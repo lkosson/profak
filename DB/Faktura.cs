@@ -16,8 +16,10 @@ namespace ProFak.DB
 		public Ref<Kontrahent> SprzedawcId { get; set; }
 		public Ref<Kontrahent> NabywcaId { get; set; }
 		public string SposobPlatnosci { get; set; }
+		public string NIPSprzedawcy { get; set; }
 		public string NazwaSprzedawcy { get; set; }
 		public string DaneSprzedawcy { get; set; }
+		public string NIPNabywcy { get; set; }
 		public string NazwaNabywcy { get; set; }
 		public string DaneNabywcy { get; set; }
 		public string RachunekBankowy { get; set; }
@@ -29,6 +31,8 @@ namespace ProFak.DB
 		public decimal RazemBrutto { get; set; }
 		public Ref<Waluta> WalutaId { get; set; }
 		public decimal KursWaluty { get; set; }
+		public Ref<SposobPlatnosci> SposobPlatnosciId { get; set; }
+		public string OpisSposobuPlatnosci { get; set; }
 	}
 
 	enum RodzajFaktury

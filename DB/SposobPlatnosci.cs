@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ProFak.DB
 {
-	class Waluta : Rekord<Waluta>
+	class SposobPlatnosci : Rekord<SposobPlatnosci>
 	{
-		public string Skrot { get; set; }
 		public string Nazwa { get; set; }
-		public bool CzyDomyslna { get; set; }
+		public int LiczbaDni { get; set; }
+		public bool CzyDomyslny { get; set; }
 	}
 }

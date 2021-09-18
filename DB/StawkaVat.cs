@@ -10,6 +10,6 @@ namespace ProFak.DB
 	{
 		public string Skrot { get; set; }
 		public decimal Wartosc { get; set; }
-		public bool CzyGlowna { get; set; }
+		public bool CzyDomyslna { get; set; }
 	}
 }

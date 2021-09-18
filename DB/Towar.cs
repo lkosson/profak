@@ -15,6 +15,7 @@ namespace ProFak.DB
 		public decimal CenaNetto { get; set; }
 		public decimal CenaBrutto { get; set; }
 		public bool CzyWedlugCenBrutto { get; set; }
+		public bool CzyArchiwalny { get; set; }
 	}
 
 	enum RodzajTowaru
