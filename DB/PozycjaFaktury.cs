@@ -19,5 +19,8 @@ namespace ProFak.DB
 		public decimal WartoscVat { get; set; }
 		public decimal WartoscBrutto { get; set; }
 		public bool CzyWedlugCenBrutto { get; set; }
+
+		public Faktura Faktura { get; set; }
+		public Towar Towar { get; set; }
 	}
 }

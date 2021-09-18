@@ -10,12 +10,16 @@ namespace ProFak.DB
 	{
 		public string Nazwa { get; set; }
 		public RodzajTowaru Rodzaj { get; set; }
-		public Ref<StawkaVat> StawkaVatId { get; set; }
-		public Ref<JednostkaMiary> JednostkaMiaryId { get; set; }
 		public decimal CenaNetto { get; set; }
 		public decimal CenaBrutto { get; set; }
 		public bool CzyWedlugCenBrutto { get; set; }
 		public bool CzyArchiwalny { get; set; }
+
+		public Ref<StawkaVat> StawkaVatId { get; set; }
+		public Ref<JednostkaMiary> JednostkaMiaryId { get; set; }
+
+		public StawkaVat StawkaVat { get; set; }
+		public JednostkaMiary JednostkaMiary { get; set; }
 	}
 
 	enum RodzajTowaru
