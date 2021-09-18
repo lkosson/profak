@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace ProFak.DB
 {
-	struct Ref<T> where T : Rekord
+	readonly struct Ref<T> where T : Rekord<T>
 	{
-		public int Id { get; set; }
+		public readonly int Id { get; }
 
 		public Type Typ => typeof(T);
 
-		public Ref(T rekord) => Id = rekord.Id;
 		public Ref(int id) => Id = id;
 		public override string ToString() => Typ.Name + "#" + Id;
 		public override bool Equals(object otherObj) => otherObj is Ref<T> other && other.Id == Id && other.Typ == Typ;

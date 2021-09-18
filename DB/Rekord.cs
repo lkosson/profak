@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace ProFak.DB
 {
-	class Rekord
+	class Rekord<T> where T : Rekord<T>
 	{
-		public int Id { get; set; }
+		public Ref<T> Id { get; set; }
 
-		public override string ToString() => GetType().Name + "#" + Id;
+		public override string ToString() => Id.ToString();
 
-		public override bool Equals(object otherObj) => otherObj is Rekord other && other.Id == Id && otherObj.GetType() == GetType();
-		public override int GetHashCode() => Id;
-		public static bool operator ==(Rekord rekord1, Rekord rekord2) => rekord1 is null ? rekord2 is null : rekord1.Equals(rekord2);
-		public static bool operator !=(Rekord rekord1, Rekord rekord2) => !(rekord1 == rekord2);
+		public override bool Equals(object otherObj) => otherObj is Rekord<T> other && other == this;
+		public override int GetHashCode() => Id.GetHashCode();
+		public static bool operator ==(Rekord<T> rekord1, Rekord<T> rekord2) => rekord1 is null ? rekord2 is null : rekord2 is not null && rekord1.Id == rekord2.Id;
+		public static bool operator !=(Rekord<T> rekord1, Rekord<T> rekord2) => !(rekord1 == rekord2);
 	}
 }

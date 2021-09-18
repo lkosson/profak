@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProFak.DB
 {
-	class Kontrahent : Rekord
+	class Kontrahent : Rekord<Kontrahent>
 	{
 		public string Nazwa { get; set; }
 		public string PelnaNazwa { get; set; }
