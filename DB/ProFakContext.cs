@@ -23,5 +23,10 @@ namespace ProFak.DB
 			base.OnConfiguring(optionsBuilder);
 			optionsBuilder.UseSqlite($"Data Source={Sciezka}");
 		}
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			DB.Model.ProFakModelBuilder.Configure(modelBuilder);
+		}
 	}
 }
