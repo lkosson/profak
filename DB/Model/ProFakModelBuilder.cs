@@ -9,8 +9,6 @@ namespace ProFak.DB.Model
 {
 	static class ProFakModelBuilder
 	{
-
-
 		public static void Configure(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<Faktura>(FakturaBuilder.Configure);

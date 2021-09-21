@@ -11,11 +11,30 @@ namespace ProFak.DB
 {
 	class ProFakContext : DbContext
 	{
-		public string Sciezka { get; set; }
+		public static string NazwaKataloguProgramu => "ProFak";
+		public static string NazwaPlikuBazy => "profak.sqlite3";
+		public static string NazwaPlikuDemo => "profak-demo.probak";
+		public static string NazwaPlikuStartowego => "profak-start.probak";
+		public static string PrywatnyKatalog => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+		public static string PublicznyKatalog => Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+		public static string LokalnyKatalog => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+		public static string PrywatnaSciezka => Path.Combine(PrywatnyKatalog, NazwaKataloguProgramu, NazwaPlikuBazy);
+		public static string PublicznaSciezka => Path.Combine(PublicznyKatalog, NazwaKataloguProgramu, NazwaPlikuBazy);
+		public static string LokalnaSciezka => Path.Combine(LokalnyKatalog, NazwaPlikuBazy);
+		public static string BazaDemo = Path.Combine(LokalnyKatalog, NazwaPlikuDemo);
+		public static string BazaStartowa = Path.Combine(LokalnyKatalog, NazwaPlikuStartowego);
+
+		public static string Sciezka { get; set; }
 
 		public ProFakContext()
 		{
-			Sciezka = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "profak.sqlite3");
+		}
+
+		public static void UstalSciezkeBazy()
+		{
+			if (File.Exists(LokalnaSciezka)) Sciezka = LokalnaSciezka;
+			else if (File.Exists(PrywatnaSciezka)) Sciezka = PrywatnaSciezka;
+			else if (File.Exists(PublicznaSciezka)) Sciezka = PublicznaSciezka;
 		}
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
