@@ -7,7 +7,7 @@ using ProFak.DB;
 
 namespace ProFak.DB.Migrations
 {
-    [DbContext(typeof(ProFakContext))]
+    [DbContext(typeof(Baza))]
     [Migration("20210918135750_NowaBaza")]
     partial class NowaBaza
     {

@@ -14,8 +14,8 @@ namespace ProFak
 			Application.SetHighDpiMode(HighDpiMode.SystemAware);
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			DB.ProFakContext.UstalSciezkeBazy();
-			if (String.IsNullOrEmpty(DB.ProFakContext.Sciezka))
+			DB.Baza.UstalSciezkeBazy();
+			if (String.IsNullOrEmpty(DB.Baza.Sciezka))
 			{
 				using var pierwszyStart = new UI.PierwszyStartBaza();
 				if (pierwszyStart.ShowDialog() != DialogResult.OK) return;

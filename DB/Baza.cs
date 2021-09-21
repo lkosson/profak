@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProFak.DB
 {
-	class ProFakContext : DbContext
+	class Baza : DbContext
 	{
 		public static string NazwaKataloguProgramu => "ProFak";
 		public static string NazwaPlikuBazy => "profak.sqlite3";
@@ -26,7 +26,7 @@ namespace ProFak.DB
 
 		public static string Sciezka { get; set; }
 
-		public ProFakContext()
+		public Baza()
 		{
 		}
 

@@ -7,7 +7,7 @@ using ProFak.DB;
 
 namespace ProFak.DB.Migrations
 {
-    [DbContext(typeof(ProFakContext))]
+    [DbContext(typeof(Baza))]
     partial class ProFakContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

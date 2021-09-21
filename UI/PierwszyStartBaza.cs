@@ -26,18 +26,18 @@ namespace ProFak.UI
 		{
 			if (radioButtonNowaPrywatnaBaza.Checked)
 			{
-				bazaZrodlowa = DB.ProFakContext.BazaStartowa;
-				bazaDocelowa = DB.ProFakContext.PrywatnaSciezka;
+				bazaZrodlowa = DB.Baza.BazaStartowa;
+				bazaDocelowa = DB.Baza.PrywatnaSciezka;
 			}
 			else if (radioButtonNowaPublicznaBaza.Checked)
 			{
-				bazaZrodlowa = DB.ProFakContext.BazaStartowa;
-				bazaDocelowa = DB.ProFakContext.PublicznaSciezka;
+				bazaZrodlowa = DB.Baza.BazaStartowa;
+				bazaDocelowa = DB.Baza.PublicznaSciezka;
 			}
 			else if (radioButtonNowaLokalnaBaza.Checked)
 			{
-				bazaZrodlowa = DB.ProFakContext.BazaStartowa;
-				bazaDocelowa = DB.ProFakContext.LokalnaSciezka;
+				bazaZrodlowa = DB.Baza.BazaStartowa;
+				bazaDocelowa = DB.Baza.LokalnaSciezka;
 			}
 			else if (radioButtonZewnetrznaBaza.Checked)
 			{
@@ -47,14 +47,14 @@ namespace ProFak.UI
 			}
 			else if (radioButtonBazaDemo.Checked)
 			{
-				bazaZrodlowa = DB.ProFakContext.BazaDemo;
+				bazaZrodlowa = DB.Baza.BazaDemo;
 				bazaDocelowa = null;
 			}
 			else if (radioButtonOdtworzKopie.Checked)
 			{
 				if (openFileDialogBackup.ShowDialog() != DialogResult.OK) return;
 				bazaZrodlowa = openFileDialogBackup.FileName;
-				bazaDocelowa = DB.ProFakContext.PrywatnaSciezka;
+				bazaDocelowa = DB.Baza.PrywatnaSciezka;
 			}
 			else return;
 
@@ -72,7 +72,7 @@ namespace ProFak.UI
 
 			if (String.IsNullOrEmpty(bazaDocelowa))
 			{
-				DB.ProFakContext.Sciezka = bazaZrodlowa;
+				DB.Baza.Sciezka = bazaZrodlowa;
 			}
 			else
 			{
@@ -92,11 +92,11 @@ namespace ProFak.UI
 				backgroundWorker.ReportProgress(0, "Kopiowanie bazy");
 				File.Copy(bazaZrodlowa, bazaDocelowa);
 
-				DB.ProFakContext.Sciezka = bazaDocelowa;
+				DB.Baza.Sciezka = bazaDocelowa;
 			}
 
 			backgroundWorker.ReportProgress(0, "Weryfikacja bazy");
-			using var db = new DB.ProFakContext();
+			using var db = new DB.Baza();
 			if (!db.Database.CanConnect()) throw new ApplicationException("Nie udało się otworzyć bazy danych.");
 
 			backgroundWorker.ReportProgress(0, "Aktualizacja struktury");

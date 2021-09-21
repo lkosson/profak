@@ -8,7 +8,7 @@ using ProFak.DB;
 
 namespace ProFak.DB.Migrations
 {
-    [DbContext(typeof(ProFakContext))]
+    [DbContext(typeof(Baza))]
     [Migration("20210918143308_Struktura")]
     partial class Struktura
     {
