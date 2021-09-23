@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +21,13 @@ namespace ProFak
 				using var pierwszyStart = new UI.PierwszyStartBaza();
 				if (pierwszyStart.ShowDialog() != DialogResult.OK) return;
 			}
+			/*
 			var rekord = new DB.StawkaVat { Skrot = "23", Wartosc = 23, CzyDomyslna = true };
 			new UI.OknoEdycji("Stawka VAT", new UI.StawkaVatEdytor(rekord)).ShowDialog();
+			*/
+			var baza = new DB.Baza();
+			baza.Database.Migrate();
+			new UI.OknoSpisu("Stawki VAT", new UI.StawkaVatSpis { Baza = baza }).ShowDialog();
 		}
 	}
 }

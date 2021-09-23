@@ -12,7 +12,10 @@ namespace ProFak.DB.Model
 	{
 		public static void Configure(EntityTypeBuilder<Waluta> builder)
 		{
+			builder.ToTable(nameof(Waluta));
+
 			builder.HasKey(e => e.Id);
+
 			builder.Property(e => e.Id).HasConversion(v => v.Id, v => v);
 			builder.Property(e => e.Skrot).IsRequired();
 			builder.Property(e => e.Nazwa).IsRequired();

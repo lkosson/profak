@@ -12,6 +12,8 @@ namespace ProFak.DB.Model
 	{
 		public static void Configure(EntityTypeBuilder<SposobPlatnosci> builder)
 		{
+			builder.ToTable(nameof(SposobPlatnosci));
+
 			builder.HasKey(e => e.Id);
 
 			builder.Property(e => e.Id).HasConversion(v => v.Id, v => v);

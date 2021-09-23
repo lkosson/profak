@@ -12,6 +12,8 @@ namespace ProFak.DB.Model
 	{
 		public static void Configure(EntityTypeBuilder<Faktura> builder)
 		{
+			builder.ToTable(nameof(Faktura));
+
 			builder.HasKey(e => e.Id);
 
 			builder.Property(e => e.Id).HasConversion(v => v.Id, v => v);

@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	partial class StawkaVatEdytor : UserControl
+	partial class StawkaVatEdytor : UserControl, IEdytor<StawkaVat>
 	{
 		public StawkaVat Rekord { get { return bindingSource.DataSource as StawkaVat; } set { bindingSource.DataSource = value; } }
 
