@@ -27,12 +27,19 @@ namespace ProFak.DB
 		public decimal KursWaluty { get; set; }
 		public string OpisSposobuPlatnosci { get; set; }
 
-		public Ref<Kontrahent> SprzedawcId { get; set; }
-		public Ref<Kontrahent> NabywcaId { get; set; }
-		public Ref<Faktura> FakturaKorygowanaId { get; set; }
-		public Ref<Faktura> FakturaKorygujacaId { get; set; }
-		public Ref<Waluta> WalutaId { get; set; }
-		public Ref<SposobPlatnosci> SposobPlatnosciId { get; set; }
+		public int SprzedawcaId { get; set; }
+		public int NabywcaId { get; set; }
+		public int FakturaKorygowanaId { get; set; }
+		public int FakturaKorygujacaId { get; set; }
+		public int WalutaId { get; set; }
+		public int SposobPlatnosciId { get; set; }
+
+		public Ref<Kontrahent> SprzedawcaRef { get => SprzedawcaId; set => SprzedawcaId = value; }
+		public Ref<Kontrahent> NabywcaRef { get => NabywcaId; set => NabywcaId = value; }
+		public Ref<Faktura> FakturaKorygowanaRef { get => FakturaKorygowanaId; set => FakturaKorygowanaId = value; }
+		public Ref<Faktura> FakturaKorygujacaRef { get => FakturaKorygujacaId; set => FakturaKorygujacaId = value; }
+		public Ref<Waluta> WalutaRef { get => WalutaId; set => WalutaId = value; }
+		public Ref<SposobPlatnosci> SposobPlatnosciRef { get => SposobPlatnosciId; set => SposobPlatnosciId = value; }
 
 		public Kontrahent Sprzedawca { get; set; }
 		public Kontrahent Nabywca { get; set; }

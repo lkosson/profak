@@ -16,7 +16,7 @@ namespace ProFak.DB.Model
 
 			builder.HasKey(e => e.Id);
 
-			builder.Property(e => e.Id).HasConversion(v => v.Id, v => v);
+			builder.Property(e => e.Id).ValueGeneratedOnAdd().IsRequired();
 			builder.Property(e => e.Skrot).IsRequired();
 			builder.Property(e => e.Nazwa).IsRequired();
 			builder.Property(e => e.CzyGlowna).HasDefaultValue(false).IsRequired();

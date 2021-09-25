@@ -15,8 +15,11 @@ namespace ProFak.DB
 		public bool CzyWedlugCenBrutto { get; set; }
 		public bool CzyArchiwalny { get; set; }
 
-		public Ref<StawkaVat> StawkaVatId { get; set; }
-		public Ref<JednostkaMiary> JednostkaMiaryId { get; set; }
+		public int StawkaVatId { get; set; }
+		public int JednostkaMiaryId { get; set; }
+
+		public Ref<StawkaVat> StawkaVatRef { get; set; }
+		public Ref<JednostkaMiary> JednostkaMiaryRef { get; set; }
 
 		public StawkaVat StawkaVat { get; set; }
 		public JednostkaMiary JednostkaMiary { get; set; }

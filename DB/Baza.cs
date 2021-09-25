@@ -38,7 +38,16 @@ namespace ProFak.DB
 		{
 		}
 
-		public static void UstalSciezkeBazy()
+		public static bool Przygotuj()
+		{
+			DB.Baza.UstalSciezkeBazy();
+			if (String.IsNullOrEmpty(Sciezka)) return false;
+			using var baza = new DB.Baza();
+			baza.Database.Migrate();
+			return true;
+		}
+
+		private static void UstalSciezkeBazy()
 		{
 			if (File.Exists(LokalnaSciezka)) Sciezka = LokalnaSciezka;
 			else if (File.Exists(PrywatnaSciezka)) Sciezka = PrywatnaSciezka;
