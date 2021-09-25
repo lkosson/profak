@@ -15,8 +15,7 @@ namespace ProFak
 			Application.SetHighDpiMode(HighDpiMode.SystemAware);
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			DB.Baza.UstalSciezkeBazy();
-			if (String.IsNullOrEmpty(DB.Baza.Sciezka))
+			if (!DB.Baza.Przygotuj())
 			{
 				using var pierwszyStart = new UI.PierwszyStartBaza();
 				if (pierwszyStart.ShowDialog() != DialogResult.OK) return;
@@ -25,9 +24,12 @@ namespace ProFak
 			var rekord = new DB.StawkaVat { Skrot = "23", Wartosc = 23, CzyDomyslna = true };
 			new UI.OknoEdycji("Stawka VAT", new UI.StawkaVatEdytor(rekord)).ShowDialog();
 			*/
-			var baza = new DB.Baza();
-			baza.Database.Migrate();
-			new UI.OknoSpisu("Stawki VAT", new UI.StawkaVatSpis { Baza = baza }).ShowDialog();
+
+			using var kontekst = new UI.Kontekst();
+			UI.OknoSpisu.Utworz<DB.StawkaVat, UI.StawkaVatSpis>(kontekst, new UI.DodajRekordAkcja<DB.StawkaVat, UI.StawkaVatEdytor>()).ShowDialog();
+
+			//new UI.OknoSpisu("Stawki VAT", new UI.StawkaVatSpis { Baza = baza }).ShowDialog();
+			//UI.OknoSpisu.Utworz(new UI.StawkaVatSpis { Baza = baza }, "Stawki VAT", );
 		}
 	}
 }

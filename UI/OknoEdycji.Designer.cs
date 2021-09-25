@@ -44,7 +44,7 @@ namespace ProFak.UI
 			this.buttonZapisz.Location = new System.Drawing.Point(3, 3);
 			this.buttonZapisz.Name = "buttonZapisz";
 			this.buttonZapisz.Size = new System.Drawing.Size(75, 23);
-			this.buttonZapisz.TabIndex = 1;
+			this.buttonZapisz.TabIndex = 1000;
 			this.buttonZapisz.Text = "Zapisz";
 			this.buttonZapisz.UseVisualStyleBackColor = true;
 			// 
@@ -54,7 +54,7 @@ namespace ProFak.UI
 			this.buttonAnuluj.Location = new System.Drawing.Point(84, 3);
 			this.buttonAnuluj.Name = "buttonAnuluj";
 			this.buttonAnuluj.Size = new System.Drawing.Size(75, 23);
-			this.buttonAnuluj.TabIndex = 2;
+			this.buttonAnuluj.TabIndex = 1001;
 			this.buttonAnuluj.Text = "Anuluj";
 			this.buttonAnuluj.UseVisualStyleBackColor = true;
 			// 
@@ -83,7 +83,7 @@ namespace ProFak.UI
 			this.flowLayoutPanelPrzyciski.Location = new System.Drawing.Point(3, 109);
 			this.flowLayoutPanelPrzyciski.Name = "flowLayoutPanelPrzyciski";
 			this.flowLayoutPanelPrzyciski.Size = new System.Drawing.Size(162, 29);
-			this.flowLayoutPanelPrzyciski.TabIndex = 0;
+			this.flowLayoutPanelPrzyciski.TabIndex = 999;
 			// 
 			// panelZawartosc
 			// 

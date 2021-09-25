@@ -10,5 +10,7 @@ namespace ProFak.UI
 		where TRekord : DB.Rekord<TRekord>
 	{
 		TRekord Rekord { get; set; }
+		Kontekst Kontekst { get; set; }
+		string Tytul { get; }
 	}
 }

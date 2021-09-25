@@ -14,6 +14,8 @@ namespace ProFak.UI
 	partial class StawkaVatEdytor : UserControl, IEdytor<StawkaVat>
 	{
 		public StawkaVat Rekord { get { return bindingSource.DataSource as StawkaVat; } set { bindingSource.DataSource = value; } }
+		public Kontekst Kontekst { get; set; }
+		public string Tytul => "Stawka VAT";
 
 		public StawkaVatEdytor()
 		{

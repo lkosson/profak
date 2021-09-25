@@ -10,8 +10,9 @@ namespace ProFak.UI
 	interface ISpis<TRekord>
 		where TRekord : Rekord<TRekord>
 	{
-		Baza Baza { get; set; }
+		Kontekst Kontekst { get; set; }
 		IEnumerable<TRekord> WybraneRekordy { get; set; }
 		void Przeladuj();
+		string Tytul { get; }
 	}
 }

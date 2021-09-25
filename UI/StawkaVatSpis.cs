@@ -13,8 +13,9 @@ namespace ProFak.UI
 {
 	partial class StawkaVatSpis : UserControl, ISpis<DB.StawkaVat>
 	{
-		public Baza Baza { get; set; }
+		public Kontekst Kontekst { get; set; }
 		public IEnumerable<StawkaVat> WybraneRekordy { get; set; }
+		public string Tytul => "Stawki VAT";
 
 		public StawkaVatSpis()
 		{
@@ -29,7 +30,7 @@ namespace ProFak.UI
 
 		public void Przeladuj()
 		{
-			bindingSource.DataSource = Baza.StawkiVat.ToList();
+			bindingSource.DataSource = Kontekst.Baza.StawkiVat.ToList();
 		}
 	}
 }
