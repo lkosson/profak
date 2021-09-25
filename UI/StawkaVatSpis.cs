@@ -11,11 +11,19 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	partial class StawkaVatSpis : UserControl, ISpis<DB.StawkaVat>
+	partial class StawkaVatSpis : UserControl, ISpis<StawkaVat>
 	{
 		public Kontekst Kontekst { get; set; }
-		public IEnumerable<StawkaVat> WybraneRekordy { get; set; }
 		public string Tytul => "Stawki VAT";
+		public IEnumerable<StawkaVat> WybraneRekordy
+		{
+			get => spis.SelectedRows.Cast<DataGridViewRow>().Select(row => row.DataBoundItem).Cast<StawkaVat>();
+
+			set
+			{
+
+			}
+		}
 
 		public StawkaVatSpis()
 		{

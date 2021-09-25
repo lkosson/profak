@@ -26,7 +26,11 @@ namespace ProFak
 			*/
 
 			using var kontekst = new UI.Kontekst();
-			UI.OknoSpisu.Utworz<DB.StawkaVat, UI.StawkaVatSpis>(kontekst, new UI.DodajRekordAkcja<DB.StawkaVat, UI.StawkaVatEdytor>()).ShowDialog();
+			UI.OknoSpisu.Utworz<DB.StawkaVat, UI.StawkaVatSpis>(kontekst, 
+				new UI.DodajRekordAkcja<DB.StawkaVat, UI.StawkaVatEdytor>(),
+				new UI.EdytujRekordAkcja<DB.StawkaVat, UI.StawkaVatEdytor>(),
+				new UI.UsunRekordAkcja<DB.StawkaVat>()
+				).ShowDialog();
 
 			//new UI.OknoSpisu("Stawki VAT", new UI.StawkaVatSpis { Baza = baza }).ShowDialog();
 			//UI.OknoSpisu.Utworz(new UI.StawkaVatSpis { Baza = baza }, "Stawki VAT", );

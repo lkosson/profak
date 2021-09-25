@@ -17,5 +17,7 @@ namespace ProFak.DB
 		public override int GetHashCode() => Id.GetHashCode();
 		public static bool operator ==(Rekord<T> rekord1, Rekord<T> rekord2) => rekord1 is null ? rekord2 is null : rekord2 is not null && rekord1.Id == rekord2.Id;
 		public static bool operator !=(Rekord<T> rekord1, Rekord<T> rekord2) => !(rekord1 == rekord2);
+
+		public T Kopia() => (T)MemberwiseClone();
 	}
 }

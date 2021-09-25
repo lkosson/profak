@@ -19,6 +19,8 @@ namespace ProFak.UI
 			AllowUserToOrderColumns = true;
 			RowHeadersVisible = false;
 			ShowCellToolTips = true;
+			ReadOnly = true;
+			SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 		}
 	}
 }
