@@ -1,0 +1,27 @@
+﻿using ProFak.DB;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ProFak.UI
+{
+	class WalutaSpis : Spis<Waluta>
+	{
+		public override string Tytul => "Waluty";
+
+		public WalutaSpis()
+		{
+			DodajKolumne(nameof(Waluta.Skrot), "Skrót");
+			DodajKolumne(nameof(Waluta.Nazwa), "Nazwa", rozciagnij: true);
+			DodajKolumne(nameof(Waluta.CzyDomyslnaFmt), "Domyślna");
+			DodajKolumne(nameof(Waluta.Id), "Id", wyrownajDoPrawej: true);
+		}
+
+		public override void Przeladuj()
+		{
+			Rekordy = Kontekst.Baza.Waluty.ToList();
+		}
+	}
+}

@@ -11,5 +11,7 @@ namespace ProFak.DB
 		public string Skrot { get; set; }
 		public string Nazwa { get; set; }
 		public bool CzyDomyslna { get; set; }
+
+		public string CzyDomyslnaFmt => CzyDomyslna ? "Tak" : "Nie";
 	}
 }

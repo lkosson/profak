@@ -31,7 +31,7 @@ namespace ProFak.UI
 
 		public static OknoSpisu Utworz<TRekord, TSpis>(Kontekst kontekst, params AkcjaNaSpisie<TRekord>[] akcje)
 			where TRekord : Rekord<TRekord>
-			where TSpis : UserControl, ISpis<TRekord>, new()
+			where TSpis : Control, ISpis<TRekord>, new()
 		{
 			var spis = new TSpis();
 			spis.Kontekst = kontekst;

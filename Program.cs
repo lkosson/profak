@@ -26,12 +26,20 @@ namespace ProFak
 			*/
 
 			using var kontekst = new UI.Kontekst();
+
+			UI.OknoSpisu.Utworz<DB.Waluta, UI.WalutaSpis>(kontekst,
+	new UI.DodajRekordAkcja<DB.Waluta, UI.WalutaEdytor>(),
+	new UI.EdytujRekordAkcja<DB.Waluta, UI.WalutaEdytor>(),
+	new UI.UsunRekordAkcja<DB.Waluta>()
+	).ShowDialog();
+
+			/*
 			UI.OknoSpisu.Utworz<DB.StawkaVat, UI.StawkaVatSpis>(kontekst, 
 				new UI.DodajRekordAkcja<DB.StawkaVat, UI.StawkaVatEdytor>(),
 				new UI.EdytujRekordAkcja<DB.StawkaVat, UI.StawkaVatEdytor>(),
 				new UI.UsunRekordAkcja<DB.StawkaVat>()
 				).ShowDialog();
-
+			*/
 			//new UI.OknoSpisu("Stawki VAT", new UI.StawkaVatSpis { Baza = baza }).ShowDialog();
 			//UI.OknoSpisu.Utworz(new UI.StawkaVatSpis { Baza = baza }, "Stawki VAT", );
 		}

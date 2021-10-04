@@ -11,7 +11,7 @@ namespace ProFak.UI
 {
 	class EdytujRekordAkcja<TRekord, TEdytor> : AkcjaNaSpisie<TRekord>
 		where TRekord : Rekord<TRekord>, new()
-		where TEdytor : UserControl, IEdytor<TRekord>, new()
+		where TEdytor : Control, IEdytor<TRekord>, new()
 	{
 		public override string Nazwa => "Wyświetl zaznaczoną pozycję";
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<TRekord> zaznaczoneRekordy) => zaznaczoneRekordy.Count() == 1;

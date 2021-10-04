@@ -21,7 +21,10 @@ namespace ProFak.UI
 
 			set
 			{
-
+				foreach (DataGridViewRow row in spis.Rows)
+				{
+					row.Selected = value.Contains(row.DataBoundItem as StawkaVat);
+				}
 			}
 		}
 

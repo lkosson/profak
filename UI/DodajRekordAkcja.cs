@@ -10,7 +10,7 @@ namespace ProFak.UI
 {
 	class DodajRekordAkcja<TRekord, TEdytor> : AkcjaNaSpisie<TRekord>
 		where TRekord : Rekord<TRekord>, new()
-		where TEdytor : UserControl, IEdytor<TRekord>, new()
+		where TEdytor : Control, IEdytor<TRekord>, new()
 	{
 		public override string Nazwa => "Dodaj nową pozycję";
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<TRekord> zaznaczoneRekordy) => true;
