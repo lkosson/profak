@@ -33,6 +33,16 @@ namespace ProFak.UI
 			);
 		}
 
+		public static OknoSpisu Kontrahenci(Kontekst kontekst)
+		{
+			return OknoSpisu.Utworz<DB.Kontrahent, KontrahentSpis>(kontekst,
+				"Kontrahenci",
+				new DodajRekordAkcja<DB.Kontrahent, KontrahentEdytor>("Nowy kontrahent"),
+				new EdytujRekordAkcja<DB.Kontrahent, KontrahentEdytor>("Edycja kontrahenta"),
+				new UsunRekordAkcja<DB.Kontrahent>()
+			);
+		}
+
 		public static OknoSpisu SposobyPlatnosci(Kontekst kontekst)
 		{
 			return OknoSpisu.Utworz<DB.SposobPlatnosci, SposobPlatnosciSpis>(kontekst,

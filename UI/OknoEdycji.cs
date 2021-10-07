@@ -29,7 +29,8 @@ namespace ProFak.UI
 
 		private void UstawZawartosc(Control zawartosc)
 		{
-			ClientSize = new Size(zawartosc.GetPreferredSize(zawartosc.Size).Width + panelZawartosc.Margin.Left + panelZawartosc.Margin.Right + Padding.Left + Padding.Right, ClientSize.Height);
+			var rozmiarPreferowany = zawartosc.GetPreferredSize(zawartosc.Size);
+			ClientSize = new Size(rozmiarPreferowany.Width + panelZawartosc.Margin.Left + panelZawartosc.Margin.Right + Padding.Left + Padding.Right, rozmiarPreferowany.Height + buttonZapisz.Height + panelZawartosc.Margin.Top + panelZawartosc.Margin.Bottom + buttonZapisz.Margin.Top + buttonZapisz.Margin.Bottom * 2);
 			panelZawartosc.Controls.Add(zawartosc);
 			zawartosc.Dock = DockStyle.Fill;
 		}
