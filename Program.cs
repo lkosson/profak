@@ -21,8 +21,7 @@ namespace ProFak
 				if (pierwszyStart.ShowDialog() != DialogResult.OK) return;
 			}
 
-			using var kontekst = new UI.Kontekst();
-			UI.Spis.Kontrahenci(kontekst).ShowDialog();
+			Application.Run(new UI.GlowneOkno());
 		}
 	}
 }
