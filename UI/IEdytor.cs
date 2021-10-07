@@ -11,6 +11,5 @@ namespace ProFak.UI
 	{
 		TRekord Rekord { get; set; }
 		Kontekst Kontekst { get; set; }
-		string Tytul { get; }
 	}
 }

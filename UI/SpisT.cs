@@ -16,7 +16,6 @@ namespace ProFak.UI
 		private readonly BindingSource bindingSource;
 
 		public Kontekst Kontekst { get; set; }
-		public abstract string Tytul { get; }
 		public IEnumerable<T> WybraneRekordy
 		{
 			get => SelectedRows.Cast<DataGridViewRow>().Select(row => row.DataBoundItem).Cast<T>();

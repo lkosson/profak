@@ -33,6 +33,7 @@ namespace ProFak.DB
 		public DbSet<StawkaVat> StawkiVat => Set<StawkaVat>();
 		public DbSet<Towar> Towary => Set<Towar>();
 		public DbSet<Waluta> Waluty => Set<Waluta>();
+		public DbSet<SposobPlatnosci> SposobyPlatnosci => Set<SposobPlatnosci>();
 
 		public Baza()
 		{

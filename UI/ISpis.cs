@@ -13,6 +13,5 @@ namespace ProFak.UI
 		Kontekst Kontekst { get; set; }
 		IEnumerable<TRekord> WybraneRekordy { get; set; }
 		void Przeladuj();
-		string Tytul { get; }
 	}
 }

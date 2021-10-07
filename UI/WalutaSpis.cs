@@ -9,8 +9,6 @@ namespace ProFak.UI
 {
 	class WalutaSpis : Spis<Waluta>
 	{
-		public override string Tytul => "Waluty";
-
 		public WalutaSpis()
 		{
 			DodajKolumne(nameof(Waluta.Skrot), "Skrót");

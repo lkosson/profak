@@ -29,7 +29,7 @@ namespace ProFak.UI
 			foreach (var akcja in akcje) panelAkcji.DodajAkcje(akcja);
 		}
 
-		public static OknoSpisu Utworz<TRekord, TSpis>(Kontekst kontekst, params AkcjaNaSpisie<TRekord>[] akcje)
+		public static OknoSpisu Utworz<TRekord, TSpis>(Kontekst kontekst, string tytul, params AkcjaNaSpisie<TRekord>[] akcje)
 			where TRekord : Rekord<TRekord>
 			where TSpis : Control, ISpis<TRekord>, new()
 		{
@@ -37,7 +37,7 @@ namespace ProFak.UI
 			spis.Kontekst = kontekst;
 			var adaptery = new List<AdapterAkcji>();
 			foreach (var akcja in akcje) adaptery.Add(new AdapterAkcji<TRekord>(akcja, spis));
-			var okno = new OknoSpisu(spis.Tytul, spis, adaptery);
+			var okno = new OknoSpisu(tytul, spis, adaptery);
 			return okno;
 		}
 	}
