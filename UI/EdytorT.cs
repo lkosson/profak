@@ -17,7 +17,6 @@ namespace ProFak.UI
 
 		public T Rekord { get { return bindingSource.DataSource as T; } set { bindingSource.DataSource = value; } }
 		public Kontekst Kontekst { get; set; }
-		public abstract string Tytul { get; }
 
 		public Edytor()
 		{

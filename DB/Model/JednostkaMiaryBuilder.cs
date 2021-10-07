@@ -19,7 +19,7 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.Id).ValueGeneratedOnAdd().IsRequired();
 			builder.Property(e => e.Skrot).IsRequired();
 			builder.Property(e => e.Nazwa).IsRequired();
-			builder.Property(e => e.CzyGlowna).HasDefaultValue(false).IsRequired();
+			builder.Property(e => e.CzyDomyslna).HasDefaultValue(false).IsRequired();
 			builder.Property(e => e.LiczbaMiescPoPrzecinku).HasDefaultValue(0).IsRequired();
 		}
 	}

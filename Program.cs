@@ -22,7 +22,7 @@ namespace ProFak
 			}
 
 			using var kontekst = new UI.Kontekst();
-			UI.Spis.SposobyPlatnosci(kontekst).ShowDialog();
+			UI.Spis.JednostkiMiar(kontekst).ShowDialog();
 		}
 	}
 }

@@ -23,6 +23,16 @@ namespace ProFak.UI
 			SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 		}
 
+		public static OknoSpisu JednostkiMiar(Kontekst kontekst)
+		{
+			return OknoSpisu.Utworz<DB.JednostkaMiary, JednostkaMiarySpis>(kontekst,
+				"Jednostki miar",
+				new DodajRekordAkcja<DB.JednostkaMiary, JednostkaMiaryEdytor>("Nowa jednostka miary"),
+				new EdytujRekordAkcja<DB.JednostkaMiary, JednostkaMiaryEdytor>("Edycja jednostki miary"),
+				new UsunRekordAkcja<DB.JednostkaMiary>()
+			);
+		}
+
 		public static OknoSpisu SposobyPlatnosci(Kontekst kontekst)
 		{
 			return OknoSpisu.Utworz<DB.SposobPlatnosci, SposobPlatnosciSpis>(kontekst,

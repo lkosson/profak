@@ -9,8 +9,6 @@ namespace ProFak.UI
 {
 	class WalutaEdytor : Edytor<Waluta>
 	{
-		public override string Tytul => "Waluta";
-
 		public WalutaEdytor()
 		{
 			DodajTextBox(nameof(Waluta.Skrot), "Skrót");

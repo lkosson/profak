@@ -9,8 +9,6 @@ namespace ProFak.UI
 {
 	class SposobPlatnosciEdytor : Edytor<SposobPlatnosci>
 	{
-		public override string Tytul => "Sposób płatności";
-
 		public SposobPlatnosciEdytor()
 		{
 			DodajTextBox(nameof(SposobPlatnosci.Nazwa), "Nazwa");

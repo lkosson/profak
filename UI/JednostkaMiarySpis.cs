@@ -14,6 +14,7 @@ namespace ProFak.UI
 			DodajKolumne(nameof(JednostkaMiary.Skrot), "Skrót");
 			DodajKolumne(nameof(JednostkaMiary.Nazwa), "Nazwa", rozciagnij: true);
 			DodajKolumne(nameof(JednostkaMiary.CzyDomyslnaFmt), "Domyślna");
+			DodajKolumne(nameof(JednostkaMiary.LiczbaMiescPoPrzecinku), "Liczba miejsc po przecinku", wyrownajDoPrawej: true);
 			DodajKolumne(nameof(JednostkaMiary.Id), "Id", wyrownajDoPrawej: true);
 		}
 
