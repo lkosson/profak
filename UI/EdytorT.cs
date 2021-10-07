@@ -14,6 +14,8 @@ namespace ProFak.UI
 	{
 		private readonly BindingSource bindingSource;
 		private readonly Container container;
+		private int szerokoscEtykiet;
+		private int szerokoscKontrolek;
 
 		public T Rekord { get { return bindingSource.DataSource as T; } set { bindingSource.DataSource = value; } }
 		public Kontekst Kontekst { get; set; }
@@ -28,8 +30,17 @@ namespace ProFak.UI
 			ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
 		}
 
+		protected override void OnCreateControl()
+		{
+			RowCount++;
+			RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
+			base.OnCreateControl();
+		}
+
 		public void DodajWiersz(Control kontrolka, string etykieta)
 		{
+			szerokoscKontrolek = Math.Max(szerokoscKontrolek, kontrolka.GetPreferredSize(default).Width);
+
 			RowCount++;
 			RowStyles.Add(new RowStyle());
 
@@ -40,9 +51,13 @@ namespace ProFak.UI
 				label.AutoSize = true;
 				label.Text = etykieta;
 				Controls.Add(label, 0, RowCount - 1);
+				szerokoscEtykiet = Math.Max(szerokoscEtykiet, label.GetPreferredSize(default).Width);
 			}
 
 			Controls.Add(kontrolka, 1, RowCount - 1);
+
+			var minimalnaSzerokosc = szerokoscEtykiet + szerokoscKontrolek + Margin.Left + Margin.Right + Padding.Left + Padding.Right;
+			if (Width < minimalnaSzerokosc) Width = minimalnaSzerokosc;
 		}
 
 		public void DodajTextBox(string pole, string etykieta, string format = "")
@@ -56,6 +71,7 @@ namespace ProFak.UI
 		public void DodajCheckBox(string pole, string etykieta)
 		{
 			var checkbox = new CheckBox();
+			checkbox.AutoSize = true;
 			checkbox.Anchor = AnchorStyles.Left;
 			checkbox.Text = etykieta;
 			checkbox.DataBindings.Add(new Binding("Checked", bindingSource, pole, true, DataSourceUpdateMode.OnValidation, null, null));
@@ -66,6 +82,7 @@ namespace ProFak.UI
 		{
 			var nud = new NumericUpDown();
 			nud.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+			nud.TextAlign = HorizontalAlignment.Right;
 			nud.DataBindings.Add(new Binding("Value", bindingSource, pole, true, DataSourceUpdateMode.OnPropertyChanged, null, format));
 			DodajWiersz(nud, etykieta);
 		}

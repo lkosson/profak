@@ -60,18 +60,18 @@ namespace ProFak.UI
 			// 
 			// tableLayoutPanelZawartosc
 			// 
-			this.tableLayoutPanelZawartosc.AutoSize = true;
 			this.tableLayoutPanelZawartosc.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.tableLayoutPanelZawartosc.ColumnCount = 1;
 			this.tableLayoutPanelZawartosc.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanelZawartosc.Controls.Add(this.flowLayoutPanelPrzyciski, 0, 1);
 			this.tableLayoutPanelZawartosc.Controls.Add(this.panelZawartosc, 0, 0);
-			this.tableLayoutPanelZawartosc.Location = new System.Drawing.Point(12, 12);
+			this.tableLayoutPanelZawartosc.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanelZawartosc.Location = new System.Drawing.Point(0, 0);
 			this.tableLayoutPanelZawartosc.Name = "tableLayoutPanelZawartosc";
 			this.tableLayoutPanelZawartosc.RowCount = 2;
+			this.tableLayoutPanelZawartosc.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanelZawartosc.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelZawartosc.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelZawartosc.Size = new System.Drawing.Size(206, 141);
+			this.tableLayoutPanelZawartosc.Size = new System.Drawing.Size(231, 163);
 			this.tableLayoutPanelZawartosc.TabIndex = 3;
 			// 
 			// flowLayoutPanelPrzyciski
@@ -80,19 +80,18 @@ namespace ProFak.UI
 			this.flowLayoutPanelPrzyciski.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.flowLayoutPanelPrzyciski.Controls.Add(this.buttonZapisz);
 			this.flowLayoutPanelPrzyciski.Controls.Add(this.buttonAnuluj);
-			this.flowLayoutPanelPrzyciski.Location = new System.Drawing.Point(3, 109);
+			this.flowLayoutPanelPrzyciski.Location = new System.Drawing.Point(3, 131);
 			this.flowLayoutPanelPrzyciski.Name = "flowLayoutPanelPrzyciski";
 			this.flowLayoutPanelPrzyciski.Size = new System.Drawing.Size(162, 29);
 			this.flowLayoutPanelPrzyciski.TabIndex = 999;
 			// 
 			// panelZawartosc
 			// 
-			this.panelZawartosc.AutoSize = true;
-			this.panelZawartosc.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.panelZawartosc.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelZawartosc.Location = new System.Drawing.Point(3, 3);
 			this.panelZawartosc.MinimumSize = new System.Drawing.Size(200, 100);
 			this.panelZawartosc.Name = "panelZawartosc";
-			this.panelZawartosc.Size = new System.Drawing.Size(200, 100);
+			this.panelZawartosc.Size = new System.Drawing.Size(225, 122);
 			this.panelZawartosc.TabIndex = 1;
 			// 
 			// OknoEdycji
@@ -101,7 +100,6 @@ namespace ProFak.UI
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
-			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.CancelButton = this.buttonAnuluj;
 			this.ClientSize = new System.Drawing.Size(227, 163);
 			this.Controls.Add(this.tableLayoutPanelZawartosc);
@@ -111,7 +109,6 @@ namespace ProFak.UI
 			this.tableLayoutPanelZawartosc.PerformLayout();
 			this.flowLayoutPanelPrzyciski.ResumeLayout(false);
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
