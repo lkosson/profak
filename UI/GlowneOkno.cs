@@ -20,7 +20,7 @@ namespace ProFak.UI
 
 		private void treeViewMenu_DoubleClick(object sender, EventArgs e)
 		{
-			WyswietlPozycje(treeViewMenu.SelectedNode);
+			Wyswietl(treeViewMenu.SelectedNode);
 		}
 
 		private void treeViewMenu_KeyPress(object sender, KeyPressEventArgs e)
@@ -28,13 +28,12 @@ namespace ProFak.UI
 			if (e.KeyChar == '\r')
 			{
 				e.Handled = true;
-				WyswietlPozycje(treeViewMenu.SelectedNode);
+				Wyswietl(treeViewMenu.SelectedNode);
 			}
 		}
 
-		private void WyswietlPozycje(TreeNode pozycja)
+		private void Wyswietl(TreeNode pozycja)
 		{
-
 			foreach (Control istniejace in panelZawartosc.Controls)
 			{
 				if (istniejace.Name == pozycja.Name)
@@ -45,19 +44,18 @@ namespace ProFak.UI
 				}
 			}
 
+			if (pozycja.Name == "JednostkiMiar") Wyswietl(Spis.JednostkiMiar, pozycja.Name);
+			else if (pozycja.Name == "Kontrahenci") Wyswietl(Spis.Kontrahenci, pozycja.Name);
+			else if (pozycja.Name == "SposobyPlatnosci") Wyswietl(Spis.SposobyPlatnosci, pozycja.Name);
+			else if (pozycja.Name == "StawkiVat") Wyswietl(Spis.StawkiVat, pozycja.Name);
+			else if (pozycja.Name == "Waluty") Wyswietl(Spis.Waluty, pozycja.Name);
+		}
+
+		private void Wyswietl(Func<Kontekst, Control> generator, string nazwa)
+		{
 			var kontekst = new UI.Kontekst();
-			UserControl kontrolka = null;
-			if (pozycja.Name == "JednostkiMiar") kontrolka = Spis.JednostkiMiar(kontekst);
-			else if (pozycja.Name == "Kontrahenci") kontrolka = Spis.Kontrahenci(kontekst);
-			else if (pozycja.Name == "SposobyPlatnosci") kontrolka = Spis.SposobyPlatnosci(kontekst);
-			else if (pozycja.Name == "StawkiVat") kontrolka = Spis.StawkiVat(kontekst);
-			else if (pozycja.Name == "Waluty") kontrolka = Spis.Waluty(kontekst);
-			if (kontrolka == null)
-			{
-				kontekst.Dispose();
-				return;
-			}
-			kontrolka.Name = pozycja.Name;
+			var kontrolka = generator(kontekst);
+			kontrolka.Name = nazwa;
 			kontrolka.Disposed += delegate { kontekst.Dispose(); };
 			kontrolka.Dock = DockStyle.Fill;
 			panelZawartosc.Controls.Add(kontrolka);
