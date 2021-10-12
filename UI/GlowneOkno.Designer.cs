@@ -42,6 +42,7 @@ namespace ProFak.UI
             treeNode5});
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.treeViewMenu = new System.Windows.Forms.TreeView();
+			this.panelZawartosc = new System.Windows.Forms.Panel();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -78,15 +79,25 @@ namespace ProFak.UI
 			this.treeViewMenu.DoubleClick += new System.EventHandler(this.treeViewMenu_DoubleClick);
 			this.treeViewMenu.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.treeViewMenu_KeyPress);
 			// 
+			// panelZawartosc
+			// 
+			this.panelZawartosc.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelZawartosc.Location = new System.Drawing.Point(247, 0);
+			this.panelZawartosc.Name = "panelZawartosc";
+			this.panelZawartosc.Size = new System.Drawing.Size(615, 498);
+			this.panelZawartosc.TabIndex = 3;
+			// 
 			// GlowneOkno
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(862, 498);
+			this.Controls.Add(this.panelZawartosc);
 			this.Controls.Add(this.panel1);
-			this.IsMdiContainer = true;
+			this.KeyPreview = true;
 			this.Name = "GlowneOkno";
 			this.Text = "ProFak";
+			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.GlowneOkno_KeyPress);
 			this.panel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
@@ -96,5 +107,6 @@ namespace ProFak.UI
 
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.TreeView treeViewMenu;
+		private System.Windows.Forms.Panel panelZawartosc;
 	}
 }

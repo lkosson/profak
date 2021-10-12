@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	partial class OknoSpisu : Form
+	partial class OknoSpisu : UserControl
 	{
 		public string Tytul { get { return Text; } set { Text = value; } }
 		public Control Zawartosc { get { return panelSpis.Controls.Cast<Control>().FirstOrDefault(); } set { panelSpis.Controls.Clear(); if (value != null) { panelSpis.Controls.Add(value); value.Dock = DockStyle.Fill; } } }

@@ -35,34 +35,46 @@ namespace ProFak.UI
 		private void WyswietlPozycje(TreeNode pozycja)
 		{
 
-			foreach (var istniejace in MdiChildren)
+			foreach (Control istniejace in panelZawartosc.Controls)
 			{
 				if (istniejace.Name == pozycja.Name)
 				{
-					istniejace.WindowState = FormWindowState.Minimized;
+					istniejace.BringToFront();
 					istniejace.Focus();
-					istniejace.WindowState = FormWindowState.Maximized;
 					return;
 				}
 			}
 
 			var kontekst = new UI.Kontekst();
-			Form okno = null;
-			if (pozycja.Name == "JednostkiMiar") okno = Spis.JednostkiMiar(kontekst);
-			else if (pozycja.Name == "Kontrahenci") okno = Spis.Kontrahenci(kontekst);
-			else if (pozycja.Name == "SposobyPlatnosci") okno = Spis.SposobyPlatnosci(kontekst);
-			else if (pozycja.Name == "StawkiVat") okno = Spis.StawkiVat(kontekst);
-			else if (pozycja.Name == "Waluty") okno = Spis.Waluty(kontekst);
-			if (okno == null)
+			UserControl kontrolka = null;
+			if (pozycja.Name == "JednostkiMiar") kontrolka = Spis.JednostkiMiar(kontekst);
+			else if (pozycja.Name == "Kontrahenci") kontrolka = Spis.Kontrahenci(kontekst);
+			else if (pozycja.Name == "SposobyPlatnosci") kontrolka = Spis.SposobyPlatnosci(kontekst);
+			else if (pozycja.Name == "StawkiVat") kontrolka = Spis.StawkiVat(kontekst);
+			else if (pozycja.Name == "Waluty") kontrolka = Spis.Waluty(kontekst);
+			if (kontrolka == null)
 			{
 				kontekst.Dispose();
 				return;
 			}
-			okno.Name = pozycja.Name;
-			okno.MdiParent = this;
-			okno.WindowState = FormWindowState.Maximized;
-			okno.FormClosed += delegate { kontekst.Dispose(); };
-			okno.Show();
+			kontrolka.Name = pozycja.Name;
+			kontrolka.Disposed += delegate { kontekst.Dispose(); };
+			kontrolka.Dock = DockStyle.Fill;
+			panelZawartosc.Controls.Add(kontrolka);
+			kontrolka.BringToFront();
+			kontrolka.Focus();
+		}
+
+		private void GlowneOkno_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (e.KeyChar == 27)
+			{
+				var kontrolka = ActiveControl;
+				if (kontrolka.Parent != panelZawartosc) return;
+				e.Handled = true;
+				panelZawartosc.Controls.Remove(kontrolka);
+				kontrolka.Dispose();
+			}
 		}
 	}
 }
