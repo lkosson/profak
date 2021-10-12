@@ -29,17 +29,18 @@ namespace ProFak.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Kontrahenci");
-			System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Jednostki miar");
-			System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Sposoby płatności");
-			System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Stawki VAT");
-			System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Waluty");
-			System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Słowniki", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
+			System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Towary");
+			System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Kontrahenci");
+			System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Jednostki miar");
+			System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Sposoby płatności");
+			System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Stawki VAT");
+			System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Waluty");
+			System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Słowniki", new System.Windows.Forms.TreeNode[] {
             treeNode2,
             treeNode3,
             treeNode4,
-            treeNode5});
+            treeNode5,
+            treeNode6});
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.treeViewMenu = new System.Windows.Forms.TreeView();
 			this.panelZawartosc = new System.Windows.Forms.Panel();
@@ -60,20 +61,23 @@ namespace ProFak.UI
 			this.treeViewMenu.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.treeViewMenu.Location = new System.Drawing.Point(0, 0);
 			this.treeViewMenu.Name = "treeViewMenu";
-			treeNode1.Name = "Kontrahenci";
-			treeNode1.Text = "Kontrahenci";
-			treeNode2.Name = "JednostkiMiar";
-			treeNode2.Text = "Jednostki miar";
-			treeNode3.Name = "SposobyPlatnosci";
-			treeNode3.Text = "Sposoby płatności";
-			treeNode4.Name = "StawkiVat";
-			treeNode4.Text = "Stawki VAT";
-			treeNode5.Name = "Waluty";
-			treeNode5.Text = "Waluty";
-			treeNode6.Name = "Node0";
-			treeNode6.Text = "Słowniki";
+			treeNode1.Name = "Towary";
+			treeNode1.Text = "Towary";
+			treeNode2.Name = "Kontrahenci";
+			treeNode2.Text = "Kontrahenci";
+			treeNode3.Name = "JednostkiMiar";
+			treeNode3.Text = "Jednostki miar";
+			treeNode4.Name = "SposobyPlatnosci";
+			treeNode4.Text = "Sposoby płatności";
+			treeNode5.Name = "StawkiVat";
+			treeNode5.Text = "Stawki VAT";
+			treeNode6.Name = "Waluty";
+			treeNode6.Text = "Waluty";
+			treeNode7.Name = "Node0";
+			treeNode7.Text = "Słowniki";
 			this.treeViewMenu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode6});
+            treeNode1,
+            treeNode7});
 			this.treeViewMenu.Size = new System.Drawing.Size(247, 498);
 			this.treeViewMenu.TabIndex = 1;
 			this.treeViewMenu.DoubleClick += new System.EventHandler(this.treeViewMenu_DoubleClick);

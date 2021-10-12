@@ -63,6 +63,16 @@ namespace ProFak.UI
 			);
 		}
 
+		public static OknoSpisu Towary(Kontekst kontekst)
+		{
+			return OknoSpisu.Utworz<DB.Towar, TowarSpis>(kontekst,
+				"Towary",
+				new DodajRekordAkcja<DB.Towar, TowarEdytor>("Nowy towar"),
+				new EdytujRekordAkcja<DB.Towar, TowarEdytor>("Edycja towaru"),
+				new UsunRekordAkcja<DB.Towar>()
+			);
+		}
+
 		public static OknoSpisu Waluty(Kontekst kontekst)
 		{
 			return OknoSpisu.Utworz<DB.Waluta, WalutaSpis>(kontekst,

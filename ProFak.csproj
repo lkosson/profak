@@ -29,4 +29,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.10" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="UI\TowarSpis.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>
