@@ -76,6 +76,7 @@ namespace ProFak.UI
 			this.treeViewMenu.Size = new System.Drawing.Size(247, 498);
 			this.treeViewMenu.TabIndex = 1;
 			this.treeViewMenu.DoubleClick += new System.EventHandler(this.treeViewMenu_DoubleClick);
+			this.treeViewMenu.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.treeViewMenu_KeyPress);
 			// 
 			// GlowneOkno
 			// 
