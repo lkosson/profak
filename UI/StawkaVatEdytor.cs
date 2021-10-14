@@ -11,21 +11,14 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	partial class StawkaVatEdytor : UserControl, IEdytor<StawkaVat>
+	partial class StawkaVatEdytor : Edytor<StawkaVat>
 	{
-		public StawkaVat Rekord { get { return bindingSource.DataSource as StawkaVat; } set { bindingSource.DataSource = value; } }
-		public Kontekst Kontekst { get; set; }
-		public string Tytul => "Stawka VAT";
-
 		public StawkaVatEdytor()
 		{
-			InitializeComponent();
-		}
-
-		public StawkaVatEdytor(StawkaVat rekord)
-			: this()
-		{
-			Rekord = rekord;
+			DodajTextBox(nameof(StawkaVat.Skrot), "Skrót");
+			DodajNumericUpDown(nameof(StawkaVat.Wartosc), "Wartość");
+			DodajCheckBox(nameof(StawkaVat.CzyDomyslna), "Domyślna");
+			MinimumSize = new Size(250, 80);
 		}
 	}
 }

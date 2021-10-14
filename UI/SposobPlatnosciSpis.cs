@@ -12,7 +12,7 @@ namespace ProFak.UI
 		public SposobPlatnosciSpis()
 		{
 			DodajKolumne(nameof(SposobPlatnosci.Nazwa), "Nazwa", rozciagnij: true);
-			DodajKolumne(nameof(SposobPlatnosci.LiczbaDni), "Liczba dni", rozciagnij: true);
+			DodajKolumne(nameof(SposobPlatnosci.LiczbaDni), "Liczba dni", wyrownajDoPrawej: true);
 			DodajKolumne(nameof(SposobPlatnosci.CzyDomyslnyFmt), "Domyślny");
 			DodajKolumne(nameof(SposobPlatnosci.Id), "Id", wyrownajDoPrawej: true);
 		}

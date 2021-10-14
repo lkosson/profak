@@ -1,6 +1,7 @@
 ﻿using ProFak.DB;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace ProFak.UI
 			DodajTextBox(nameof(Waluta.Skrot), "Skrót");
 			DodajTextBox(nameof(Waluta.Nazwa), "Nazwa");
 			DodajCheckBox(nameof(Waluta.CzyDomyslna), "Domyślna");
+			MinimumSize = new Size(250, 80);
 		}
 	}
 }

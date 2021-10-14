@@ -11,36 +11,20 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	partial class StawkaVatSpis : UserControl, ISpis<StawkaVat>
+	partial class StawkaVatSpis : Spis<StawkaVat>
 	{
-		public Kontekst Kontekst { get; set; }
-		public IEnumerable<StawkaVat> WybraneRekordy
-		{
-			get => spis.SelectedRows.Cast<DataGridViewRow>().Select(row => row.DataBoundItem).Cast<StawkaVat>();
-
-			set
-			{
-				foreach (DataGridViewRow row in spis.Rows)
-				{
-					row.Selected = value.Contains(row.DataBoundItem as StawkaVat);
-				}
-			}
-		}
-
 		public StawkaVatSpis()
 		{
-			InitializeComponent();
+			DodajKolumne(nameof(StawkaVat.Skrot), "Skrót", rozciagnij: true);
+			DodajKolumne(nameof(StawkaVat.Wartosc), "Wartość", wyrownajDoPrawej: true, format: "0");
+			DodajKolumne(nameof(StawkaVat.CzyDomyslnaFmt), "Domyślna");
+			DodajKolumne(nameof(StawkaVat.Id), "Id", wyrownajDoPrawej: true);
 		}
 
-		protected override void OnLoad(EventArgs e)
+		public override void Przeladuj()
 		{
-			Przeladuj();
-			base.OnLoad(e);
+			Rekordy = Kontekst.Baza.StawkiVat.ToList();
 		}
 
-		public void Przeladuj()
-		{
-			bindingSource.DataSource = Kontekst.Baza.StawkiVat.ToList();
-		}
 	}
 }

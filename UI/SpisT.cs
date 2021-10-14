@@ -52,7 +52,7 @@ namespace ProFak.UI
 			base.Dispose(disposing);
 		}
 
-		public void DodajKolumne(string wlasciwosc, string naglowek, bool wyrownajDoPrawej = false, bool rozciagnij = false)
+		public void DodajKolumne(string wlasciwosc, string naglowek, bool wyrownajDoPrawej = false, bool rozciagnij = false, string format = null)
 		{
 			var kolumna = new DataGridViewTextBoxColumn();
 			kolumna.HeaderText = naglowek;
@@ -60,6 +60,7 @@ namespace ProFak.UI
 			kolumna.Name = wlasciwosc;
 			kolumna.DefaultCellStyle.Alignment = wyrownajDoPrawej ? DataGridViewContentAlignment.MiddleRight : DataGridViewContentAlignment.MiddleLeft;
 			kolumna.AutoSizeMode = rozciagnij ? DataGridViewAutoSizeColumnMode.Fill : DataGridViewAutoSizeColumnMode.NotSet;
+			if (!String.IsNullOrEmpty(format)) kolumna.DefaultCellStyle.Format = format;
 			Columns.Add(kolumna);
 		}
 

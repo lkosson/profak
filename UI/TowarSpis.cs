@@ -13,8 +13,8 @@ namespace ProFak.UI
 		{
 			DodajKolumne(nameof(Towar.Nazwa), "Nazwa", rozciagnij: true);
 			DodajKolumne(nameof(Towar.Rodzaj), "Rodzaj");
-			DodajKolumne(nameof(Towar.CenaNetto), "Cena netto");
-			DodajKolumne(nameof(Towar.CenaBrutto), "Cena brutto");
+			DodajKolumne(nameof(Towar.CenaNetto), "Cena netto", wyrownajDoPrawej: true, format: "#,##0.00");
+			DodajKolumne(nameof(Towar.CenaBrutto), "Cena brutto", wyrownajDoPrawej: true, format: "#,##0.00");
 			DodajKolumne(nameof(Towar.Id), "Id", wyrownajDoPrawej: true);
 		}
 

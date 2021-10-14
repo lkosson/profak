@@ -287,7 +287,7 @@ namespace ProFak.UI
 			this.textBoxNazwa.Location = new System.Drawing.Point(149, 3);
 			this.textBoxNazwa.Name = "textBoxNazwa";
 			this.textBoxNazwa.Size = new System.Drawing.Size(148, 23);
-			this.textBoxNazwa.TabIndex = 2;
+			this.textBoxNazwa.TabIndex = 1;
 			// 
 			// label1
 			// 
