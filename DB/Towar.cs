@@ -18,8 +18,8 @@ namespace ProFak.DB
 		public int StawkaVatId { get; set; }
 		public int JednostkaMiaryId { get; set; }
 
-		public Ref<StawkaVat> StawkaVatRef { get; set; }
-		public Ref<JednostkaMiary> JednostkaMiaryRef { get; set; }
+		public Ref<StawkaVat> StawkaVatRef { get => StawkaVatId; set => StawkaVatId = value; }
+		public Ref<JednostkaMiary> JednostkaMiaryRef { get => JednostkaMiaryId; set => JednostkaMiaryId = value; }
 
 		public StawkaVat StawkaVat { get; set; }
 		public JednostkaMiary JednostkaMiary { get; set; }

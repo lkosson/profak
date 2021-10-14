@@ -19,6 +19,31 @@ namespace ProFak.UI
 		public TowarEdytor()
 		{
 			InitializeComponent();
+			comboBoxRodzaj.DataSource = Enum.GetValues(typeof(RodzajTowaru)).Cast<RodzajTowaru>().Select(r => new PozycjaListy<RodzajTowaru> { Wartosc = r, Opis = r.ToString() }).ToArray();
+			comboBoxRodzaj.DisplayMember = "Opis";
+			comboBoxRodzaj.ValueMember = "Wartosc";
+		}
+
+		protected override void OnCreateControl()
+		{
+			bindingSourceJednostkaMiary.DataSource = Kontekst.Baza.JednostkiMiar.ToList();
+			bindingSourceStawkaVat.DataSource = Kontekst.Baza.StawkiVat.ToList();
+			base.OnCreateControl();
+		}
+
+		protected override void OnValidating(CancelEventArgs e)
+		{
+			Rekord.CzyWedlugCenBrutto = comboBoxSposobLiczenia.SelectedIndex == 1;
+			Rekord.CzyArchiwalny = comboBoxWidocznosc.SelectedIndex == 1;
+			Rekord.Rodzaj = (RodzajTowaru)comboBoxRodzaj.SelectedValue;
+			base.OnValidating(e);
+		}
+
+		private void bindingSource_DataSourceChanged(object sender, EventArgs e)
+		{
+			comboBoxRodzaj.SelectedValue = Rekord.Rodzaj;
+			comboBoxSposobLiczenia.SelectedIndex = Rekord.CzyWedlugCenBrutto ? 1 : 0;
+			comboBoxWidocznosc.SelectedIndex = Rekord.CzyArchiwalny ? 1 : 0;
 		}
 	}
 }
