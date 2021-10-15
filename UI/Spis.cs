@@ -24,6 +24,18 @@ namespace ProFak.UI
 			SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 		}
 
+		public static T Wybierz<T>(Kontekst kontekst, Func<Kontekst, SpisZAkcjami<T>> generatorSpisu, string tytul)
+			where T : Rekord<T>
+		{
+			var wybor = new WybierzRekordAkcja<T>();
+			using var nowyKontekst = new Kontekst(kontekst);
+			using var spis = generatorSpisu(nowyKontekst);
+			using var dialog = new Dialog(tytul, spis, nowyKontekst);
+			spis.Akcje.Add(wybor);
+			if (dialog.ShowDialog() != DialogResult.OK) return default;
+			return wybor.WybranyRekord;
+		}
+
 		public static SpisZAkcjami<JednostkaMiary> JednostkiMiar(Kontekst kontekst)
 		{
 			return SpisZAkcjami<JednostkaMiary>.Utworz(new JednostkaMiarySpis { Kontekst = kontekst },

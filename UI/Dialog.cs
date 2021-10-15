@@ -14,16 +14,17 @@ namespace ProFak.UI
 	{
 		public Control Zawartosc { get { return panelZawartosc.Controls.Cast<Control>().FirstOrDefault(); } set { panelZawartosc.Controls.Clear(); if (value != null) UstawZawartosc(value); } }
 
-		public Dialog()
+		private Dialog()
 		{
 			InitializeComponent();
 		}
 
-		public Dialog(string tytul, Control zawartosc)
+		public Dialog(string tytul, Control zawartosc, Kontekst kontekst)
 			: this()
 		{
 			Text = tytul;
 			Zawartosc = zawartosc;
+			kontekst.Dialog = this;
 		}
 
 		private void UstawZawartosc(Control zawartosc)

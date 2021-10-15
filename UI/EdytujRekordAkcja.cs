@@ -29,16 +29,17 @@ namespace ProFak.UI
 		{
 			var rekord = zaznaczoneRekordy.Single();
 			var kopiaRekordu = rekord.Kopia();
+			using var nowyKontekst = new Kontekst(kontekst);
 			using var edytor = new TEdytor();
-			edytor.Kontekst = kontekst;
+			using var okno = new Dialog(tytul, edytor, nowyKontekst);
+			edytor.Kontekst = nowyKontekst;
 			edytor.Rekord = rekord;
-			using var okno = new Dialog(tytul, edytor);
 			if (okno.ShowDialog() != DialogResult.OK)
 			{
-				kontekst.Baza.Entry(rekord).State = EntityState.Detached;
-				kontekst.Baza.Entry(kopiaRekordu).State = EntityState.Modified;
+				nowyKontekst.Baza.Entry(rekord).State = EntityState.Detached;
+				nowyKontekst.Baza.Entry(kopiaRekordu).State = EntityState.Modified;
 			}
-			kontekst.Baza.SaveChanges();
+			nowyKontekst.Baza.SaveChanges();
 		}
 	}
 }

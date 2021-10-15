@@ -54,7 +54,7 @@ namespace ProFak.UI
 
 		private void Wyswietl(Func<Kontekst, Control> generator, string nazwa)
 		{
-			var kontekst = new UI.Kontekst();
+			var kontekst = new Kontekst();
 			var kontrolka = generator(kontekst);
 			kontrolka.Name = nazwa;
 			kontrolka.Disposed += delegate { kontekst.Dispose(); };

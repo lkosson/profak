@@ -26,13 +26,14 @@ namespace ProFak.UI
 		public override void Uruchom(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy)
 		{
 			var rekord = new TRekord();
+			using var nowyKontekst = new Kontekst(kontekst);
 			using var edytor = new TEdytor();
-			edytor.Kontekst = kontekst;
+			using var okno = new Dialog(tytul, edytor, nowyKontekst);
+			edytor.Kontekst = nowyKontekst;
 			edytor.Rekord = rekord;
-			using var okno = new Dialog(tytul, edytor);
 			if (okno.ShowDialog() != DialogResult.OK) return;
-			kontekst.Baza.Set<TRekord>().Add(rekord);
-			kontekst.Baza.SaveChanges();
+			nowyKontekst.Baza.Set<TRekord>().Add(rekord);
+			nowyKontekst.Baza.SaveChanges();
 		}
 	}
 }

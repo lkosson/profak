@@ -48,14 +48,20 @@ namespace ProFak.UI
 
 		private void buttonStawkaVat_Click(object sender, EventArgs e)
 		{
-			var spis = Spis.StawkiVat(Kontekst);
-			using var dialog = new Dialog("Wybierz stawkę Vat", spis);
-			if (dialog.ShowDialog() != DialogResult.OK) return;
+			var stawkaVat = Spis.Wybierz(Kontekst, Spis.StawkiVat, "Wybierz stawkę Vat");
+			if (stawkaVat == null) return;
+			bindingSourceStawkaVat.DataSource = Kontekst.Baza.StawkiVat.ToList();
+			Rekord.StawkaVatRef = stawkaVat.Ref;
+			bindingSource.ResetCurrentItem();
 		}
 
 		private void buttonJednostkaMiary_Click(object sender, EventArgs e)
 		{
-
+			var jednostkaMiary = Spis.Wybierz(Kontekst, Spis.JednostkiMiar, "Wybierz jednostkę miary");
+			if (jednostkaMiary == null) return;
+			bindingSourceJednostkaMiary.DataSource = Kontekst.Baza.JednostkiMiar.ToList();
+			Rekord.JednostkaMiaryRef = jednostkaMiary.Ref;
+			bindingSource.ResetCurrentItem();
 		}
 	}
 }

@@ -9,12 +9,12 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	class WybierzRekordAkcja<TRekord, TEdytor> : AkcjaNaSpisie<TRekord>
-		where TRekord : Rekord<TRekord>, new()
-		where TEdytor : Control, IEdytor<TRekord>, new()
+	class WybierzRekordAkcja<TRekord> : AkcjaNaSpisie<TRekord>
+		where TRekord : Rekord<TRekord>
 	{
 		public override bool CzyDomyslna => true;
 		public override string Nazwa => null;
+		public TRekord WybranyRekord { get; private set; }
 
 		public WybierzRekordAkcja()
 		{
@@ -24,8 +24,9 @@ namespace ProFak.UI
 
 		public override void Uruchom(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy)
 		{
-			var rekord = zaznaczoneRekordy.Single();
-
+			WybranyRekord = zaznaczoneRekordy.Single();
+			kontekst.Dialog.DialogResult = DialogResult.OK;
+			kontekst.Dialog.Close();
 		}
 	}
 }
