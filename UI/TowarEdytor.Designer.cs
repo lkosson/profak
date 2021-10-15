@@ -133,6 +133,7 @@ namespace ProFak.UI
 			this.buttonStawkaVat.TabIndex = 5;
 			this.buttonStawkaVat.Text = "...";
 			this.buttonStawkaVat.UseVisualStyleBackColor = true;
+			this.buttonStawkaVat.Click += new System.EventHandler(this.buttonStawkaVat_Click);
 			// 
 			// comboBoxWidocznosc
 			// 
@@ -326,6 +327,7 @@ namespace ProFak.UI
 			this.buttonJednostkaMiary.TabIndex = 9;
 			this.buttonJednostkaMiary.Text = "...";
 			this.buttonJednostkaMiary.UseVisualStyleBackColor = true;
+			this.buttonJednostkaMiary.Click += new System.EventHandler(this.buttonJednostkaMiary_Click);
 			// 
 			// TowarEdytor
 			// 

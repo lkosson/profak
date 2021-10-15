@@ -9,18 +9,15 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	class EdytujRekordAkcja<TRekord, TEdytor> : AkcjaNaSpisie<TRekord>
+	class WybierzRekordAkcja<TRekord, TEdytor> : AkcjaNaSpisie<TRekord>
 		where TRekord : Rekord<TRekord>, new()
 		where TEdytor : Control, IEdytor<TRekord>, new()
 	{
-		private readonly string tytul;
-
 		public override bool CzyDomyslna => true;
-		public override string Nazwa => "Wyświetl zaznaczoną pozycję";
+		public override string Nazwa => null;
 
-		public EdytujRekordAkcja(string tytul)
+		public WybierzRekordAkcja()
 		{
-			this.tytul = tytul;
 		}
 
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<TRekord> zaznaczoneRekordy) => zaznaczoneRekordy.Count() == 1;
@@ -28,17 +25,7 @@ namespace ProFak.UI
 		public override void Uruchom(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy)
 		{
 			var rekord = zaznaczoneRekordy.Single();
-			var kopiaRekordu = rekord.Kopia();
-			using var edytor = new TEdytor();
-			edytor.Kontekst = kontekst;
-			edytor.Rekord = rekord;
-			using var okno = new Dialog(tytul, edytor);
-			if (okno.ShowDialog() != DialogResult.OK)
-			{
-				kontekst.Baza.Entry(rekord).State = EntityState.Detached;
-				kontekst.Baza.Entry(kopiaRekordu).State = EntityState.Modified;
-			}
-			kontekst.Baza.SaveChanges();
+
 		}
 	}
 }

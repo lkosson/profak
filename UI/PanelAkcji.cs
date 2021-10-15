@@ -10,11 +10,8 @@ namespace ProFak.UI
 {
 	class PanelAkcji : Panel
 	{
-		private List<(AdapterAkcji adapter, Button przycisk)> akcje;
-
 		public PanelAkcji()
 		{
-			akcje = new List<(AdapterAkcji adapter, Button przycisk)>();
 		}
 
 		protected override void OnSizeChanged(EventArgs e)
@@ -34,7 +31,7 @@ namespace ProFak.UI
 			SuspendLayout();
 			int y = 0;
 			y += Padding.Top;
-			foreach (var (adapter, przycisk) in akcje)
+			foreach (Button przycisk in Controls)
 			{
 				przycisk.Location = new Point(Math.Max(Padding.Left, przycisk.Margin.Left), y);
 				przycisk.Width = ClientSize.Width - Math.Max(Padding.Left, przycisk.Margin.Left) - Math.Max(Padding.Right, przycisk.Margin.Right);
@@ -47,25 +44,33 @@ namespace ProFak.UI
 
 		public void DodajAkcje(AdapterAkcji adapter)
 		{
-			var przycisk = DodajPrzycisk(adapter);
-			akcje.Add((adapter, przycisk));
-		}
-
-		private Button DodajPrzycisk(AdapterAkcji adapter)
-		{
 			var przycisk = new Button();
-			przycisk.Name = adapter.Nazwa;
-			przycisk.Text = adapter.Nazwa;
 			przycisk.Tag = adapter;
 			przycisk.Click += Przycisk_Click;
+			AktualizujPrzycisk(przycisk);
 			Controls.Add(przycisk);
-			return przycisk;
+		}
+
+		public void Aktualizuj()
+		{
+			foreach (Button przycisk in Controls)
+			{
+				AktualizujPrzycisk(przycisk);
+			}
+		}
+
+		private void AktualizujPrzycisk(Button przycisk)
+		{
+			var adapter = (AdapterAkcji)przycisk.Tag;
+			przycisk.Text = adapter.Nazwa;
+			przycisk.Enabled = adapter.CzyDostepna;
 		}
 
 		private void Przycisk_Click(object sender, EventArgs e)
 		{
 			var przycisk = (Button)sender;
 			var adapter = (AdapterAkcji)przycisk.Tag;
+			if (!adapter.CzyDostepna) return;
 			adapter.Uruchom();
 		}
 	}

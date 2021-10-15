@@ -45,5 +45,17 @@ namespace ProFak.UI
 			comboBoxSposobLiczenia.SelectedIndex = Rekord.CzyWedlugCenBrutto ? 1 : 0;
 			comboBoxWidocznosc.SelectedIndex = Rekord.CzyArchiwalny ? 1 : 0;
 		}
+
+		private void buttonStawkaVat_Click(object sender, EventArgs e)
+		{
+			var spis = Spis.StawkiVat(Kontekst);
+			using var dialog = new Dialog("Wybierz stawkę Vat", spis);
+			if (dialog.ShowDialog() != DialogResult.OK) return;
+		}
+
+		private void buttonJednostkaMiary_Click(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

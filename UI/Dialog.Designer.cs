@@ -1,7 +1,7 @@
 ﻿
 namespace ProFak.UI
 {
-	partial class OknoEdycji
+	partial class Dialog
 	{
 		/// <summary>
 		/// Required designer variable.

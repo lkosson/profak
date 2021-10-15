@@ -10,20 +10,19 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	partial class OknoEdycji : Form
+	partial class Dialog : Form
 	{
-		public string Tytul { get { return Text; } set { Text = value; } }
 		public Control Zawartosc { get { return panelZawartosc.Controls.Cast<Control>().FirstOrDefault(); } set { panelZawartosc.Controls.Clear(); if (value != null) UstawZawartosc(value); } }
 
-		public OknoEdycji()
+		public Dialog()
 		{
 			InitializeComponent();
 		}
 
-		public OknoEdycji(string tytul, Control zawartosc)
+		public Dialog(string tytul, Control zawartosc)
 			: this()
 		{
-			Tytul = tytul;
+			Text = tytul;
 			Zawartosc = zawartosc;
 		}
 

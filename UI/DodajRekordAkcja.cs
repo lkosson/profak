@@ -29,7 +29,7 @@ namespace ProFak.UI
 			using var edytor = new TEdytor();
 			edytor.Kontekst = kontekst;
 			edytor.Rekord = rekord;
-			using var okno = new OknoEdycji(tytul, edytor);
+			using var okno = new Dialog(tytul, edytor);
 			if (okno.ShowDialog() != DialogResult.OK) return;
 			kontekst.Baza.Set<TRekord>().Add(rekord);
 			kontekst.Baza.SaveChanges();

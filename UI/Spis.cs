@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProFak.DB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,60 +24,54 @@ namespace ProFak.UI
 			SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 		}
 
-		public static OknoSpisu JednostkiMiar(Kontekst kontekst)
+		public static SpisZAkcjami<JednostkaMiary> JednostkiMiar(Kontekst kontekst)
 		{
-			return OknoSpisu.Utworz<DB.JednostkaMiary, JednostkaMiarySpis>(kontekst,
-				"Jednostki miar",
+			return SpisZAkcjami<JednostkaMiary>.Utworz(new JednostkaMiarySpis { Kontekst = kontekst },
 				new DodajRekordAkcja<DB.JednostkaMiary, JednostkaMiaryEdytor>("Nowa jednostka miary"),
 				new EdytujRekordAkcja<DB.JednostkaMiary, JednostkaMiaryEdytor>("Edycja jednostki miary"),
 				new UsunRekordAkcja<DB.JednostkaMiary>()
 			);
 		}
 
-		public static OknoSpisu Kontrahenci(Kontekst kontekst)
+		public static SpisZAkcjami<Kontrahent> Kontrahenci(Kontekst kontekst)
 		{
-			return OknoSpisu.Utworz<DB.Kontrahent, KontrahentSpis>(kontekst,
-				"Kontrahenci",
+			return SpisZAkcjami<Kontrahent>.Utworz(new KontrahentSpis { Kontekst = kontekst },
 				new DodajRekordAkcja<DB.Kontrahent, KontrahentEdytor>("Nowy kontrahent"),
 				new EdytujRekordAkcja<DB.Kontrahent, KontrahentEdytor>("Edycja kontrahenta"),
 				new UsunRekordAkcja<DB.Kontrahent>()
 			);
 		}
 
-		public static OknoSpisu SposobyPlatnosci(Kontekst kontekst)
+		public static SpisZAkcjami<SposobPlatnosci> SposobyPlatnosci(Kontekst kontekst)
 		{
-			return OknoSpisu.Utworz<DB.SposobPlatnosci, SposobPlatnosciSpis>(kontekst,
-				"Sposoby płatności",
+			return SpisZAkcjami<SposobPlatnosci>.Utworz(new SposobPlatnosciSpis { Kontekst = kontekst },
 				new DodajRekordAkcja<DB.SposobPlatnosci, SposobPlatnosciEdytor>("Nowy sposób płatności"),
 				new EdytujRekordAkcja<DB.SposobPlatnosci, SposobPlatnosciEdytor>("Edycja sposobu płatności"),
 				new UsunRekordAkcja<DB.SposobPlatnosci>()
 			);
 		}
 
-		public static OknoSpisu StawkiVat(Kontekst kontekst)
+		public static SpisZAkcjami<StawkaVat> StawkiVat(Kontekst kontekst)
 		{
-			return OknoSpisu.Utworz<DB.StawkaVat, StawkaVatSpis>(kontekst,
-				"Stawki VAT",
+			return SpisZAkcjami<StawkaVat>.Utworz(new StawkaVatSpis { Kontekst = kontekst },
 				new DodajRekordAkcja<DB.StawkaVat, StawkaVatEdytor>("Nowa stawka VAT"),
 				new EdytujRekordAkcja<DB.StawkaVat, StawkaVatEdytor>("Edycja stawki VAT"),
 				new UsunRekordAkcja<DB.StawkaVat>()
 			);
 		}
 
-		public static OknoSpisu Towary(Kontekst kontekst)
+		public static SpisZAkcjami<Towar> Towary(Kontekst kontekst)
 		{
-			return OknoSpisu.Utworz<DB.Towar, TowarSpis>(kontekst,
-				"Towary",
+			return SpisZAkcjami<Towar>.Utworz(new TowarSpis { Kontekst = kontekst },
 				new DodajRekordAkcja<DB.Towar, TowarEdytor>("Nowy towar"),
 				new EdytujRekordAkcja<DB.Towar, TowarEdytor>("Edycja towaru"),
 				new UsunRekordAkcja<DB.Towar>()
 			);
 		}
 
-		public static OknoSpisu Waluty(Kontekst kontekst)
+		public static SpisZAkcjami<Waluta> Waluty(Kontekst kontekst)
 		{
-			return OknoSpisu.Utworz<DB.Waluta, WalutaSpis>(kontekst,
-				"Waluty",
+			return SpisZAkcjami<Waluta>.Utworz(new WalutaSpis { Kontekst = kontekst },
 				new DodajRekordAkcja<DB.Waluta, WalutaEdytor>("Nowa waluta"),
 				new EdytujRekordAkcja<DB.Waluta, WalutaEdytor>("Edycja waluty"),
 				new UsunRekordAkcja<DB.Waluta>()
