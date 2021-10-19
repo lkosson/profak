@@ -27,6 +27,7 @@ namespace ProFak.UI
 		public override void Przeladuj()
 		{
 			Rekordy = Kontekst.Baza.Faktury
+				.Where(faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu)
 				.Include(faktura => faktura.Waluta)
 				.ToList();
 		}
