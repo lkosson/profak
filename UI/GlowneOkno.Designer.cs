@@ -29,18 +29,22 @@ namespace ProFak.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Towary");
-			System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Kontrahenci");
-			System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Jednostki miar");
-			System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Sposoby płatności");
-			System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Stawki VAT");
-			System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Waluty");
-			System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Słowniki", new System.Windows.Forms.TreeNode[] {
-            treeNode2,
-            treeNode3,
-            treeNode4,
-            treeNode5,
-            treeNode6});
+			System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Faktury sprzedaży");
+			System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Faktury zakupu");
+			System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Faktury", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2});
+			System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Kontrahenci");
+			System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Towary");
+			System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Jednostki miar");
+			System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Sposoby płatności");
+			System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Stawki VAT");
+			System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Waluty");
+			System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Słowniki", new System.Windows.Forms.TreeNode[] {
+            treeNode6,
+            treeNode7,
+            treeNode8,
+            treeNode9});
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.treeViewMenu = new System.Windows.Forms.TreeView();
 			this.panelZawartosc = new System.Windows.Forms.Panel();
@@ -61,23 +65,31 @@ namespace ProFak.UI
 			this.treeViewMenu.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.treeViewMenu.Location = new System.Drawing.Point(0, 0);
 			this.treeViewMenu.Name = "treeViewMenu";
-			treeNode1.Name = "Towary";
-			treeNode1.Text = "Towary";
-			treeNode2.Name = "Kontrahenci";
-			treeNode2.Text = "Kontrahenci";
-			treeNode3.Name = "JednostkiMiar";
-			treeNode3.Text = "Jednostki miar";
-			treeNode4.Name = "SposobyPlatnosci";
-			treeNode4.Text = "Sposoby płatności";
-			treeNode5.Name = "StawkiVat";
-			treeNode5.Text = "Stawki VAT";
-			treeNode6.Name = "Waluty";
-			treeNode6.Text = "Waluty";
-			treeNode7.Name = "Node0";
-			treeNode7.Text = "Słowniki";
+			treeNode1.Name = "FakturySprzedazy";
+			treeNode1.Text = "Faktury sprzedaży";
+			treeNode2.Name = "FakturyZakupu";
+			treeNode2.Text = "Faktury zakupu";
+			treeNode3.Name = "";
+			treeNode3.Text = "Faktury";
+			treeNode4.Name = "Kontrahenci";
+			treeNode4.Text = "Kontrahenci";
+			treeNode5.Name = "Towary";
+			treeNode5.Text = "Towary";
+			treeNode6.Name = "JednostkiMiar";
+			treeNode6.Text = "Jednostki miar";
+			treeNode7.Name = "SposobyPlatnosci";
+			treeNode7.Text = "Sposoby płatności";
+			treeNode8.Name = "StawkiVat";
+			treeNode8.Text = "Stawki VAT";
+			treeNode9.Name = "Waluty";
+			treeNode9.Text = "Waluty";
+			treeNode10.Name = "Node0";
+			treeNode10.Text = "Słowniki";
 			this.treeViewMenu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode7});
+            treeNode3,
+            treeNode4,
+            treeNode5,
+            treeNode10});
 			this.treeViewMenu.Size = new System.Drawing.Size(247, 498);
 			this.treeViewMenu.TabIndex = 1;
 			this.treeViewMenu.DoubleClick += new System.EventHandler(this.treeViewMenu_DoubleClick);

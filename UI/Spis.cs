@@ -36,57 +36,75 @@ namespace ProFak.UI
 			return wybor.WybranyRekord;
 		}
 
+		public static SpisZAkcjami<Faktura> FakturySprzedazy(Kontekst kontekst)
+		{
+			return SpisZAkcjami<Faktura>.Utworz(new FakturaSprzedazySpis { Kontekst = kontekst },
+				//new DodajRekordAkcja<Faktura, FakturaEdytor>("Nowa faktura sprzedaży"),
+				//new EdytujRekordAkcja<Faktura, FakturaEdytor>("Edycja faktury"),
+				new UsunRekordAkcja<Faktura>()
+			);
+		}
+
+		public static SpisZAkcjami<Faktura> FakturyZakupu(Kontekst kontekst)
+		{
+			return SpisZAkcjami<Faktura>.Utworz(new FakturaZakupuSpis { Kontekst = kontekst },
+				//new DodajRekordAkcja<Faktura, FakturaEdytor>("Nowa faktura zakupu"),
+				//new EdytujRekordAkcja<Faktura, FakturaEdytor>("Edycja faktury"),
+				new UsunRekordAkcja<Faktura>()
+			);
+		}
+
 		public static SpisZAkcjami<JednostkaMiary> JednostkiMiar(Kontekst kontekst)
 		{
 			return SpisZAkcjami<JednostkaMiary>.Utworz(new JednostkaMiarySpis { Kontekst = kontekst },
-				new DodajRekordAkcja<DB.JednostkaMiary, JednostkaMiaryEdytor>("Nowa jednostka miary"),
-				new EdytujRekordAkcja<DB.JednostkaMiary, JednostkaMiaryEdytor>("Edycja jednostki miary"),
-				new UsunRekordAkcja<DB.JednostkaMiary>()
+				new DodajRekordAkcja<JednostkaMiary, JednostkaMiaryEdytor>("Nowa jednostka miary"),
+				new EdytujRekordAkcja<JednostkaMiary, JednostkaMiaryEdytor>("Edycja jednostki miary"),
+				new UsunRekordAkcja<JednostkaMiary>()
 			);
 		}
 
 		public static SpisZAkcjami<Kontrahent> Kontrahenci(Kontekst kontekst)
 		{
 			return SpisZAkcjami<Kontrahent>.Utworz(new KontrahentSpis { Kontekst = kontekst },
-				new DodajRekordAkcja<DB.Kontrahent, KontrahentEdytor>("Nowy kontrahent"),
-				new EdytujRekordAkcja<DB.Kontrahent, KontrahentEdytor>("Edycja kontrahenta"),
-				new UsunRekordAkcja<DB.Kontrahent>()
+				new DodajRekordAkcja<Kontrahent, KontrahentEdytor>("Nowy kontrahent"),
+				new EdytujRekordAkcja<Kontrahent, KontrahentEdytor>("Edycja kontrahenta"),
+				new UsunRekordAkcja<Kontrahent>()
 			);
 		}
 
 		public static SpisZAkcjami<SposobPlatnosci> SposobyPlatnosci(Kontekst kontekst)
 		{
 			return SpisZAkcjami<SposobPlatnosci>.Utworz(new SposobPlatnosciSpis { Kontekst = kontekst },
-				new DodajRekordAkcja<DB.SposobPlatnosci, SposobPlatnosciEdytor>("Nowy sposób płatności"),
-				new EdytujRekordAkcja<DB.SposobPlatnosci, SposobPlatnosciEdytor>("Edycja sposobu płatności"),
-				new UsunRekordAkcja<DB.SposobPlatnosci>()
+				new DodajRekordAkcja<SposobPlatnosci, SposobPlatnosciEdytor>("Nowy sposób płatności"),
+				new EdytujRekordAkcja<SposobPlatnosci, SposobPlatnosciEdytor>("Edycja sposobu płatności"),
+				new UsunRekordAkcja<SposobPlatnosci>()
 			);
 		}
 
 		public static SpisZAkcjami<StawkaVat> StawkiVat(Kontekst kontekst)
 		{
 			return SpisZAkcjami<StawkaVat>.Utworz(new StawkaVatSpis { Kontekst = kontekst },
-				new DodajRekordAkcja<DB.StawkaVat, StawkaVatEdytor>("Nowa stawka VAT"),
-				new EdytujRekordAkcja<DB.StawkaVat, StawkaVatEdytor>("Edycja stawki VAT"),
-				new UsunRekordAkcja<DB.StawkaVat>()
+				new DodajRekordAkcja<StawkaVat, StawkaVatEdytor>("Nowa stawka VAT"),
+				new EdytujRekordAkcja<StawkaVat, StawkaVatEdytor>("Edycja stawki VAT"),
+				new UsunRekordAkcja<StawkaVat>()
 			);
 		}
 
 		public static SpisZAkcjami<Towar> Towary(Kontekst kontekst)
 		{
 			return SpisZAkcjami<Towar>.Utworz(new TowarSpis { Kontekst = kontekst },
-				new DodajRekordAkcja<DB.Towar, TowarEdytor>("Nowy towar"),
-				new EdytujRekordAkcja<DB.Towar, TowarEdytor>("Edycja towaru"),
-				new UsunRekordAkcja<DB.Towar>()
+				new DodajRekordAkcja<Towar, TowarEdytor>("Nowy towar"),
+				new EdytujRekordAkcja<Towar, TowarEdytor>("Edycja towaru"),
+				new UsunRekordAkcja<Towar>()
 			);
 		}
 
 		public static SpisZAkcjami<Waluta> Waluty(Kontekst kontekst)
 		{
 			return SpisZAkcjami<Waluta>.Utworz(new WalutaSpis { Kontekst = kontekst },
-				new DodajRekordAkcja<DB.Waluta, WalutaEdytor>("Nowa waluta"),
-				new EdytujRekordAkcja<DB.Waluta, WalutaEdytor>("Edycja waluty"),
-				new UsunRekordAkcja<DB.Waluta>()
+				new DodajRekordAkcja<Waluta, WalutaEdytor>("Nowa waluta"),
+				new EdytujRekordAkcja<Waluta, WalutaEdytor>("Edycja waluty"),
+				new UsunRekordAkcja<Waluta>()
 			);
 		}
 	}
