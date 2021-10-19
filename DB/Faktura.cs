@@ -26,6 +26,7 @@ namespace ProFak.DB
 		public decimal RazemBrutto { get; set; }
 		public decimal KursWaluty { get; set; }
 		public string OpisSposobuPlatnosci { get; set; }
+		public RodzajFaktury Rodzaj { get; set; }
 
 		public int SprzedawcaId { get; set; }
 		public int NabywcaId { get; set; }
