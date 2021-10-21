@@ -28,12 +28,12 @@ namespace ProFak.DB
 		public string OpisSposobuPlatnosci { get; set; }
 		public RodzajFaktury Rodzaj { get; set; }
 
-		public int SprzedawcaId { get; set; }
-		public int NabywcaId { get; set; }
-		public int FakturaKorygowanaId { get; set; }
-		public int FakturaKorygujacaId { get; set; }
+		public int? SprzedawcaId { get; set; }
+		public int? NabywcaId { get; set; }
+		public int? FakturaKorygowanaId { get; set; }
+		public int? FakturaKorygujacaId { get; set; }
 		public int WalutaId { get; set; }
-		public int SposobPlatnosciId { get; set; }
+		public int? SposobPlatnosciId { get; set; }
 
 		public Ref<Kontrahent> SprzedawcaRef { get => SprzedawcaId; set => SprzedawcaId = value; }
 		public Ref<Kontrahent> NabywcaRef { get => NabywcaId; set => NabywcaId = value; }

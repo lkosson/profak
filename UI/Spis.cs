@@ -39,8 +39,8 @@ namespace ProFak.UI
 		public static SpisZAkcjami<Faktura> FakturySprzedazy(Kontekst kontekst)
 		{
 			return SpisZAkcjami<Faktura>.Utworz(new FakturaSprzedazySpis { Kontekst = kontekst },
-				//new DodajRekordAkcja<Faktura, FakturaEdytor>("Nowa faktura sprzedaży"),
-				//new EdytujRekordAkcja<Faktura, FakturaEdytor>("Edycja faktury"),
+				new DodajRekordAkcja<Faktura, FakturaEdytor>("Nowa faktura sprzedaży"),
+				new EdytujRekordAkcja<Faktura, FakturaEdytor>("Edycja faktury"),
 				new UsunRekordAkcja<Faktura>()
 			);
 		}
@@ -48,8 +48,8 @@ namespace ProFak.UI
 		public static SpisZAkcjami<Faktura> FakturyZakupu(Kontekst kontekst)
 		{
 			return SpisZAkcjami<Faktura>.Utworz(new FakturaZakupuSpis { Kontekst = kontekst },
-				//new DodajRekordAkcja<Faktura, FakturaEdytor>("Nowa faktura zakupu"),
-				//new EdytujRekordAkcja<Faktura, FakturaEdytor>("Edycja faktury"),
+				new DodajRekordAkcja<Faktura, FakturaEdytor>("Nowa faktura zakupu"),
+				new EdytujRekordAkcja<Faktura, FakturaEdytor>("Edycja faktury"),
 				new UsunRekordAkcja<Faktura>()
 			);
 		}

@@ -37,12 +37,12 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.OpisSposobuPlatnosci).IsRequired();
 			builder.Property(e => e.Rodzaj).HasDefaultValue(RodzajFaktury.Sprzedaż).IsRequired();
 
-			builder.Property(e => e.SprzedawcaId).IsRequired();
-			builder.Property(e => e.NabywcaId).IsRequired();
-			builder.Property(e => e.FakturaKorygowanaId).IsRequired();
-			builder.Property(e => e.FakturaKorygujacaId).IsRequired();
+			builder.Property(e => e.SprzedawcaId);
+			builder.Property(e => e.NabywcaId);
+			builder.Property(e => e.FakturaKorygowanaId);
+			builder.Property(e => e.FakturaKorygujacaId);
 			builder.Property(e => e.WalutaId).IsRequired();
-			builder.Property(e => e.SposobPlatnosciId).IsRequired();
+			builder.Property(e => e.SposobPlatnosciId);
 
 			builder.Ignore(e => e.SprzedawcaRef);
 			builder.Ignore(e => e.NabywcaRef);
