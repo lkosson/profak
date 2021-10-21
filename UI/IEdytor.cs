@@ -9,7 +9,8 @@ namespace ProFak.UI
 	interface IEdytor<TRekord>
 		where TRekord : DB.Rekord<TRekord>
 	{
-		TRekord Rekord { get; set; }
-		Kontekst Kontekst { get; set; }
+		TRekord Rekord { get; }
+		Kontekst Kontekst { get; }
+		void Przygotuj(Kontekst kontekst, TRekord rekord);
 	}
 }

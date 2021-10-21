@@ -13,8 +13,8 @@ namespace ProFak.UI
 {
 	partial class TowarEdytor : UserControl, IEdytor<Towar>
 	{
-		public Towar Rekord { get { return bindingSource.DataSource as Towar; } set { bindingSource.DataSource = value; } }
-		public Kontekst Kontekst { get; set; }
+		public Towar Rekord { get => bindingSource.DataSource as Towar; private set => bindingSource.DataSource = value; }
+		public Kontekst Kontekst { get; private set; }
 
 		public TowarEdytor()
 		{
@@ -24,11 +24,17 @@ namespace ProFak.UI
 			comboBoxRodzaj.ValueMember = "Wartosc";
 		}
 
-		protected override void OnCreateControl()
+		public void Przygotuj(Kontekst kontekst, Towar rekord)
+		{
+			Kontekst = kontekst;
+			WypelnijSpisy();
+			Rekord = rekord;
+		}
+
+		private void WypelnijSpisy()
 		{
 			bindingSourceJednostkaMiary.DataSource = Kontekst.Baza.JednostkiMiar.ToList();
 			bindingSourceStawkaVat.DataSource = Kontekst.Baza.StawkiVat.ToList();
-			base.OnCreateControl();
 		}
 
 		protected override void OnValidating(CancelEventArgs e)

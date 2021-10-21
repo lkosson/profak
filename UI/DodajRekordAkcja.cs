@@ -29,8 +29,7 @@ namespace ProFak.UI
 			using var nowyKontekst = new Kontekst(kontekst);
 			using var edytor = new TEdytor();
 			using var okno = new Dialog(tytul, edytor, nowyKontekst);
-			edytor.Kontekst = nowyKontekst;
-			edytor.Rekord = rekord;
+			edytor.Przygotuj(nowyKontekst, rekord);
 			if (okno.ShowDialog() != DialogResult.OK) return;
 			nowyKontekst.Baza.Set<TRekord>().Add(rekord);
 			nowyKontekst.Baza.SaveChanges();

@@ -13,8 +13,9 @@ namespace ProFak.UI
 {
 	partial class FakturaEdytor : UserControl, IEdytor<Faktura>
 	{
-		public Faktura Rekord { get { return bindingSource.DataSource as Faktura; } set { UstawObowiazkowePola(value); bindingSource.DataSource = value; } }
-		public Kontekst Kontekst { get; set; }
+		public Faktura Rekord { get => bindingSource.DataSource as Faktura; private set { ignorujZmiane = true; bindingSource.DataSource = value; ignorujZmiane = false; } }
+		public Kontekst Kontekst { get; private set; }
+		private bool ignorujZmiane;
 
 		public FakturaEdytor()
 		{
@@ -24,12 +25,23 @@ namespace ProFak.UI
 			comboBoxRodzaj.ValueMember = "Wartosc";
 		}
 
-		protected override void OnCreateControl()
+		public void Przygotuj(Kontekst kontekst, Faktura rekord)
+		{
+			Kontekst = kontekst;
+			WypelnijSpisy();
+			UstawObowiazkowePola(rekord);
+			Rekord = rekord;
+		}
+
+		private void WypelnijSpisy()
 		{
 			bindingSourceSposobPlatnosci.DataSource = Kontekst.Baza.SposobyPlatnosci.ToList();
 			bindingSourceSprzedawca.DataSource = Kontekst.Baza.Kontrahenci.ToList();
 			bindingSourceWaluta.DataSource = Kontekst.Baza.Waluty.ToList();
-			base.OnCreateControl();
+			comboBoxNazwaSprzedawcy.SelectedItem = null;
+			comboBoxNIPSprzedawcy.SelectedItem = null;
+			comboBoxWaluta.SelectedItem = null;
+			comboBoxSposobPlatnosci.SelectedItem = null;
 		}
 
 		private void UstawObowiazkowePola(Faktura faktura)
@@ -48,12 +60,15 @@ namespace ProFak.UI
 
 		private void comboBoxNIPSprzedawcy_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			if (Rekord == null) return;
+			if (ignorujZmiane) return;
 			if (comboBoxNIPSprzedawcy.SelectedItem is Kontrahent sprzedawca)
 			{
 				Rekord.SprzedawcaRef = sprzedawca.Ref;
 				Rekord.NIPSprzedawcy = sprzedawca.NIP;
 				Rekord.NazwaSprzedawcy = sprzedawca.PelnaNazwa;
 				Rekord.DaneSprzedawcy = sprzedawca.AdresRejestrowy;
+				bindingSource.ResetCurrentItem();
 			}
 			else
 			{
@@ -63,17 +78,22 @@ namespace ProFak.UI
 
 		private void comboBoxNIPSprzedawcy_TextChanged(object sender, EventArgs e)
 		{
+			if (Rekord == null) return;
+			if (ignorujZmiane) return;
 			Rekord.NIPSprzedawcy = comboBoxNIPSprzedawcy.Text;
 		}
 
 		private void comboBoxNazwaSprzedawcy_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			if (Rekord == null) return;
+			if (ignorujZmiane) return;
 			if (comboBoxNazwaSprzedawcy.SelectedItem is Kontrahent sprzedawca)
 			{
 				Rekord.SprzedawcaRef = sprzedawca.Ref;
 				Rekord.NIPSprzedawcy = sprzedawca.NIP;
 				Rekord.NazwaSprzedawcy = sprzedawca.PelnaNazwa;
 				Rekord.DaneSprzedawcy = sprzedawca.AdresRejestrowy;
+				bindingSource.ResetCurrentItem();
 			}
 			else
 			{
@@ -83,11 +103,15 @@ namespace ProFak.UI
 
 		private void comboBoxNazwaSprzedawcy_TextChanged(object sender, EventArgs e)
 		{
+			if (Rekord == null) return;
+			if (ignorujZmiane) return;
 			Rekord.NazwaSprzedawcy = comboBoxNazwaSprzedawcy.Text;
 		}
 
 		private void comboBoxSposobPlatnosci_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			if (Rekord == null) return;
+			if (ignorujZmiane) return;
 			if (comboBoxSposobPlatnosci.SelectedItem is SposobPlatnosci sposobPlatnosci)
 			{
 				Rekord.SposobPlatnosciRef = sposobPlatnosci.Ref;
@@ -102,6 +126,8 @@ namespace ProFak.UI
 
 		private void comboBoxSposobPlatnosci_TextChanged(object sender, EventArgs e)
 		{
+			if (Rekord == null) return;
+			if (ignorujZmiane) return;
 			Rekord.OpisSposobuPlatnosci = comboBoxSposobPlatnosci.Text;
 		}
 
@@ -109,6 +135,12 @@ namespace ProFak.UI
 		{
 			comboBoxNazwaSprzedawcy.Text = Rekord.NazwaSprzedawcy;
 			comboBoxNIPSprzedawcy.Text = Rekord.NIPSprzedawcy;
+		}
+
+		protected override void OnHandleDestroyed(EventArgs e)
+		{
+			ignorujZmiane = true;
+			base.OnHandleDestroyed(e);
 		}
 	}
 }

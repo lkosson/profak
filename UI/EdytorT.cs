@@ -17,8 +17,8 @@ namespace ProFak.UI
 		private int szerokoscEtykiet;
 		private int szerokoscKontrolek;
 
-		public T Rekord { get { return bindingSource.DataSource as T; } set { bindingSource.DataSource = value; } }
-		public Kontekst Kontekst { get; set; }
+		public T Rekord { get { return bindingSource.DataSource as T; } private set { bindingSource.DataSource = value; } }
+		public Kontekst Kontekst { get; private set; }
 
 		public Edytor()
 		{
@@ -28,6 +28,12 @@ namespace ProFak.UI
 
 			ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
 			ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
+		}
+
+		public void Przygotuj(Kontekst kontekst, T rekord)
+		{
+			Kontekst = kontekst;
+			Rekord = rekord;
 		}
 
 		protected override void OnCreateControl()
