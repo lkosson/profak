@@ -67,7 +67,6 @@ namespace ProFak.UI
 			this.label10 = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
 			this.textBox4 = new System.Windows.Forms.TextBox();
-			this.textBox5 = new System.Windows.Forms.TextBox();
 			this.button2 = new System.Windows.Forms.Button();
 			this.comboBoxNabywca = new System.Windows.Forms.ComboBox();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -80,8 +79,9 @@ namespace ProFak.UI
 			this.label2 = new System.Windows.Forms.Label();
 			this.label15 = new System.Windows.Forms.Label();
 			this.comboBoxWaluta = new System.Windows.Forms.ComboBox();
-			this.bindingSourceNabywca = new System.Windows.Forms.BindingSource(this.components);
 			this.bindingSourceWaluta = new System.Windows.Forms.BindingSource(this.components);
+			this.bindingSourceNabywca = new System.Windows.Forms.BindingSource(this.components);
+			this.comboBoxNazwaNabywcy = new System.Windows.Forms.ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
 			this.tableLayoutPanel.SuspendLayout();
 			this.tableLayoutPanelKontrahenci.SuspendLayout();
@@ -97,8 +97,8 @@ namespace ProFak.UI
 			this.tableLayoutPanel6.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.bindingSourceNabywca)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.bindingSourceWaluta)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.bindingSourceNabywca)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// bindingSource
@@ -496,9 +496,9 @@ namespace ProFak.UI
 			this.tableLayoutPanel6.Controls.Add(this.label10, 0, 1);
 			this.tableLayoutPanel6.Controls.Add(this.label11, 0, 2);
 			this.tableLayoutPanel6.Controls.Add(this.textBox4, 1, 2);
-			this.tableLayoutPanel6.Controls.Add(this.textBox5, 1, 1);
 			this.tableLayoutPanel6.Controls.Add(this.button2, 2, 0);
 			this.tableLayoutPanel6.Controls.Add(this.comboBoxNabywca, 1, 0);
+			this.tableLayoutPanel6.Controls.Add(this.comboBoxNazwaNabywcy, 1, 1);
 			this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 19);
 			this.tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -550,16 +550,6 @@ namespace ProFak.UI
 			this.textBox4.Size = new System.Drawing.Size(307, 59);
 			this.textBox4.TabIndex = 23;
 			// 
-			// textBox5
-			// 
-			this.textBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableLayoutPanel6.SetColumnSpan(this.textBox5, 2);
-			this.textBox5.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "NazwaNabywcy", true));
-			this.textBox5.Location = new System.Drawing.Point(51, 34);
-			this.textBox5.Name = "textBox5";
-			this.textBox5.Size = new System.Drawing.Size(307, 23);
-			this.textBox5.TabIndex = 22;
-			// 
 			// button2
 			// 
 			this.button2.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -574,13 +564,14 @@ namespace ProFak.UI
 			// comboBoxNabywca
 			// 
 			this.comboBoxNabywca.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.comboBoxNabywca.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "NIPNabywcy", true));
-			this.comboBoxNabywca.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.bindingSource, "NabywcaRef", true));
+			this.comboBoxNabywca.DataSource = this.bindingSourceNabywca;
+			this.comboBoxNabywca.DisplayMember = "NIP";
 			this.comboBoxNabywca.FormattingEnabled = true;
 			this.comboBoxNabywca.Location = new System.Drawing.Point(51, 4);
 			this.comboBoxNabywca.Name = "comboBoxNabywca";
 			this.comboBoxNabywca.Size = new System.Drawing.Size(272, 23);
 			this.comboBoxNabywca.TabIndex = 20;
+			this.comboBoxNabywca.ValueMember = "Ref";
 			// 
 			// tabControl1
 			// 
@@ -608,7 +599,7 @@ namespace ProFak.UI
 			this.tabPage2.Location = new System.Drawing.Point(4, 24);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(737, 34);
+			this.tabPage2.Size = new System.Drawing.Size(737, 105);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "tabPage2";
 			this.tabPage2.UseVisualStyleBackColor = true;
@@ -703,13 +694,26 @@ namespace ProFak.UI
 			this.comboBoxWaluta.TabIndex = 1;
 			this.comboBoxWaluta.ValueMember = "Ref";
 			// 
+			// bindingSourceWaluta
+			// 
+			this.bindingSourceWaluta.DataSource = typeof(ProFak.DB.Waluta);
+			// 
 			// bindingSourceNabywca
 			// 
 			this.bindingSourceNabywca.DataSource = typeof(ProFak.DB.Kontrahent);
 			// 
-			// bindingSourceWaluta
+			// comboBoxNazwaNabywcy
 			// 
-			this.bindingSourceWaluta.DataSource = typeof(ProFak.DB.Waluta);
+			this.comboBoxNazwaNabywcy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.tableLayoutPanel6.SetColumnSpan(this.comboBoxNazwaNabywcy, 2);
+			this.comboBoxNazwaNabywcy.DataSource = this.bindingSourceNabywca;
+			this.comboBoxNazwaNabywcy.DisplayMember = "PelnaNazwa";
+			this.comboBoxNazwaNabywcy.FormattingEnabled = true;
+			this.comboBoxNazwaNabywcy.Location = new System.Drawing.Point(51, 34);
+			this.comboBoxNazwaNabywcy.Name = "comboBoxNazwaNabywcy";
+			this.comboBoxNazwaNabywcy.Size = new System.Drawing.Size(307, 23);
+			this.comboBoxNazwaNabywcy.TabIndex = 20;
+			this.comboBoxNazwaNabywcy.ValueMember = "Ref";
 			// 
 			// FakturaEdytor
 			// 
@@ -744,8 +748,8 @@ namespace ProFak.UI
 			this.tabControl1.ResumeLayout(false);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.bindingSourceNabywca)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.bindingSourceWaluta)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.bindingSourceNabywca)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -787,7 +791,6 @@ namespace ProFak.UI
 		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.TextBox textBox3;
 		private System.Windows.Forms.TextBox textBox4;
-		private System.Windows.Forms.TextBox textBox5;
 		private System.Windows.Forms.TextBox textBox6;
 		private System.Windows.Forms.DateTimePicker dateTimePicker4;
 		private System.Windows.Forms.ComboBox comboBoxSposobPlatnosci;
@@ -804,5 +807,6 @@ namespace ProFak.UI
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.ComboBox comboBoxWaluta;
 		private System.Windows.Forms.BindingSource bindingSourceWaluta;
+		private System.Windows.Forms.ComboBox comboBoxNazwaNabywcy;
 	}
 }
