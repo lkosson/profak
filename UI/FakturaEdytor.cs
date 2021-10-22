@@ -35,13 +35,30 @@ namespace ProFak.UI
 
 		private void WypelnijSpisy()
 		{
-			bindingSourceSposobPlatnosci.DataSource = Kontekst.Baza.SposobyPlatnosci.ToList();
+			//bindingSourceSposobPlatnosci.DataSource = Kontekst.Baza.SposobyPlatnosci.ToList();
 			bindingSourceSprzedawca.DataSource = Kontekst.Baza.Kontrahenci.ToList();
-			bindingSourceWaluta.DataSource = Kontekst.Baza.Waluty.ToList();
+			//bindingSourceWaluta.DataSource = Kontekst.Baza.Waluty.ToList();
 			comboBoxNazwaSprzedawcy.SelectedItem = null;
 			comboBoxNIPSprzedawcy.SelectedItem = null;
-			comboBoxWaluta.SelectedItem = null;
-			comboBoxSposobPlatnosci.SelectedItem = null;
+			//comboBoxWaluta.SelectedItem = null;
+			//comboBoxSposobPlatnosci.SelectedItem = null;
+			new SwobodnySlownik<SposobPlatnosci>(comboBoxSposobPlatnosci, buttonSposobPlatnosci,
+				Kontekst.Baza.SposobyPlatnosci.ToList,
+				sposobPlatnosci => sposobPlatnosci.Nazwa,
+				sposobPlatnosci => { Rekord.SposobPlatnosciRef = sposobPlatnosci; if (sposobPlatnosci != null) Rekord.OpisSposobuPlatnosci = sposobPlatnosci.Nazwa; })
+				.Zainstaluj();
+
+			new SwobodnySlownik<Kontrahent>(comboBoxNIPNabywcy, buttonNabywca,
+				Kontekst.Baza.Kontrahenci.ToList,
+				kontrahent => kontrahent.NIP,
+				kontrahent => { Rekord.NabywcaRef = kontrahent; if (kontrahent != null) { Rekord.NIPNabywcy = kontrahent.NIP; Rekord.NazwaNabywcy = kontrahent.PelnaNazwa; Rekord.DaneNabywcy = kontrahent.AdresRejestrowy; bindingSource.ResetCurrentItem(); } })
+				.Zainstaluj();
+
+			new SwobodnySlownik<Kontrahent>(comboBoxNazwaNabywcy, null,
+				Kontekst.Baza.Kontrahenci.ToList,
+				kontrahent => kontrahent.PelnaNazwa,
+				kontrahent => { Rekord.NabywcaRef = kontrahent; if (kontrahent != null) { Rekord.NIPNabywcy = kontrahent.NIP; Rekord.NazwaNabywcy = kontrahent.PelnaNazwa; Rekord.DaneNabywcy = kontrahent.AdresRejestrowy; bindingSource.ResetCurrentItem(); } })
+				.Zainstaluj();
 		}
 
 		private void UstawObowiazkowePola(Faktura faktura)
