@@ -35,7 +35,10 @@ namespace ProFak.UI
 		public override void Uruchom()
 		{
 			akcja.Uruchom(spis.Kontekst, spis.WybraneRekordy);
-			spis.Przeladuj();
+			if (spis.Kontekst.Dialog == null || spis.Kontekst.Dialog.DialogResult == System.Windows.Forms.DialogResult.None)
+			{
+				spis.Przeladuj();
+			}
 		}
 	}
 }

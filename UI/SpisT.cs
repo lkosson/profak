@@ -46,9 +46,29 @@ namespace ProFak.UI
 
 		private void Rows_CollectionChanged(object sender, CollectionChangeEventArgs e)
 		{
-			if (RekordPoczatkowy != default)
+			if (RekordPoczatkowy == default) return;
+			/*
+			ClearSelection();
+			foreach (DataGridViewRow row in Rows)
 			{
-				foreach (DataGridViewRow row in Rows) if (row.DataBoundItem is T rekord) row.Selected = rekord.Ref == RekordPoczatkowy;
+				if (row.DataBoundItem is not T rekord) continue;
+				if (rekord.Ref != RekordPoczatkowy) continue;
+				row.Selected = true;
+				foreach (DataGridViewCell cell in row.Cells)
+				{
+					if (!cell.Visible) continue;
+					CurrentCell = cell;
+					break;
+				}
+				break;
+			}
+			*/
+			foreach (DataGridViewRow row in Rows)
+			{
+				if (row.DataBoundItem is not T rekord) continue;
+				if (rekord.Ref != RekordPoczatkowy) continue;
+				bindingSource.Position = row.Index;
+				break;
 			}
 		}
 
@@ -56,6 +76,7 @@ namespace ProFak.UI
 		{
 			base.OnCreateControl();
 			Przeladuj();
+			bindingSource.ResetBindings(true);
 		}
 
 		protected override void Dispose(bool disposing)

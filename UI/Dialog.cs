@@ -26,6 +26,7 @@ namespace ProFak.UI
 			Text = tytul;
 			Zawartosc = zawartosc;
 			kontekst.Dialog = this;
+			KeyPreview = true;
 		}
 
 		private void UstawZawartosc(Control zawartosc)
@@ -34,6 +35,16 @@ namespace ProFak.UI
 			ClientSize = new Size(rozmiarPreferowany.Width + panelZawartosc.Margin.Left + panelZawartosc.Margin.Right + Padding.Left + Padding.Right, rozmiarPreferowany.Height + buttonZapisz.Height + panelZawartosc.Margin.Top + panelZawartosc.Margin.Bottom + buttonZapisz.Margin.Top + buttonZapisz.Margin.Bottom * 2);
 			panelZawartosc.Controls.Add(zawartosc);
 			zawartosc.Dock = DockStyle.Fill;
+		}
+
+		protected override void OnKeyUp(KeyEventArgs e)
+		{
+			base.OnKeyUp(e);
+			if (e.KeyCode == Keys.Escape)
+			{
+				DialogResult = DialogResult.Cancel;
+				Close();
+			}
 		}
 	}
 }

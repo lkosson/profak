@@ -51,6 +51,7 @@ namespace ProFak.UI
 
 		private void spis_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
 		{
+			if (e.RowIndex == -1) return;
 			DomyslnaAkcja();
 		}
 
@@ -77,7 +78,6 @@ namespace ProFak.UI
 				panelAkcji.DodajAkcje(akcja.UtworzAdapter(spis));
 			}
 			panelAkcji.AktualizujUklad();
-			spis.Focus();
 			base.OnCreateControl();
 		}
 
