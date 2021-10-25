@@ -11,6 +11,7 @@ namespace ProFak.UI
 	{
 		public abstract string Nazwa { get; }
 		public abstract bool CzyDostepna { get; }
+		public abstract bool CzyDomyslna { get; }
 
 		public abstract void Uruchom();
 	}
@@ -23,6 +24,7 @@ namespace ProFak.UI
 
 		public override string Nazwa => akcja.Nazwa;
 		public override bool CzyDostepna => akcja.CzyDostepnaDlaRekordow(spis.WybraneRekordy);
+		public override bool CzyDomyslna => akcja.CzyDomyslna;
 
 		public AdapterAkcji(AkcjaNaSpisie<TRekord> akcja, ISpis<TRekord> spis)
 		{

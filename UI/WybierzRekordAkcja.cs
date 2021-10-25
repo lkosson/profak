@@ -13,7 +13,7 @@ namespace ProFak.UI
 		where TRekord : Rekord<TRekord>
 	{
 		public override bool CzyDomyslna => true;
-		public override string Nazwa => null;
+		public override string Nazwa => "Wybierz zaznaczoną pozycję";
 		public TRekord WybranyRekord { get; private set; }
 
 		public WybierzRekordAkcja()

@@ -41,6 +41,7 @@ namespace ProFak.UI
 			spis.CellDoubleClick += spis_CellDoubleClick;
 			spis.KeyPress += spis_KeyPress;
 			Controls.Add(spis, 0, 0);
+			MinimumSize = new Size(panelAkcji.MinimumSize.Width + spis.MinimumSize.Width, panelAkcji.MinimumSize.Height + spis.MinimumSize.Height);
 		}
 
 		private void spis_KeyPress(object sender, KeyPressEventArgs e)
@@ -75,6 +76,8 @@ namespace ProFak.UI
 			{
 				panelAkcji.DodajAkcje(akcja.UtworzAdapter(spis));
 			}
+			panelAkcji.AktualizujUklad();
+			spis.Focus();
 			base.OnCreateControl();
 		}
 

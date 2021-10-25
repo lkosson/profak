@@ -13,6 +13,7 @@ namespace ProFak.UI
 	partial class Dialog : Form
 	{
 		public Control Zawartosc { get { return panelZawartosc.Controls.Cast<Control>().FirstOrDefault(); } set { panelZawartosc.Controls.Clear(); if (value != null) UstawZawartosc(value); } }
+		public bool CzyPrzyciskiWidoczne { get => flowLayoutPanelPrzyciski.Visible; set => flowLayoutPanelPrzyciski.Visible = value; }
 
 		private Dialog()
 		{

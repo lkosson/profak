@@ -32,12 +32,24 @@ namespace ProFak.UI
 			set => bindingSource.DataSource = value;
 		}
 
+		public Ref<T> RekordPoczatkowy { get; set; }
+
 		public Spis()
 		{
 			container = new Container();
 			bindingSource = new BindingSource(container);
 			bindingSource.DataSource = typeof(T);
 			DataSource = bindingSource;
+			MinimumSize = new System.Drawing.Size(500, 100);
+			Rows.CollectionChanged += Rows_CollectionChanged;
+		}
+
+		private void Rows_CollectionChanged(object sender, CollectionChangeEventArgs e)
+		{
+			if (RekordPoczatkowy != default)
+			{
+				foreach (DataGridViewRow row in Rows) if (row.DataBoundItem is T rekord) row.Selected = rekord.Ref == RekordPoczatkowy;
+			}
 		}
 
 		protected override void OnCreateControl()

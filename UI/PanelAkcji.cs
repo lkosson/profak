@@ -12,6 +12,8 @@ namespace ProFak.UI
 	{
 		public PanelAkcji()
 		{
+			MinimumSize = new Size(100, 50);
+			TabIndex = 100;
 		}
 
 		protected override void OnSizeChanged(EventArgs e)
@@ -26,7 +28,7 @@ namespace ProFak.UI
 			AktualizujUklad();
 		}
 
-		private void AktualizujUklad()
+		public void AktualizujUklad()
 		{
 			SuspendLayout();
 			int y = 0;
@@ -39,6 +41,7 @@ namespace ProFak.UI
 				y += przycisk.Height;
 				y += przycisk.Margin.Bottom;
 			}
+			Height = y;
 			ResumeLayout();
 		}
 
@@ -46,6 +49,7 @@ namespace ProFak.UI
 		{
 			var przycisk = new Button();
 			przycisk.Tag = adapter;
+			przycisk.TabIndex = TabIndex + Controls.Count;
 			przycisk.Click += Przycisk_Click;
 			AktualizujPrzycisk(przycisk);
 			Controls.Add(przycisk);
@@ -64,6 +68,11 @@ namespace ProFak.UI
 			var adapter = (AdapterAkcji)przycisk.Tag;
 			przycisk.Text = adapter.Nazwa;
 			przycisk.Enabled = adapter.CzyDostepna;
+			if (adapter.CzyDomyslna)
+			{
+				FindForm().AcceptButton = przycisk;
+				przycisk.DialogResult = DialogResult.OK;
+			}
 		}
 
 		private void Przycisk_Click(object sender, EventArgs e)

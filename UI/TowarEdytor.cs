@@ -54,7 +54,7 @@ namespace ProFak.UI
 
 		private void buttonStawkaVat_Click(object sender, EventArgs e)
 		{
-			var stawkaVat = Spis.Wybierz(Kontekst, Spis.StawkiVat, "Wybierz stawkę Vat");
+			var stawkaVat = Spis.Wybierz(Kontekst, Spis.StawkiVat, "Wybierz stawkę Vat", Rekord.StawkaVatRef);
 			if (stawkaVat == null) return;
 			bindingSourceStawkaVat.DataSource = Kontekst.Baza.StawkiVat.ToList();
 			Rekord.StawkaVatRef = stawkaVat.Ref;
@@ -63,7 +63,7 @@ namespace ProFak.UI
 
 		private void buttonJednostkaMiary_Click(object sender, EventArgs e)
 		{
-			var jednostkaMiary = Spis.Wybierz(Kontekst, Spis.JednostkiMiar, "Wybierz jednostkę miary");
+			var jednostkaMiary = Spis.Wybierz(Kontekst, Spis.JednostkiMiar, "Wybierz jednostkę miary", Rekord.JednostkaMiaryRef);
 			if (jednostkaMiary == null) return;
 			bindingSourceJednostkaMiary.DataSource = Kontekst.Baza.JednostkiMiar.ToList();
 			Rekord.JednostkaMiaryRef = jednostkaMiary.Ref;

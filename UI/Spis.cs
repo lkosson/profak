@@ -22,9 +22,10 @@ namespace ProFak.UI
 			ShowCellToolTips = true;
 			ReadOnly = true;
 			SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+			TabIndex = 50;
 		}
 
-		public static T Wybierz<T>(Kontekst kontekst, Func<Kontekst, SpisZAkcjami<T>> generatorSpisu, string tytul)
+		public static T Wybierz<T>(Kontekst kontekst, Func<Kontekst, SpisZAkcjami<T>> generatorSpisu, string tytul, Ref<T> biezacaWartosc)
 			where T : Rekord<T>
 		{
 			var wybor = new WybierzRekordAkcja<T>();
@@ -32,6 +33,9 @@ namespace ProFak.UI
 			using var spis = generatorSpisu(nowyKontekst);
 			using var dialog = new Dialog(tytul, spis, nowyKontekst);
 			spis.Akcje.Add(wybor);
+			spis.Spis.RekordPoczatkowy = biezacaWartosc;
+			dialog.CzyPrzyciskiWidoczne = false;
+			dialog.Size = new System.Drawing.Size(800, 450);
 			if (dialog.ShowDialog() != DialogResult.OK) return default;
 			return wybor.WybranyRekord;
 		}

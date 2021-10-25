@@ -13,9 +13,8 @@ namespace ProFak.UI
 {
 	partial class FakturaEdytor : UserControl, IEdytor<Faktura>
 	{
-		public Faktura Rekord { get => bindingSource.DataSource as Faktura; private set { ignorujZmiane = true; bindingSource.DataSource = value; ignorujZmiane = false; } }
+		public Faktura Rekord { get => bindingSource.DataSource as Faktura; private set => bindingSource.DataSource = value; }
 		public Kontekst Kontekst { get; private set; }
-		private bool ignorujZmiane;
 
 		public FakturaEdytor()
 		{
@@ -89,12 +88,6 @@ namespace ProFak.UI
 				faktura.SposobPlatnosciRef = Kontekst.Baza.SposobyPlatnosci.FirstOrDefault(sposob => sposob.CzyDomyslny);
 				faktura.Uwagi = "";
 			}
-		}
-
-		protected override void OnHandleDestroyed(EventArgs e)
-		{
-			ignorujZmiane = true;
-			base.OnHandleDestroyed(e);
 		}
 	}
 }

@@ -41,13 +41,14 @@ namespace ProFak.UI
 
 		private void button_Click(object sender, EventArgs e)
 		{
-			var wartosc = Spis.Wybierz(kontekst, generatorSpisu, "Wybierz pozycję");
+			var dotychczasowaPozycja = (PozycjaListy<T>)comboBox.SelectedItem;
+			var wartosc = Spis.Wybierz(kontekst, generatorSpisu, "Wybierz pozycję", dotychczasowaPozycja?.Wartosc);
 			if (wartosc == null) return;
 			gotowy = false;
 			WypelnijListe();
 			gotowy = true;
-			var pozycja = comboBox.Items.Cast<PozycjaListy<T>>().FirstOrDefault(p => p.Wartosc == wartosc);
-			if (pozycja != null) comboBox.SelectedItem = pozycja;
+			var nowaPozycja = comboBox.Items.Cast<PozycjaListy<T>>().FirstOrDefault(p => p.Wartosc == wartosc);
+			if (nowaPozycja != null) comboBox.SelectedItem = nowaPozycja;
 		}
 
 		private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
