@@ -79,6 +79,12 @@ namespace ProFak.UI
 			bindingSource.ResetBindings(true);
 		}
 
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter) e.Handled = true;
+			base.OnKeyDown(e);
+		}
+
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing) container.Dispose();

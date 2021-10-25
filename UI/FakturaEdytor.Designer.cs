@@ -78,6 +78,7 @@ namespace ProFak.UI
 			this.label2 = new System.Windows.Forms.Label();
 			this.label15 = new System.Windows.Forms.Label();
 			this.comboBoxWaluta = new System.Windows.Forms.ComboBox();
+			this.buttonWaluta = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
 			this.tableLayoutPanel.SuspendLayout();
 			this.tableLayoutPanelKontrahenci.SuspendLayout();
@@ -130,7 +131,7 @@ namespace ProFak.UI
 			this.tableLayoutPanelKontrahenci.Controls.Add(this.groupBox2, 0, 0);
 			this.tableLayoutPanelKontrahenci.Controls.Add(this.groupBox3, 1, 0);
 			this.tableLayoutPanelKontrahenci.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanelKontrahenci.Location = new System.Drawing.Point(3, 38);
+			this.tableLayoutPanelKontrahenci.Location = new System.Drawing.Point(3, 40);
 			this.tableLayoutPanelKontrahenci.Name = "tableLayoutPanelKontrahenci";
 			this.tableLayoutPanelKontrahenci.RowCount = 2;
 			this.tableLayoutPanelKontrahenci.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -560,10 +561,10 @@ namespace ProFak.UI
 			this.tabControl1.Controls.Add(this.tabPage1);
 			this.tabControl1.Controls.Add(this.tabPage2);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabControl1.Location = new System.Drawing.Point(3, 314);
+			this.tabControl1.Location = new System.Drawing.Point(3, 316);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(745, 133);
+			this.tabControl1.Size = new System.Drawing.Size(745, 131);
 			this.tabControl1.TabIndex = 50;
 			// 
 			// tabPage1
@@ -571,7 +572,7 @@ namespace ProFak.UI
 			this.tabPage1.Location = new System.Drawing.Point(4, 24);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(737, 105);
+			this.tabPage1.Size = new System.Drawing.Size(737, 103);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "tabPage1";
 			this.tabPage1.UseVisualStyleBackColor = true;
@@ -590,7 +591,7 @@ namespace ProFak.UI
 			// 
 			this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanel1.AutoSize = true;
-			this.tableLayoutPanel1.ColumnCount = 8;
+			this.tableLayoutPanel1.ColumnCount = 9;
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
@@ -599,26 +600,28 @@ namespace ProFak.UI
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel1.Controls.Add(this.textBoxNumer, 4, 0);
 			this.tableLayoutPanel1.Controls.Add(this.comboBoxRodzaj, 1, 0);
 			this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
 			this.tableLayoutPanel1.Controls.Add(this.label2, 3, 0);
+			this.tableLayoutPanel1.Controls.Add(this.buttonWaluta, 8, 0);
 			this.tableLayoutPanel1.Controls.Add(this.label15, 6, 0);
 			this.tableLayoutPanel1.Controls.Add(this.comboBoxWaluta, 7, 0);
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 1;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(745, 29);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(745, 31);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// textBoxNumer
 			// 
 			this.textBoxNumer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxNumer.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "Numer", true));
-			this.textBoxNumer.Location = new System.Drawing.Point(241, 3);
+			this.textBoxNumer.Location = new System.Drawing.Point(241, 4);
 			this.textBoxNumer.Name = "textBoxNumer";
-			this.textBoxNumer.Size = new System.Drawing.Size(311, 23);
+			this.textBoxNumer.Size = new System.Drawing.Size(279, 23);
 			this.textBoxNumer.TabIndex = 2;
 			// 
 			// comboBoxRodzaj
@@ -627,7 +630,7 @@ namespace ProFak.UI
 			this.comboBoxRodzaj.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.bindingSource, "Rodzaj", true));
 			this.comboBoxRodzaj.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxRodzaj.FormattingEnabled = true;
-			this.comboBoxRodzaj.Location = new System.Drawing.Point(51, 3);
+			this.comboBoxRodzaj.Location = new System.Drawing.Point(51, 4);
 			this.comboBoxRodzaj.Name = "comboBoxRodzaj";
 			this.comboBoxRodzaj.Size = new System.Drawing.Size(114, 23);
 			this.comboBoxRodzaj.TabIndex = 1;
@@ -636,7 +639,7 @@ namespace ProFak.UI
 			// 
 			this.label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(3, 7);
+			this.label1.Location = new System.Drawing.Point(3, 8);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(42, 15);
 			this.label1.TabIndex = 0;
@@ -646,7 +649,7 @@ namespace ProFak.UI
 			// 
 			this.label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(191, 7);
+			this.label2.Location = new System.Drawing.Point(191, 8);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(44, 15);
 			this.label2.TabIndex = 2;
@@ -656,7 +659,7 @@ namespace ProFak.UI
 			// 
 			this.label15.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label15.AutoSize = true;
-			this.label15.Location = new System.Drawing.Point(578, 7);
+			this.label15.Location = new System.Drawing.Point(546, 8);
 			this.label15.Name = "label15";
 			this.label15.Size = new System.Drawing.Size(44, 15);
 			this.label15.TabIndex = 0;
@@ -668,10 +671,21 @@ namespace ProFak.UI
 			this.comboBoxWaluta.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.bindingSource, "WalutaRef", true));
 			this.comboBoxWaluta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxWaluta.FormattingEnabled = true;
-			this.comboBoxWaluta.Location = new System.Drawing.Point(628, 3);
+			this.comboBoxWaluta.Location = new System.Drawing.Point(596, 4);
 			this.comboBoxWaluta.Name = "comboBoxWaluta";
 			this.comboBoxWaluta.Size = new System.Drawing.Size(114, 23);
 			this.comboBoxWaluta.TabIndex = 1;
+			// 
+			// buttonWaluta
+			// 
+			this.buttonWaluta.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.buttonWaluta.AutoSize = true;
+			this.buttonWaluta.Location = new System.Drawing.Point(716, 3);
+			this.buttonWaluta.Name = "buttonWaluta";
+			this.buttonWaluta.Size = new System.Drawing.Size(26, 25);
+			this.buttonWaluta.TabIndex = 21;
+			this.buttonWaluta.Text = "...";
+			this.buttonWaluta.UseVisualStyleBackColor = true;
 			// 
 			// FakturaEdytor
 			// 
@@ -758,5 +772,6 @@ namespace ProFak.UI
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.ComboBox comboBoxWaluta;
 		private System.Windows.Forms.ComboBox comboBoxNazwaNabywcy;
+		private System.Windows.Forms.Button buttonWaluta;
 	}
 }

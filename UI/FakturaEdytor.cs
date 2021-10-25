@@ -34,13 +34,20 @@ namespace ProFak.UI
 
 		private void WypelnijSpisy()
 		{
+			new SwobodnySlownik<Waluta>(
+				Kontekst, comboBoxWaluta, buttonWaluta,
+				Kontekst.Baza.Waluty.ToList,
+				waluta => waluta.Skrot,
+				waluta => { },
+				Spis.Waluty)
+				.Zainstaluj();
+
 			new SwobodnySlownik<SposobPlatnosci>(
 				Kontekst, comboBoxSposobPlatnosci, buttonSposobPlatnosci,
 				Kontekst.Baza.SposobyPlatnosci.ToList,
 				sposobPlatnosci => sposobPlatnosci.Nazwa,
 				sposobPlatnosci => { if (sposobPlatnosci == null || Rekord.SposobPlatnosciRef == sposobPlatnosci.Ref) return; Rekord.SposobPlatnosciRef = sposobPlatnosci; Rekord.OpisSposobuPlatnosci = sposobPlatnosci.Nazwa; Rekord.TerminPlatnosci = Rekord.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni); bindingSource.ResetCurrentItem(); },
-				Spis.SposobyPlatnosci
-				)
+				Spis.SposobyPlatnosci)
 				.Zainstaluj();
 
 			new SwobodnySlownik<Kontrahent>(

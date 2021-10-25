@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProFak.DB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,18 @@ namespace ProFak.UI
 		public string Opis { get; set; }
 
 		public PozycjaListy()
+		{
+		}
+	}
+
+	class PozycjaListyRekordu<T>
+		where T : Rekord<T>
+	{
+		public T Wartosc { get; set; }
+		public Ref<T> Ref => Wartosc.Ref;
+		public string Opis { get; set; }
+
+		public PozycjaListyRekordu()
 		{
 		}
 	}

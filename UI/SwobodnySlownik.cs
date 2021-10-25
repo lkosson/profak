@@ -41,20 +41,20 @@ namespace ProFak.UI
 
 		private void button_Click(object sender, EventArgs e)
 		{
-			var dotychczasowaPozycja = (PozycjaListy<T>)comboBox.SelectedItem;
+			var dotychczasowaPozycja = (PozycjaListyRekordu<T>)comboBox.SelectedItem;
 			var wartosc = Spis.Wybierz(kontekst, generatorSpisu, "Wybierz pozycję", dotychczasowaPozycja?.Wartosc);
 			if (wartosc == null) return;
 			gotowy = false;
 			WypelnijListe();
 			gotowy = true;
-			var nowaPozycja = comboBox.Items.Cast<PozycjaListy<T>>().FirstOrDefault(p => p.Wartosc == wartosc);
+			var nowaPozycja = comboBox.Items.Cast<PozycjaListyRekordu<T>>().FirstOrDefault(p => p.Wartosc == wartosc);
 			if (nowaPozycja != null) comboBox.SelectedItem = nowaPozycja;
 		}
 
 		private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (!gotowy) return;
-			var pozycja = (PozycjaListy<T>)comboBox.SelectedItem;
+			var pozycja = (PozycjaListyRekordu<T>)comboBox.SelectedItem;
 			ustawWartosc(pozycja?.Wartosc);
 		}
 
@@ -62,14 +62,17 @@ namespace ProFak.UI
 		{
 			var dostepneWartosci = pobierzWartosci();
 			comboBox.BeginUpdate();
-			comboBox.Items.Clear();
+			//comboBox.Items.Clear();
+			var pozycje = new List<PozycjaListyRekordu<T>>();
 			foreach (var wartosc in dostepneWartosci)
 			{
-				var pozycja = new PozycjaListy<T> { Wartosc = wartosc, Opis = wyswietlanaWartosc(wartosc) };
-				comboBox.Items.Add(pozycja);
+				var pozycja = new PozycjaListyRekordu<T> { Wartosc = wartosc, Opis = wyswietlanaWartosc(wartosc) };
+				//comboBox.Items.Add(pozycja);
+				pozycje.Add(pozycja);
 			}
-			comboBox.ValueMember = nameof(PozycjaListy<T>.Wartosc);
-			comboBox.DisplayMember = nameof(PozycjaListy<T>.Opis);
+			comboBox.DataSource = pozycje;
+			comboBox.ValueMember = nameof(PozycjaListyRekordu<T>.Ref);
+			comboBox.DisplayMember = nameof(PozycjaListyRekordu<T>.Opis);
 			comboBox.EndUpdate();
 		}
 	}
