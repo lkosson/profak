@@ -11,32 +11,43 @@ namespace ProFak.UI
 	class SwobodnySlownik<T>
 		where T : Rekord<T>
 	{
+		private readonly Kontekst kontekst;
 		private readonly ComboBox comboBox;
 		private readonly Button button;
 		private readonly Func<IEnumerable<T>> pobierzWartosci;
 		private readonly Func<T, string> wyswietlanaWartosc;
 		private readonly Action<T> ustawWartosc;
+		private readonly Func<Kontekst, SpisZAkcjami<T>> generatorSpisu;
 		private bool gotowy;
 
-		public SwobodnySlownik(ComboBox comboBox, Button button, Func<IEnumerable<T>> pobierzWartosci, Func<T, string> wyswietlanaWartosc, Action<T> ustawWartosc)
+		public SwobodnySlownik(Kontekst kontekst, ComboBox comboBox, Button button, Func<IEnumerable<T>> pobierzWartosci, Func<T, string> wyswietlanaWartosc, Action<T> ustawWartosc, Func<Kontekst, SpisZAkcjami<T>> generatorSpisu)
 		{
+			this.kontekst = kontekst;
 			this.comboBox = comboBox;
 			this.button = button;
 			this.pobierzWartosci = pobierzWartosci;
 			this.wyswietlanaWartosc = wyswietlanaWartosc;
 			this.ustawWartosc = ustawWartosc;
+			this.generatorSpisu = generatorSpisu;
 		}
 
 		public void Zainstaluj()
 		{
 			WypelnijListe();
 			comboBox.SelectedIndexChanged += comboBox_SelectedIndexChanged;
-			comboBox.TextChanged += comboBox_TextChanged;
+			if (button != null) button.Click += button_Click;
 			gotowy = true;
 		}
 
-		private void comboBox_TextChanged(object sender, EventArgs e)
+		private void button_Click(object sender, EventArgs e)
 		{
+			var wartosc = Spis.Wybierz(kontekst, generatorSpisu, "Wybierz pozycję");
+			if (wartosc == null) return;
+			gotowy = false;
+			WypelnijListe();
+			gotowy = true;
+			var pozycja = comboBox.Items.Cast<PozycjaListy<T>>().FirstOrDefault(p => p.Wartosc == wartosc);
+			if (pozycja != null) comboBox.SelectedItem = pozycja;
 		}
 
 		private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
