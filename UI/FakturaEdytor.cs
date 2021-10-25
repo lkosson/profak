@@ -35,29 +35,34 @@ namespace ProFak.UI
 
 		private void WypelnijSpisy()
 		{
-			//bindingSourceSposobPlatnosci.DataSource = Kontekst.Baza.SposobyPlatnosci.ToList();
-			bindingSourceSprzedawca.DataSource = Kontekst.Baza.Kontrahenci.ToList();
-			//bindingSourceWaluta.DataSource = Kontekst.Baza.Waluty.ToList();
-			comboBoxNazwaSprzedawcy.SelectedItem = null;
-			comboBoxNIPSprzedawcy.SelectedItem = null;
-			//comboBoxWaluta.SelectedItem = null;
-			//comboBoxSposobPlatnosci.SelectedItem = null;
 			new SwobodnySlownik<SposobPlatnosci>(comboBoxSposobPlatnosci, buttonSposobPlatnosci,
 				Kontekst.Baza.SposobyPlatnosci.ToList,
 				sposobPlatnosci => sposobPlatnosci.Nazwa,
-				sposobPlatnosci => { Rekord.SposobPlatnosciRef = sposobPlatnosci; if (sposobPlatnosci != null) Rekord.OpisSposobuPlatnosci = sposobPlatnosci.Nazwa; })
+				sposobPlatnosci => { if (sposobPlatnosci == null || Rekord.SposobPlatnosciRef == sposobPlatnosci.Ref) return; Rekord.SposobPlatnosciRef = sposobPlatnosci; Rekord.OpisSposobuPlatnosci = sposobPlatnosci.Nazwa; Rekord.TerminPlatnosci = Rekord.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni); bindingSource.ResetCurrentItem(); })
 				.Zainstaluj();
 
 			new SwobodnySlownik<Kontrahent>(comboBoxNIPNabywcy, buttonNabywca,
 				Kontekst.Baza.Kontrahenci.ToList,
 				kontrahent => kontrahent.NIP,
-				kontrahent => { Rekord.NabywcaRef = kontrahent; if (kontrahent != null) { Rekord.NIPNabywcy = kontrahent.NIP; Rekord.NazwaNabywcy = kontrahent.PelnaNazwa; Rekord.DaneNabywcy = kontrahent.AdresRejestrowy; bindingSource.ResetCurrentItem(); } })
+				kontrahent => { if (kontrahent == null || Rekord.NabywcaRef == kontrahent.Ref) return; Rekord.NabywcaRef = kontrahent; Rekord.NIPNabywcy = kontrahent.NIP; Rekord.NazwaNabywcy = kontrahent.PelnaNazwa; Rekord.DaneNabywcy = kontrahent.AdresRejestrowy; bindingSource.ResetCurrentItem(); })
 				.Zainstaluj();
 
 			new SwobodnySlownik<Kontrahent>(comboBoxNazwaNabywcy, null,
 				Kontekst.Baza.Kontrahenci.ToList,
 				kontrahent => kontrahent.PelnaNazwa,
-				kontrahent => { Rekord.NabywcaRef = kontrahent; if (kontrahent != null) { Rekord.NIPNabywcy = kontrahent.NIP; Rekord.NazwaNabywcy = kontrahent.PelnaNazwa; Rekord.DaneNabywcy = kontrahent.AdresRejestrowy; bindingSource.ResetCurrentItem(); } })
+				kontrahent => { if (kontrahent == null || Rekord.NabywcaRef == kontrahent.Ref) return; Rekord.NabywcaRef = kontrahent; Rekord.NIPNabywcy = kontrahent.NIP; Rekord.NazwaNabywcy = kontrahent.PelnaNazwa; Rekord.DaneNabywcy = kontrahent.AdresRejestrowy; bindingSource.ResetCurrentItem(); })
+				.Zainstaluj();
+
+			new SwobodnySlownik<Kontrahent>(comboBoxNIPSprzedawcy, buttonSprzedawca,
+				Kontekst.Baza.Kontrahenci.ToList,
+				kontrahent => kontrahent.NIP,
+				kontrahent => { if (kontrahent == null || Rekord.SprzedawcaRef == kontrahent.Ref) return; Rekord.SprzedawcaRef = kontrahent; Rekord.NIPSprzedawcy = kontrahent.NIP; Rekord.NazwaSprzedawcy = kontrahent.PelnaNazwa; Rekord.DaneSprzedawcy = kontrahent.AdresRejestrowy; bindingSource.ResetCurrentItem(); })
+				.Zainstaluj();
+
+			new SwobodnySlownik<Kontrahent>(comboBoxNazwaSprzedawcy, null,
+				Kontekst.Baza.Kontrahenci.ToList,
+				kontrahent => kontrahent.PelnaNazwa,
+				kontrahent => { if (kontrahent == null || Rekord.SprzedawcaRef == kontrahent.Ref) return; Rekord.SprzedawcaRef = kontrahent; Rekord.NIPSprzedawcy = kontrahent.NIP; Rekord.NazwaSprzedawcy = kontrahent.PelnaNazwa; Rekord.DaneSprzedawcy = kontrahent.AdresRejestrowy; bindingSource.ResetCurrentItem(); })
 				.Zainstaluj();
 		}
 
@@ -73,85 +78,6 @@ namespace ProFak.UI
 				faktura.SposobPlatnosciRef = Kontekst.Baza.SposobyPlatnosci.FirstOrDefault(sposob => sposob.CzyDomyslny);
 				faktura.Uwagi = "";
 			}
-		}
-
-		private void comboBoxNIPSprzedawcy_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (Rekord == null) return;
-			if (ignorujZmiane) return;
-			if (comboBoxNIPSprzedawcy.SelectedItem is Kontrahent sprzedawca)
-			{
-				Rekord.SprzedawcaRef = sprzedawca.Ref;
-				Rekord.NIPSprzedawcy = sprzedawca.NIP;
-				Rekord.NazwaSprzedawcy = sprzedawca.PelnaNazwa;
-				Rekord.DaneSprzedawcy = sprzedawca.AdresRejestrowy;
-				bindingSource.ResetCurrentItem();
-			}
-			else
-			{
-				Rekord.SprzedawcaRef = default;
-			}
-		}
-
-		private void comboBoxNIPSprzedawcy_TextChanged(object sender, EventArgs e)
-		{
-			if (Rekord == null) return;
-			if (ignorujZmiane) return;
-			Rekord.NIPSprzedawcy = comboBoxNIPSprzedawcy.Text;
-		}
-
-		private void comboBoxNazwaSprzedawcy_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (Rekord == null) return;
-			if (ignorujZmiane) return;
-			if (comboBoxNazwaSprzedawcy.SelectedItem is Kontrahent sprzedawca)
-			{
-				Rekord.SprzedawcaRef = sprzedawca.Ref;
-				Rekord.NIPSprzedawcy = sprzedawca.NIP;
-				Rekord.NazwaSprzedawcy = sprzedawca.PelnaNazwa;
-				Rekord.DaneSprzedawcy = sprzedawca.AdresRejestrowy;
-				bindingSource.ResetCurrentItem();
-			}
-			else
-			{
-				Rekord.SprzedawcaRef = default;
-			}
-		}
-
-		private void comboBoxNazwaSprzedawcy_TextChanged(object sender, EventArgs e)
-		{
-			if (Rekord == null) return;
-			if (ignorujZmiane) return;
-			Rekord.NazwaSprzedawcy = comboBoxNazwaSprzedawcy.Text;
-		}
-
-		private void comboBoxSposobPlatnosci_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (Rekord == null) return;
-			if (ignorujZmiane) return;
-			if (comboBoxSposobPlatnosci.SelectedItem is SposobPlatnosci sposobPlatnosci)
-			{
-				Rekord.SposobPlatnosciRef = sposobPlatnosci.Ref;
-				Rekord.OpisSposobuPlatnosci = sposobPlatnosci.Nazwa;
-				Rekord.TerminPlatnosci = Rekord.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
-			}
-			else
-			{
-				Rekord.SposobPlatnosciRef = default;
-			}
-		}
-
-		private void comboBoxSposobPlatnosci_TextChanged(object sender, EventArgs e)
-		{
-			if (Rekord == null) return;
-			if (ignorujZmiane) return;
-			Rekord.OpisSposobuPlatnosci = comboBoxSposobPlatnosci.Text;
-		}
-
-		private void bindingSource_DataSourceChanged(object sender, EventArgs e)
-		{
-			comboBoxNazwaSprzedawcy.Text = Rekord.NazwaSprzedawcy;
-			comboBoxNIPSprzedawcy.Text = Rekord.NIPSprzedawcy;
 		}
 
 		protected override void OnHandleDestroyed(EventArgs e)
