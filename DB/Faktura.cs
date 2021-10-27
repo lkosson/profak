@@ -50,6 +50,7 @@ namespace ProFak.DB
 		public SposobPlatnosci SposobPlatnosci { get; set; }
 
 		public List<PozycjaFaktury> Pozycje { get; set; }
+		public List<Wplata> Wplaty { get; set; }
 	}
 
 	enum RodzajFaktury

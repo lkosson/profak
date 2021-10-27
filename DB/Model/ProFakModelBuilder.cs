@@ -19,6 +19,7 @@ namespace ProFak.DB.Model
 			modelBuilder.Entity<StawkaVat>(StawkaVatBuilder.Configure);
 			modelBuilder.Entity<Towar>(TowarBuilder.Configure);
 			modelBuilder.Entity<Waluta>(WalutaBuilder.Configure);
+			modelBuilder.Entity<Wplata>(WplataBuilder.Configure);
 		}
 	}
 }
