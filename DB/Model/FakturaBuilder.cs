@@ -29,7 +29,8 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.NazwaNabywcy).IsRequired();
 			builder.Property(e => e.DaneNabywcy).IsRequired();
 			builder.Property(e => e.RachunekBankowy).IsRequired();
-			builder.Property(e => e.Uwagi).IsRequired();
+			builder.Property(e => e.UwagiWewnetrzne).HasDefaultValue("").IsRequired();
+			builder.Property(e => e.UwagiPubliczne).HasDefaultValue("").IsRequired();
 			builder.Property(e => e.RazemNetto).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.RazemVat).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.RazemBrutto).HasDefaultValue(0).IsRequired();

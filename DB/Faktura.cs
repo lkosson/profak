@@ -20,7 +20,8 @@ namespace ProFak.DB
 		public string NazwaNabywcy { get; set; }
 		public string DaneNabywcy { get; set; }
 		public string RachunekBankowy { get; set; }
-		public string Uwagi { get; set; }
+		public string UwagiPubliczne { get; set; }
+		public string UwagiWewnetrzne { get; set; }
 		public decimal RazemNetto { get; set; }
 		public decimal RazemVat { get; set; }
 		public decimal RazemBrutto { get; set; }

@@ -71,14 +71,20 @@ namespace ProFak.UI
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.groupBox4 = new System.Windows.Forms.GroupBox();
+			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.textBoxNumer = new System.Windows.Forms.TextBox();
 			this.comboBoxRodzaj = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
+			this.buttonWaluta = new System.Windows.Forms.Button();
 			this.label15 = new System.Windows.Forms.Label();
 			this.comboBoxWaluta = new System.Windows.Forms.ComboBox();
-			this.buttonWaluta = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
 			this.tableLayoutPanel.SuspendLayout();
 			this.tableLayoutPanelKontrahenci.SuspendLayout();
@@ -91,6 +97,10 @@ namespace ProFak.UI
 			this.groupBox3.SuspendLayout();
 			this.tableLayoutPanel6.SuspendLayout();
 			this.tabControl1.SuspendLayout();
+			this.tabPage3.SuspendLayout();
+			this.tableLayoutPanel2.SuspendLayout();
+			this.groupBox5.SuspendLayout();
+			this.groupBox4.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -560,6 +570,7 @@ namespace ProFak.UI
 			// 
 			this.tabControl1.Controls.Add(this.tabPage1);
 			this.tabControl1.Controls.Add(this.tabPage2);
+			this.tabControl1.Controls.Add(this.tabPage3);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl1.Location = new System.Drawing.Point(3, 316);
 			this.tabControl1.Name = "tabControl1";
@@ -571,21 +582,86 @@ namespace ProFak.UI
 			// 
 			this.tabPage1.Location = new System.Drawing.Point(4, 24);
 			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
 			this.tabPage1.Size = new System.Drawing.Size(737, 103);
 			this.tabPage1.TabIndex = 0;
-			this.tabPage1.Text = "tabPage1";
+			this.tabPage1.Text = "Pozycje";
 			this.tabPage1.UseVisualStyleBackColor = true;
 			// 
 			// tabPage2
 			// 
 			this.tabPage2.Location = new System.Drawing.Point(4, 24);
 			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(737, 105);
+			this.tabPage2.Size = new System.Drawing.Size(737, 103);
 			this.tabPage2.TabIndex = 1;
-			this.tabPage2.Text = "tabPage2";
+			this.tabPage2.Text = "Wpłaty";
 			this.tabPage2.UseVisualStyleBackColor = true;
+			// 
+			// tabPage3
+			// 
+			this.tabPage3.Controls.Add(this.tableLayoutPanel2);
+			this.tabPage3.Location = new System.Drawing.Point(4, 24);
+			this.tabPage3.Name = "tabPage3";
+			this.tabPage3.Size = new System.Drawing.Size(737, 103);
+			this.tabPage3.TabIndex = 2;
+			this.tabPage3.Text = "Uwagi";
+			this.tabPage3.UseVisualStyleBackColor = true;
+			// 
+			// tableLayoutPanel2
+			// 
+			this.tableLayoutPanel2.ColumnCount = 2;
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel2.Controls.Add(this.groupBox4, 0, 0);
+			this.tableLayoutPanel2.Controls.Add(this.groupBox5, 1, 0);
+			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+			this.tableLayoutPanel2.RowCount = 1;
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(737, 103);
+			this.tableLayoutPanel2.TabIndex = 2;
+			// 
+			// groupBox5
+			// 
+			this.groupBox5.Controls.Add(this.textBox2);
+			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBox5.Location = new System.Drawing.Point(371, 3);
+			this.groupBox5.Name = "groupBox5";
+			this.groupBox5.Size = new System.Drawing.Size(363, 97);
+			this.groupBox5.TabIndex = 1;
+			this.groupBox5.TabStop = false;
+			this.groupBox5.Text = "Uwagi (wewnętrzne)";
+			// 
+			// textBox2
+			// 
+			this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "UwagiWewnetrzne", true));
+			this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textBox2.Location = new System.Drawing.Point(3, 19);
+			this.textBox2.Multiline = true;
+			this.textBox2.Name = "textBox2";
+			this.textBox2.Size = new System.Drawing.Size(357, 75);
+			this.textBox2.TabIndex = 0;
+			// 
+			// groupBox4
+			// 
+			this.groupBox4.Controls.Add(this.textBox1);
+			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBox4.Location = new System.Drawing.Point(3, 3);
+			this.groupBox4.Name = "groupBox4";
+			this.groupBox4.Size = new System.Drawing.Size(362, 97);
+			this.groupBox4.TabIndex = 1;
+			this.groupBox4.TabStop = false;
+			this.groupBox4.Text = "Uwagi (drukowane na fakturze)";
+			// 
+			// textBox1
+			// 
+			this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "UwagiPubliczne", true));
+			this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textBox1.Location = new System.Drawing.Point(3, 19);
+			this.textBox1.Multiline = true;
+			this.textBox1.Name = "textBox1";
+			this.textBox1.Size = new System.Drawing.Size(356, 75);
+			this.textBox1.TabIndex = 0;
 			// 
 			// tableLayoutPanel1
 			// 
@@ -655,6 +731,17 @@ namespace ProFak.UI
 			this.label2.TabIndex = 2;
 			this.label2.Text = "Numer";
 			// 
+			// buttonWaluta
+			// 
+			this.buttonWaluta.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.buttonWaluta.AutoSize = true;
+			this.buttonWaluta.Location = new System.Drawing.Point(716, 3);
+			this.buttonWaluta.Name = "buttonWaluta";
+			this.buttonWaluta.Size = new System.Drawing.Size(26, 25);
+			this.buttonWaluta.TabIndex = 21;
+			this.buttonWaluta.Text = "...";
+			this.buttonWaluta.UseVisualStyleBackColor = true;
+			// 
 			// label15
 			// 
 			this.label15.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -675,17 +762,6 @@ namespace ProFak.UI
 			this.comboBoxWaluta.Name = "comboBoxWaluta";
 			this.comboBoxWaluta.Size = new System.Drawing.Size(114, 23);
 			this.comboBoxWaluta.TabIndex = 1;
-			// 
-			// buttonWaluta
-			// 
-			this.buttonWaluta.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.buttonWaluta.AutoSize = true;
-			this.buttonWaluta.Location = new System.Drawing.Point(716, 3);
-			this.buttonWaluta.Name = "buttonWaluta";
-			this.buttonWaluta.Size = new System.Drawing.Size(26, 25);
-			this.buttonWaluta.TabIndex = 21;
-			this.buttonWaluta.Text = "...";
-			this.buttonWaluta.UseVisualStyleBackColor = true;
 			// 
 			// FakturaEdytor
 			// 
@@ -716,6 +792,12 @@ namespace ProFak.UI
 			this.tableLayoutPanel6.ResumeLayout(false);
 			this.tableLayoutPanel6.PerformLayout();
 			this.tabControl1.ResumeLayout(false);
+			this.tabPage3.ResumeLayout(false);
+			this.tableLayoutPanel2.ResumeLayout(false);
+			this.groupBox5.ResumeLayout(false);
+			this.groupBox5.PerformLayout();
+			this.groupBox4.ResumeLayout(false);
+			this.groupBox4.PerformLayout();
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
 			this.ResumeLayout(false);
@@ -773,5 +855,11 @@ namespace ProFak.UI
 		private System.Windows.Forms.ComboBox comboBoxWaluta;
 		private System.Windows.Forms.ComboBox comboBoxNazwaNabywcy;
 		private System.Windows.Forms.Button buttonWaluta;
+		private System.Windows.Forms.TabPage tabPage3;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+		private System.Windows.Forms.GroupBox groupBox5;
+		private System.Windows.Forms.TextBox textBox2;
+		private System.Windows.Forms.GroupBox groupBox4;
+		private System.Windows.Forms.TextBox textBox1;
 	}
 }

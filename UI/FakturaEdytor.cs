@@ -93,7 +93,8 @@ namespace ProFak.UI
 				faktura.TerminPlatnosci = DateTime.Now.Date;
 				faktura.WalutaRef = Kontekst.Baza.Waluty.FirstOrDefault(waluta => waluta.CzyDomyslna);
 				faktura.SposobPlatnosciRef = Kontekst.Baza.SposobyPlatnosci.FirstOrDefault(sposob => sposob.CzyDomyslny);
-				faktura.Uwagi = "";
+				faktura.UwagiWewnetrzne = "";
+				faktura.UwagiPubliczne = "";
 			}
 		}
 	}
