@@ -35,7 +35,7 @@ namespace ProFak.UI
 			edytor.Przygotuj(nowyKontekst, rekord);
 			if (okno.ShowDialog() == DialogResult.OK)
 			{
-				nowyKontekst.Baza.SaveChanges();
+				nowyKontekst.Zapisz();
 			}
 			else
 			{

@@ -32,7 +32,7 @@ namespace ProFak.UI
 			edytor.Przygotuj(nowyKontekst, rekord);
 			if (okno.ShowDialog() != DialogResult.OK) return;
 			nowyKontekst.Baza.Set<TRekord>().Add(rekord);
-			nowyKontekst.Baza.SaveChanges();
+			nowyKontekst.Zapisz();
 		}
 	}
 }
