@@ -37,6 +37,7 @@ namespace ProFak.UI
 			dialog.CzyPrzyciskiWidoczne = false;
 			dialog.Size = new System.Drawing.Size(800, 450);
 			if (dialog.ShowDialog() != DialogResult.OK) return default;
+			nowyKontekst.Zapisz();
 			return wybor.WybranyRekord;
 		}
 

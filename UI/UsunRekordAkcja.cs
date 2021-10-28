@@ -16,9 +16,10 @@ namespace ProFak.UI
 
 		public override void Uruchom(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy)
 		{
+			using var nowyKontekst = new Kontekst(kontekst);
 			if (MessageBox.Show("Czy na pewno chcesz usunąć zaznaczoną pozycję?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
-			kontekst.Baza.Set<TRekord>().RemoveRange(zaznaczoneRekordy);
-			kontekst.Zapisz();
+			nowyKontekst.Baza.Set<TRekord>().RemoveRange(zaznaczoneRekordy);
+			nowyKontekst.Zapisz();
 		}
 	}
 }
