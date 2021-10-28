@@ -20,9 +20,9 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.FakturaId).IsRequired();
 			builder.Property(e => e.TowarId).IsRequired();
 			builder.Property(e => e.Opis).IsRequired();
-			builder.Property(e => e.KwotaNetto).HasDefaultValue(0).IsRequired();
-			builder.Property(e => e.KwotaVat).HasDefaultValue(0).IsRequired();
-			builder.Property(e => e.KwotaBrutto).HasDefaultValue(0).IsRequired();
+			builder.Property(e => e.CenaNetto).HasDefaultValue(0).IsRequired();
+			builder.Property(e => e.CenaVat).HasDefaultValue(0).IsRequired();
+			builder.Property(e => e.CenaBrutto).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.Ilosc).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.WartoscNetto).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.WartoscVat).HasDefaultValue(0).IsRequired();

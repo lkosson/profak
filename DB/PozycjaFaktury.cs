@@ -11,9 +11,9 @@ namespace ProFak.DB
 		public int FakturaId { get; set; }
 		public int TowarId { get; set; }
 		public string Opis { get; set; }
-		public decimal KwotaNetto { get; set; }
-		public decimal KwotaVat { get; set; }
-		public decimal KwotaBrutto { get; set; }
+		public decimal CenaNetto { get; set; }
+		public decimal CenaVat { get; set; }
+		public decimal CenaBrutto { get; set; }
 		public decimal Ilosc { get; set; }
 		public decimal WartoscNetto { get; set; }
 		public decimal WartoscVat { get; set; }
