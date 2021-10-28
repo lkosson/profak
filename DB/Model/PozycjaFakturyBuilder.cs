@@ -28,6 +28,7 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.WartoscVat).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.WartoscBrutto).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.CzyWedlugCenBrutto).HasDefaultValue(false).IsRequired();
+			builder.Property(e => e.CzyWartosciReczne).HasDefaultValue(false).IsRequired();
 
 			builder.Ignore(e => e.FakturaRef);
 			builder.Ignore(e => e.TowarRef);

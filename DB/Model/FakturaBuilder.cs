@@ -37,6 +37,7 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.KursWaluty).HasDefaultValue(1).IsRequired();
 			builder.Property(e => e.OpisSposobuPlatnosci).IsRequired();
 			builder.Property(e => e.Rodzaj).HasDefaultValue(RodzajFaktury.Sprzedaż).IsRequired();
+			builder.Property(e => e.CzyWartosciReczne).HasDefaultValue(false).IsRequired();
 
 			builder.Property(e => e.SprzedawcaId);
 			builder.Property(e => e.NabywcaId);
