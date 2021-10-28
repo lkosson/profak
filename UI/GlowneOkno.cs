@@ -52,6 +52,7 @@ namespace ProFak.UI
 			else if (pozycja.Name == "Towary") Wyswietl(Spis.Towary, pozycja.Name);
 			else if (pozycja.Name == "FakturyZakupu") Wyswietl(Spis.FakturyZakupu, pozycja.Name);
 			else if (pozycja.Name == "FakturySprzedazy") Wyswietl(Spis.FakturySprzedazy, pozycja.Name);
+			else if (pozycja.Name == "PozycjeFaktur") Wyswietl(Spis.PozycjeFaktur, pozycja.Name);
 		}
 
 		private void Wyswietl(Func<Kontekst, Control> generator, string nazwa)

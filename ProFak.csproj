@@ -30,6 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="UI\PozycjaFakturySpis.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="UI\FakturaZakupuSpis.cs">
       <SubType>Component</SubType>
     </Compile>

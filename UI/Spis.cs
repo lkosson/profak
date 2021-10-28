@@ -77,6 +77,15 @@ namespace ProFak.UI
 			);
 		}
 
+		public static SpisZAkcjami<PozycjaFaktury> PozycjeFaktur(Kontekst kontekst)
+		{
+			return SpisZAkcjami<PozycjaFaktury>.Utworz(new PozycjaFakturySpis { Kontekst = kontekst },
+				new DodajRekordAkcja<PozycjaFaktury, PozycjaFakturyEdytor>("Nowa pozycja"),
+				new EdytujRekordAkcja<PozycjaFaktury, PozycjaFakturyEdytor>("Edycja pozycji"),
+				new UsunRekordAkcja<PozycjaFaktury>()
+			);
+		}
+
 		public static SpisZAkcjami<SposobPlatnosci> SposobyPlatnosci(Kontekst kontekst)
 		{
 			return SpisZAkcjami<SposobPlatnosci>.Utworz(new SposobPlatnosciSpis { Kontekst = kontekst },

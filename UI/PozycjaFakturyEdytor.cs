@@ -1,4 +1,5 @@
-﻿using ProFak.DB;
+﻿using Microsoft.EntityFrameworkCore;
+using ProFak.DB;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,6 +31,28 @@ namespace ProFak.UI
 
 		private void WypelnijSpisy()
 		{
+			new SwobodnySlownik<Towar>(
+				Kontekst, comboBoxTowar, buttonTowar,
+				Kontekst.Baza.Towary.ToList,
+				towar => towar.Nazwa,
+				towar => { if (towar == null || Rekord.TowarRef == towar.Ref) return; Rekord.TowarRef = towar; Rekord.Opis = towar.Nazwa; KonfigurujPoleIlosci(); bindingSource.ResetCurrentItem(); },
+				Spis.Towary)
+				.Zainstaluj();
+		}
+
+		private void KonfigurujPoleIlosci()
+		{
+			var towar = Kontekst.Baza.Towary.Include(towar => towar.JednostkaMiary).FirstOrDefault(towar => towar.Id == Rekord.TowarId);
+			if (towar == null)
+			{
+				labelJednostka.Text = "";
+				numericUpDownIlosc.DecimalPlaces = 0;
+			}
+			else
+			{
+				labelJednostka.Text = towar.JednostkaMiary.Nazwa;
+				numericUpDownIlosc.DecimalPlaces = towar.JednostkaMiary.LiczbaMiescPoPrzecinku;
+			}
 		}
 	}
 }

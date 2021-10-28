@@ -45,6 +45,7 @@ namespace ProFak.UI
             treeNode7,
             treeNode8,
             treeNode9});
+			System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("(tmp) Pozycje faktur");
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.treeViewMenu = new System.Windows.Forms.TreeView();
 			this.panelZawartosc = new System.Windows.Forms.Panel();
@@ -85,11 +86,14 @@ namespace ProFak.UI
 			treeNode9.Text = "Waluty";
 			treeNode10.Name = "Node0";
 			treeNode10.Text = "Słowniki";
+			treeNode11.Name = "PozycjeFaktur";
+			treeNode11.Text = "(tmp) Pozycje faktur";
 			this.treeViewMenu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode3,
             treeNode4,
             treeNode5,
-            treeNode10});
+            treeNode10,
+            treeNode11});
 			this.treeViewMenu.Size = new System.Drawing.Size(247, 593);
 			this.treeViewMenu.TabIndex = 1;
 			this.treeViewMenu.DoubleClick += new System.EventHandler(this.treeViewMenu_DoubleClick);
