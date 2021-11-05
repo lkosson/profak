@@ -121,5 +121,14 @@ namespace ProFak.UI
 				new UsunRekordAkcja<Waluta>()
 			);
 		}
+
+		public static SpisZAkcjami<Wplata> Wplaty(Kontekst kontekst)
+		{
+			return SpisZAkcjami<Wplata>.Utworz(new WplataSpis { Kontekst = kontekst },
+				new DodajRekordAkcja<Wplata, WplataEdytor>("Nowa wpłata"),
+				new EdytujRekordAkcja<Wplata, WplataEdytor>("Edycja wpłaty"),
+				new UsunRekordAkcja<Wplata>()
+			);
+		}
 	}
 }

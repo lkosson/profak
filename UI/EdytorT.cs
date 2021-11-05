@@ -84,13 +84,22 @@ namespace ProFak.UI
 			DodajWiersz(checkbox, null);
 		}
 
-		public void DodajNumericUpDown(string pole, string etykieta, string format = "")
+		public void DodajNumericUpDown(string pole, string etykieta, string format = "", int poprzecinku = 2)
 		{
 			var nud = new NumericUpDown();
 			nud.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 			nud.TextAlign = HorizontalAlignment.Right;
 			nud.DataBindings.Add(new Binding("Value", bindingSource, pole, true, DataSourceUpdateMode.OnPropertyChanged, null, format));
+			nud.DecimalPlaces = poprzecinku;
 			DodajWiersz(nud, etykieta);
+		}
+
+		public void DodajDatePicker(string pole, string etykieta)
+		{
+			var dateTimePicker = new DateTimePicker();
+			dateTimePicker.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+			dateTimePicker.DataBindings.Add(new Binding("Value", bindingSource, pole, true, DataSourceUpdateMode.OnValidation));
+			DodajWiersz(dateTimePicker, etykieta);
 		}
 
 		protected override void Dispose(bool disposing)
