@@ -87,14 +87,8 @@ namespace ProFak.UI
 		{
 			if (faktura.Id == 0)
 			{
-				faktura.DataSprzedazy = DateTime.Now.Date;
-				faktura.DataWystawienia = DateTime.Now.Date;
-				faktura.DataWprowadzenia = DateTime.Now.Date;
-				faktura.TerminPlatnosci = DateTime.Now.Date;
-				faktura.WalutaRef = Kontekst.Baza.Waluty.FirstOrDefault(waluta => waluta.CzyDomyslna);
-				faktura.SposobPlatnosciRef = Kontekst.Baza.SposobyPlatnosci.FirstOrDefault(sposob => sposob.CzyDomyslny);
-				faktura.UwagiWewnetrzne = "";
-				faktura.UwagiPubliczne = "";
+				faktura.WalutaRef = Kontekst.Baza.Waluty.OrderByDescending(waluta => waluta.CzyDomyslna).ThenBy(waluta => waluta.Id).FirstOrDefault();
+				faktura.SposobPlatnosciRef = Kontekst.Baza.SposobyPlatnosci.OrderByDescending(sposob => sposob.CzyDomyslny).ThenBy(sposob => sposob.Id).FirstOrDefault();
 			}
 		}
 	}

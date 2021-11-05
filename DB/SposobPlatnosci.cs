@@ -13,5 +13,10 @@ namespace ProFak.DB
 		public bool CzyDomyslny { get; set; }
 
 		public string CzyDomyslnyFmt => CzyDomyslny ? "Tak" : "Nie";
+
+		public SposobPlatnosci()
+		{
+			Nazwa = "";
+		}
 	}
 }

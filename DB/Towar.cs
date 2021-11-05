@@ -23,6 +23,11 @@ namespace ProFak.DB
 
 		public StawkaVat StawkaVat { get; set; }
 		public JednostkaMiary JednostkaMiary { get; set; }
+
+		public Towar()
+		{
+			Nazwa = "";
+		}
 	}
 
 	enum RodzajTowaru

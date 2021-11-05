@@ -26,5 +26,10 @@ namespace ProFak.DB
 
 		public Faktura Faktura { get; set; }
 		public Towar Towar { get; set; }
+
+		public PozycjaFaktury()
+		{
+			Opis = "";
+		}
 	}
 }

@@ -17,15 +17,15 @@ namespace ProFak.DB.Model
 			builder.HasKey(e => e.Id);
 
 			builder.Property(e => e.Id).ValueGeneratedOnAdd().IsRequired();
-			builder.Property(e => e.Nazwa).IsRequired();
-			builder.Property(e => e.PelnaNazwa).IsRequired();
-			builder.Property(e => e.NIP).IsRequired();
-			builder.Property(e => e.AdresRejestrowy);
-			builder.Property(e => e.AdresKorespondencyjny);
-			builder.Property(e => e.RachunekBankowy);
-			builder.Property(e => e.Telefon);
-			builder.Property(e => e.EMail);
-			builder.Property(e => e.Uwagi);
+			builder.Property(e => e.Nazwa).HasDefaultValue("").IsRequired();
+			builder.Property(e => e.PelnaNazwa).HasDefaultValue("").IsRequired();
+			builder.Property(e => e.NIP).HasDefaultValue("").IsRequired();
+			builder.Property(e => e.AdresRejestrowy).HasDefaultValue("");
+			builder.Property(e => e.AdresKorespondencyjny).HasDefaultValue("");
+			builder.Property(e => e.RachunekBankowy).HasDefaultValue("");
+			builder.Property(e => e.Telefon).HasDefaultValue("");
+			builder.Property(e => e.EMail).HasDefaultValue("");
+			builder.Property(e => e.Uwagi).HasDefaultValue("");
 			builder.Property(e => e.CzyArchiwalny).HasDefaultValue(false).IsRequired();
 			builder.Property(e => e.CzyPodmiot).HasDefaultValue(false).IsRequired();
 		}

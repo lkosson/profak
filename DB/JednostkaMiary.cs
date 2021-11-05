@@ -14,5 +14,11 @@ namespace ProFak.DB
 		public int LiczbaMiescPoPrzecinku { get; set; }
 
 		public string CzyDomyslnaFmt => CzyDomyslna ? "Tak" : "Nie";
+
+		public JednostkaMiary()
+		{
+			Skrot = "";
+			Nazwa = "";
+		}
 	}
 }

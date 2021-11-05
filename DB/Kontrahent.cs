@@ -19,5 +19,18 @@ namespace ProFak.DB
 		public string Uwagi { get; set; }
 		public bool CzyArchiwalny { get; set; }
 		public bool CzyPodmiot { get; set; }
+
+		public Kontrahent()
+		{
+			Nazwa = "";
+			PelnaNazwa = "";
+			NIP = "";
+			AdresRejestrowy = "";
+			AdresKorespondencyjny = "";
+			RachunekBankowy = "";
+			Telefon = "";
+			EMail = "";
+			Uwagi = "";
+		}
 	}
 }

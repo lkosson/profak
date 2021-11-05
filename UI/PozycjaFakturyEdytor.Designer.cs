@@ -91,7 +91,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel1.RowCount = 2;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(484, 201);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(500, 201);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// groupBox1
@@ -100,7 +100,7 @@ namespace ProFak.UI
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox1.Location = new System.Drawing.Point(3, 40);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(236, 158);
+			this.groupBox1.Size = new System.Drawing.Size(244, 158);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Cena jednostkowa";
@@ -126,7 +126,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel3.Size = new System.Drawing.Size(230, 136);
+			this.tableLayoutPanel3.Size = new System.Drawing.Size(238, 136);
 			this.tableLayoutPanel3.TabIndex = 0;
 			// 
 			// label3
@@ -171,7 +171,7 @@ namespace ProFak.UI
             0,
             0});
 			this.numericUpDown2.Name = "numericUpDown2";
-			this.numericUpDown2.Size = new System.Drawing.Size(178, 23);
+			this.numericUpDown2.Size = new System.Drawing.Size(186, 23);
 			this.numericUpDown2.TabIndex = 3;
 			this.numericUpDown2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
@@ -187,7 +187,7 @@ namespace ProFak.UI
             0,
             0});
 			this.numericUpDown3.Name = "numericUpDown3";
-			this.numericUpDown3.Size = new System.Drawing.Size(178, 23);
+			this.numericUpDown3.Size = new System.Drawing.Size(186, 23);
 			this.numericUpDown3.TabIndex = 3;
 			this.numericUpDown3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
@@ -203,7 +203,7 @@ namespace ProFak.UI
             0,
             0});
 			this.numericUpDown4.Name = "numericUpDown4";
-			this.numericUpDown4.Size = new System.Drawing.Size(178, 23);
+			this.numericUpDown4.Size = new System.Drawing.Size(186, 23);
 			this.numericUpDown4.TabIndex = 3;
 			this.numericUpDown4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
@@ -222,9 +222,9 @@ namespace ProFak.UI
 			// 
 			this.groupBox2.Controls.Add(this.tableLayoutPanel4);
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBox2.Location = new System.Drawing.Point(245, 40);
+			this.groupBox2.Location = new System.Drawing.Point(253, 40);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(236, 158);
+			this.groupBox2.Size = new System.Drawing.Size(244, 158);
 			this.groupBox2.TabIndex = 1;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Łączna wartość";
@@ -250,7 +250,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel4.Size = new System.Drawing.Size(230, 136);
+			this.tableLayoutPanel4.Size = new System.Drawing.Size(238, 136);
 			this.tableLayoutPanel4.TabIndex = 0;
 			// 
 			// label6
@@ -295,7 +295,7 @@ namespace ProFak.UI
             0,
             0});
 			this.numericUpDown5.Name = "numericUpDown5";
-			this.numericUpDown5.Size = new System.Drawing.Size(178, 23);
+			this.numericUpDown5.Size = new System.Drawing.Size(186, 23);
 			this.numericUpDown5.TabIndex = 3;
 			this.numericUpDown5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
@@ -311,7 +311,7 @@ namespace ProFak.UI
             0,
             0});
 			this.numericUpDown6.Name = "numericUpDown6";
-			this.numericUpDown6.Size = new System.Drawing.Size(178, 23);
+			this.numericUpDown6.Size = new System.Drawing.Size(186, 23);
 			this.numericUpDown6.TabIndex = 3;
 			this.numericUpDown6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
@@ -327,7 +327,7 @@ namespace ProFak.UI
             0,
             0});
 			this.numericUpDown7.Name = "numericUpDown7";
-			this.numericUpDown7.Size = new System.Drawing.Size(178, 23);
+			this.numericUpDown7.Size = new System.Drawing.Size(186, 23);
 			this.numericUpDown7.TabIndex = 3;
 			this.numericUpDown7.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
@@ -363,7 +363,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
 			this.tableLayoutPanel2.RowCount = 1;
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(478, 31);
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(494, 31);
 			this.tableLayoutPanel2.TabIndex = 2;
 			// 
 			// label1
@@ -383,14 +383,14 @@ namespace ProFak.UI
 			this.comboBoxTowar.FormattingEnabled = true;
 			this.comboBoxTowar.Location = new System.Drawing.Point(75, 4);
 			this.comboBoxTowar.Name = "comboBoxTowar";
-			this.comboBoxTowar.Size = new System.Drawing.Size(233, 23);
+			this.comboBoxTowar.Size = new System.Drawing.Size(249, 23);
 			this.comboBoxTowar.TabIndex = 1;
 			// 
 			// buttonTowar
 			// 
 			this.buttonTowar.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.buttonTowar.AutoSize = true;
-			this.buttonTowar.Location = new System.Drawing.Point(314, 3);
+			this.buttonTowar.Location = new System.Drawing.Point(330, 3);
 			this.buttonTowar.Name = "buttonTowar";
 			this.buttonTowar.Size = new System.Drawing.Size(26, 25);
 			this.buttonTowar.TabIndex = 2;
@@ -402,7 +402,7 @@ namespace ProFak.UI
 			this.numericUpDownIlosc.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.numericUpDownIlosc.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bindingSource, "Ilosc", true));
 			this.numericUpDownIlosc.DecimalPlaces = 3;
-			this.numericUpDownIlosc.Location = new System.Drawing.Point(366, 4);
+			this.numericUpDownIlosc.Location = new System.Drawing.Point(382, 4);
 			this.numericUpDownIlosc.Maximum = new decimal(new int[] {
             999999999,
             0,
@@ -417,7 +417,7 @@ namespace ProFak.UI
 			// 
 			this.labelJednostka.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelJednostka.AutoSize = true;
-			this.labelJednostka.Location = new System.Drawing.Point(445, 8);
+			this.labelJednostka.Location = new System.Drawing.Point(461, 8);
 			this.labelJednostka.Name = "labelJednostka";
 			this.labelJednostka.Size = new System.Drawing.Size(30, 15);
 			this.labelJednostka.TabIndex = 4;
@@ -428,8 +428,9 @@ namespace ProFak.UI
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.tableLayoutPanel1);
+			this.MinimumSize = new System.Drawing.Size(500, 200);
 			this.Name = "PozycjaFakturyEdytor";
-			this.Size = new System.Drawing.Size(484, 201);
+			this.Size = new System.Drawing.Size(500, 201);
 			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();

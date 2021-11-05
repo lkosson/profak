@@ -17,25 +17,25 @@ namespace ProFak.DB.Model
 			builder.HasKey(e => e.Id);
 
 			builder.Property(e => e.Id).ValueGeneratedOnAdd().IsRequired();
-			builder.Property(e => e.Numer).IsRequired();
+			builder.Property(e => e.Numer).HasDefaultValue("").IsRequired();
 			builder.Property(e => e.DataWystawienia).IsRequired();
 			builder.Property(e => e.DataSprzedazy).IsRequired();
 			builder.Property(e => e.DataWprowadzenia).IsRequired();
 			builder.Property(e => e.TerminPlatnosci).IsRequired();
-			builder.Property(e => e.NIPSprzedawcy).IsRequired();
-			builder.Property(e => e.NazwaSprzedawcy).IsRequired();
-			builder.Property(e => e.DaneSprzedawcy).IsRequired();
-			builder.Property(e => e.NIPNabywcy).IsRequired();
-			builder.Property(e => e.NazwaNabywcy).IsRequired();
-			builder.Property(e => e.DaneNabywcy).IsRequired();
-			builder.Property(e => e.RachunekBankowy).IsRequired();
+			builder.Property(e => e.NIPSprzedawcy).HasDefaultValue("").IsRequired();
+			builder.Property(e => e.NazwaSprzedawcy).HasDefaultValue("").IsRequired();
+			builder.Property(e => e.DaneSprzedawcy).HasDefaultValue("").IsRequired();
+			builder.Property(e => e.NIPNabywcy).HasDefaultValue("").IsRequired();
+			builder.Property(e => e.NazwaNabywcy).HasDefaultValue("").IsRequired();
+			builder.Property(e => e.DaneNabywcy).HasDefaultValue("").IsRequired();
+			builder.Property(e => e.RachunekBankowy).HasDefaultValue("").IsRequired();
 			builder.Property(e => e.UwagiWewnetrzne).HasDefaultValue("").IsRequired();
 			builder.Property(e => e.UwagiPubliczne).HasDefaultValue("").IsRequired();
 			builder.Property(e => e.RazemNetto).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.RazemVat).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.RazemBrutto).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.KursWaluty).HasDefaultValue(1).IsRequired();
-			builder.Property(e => e.OpisSposobuPlatnosci).IsRequired();
+			builder.Property(e => e.OpisSposobuPlatnosci).HasDefaultValue("").IsRequired();
 			builder.Property(e => e.Rodzaj).HasDefaultValue(RodzajFaktury.Sprzedaż).IsRequired();
 			builder.Property(e => e.CzyWartosciReczne).HasDefaultValue(false).IsRequired();
 

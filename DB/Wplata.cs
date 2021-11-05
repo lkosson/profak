@@ -15,5 +15,10 @@ namespace ProFak.DB
 		public Ref<Faktura> FakturaRef { get => FakturaId; set => FakturaId = value; }
 
 		public Faktura Faktura { get; set; }
+
+		public Wplata()
+		{
+			Data = DateTime.Now.Date;
+		}
 	}
 }

@@ -17,7 +17,7 @@ namespace ProFak.DB.Model
 			builder.HasKey(e => e.Id);
 
 			builder.Property(e => e.Id).ValueGeneratedOnAdd().IsRequired();
-			builder.Property(e => e.Nazwa).IsRequired();
+			builder.Property(e => e.Nazwa).HasDefaultValue("").IsRequired();
 			builder.Property(e => e.LiczbaDni).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.CzyDomyslny).HasDefaultValue(false).IsRequired();
 		}

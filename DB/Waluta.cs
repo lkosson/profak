@@ -13,5 +13,11 @@ namespace ProFak.DB
 		public bool CzyDomyslna { get; set; }
 
 		public string CzyDomyslnaFmt => CzyDomyslna ? "Tak" : "Nie";
+
+		public Waluta()
+		{
+			Skrot = "";
+			Nazwa = "";
+		}
 	}
 }

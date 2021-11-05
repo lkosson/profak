@@ -53,6 +53,25 @@ namespace ProFak.DB
 
 		public List<PozycjaFaktury> Pozycje { get; set; }
 		public List<Wplata> Wplaty { get; set; }
+
+		public Faktura()
+		{
+			Numer = "";
+			UwagiWewnetrzne = "";
+			UwagiPubliczne = "";
+			NIPSprzedawcy = "";
+			NazwaSprzedawcy = "";
+			DaneSprzedawcy = "";
+			NIPNabywcy = "";
+			NazwaNabywcy = "";
+			DaneNabywcy = "";
+			RachunekBankowy = "";
+			OpisSposobuPlatnosci = "";
+			DataSprzedazy = DateTime.Now.Date;
+			DataWystawienia = DateTime.Now.Date;
+			DataWprowadzenia = DateTime.Now.Date;
+			TerminPlatnosci = DateTime.Now.Date;
+		}
 	}
 
 	enum RodzajFaktury
