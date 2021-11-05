@@ -75,7 +75,7 @@ namespace ProFak.UI
 		protected override void OnCreateControl()
 		{
 			base.OnCreateControl();
-			Przeladuj();
+			if (Kontekst != null) Przeladuj();
 			bindingSource.ResetBindings(true);
 		}
 

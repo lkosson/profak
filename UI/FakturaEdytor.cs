@@ -15,6 +15,7 @@ namespace ProFak.UI
 	{
 		public Faktura Rekord { get => bindingSource.DataSource as Faktura; private set => bindingSource.DataSource = value; }
 		public Kontekst Kontekst { get; private set; }
+		private readonly SpisZAkcjami<Wplata, WplataSpis> wplaty;
 
 		public FakturaEdytor()
 		{
@@ -22,6 +23,11 @@ namespace ProFak.UI
 			comboBoxRodzaj.DataSource = Enum.GetValues(typeof(RodzajFaktury)).Cast<RodzajFaktury>().Select(r => new PozycjaListy<RodzajFaktury> { Wartosc = r, Opis = r.ToString() }).ToArray();
 			comboBoxRodzaj.DisplayMember = "Opis";
 			comboBoxRodzaj.ValueMember = "Wartosc";
+
+			wplaty = Spis.Wplaty(Kontekst);
+			wplaty.Dock = DockStyle.Fill;
+			wplaty.Spis.FakturaRef = Rekord;
+			tabPageWplaty.Controls.Add(wplaty);
 		}
 
 		public void Przygotuj(Kontekst kontekst, Faktura rekord)
@@ -30,6 +36,8 @@ namespace ProFak.UI
 			WypelnijSpisy();
 			UstawObowiazkowePola(rekord);
 			Rekord = rekord;
+			wplaty.Spis.FakturaRef = rekord;
+			wplaty.Spis.Kontekst = kontekst;
 		}
 
 		private void WypelnijSpisy()
@@ -81,11 +89,6 @@ namespace ProFak.UI
 				kontrahent => { if (kontrahent == null || Rekord.SprzedawcaRef == kontrahent.Ref) return; Rekord.SprzedawcaRef = kontrahent; Rekord.NIPSprzedawcy = kontrahent.NIP; Rekord.NazwaSprzedawcy = kontrahent.PelnaNazwa; Rekord.DaneSprzedawcy = kontrahent.AdresRejestrowy; bindingSource.ResetCurrentItem(); },
 				Spis.Kontrahenci)
 				.Zainstaluj();
-
-			var wplaty = Spis.Wplaty(Kontekst);
-			wplaty.Dock = DockStyle.Fill;
-			wplaty.Spis.FakturaRef = Rekord;
-			tabPageWplaty.Controls.Add(wplaty);
 		}
 
 		private void UstawObowiazkowePola(Faktura faktura)

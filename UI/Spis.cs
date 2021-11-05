@@ -124,8 +124,9 @@ namespace ProFak.UI
 
 		public static SpisZAkcjami<Wplata, WplataSpis> Wplaty(Kontekst kontekst)
 		{
-			return SpisZAkcjami.Utworz(new WplataSpis { Kontekst = kontekst },
-				new DodajRekordAkcja<Wplata, WplataEdytor>("Nowa wpłata"),
+			var spis = new WplataSpis { Kontekst = kontekst };
+			return SpisZAkcjami.Utworz(spis,
+				new DodajRekordAkcja<Wplata, WplataEdytor>("Nowa wpłata", wplata => wplata.FakturaRef = spis.FakturaRef),
 				new EdytujRekordAkcja<Wplata, WplataEdytor>("Edycja wpłaty"),
 				new UsunRekordAkcja<Wplata>()
 			);

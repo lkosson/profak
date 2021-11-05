@@ -13,12 +13,14 @@ namespace ProFak.UI
 		where TEdytor : Control, IEdytor<TRekord>, new()
 	{
 		private readonly string tytul;
+		private readonly Action<TRekord> przygotujRekord;
 
 		public override string Nazwa => "Dodaj nową pozycję";
 		
-		public DodajRekordAkcja(string tytul)
+		public DodajRekordAkcja(string tytul, Action<TRekord> przygotujRekord = null)
 		{
 			this.tytul = tytul;
+			this.przygotujRekord = przygotujRekord;
 		}
 
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<TRekord> zaznaczoneRekordy) => true;
@@ -26,6 +28,7 @@ namespace ProFak.UI
 		public override void Uruchom(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy)
 		{
 			var rekord = new TRekord();
+			przygotujRekord(rekord);
 			using var nowyKontekst = new Kontekst(kontekst);
 			using var edytor = new TEdytor();
 			using var okno = new Dialog(tytul, edytor, nowyKontekst);
