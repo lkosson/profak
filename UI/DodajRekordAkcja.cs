@@ -30,12 +30,14 @@ namespace ProFak.UI
 			var rekord = new TRekord();
 			przygotujRekord(rekord);
 			using var nowyKontekst = new Kontekst(kontekst);
+			using var transakcja = nowyKontekst.Transakcja();
 			using var edytor = new TEdytor();
 			using var okno = new Dialog(tytul, edytor, nowyKontekst);
 			edytor.Przygotuj(nowyKontekst, rekord);
 			if (okno.ShowDialog() != DialogResult.OK) return;
 			nowyKontekst.Baza.Set<TRekord>().Add(rekord);
-			nowyKontekst.Zapisz();
+			nowyKontekst.Baza.Zapisz();
+			transakcja.Zatwierdz();
 		}
 	}
 }

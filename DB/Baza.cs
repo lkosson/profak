@@ -66,5 +66,7 @@ namespace ProFak.DB
 		{
 			DB.Model.ProFakModelBuilder.Configure(modelBuilder);
 		}
+
+		public void Zapisz() => SaveChanges();
 	}
 }

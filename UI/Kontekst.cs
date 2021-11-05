@@ -15,42 +15,29 @@ namespace ProFak.UI
 		public Baza Baza { get; }
 		public Dialog Dialog { get; set; }
 		public Kontekst Poprzedni { get; }
-		private readonly IDbContextTransaction transakcja;
-		private string savepoint;
-		private static int sp;
+		private Transakcja AktywnaTransakcja => lokalnaTransakcja ?? Poprzedni?.AktywnaTransakcja;
+		private Transakcja lokalnaTransakcja;
 
 		public Kontekst()
 		{
 			Baza = new Baza();
-			transakcja = Baza.Database.BeginTransaction();
-			UtworzSavepoint();
 		}
 
 		public Kontekst(Kontekst poprzedni)
 		{
 			Baza = poprzedni.Baza;
 			Poprzedni = poprzedni;
-			transakcja = poprzedni.transakcja;
-			UtworzSavepoint();
 		}
 
-		private void UtworzSavepoint()
+		public Transakcja Transakcja()
 		{
-			savepoint = "SP" + Interlocked.Increment(ref sp);
-			transakcja.CreateSavepoint(savepoint);
-		}
-
-		public void Zapisz()
-		{
-			Baza.SaveChanges();
-			transakcja.ReleaseSavepoint(savepoint);
-			if (Poprzedni == null) transakcja.Commit();
-			savepoint = null;
+			if (lokalnaTransakcja != null) throw new InvalidOperationException("Transakcja jest już aktywna.");
+			lokalnaTransakcja = AktywnaTransakcja == null ? new Transakcja(Baza) : new Transakcja(AktywnaTransakcja);
+			return lokalnaTransakcja;
 		}
 
 		public void Dispose()
 		{
-			if (savepoint != null) transakcja.RollbackToSavepoint(savepoint);
 			if (Poprzedni == null) Baza.Dispose();
 		}
 	}

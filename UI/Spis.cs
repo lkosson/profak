@@ -30,6 +30,7 @@ namespace ProFak.UI
 		{
 			var wybor = new WybierzRekordAkcja<TRekord>();
 			using var nowyKontekst = new Kontekst(kontekst);
+			using var transakcja = nowyKontekst.Transakcja();
 			using var spis = generatorSpisu(nowyKontekst);
 			using var dialog = new Dialog(tytul, spis, nowyKontekst);
 			spis.Akcje.Add(wybor);
@@ -37,7 +38,8 @@ namespace ProFak.UI
 			dialog.CzyPrzyciskiWidoczne = false;
 			dialog.Size = new System.Drawing.Size(800, 450);
 			if (dialog.ShowDialog() != DialogResult.OK) return default;
-			nowyKontekst.Zapisz();
+			nowyKontekst.Baza.Zapisz();
+			transakcja.Zatwierdz();
 			return wybor.WybranyRekord;
 		}
 
