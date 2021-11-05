@@ -22,5 +22,7 @@ namespace ProFak.DB
 		public static implicit operator Ref<T>(int id) => new Ref<T>(id);
 		public static implicit operator Ref<T>(int? id) => id.GetValueOrDefault();
 		public static implicit operator Ref<T>(Rekord<T> rekord) => rekord?.Id;
+		public bool IsNull => Id == 0;
+		public bool IsNotNull => !IsNull;
 	}
 }

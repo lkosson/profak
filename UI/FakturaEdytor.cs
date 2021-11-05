@@ -16,6 +16,7 @@ namespace ProFak.UI
 		public Faktura Rekord { get => bindingSource.DataSource as Faktura; private set => bindingSource.DataSource = value; }
 		public Kontekst Kontekst { get; private set; }
 		private readonly SpisZAkcjami<Wplata, WplataSpis> wplaty;
+		private readonly SpisZAkcjami<PozycjaFaktury, PozycjaFakturySpis> pozycjeFaktury;
 
 		public FakturaEdytor()
 		{
@@ -25,9 +26,10 @@ namespace ProFak.UI
 			comboBoxRodzaj.ValueMember = "Wartosc";
 
 			wplaty = Spis.Wplaty(Kontekst);
-			wplaty.Dock = DockStyle.Fill;
-			wplaty.Spis.FakturaRef = Rekord;
 			tabPageWplaty.Controls.Add(wplaty);
+
+			pozycjeFaktury = Spis.PozycjeFaktur(Kontekst);
+			tabPagePozycje.Controls.Add(pozycjeFaktury);
 		}
 
 		public void Przygotuj(Kontekst kontekst, Faktura rekord)
@@ -38,6 +40,8 @@ namespace ProFak.UI
 			Rekord = rekord;
 			wplaty.Spis.FakturaRef = rekord;
 			wplaty.Spis.Kontekst = kontekst;
+			pozycjeFaktury.Spis.FakturaRef = rekord;
+			pozycjeFaktury.Spis.Kontekst = kontekst;
 		}
 
 		private void WypelnijSpisy()

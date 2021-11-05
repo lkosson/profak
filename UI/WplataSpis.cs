@@ -20,7 +20,9 @@ namespace ProFak.UI
 
 		public override void Przeladuj()
 		{
-			Rekordy = Kontekst.Baza.Wplaty.ToList();
+			IQueryable<Wplata> q = Kontekst.Baza.Wplaty;
+			if (FakturaRef.IsNotNull) q = q.Where(wplata => wplata.FakturaId == FakturaRef.Id);
+			Rekordy = q.ToList();
 		}
 	}
 }

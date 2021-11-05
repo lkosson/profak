@@ -10,10 +10,12 @@ namespace ProFak.UI
 {
 	class PozycjaFakturySpis : Spis<PozycjaFaktury>
 	{
+		public Ref<Faktura> FakturaRef { get; set; }
+
 		public PozycjaFakturySpis()
 		{
 			DodajKolumne(nameof(PozycjaFaktury.Opis), "Opis");
-			DodajKolumne(nameof(PozycjaFaktury.Ilosc), "Ilość");
+			DodajKolumne(nameof(PozycjaFaktury.Ilosc), "Ilość", wyrownajDoPrawej: true);
 			DodajKolumne(nameof(PozycjaFaktury.CenaNetto), "Cena netto", wyrownajDoPrawej: true, format: "#,##0.00");
 			DodajKolumne(nameof(PozycjaFaktury.CenaBrutto), "Cena brutto", wyrownajDoPrawej: true, format: "#,##0.00");
 			DodajKolumne(nameof(PozycjaFaktury.WartoscNetto), "Wartość netto", wyrownajDoPrawej: true, format: "#,##0.00");
@@ -24,8 +26,9 @@ namespace ProFak.UI
 
 		public override void Przeladuj()
 		{
-			Rekordy = Kontekst.Baza.PozycjeFaktur
-				.ToList();
+			IQueryable<PozycjaFaktury> q = Kontekst.Baza.PozycjeFaktur;
+			if (FakturaRef.IsNotNull) q = q.Where(pozycja => pozycja.FakturaId == FakturaRef.Id);
+			Rekordy = q.ToList();
 		}
 	}
 }

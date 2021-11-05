@@ -81,8 +81,9 @@ namespace ProFak.UI
 
 		public static SpisZAkcjami<PozycjaFaktury, PozycjaFakturySpis> PozycjeFaktur(Kontekst kontekst)
 		{
-			return SpisZAkcjami.Utworz(new PozycjaFakturySpis { Kontekst = kontekst },
-				new DodajRekordAkcja<PozycjaFaktury, PozycjaFakturyEdytor>("Nowa pozycja"),
+			var spis = new PozycjaFakturySpis { Kontekst = kontekst };
+			return SpisZAkcjami.Utworz(spis,
+				new DodajRekordAkcja<PozycjaFaktury, PozycjaFakturyEdytor>("Nowa pozycja", pozycja => pozycja.FakturaRef = spis.FakturaRef),
 				new EdytujRekordAkcja<PozycjaFaktury, PozycjaFakturyEdytor>("Edycja pozycji"),
 				new UsunRekordAkcja<PozycjaFaktury>()
 			);

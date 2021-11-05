@@ -28,7 +28,7 @@ namespace ProFak.UI
 		public override void Uruchom(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy)
 		{
 			var rekord = new TRekord();
-			przygotujRekord(rekord);
+			if (przygotujRekord != null) przygotujRekord(rekord);
 			using var nowyKontekst = new Kontekst(kontekst);
 			using var transakcja = nowyKontekst.Transakcja();
 			using var edytor = new TEdytor();

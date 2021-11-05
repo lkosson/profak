@@ -18,6 +18,8 @@ namespace ProFak.UI
 
 		public SpisZAkcjami(Spis spis)
 		{
+			Dock = DockStyle.Fill;
+
 			ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
 			ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
 			RowStyles.Add(new RowStyle(SizeType.Percent, 100));
