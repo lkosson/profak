@@ -69,14 +69,14 @@ namespace ProFak.UI
 			this.comboBoxNIPNabywcy = new System.Windows.Forms.ComboBox();
 			this.comboBoxNazwaNabywcy = new System.Windows.Forms.ComboBox();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
-			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.tabPagePozycje = new System.Windows.Forms.TabPage();
+			this.tabPageWplaty = new System.Windows.Forms.TabPage();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			this.groupBox5 = new System.Windows.Forms.GroupBox();
-			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.textBoxNumer = new System.Windows.Forms.TextBox();
 			this.comboBoxRodzaj = new System.Windows.Forms.ComboBox();
@@ -99,8 +99,8 @@ namespace ProFak.UI
 			this.tabControl1.SuspendLayout();
 			this.tabPage3.SuspendLayout();
 			this.tableLayoutPanel2.SuspendLayout();
-			this.groupBox5.SuspendLayout();
 			this.groupBox4.SuspendLayout();
+			this.groupBox5.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -568,8 +568,8 @@ namespace ProFak.UI
 			// 
 			// tabControl1
 			// 
-			this.tabControl1.Controls.Add(this.tabPage1);
-			this.tabControl1.Controls.Add(this.tabPage2);
+			this.tabControl1.Controls.Add(this.tabPagePozycje);
+			this.tabControl1.Controls.Add(this.tabPageWplaty);
 			this.tabControl1.Controls.Add(this.tabPage3);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl1.Location = new System.Drawing.Point(3, 316);
@@ -578,23 +578,23 @@ namespace ProFak.UI
 			this.tabControl1.Size = new System.Drawing.Size(745, 131);
 			this.tabControl1.TabIndex = 50;
 			// 
-			// tabPage1
+			// tabPagePozycje
 			// 
-			this.tabPage1.Location = new System.Drawing.Point(4, 24);
-			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Size = new System.Drawing.Size(737, 103);
-			this.tabPage1.TabIndex = 0;
-			this.tabPage1.Text = "Pozycje";
-			this.tabPage1.UseVisualStyleBackColor = true;
+			this.tabPagePozycje.Location = new System.Drawing.Point(4, 24);
+			this.tabPagePozycje.Name = "tabPagePozycje";
+			this.tabPagePozycje.Size = new System.Drawing.Size(737, 103);
+			this.tabPagePozycje.TabIndex = 0;
+			this.tabPagePozycje.Text = "Pozycje";
+			this.tabPagePozycje.UseVisualStyleBackColor = true;
 			// 
-			// tabPage2
+			// tabPageWplaty
 			// 
-			this.tabPage2.Location = new System.Drawing.Point(4, 24);
-			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Size = new System.Drawing.Size(737, 103);
-			this.tabPage2.TabIndex = 1;
-			this.tabPage2.Text = "Wpłaty";
-			this.tabPage2.UseVisualStyleBackColor = true;
+			this.tabPageWplaty.Location = new System.Drawing.Point(4, 24);
+			this.tabPageWplaty.Name = "tabPageWplaty";
+			this.tabPageWplaty.Size = new System.Drawing.Size(737, 103);
+			this.tabPageWplaty.TabIndex = 1;
+			this.tabPageWplaty.Text = "Wpłaty";
+			this.tabPageWplaty.UseVisualStyleBackColor = true;
 			// 
 			// tabPage3
 			// 
@@ -621,27 +621,6 @@ namespace ProFak.UI
 			this.tableLayoutPanel2.Size = new System.Drawing.Size(737, 103);
 			this.tableLayoutPanel2.TabIndex = 2;
 			// 
-			// groupBox5
-			// 
-			this.groupBox5.Controls.Add(this.textBox2);
-			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBox5.Location = new System.Drawing.Point(371, 3);
-			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(363, 97);
-			this.groupBox5.TabIndex = 1;
-			this.groupBox5.TabStop = false;
-			this.groupBox5.Text = "Uwagi (wewnętrzne)";
-			// 
-			// textBox2
-			// 
-			this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "UwagiWewnetrzne", true));
-			this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBox2.Location = new System.Drawing.Point(3, 19);
-			this.textBox2.Multiline = true;
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(357, 75);
-			this.textBox2.TabIndex = 0;
-			// 
 			// groupBox4
 			// 
 			this.groupBox4.Controls.Add(this.textBox1);
@@ -662,6 +641,27 @@ namespace ProFak.UI
 			this.textBox1.Name = "textBox1";
 			this.textBox1.Size = new System.Drawing.Size(356, 75);
 			this.textBox1.TabIndex = 0;
+			// 
+			// groupBox5
+			// 
+			this.groupBox5.Controls.Add(this.textBox2);
+			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBox5.Location = new System.Drawing.Point(371, 3);
+			this.groupBox5.Name = "groupBox5";
+			this.groupBox5.Size = new System.Drawing.Size(363, 97);
+			this.groupBox5.TabIndex = 1;
+			this.groupBox5.TabStop = false;
+			this.groupBox5.Text = "Uwagi (wewnętrzne)";
+			// 
+			// textBox2
+			// 
+			this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "UwagiWewnetrzne", true));
+			this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textBox2.Location = new System.Drawing.Point(3, 19);
+			this.textBox2.Multiline = true;
+			this.textBox2.Name = "textBox2";
+			this.textBox2.Size = new System.Drawing.Size(357, 75);
+			this.textBox2.TabIndex = 0;
 			// 
 			// tableLayoutPanel1
 			// 
@@ -794,10 +794,10 @@ namespace ProFak.UI
 			this.tabControl1.ResumeLayout(false);
 			this.tabPage3.ResumeLayout(false);
 			this.tableLayoutPanel2.ResumeLayout(false);
-			this.groupBox5.ResumeLayout(false);
-			this.groupBox5.PerformLayout();
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox4.PerformLayout();
+			this.groupBox5.ResumeLayout(false);
+			this.groupBox5.PerformLayout();
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
 			this.ResumeLayout(false);
@@ -820,8 +820,8 @@ namespace ProFak.UI
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
 		private System.Windows.Forms.TabControl tabControl1;
-		private System.Windows.Forms.TabPage tabPage1;
-		private System.Windows.Forms.TabPage tabPage2;
+		private System.Windows.Forms.TabPage tabPagePozycje;
+		private System.Windows.Forms.TabPage tabPageWplaty;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label5;

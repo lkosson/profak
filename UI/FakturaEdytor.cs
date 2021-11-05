@@ -81,6 +81,11 @@ namespace ProFak.UI
 				kontrahent => { if (kontrahent == null || Rekord.SprzedawcaRef == kontrahent.Ref) return; Rekord.SprzedawcaRef = kontrahent; Rekord.NIPSprzedawcy = kontrahent.NIP; Rekord.NazwaSprzedawcy = kontrahent.PelnaNazwa; Rekord.DaneSprzedawcy = kontrahent.AdresRejestrowy; bindingSource.ResetCurrentItem(); },
 				Spis.Kontrahenci)
 				.Zainstaluj();
+
+			var wplaty = Spis.Wplaty(Kontekst);
+			wplaty.Dock = DockStyle.Fill;
+			wplaty.Spis.FakturaRef = Rekord;
+			tabPageWplaty.Controls.Add(wplaty);
 		}
 
 		private void UstawObowiazkowePola(Faktura faktura)

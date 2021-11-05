@@ -9,6 +9,8 @@ namespace ProFak.UI
 {
 	class WplataSpis : Spis<Wplata>
 	{
+		public Ref<Faktura> FakturaRef { get; set; }
+
 		public WplataSpis()
 		{
 			DodajKolumne(nameof(Wplata.Data), "Data");

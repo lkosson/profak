@@ -15,7 +15,7 @@ namespace ProFak.UI
 		public Baza Baza { get; }
 		public Dialog Dialog { get; set; }
 		public Kontekst Poprzedni { get; }
-		private IDbContextTransaction transakcja;
+		private readonly IDbContextTransaction transakcja;
 		private string savepoint;
 		private static int sp;
 
