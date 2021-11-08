@@ -10,6 +10,8 @@ namespace ProFak.UI
 {
 	class PanelAkcji : Panel
 	{
+		public bool CzyGlownySpis { get; set; }
+
 		public PanelAkcji()
 		{
 			MinimumSize = new Size(100, 50);
@@ -68,10 +70,7 @@ namespace ProFak.UI
 			var adapter = (AdapterAkcji)przycisk.Tag;
 			przycisk.Text = adapter.Nazwa;
 			przycisk.Enabled = adapter.CzyDostepna;
-			if (adapter.CzyDomyslna)
-			{
-				FindForm().AcceptButton = przycisk;
-			}
+			if (CzyGlownySpis && adapter.CzyDomyslna) FindForm().AcceptButton = przycisk;
 		}
 
 		private void Przycisk_Click(object sender, EventArgs e)
