@@ -217,7 +217,7 @@ namespace ProFak.UI
 			// dateTimePicker1
 			// 
 			this.dateTimePicker1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.dateTimePicker1.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bindingSource, "DataWystawienia", true));
+			this.dateTimePicker1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "DataWystawienia", true));
 			this.dateTimePicker1.Location = new System.Drawing.Point(119, 3);
 			this.dateTimePicker1.Name = "dateTimePicker1";
 			this.dateTimePicker1.Size = new System.Drawing.Size(238, 23);
@@ -226,7 +226,7 @@ namespace ProFak.UI
 			// dateTimePicker2
 			// 
 			this.dateTimePicker2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.dateTimePicker2.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bindingSource, "DataSprzedazy", true));
+			this.dateTimePicker2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "DataSprzedazy", true));
 			this.dateTimePicker2.Location = new System.Drawing.Point(119, 32);
 			this.dateTimePicker2.Name = "dateTimePicker2";
 			this.dateTimePicker2.Size = new System.Drawing.Size(238, 23);
@@ -235,7 +235,7 @@ namespace ProFak.UI
 			// dateTimePicker3
 			// 
 			this.dateTimePicker3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.dateTimePicker3.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bindingSource, "DataWprowadzenia", true));
+			this.dateTimePicker3.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "DataWprowadzenia", true));
 			this.dateTimePicker3.Location = new System.Drawing.Point(119, 62);
 			this.dateTimePicker3.Name = "dateTimePicker3";
 			this.dateTimePicker3.Size = new System.Drawing.Size(238, 23);
@@ -322,7 +322,7 @@ namespace ProFak.UI
 			// 
 			this.dateTimePicker4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanel9.SetColumnSpan(this.dateTimePicker4, 2);
-			this.dateTimePicker4.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bindingSource, "TerminPlatnosci", true));
+			this.dateTimePicker4.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "TerminPlatnosci", true));
 			this.dateTimePicker4.Location = new System.Drawing.Point(106, 34);
 			this.dateTimePicker4.Name = "dateTimePicker4";
 			this.dateTimePicker4.Size = new System.Drawing.Size(252, 23);

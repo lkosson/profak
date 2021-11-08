@@ -98,7 +98,7 @@ namespace ProFak.UI
 		{
 			var dateTimePicker = new DateTimePicker();
 			dateTimePicker.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-			dateTimePicker.DataBindings.Add(new Binding("Value", bindingSource, pole, true, DataSourceUpdateMode.OnValidation));
+			dateTimePicker.DataBindings.Add(new Binding("Text", bindingSource, pole, true, DataSourceUpdateMode.OnValidation));
 			DodajWiersz(dateTimePicker, etykieta);
 		}
 
