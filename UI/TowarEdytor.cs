@@ -13,7 +13,7 @@ namespace ProFak.UI
 {
 	partial class TowarEdytor : UserControl, IEdytor<Towar>
 	{
-		public Towar Rekord { get => bindingSource.DataSource as Towar; private set => bindingSource.DataSource = value; }
+		public Towar Rekord { get => bindingSource.DataSource as Towar; private set { UzupelnijPowiazaneWlasciwosci(value); bindingSource.DataSource = value; PrzeliczCeny(); } }
 		public Kontekst Kontekst { get; private set; }
 
 		public TowarEdytor()
@@ -22,6 +22,14 @@ namespace ProFak.UI
 			comboBoxRodzaj.DataSource = Enum.GetValues(typeof(RodzajTowaru)).Cast<RodzajTowaru>().Select(r => new PozycjaListy<RodzajTowaru> { Wartosc = r, Opis = r.ToString() }).ToArray();
 			comboBoxRodzaj.DisplayMember = "Opis";
 			comboBoxRodzaj.ValueMember = "Wartosc";
+
+			comboBoxSposobLiczenia.DataSource = new[] { new PozycjaListy<bool> { Wartosc = false, Opis = "według netto" }, new PozycjaListy<bool> { Wartosc = true, Opis = "według brutto" } };
+			comboBoxSposobLiczenia.DisplayMember = "Opis";
+			comboBoxSposobLiczenia.ValueMember = "Wartosc";
+
+			comboBoxWidocznosc.DataSource = new[] { new PozycjaListy<bool> { Wartosc = false, Opis = "widoczny" }, new PozycjaListy<bool> { Wartosc = true, Opis = "ukryty" } };
+			comboBoxWidocznosc.DisplayMember = "Opis";
+			comboBoxWidocznosc.ValueMember = "Wartosc";
 		}
 
 		public void Przygotuj(Kontekst kontekst, Towar rekord)
@@ -33,41 +41,51 @@ namespace ProFak.UI
 
 		private void WypelnijSpisy()
 		{
-			bindingSourceJednostkaMiary.DataSource = Kontekst.Baza.JednostkiMiar.ToList();
-			bindingSourceStawkaVat.DataSource = Kontekst.Baza.StawkiVat.ToList();
+			new SwobodnySlownik<JednostkaMiary>(
+				Kontekst, comboBoxJednostkaMiary, buttonJednostkaMiary,
+				Kontekst.Baza.JednostkiMiar.ToList,
+				jednostka => jednostka.Skrot,
+				jednostka => { Rekord.JednostkaMiary = jednostka; },
+				Spis.JednostkiMiar)
+				.Zainstaluj();
+
+			new SwobodnySlownik<StawkaVat>(
+				Kontekst, comboBoxStawkaVat, buttonStawkaVat,
+				Kontekst.Baza.StawkiVat.ToList,
+				stawka => stawka.Skrot,
+				stawka => { Rekord.StawkaVat = stawka; PrzeliczCeny(); },
+				Spis.StawkiVat)
+				.Zainstaluj();
 		}
 
-		protected override void OnValidating(CancelEventArgs e)
+		private void UzupelnijPowiazaneWlasciwosci(Towar rekord)
 		{
-			Rekord.CzyWedlugCenBrutto = comboBoxSposobLiczenia.SelectedIndex == 1;
-			Rekord.CzyArchiwalny = comboBoxWidocznosc.SelectedIndex == 1;
-			Rekord.Rodzaj = (RodzajTowaru)comboBoxRodzaj.SelectedValue;
-			base.OnValidating(e);
+			rekord.StawkaVat = Kontekst.Baza.StawkiVat.Single(stawka => stawka.Id == rekord.StawkaVatId);
+			rekord.JednostkaMiary = Kontekst.Baza.JednostkiMiar.Single(jednostka => jednostka.Id == rekord.JednostkaMiaryId);
 		}
 
-		private void bindingSource_DataSourceChanged(object sender, EventArgs e)
+		private void PrzeliczCeny()
 		{
-			comboBoxRodzaj.SelectedValue = Rekord.Rodzaj;
-			comboBoxSposobLiczenia.SelectedIndex = Rekord.CzyWedlugCenBrutto ? 1 : 0;
-			comboBoxWidocznosc.SelectedIndex = Rekord.CzyArchiwalny ? 1 : 0;
+			if (Rekord == null) return;
+			if (Rekord.CzyWedlugCenBrutto) Rekord.CenaNetto = Decimal.Round(Rekord.CenaBrutto * 100m / (100 + Rekord.StawkaVat.Wartosc), 2, MidpointRounding.AwayFromZero);
+			else Rekord.CenaBrutto = Decimal.Round(Rekord.CenaNetto * (100 + Rekord.StawkaVat.Wartosc) / 100m, 2, MidpointRounding.AwayFromZero);
 		}
 
-		private void buttonStawkaVat_Click(object sender, EventArgs e)
+		private void comboBoxSposobLiczenia_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			var stawkaVat = Spis.Wybierz(Kontekst, Spis.StawkiVat, "Wybierz stawkę Vat", Rekord.StawkaVatRef);
-			if (stawkaVat == null) return;
-			bindingSourceStawkaVat.DataSource = Kontekst.Baza.StawkiVat.ToList();
-			Rekord.StawkaVatRef = stawkaVat.Ref;
-			bindingSource.ResetCurrentItem();
+			PrzeliczCeny();
 		}
 
-		private void buttonJednostkaMiary_Click(object sender, EventArgs e)
+		private void numericUpDownCenaNetto_ValueChanged(object sender, EventArgs e)
 		{
-			var jednostkaMiary = Spis.Wybierz(Kontekst, Spis.JednostkiMiar, "Wybierz jednostkę miary", Rekord.JednostkaMiaryRef);
-			if (jednostkaMiary == null) return;
-			bindingSourceJednostkaMiary.DataSource = Kontekst.Baza.JednostkiMiar.ToList();
-			Rekord.JednostkaMiaryRef = jednostkaMiary.Ref;
-			bindingSource.ResetCurrentItem();
+			if (Rekord.CzyWedlugCenBrutto) return;
+			Rekord.CenaBrutto = Decimal.Round(numericUpDownCenaNetto.Value * (100 + Rekord.StawkaVat.Wartosc) / 100m, 2, MidpointRounding.AwayFromZero);
+		}
+
+		private void numericUpDownCenaBrutto_ValueChanged(object sender, EventArgs e)
+		{
+			if (!Rekord.CzyWedlugCenBrutto) return;
+			Rekord.CenaNetto = Decimal.Round(Rekord.CenaBrutto * 100m / (100 + Rekord.StawkaVat.Wartosc), 2, MidpointRounding.AwayFromZero);
 		}
 	}
 }

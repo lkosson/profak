@@ -35,7 +35,12 @@ namespace ProFak.UI
 		{
 			WypelnijListe();
 			comboBox.SelectedIndexChanged += comboBox_SelectedIndexChanged;
+			comboBox.HandleCreated += ComboBox_HandleCreated;
 			if (button != null) button.Click += button_Click;
+		}
+
+		private void ComboBox_HandleCreated(object sender, EventArgs e)
+		{
 			gotowy = true;
 		}
 
