@@ -75,7 +75,17 @@ namespace ProFak.UI
 		protected override void OnCreateControl()
 		{
 			base.OnCreateControl();
-			if (Kontekst != null) Przeladuj();
+			if (Kontekst != null)
+			{
+				try
+				{
+					Przeladuj();
+				}
+				catch (Exception exc)
+				{
+					MessageBox.Show($"Nie udało się załadować danych do spisu.\n\n{exc}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
 			bindingSource.ResetBindings(true);
 		}
 

@@ -36,7 +36,6 @@ namespace ProFak.UI
 		{
 			Kontekst = kontekst;
 			WypelnijSpisy();
-			UstawObowiazkowePola(rekord);
 			Rekord = rekord;
 			wplaty.Spis.FakturaRef = rekord;
 			wplaty.Spis.Kontekst = kontekst;
@@ -93,15 +92,6 @@ namespace ProFak.UI
 				kontrahent => { if (kontrahent == null || Rekord.SprzedawcaRef == kontrahent.Ref) return; Rekord.SprzedawcaRef = kontrahent; Rekord.NIPSprzedawcy = kontrahent.NIP; Rekord.NazwaSprzedawcy = kontrahent.PelnaNazwa; Rekord.DaneSprzedawcy = kontrahent.AdresRejestrowy; bindingSource.ResetCurrentItem(); },
 				Spis.Kontrahenci)
 				.Zainstaluj();
-		}
-
-		private void UstawObowiazkowePola(Faktura faktura)
-		{
-			if (faktura.Id == 0)
-			{
-				faktura.WalutaRef = Kontekst.Baza.Waluty.OrderByDescending(waluta => waluta.CzyDomyslna).ThenBy(waluta => waluta.Id).FirstOrDefault();
-				faktura.SposobPlatnosciRef = Kontekst.Baza.SposobyPlatnosci.OrderByDescending(sposob => sposob.CzyDomyslny).ThenBy(sposob => sposob.Id).FirstOrDefault();
-			}
 		}
 	}
 }

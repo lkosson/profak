@@ -38,5 +38,9 @@ namespace ProFak.DB
 		public ushort ToUInt16(IFormatProvider provider) => throw new NotSupportedException();
 		public uint ToUInt32(IFormatProvider provider) => throw new NotSupportedException();
 		public ulong ToUInt64(IFormatProvider provider) => throw new NotSupportedException();
+
+		public virtual void WypelnijDomyslnePola(Baza baza)
+		{
+		}
 	}
 }

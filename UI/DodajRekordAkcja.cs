@@ -1,4 +1,5 @@
-﻿using ProFak.DB;
+﻿using Microsoft.EntityFrameworkCore;
+using ProFak.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,17 +28,36 @@ namespace ProFak.UI
 
 		public override void Uruchom(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy)
 		{
-			var rekord = new TRekord();
-			if (przygotujRekord != null) przygotujRekord(rekord);
 			using var nowyKontekst = new Kontekst(kontekst);
 			using var transakcja = nowyKontekst.Transakcja();
-			using var edytor = new TEdytor();
-			using var okno = new Dialog(tytul, edytor, nowyKontekst);
-			edytor.Przygotuj(nowyKontekst, rekord);
-			if (okno.ShowDialog() != DialogResult.OK) return;
+			var rekord = new TRekord();
+			rekord.WypelnijDomyslnePola(nowyKontekst.Baza);
+			if (przygotujRekord != null) przygotujRekord(rekord);
 			nowyKontekst.Baza.Set<TRekord>().Add(rekord);
 			nowyKontekst.Baza.Zapisz();
-			transakcja.Zatwierdz();
+			while (true)
+			{
+				try
+				{
+					using var edytor = new TEdytor();
+					using var okno = new Dialog(tytul, edytor, nowyKontekst);
+					edytor.Przygotuj(nowyKontekst, rekord);
+					if (okno.ShowDialog() == DialogResult.OK)
+					{
+						nowyKontekst.Baza.Zapisz();
+						transakcja.Zatwierdz();
+					}
+					else
+					{
+						nowyKontekst.Baza.Entry(rekord).State = EntityState.Detached;
+					}
+					break;
+				}
+				catch (Exception exc)
+				{
+					MessageBox.Show($"Wystąpił nieobsłużony błąd. Uruchom ponownie program i spróbuj ponownie wykonać operację.\n\n{exc}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
 		}
 	}
 }

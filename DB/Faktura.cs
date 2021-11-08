@@ -67,10 +67,19 @@ namespace ProFak.DB
 			DaneNabywcy = "";
 			RachunekBankowy = "";
 			OpisSposobuPlatnosci = "";
+		}
+
+		public override void WypelnijDomyslnePola(Baza baza)
+		{
+			base.WypelnijDomyslnePola(baza);
 			DataSprzedazy = DateTime.Now.Date;
 			DataWystawienia = DateTime.Now.Date;
 			DataWprowadzenia = DateTime.Now.Date;
 			TerminPlatnosci = DateTime.Now.Date;
+			WalutaRef = baza.Waluty.OrderByDescending(waluta => waluta.CzyDomyslna).ThenBy(waluta => waluta.Id).FirstOrDefault();
+			SposobPlatnosciRef = baza.SposobyPlatnosci.OrderByDescending(sposob => sposob.CzyDomyslny).ThenBy(sposob => sposob.Id).FirstOrDefault();
+			if (WalutaRef.IsNull) throw new ApplicationException("Przed wprowadzeniem faktury należy zdefiniować przynajmniej jedną walutę.");
+			if (SposobPlatnosciRef.IsNull) throw new ApplicationException("Przed wprowadzeniem faktury należy zdefiniować przynajmniej jeden sposób płatności.");
 		}
 	}
 

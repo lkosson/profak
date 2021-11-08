@@ -14,7 +14,7 @@ namespace ProFak.UI
 {
 	partial class PozycjaFakturyEdytor : UserControl, IEdytor<PozycjaFaktury>
 	{
-		public PozycjaFaktury Rekord { get => bindingSource.DataSource as PozycjaFaktury; private set => bindingSource.DataSource = value; }
+		public PozycjaFaktury Rekord { get => bindingSource.DataSource as PozycjaFaktury; private set { bindingSource.DataSource = value; KonfigurujPoleIlosci(); } }
 		public Kontekst Kontekst { get; private set; }
 
 		public PozycjaFakturyEdytor()

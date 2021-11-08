@@ -71,7 +71,6 @@ namespace ProFak.UI
 			if (adapter.CzyDomyslna)
 			{
 				FindForm().AcceptButton = przycisk;
-				przycisk.DialogResult = DialogResult.OK;
 			}
 		}
 

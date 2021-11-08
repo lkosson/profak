@@ -28,6 +28,15 @@ namespace ProFak.DB
 		{
 			Nazwa = "";
 		}
+
+		public override void WypelnijDomyslnePola(Baza baza)
+		{
+			base.WypelnijDomyslnePola(baza);
+			StawkaVatRef = baza.StawkiVat.OrderByDescending(stawkaVat => stawkaVat.CzyDomyslna).ThenBy(stawkaVat => stawkaVat.Id).FirstOrDefault();
+			JednostkaMiaryRef = baza.JednostkiMiar.OrderByDescending(jednostka => jednostka.CzyDomyslna).ThenBy(jednostka => jednostka.Id).FirstOrDefault();
+			if (StawkaVatRef.IsNull) throw new ApplicationException("Przed dodaniem towaru należy zdefiniować przynajmniej jedną stawkę VAT.");
+			if (JednostkaMiaryRef.IsNull) throw new ApplicationException("Przed dodaniem towaru należy zdefiniować przynajmniej jedną jednostkę miary.");
+		}
 	}
 
 	enum RodzajTowaru

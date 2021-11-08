@@ -31,18 +31,29 @@ namespace ProFak.UI
 			var kopiaRekordu = rekord.Kopia();
 			using var nowyKontekst = new Kontekst(kontekst);
 			using var transakcja = nowyKontekst.Transakcja();
-			using var edytor = new TEdytor();
-			using var okno = new Dialog(tytul, edytor, nowyKontekst);
-			edytor.Przygotuj(nowyKontekst, rekord);
-			if (okno.ShowDialog() == DialogResult.OK)
+			while (true)
 			{
-				nowyKontekst.Baza.Zapisz();
-				transakcja.Zatwierdz();
-			}
-			else
-			{
-				nowyKontekst.Baza.Entry(rekord).State = EntityState.Detached;
-				nowyKontekst.Baza.Entry(kopiaRekordu).State = EntityState.Unchanged;
+				try
+				{
+					using var edytor = new TEdytor();
+					using var okno = new Dialog(tytul, edytor, nowyKontekst);
+					edytor.Przygotuj(nowyKontekst, rekord);
+					if (okno.ShowDialog() == DialogResult.OK)
+					{
+						nowyKontekst.Baza.Zapisz();
+						transakcja.Zatwierdz();
+					}
+					else
+					{
+						nowyKontekst.Baza.Entry(rekord).State = EntityState.Detached;
+						nowyKontekst.Baza.Entry(kopiaRekordu).State = EntityState.Unchanged;
+					}
+					break;
+				}
+				catch (Exception exc)
+				{
+					MessageBox.Show($"Wystąpił nieobsłużony błąd. Uruchom ponownie program i spróbuj ponownie wykonać operację.\n\n{exc}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
 			}
 		}
 	}

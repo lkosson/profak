@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ProFak.UI
 {
@@ -34,10 +35,21 @@ namespace ProFak.UI
 
 		public override void Uruchom()
 		{
-			akcja.Uruchom(spis.Kontekst, spis.WybraneRekordy);
-			if (spis.Kontekst.Dialog == null || spis.Kontekst.Dialog.DialogResult == System.Windows.Forms.DialogResult.None)
+			try
 			{
-				spis.Przeladuj();
+				akcja.Uruchom(spis.Kontekst, spis.WybraneRekordy);
+				if (spis.Kontekst.Dialog == null || spis.Kontekst.Dialog.DialogResult == System.Windows.Forms.DialogResult.None)
+				{
+					spis.Przeladuj();
+				}
+			}
+			catch (ApplicationException ae) when (ae.GetType() == typeof(ApplicationException))
+			{
+				MessageBox.Show(ae.Message, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			}
+			catch (Exception exc)
+			{
+				MessageBox.Show($"Wystąpił nieobsłużony błąd. Uruchom ponownie program i spróbuj ponownie wykonać operację.\n\n{exc}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 	}
