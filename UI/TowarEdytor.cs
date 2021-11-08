@@ -19,17 +19,17 @@ namespace ProFak.UI
 		public TowarEdytor()
 		{
 			InitializeComponent();
-			comboBoxRodzaj.DataSource = Enum.GetValues(typeof(RodzajTowaru)).Cast<RodzajTowaru>().Select(r => new PozycjaListy<RodzajTowaru> { Wartosc = r, Opis = r.ToString() }).ToArray();
 			comboBoxRodzaj.DisplayMember = "Opis";
 			comboBoxRodzaj.ValueMember = "Wartosc";
+			comboBoxRodzaj.DataSource = Enum.GetValues(typeof(RodzajTowaru)).Cast<RodzajTowaru>().Select(r => new PozycjaListy<RodzajTowaru> { Wartosc = r, Opis = r.ToString() }).ToArray();
 
-			comboBoxSposobLiczenia.DataSource = new[] { new PozycjaListy<bool> { Wartosc = false, Opis = "według netto" }, new PozycjaListy<bool> { Wartosc = true, Opis = "według brutto" } };
 			comboBoxSposobLiczenia.DisplayMember = "Opis";
 			comboBoxSposobLiczenia.ValueMember = "Wartosc";
+			comboBoxSposobLiczenia.DataSource = new[] { new PozycjaListy<bool> { Wartosc = false, Opis = "według netto" }, new PozycjaListy<bool> { Wartosc = true, Opis = "według brutto" } };
 
-			comboBoxWidocznosc.DataSource = new[] { new PozycjaListy<bool> { Wartosc = false, Opis = "widoczny" }, new PozycjaListy<bool> { Wartosc = true, Opis = "ukryty" } };
 			comboBoxWidocznosc.DisplayMember = "Opis";
 			comboBoxWidocznosc.ValueMember = "Wartosc";
+			comboBoxWidocznosc.DataSource = new[] { new PozycjaListy<bool> { Wartosc = false, Opis = "widoczny" }, new PozycjaListy<bool> { Wartosc = true, Opis = "ukryty" } };
 		}
 
 		public void Przygotuj(Kontekst kontekst, Towar rekord)
@@ -74,6 +74,11 @@ namespace ProFak.UI
 		private void comboBoxSposobLiczenia_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			PrzeliczCeny();
+			if (comboBoxSposobLiczenia.SelectedValue != null)
+			{
+				numericUpDownCenaBrutto.Enabled = (bool)comboBoxSposobLiczenia.SelectedValue;
+				numericUpDownCenaNetto.Enabled = !(bool)comboBoxSposobLiczenia.SelectedValue;
+			}
 		}
 
 		private void numericUpDownCenaNetto_ValueChanged(object sender, EventArgs e)
@@ -85,7 +90,7 @@ namespace ProFak.UI
 		private void numericUpDownCenaBrutto_ValueChanged(object sender, EventArgs e)
 		{
 			if (!Rekord.CzyWedlugCenBrutto) return;
-			Rekord.CenaNetto = Decimal.Round(Rekord.CenaBrutto * 100m / (100 + Rekord.StawkaVat.Wartosc), 2, MidpointRounding.AwayFromZero);
+			Rekord.CenaNetto = Decimal.Round(numericUpDownCenaBrutto.Value * 100m / (100 + Rekord.StawkaVat.Wartosc), 2, MidpointRounding.AwayFromZero);
 		}
 	}
 }
