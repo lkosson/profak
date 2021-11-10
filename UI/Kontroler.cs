@@ -23,47 +23,47 @@ namespace ProFak.UI
 			powiazania = new List<Action>();
 		}
 
-		public void Powiazanie(NumericUpDown numericUpDown, Expression<Func<TModel, decimal>> wlasciwosc) => Powiazanie(numericUpDown, wlasciwosc, Powiazanie);
-		public void Powiazanie(TextBox textBox, Expression<Func<TModel, string>> wlasciwosc) => Powiazanie(textBox, wlasciwosc, Powiazanie);
-		public void Powiazanie(CheckBox checkBox, Expression<Func<TModel, bool>> wlasciwosc) => Powiazanie(checkBox, wlasciwosc, Powiazanie);
-		public void Powiazanie(ComboBox comboBox, Expression<Func<TModel, string>> wlasciwosc) => Powiazanie(comboBox, wlasciwosc, Powiazanie);
+		public void Powiazanie(NumericUpDown numericUpDown, Expression<Func<TModel, decimal>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(numericUpDown, wlasciwosc, Powiazanie, wartoscZmieniona);
+		public void Powiazanie(TextBox textBox, Expression<Func<TModel, string>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(textBox, wlasciwosc, Powiazanie, wartoscZmieniona);
+		public void Powiazanie(CheckBox checkBox, Expression<Func<TModel, bool>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(checkBox, wlasciwosc, Powiazanie, wartoscZmieniona);
+		public void Powiazanie(ComboBox comboBox, Expression<Func<TModel, string>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(comboBox, wlasciwosc, Powiazanie, wartoscZmieniona);
 
-		private void Powiazanie<TKontrolka, TWartosc>(TKontrolka kontrolka, Expression<Func<TModel, TWartosc>> wlasciwosc, Action<TKontrolka, Func<TModel, TWartosc>, Action<TModel, TWartosc>> powiazanie)
+		private void Powiazanie<TKontrolka, TWartosc>(TKontrolka kontrolka, Expression<Func<TModel, TWartosc>> wlasciwosc, Action<TKontrolka, Func<TModel, TWartosc>, Action<TModel, TWartosc>, Action> powiazanie, Action wartoscZmieniona = null)
 		{
 			var exp = (MemberExpression)wlasciwosc.Body;
 			var pi = (PropertyInfo)exp.Member;
 			var getter = (Func<TModel, TWartosc>)pi.GetGetMethod().CreateDelegate(typeof(Func<TModel, TWartosc>));
 			var setter = (Action<TModel, TWartosc>)pi.GetSetMethod().CreateDelegate(typeof(Action<TModel, TWartosc>));
-			powiazanie(kontrolka, getter, setter);
+			powiazanie(kontrolka, getter, setter, wartoscZmieniona);
 		}
 
-		public void Powiazanie(NumericUpDown numericUpDown, Func<TModel, decimal> pobierzWartosc, Action<TModel, decimal> ustawWartosc)
+		public void Powiazanie(NumericUpDown numericUpDown, Func<TModel, decimal> pobierzWartosc, Action<TModel, decimal> ustawWartosc, Action wartoscZmieniona = null)
 		{
-			numericUpDown.ValueChanged += delegate { AktualizujModel(numericUpDown, ustawWartosc, nud => nud.Value); };
+			numericUpDown.ValueChanged += delegate { AktualizujModel(numericUpDown, ustawWartosc, nud => nud.Value); if (wartoscZmieniona != null) wartoscZmieniona(); };
 			Action powiazanie = delegate { AktualizujKontrolke(numericUpDown, pobierzWartosc, (nud, wartosc) => nud.Value = wartosc); };
 			if (model != null) powiazanie();
 			powiazania.Add(powiazanie);
 		}
 
-		public void Powiazanie(TextBox textBox, Func<TModel, string> pobierzWartosc, Action<TModel, string> ustawWartosc)
+		public void Powiazanie(TextBox textBox, Func<TModel, string> pobierzWartosc, Action<TModel, string> ustawWartosc, Action wartoscZmieniona = null)
 		{
-			textBox.TextChanged += delegate { AktualizujModel(textBox, ustawWartosc, txt => txt.Text); };
+			textBox.TextChanged += delegate { AktualizujModel(textBox, ustawWartosc, txt => txt.Text); if (wartoscZmieniona != null) wartoscZmieniona(); };
 			Action powiazanie = delegate { AktualizujKontrolke(textBox, pobierzWartosc, (txt, wartosc) => txt.Text = wartosc); };
 			if (model != null) powiazanie();
 			powiazania.Add(powiazanie);
 		}
 
-		public void Powiazanie(CheckBox checkBox, Func<TModel, bool> pobierzWartosc, Action<TModel, bool> ustawWartosc)
+		public void Powiazanie(CheckBox checkBox, Func<TModel, bool> pobierzWartosc, Action<TModel, bool> ustawWartosc, Action wartoscZmieniona = null)
 		{
-			checkBox.CheckedChanged += delegate { AktualizujModel(checkBox, ustawWartosc, chk => chk.Checked); };
+			checkBox.CheckedChanged += delegate { AktualizujModel(checkBox, ustawWartosc, chk => chk.Checked); if (wartoscZmieniona != null) wartoscZmieniona(); };
 			Action powiazanie = delegate { AktualizujKontrolke(checkBox, pobierzWartosc, (chk, wartosc) => chk.Checked = wartosc); };
 			if (model != null) powiazanie();
 			powiazania.Add(powiazanie);
 		}
 
-		public void Powiazanie(ComboBox comboBox, Func<TModel, string> pobierzWartosc, Action<TModel, string> ustawWartosc)
+		public void Powiazanie(ComboBox comboBox, Func<TModel, string> pobierzWartosc, Action<TModel, string> ustawWartosc, Action wartoscZmieniona = null)
 		{
-			comboBox.TextChanged += delegate { AktualizujModel(comboBox, ustawWartosc, comboBox => comboBox.Text); };
+			comboBox.TextChanged += delegate { AktualizujModel(comboBox, ustawWartosc, comboBox => comboBox.Text); if (wartoscZmieniona != null) wartoscZmieniona(); };
 			Action powiazanie = delegate { AktualizujKontrolke(comboBox, pobierzWartosc, (comboBox, wartosc) => { if (comboBox.SelectedIndex != -1) comboBox.SelectedIndex = -1; comboBox.Text = wartosc; }); };
 			if (model != null) powiazanie();
 			powiazania.Add(powiazanie);
