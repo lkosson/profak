@@ -29,26 +29,24 @@ namespace ProFak.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
-			this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-			this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
-			this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
+			this.numericUpDownCenaNetto = new System.Windows.Forms.NumericUpDown();
+			this.numericUpDownCenaVat = new System.Windows.Forms.NumericUpDown();
+			this.numericUpDownCenaBrutto = new System.Windows.Forms.NumericUpDown();
 			this.checkBoxWedlugBrutto = new System.Windows.Forms.CheckBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
-			this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
-			this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
-			this.numericUpDown7 = new System.Windows.Forms.NumericUpDown();
+			this.numericUpDownWartoscNetto = new System.Windows.Forms.NumericUpDown();
+			this.numericUpDownWartoscVat = new System.Windows.Forms.NumericUpDown();
+			this.numericUpDownWartoscBrutto = new System.Windows.Forms.NumericUpDown();
 			this.checkBoxRecznie = new System.Windows.Forms.CheckBox();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.label1 = new System.Windows.Forms.Label();
@@ -56,25 +54,20 @@ namespace ProFak.UI
 			this.buttonTowar = new System.Windows.Forms.Button();
 			this.numericUpDownIlosc = new System.Windows.Forms.NumericUpDown();
 			this.labelJednostka = new System.Windows.Forms.Label();
-			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.tableLayoutPanel3.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownCenaNetto)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownCenaVat)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownCenaBrutto)).BeginInit();
 			this.groupBox2.SuspendLayout();
 			this.tableLayoutPanel4.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownWartoscNetto)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownWartoscVat)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownWartoscBrutto)).BeginInit();
 			this.tableLayoutPanel2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownIlosc)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// bindingSource
-			// 
-			this.bindingSource.DataSource = typeof(ProFak.DB.PozycjaFaktury);
 			// 
 			// tableLayoutPanel1
 			// 
@@ -113,9 +106,9 @@ namespace ProFak.UI
 			this.tableLayoutPanel3.Controls.Add(this.label3, 0, 0);
 			this.tableLayoutPanel3.Controls.Add(this.label4, 0, 1);
 			this.tableLayoutPanel3.Controls.Add(this.label5, 0, 2);
-			this.tableLayoutPanel3.Controls.Add(this.numericUpDown2, 1, 0);
-			this.tableLayoutPanel3.Controls.Add(this.numericUpDown3, 1, 1);
-			this.tableLayoutPanel3.Controls.Add(this.numericUpDown4, 1, 2);
+			this.tableLayoutPanel3.Controls.Add(this.numericUpDownCenaNetto, 1, 0);
+			this.tableLayoutPanel3.Controls.Add(this.numericUpDownCenaVat, 1, 1);
+			this.tableLayoutPanel3.Controls.Add(this.numericUpDownCenaBrutto, 1, 2);
 			this.tableLayoutPanel3.Controls.Add(this.checkBoxWedlugBrutto, 1, 3);
 			this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 19);
@@ -159,58 +152,54 @@ namespace ProFak.UI
 			this.label5.TabIndex = 0;
 			this.label5.Text = "Brutto";
 			// 
-			// numericUpDown2
+			// numericUpDownCenaNetto
 			// 
-			this.numericUpDown2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.numericUpDown2.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bindingSource, "CenaNetto", true));
-			this.numericUpDown2.DecimalPlaces = 2;
-			this.numericUpDown2.Location = new System.Drawing.Point(49, 3);
-			this.numericUpDown2.Maximum = new decimal(new int[] {
+			this.numericUpDownCenaNetto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.numericUpDownCenaNetto.DecimalPlaces = 2;
+			this.numericUpDownCenaNetto.Location = new System.Drawing.Point(49, 3);
+			this.numericUpDownCenaNetto.Maximum = new decimal(new int[] {
             999999999,
             0,
             0,
             0});
-			this.numericUpDown2.Name = "numericUpDown2";
-			this.numericUpDown2.Size = new System.Drawing.Size(186, 23);
-			this.numericUpDown2.TabIndex = 3;
-			this.numericUpDown2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.numericUpDownCenaNetto.Name = "numericUpDownCenaNetto";
+			this.numericUpDownCenaNetto.Size = new System.Drawing.Size(186, 23);
+			this.numericUpDownCenaNetto.TabIndex = 3;
+			this.numericUpDownCenaNetto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
-			// numericUpDown3
+			// numericUpDownCenaVat
 			// 
-			this.numericUpDown3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.numericUpDown3.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bindingSource, "CenaVat", true));
-			this.numericUpDown3.DecimalPlaces = 2;
-			this.numericUpDown3.Location = new System.Drawing.Point(49, 32);
-			this.numericUpDown3.Maximum = new decimal(new int[] {
+			this.numericUpDownCenaVat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.numericUpDownCenaVat.DecimalPlaces = 2;
+			this.numericUpDownCenaVat.Location = new System.Drawing.Point(49, 32);
+			this.numericUpDownCenaVat.Maximum = new decimal(new int[] {
             999999999,
             0,
             0,
             0});
-			this.numericUpDown3.Name = "numericUpDown3";
-			this.numericUpDown3.Size = new System.Drawing.Size(186, 23);
-			this.numericUpDown3.TabIndex = 3;
-			this.numericUpDown3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.numericUpDownCenaVat.Name = "numericUpDownCenaVat";
+			this.numericUpDownCenaVat.Size = new System.Drawing.Size(186, 23);
+			this.numericUpDownCenaVat.TabIndex = 3;
+			this.numericUpDownCenaVat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
-			// numericUpDown4
+			// numericUpDownCenaBrutto
 			// 
-			this.numericUpDown4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.numericUpDown4.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bindingSource, "CenaBrutto", true));
-			this.numericUpDown4.DecimalPlaces = 2;
-			this.numericUpDown4.Location = new System.Drawing.Point(49, 61);
-			this.numericUpDown4.Maximum = new decimal(new int[] {
+			this.numericUpDownCenaBrutto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.numericUpDownCenaBrutto.DecimalPlaces = 2;
+			this.numericUpDownCenaBrutto.Location = new System.Drawing.Point(49, 61);
+			this.numericUpDownCenaBrutto.Maximum = new decimal(new int[] {
             999999999,
             0,
             0,
             0});
-			this.numericUpDown4.Name = "numericUpDown4";
-			this.numericUpDown4.Size = new System.Drawing.Size(186, 23);
-			this.numericUpDown4.TabIndex = 3;
-			this.numericUpDown4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.numericUpDownCenaBrutto.Name = "numericUpDownCenaBrutto";
+			this.numericUpDownCenaBrutto.Size = new System.Drawing.Size(186, 23);
+			this.numericUpDownCenaBrutto.TabIndex = 3;
+			this.numericUpDownCenaBrutto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// checkBoxWedlugBrutto
 			// 
 			this.checkBoxWedlugBrutto.AutoSize = true;
-			this.checkBoxWedlugBrutto.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bindingSource, "CzyWedlugCenBrutto", true));
 			this.checkBoxWedlugBrutto.Location = new System.Drawing.Point(49, 90);
 			this.checkBoxWedlugBrutto.Name = "checkBoxWedlugBrutto";
 			this.checkBoxWedlugBrutto.Size = new System.Drawing.Size(131, 19);
@@ -237,9 +226,9 @@ namespace ProFak.UI
 			this.tableLayoutPanel4.Controls.Add(this.label6, 0, 0);
 			this.tableLayoutPanel4.Controls.Add(this.label7, 0, 1);
 			this.tableLayoutPanel4.Controls.Add(this.label8, 0, 2);
-			this.tableLayoutPanel4.Controls.Add(this.numericUpDown5, 1, 0);
-			this.tableLayoutPanel4.Controls.Add(this.numericUpDown6, 1, 1);
-			this.tableLayoutPanel4.Controls.Add(this.numericUpDown7, 1, 2);
+			this.tableLayoutPanel4.Controls.Add(this.numericUpDownWartoscNetto, 1, 0);
+			this.tableLayoutPanel4.Controls.Add(this.numericUpDownWartoscVat, 1, 1);
+			this.tableLayoutPanel4.Controls.Add(this.numericUpDownWartoscBrutto, 1, 2);
 			this.tableLayoutPanel4.Controls.Add(this.checkBoxRecznie, 1, 3);
 			this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 19);
@@ -283,58 +272,54 @@ namespace ProFak.UI
 			this.label8.TabIndex = 0;
 			this.label8.Text = "Brutto";
 			// 
-			// numericUpDown5
+			// numericUpDownWartoscNetto
 			// 
-			this.numericUpDown5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.numericUpDown5.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bindingSource, "WartoscNetto", true));
-			this.numericUpDown5.DecimalPlaces = 2;
-			this.numericUpDown5.Location = new System.Drawing.Point(49, 3);
-			this.numericUpDown5.Maximum = new decimal(new int[] {
+			this.numericUpDownWartoscNetto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.numericUpDownWartoscNetto.DecimalPlaces = 2;
+			this.numericUpDownWartoscNetto.Location = new System.Drawing.Point(49, 3);
+			this.numericUpDownWartoscNetto.Maximum = new decimal(new int[] {
             999999999,
             0,
             0,
             0});
-			this.numericUpDown5.Name = "numericUpDown5";
-			this.numericUpDown5.Size = new System.Drawing.Size(186, 23);
-			this.numericUpDown5.TabIndex = 3;
-			this.numericUpDown5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.numericUpDownWartoscNetto.Name = "numericUpDownWartoscNetto";
+			this.numericUpDownWartoscNetto.Size = new System.Drawing.Size(186, 23);
+			this.numericUpDownWartoscNetto.TabIndex = 3;
+			this.numericUpDownWartoscNetto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
-			// numericUpDown6
+			// numericUpDownWartoscVat
 			// 
-			this.numericUpDown6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.numericUpDown6.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bindingSource, "WartoscVat", true));
-			this.numericUpDown6.DecimalPlaces = 2;
-			this.numericUpDown6.Location = new System.Drawing.Point(49, 32);
-			this.numericUpDown6.Maximum = new decimal(new int[] {
+			this.numericUpDownWartoscVat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.numericUpDownWartoscVat.DecimalPlaces = 2;
+			this.numericUpDownWartoscVat.Location = new System.Drawing.Point(49, 32);
+			this.numericUpDownWartoscVat.Maximum = new decimal(new int[] {
             999999999,
             0,
             0,
             0});
-			this.numericUpDown6.Name = "numericUpDown6";
-			this.numericUpDown6.Size = new System.Drawing.Size(186, 23);
-			this.numericUpDown6.TabIndex = 3;
-			this.numericUpDown6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.numericUpDownWartoscVat.Name = "numericUpDownWartoscVat";
+			this.numericUpDownWartoscVat.Size = new System.Drawing.Size(186, 23);
+			this.numericUpDownWartoscVat.TabIndex = 3;
+			this.numericUpDownWartoscVat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
-			// numericUpDown7
+			// numericUpDownWartoscBrutto
 			// 
-			this.numericUpDown7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.numericUpDown7.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bindingSource, "WartoscBrutto", true));
-			this.numericUpDown7.DecimalPlaces = 2;
-			this.numericUpDown7.Location = new System.Drawing.Point(49, 61);
-			this.numericUpDown7.Maximum = new decimal(new int[] {
+			this.numericUpDownWartoscBrutto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.numericUpDownWartoscBrutto.DecimalPlaces = 2;
+			this.numericUpDownWartoscBrutto.Location = new System.Drawing.Point(49, 61);
+			this.numericUpDownWartoscBrutto.Maximum = new decimal(new int[] {
             999999999,
             0,
             0,
             0});
-			this.numericUpDown7.Name = "numericUpDown7";
-			this.numericUpDown7.Size = new System.Drawing.Size(186, 23);
-			this.numericUpDown7.TabIndex = 3;
-			this.numericUpDown7.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.numericUpDownWartoscBrutto.Name = "numericUpDownWartoscBrutto";
+			this.numericUpDownWartoscBrutto.Size = new System.Drawing.Size(186, 23);
+			this.numericUpDownWartoscBrutto.TabIndex = 3;
+			this.numericUpDownWartoscBrutto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// checkBoxRecznie
 			// 
 			this.checkBoxRecznie.AutoSize = true;
-			this.checkBoxRecznie.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.bindingSource, "CzyWartosciReczne", true));
 			this.checkBoxRecznie.Location = new System.Drawing.Point(49, 90);
 			this.checkBoxRecznie.Name = "checkBoxRecznie";
 			this.checkBoxRecznie.Size = new System.Drawing.Size(133, 19);
@@ -379,7 +364,6 @@ namespace ProFak.UI
 			// comboBoxTowar
 			// 
 			this.comboBoxTowar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.comboBoxTowar.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "Opis", true));
 			this.comboBoxTowar.FormattingEnabled = true;
 			this.comboBoxTowar.Location = new System.Drawing.Point(75, 4);
 			this.comboBoxTowar.Name = "comboBoxTowar";
@@ -400,7 +384,6 @@ namespace ProFak.UI
 			// numericUpDownIlosc
 			// 
 			this.numericUpDownIlosc.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.numericUpDownIlosc.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bindingSource, "Ilosc", true));
 			this.numericUpDownIlosc.DecimalPlaces = 3;
 			this.numericUpDownIlosc.Location = new System.Drawing.Point(382, 4);
 			this.numericUpDownIlosc.Maximum = new decimal(new int[] {
@@ -431,21 +414,20 @@ namespace ProFak.UI
 			this.MinimumSize = new System.Drawing.Size(500, 200);
 			this.Name = "PozycjaFakturyEdytor";
 			this.Size = new System.Drawing.Size(500, 201);
-			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
 			this.groupBox1.ResumeLayout(false);
 			this.tableLayoutPanel3.ResumeLayout(false);
 			this.tableLayoutPanel3.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownCenaNetto)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownCenaVat)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownCenaBrutto)).EndInit();
 			this.groupBox2.ResumeLayout(false);
 			this.tableLayoutPanel4.ResumeLayout(false);
 			this.tableLayoutPanel4.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownWartoscNetto)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownWartoscVat)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownWartoscBrutto)).EndInit();
 			this.tableLayoutPanel2.ResumeLayout(false);
 			this.tableLayoutPanel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownIlosc)).EndInit();
@@ -454,8 +436,6 @@ namespace ProFak.UI
 		}
 
 		#endregion
-
-		private System.Windows.Forms.BindingSource bindingSource;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.GroupBox groupBox2;
@@ -466,15 +446,15 @@ namespace ProFak.UI
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.NumericUpDown numericUpDown2;
-		private System.Windows.Forms.NumericUpDown numericUpDown3;
-		private System.Windows.Forms.NumericUpDown numericUpDown4;
+		private System.Windows.Forms.NumericUpDown numericUpDownCenaNetto;
+		private System.Windows.Forms.NumericUpDown numericUpDownCenaVat;
+		private System.Windows.Forms.NumericUpDown numericUpDownCenaBrutto;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.NumericUpDown numericUpDown5;
-		private System.Windows.Forms.NumericUpDown numericUpDown6;
-		private System.Windows.Forms.NumericUpDown numericUpDown7;
+		private System.Windows.Forms.NumericUpDown numericUpDownWartoscNetto;
+		private System.Windows.Forms.NumericUpDown numericUpDownWartoscVat;
+		private System.Windows.Forms.NumericUpDown numericUpDownWartoscBrutto;
 		private System.Windows.Forms.ComboBox comboBoxTowar;
 		private System.Windows.Forms.Button buttonTowar;
 		private System.Windows.Forms.NumericUpDown numericUpDownIlosc;

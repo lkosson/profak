@@ -14,12 +14,25 @@ namespace ProFak.UI
 {
 	partial class PozycjaFakturyEdytor : UserControl, IEdytor<PozycjaFaktury>
 	{
-		public PozycjaFaktury Rekord { get => bindingSource.DataSource as PozycjaFaktury; private set { bindingSource.DataSource = value; KonfigurujPoleIlosci(); } }
+		public PozycjaFaktury Rekord { get => kontroler.Model; private set { kontroler.Model = value; KonfigurujPoleIlosci(); } }
 		public Kontekst Kontekst { get; private set; }
+		private readonly Kontroler<PozycjaFaktury> kontroler;
 
 		public PozycjaFakturyEdytor()
 		{
 			InitializeComponent();
+			kontroler = new Kontroler<PozycjaFaktury>();
+
+			kontroler.Powiazanie(comboBoxTowar, pozycja => pozycja.Opis);
+			kontroler.Powiazanie(numericUpDownIlosc, pozycja => pozycja.Ilosc);
+			kontroler.Powiazanie(numericUpDownCenaNetto, pozycja => pozycja.CenaNetto);
+			kontroler.Powiazanie(numericUpDownCenaVat, pozycja => pozycja.CenaVat);
+			kontroler.Powiazanie(numericUpDownCenaBrutto, pozycja => pozycja.CenaBrutto);
+			kontroler.Powiazanie(numericUpDownWartoscNetto, pozycja => pozycja.WartoscNetto);
+			kontroler.Powiazanie(numericUpDownWartoscVat, pozycja => pozycja.WartoscVat);
+			kontroler.Powiazanie(numericUpDownWartoscBrutto, pozycja => pozycja.WartoscBrutto);
+			kontroler.Powiazanie(checkBoxWedlugBrutto, pozycja => pozycja.CzyWedlugCenBrutto);
+			kontroler.Powiazanie(checkBoxRecznie, pozycja => pozycja.CzyWartosciReczne);
 		}
 
 		public void Przygotuj(Kontekst kontekst, PozycjaFaktury rekord)
@@ -35,7 +48,7 @@ namespace ProFak.UI
 				Kontekst, comboBoxTowar, buttonTowar,
 				Kontekst.Baza.Towary.ToList,
 				towar => towar.Nazwa,
-				towar => { if (towar == null || Rekord.TowarRef == towar.Ref) return; Rekord.TowarRef = towar; Rekord.Opis = towar.Nazwa; KonfigurujPoleIlosci(); bindingSource.ResetCurrentItem(); },
+				towar => { if (towar == null || Rekord.TowarRef == towar.Ref) return; Rekord.TowarRef = towar; Rekord.Opis = towar.Nazwa; KonfigurujPoleIlosci(); },
 				Spis.Towary)
 				.Zainstaluj();
 		}
