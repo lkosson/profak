@@ -13,14 +13,21 @@ namespace ProFak.UI
 {
 	partial class FakturaEdytor : UserControl, IEdytor<Faktura>
 	{
-		public Faktura Rekord { get => bindingSource.DataSource as Faktura; private set => bindingSource.DataSource = value; }
+		public Faktura Rekord { get => bindingSource.DataSource as Faktura; private set { kontroler.Model = value; bindingSource.DataSource = value; } }
 		public Kontekst Kontekst { get; private set; }
 		private readonly SpisZAkcjami<Wplata, WplataSpis> wplaty;
 		private readonly SpisZAkcjami<PozycjaFaktury, PozycjaFakturySpis> pozycjeFaktury;
+		private readonly Kontroler<Faktura> kontroler;
 
 		public FakturaEdytor()
 		{
 			InitializeComponent();
+			kontroler = new Kontroler<Faktura>();
+
+			kontroler.Powiazanie(numericUpDownNetto, faktura => faktura.RazemNetto);
+			kontroler.Powiazanie(numericUpDownVat, faktura => faktura.RazemVat);
+			kontroler.Powiazanie(numericUpDownBrutto, faktura => faktura.RazemBrutto);
+
 			comboBoxRodzaj.DataSource = Enum.GetValues(typeof(RodzajFaktury)).Cast<RodzajFaktury>().Select(r => new PozycjaListy<RodzajFaktury> { Wartosc = r, Opis = r.ToString() }).ToArray();
 			comboBoxRodzaj.DisplayMember = "Opis";
 			comboBoxRodzaj.ValueMember = "Wartosc";
@@ -30,6 +37,15 @@ namespace ProFak.UI
 
 			pozycjeFaktury = Spis.PozycjeFaktur(Kontekst);
 			tabPagePozycje.Controls.Add(pozycjeFaktury);
+			pozycjeFaktury.Spis.RekordyZmienione += pozycjeFakturySpis_RekordyZmienione;
+		}
+
+		private void pozycjeFakturySpis_RekordyZmienione()
+		{
+			Rekord.RazemNetto = pozycjeFaktury.Spis.Rekordy.Sum(pozycja => pozycja.WartoscNetto);
+			Rekord.RazemVat = pozycjeFaktury.Spis.Rekordy.Sum(pozycja => pozycja.WartoscVat);
+			Rekord.RazemBrutto = pozycjeFaktury.Spis.Rekordy.Sum(pozycja => pozycja.WartoscBrutto);
+			kontroler.AktualizujKontrolki();
 		}
 
 		public void Przygotuj(Kontekst kontekst, Faktura rekord)

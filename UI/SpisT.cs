@@ -29,8 +29,10 @@ namespace ProFak.UI
 		public IEnumerable<T> Rekordy
 		{
 			get => bindingSource.DataSource as IEnumerable<T>;
-			set => bindingSource.DataSource = value;
+			set { bindingSource.DataSource = value; if (RekordyZmienione != null) RekordyZmienione(); }
 		}
+
+		public event Action RekordyZmienione;
 
 		public Ref<T> RekordPoczatkowy { get; set; }
 
