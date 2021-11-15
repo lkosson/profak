@@ -8,16 +8,10 @@ namespace ProFak.DB
 {
 	class Waluta : Rekord<Waluta>
 	{
-		public string Skrot { get; set; }
-		public string Nazwa { get; set; }
+		public string Skrot { get; set; } = "";
+		public string Nazwa { get; set; } = "";
 		public bool CzyDomyslna { get; set; }
 
 		public string CzyDomyslnaFmt => CzyDomyslna ? "Tak" : "Nie";
-
-		public Waluta()
-		{
-			Skrot = "";
-			Nazwa = "";
-		}
 	}
 }

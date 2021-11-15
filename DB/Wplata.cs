@@ -16,8 +16,9 @@ namespace ProFak.DB
 
 		public Faktura Faktura { get; set; }
 
-		public Wplata()
+		public override void WypelnijDomyslnePola(Baza baza)
 		{
+			base.WypelnijDomyslnePola(baza);
 			Data = DateTime.Now.Date;
 		}
 	}

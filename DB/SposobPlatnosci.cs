@@ -8,15 +8,10 @@ namespace ProFak.DB
 {
 	class SposobPlatnosci : Rekord<SposobPlatnosci>
 	{
-		public string Nazwa { get; set; }
+		public string Nazwa { get; set; } = "";
 		public int LiczbaDni { get; set; }
 		public bool CzyDomyslny { get; set; }
 
 		public string CzyDomyslnyFmt => CzyDomyslny ? "Tak" : "Nie";
-
-		public SposobPlatnosci()
-		{
-			Nazwa = "";
-		}
 	}
 }

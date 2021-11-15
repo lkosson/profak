@@ -11,7 +11,7 @@ namespace ProFak.DB
 	{
 		public int FakturaId { get; set; }
 		public int TowarId { get; set; }
-		public string Opis { get; set; }
+		public string Opis { get; set; } = "";
 		public decimal CenaNetto { get; set; }
 		public decimal CenaVat { get; set; }
 		public decimal CenaBrutto { get; set; }
@@ -27,11 +27,6 @@ namespace ProFak.DB
 
 		public Faktura Faktura { get; set; }
 		public Towar Towar { get; set; }
-
-		public PozycjaFaktury()
-		{
-			Opis = "";
-		}
 
 		public override void WypelnijDomyslnePola(Baza baza)
 		{

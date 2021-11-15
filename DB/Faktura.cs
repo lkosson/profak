@@ -8,25 +8,25 @@ namespace ProFak.DB
 {
 	class Faktura : Rekord<Faktura>
 	{
-		public string Numer { get; set; }
+		public string Numer { get; set; } = "";
 		public DateTime DataWystawienia { get; set; }
 		public DateTime DataSprzedazy { get; set; }
 		public DateTime DataWprowadzenia { get; set; }
 		public DateTime TerminPlatnosci { get; set; }
-		public string NIPSprzedawcy { get; set; }
-		public string NazwaSprzedawcy { get; set; }
-		public string DaneSprzedawcy { get; set; }
-		public string NIPNabywcy { get; set; }
-		public string NazwaNabywcy { get; set; }
-		public string DaneNabywcy { get; set; }
-		public string RachunekBankowy { get; set; }
-		public string UwagiPubliczne { get; set; }
-		public string UwagiWewnetrzne { get; set; }
+		public string NIPSprzedawcy { get; set; } = "";
+		public string NazwaSprzedawcy { get; set; } = "";
+		public string DaneSprzedawcy { get; set; } = "";
+		public string NIPNabywcy { get; set; } = "";
+		public string NazwaNabywcy { get; set; } = "";
+		public string DaneNabywcy { get; set; } = "";
+		public string RachunekBankowy { get; set; } = "";
+		public string UwagiPubliczne { get; set; } = "";
+		public string UwagiWewnetrzne { get; set; } = "";
 		public decimal RazemNetto { get; set; }
 		public decimal RazemVat { get; set; }
 		public decimal RazemBrutto { get; set; }
 		public decimal KursWaluty { get; set; }
-		public string OpisSposobuPlatnosci { get; set; }
+		public string OpisSposobuPlatnosci { get; set; } = "";
 		public RodzajFaktury Rodzaj { get; set; }
 		public bool CzyWartosciReczne { get; set; }
 
@@ -54,24 +54,10 @@ namespace ProFak.DB
 		public List<PozycjaFaktury> Pozycje { get; set; }
 		public List<Wplata> Wplaty { get; set; }
 
-		public Faktura()
-		{
-			Numer = "";
-			UwagiWewnetrzne = "";
-			UwagiPubliczne = "";
-			NIPSprzedawcy = "";
-			NazwaSprzedawcy = "";
-			DaneSprzedawcy = "";
-			NIPNabywcy = "";
-			NazwaNabywcy = "";
-			DaneNabywcy = "";
-			RachunekBankowy = "";
-			OpisSposobuPlatnosci = "";
-		}
-
 		public override void WypelnijDomyslnePola(Baza baza)
 		{
 			base.WypelnijDomyslnePola(baza);
+			Rodzaj = RodzajFaktury.Sprzedaż;
 			DataSprzedazy = DateTime.Now.Date;
 			DataWystawienia = DateTime.Now.Date;
 			DataWprowadzenia = DateTime.Now.Date;

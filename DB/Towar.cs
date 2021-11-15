@@ -8,7 +8,7 @@ namespace ProFak.DB
 {
 	class Towar : Rekord<Towar>
 	{
-		public string Nazwa { get; set; }
+		public string Nazwa { get; set; } = "";
 		public RodzajTowaru Rodzaj { get; set; }
 		public decimal CenaNetto { get; set; }
 		public decimal CenaBrutto { get; set; }
@@ -24,14 +24,10 @@ namespace ProFak.DB
 		public StawkaVat StawkaVat { get; set; }
 		public JednostkaMiary JednostkaMiary { get; set; }
 
-		public Towar()
-		{
-			Nazwa = "";
-		}
-
 		public override void WypelnijDomyslnePola(Baza baza)
 		{
 			base.WypelnijDomyslnePola(baza);
+			Rodzaj = RodzajTowaru.Towar;
 			StawkaVatRef = baza.StawkiVat.OrderByDescending(stawkaVat => stawkaVat.CzyDomyslna).ThenBy(stawkaVat => stawkaVat.Id).FirstOrDefault();
 			JednostkaMiaryRef = baza.JednostkiMiar.OrderByDescending(jednostka => jednostka.CzyDomyslna).ThenBy(jednostka => jednostka.Id).FirstOrDefault();
 			if (StawkaVatRef.IsNull) throw new ApplicationException("Przed dodaniem towaru należy zdefiniować przynajmniej jedną stawkę VAT.");
