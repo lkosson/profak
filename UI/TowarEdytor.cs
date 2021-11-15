@@ -41,7 +41,7 @@ namespace ProFak.UI
 
 		private void WypelnijSpisy()
 		{
-			new SwobodnySlownik<JednostkaMiary>(
+			new Slownik<JednostkaMiary>(
 				Kontekst, comboBoxJednostkaMiary, buttonJednostkaMiary,
 				Kontekst.Baza.JednostkiMiar.ToList,
 				jednostka => jednostka.Skrot,
@@ -49,7 +49,7 @@ namespace ProFak.UI
 				Spis.JednostkiMiar)
 				.Zainstaluj();
 
-			new SwobodnySlownik<StawkaVat>(
+			new Slownik<StawkaVat>(
 				Kontekst, comboBoxStawkaVat, buttonStawkaVat,
 				Kontekst.Baza.StawkiVat.ToList,
 				stawka => stawka.Skrot,

@@ -61,7 +61,7 @@ namespace ProFak.UI
 
 		private void WypelnijSpisy()
 		{
-			new SwobodnySlownik<Waluta>(
+			new Slownik<Waluta>(
 				Kontekst, comboBoxWaluta, buttonWaluta,
 				Kontekst.Baza.Waluty.ToList,
 				waluta => waluta.Skrot,
@@ -69,7 +69,7 @@ namespace ProFak.UI
 				Spis.Waluty)
 				.Zainstaluj();
 
-			new SwobodnySlownik<SposobPlatnosci>(
+			new Slownik<SposobPlatnosci>(
 				Kontekst, comboBoxSposobPlatnosci, buttonSposobPlatnosci,
 				Kontekst.Baza.SposobyPlatnosci.ToList,
 				sposobPlatnosci => sposobPlatnosci.Nazwa,
@@ -77,7 +77,7 @@ namespace ProFak.UI
 				Spis.SposobyPlatnosci)
 				.Zainstaluj();
 
-			new SwobodnySlownik<Kontrahent>(
+			new Slownik<Kontrahent>(
 				Kontekst, comboBoxNIPNabywcy, buttonNabywca,
 				Kontekst.Baza.Kontrahenci.ToList,
 				kontrahent => kontrahent.NIP,
@@ -85,7 +85,7 @@ namespace ProFak.UI
 				Spis.Kontrahenci)
 				.Zainstaluj();
 
-			new SwobodnySlownik<Kontrahent>(
+			new Slownik<Kontrahent>(
 				Kontekst, comboBoxNazwaNabywcy, null,
 				Kontekst.Baza.Kontrahenci.ToList,
 				kontrahent => kontrahent.PelnaNazwa,
@@ -93,7 +93,7 @@ namespace ProFak.UI
 				Spis.Kontrahenci)
 				.Zainstaluj();
 
-			new SwobodnySlownik<Kontrahent>(
+			new Slownik<Kontrahent>(
 				Kontekst, comboBoxNIPSprzedawcy, buttonSprzedawca,
 				Kontekst.Baza.Kontrahenci.ToList,
 				kontrahent => kontrahent.NIP,
@@ -101,7 +101,7 @@ namespace ProFak.UI
 				Spis.Kontrahenci)
 				.Zainstaluj();
 
-			new SwobodnySlownik<Kontrahent>(
+			new Slownik<Kontrahent>(
 				Kontekst, comboBoxNazwaSprzedawcy, null,
 				Kontekst.Baza.Kontrahenci.ToList,
 				kontrahent => kontrahent.PelnaNazwa,

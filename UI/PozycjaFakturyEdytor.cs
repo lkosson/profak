@@ -44,7 +44,7 @@ namespace ProFak.UI
 
 		private void WypelnijSpisy()
 		{
-			new SwobodnySlownik<Towar>(
+			new Slownik<Towar>(
 				Kontekst, comboBoxTowar, buttonTowar,
 				Kontekst.Baza.Towary.ToList,
 				towar => towar.Nazwa,

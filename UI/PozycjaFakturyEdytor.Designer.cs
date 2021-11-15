@@ -94,7 +94,7 @@ namespace ProFak.UI
 			this.groupBox1.Location = new System.Drawing.Point(3, 40);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(244, 158);
-			this.groupBox1.TabIndex = 0;
+			this.groupBox1.TabIndex = 2;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Cena jednostkowa";
 			// 
@@ -164,7 +164,7 @@ namespace ProFak.UI
             0});
 			this.numericUpDownCenaNetto.Name = "numericUpDownCenaNetto";
 			this.numericUpDownCenaNetto.Size = new System.Drawing.Size(186, 23);
-			this.numericUpDownCenaNetto.TabIndex = 3;
+			this.numericUpDownCenaNetto.TabIndex = 1;
 			this.numericUpDownCenaNetto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// numericUpDownCenaVat
@@ -179,7 +179,7 @@ namespace ProFak.UI
             0});
 			this.numericUpDownCenaVat.Name = "numericUpDownCenaVat";
 			this.numericUpDownCenaVat.Size = new System.Drawing.Size(186, 23);
-			this.numericUpDownCenaVat.TabIndex = 3;
+			this.numericUpDownCenaVat.TabIndex = 2;
 			this.numericUpDownCenaVat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// numericUpDownCenaBrutto
@@ -214,7 +214,7 @@ namespace ProFak.UI
 			this.groupBox2.Location = new System.Drawing.Point(253, 40);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(244, 158);
-			this.groupBox2.TabIndex = 1;
+			this.groupBox2.TabIndex = 3;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Łączna wartość";
 			// 
@@ -284,7 +284,7 @@ namespace ProFak.UI
             0});
 			this.numericUpDownWartoscNetto.Name = "numericUpDownWartoscNetto";
 			this.numericUpDownWartoscNetto.Size = new System.Drawing.Size(186, 23);
-			this.numericUpDownWartoscNetto.TabIndex = 3;
+			this.numericUpDownWartoscNetto.TabIndex = 1;
 			this.numericUpDownWartoscNetto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// numericUpDownWartoscVat
@@ -299,7 +299,7 @@ namespace ProFak.UI
             0});
 			this.numericUpDownWartoscVat.Name = "numericUpDownWartoscVat";
 			this.numericUpDownWartoscVat.Size = new System.Drawing.Size(186, 23);
-			this.numericUpDownWartoscVat.TabIndex = 3;
+			this.numericUpDownWartoscVat.TabIndex = 2;
 			this.numericUpDownWartoscVat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// numericUpDownWartoscBrutto
@@ -349,7 +349,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel2.RowCount = 1;
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel2.Size = new System.Drawing.Size(494, 31);
-			this.tableLayoutPanel2.TabIndex = 2;
+			this.tableLayoutPanel2.TabIndex = 1;
 			// 
 			// label1
 			// 

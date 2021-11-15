@@ -39,6 +39,7 @@ namespace ProFak.UI
 
 		public void Powiazanie(NumericUpDown numericUpDown, Func<TModel, decimal> pobierzWartosc, Action<TModel, decimal> ustawWartosc, Action wartoscZmieniona = null)
 		{
+			numericUpDown.Enter += delegate { numericUpDown.Select(0, numericUpDown.Text.Length); };
 			numericUpDown.ValueChanged += delegate { AktualizujModel(numericUpDown, ustawWartosc, nud => nud.Value); if (wartoscZmieniona != null) wartoscZmieniona(); };
 			Action powiazanie = delegate { AktualizujKontrolke(numericUpDown, pobierzWartosc, (nud, wartosc) => nud.Value = wartosc); };
 			if (model != null) powiazanie();

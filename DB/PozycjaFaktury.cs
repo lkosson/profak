@@ -31,5 +31,13 @@ namespace ProFak.DB
 		{
 			Opis = "";
 		}
+
+		public override void WypelnijDomyslnePola(Baza baza)
+		{
+			base.WypelnijDomyslnePola(baza);
+			var towar = baza.Towary.OrderBy(towar => towar.CzyArchiwalny).ThenBy(towar => towar.Id).FirstOrDefault();
+			TowarRef = towar;
+			Opis = towar.Nazwa;
+		}
 	}
 }

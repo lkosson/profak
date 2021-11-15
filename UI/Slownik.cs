@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	class SwobodnySlownik<T>
+	class Slownik<T>
 		where T : Rekord<T>
 	{
 		private readonly Kontekst kontekst;
@@ -20,7 +20,7 @@ namespace ProFak.UI
 		private readonly Func<Kontekst, SpisZAkcjami<T>> generatorSpisu;
 		private bool gotowy;
 
-		public SwobodnySlownik(Kontekst kontekst, ComboBox comboBox, Button button, Func<IEnumerable<T>> pobierzWartosci, Func<T, string> wyswietlanaWartosc, Action<T> ustawWartosc, Func<Kontekst, SpisZAkcjami<T>> generatorSpisu)
+		public Slownik(Kontekst kontekst, ComboBox comboBox, Button button, Func<IEnumerable<T>> pobierzWartosci, Func<T, string> wyswietlanaWartosc, Action<T> ustawWartosc, Func<Kontekst, SpisZAkcjami<T>> generatorSpisu)
 		{
 			this.kontekst = kontekst;
 			this.comboBox = comboBox;
@@ -36,7 +36,13 @@ namespace ProFak.UI
 			WypelnijListe();
 			comboBox.SelectedIndexChanged += comboBox_SelectedIndexChanged;
 			comboBox.HandleCreated += ComboBox_HandleCreated;
+			comboBox.KeyDown += ComboBox_KeyDown;
 			if (button != null) button.Click += button_Click;
+		}
+
+		private void ComboBox_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.F2) PokazSpis();
 		}
 
 		private void ComboBox_HandleCreated(object sender, EventArgs e)
@@ -44,7 +50,7 @@ namespace ProFak.UI
 			gotowy = true;
 		}
 
-		private void button_Click(object sender, EventArgs e)
+		private void PokazSpis()
 		{
 			var dotychczasowaPozycja = (PozycjaListyRekordu<T>)comboBox.SelectedItem;
 			var wartosc = Spis.Wybierz(kontekst, generatorSpisu, "Wybierz pozycję", dotychczasowaPozycja?.Wartosc);
@@ -54,6 +60,11 @@ namespace ProFak.UI
 			gotowy = true;
 			var nowaPozycja = comboBox.Items.Cast<PozycjaListyRekordu<T>>().FirstOrDefault(p => p.Wartosc == wartosc);
 			if (nowaPozycja != null) comboBox.SelectedItem = nowaPozycja;
+		}
+
+		private void button_Click(object sender, EventArgs e)
+		{
+			PokazSpis();
 		}
 
 		private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
