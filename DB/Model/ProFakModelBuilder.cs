@@ -14,8 +14,10 @@ namespace ProFak.DB.Model
 			modelBuilder.Entity<Faktura>(FakturaBuilder.Configure);
 			modelBuilder.Entity<JednostkaMiary>(JednostkaMiaryBuilder.Configure);
 			modelBuilder.Entity<Kontrahent>(KontrahentBuilder.Configure);
+			modelBuilder.Entity<Numerator>(NumeratorBuilder.Configure);
 			modelBuilder.Entity<PozycjaFaktury>(PozycjaFakturyBuilder.Configure);
 			modelBuilder.Entity<SposobPlatnosci>(SposobPlatnosciBuilder.Configure);
+			modelBuilder.Entity<StanNumeratora>(StanNumeratoraBuilder.Configure);
 			modelBuilder.Entity<StawkaVat>(StawkaVatBuilder.Configure);
 			modelBuilder.Entity<Towar>(TowarBuilder.Configure);
 			modelBuilder.Entity<Waluta>(WalutaBuilder.Configure);
