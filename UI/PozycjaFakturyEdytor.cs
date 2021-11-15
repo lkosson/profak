@@ -80,26 +80,7 @@ namespace ProFak.UI
 
 		private void PrzeliczCeny()
 		{
-			if (Rekord.CzyWartosciReczne) return;
-			var towar = Kontekst.Baza.Towary.Include(towar => towar.StawkaVat).FirstOrDefault(towar => towar.Id == Rekord.TowarId);
-			var procentVat = towar?.StawkaVat?.Wartosc ?? 0;
-
-			if (Rekord.CzyWedlugCenBrutto)
-			{
-				Rekord.CenaNetto = Decimal.Round(Rekord.CenaBrutto * 100m / (100 + procentVat), 2, MidpointRounding.AwayFromZero);
-				Rekord.CenaVat = Decimal.Round(Rekord.CenaBrutto - Rekord.CenaNetto, 2, MidpointRounding.AwayFromZero);
-				Rekord.WartoscBrutto = Decimal.Round(Rekord.Ilosc * Rekord.CenaBrutto, 2, MidpointRounding.AwayFromZero);
-				Rekord.WartoscNetto = Decimal.Round(Rekord.WartoscBrutto * 100m / (100 + procentVat), 2, MidpointRounding.AwayFromZero);
-				Rekord.WartoscVat = Decimal.Round(Rekord.WartoscBrutto - Rekord.WartoscNetto, 2, MidpointRounding.AwayFromZero);
-			}
-			else
-			{
-				Rekord.CenaVat = Decimal.Round(Rekord.CenaNetto * procentVat / 100, 2, MidpointRounding.AwayFromZero);
-				Rekord.CenaBrutto = Decimal.Round(Rekord.CenaNetto + Rekord.CenaVat, 2, MidpointRounding.AwayFromZero);
-				Rekord.WartoscNetto = Decimal.Round(Rekord.Ilosc * Rekord.CenaNetto, 2, MidpointRounding.AwayFromZero);
-				Rekord.WartoscVat = Decimal.Round(Rekord.WartoscNetto * procentVat / 100, 2, MidpointRounding.AwayFromZero);
-				Rekord.WartoscBrutto = Decimal.Round(Rekord.WartoscNetto + Rekord.WartoscVat, 2, MidpointRounding.AwayFromZero);
-			}
+			Rekord.PrzeliczCeny(Kontekst.Baza);
 			kontroler.AktualizujKontrolki();
 		}
 	}

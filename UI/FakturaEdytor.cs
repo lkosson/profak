@@ -42,9 +42,7 @@ namespace ProFak.UI
 
 		private void pozycjeFakturySpis_RekordyZmienione()
 		{
-			Rekord.RazemNetto = pozycjeFaktury.Spis.Rekordy.Sum(pozycja => pozycja.WartoscNetto);
-			Rekord.RazemVat = pozycjeFaktury.Spis.Rekordy.Sum(pozycja => pozycja.WartoscVat);
-			Rekord.RazemBrutto = pozycjeFaktury.Spis.Rekordy.Sum(pozycja => pozycja.WartoscBrutto);
+			Rekord.PrzeliczRazem(Kontekst.Baza);
 			kontroler.AktualizujKontrolki();
 		}
 

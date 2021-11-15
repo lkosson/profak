@@ -81,6 +81,14 @@ namespace ProFak.DB
 			if (WalutaRef.IsNull) throw new ApplicationException("Przed wprowadzeniem faktury należy zdefiniować przynajmniej jedną walutę.");
 			if (SposobPlatnosciRef.IsNull) throw new ApplicationException("Przed wprowadzeniem faktury należy zdefiniować przynajmniej jeden sposób płatności.");
 		}
+
+		public void PrzeliczRazem(Baza baza)
+		{
+			var pozycje = baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == Id).ToList();
+			RazemNetto = pozycje.Sum(pozycja => pozycja.WartoscNetto);
+			RazemVat = pozycje.Sum(pozycja => pozycja.WartoscVat);
+			RazemBrutto = pozycje.Sum(pozycja => pozycja.WartoscBrutto);
+		}
 	}
 
 	enum RodzajFaktury

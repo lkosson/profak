@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,6 +39,30 @@ namespace ProFak.DB
 			var towar = baza.Towary.OrderBy(towar => towar.CzyArchiwalny).ThenBy(towar => towar.Id).FirstOrDefault();
 			TowarRef = towar;
 			Opis = towar.Nazwa;
+		}
+
+		public void PrzeliczCeny(Baza baza)
+		{
+			if (CzyWartosciReczne) return;
+			var towar = baza.Towary.Include(towar => towar.StawkaVat).FirstOrDefault(towar => towar.Id == TowarId);
+			var procentVat = towar?.StawkaVat?.Wartosc ?? 0;
+
+			if (CzyWedlugCenBrutto)
+			{
+				CenaNetto = Decimal.Round(CenaBrutto * 100m / (100 + procentVat), 2, MidpointRounding.AwayFromZero);
+				CenaVat = Decimal.Round(CenaBrutto - CenaNetto, 2, MidpointRounding.AwayFromZero);
+				WartoscBrutto = Decimal.Round(Ilosc * CenaBrutto, 2, MidpointRounding.AwayFromZero);
+				WartoscNetto = Decimal.Round(WartoscBrutto * 100m / (100 + procentVat), 2, MidpointRounding.AwayFromZero);
+				WartoscVat = Decimal.Round(WartoscBrutto - WartoscNetto, 2, MidpointRounding.AwayFromZero);
+			}
+			else
+			{
+				CenaVat = Decimal.Round(CenaNetto * procentVat / 100, 2, MidpointRounding.AwayFromZero);
+				CenaBrutto = Decimal.Round(CenaNetto + CenaVat, 2, MidpointRounding.AwayFromZero);
+				WartoscNetto = Decimal.Round(Ilosc * CenaNetto, 2, MidpointRounding.AwayFromZero);
+				WartoscVat = Decimal.Round(WartoscNetto * procentVat / 100, 2, MidpointRounding.AwayFromZero);
+				WartoscBrutto = Decimal.Round(WartoscNetto + WartoscVat, 2, MidpointRounding.AwayFromZero);
+			}
 		}
 	}
 }
