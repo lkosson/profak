@@ -29,8 +29,6 @@ namespace ProFak.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
 			this.comboBoxStawkaVat = new System.Windows.Forms.ComboBox();
 			this.buttonStawkaVat = new System.Windows.Forms.Button();
@@ -50,15 +48,10 @@ namespace ProFak.UI
 			this.label1 = new System.Windows.Forms.Label();
 			this.numericUpDownCenaNetto = new System.Windows.Forms.NumericUpDown();
 			this.buttonJednostkaMiary = new System.Windows.Forms.Button();
-			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
 			this.tableLayoutPanel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownCenaBrutto)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownCenaNetto)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// bindingSource
-			// 
-			this.bindingSource.DataSource = typeof(ProFak.DB.Towar);
 			// 
 			// tableLayoutPanel
 			// 
@@ -103,7 +96,6 @@ namespace ProFak.UI
 			// comboBoxStawkaVat
 			// 
 			this.comboBoxStawkaVat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.comboBoxStawkaVat.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.bindingSource, "StawkaVatRef", true));
 			this.comboBoxStawkaVat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxStawkaVat.FormattingEnabled = true;
 			this.comboBoxStawkaVat.Location = new System.Drawing.Point(149, 91);
@@ -126,7 +118,6 @@ namespace ProFak.UI
 			// 
 			this.comboBoxWidocznosc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanel.SetColumnSpan(this.comboBoxWidocznosc, 2);
-			this.comboBoxWidocznosc.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.bindingSource, "CzyArchiwalny", true));
 			this.comboBoxWidocznosc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxWidocznosc.FormattingEnabled = true;
 			this.comboBoxWidocznosc.Location = new System.Drawing.Point(149, 210);
@@ -138,7 +129,6 @@ namespace ProFak.UI
 			// 
 			this.numericUpDownCenaBrutto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanel.SetColumnSpan(this.numericUpDownCenaBrutto, 2);
-			this.numericUpDownCenaBrutto.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bindingSource, "CenaBrutto", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.numericUpDownCenaBrutto.DecimalPlaces = 2;
 			this.numericUpDownCenaBrutto.Location = new System.Drawing.Point(149, 150);
 			this.numericUpDownCenaBrutto.Maximum = new decimal(new int[] {
@@ -155,7 +145,6 @@ namespace ProFak.UI
 			// comboBoxJednostkaMiary
 			// 
 			this.comboBoxJednostkaMiary.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.comboBoxJednostkaMiary.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.bindingSource, "JednostkaMiaryRef", true));
 			this.comboBoxJednostkaMiary.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxJednostkaMiary.FormattingEnabled = true;
 			this.comboBoxJednostkaMiary.Location = new System.Drawing.Point(149, 180);
@@ -177,7 +166,6 @@ namespace ProFak.UI
 			// 
 			this.comboBoxSposobLiczenia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanel.SetColumnSpan(this.comboBoxSposobLiczenia, 2);
-			this.comboBoxSposobLiczenia.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.bindingSource, "CzyWedlugCenBrutto", true));
 			this.comboBoxSposobLiczenia.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxSposobLiczenia.FormattingEnabled = true;
 			this.comboBoxSposobLiczenia.Location = new System.Drawing.Point(149, 61);
@@ -240,7 +228,6 @@ namespace ProFak.UI
 			// 
 			this.comboBoxRodzaj.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanel.SetColumnSpan(this.comboBoxRodzaj, 2);
-			this.comboBoxRodzaj.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.bindingSource, "Rodzaj", true));
 			this.comboBoxRodzaj.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxRodzaj.FormattingEnabled = true;
 			this.comboBoxRodzaj.Location = new System.Drawing.Point(149, 32);
@@ -262,7 +249,6 @@ namespace ProFak.UI
 			// 
 			this.textBoxNazwa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanel.SetColumnSpan(this.textBoxNazwa, 2);
-			this.textBoxNazwa.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "Nazwa", true));
 			this.textBoxNazwa.Location = new System.Drawing.Point(149, 3);
 			this.textBoxNazwa.Name = "textBoxNazwa";
 			this.textBoxNazwa.Size = new System.Drawing.Size(148, 23);
@@ -282,7 +268,6 @@ namespace ProFak.UI
 			// 
 			this.numericUpDownCenaNetto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanel.SetColumnSpan(this.numericUpDownCenaNetto, 2);
-			this.numericUpDownCenaNetto.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bindingSource, "CenaNetto", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.numericUpDownCenaNetto.DecimalPlaces = 2;
 			this.numericUpDownCenaNetto.Location = new System.Drawing.Point(149, 121);
 			this.numericUpDownCenaNetto.Maximum = new decimal(new int[] {
@@ -315,7 +300,6 @@ namespace ProFak.UI
 			this.MinimumSize = new System.Drawing.Size(300, 240);
 			this.Name = "TowarEdytor";
 			this.Size = new System.Drawing.Size(300, 243);
-			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
 			this.tableLayoutPanel.ResumeLayout(false);
 			this.tableLayoutPanel.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownCenaBrutto)).EndInit();
@@ -325,8 +309,6 @@ namespace ProFak.UI
 		}
 
 		#endregion
-
-		private System.Windows.Forms.BindingSource bindingSource;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.TextBox textBoxNazwa;
