@@ -27,6 +27,7 @@ namespace ProFak.UI
 		public void Powiazanie(TextBox textBox, Expression<Func<TModel, string>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(textBox, wlasciwosc, Powiazanie, wartoscZmieniona);
 		public void Powiazanie(CheckBox checkBox, Expression<Func<TModel, bool>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(checkBox, wlasciwosc, Powiazanie, wartoscZmieniona);
 		public void Powiazanie(ComboBox comboBox, Expression<Func<TModel, string>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(comboBox, wlasciwosc, Powiazanie, wartoscZmieniona);
+		public void Powiazanie<TWartosc>(ComboBox comboBox, Expression<Func<TModel, TWartosc>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(comboBox, wlasciwosc, Powiazanie, wartoscZmieniona);
 
 		private void Powiazanie<TKontrolka, TWartosc>(TKontrolka kontrolka, Expression<Func<TModel, TWartosc>> wlasciwosc, Action<TKontrolka, Func<TModel, TWartosc>, Action<TModel, TWartosc>, Action> powiazanie, Action wartoscZmieniona = null)
 		{
@@ -70,6 +71,14 @@ namespace ProFak.UI
 			powiazania.Add(powiazanie);
 		}
 
+		public void Powiazanie<TWartosc>(ComboBox comboBox, Func<TModel, TWartosc> pobierzWartosc, Action<TModel, TWartosc> ustawWartosc, Action wartoscZmieniona = null)
+		{
+			comboBox.TextChanged += delegate { AktualizujModel(comboBox, ustawWartosc, comboBox => (TWartosc)comboBox.SelectedValue); if (wartoscZmieniona != null) wartoscZmieniona(); };
+			Action powiazanie = delegate { AktualizujKontrolke(comboBox, pobierzWartosc, (comboBox, wartosc) => { if (comboBox.SelectedIndex != -1) comboBox.SelectedIndex = -1; comboBox.SelectedValue = wartosc; }); };
+			if (model != null) powiazanie();
+			powiazania.Add(powiazanie);
+		}
+
 		private void AktualizujModel<TWartosc, TKontrolka>(TKontrolka kontrolka, Action<TModel, TWartosc> ustawWartosc, Func<TKontrolka, TWartosc> pobierzWartosc)
 			where TKontrolka : Control
 		{
@@ -107,6 +116,14 @@ namespace ProFak.UI
 		public void AktualizujKontrolki()
 		{
 			foreach (var powiazanie in powiazania) powiazanie();
+		}
+
+		public void Slownik<TEnum>(ComboBox comboBox) where TEnum : Enum
+		{
+			comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+			comboBox.DataSource = Enum.GetValues(typeof(TEnum)).Cast<TEnum>().Select(r => new PozycjaListy<TEnum> { Wartosc = r, Opis = r.ToString() }).ToArray();
+			comboBox.DisplayMember = "Opis";
+			comboBox.ValueMember = "Wartosc";
 		}
 	}
 }

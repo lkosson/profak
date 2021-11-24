@@ -29,6 +29,7 @@ namespace ProFak.DB
 		public DbSet<Faktura> Faktury => Set<Faktura>();
 		public DbSet<JednostkaMiary> JednostkiMiar => Set<JednostkaMiary>();
 		public DbSet<Kontrahent> Kontrahenci => Set<Kontrahent>();
+		public DbSet<Numerator> Numeratory => Set<Numerator>();
 		public DbSet<PozycjaFaktury> PozycjeFaktur => Set<PozycjaFaktury>();
 		public DbSet<StawkaVat> StawkiVat => Set<StawkaVat>();
 		public DbSet<Towar> Towary => Set<Towar>();

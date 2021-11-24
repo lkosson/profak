@@ -79,6 +79,15 @@ namespace ProFak.UI
 			);
 		}
 
+		public static SpisZAkcjami<Numerator, NumeratorSpis> Numeratory(Kontekst kontekst)
+		{
+			return SpisZAkcjami.Utworz(new NumeratorSpis { Kontekst = kontekst },
+				new DodajRekordAkcja<Numerator, NumeratorEdytor>("Nowy numerator"),
+				new EdytujRekordAkcja<Numerator, NumeratorEdytor>("Edycja numeratora"),
+				new UsunRekordAkcja<Numerator>()
+			);
+		}
+
 		public static SpisZAkcjami<PozycjaFaktury, PozycjaFakturySpis> PozycjeFaktur(Kontekst kontekst)
 		{
 			var spis = new PozycjaFakturySpis { Kontekst = kontekst };

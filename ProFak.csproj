@@ -30,6 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="UI\NumeratorSpis.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="UI\WplataSpis.cs">
       <SubType>Component</SubType>
     </Compile>
