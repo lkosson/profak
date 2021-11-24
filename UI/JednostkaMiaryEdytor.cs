@@ -12,10 +12,10 @@ namespace ProFak.UI
 	{
 		public JednostkaMiaryEdytor()
 		{
-			DodajTextBox(nameof(JednostkaMiary.Skrot), "Skrót");
-			DodajTextBox(nameof(JednostkaMiary.Nazwa), "Nazwa");
-			DodajCheckBox(nameof(JednostkaMiary.CzyDomyslna), "Domyślna");
-			DodajNumericUpDown(nameof(JednostkaMiary.LiczbaMiescPoPrzecinku), "Liczba miejsc po przecinku");
+			DodajTextBox(jednostkaMiary => jednostkaMiary.Skrot, "Skrót");
+			DodajTextBox(jednostkaMiary => jednostkaMiary.Nazwa, "Nazwa");
+			DodajCheckBox(jednostkaMiary => jednostkaMiary.CzyDomyslna, "Domyślna");
+			DodajNumericUpDown(jednostkaMiary => jednostkaMiary.LiczbaMiescPoPrzecinku, "Liczba miejsc po przecinku");
 			MinimumSize = new Size(250, 100);
 		}
 	}

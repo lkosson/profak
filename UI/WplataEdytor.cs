@@ -12,8 +12,8 @@ namespace ProFak.UI
 	{
 		public WplataEdytor()
 		{
-			DodajDatePicker(nameof(Wplata.Data), "Data wpływu");
-			DodajNumericUpDown(nameof(Wplata.Kwota), "Kwota");
+			DodajDatePicker(wplata => wplata.Data, "Data wpływu");
+			DodajNumericUpDown(wplata => wplata.Kwota, "Kwota");
 			MinimumSize = new Size(250, 100);
 		}
 	}

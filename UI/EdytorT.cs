@@ -3,34 +3,34 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	abstract class Edytor<T> : TableLayoutPanel, IEdytor<T>
-		where T : Rekord<T>
+	abstract class Edytor<TRekord> : TableLayoutPanel, IEdytor<TRekord>
+		where TRekord : Rekord<TRekord>
 	{
-		private readonly BindingSource bindingSource;
+		private readonly Kontroler<TRekord> kontroler;
 		private readonly Container container;
 		private int szerokoscEtykiet;
 		private int szerokoscKontrolek;
 
-		public T Rekord { get { return bindingSource.DataSource as T; } private set { bindingSource.DataSource = value; } }
+		public TRekord Rekord { get => kontroler.Model; set => kontroler.Model = value; }
 		public Kontekst Kontekst { get; private set; }
 
 		public Edytor()
 		{
 			container = new Container();
-			bindingSource = new BindingSource(container);
-			bindingSource.DataSource = typeof(T);
+			kontroler = new Kontroler<TRekord>();
 
 			ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
 			ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
 		}
 
-		public void Przygotuj(Kontekst kontekst, T rekord)
+		public void Przygotuj(Kontekst kontekst, TRekord rekord)
 		{
 			Kontekst = kontekst;
 			Rekord = rekord;
@@ -66,39 +66,49 @@ namespace ProFak.UI
 			if (Width < minimalnaSzerokosc) Width = minimalnaSzerokosc;
 		}
 
-		public void DodajTextBox(string pole, string etykieta, string format = "")
+		public void DodajTextBox(Expression<Func<TRekord, string>> wlasciwosc, string etykieta)
 		{
 			var textbox = new TextBox();
 			textbox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-			textbox.DataBindings.Add(new Binding("Text", bindingSource, pole, true, DataSourceUpdateMode.OnValidation, null, format));
+			kontroler.Powiazanie(textbox, wlasciwosc);
 			DodajWiersz(textbox, etykieta);
 		}
 
-		public void DodajCheckBox(string pole, string etykieta)
+		public void DodajCheckBox(Expression<Func<TRekord, bool>> wlasciwosc, string etykieta)
 		{
 			var checkbox = new CheckBox();
 			checkbox.AutoSize = true;
 			checkbox.Anchor = AnchorStyles.Left;
 			checkbox.Text = etykieta;
-			checkbox.DataBindings.Add(new Binding("Checked", bindingSource, pole, true, DataSourceUpdateMode.OnValidation, null, null));
+			kontroler.Powiazanie(checkbox, wlasciwosc);
 			DodajWiersz(checkbox, null);
 		}
 
-		public void DodajNumericUpDown(string pole, string etykieta, string format = "", int poprzecinku = 2)
+		public void DodajNumericUpDown(Expression<Func<TRekord, decimal>> wlasciwosc, string etykieta, int poprzecinku = 2)
 		{
-			var nud = new NumericUpDown();
-			nud.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-			nud.TextAlign = HorizontalAlignment.Right;
-			nud.DataBindings.Add(new Binding("Value", bindingSource, pole, true, DataSourceUpdateMode.OnPropertyChanged, null, format));
-			nud.DecimalPlaces = poprzecinku;
-			DodajWiersz(nud, etykieta);
+			var numericUpDown = new NumericUpDown();
+			numericUpDown.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+			numericUpDown.TextAlign = HorizontalAlignment.Right;
+			kontroler.Powiazanie(numericUpDown, wlasciwosc);
+			numericUpDown.DecimalPlaces = poprzecinku;
+			DodajWiersz(numericUpDown, etykieta);
 		}
 
-		public void DodajDatePicker(string pole, string etykieta)
+		public void DodajNumericUpDown(Expression<Func<TRekord, int>> wlasciwosc, string etykieta)
+		{
+			var numericUpDown = new NumericUpDown();
+			numericUpDown.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+			numericUpDown.TextAlign = HorizontalAlignment.Right;
+			kontroler.Powiazanie(numericUpDown, wlasciwosc);
+			numericUpDown.DecimalPlaces = 0;
+			DodajWiersz(numericUpDown, etykieta);
+		}
+
+		public void DodajDatePicker(Expression<Func<TRekord, DateTime>> wlasciwosc, string etykieta)
 		{
 			var dateTimePicker = new DateTimePicker();
 			dateTimePicker.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-			dateTimePicker.DataBindings.Add(new Binding("Text", bindingSource, pole, true, DataSourceUpdateMode.OnValidation));
+			kontroler.Powiazanie(dateTimePicker, wlasciwosc);
 			DodajWiersz(dateTimePicker, etykieta);
 		}
 

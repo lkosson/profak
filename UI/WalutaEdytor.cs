@@ -12,9 +12,9 @@ namespace ProFak.UI
 	{
 		public WalutaEdytor()
 		{
-			DodajTextBox(nameof(Waluta.Skrot), "Skrót");
-			DodajTextBox(nameof(Waluta.Nazwa), "Nazwa");
-			DodajCheckBox(nameof(Waluta.CzyDomyslna), "Domyślna");
+			DodajTextBox(waluta => waluta.Skrot, "Skrót");
+			DodajTextBox(waluta => waluta.Nazwa, "Nazwa");
+			DodajCheckBox(waluta => waluta.CzyDomyslna, "Domyślna");
 			MinimumSize = new Size(250, 80);
 		}
 	}

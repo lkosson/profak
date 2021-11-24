@@ -15,9 +15,9 @@ namespace ProFak.UI
 	{
 		public StawkaVatEdytor()
 		{
-			DodajTextBox(nameof(StawkaVat.Skrot), "Skrót");
-			DodajNumericUpDown(nameof(StawkaVat.Wartosc), "Wartość");
-			DodajCheckBox(nameof(StawkaVat.CzyDomyslna), "Domyślna");
+			DodajTextBox(stawkaVat => stawkaVat.Skrot, "Skrót");
+			DodajNumericUpDown(stawkaVat => stawkaVat.Wartosc, "Wartość");
+			DodajCheckBox(stawkaVat => stawkaVat.CzyDomyslna, "Domyślna");
 			MinimumSize = new Size(250, 80);
 		}
 	}

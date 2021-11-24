@@ -25,6 +25,7 @@ namespace ProFak.UI
 
 		public void Powiazanie(DateTimePicker dateTimePicker, Expression<Func<TModel, DateTime>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(dateTimePicker, wlasciwosc, Powiazanie, wartoscZmieniona);
 		public void Powiazanie(NumericUpDown numericUpDown, Expression<Func<TModel, decimal>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(numericUpDown, wlasciwosc, Powiazanie, wartoscZmieniona);
+		public void Powiazanie(NumericUpDown numericUpDown, Expression<Func<TModel, int>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(numericUpDown, wlasciwosc, Powiazanie, wartoscZmieniona);
 		public void Powiazanie(TextBox textBox, Expression<Func<TModel, string>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(textBox, wlasciwosc, Powiazanie, wartoscZmieniona);
 		public void Powiazanie(CheckBox checkBox, Expression<Func<TModel, bool>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(checkBox, wlasciwosc, Powiazanie, wartoscZmieniona);
 		public void Powiazanie(ComboBox comboBox, Expression<Func<TModel, string>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(comboBox, wlasciwosc, Powiazanie, wartoscZmieniona);
@@ -45,6 +46,11 @@ namespace ProFak.UI
 			Action powiazanie = delegate { AktualizujKontrolke(dateTimePicker, pobierzWartosc, (nud, wartosc) => nud.Value = wartosc); };
 			if (model != null) powiazanie();
 			powiazania.Add(powiazanie);
+		}
+
+		public void Powiazanie(NumericUpDown numericUpDown, Func<TModel, int> pobierzWartosc, Action<TModel, int> ustawWartosc, Action wartoscZmieniona = null)
+		{
+			Powiazanie(numericUpDown, model => pobierzWartosc(model), (TModel model, decimal wartosc) => ustawWartosc(model, (int)wartosc), wartoscZmieniona);
 		}
 
 		public void Powiazanie(NumericUpDown numericUpDown, Func<TModel, decimal> pobierzWartosc, Action<TModel, decimal> ustawWartosc, Action wartoscZmieniona = null)

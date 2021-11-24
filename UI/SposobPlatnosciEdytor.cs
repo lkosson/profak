@@ -12,9 +12,9 @@ namespace ProFak.UI
 	{
 		public SposobPlatnosciEdytor()
 		{
-			DodajTextBox(nameof(SposobPlatnosci.Nazwa), "Nazwa");
-			DodajNumericUpDown(nameof(SposobPlatnosci.LiczbaDni), "Liczba dni");
-			DodajCheckBox(nameof(SposobPlatnosci.CzyDomyslny), "Domyślny");
+			DodajTextBox(sposobPlatnosci => sposobPlatnosci.Nazwa, "Nazwa");
+			DodajNumericUpDown(sposobPlatnosci => sposobPlatnosci.LiczbaDni, "Liczba dni");
+			DodajCheckBox(sposobPlatnosci => sposobPlatnosci.CzyDomyslny, "Domyślny");
 			MinimumSize = new Size(250, 80);
 		}
 	}
