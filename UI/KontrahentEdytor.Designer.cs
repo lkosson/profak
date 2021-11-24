@@ -29,41 +29,34 @@ namespace ProFak.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.label2 = new System.Windows.Forms.Label();
-			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.textBoxPelnaNazwa = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
-			this.textBox3 = new System.Windows.Forms.TextBox();
-			this.textBox4 = new System.Windows.Forms.TextBox();
-			this.textBox5 = new System.Windows.Forms.TextBox();
-			this.textBox6 = new System.Windows.Forms.TextBox();
-			this.textBox7 = new System.Windows.Forms.TextBox();
-			this.textBox8 = new System.Windows.Forms.TextBox();
+			this.textBoxNIP = new System.Windows.Forms.TextBox();
+			this.textBoxAdresRejestrowy = new System.Windows.Forms.TextBox();
+			this.textBoxAdresKorespondencyjny = new System.Windows.Forms.TextBox();
+			this.textBoxTelefon = new System.Windows.Forms.TextBox();
+			this.textBoxEMail = new System.Windows.Forms.TextBox();
+			this.textBoxRachunekBankowy = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
-			this.textBox9 = new System.Windows.Forms.TextBox();
-			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.textBoxUwagi = new System.Windows.Forms.TextBox();
+			this.textBoxNazwa = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
 			this.tabControl.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.tabPage2.SuspendLayout();
 			this.tableLayoutPanel2.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// bindingSource
-			// 
-			this.bindingSource.DataSource = typeof(ProFak.DB.Kontrahent);
 			// 
 			// tabControl
 			// 
@@ -94,14 +87,14 @@ namespace ProFak.UI
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel1.Controls.Add(this.label2, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.textBox2, 1, 0);
+			this.tableLayoutPanel1.Controls.Add(this.textBoxPelnaNazwa, 1, 0);
 			this.tableLayoutPanel1.Controls.Add(this.label3, 0, 1);
-			this.tableLayoutPanel1.Controls.Add(this.textBox3, 1, 1);
-			this.tableLayoutPanel1.Controls.Add(this.textBox4, 1, 2);
-			this.tableLayoutPanel1.Controls.Add(this.textBox5, 1, 3);
-			this.tableLayoutPanel1.Controls.Add(this.textBox6, 1, 4);
-			this.tableLayoutPanel1.Controls.Add(this.textBox7, 1, 5);
-			this.tableLayoutPanel1.Controls.Add(this.textBox8, 1, 6);
+			this.tableLayoutPanel1.Controls.Add(this.textBoxNIP, 1, 1);
+			this.tableLayoutPanel1.Controls.Add(this.textBoxAdresRejestrowy, 1, 2);
+			this.tableLayoutPanel1.Controls.Add(this.textBoxAdresKorespondencyjny, 1, 3);
+			this.tableLayoutPanel1.Controls.Add(this.textBoxTelefon, 1, 4);
+			this.tableLayoutPanel1.Controls.Add(this.textBoxEMail, 1, 5);
+			this.tableLayoutPanel1.Controls.Add(this.textBoxRachunekBankowy, 1, 6);
 			this.tableLayoutPanel1.Controls.Add(this.label4, 0, 2);
 			this.tableLayoutPanel1.Controls.Add(this.label5, 0, 3);
 			this.tableLayoutPanel1.Controls.Add(this.label6, 0, 4);
@@ -132,14 +125,13 @@ namespace ProFak.UI
 			this.label2.TabIndex = 2;
 			this.label2.Text = "Pełna nazwa";
 			// 
-			// textBox2
+			// textBoxPelnaNazwa
 			// 
-			this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "PelnaNazwa", true));
-			this.textBox2.Location = new System.Drawing.Point(146, 3);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(231, 23);
-			this.textBox2.TabIndex = 1;
+			this.textBoxPelnaNazwa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxPelnaNazwa.Location = new System.Drawing.Point(146, 3);
+			this.textBoxPelnaNazwa.Name = "textBoxPelnaNazwa";
+			this.textBoxPelnaNazwa.Size = new System.Drawing.Size(231, 23);
+			this.textBoxPelnaNazwa.TabIndex = 1;
 			// 
 			// label3
 			// 
@@ -151,61 +143,55 @@ namespace ProFak.UI
 			this.label3.TabIndex = 2;
 			this.label3.Text = "NIP";
 			// 
-			// textBox3
+			// textBoxNIP
 			// 
-			this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox3.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "NIP", true));
-			this.textBox3.Location = new System.Drawing.Point(146, 32);
-			this.textBox3.Name = "textBox3";
-			this.textBox3.Size = new System.Drawing.Size(231, 23);
-			this.textBox3.TabIndex = 2;
+			this.textBoxNIP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxNIP.Location = new System.Drawing.Point(146, 32);
+			this.textBoxNIP.Name = "textBoxNIP";
+			this.textBoxNIP.Size = new System.Drawing.Size(231, 23);
+			this.textBoxNIP.TabIndex = 2;
 			// 
-			// textBox4
+			// textBoxAdresRejestrowy
 			// 
-			this.textBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox4.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "AdresRejestrowy", true));
-			this.textBox4.Location = new System.Drawing.Point(146, 61);
-			this.textBox4.Multiline = true;
-			this.textBox4.Name = "textBox4";
-			this.textBox4.Size = new System.Drawing.Size(231, 65);
-			this.textBox4.TabIndex = 3;
+			this.textBoxAdresRejestrowy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxAdresRejestrowy.Location = new System.Drawing.Point(146, 61);
+			this.textBoxAdresRejestrowy.Multiline = true;
+			this.textBoxAdresRejestrowy.Name = "textBoxAdresRejestrowy";
+			this.textBoxAdresRejestrowy.Size = new System.Drawing.Size(231, 65);
+			this.textBoxAdresRejestrowy.TabIndex = 3;
 			// 
-			// textBox5
+			// textBoxAdresKorespondencyjny
 			// 
-			this.textBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox5.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "AdresKorespondencyjny", true));
-			this.textBox5.Location = new System.Drawing.Point(146, 132);
-			this.textBox5.Multiline = true;
-			this.textBox5.Name = "textBox5";
-			this.textBox5.Size = new System.Drawing.Size(231, 65);
-			this.textBox5.TabIndex = 4;
+			this.textBoxAdresKorespondencyjny.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxAdresKorespondencyjny.Location = new System.Drawing.Point(146, 132);
+			this.textBoxAdresKorespondencyjny.Multiline = true;
+			this.textBoxAdresKorespondencyjny.Name = "textBoxAdresKorespondencyjny";
+			this.textBoxAdresKorespondencyjny.Size = new System.Drawing.Size(231, 65);
+			this.textBoxAdresKorespondencyjny.TabIndex = 4;
 			// 
-			// textBox6
+			// textBoxTelefon
 			// 
-			this.textBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox6.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "Telefon", true));
-			this.textBox6.Location = new System.Drawing.Point(146, 203);
-			this.textBox6.Name = "textBox6";
-			this.textBox6.Size = new System.Drawing.Size(231, 23);
-			this.textBox6.TabIndex = 5;
+			this.textBoxTelefon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxTelefon.Location = new System.Drawing.Point(146, 203);
+			this.textBoxTelefon.Name = "textBoxTelefon";
+			this.textBoxTelefon.Size = new System.Drawing.Size(231, 23);
+			this.textBoxTelefon.TabIndex = 5;
 			// 
-			// textBox7
+			// textBoxEMail
 			// 
-			this.textBox7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox7.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "EMail", true));
-			this.textBox7.Location = new System.Drawing.Point(146, 232);
-			this.textBox7.Name = "textBox7";
-			this.textBox7.Size = new System.Drawing.Size(231, 23);
-			this.textBox7.TabIndex = 6;
+			this.textBoxEMail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxEMail.Location = new System.Drawing.Point(146, 232);
+			this.textBoxEMail.Name = "textBoxEMail";
+			this.textBoxEMail.Size = new System.Drawing.Size(231, 23);
+			this.textBoxEMail.TabIndex = 6;
 			// 
-			// textBox8
+			// textBoxRachunekBankowy
 			// 
-			this.textBox8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox8.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "RachunekBankowy", true));
-			this.textBox8.Location = new System.Drawing.Point(146, 261);
-			this.textBox8.Name = "textBox8";
-			this.textBox8.Size = new System.Drawing.Size(231, 23);
-			this.textBox8.TabIndex = 7;
+			this.textBoxRachunekBankowy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxRachunekBankowy.Location = new System.Drawing.Point(146, 261);
+			this.textBoxRachunekBankowy.Name = "textBoxRachunekBankowy";
+			this.textBoxRachunekBankowy.Size = new System.Drawing.Size(231, 23);
+			this.textBoxRachunekBankowy.TabIndex = 7;
 			// 
 			// label4
 			// 
@@ -259,7 +245,7 @@ namespace ProFak.UI
 			// 
 			// tabPage2
 			// 
-			this.tabPage2.Controls.Add(this.textBox9);
+			this.tabPage2.Controls.Add(this.textBoxUwagi);
 			this.tabPage2.Location = new System.Drawing.Point(4, 24);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -268,24 +254,22 @@ namespace ProFak.UI
 			this.tabPage2.Text = "Uwagi";
 			this.tabPage2.UseVisualStyleBackColor = true;
 			// 
-			// textBox9
+			// textBoxUwagi
 			// 
-			this.textBox9.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "Uwagi", true));
-			this.textBox9.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBox9.Location = new System.Drawing.Point(3, 3);
-			this.textBox9.Multiline = true;
-			this.textBox9.Name = "textBox9";
-			this.textBox9.Size = new System.Drawing.Size(380, 306);
-			this.textBox9.TabIndex = 0;
+			this.textBoxUwagi.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textBoxUwagi.Location = new System.Drawing.Point(3, 3);
+			this.textBoxUwagi.Multiline = true;
+			this.textBoxUwagi.Name = "textBoxUwagi";
+			this.textBoxUwagi.Size = new System.Drawing.Size(380, 306);
+			this.textBoxUwagi.TabIndex = 0;
 			// 
-			// textBox1
+			// textBoxNazwa
 			// 
-			this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "Nazwa", true));
-			this.textBox1.Location = new System.Drawing.Point(51, 3);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(346, 23);
-			this.textBox1.TabIndex = 1;
+			this.textBoxNazwa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxNazwa.Location = new System.Drawing.Point(51, 3);
+			this.textBoxNazwa.Name = "textBoxNazwa";
+			this.textBoxNazwa.Size = new System.Drawing.Size(346, 23);
+			this.textBoxNazwa.TabIndex = 1;
 			// 
 			// label1
 			// 
@@ -304,7 +288,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
 			this.tableLayoutPanel2.Controls.Add(this.tabControl, 0, 1);
-			this.tableLayoutPanel2.Controls.Add(this.textBox1, 1, 0);
+			this.tableLayoutPanel2.Controls.Add(this.textBoxNazwa, 1, 0);
 			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
 			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -323,7 +307,6 @@ namespace ProFak.UI
 			this.MinimumSize = new System.Drawing.Size(400, 375);
 			this.Name = "KontrahentEdytor";
 			this.Size = new System.Drawing.Size(400, 375);
-			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
 			this.tabControl.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
 			this.tableLayoutPanel1.ResumeLayout(false);
@@ -337,29 +320,27 @@ namespace ProFak.UI
 		}
 
 		#endregion
-
-		private System.Windows.Forms.BindingSource bindingSource;
 		private System.Windows.Forms.TabControl tabControl;
 		private System.Windows.Forms.TabPage tabPage1;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.TabPage tabPage2;
-		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.TextBox textBoxNazwa;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.TextBox textBox2;
+		private System.Windows.Forms.TextBox textBoxPelnaNazwa;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.TextBox textBox3;
-		private System.Windows.Forms.TextBox textBox4;
-		private System.Windows.Forms.TextBox textBox5;
-		private System.Windows.Forms.TextBox textBox6;
-		private System.Windows.Forms.TextBox textBox7;
-		private System.Windows.Forms.TextBox textBox8;
+		private System.Windows.Forms.TextBox textBoxNIP;
+		private System.Windows.Forms.TextBox textBoxAdresRejestrowy;
+		private System.Windows.Forms.TextBox textBoxAdresKorespondencyjny;
+		private System.Windows.Forms.TextBox textBoxTelefon;
+		private System.Windows.Forms.TextBox textBoxEMail;
+		private System.Windows.Forms.TextBox textBoxRachunekBankowy;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.TextBox textBox9;
+		private System.Windows.Forms.TextBox textBoxUwagi;
 	}
 }
