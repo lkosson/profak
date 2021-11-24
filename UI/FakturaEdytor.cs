@@ -13,7 +13,7 @@ namespace ProFak.UI
 {
 	partial class FakturaEdytor : UserControl, IEdytor<Faktura>
 	{
-		public Faktura Rekord { get => bindingSource.DataSource as Faktura; private set { kontroler.Model = value; bindingSource.DataSource = value; } }
+		public Faktura Rekord { get => kontroler.Model; private set => kontroler.Model = value; }
 		public Kontekst Kontekst { get; private set; }
 		private readonly SpisZAkcjami<Wplata, WplataSpis> wplaty;
 		private readonly SpisZAkcjami<PozycjaFaktury, PozycjaFakturySpis> pozycjeFaktury;
@@ -24,13 +24,34 @@ namespace ProFak.UI
 			InitializeComponent();
 			kontroler = new Kontroler<Faktura>();
 
+			kontroler.Slownik<RodzajFaktury>(comboBoxRodzaj);
+
+			kontroler.Powiazanie(comboBoxRodzaj, faktura => faktura.Rodzaj);
+			kontroler.Powiazanie(textBoxNumer, faktura => faktura.Numer);
+			kontroler.Powiazanie(comboBoxWaluta, faktura => faktura.WalutaRef);
+
+			kontroler.Powiazanie(comboBoxNIPSprzedawcy, faktura => faktura.NIPSprzedawcy);
+			kontroler.Powiazanie(comboBoxNazwaSprzedawcy, faktura => faktura.NazwaSprzedawcy);
+			kontroler.Powiazanie(textBoxDaneSprzedawcy, faktura => faktura.DaneSprzedawcy);
+
+			kontroler.Powiazanie(comboBoxNIPNabywcy, faktura => faktura.NIPNabywcy);
+			kontroler.Powiazanie(comboBoxNazwaNabywcy, faktura => faktura.NazwaNabywcy);
+			kontroler.Powiazanie(textBoxDaneNabywcy, faktura => faktura.DaneNabywcy);
+
+			kontroler.Powiazanie(dateTimePickerDataWystawienia, faktura => faktura.DataWystawienia);
+			kontroler.Powiazanie(dateTimePickerDataSprzedazy, faktura => faktura.DataSprzedazy);
+			kontroler.Powiazanie(dateTimePickerDataWprowadzenia, faktura => faktura.DataWprowadzenia);
+			kontroler.Powiazanie(dateTimePickerTerminPlatnosci, faktura => faktura.TerminPlatnosci);
+
+			kontroler.Powiazanie(comboBoxSposobPlatnosci, faktura => faktura.OpisSposobuPlatnosci);
+			kontroler.Powiazanie(textBoxRachunekBankowy, faktura => faktura.RachunekBankowy);
+
 			kontroler.Powiazanie(numericUpDownNetto, faktura => faktura.RazemNetto);
 			kontroler.Powiazanie(numericUpDownVat, faktura => faktura.RazemVat);
 			kontroler.Powiazanie(numericUpDownBrutto, faktura => faktura.RazemBrutto);
 
-			comboBoxRodzaj.DataSource = Enum.GetValues(typeof(RodzajFaktury)).Cast<RodzajFaktury>().Select(r => new PozycjaListy<RodzajFaktury> { Wartosc = r, Opis = r.ToString() }).ToArray();
-			comboBoxRodzaj.DisplayMember = "Opis";
-			comboBoxRodzaj.ValueMember = "Wartosc";
+			kontroler.Powiazanie(textBoxUwagiPubliczne, faktura => faktura.UwagiPubliczne);
+			kontroler.Powiazanie(textBoxUwagiWewnetrzne, faktura => faktura.UwagiWewnetrzne);
 
 			wplaty = Spis.Wplaty(Kontekst);
 			tabPageWplaty.Controls.Add(wplaty);
@@ -71,7 +92,7 @@ namespace ProFak.UI
 				Kontekst, comboBoxSposobPlatnosci, buttonSposobPlatnosci,
 				Kontekst.Baza.SposobyPlatnosci.ToList,
 				sposobPlatnosci => sposobPlatnosci.Nazwa,
-				sposobPlatnosci => { if (sposobPlatnosci == null || Rekord.SposobPlatnosciRef == sposobPlatnosci.Ref) return; Rekord.SposobPlatnosciRef = sposobPlatnosci; Rekord.OpisSposobuPlatnosci = sposobPlatnosci.Nazwa; Rekord.TerminPlatnosci = Rekord.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni); bindingSource.ResetCurrentItem(); },
+				sposobPlatnosci => { if (sposobPlatnosci == null || Rekord.SposobPlatnosciRef == sposobPlatnosci.Ref) return; Rekord.SposobPlatnosciRef = sposobPlatnosci; Rekord.OpisSposobuPlatnosci = sposobPlatnosci.Nazwa; Rekord.TerminPlatnosci = Rekord.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni); kontroler.AktualizujKontrolki(); },
 				Spis.SposobyPlatnosci)
 				.Zainstaluj();
 
@@ -79,7 +100,7 @@ namespace ProFak.UI
 				Kontekst, comboBoxNIPNabywcy, buttonNabywca,
 				Kontekst.Baza.Kontrahenci.ToList,
 				kontrahent => kontrahent.NIP,
-				kontrahent => { if (kontrahent == null || Rekord.NabywcaRef == kontrahent.Ref) return; Rekord.NabywcaRef = kontrahent; Rekord.NIPNabywcy = kontrahent.NIP; Rekord.NazwaNabywcy = kontrahent.PelnaNazwa; Rekord.DaneNabywcy = kontrahent.AdresRejestrowy; bindingSource.ResetCurrentItem(); },
+				kontrahent => { if (kontrahent == null || Rekord.NabywcaRef == kontrahent.Ref) return; Rekord.NabywcaRef = kontrahent; Rekord.NIPNabywcy = kontrahent.NIP; Rekord.NazwaNabywcy = kontrahent.PelnaNazwa; Rekord.DaneNabywcy = kontrahent.AdresRejestrowy; kontroler.AktualizujKontrolki(); },
 				Spis.Kontrahenci)
 				.Zainstaluj();
 
@@ -87,7 +108,7 @@ namespace ProFak.UI
 				Kontekst, comboBoxNazwaNabywcy, null,
 				Kontekst.Baza.Kontrahenci.ToList,
 				kontrahent => kontrahent.PelnaNazwa,
-				kontrahent => { if (kontrahent == null || Rekord.NabywcaRef == kontrahent.Ref) return; Rekord.NabywcaRef = kontrahent; Rekord.NIPNabywcy = kontrahent.NIP; Rekord.NazwaNabywcy = kontrahent.PelnaNazwa; Rekord.DaneNabywcy = kontrahent.AdresRejestrowy; bindingSource.ResetCurrentItem(); },
+				kontrahent => { if (kontrahent == null || Rekord.NabywcaRef == kontrahent.Ref) return; Rekord.NabywcaRef = kontrahent; Rekord.NIPNabywcy = kontrahent.NIP; Rekord.NazwaNabywcy = kontrahent.PelnaNazwa; Rekord.DaneNabywcy = kontrahent.AdresRejestrowy; kontroler.AktualizujKontrolki(); },
 				Spis.Kontrahenci)
 				.Zainstaluj();
 
@@ -95,7 +116,7 @@ namespace ProFak.UI
 				Kontekst, comboBoxNIPSprzedawcy, buttonSprzedawca,
 				Kontekst.Baza.Kontrahenci.ToList,
 				kontrahent => kontrahent.NIP,
-				kontrahent => { if (kontrahent == null || Rekord.SprzedawcaRef == kontrahent.Ref) return; Rekord.SprzedawcaRef = kontrahent; Rekord.NIPSprzedawcy = kontrahent.NIP; Rekord.NazwaSprzedawcy = kontrahent.PelnaNazwa; Rekord.DaneSprzedawcy = kontrahent.AdresRejestrowy; bindingSource.ResetCurrentItem(); },
+				kontrahent => { if (kontrahent == null || Rekord.SprzedawcaRef == kontrahent.Ref) return; Rekord.SprzedawcaRef = kontrahent; Rekord.NIPSprzedawcy = kontrahent.NIP; Rekord.NazwaSprzedawcy = kontrahent.PelnaNazwa; Rekord.DaneSprzedawcy = kontrahent.AdresRejestrowy; kontroler.AktualizujKontrolki(); },
 				Spis.Kontrahenci)
 				.Zainstaluj();
 
@@ -103,7 +124,7 @@ namespace ProFak.UI
 				Kontekst, comboBoxNazwaSprzedawcy, null,
 				Kontekst.Baza.Kontrahenci.ToList,
 				kontrahent => kontrahent.PelnaNazwa,
-				kontrahent => { if (kontrahent == null || Rekord.SprzedawcaRef == kontrahent.Ref) return; Rekord.SprzedawcaRef = kontrahent; Rekord.NIPSprzedawcy = kontrahent.NIP; Rekord.NazwaSprzedawcy = kontrahent.PelnaNazwa; Rekord.DaneSprzedawcy = kontrahent.AdresRejestrowy; bindingSource.ResetCurrentItem(); },
+				kontrahent => { if (kontrahent == null || Rekord.SprzedawcaRef == kontrahent.Ref) return; Rekord.SprzedawcaRef = kontrahent; Rekord.NIPSprzedawcy = kontrahent.NIP; Rekord.NazwaSprzedawcy = kontrahent.PelnaNazwa; Rekord.DaneSprzedawcy = kontrahent.AdresRejestrowy; kontroler.AktualizujKontrolki(); },
 				Spis.Kontrahenci)
 				.Zainstaluj();
 		}

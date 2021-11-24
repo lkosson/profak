@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 namespace ProFak.UI
 {
 	interface IEdytor<TRekord>
-		where TRekord : DB.Rekord<TRekord>
 	{
 		TRekord Rekord { get; }
 		Kontekst Kontekst { get; }

@@ -29,8 +29,6 @@ namespace ProFak.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
 			this.tableLayoutPanelKontrahenci = new System.Windows.Forms.TableLayoutPanel();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -38,7 +36,7 @@ namespace ProFak.UI
 			this.label6 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
-			this.textBox3 = new System.Windows.Forms.TextBox();
+			this.textBoxDaneSprzedawcy = new System.Windows.Forms.TextBox();
 			this.buttonSprzedawca = new System.Windows.Forms.Button();
 			this.comboBoxNIPSprzedawcy = new System.Windows.Forms.ComboBox();
 			this.comboBoxNazwaSprzedawcy = new System.Windows.Forms.ComboBox();
@@ -47,7 +45,7 @@ namespace ProFak.UI
 			this.label9 = new System.Windows.Forms.Label();
 			this.label10 = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
-			this.textBox4 = new System.Windows.Forms.TextBox();
+			this.textBoxDaneNabywcy = new System.Windows.Forms.TextBox();
 			this.buttonNabywca = new System.Windows.Forms.Button();
 			this.comboBoxNIPNabywcy = new System.Windows.Forms.ComboBox();
 			this.comboBoxNazwaNabywcy = new System.Windows.Forms.ComboBox();
@@ -57,9 +55,9 @@ namespace ProFak.UI
 			this.tabPage3 = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
-			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.textBoxUwagiPubliczne = new System.Windows.Forms.TextBox();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
-			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.textBoxUwagiWewnetrzne = new System.Windows.Forms.TextBox();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.textBoxNumer = new System.Windows.Forms.TextBox();
 			this.comboBoxRodzaj = new System.Windows.Forms.ComboBox();
@@ -74,8 +72,8 @@ namespace ProFak.UI
 			this.label12 = new System.Windows.Forms.Label();
 			this.label13 = new System.Windows.Forms.Label();
 			this.label14 = new System.Windows.Forms.Label();
-			this.textBox6 = new System.Windows.Forms.TextBox();
-			this.dateTimePicker4 = new System.Windows.Forms.DateTimePicker();
+			this.textBoxRachunekBankowy = new System.Windows.Forms.TextBox();
+			this.dateTimePickerTerminPlatnosci = new System.Windows.Forms.DateTimePicker();
 			this.comboBoxSposobPlatnosci = new System.Windows.Forms.ComboBox();
 			this.buttonSposobPlatnosci = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -83,9 +81,9 @@ namespace ProFak.UI
 			this.label3 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
-			this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-			this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-			this.dateTimePicker3 = new System.Windows.Forms.DateTimePicker();
+			this.dateTimePickerDataWystawienia = new System.Windows.Forms.DateTimePicker();
+			this.dateTimePickerDataSprzedazy = new System.Windows.Forms.DateTimePicker();
+			this.dateTimePickerDataWprowadzenia = new System.Windows.Forms.DateTimePicker();
 			this.groupBox7 = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
 			this.label16 = new System.Windows.Forms.Label();
@@ -94,7 +92,6 @@ namespace ProFak.UI
 			this.numericUpDownNetto = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDownVat = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDownBrutto = new System.Windows.Forms.NumericUpDown();
-			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
 			this.tableLayoutPanel.SuspendLayout();
 			this.tableLayoutPanelKontrahenci.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -118,10 +115,6 @@ namespace ProFak.UI
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownVat)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownBrutto)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// bindingSource
-			// 
-			this.bindingSource.DataSource = typeof(ProFak.DB.Faktura);
 			// 
 			// tableLayoutPanel
 			// 
@@ -186,7 +179,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel5.Controls.Add(this.label6, 0, 0);
 			this.tableLayoutPanel5.Controls.Add(this.label7, 0, 1);
 			this.tableLayoutPanel5.Controls.Add(this.label8, 0, 2);
-			this.tableLayoutPanel5.Controls.Add(this.textBox3, 1, 2);
+			this.tableLayoutPanel5.Controls.Add(this.textBoxDaneSprzedawcy, 1, 2);
 			this.tableLayoutPanel5.Controls.Add(this.buttonSprzedawca, 2, 0);
 			this.tableLayoutPanel5.Controls.Add(this.comboBoxNIPSprzedawcy, 1, 0);
 			this.tableLayoutPanel5.Controls.Add(this.comboBoxNazwaSprzedawcy, 1, 1);
@@ -230,16 +223,15 @@ namespace ProFak.UI
 			this.label8.TabIndex = 0;
 			this.label8.Text = "Adres";
 			// 
-			// textBox3
+			// textBoxDaneSprzedawcy
 			// 
-			this.tableLayoutPanel5.SetColumnSpan(this.textBox3, 2);
-			this.textBox3.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "DaneSprzedawcy", true));
-			this.textBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBox3.Location = new System.Drawing.Point(51, 63);
-			this.textBox3.Multiline = true;
-			this.textBox3.Name = "textBox3";
-			this.textBox3.Size = new System.Drawing.Size(306, 59);
-			this.textBox3.TabIndex = 13;
+			this.tableLayoutPanel5.SetColumnSpan(this.textBoxDaneSprzedawcy, 2);
+			this.textBoxDaneSprzedawcy.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textBoxDaneSprzedawcy.Location = new System.Drawing.Point(51, 63);
+			this.textBoxDaneSprzedawcy.Multiline = true;
+			this.textBoxDaneSprzedawcy.Name = "textBoxDaneSprzedawcy";
+			this.textBoxDaneSprzedawcy.Size = new System.Drawing.Size(306, 59);
+			this.textBoxDaneSprzedawcy.TabIndex = 13;
 			// 
 			// buttonSprzedawca
 			// 
@@ -255,7 +247,6 @@ namespace ProFak.UI
 			// comboBoxNIPSprzedawcy
 			// 
 			this.comboBoxNIPSprzedawcy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.comboBoxNIPSprzedawcy.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "NIPSprzedawcy", true));
 			this.comboBoxNIPSprzedawcy.FormattingEnabled = true;
 			this.comboBoxNIPSprzedawcy.Location = new System.Drawing.Point(51, 4);
 			this.comboBoxNIPSprzedawcy.Name = "comboBoxNIPSprzedawcy";
@@ -266,7 +257,6 @@ namespace ProFak.UI
 			// 
 			this.comboBoxNazwaSprzedawcy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanel5.SetColumnSpan(this.comboBoxNazwaSprzedawcy, 2);
-			this.comboBoxNazwaSprzedawcy.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "NazwaSprzedawcy", true));
 			this.comboBoxNazwaSprzedawcy.FormattingEnabled = true;
 			this.comboBoxNazwaSprzedawcy.Location = new System.Drawing.Point(51, 34);
 			this.comboBoxNazwaSprzedawcy.Name = "comboBoxNazwaSprzedawcy";
@@ -296,7 +286,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel6.Controls.Add(this.label9, 0, 0);
 			this.tableLayoutPanel6.Controls.Add(this.label10, 0, 1);
 			this.tableLayoutPanel6.Controls.Add(this.label11, 0, 2);
-			this.tableLayoutPanel6.Controls.Add(this.textBox4, 1, 2);
+			this.tableLayoutPanel6.Controls.Add(this.textBoxDaneNabywcy, 1, 2);
 			this.tableLayoutPanel6.Controls.Add(this.buttonNabywca, 2, 0);
 			this.tableLayoutPanel6.Controls.Add(this.comboBoxNIPNabywcy, 1, 0);
 			this.tableLayoutPanel6.Controls.Add(this.comboBoxNazwaNabywcy, 1, 1);
@@ -340,16 +330,15 @@ namespace ProFak.UI
 			this.label11.TabIndex = 0;
 			this.label11.Text = "Adres";
 			// 
-			// textBox4
+			// textBoxDaneNabywcy
 			// 
-			this.tableLayoutPanel6.SetColumnSpan(this.textBox4, 2);
-			this.textBox4.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "DaneNabywcy", true));
-			this.textBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBox4.Location = new System.Drawing.Point(51, 63);
-			this.textBox4.Multiline = true;
-			this.textBox4.Name = "textBox4";
-			this.textBox4.Size = new System.Drawing.Size(307, 59);
-			this.textBox4.TabIndex = 23;
+			this.tableLayoutPanel6.SetColumnSpan(this.textBoxDaneNabywcy, 2);
+			this.textBoxDaneNabywcy.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textBoxDaneNabywcy.Location = new System.Drawing.Point(51, 63);
+			this.textBoxDaneNabywcy.Multiline = true;
+			this.textBoxDaneNabywcy.Name = "textBoxDaneNabywcy";
+			this.textBoxDaneNabywcy.Size = new System.Drawing.Size(307, 59);
+			this.textBoxDaneNabywcy.TabIndex = 23;
 			// 
 			// buttonNabywca
 			// 
@@ -365,7 +354,6 @@ namespace ProFak.UI
 			// comboBoxNIPNabywcy
 			// 
 			this.comboBoxNIPNabywcy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.comboBoxNIPNabywcy.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "NIPNabywcy", true));
 			this.comboBoxNIPNabywcy.FormattingEnabled = true;
 			this.comboBoxNIPNabywcy.Location = new System.Drawing.Point(51, 4);
 			this.comboBoxNIPNabywcy.Name = "comboBoxNIPNabywcy";
@@ -376,7 +364,6 @@ namespace ProFak.UI
 			// 
 			this.comboBoxNazwaNabywcy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanel6.SetColumnSpan(this.comboBoxNazwaNabywcy, 2);
-			this.comboBoxNazwaNabywcy.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "NazwaNabywcy", true));
 			this.comboBoxNazwaNabywcy.FormattingEnabled = true;
 			this.comboBoxNazwaNabywcy.Location = new System.Drawing.Point(51, 34);
 			this.comboBoxNazwaNabywcy.Name = "comboBoxNazwaNabywcy";
@@ -440,7 +427,7 @@ namespace ProFak.UI
 			// 
 			// groupBox4
 			// 
-			this.groupBox4.Controls.Add(this.textBox1);
+			this.groupBox4.Controls.Add(this.textBoxUwagiPubliczne);
 			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox4.Location = new System.Drawing.Point(3, 3);
 			this.groupBox4.Name = "groupBox4";
@@ -449,19 +436,18 @@ namespace ProFak.UI
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Uwagi (drukowane na fakturze)";
 			// 
-			// textBox1
+			// textBoxUwagiPubliczne
 			// 
-			this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "UwagiPubliczne", true));
-			this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBox1.Location = new System.Drawing.Point(3, 19);
-			this.textBox1.Multiline = true;
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(356, 81);
-			this.textBox1.TabIndex = 0;
+			this.textBoxUwagiPubliczne.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textBoxUwagiPubliczne.Location = new System.Drawing.Point(3, 19);
+			this.textBoxUwagiPubliczne.Multiline = true;
+			this.textBoxUwagiPubliczne.Name = "textBoxUwagiPubliczne";
+			this.textBoxUwagiPubliczne.Size = new System.Drawing.Size(356, 81);
+			this.textBoxUwagiPubliczne.TabIndex = 0;
 			// 
 			// groupBox5
 			// 
-			this.groupBox5.Controls.Add(this.textBox2);
+			this.groupBox5.Controls.Add(this.textBoxUwagiWewnetrzne);
 			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox5.Location = new System.Drawing.Point(371, 3);
 			this.groupBox5.Name = "groupBox5";
@@ -470,15 +456,14 @@ namespace ProFak.UI
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Uwagi (wewnętrzne)";
 			// 
-			// textBox2
+			// textBoxUwagiWewnetrzne
 			// 
-			this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "UwagiWewnetrzne", true));
-			this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBox2.Location = new System.Drawing.Point(3, 19);
-			this.textBox2.Multiline = true;
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(357, 81);
-			this.textBox2.TabIndex = 0;
+			this.textBoxUwagiWewnetrzne.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textBoxUwagiWewnetrzne.Location = new System.Drawing.Point(3, 19);
+			this.textBoxUwagiWewnetrzne.Multiline = true;
+			this.textBoxUwagiWewnetrzne.Name = "textBoxUwagiWewnetrzne";
+			this.textBoxUwagiWewnetrzne.Size = new System.Drawing.Size(357, 81);
+			this.textBoxUwagiWewnetrzne.TabIndex = 0;
 			// 
 			// tableLayoutPanel1
 			// 
@@ -511,7 +496,6 @@ namespace ProFak.UI
 			// textBoxNumer
 			// 
 			this.textBoxNumer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxNumer.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "Numer", true));
 			this.textBoxNumer.Location = new System.Drawing.Point(241, 4);
 			this.textBoxNumer.Name = "textBoxNumer";
 			this.textBoxNumer.Size = new System.Drawing.Size(279, 23);
@@ -520,7 +504,6 @@ namespace ProFak.UI
 			// comboBoxRodzaj
 			// 
 			this.comboBoxRodzaj.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.comboBoxRodzaj.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.bindingSource, "Rodzaj", true));
 			this.comboBoxRodzaj.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxRodzaj.FormattingEnabled = true;
 			this.comboBoxRodzaj.Location = new System.Drawing.Point(51, 4);
@@ -572,7 +555,6 @@ namespace ProFak.UI
 			// comboBoxWaluta
 			// 
 			this.comboBoxWaluta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.comboBoxWaluta.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.bindingSource, "WalutaRef", true));
 			this.comboBoxWaluta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxWaluta.FormattingEnabled = true;
 			this.comboBoxWaluta.Location = new System.Drawing.Point(596, 4);
@@ -622,8 +604,8 @@ namespace ProFak.UI
 			this.tableLayoutPanel9.Controls.Add(this.label12, 0, 0);
 			this.tableLayoutPanel9.Controls.Add(this.label13, 0, 1);
 			this.tableLayoutPanel9.Controls.Add(this.label14, 0, 2);
-			this.tableLayoutPanel9.Controls.Add(this.textBox6, 1, 2);
-			this.tableLayoutPanel9.Controls.Add(this.dateTimePicker4, 1, 1);
+			this.tableLayoutPanel9.Controls.Add(this.textBoxRachunekBankowy, 1, 2);
+			this.tableLayoutPanel9.Controls.Add(this.dateTimePickerTerminPlatnosci, 1, 1);
 			this.tableLayoutPanel9.Controls.Add(this.comboBoxSposobPlatnosci, 1, 0);
 			this.tableLayoutPanel9.Controls.Add(this.buttonSposobPlatnosci, 2, 0);
 			this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -666,30 +648,27 @@ namespace ProFak.UI
 			this.label14.TabIndex = 0;
 			this.label14.Text = "Numer rachunku";
 			// 
-			// textBox6
+			// textBoxRachunekBankowy
 			// 
-			this.textBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableLayoutPanel9.SetColumnSpan(this.textBox6, 2);
-			this.textBox6.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "RachunekBankowy", true));
-			this.textBox6.Location = new System.Drawing.Point(106, 63);
-			this.textBox6.Name = "textBox6";
-			this.textBox6.Size = new System.Drawing.Size(177, 23);
-			this.textBox6.TabIndex = 43;
+			this.textBoxRachunekBankowy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.tableLayoutPanel9.SetColumnSpan(this.textBoxRachunekBankowy, 2);
+			this.textBoxRachunekBankowy.Location = new System.Drawing.Point(106, 63);
+			this.textBoxRachunekBankowy.Name = "textBoxRachunekBankowy";
+			this.textBoxRachunekBankowy.Size = new System.Drawing.Size(177, 23);
+			this.textBoxRachunekBankowy.TabIndex = 43;
 			// 
-			// dateTimePicker4
+			// dateTimePickerTerminPlatnosci
 			// 
-			this.dateTimePicker4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableLayoutPanel9.SetColumnSpan(this.dateTimePicker4, 2);
-			this.dateTimePicker4.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "TerminPlatnosci", true));
-			this.dateTimePicker4.Location = new System.Drawing.Point(106, 34);
-			this.dateTimePicker4.Name = "dateTimePicker4";
-			this.dateTimePicker4.Size = new System.Drawing.Size(177, 23);
-			this.dateTimePicker4.TabIndex = 42;
+			this.dateTimePickerTerminPlatnosci.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.tableLayoutPanel9.SetColumnSpan(this.dateTimePickerTerminPlatnosci, 2);
+			this.dateTimePickerTerminPlatnosci.Location = new System.Drawing.Point(106, 34);
+			this.dateTimePickerTerminPlatnosci.Name = "dateTimePickerTerminPlatnosci";
+			this.dateTimePickerTerminPlatnosci.Size = new System.Drawing.Size(177, 23);
+			this.dateTimePickerTerminPlatnosci.TabIndex = 42;
 			// 
 			// comboBoxSposobPlatnosci
 			// 
 			this.comboBoxSposobPlatnosci.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.comboBoxSposobPlatnosci.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "OpisSposobuPlatnosci", true));
 			this.comboBoxSposobPlatnosci.FormattingEnabled = true;
 			this.comboBoxSposobPlatnosci.Location = new System.Drawing.Point(106, 4);
 			this.comboBoxSposobPlatnosci.Name = "comboBoxSposobPlatnosci";
@@ -729,9 +708,9 @@ namespace ProFak.UI
 			this.tableLayoutPanel4.Controls.Add(this.label3, 0, 0);
 			this.tableLayoutPanel4.Controls.Add(this.label4, 0, 1);
 			this.tableLayoutPanel4.Controls.Add(this.label5, 0, 2);
-			this.tableLayoutPanel4.Controls.Add(this.dateTimePicker1, 1, 0);
-			this.tableLayoutPanel4.Controls.Add(this.dateTimePicker2, 1, 1);
-			this.tableLayoutPanel4.Controls.Add(this.dateTimePicker3, 1, 2);
+			this.tableLayoutPanel4.Controls.Add(this.dateTimePickerDataWystawienia, 1, 0);
+			this.tableLayoutPanel4.Controls.Add(this.dateTimePickerDataSprzedazy, 1, 1);
+			this.tableLayoutPanel4.Controls.Add(this.dateTimePickerDataWprowadzenia, 1, 2);
 			this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 19);
 			this.tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -772,32 +751,29 @@ namespace ProFak.UI
 			this.label5.TabIndex = 1;
 			this.label5.Text = "Data wprowadzenia";
 			// 
-			// dateTimePicker1
+			// dateTimePickerDataWystawienia
 			// 
-			this.dateTimePicker1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.dateTimePicker1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "DataWystawienia", true));
-			this.dateTimePicker1.Location = new System.Drawing.Point(119, 3);
-			this.dateTimePicker1.Name = "dateTimePicker1";
-			this.dateTimePicker1.Size = new System.Drawing.Size(164, 23);
-			this.dateTimePicker1.TabIndex = 30;
+			this.dateTimePickerDataWystawienia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.dateTimePickerDataWystawienia.Location = new System.Drawing.Point(119, 3);
+			this.dateTimePickerDataWystawienia.Name = "dateTimePickerDataWystawienia";
+			this.dateTimePickerDataWystawienia.Size = new System.Drawing.Size(164, 23);
+			this.dateTimePickerDataWystawienia.TabIndex = 30;
 			// 
-			// dateTimePicker2
+			// dateTimePickerDataSprzedazy
 			// 
-			this.dateTimePicker2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.dateTimePicker2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "DataSprzedazy", true));
-			this.dateTimePicker2.Location = new System.Drawing.Point(119, 32);
-			this.dateTimePicker2.Name = "dateTimePicker2";
-			this.dateTimePicker2.Size = new System.Drawing.Size(164, 23);
-			this.dateTimePicker2.TabIndex = 31;
+			this.dateTimePickerDataSprzedazy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.dateTimePickerDataSprzedazy.Location = new System.Drawing.Point(119, 32);
+			this.dateTimePickerDataSprzedazy.Name = "dateTimePickerDataSprzedazy";
+			this.dateTimePickerDataSprzedazy.Size = new System.Drawing.Size(164, 23);
+			this.dateTimePickerDataSprzedazy.TabIndex = 31;
 			// 
-			// dateTimePicker3
+			// dateTimePickerDataWprowadzenia
 			// 
-			this.dateTimePicker3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.dateTimePicker3.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "DataWprowadzenia", true));
-			this.dateTimePicker3.Location = new System.Drawing.Point(119, 62);
-			this.dateTimePicker3.Name = "dateTimePicker3";
-			this.dateTimePicker3.Size = new System.Drawing.Size(164, 23);
-			this.dateTimePicker3.TabIndex = 32;
+			this.dateTimePickerDataWprowadzenia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.dateTimePickerDataWprowadzenia.Location = new System.Drawing.Point(119, 62);
+			this.dateTimePickerDataWprowadzenia.Name = "dateTimePickerDataWprowadzenia";
+			this.dateTimePickerDataWprowadzenia.Size = new System.Drawing.Size(164, 23);
+			this.dateTimePickerDataWprowadzenia.TabIndex = 32;
 			// 
 			// groupBox7
 			// 
@@ -920,7 +896,6 @@ namespace ProFak.UI
 			this.MinimumSize = new System.Drawing.Size(750, 450);
 			this.Name = "FakturaEdytor";
 			this.Size = new System.Drawing.Size(751, 462);
-			((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
 			this.tableLayoutPanel.ResumeLayout(false);
 			this.tableLayoutPanel.PerformLayout();
 			this.tableLayoutPanelKontrahenci.ResumeLayout(false);
@@ -962,8 +937,6 @@ namespace ProFak.UI
 		}
 
 		#endregion
-
-		private System.Windows.Forms.BindingSource bindingSource;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.ComboBox comboBoxRodzaj;
@@ -988,18 +961,18 @@ namespace ProFak.UI
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.Label label11;
-		private System.Windows.Forms.DateTimePicker dateTimePicker1;
-		private System.Windows.Forms.DateTimePicker dateTimePicker2;
-		private System.Windows.Forms.DateTimePicker dateTimePicker3;
+		private System.Windows.Forms.DateTimePicker dateTimePickerDataWystawienia;
+		private System.Windows.Forms.DateTimePicker dateTimePickerDataSprzedazy;
+		private System.Windows.Forms.DateTimePicker dateTimePickerDataWprowadzenia;
 		private System.Windows.Forms.GroupBox groupBox6;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
 		private System.Windows.Forms.Label label12;
 		private System.Windows.Forms.Label label13;
 		private System.Windows.Forms.Label label14;
-		private System.Windows.Forms.TextBox textBox3;
-		private System.Windows.Forms.TextBox textBox4;
-		private System.Windows.Forms.TextBox textBox6;
-		private System.Windows.Forms.DateTimePicker dateTimePicker4;
+		private System.Windows.Forms.TextBox textBoxDaneSprzedawcy;
+		private System.Windows.Forms.TextBox textBoxDaneNabywcy;
+		private System.Windows.Forms.TextBox textBoxRachunekBankowy;
+		private System.Windows.Forms.DateTimePicker dateTimePickerTerminPlatnosci;
 		private System.Windows.Forms.ComboBox comboBoxSposobPlatnosci;
 		private System.Windows.Forms.Button buttonSprzedawca;
 		private System.Windows.Forms.Button buttonNabywca;
@@ -1015,9 +988,9 @@ namespace ProFak.UI
 		private System.Windows.Forms.TabPage tabPage3;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
 		private System.Windows.Forms.GroupBox groupBox5;
-		private System.Windows.Forms.TextBox textBox2;
+		private System.Windows.Forms.TextBox textBoxUwagiWewnetrzne;
 		private System.Windows.Forms.GroupBox groupBox4;
-		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.TextBox textBoxUwagiPubliczne;
 		private System.Windows.Forms.GroupBox groupBox7;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
 		private System.Windows.Forms.Label label16;

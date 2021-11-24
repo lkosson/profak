@@ -11,8 +11,8 @@ namespace ProFak.UI
 {
 	class Kontroler<TModel>
 	{
-		private TModel model;
 		private readonly HashSet<Control> aktualizowaneKontrolki;
+		private TModel model;
 		private List<Action> powiazania;
 
 		public TModel Model { get => model; set { model = value; AktualizujKontrolki(); } }
@@ -23,6 +23,7 @@ namespace ProFak.UI
 			powiazania = new List<Action>();
 		}
 
+		public void Powiazanie(DateTimePicker dateTimePicker, Expression<Func<TModel, DateTime>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(dateTimePicker, wlasciwosc, Powiazanie, wartoscZmieniona);
 		public void Powiazanie(NumericUpDown numericUpDown, Expression<Func<TModel, decimal>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(numericUpDown, wlasciwosc, Powiazanie, wartoscZmieniona);
 		public void Powiazanie(TextBox textBox, Expression<Func<TModel, string>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(textBox, wlasciwosc, Powiazanie, wartoscZmieniona);
 		public void Powiazanie(CheckBox checkBox, Expression<Func<TModel, bool>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(checkBox, wlasciwosc, Powiazanie, wartoscZmieniona);
@@ -36,6 +37,14 @@ namespace ProFak.UI
 			var getter = (Func<TModel, TWartosc>)pi.GetGetMethod().CreateDelegate(typeof(Func<TModel, TWartosc>));
 			var setter = (Action<TModel, TWartosc>)pi.GetSetMethod().CreateDelegate(typeof(Action<TModel, TWartosc>));
 			powiazanie(kontrolka, getter, setter, wartoscZmieniona);
+		}
+
+		public void Powiazanie(DateTimePicker dateTimePicker, Func<TModel, DateTime> pobierzWartosc, Action<TModel, DateTime> ustawWartosc, Action wartoscZmieniona = null)
+		{
+			dateTimePicker.ValueChanged += delegate { AktualizujModel(dateTimePicker, ustawWartosc, nud => nud.Value); if (wartoscZmieniona != null) wartoscZmieniona(); };
+			Action powiazanie = delegate { AktualizujKontrolke(dateTimePicker, pobierzWartosc, (nud, wartosc) => nud.Value = wartosc); };
+			if (model != null) powiazanie();
+			powiazania.Add(powiazanie);
 		}
 
 		public void Powiazanie(NumericUpDown numericUpDown, Func<TModel, decimal> pobierzWartosc, Action<TModel, decimal> ustawWartosc, Action wartoscZmieniona = null)
