@@ -25,15 +25,16 @@ namespace ProFak.UI
 			TabIndex = 50;
 		}
 
-		public static TRekord Wybierz<TRekord>(Kontekst kontekst, Func<Kontekst, SpisZAkcjami<TRekord>> generatorSpisu, string tytul, Ref<TRekord> biezacaWartosc)
+		public static TRekord Wybierz<TRekord>(Kontekst kontekst, Func<SpisZAkcjami<TRekord>> generatorSpisu, string tytul, Ref<TRekord> biezacaWartosc)
 			where TRekord : Rekord<TRekord>
 		{
 			var wybor = new WybierzRekordAkcja<TRekord>();
 			using var nowyKontekst = new Kontekst(kontekst);
 			using var transakcja = nowyKontekst.Transakcja();
-			using var spis = generatorSpisu(nowyKontekst);
+			using var spis = generatorSpisu();
 			using var dialog = new Dialog(tytul, spis, nowyKontekst);
 			spis.Akcje.Add(wybor);
+			spis.Spis.Kontekst = nowyKontekst;
 			spis.Spis.RekordPoczatkowy = biezacaWartosc;
 			dialog.CzyPrzyciskiWidoczne = false;
 			dialog.Size = new System.Drawing.Size(800, 450);
@@ -43,54 +44,54 @@ namespace ProFak.UI
 			return wybor.WybranyRekord;
 		}
 
-		public static SpisZAkcjami<Faktura, FakturaSprzedazySpis> FakturySprzedazy(Kontekst kontekst)
+		public static SpisZAkcjami<Faktura, FakturaSprzedazySpis> FakturySprzedazy()
 		{
-			return SpisZAkcjami.Utworz(new FakturaSprzedazySpis { Kontekst = kontekst },
+			return SpisZAkcjami.Utworz(new FakturaSprzedazySpis(),
 				new DodajRekordAkcja<Faktura, FakturaEdytor>("Nowa faktura sprzedaży"),
 				new EdytujRekordAkcja<Faktura, FakturaEdytor>("Edycja faktury"),
 				new UsunRekordAkcja<Faktura>()
 			);
 		}
 
-		public static SpisZAkcjami<Faktura, FakturaZakupuSpis> FakturyZakupu(Kontekst kontekst)
+		public static SpisZAkcjami<Faktura, FakturaZakupuSpis> FakturyZakupu()
 		{
-			return SpisZAkcjami.Utworz(new FakturaZakupuSpis { Kontekst = kontekst },
+			return SpisZAkcjami.Utworz(new FakturaZakupuSpis(),
 				new DodajRekordAkcja<Faktura, FakturaEdytor>("Nowa faktura zakupu"),
 				new EdytujRekordAkcja<Faktura, FakturaEdytor>("Edycja faktury"),
 				new UsunRekordAkcja<Faktura>()
 			);
 		}
 
-		public static SpisZAkcjami<JednostkaMiary, JednostkaMiarySpis> JednostkiMiar(Kontekst kontekst)
+		public static SpisZAkcjami<JednostkaMiary, JednostkaMiarySpis> JednostkiMiar()
 		{
-			return SpisZAkcjami.Utworz(new JednostkaMiarySpis { Kontekst = kontekst },
+			return SpisZAkcjami.Utworz(new JednostkaMiarySpis(),
 				new DodajRekordAkcja<JednostkaMiary, JednostkaMiaryEdytor>("Nowa jednostka miary"),
 				new EdytujRekordAkcja<JednostkaMiary, JednostkaMiaryEdytor>("Edycja jednostki miary"),
 				new UsunRekordAkcja<JednostkaMiary>()
 			);
 		}
 
-		public static SpisZAkcjami<Kontrahent, KontrahentSpis> Kontrahenci(Kontekst kontekst)
+		public static SpisZAkcjami<Kontrahent, KontrahentSpis> Kontrahenci()
 		{
-			return SpisZAkcjami.Utworz(new KontrahentSpis { Kontekst = kontekst },
+			return SpisZAkcjami.Utworz(new KontrahentSpis(),
 				new DodajRekordAkcja<Kontrahent, KontrahentEdytor>("Nowy kontrahent"),
 				new EdytujRekordAkcja<Kontrahent, KontrahentEdytor>("Edycja kontrahenta"),
 				new UsunRekordAkcja<Kontrahent>()
 			);
 		}
 
-		public static SpisZAkcjami<Numerator, NumeratorSpis> Numeratory(Kontekst kontekst)
+		public static SpisZAkcjami<Numerator, NumeratorSpis> Numeratory()
 		{
-			return SpisZAkcjami.Utworz(new NumeratorSpis { Kontekst = kontekst },
+			return SpisZAkcjami.Utworz(new NumeratorSpis(),
 				new DodajRekordAkcja<Numerator, NumeratorEdytor>("Nowy numerator"),
 				new EdytujRekordAkcja<Numerator, NumeratorEdytor>("Edycja numeratora"),
 				new UsunRekordAkcja<Numerator>()
 			);
 		}
 
-		public static SpisZAkcjami<PozycjaFaktury, PozycjaFakturySpis> PozycjeFaktur(Kontekst kontekst)
+		public static SpisZAkcjami<PozycjaFaktury, PozycjaFakturySpis> PozycjeFaktur()
 		{
-			var spis = new PozycjaFakturySpis { Kontekst = kontekst };
+			var spis = new PozycjaFakturySpis();
 			return SpisZAkcjami.Utworz(spis,
 				new DodajRekordAkcja<PozycjaFaktury, PozycjaFakturyEdytor>("Nowa pozycja", pozycja => pozycja.FakturaRef = spis.FakturaRef),
 				new EdytujRekordAkcja<PozycjaFaktury, PozycjaFakturyEdytor>("Edycja pozycji"),
@@ -98,18 +99,18 @@ namespace ProFak.UI
 			);
 		}
 
-		public static SpisZAkcjami<SposobPlatnosci, SposobPlatnosciSpis> SposobyPlatnosci(Kontekst kontekst)
+		public static SpisZAkcjami<SposobPlatnosci, SposobPlatnosciSpis> SposobyPlatnosci()
 		{
-			return SpisZAkcjami.Utworz(new SposobPlatnosciSpis { Kontekst = kontekst },
+			return SpisZAkcjami.Utworz(new SposobPlatnosciSpis(),
 				new DodajRekordAkcja<SposobPlatnosci, SposobPlatnosciEdytor>("Nowy sposób płatności"),
 				new EdytujRekordAkcja<SposobPlatnosci, SposobPlatnosciEdytor>("Edycja sposobu płatności"),
 				new UsunRekordAkcja<SposobPlatnosci>()
 			);
 		}
 
-		public static SpisZAkcjami<StanNumeratora, StanNumeratoraSpis> StanyNumeratorow(Kontekst kontekst)
+		public static SpisZAkcjami<StanNumeratora, StanNumeratoraSpis> StanyNumeratorow()
 		{
-			var spis = new StanNumeratoraSpis { Kontekst = kontekst };
+			var spis = new StanNumeratoraSpis();
 			return SpisZAkcjami.Utworz(spis,
 				new DodajRekordAkcja<StanNumeratora, StanNumeratoraEdytor>("Nowy stan", stanNumeratora => stanNumeratora.NumeratorRef = spis.NumeratorRef),
 				new EdytujRekordAkcja<StanNumeratora, StanNumeratoraEdytor>("Edycja stanu"),
@@ -117,36 +118,36 @@ namespace ProFak.UI
 			);
 		}
 
-		public static SpisZAkcjami<StawkaVat, StawkaVatSpis> StawkiVat(Kontekst kontekst)
+		public static SpisZAkcjami<StawkaVat, StawkaVatSpis> StawkiVat()
 		{
-			return SpisZAkcjami.Utworz(new StawkaVatSpis { Kontekst = kontekst },
+			return SpisZAkcjami.Utworz(new StawkaVatSpis(),
 				new DodajRekordAkcja<StawkaVat, StawkaVatEdytor>("Nowa stawka VAT"),
 				new EdytujRekordAkcja<StawkaVat, StawkaVatEdytor>("Edycja stawki VAT"),
 				new UsunRekordAkcja<StawkaVat>()
 			);
 		}
 
-		public static SpisZAkcjami<Towar, TowarSpis> Towary(Kontekst kontekst)
+		public static SpisZAkcjami<Towar, TowarSpis> Towary()
 		{
-			return SpisZAkcjami.Utworz(new TowarSpis { Kontekst = kontekst },
+			return SpisZAkcjami.Utworz(new TowarSpis(),
 				new DodajRekordAkcja<Towar, TowarEdytor>("Nowy towar"),
 				new EdytujRekordAkcja<Towar, TowarEdytor>("Edycja towaru"),
 				new UsunRekordAkcja<Towar>()
 			);
 		}
 
-		public static SpisZAkcjami<Waluta, WalutaSpis> Waluty(Kontekst kontekst)
+		public static SpisZAkcjami<Waluta, WalutaSpis> Waluty()
 		{
-			return SpisZAkcjami.Utworz(new WalutaSpis { Kontekst = kontekst },
+			return SpisZAkcjami.Utworz(new WalutaSpis(),
 				new DodajRekordAkcja<Waluta, WalutaEdytor>("Nowa waluta"),
 				new EdytujRekordAkcja<Waluta, WalutaEdytor>("Edycja waluty"),
 				new UsunRekordAkcja<Waluta>()
 			);
 		}
 
-		public static SpisZAkcjami<Wplata, WplataSpis> Wplaty(Kontekst kontekst)
+		public static SpisZAkcjami<Wplata, WplataSpis> Wplaty()
 		{
-			var spis = new WplataSpis { Kontekst = kontekst };
+			var spis = new WplataSpis();
 			return SpisZAkcjami.Utworz(spis,
 				new DodajRekordAkcja<Wplata, WplataEdytor>("Nowa wpłata", wplata => wplata.FakturaRef = spis.FakturaRef),
 				new EdytujRekordAkcja<Wplata, WplataEdytor>("Edycja wpłaty"),

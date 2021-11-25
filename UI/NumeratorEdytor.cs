@@ -24,10 +24,10 @@ namespace ProFak.UI
 			kontroler.Powiazanie(comboBoxPrzeznaczenie, numerator => numerator.Przeznaczenie);
 			kontroler.Powiazanie(textBoxFormat, numerator => numerator.Format);
 
-			stanyNumeratora = Spis.StanyNumeratorow(Kontekst);
-			panelStan.Controls.Add(stanyNumeratora);
+			Wymagane(comboBoxPrzeznaczenie);
+			Wymagane(textBoxFormat);
 
-			MinimumSize = new Size(800, 200);
+			panelStan.Controls.Add(stanyNumeratora = Spis.StanyNumeratorow());
 		}
 
 		protected override void RekordGotowy()

@@ -48,6 +48,11 @@ namespace ProFak.UI
 			textBox.Validating += TextBox_Wymagane_Validating;
 		}
 
+		public void Wymagane(ComboBox comboBox)
+		{
+			comboBox.Validating += ComboBox_Wymagane_Validating;
+		}
+
 		private void TextBox_Wymagane_Validating(object sender, CancelEventArgs e)
 		{
 			var textBox = (TextBox)sender;
@@ -60,6 +65,22 @@ namespace ProFak.UI
 			else
 			{
 				errorProvider.SetError(textBox, "");
+			}
+		}
+
+		private void ComboBox_Wymagane_Validating(object sender, CancelEventArgs e)
+		{
+			var comboBox = (ComboBox)sender;
+			if ((comboBox.DropDownStyle == ComboBoxStyle.DropDownList && comboBox.SelectedIndex == -1)
+				|| (comboBox.DropDownStyle != ComboBoxStyle.DropDownList) && String.IsNullOrEmpty(comboBox.Text))
+			{
+				errorProvider.SetIconAlignment(comboBox, ErrorIconAlignment.MiddleLeft);
+				errorProvider.SetError(comboBox, "Należy uzupełnić pole.");
+				e.Cancel = true;
+			}
+			else
+			{
+				errorProvider.SetError(comboBox, "");
 			}
 		}
 

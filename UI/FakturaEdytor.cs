@@ -48,11 +48,15 @@ namespace ProFak.UI
 			kontroler.Powiazanie(textBoxUwagiPubliczne, faktura => faktura.UwagiPubliczne);
 			kontroler.Powiazanie(textBoxUwagiWewnetrzne, faktura => faktura.UwagiWewnetrzne);
 
-			wplaty = Spis.Wplaty(Kontekst);
-			tabPageWplaty.Controls.Add(wplaty);
+			Wymagane(textBoxNumer);
+			Wymagane(comboBoxNazwaNabywcy);
+			Wymagane(comboBoxNazwaSprzedawcy);
+			Wymagane(comboBoxSposobPlatnosci);
+			Wymagane(comboBoxWaluta);
+			Wymagane(comboBoxRodzaj);
 
-			pozycjeFaktury = Spis.PozycjeFaktur(Kontekst);
-			tabPagePozycje.Controls.Add(pozycjeFaktury);
+			tabPageWplaty.Controls.Add(wplaty = Spis.Wplaty());
+			tabPagePozycje.Controls.Add(pozycjeFaktury = Spis.PozycjeFaktur());
 			pozycjeFaktury.Spis.RekordyZmienione += pozycjeFakturySpis_RekordyZmienione;
 		}
 

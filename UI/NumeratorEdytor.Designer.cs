@@ -55,7 +55,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(400, 250);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 250);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// label1
@@ -85,7 +85,7 @@ namespace ProFak.UI
 			this.comboBoxPrzeznaczenie.FormattingEnabled = true;
 			this.comboBoxPrzeznaczenie.Location = new System.Drawing.Point(89, 3);
 			this.comboBoxPrzeznaczenie.Name = "comboBoxPrzeznaczenie";
-			this.comboBoxPrzeznaczenie.Size = new System.Drawing.Size(308, 23);
+			this.comboBoxPrzeznaczenie.Size = new System.Drawing.Size(708, 23);
 			this.comboBoxPrzeznaczenie.TabIndex = 1;
 			// 
 			// textBoxFormat
@@ -93,7 +93,7 @@ namespace ProFak.UI
 			this.textBoxFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxFormat.Location = new System.Drawing.Point(89, 32);
 			this.textBoxFormat.Name = "textBoxFormat";
-			this.textBoxFormat.Size = new System.Drawing.Size(308, 23);
+			this.textBoxFormat.Size = new System.Drawing.Size(708, 23);
 			this.textBoxFormat.TabIndex = 2;
 			// 
 			// panelStan
@@ -102,7 +102,7 @@ namespace ProFak.UI
 			this.panelStan.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelStan.Location = new System.Drawing.Point(3, 61);
 			this.panelStan.Name = "panelStan";
-			this.panelStan.Size = new System.Drawing.Size(394, 186);
+			this.panelStan.Size = new System.Drawing.Size(794, 186);
 			this.panelStan.TabIndex = 3;
 			// 
 			// NumeratorEdytor
@@ -110,9 +110,9 @@ namespace ProFak.UI
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.tableLayoutPanel1);
-			this.MinimumSize = new System.Drawing.Size(400, 250);
+			this.MinimumSize = new System.Drawing.Size(800, 250);
 			this.Name = "NumeratorEdytor";
-			this.Size = new System.Drawing.Size(400, 250);
+			this.Size = new System.Drawing.Size(800, 250);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
 			this.ResumeLayout(false);

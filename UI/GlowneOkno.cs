@@ -44,24 +44,25 @@ namespace ProFak.UI
 				}
 			}
 
-			if (pozycja.Name == "JednostkiMiar") Wyswietl(Spis.JednostkiMiar, pozycja.Name);
-			else if (pozycja.Name == "Kontrahenci") Wyswietl(Spis.Kontrahenci, pozycja.Name);
-			else if (pozycja.Name == "SposobyPlatnosci") Wyswietl(Spis.SposobyPlatnosci, pozycja.Name);
-			else if (pozycja.Name == "StawkiVat") Wyswietl(Spis.StawkiVat, pozycja.Name);
-			else if (pozycja.Name == "Waluty") Wyswietl(Spis.Waluty, pozycja.Name);
-			else if (pozycja.Name == "Towary") Wyswietl(Spis.Towary, pozycja.Name);
-			else if (pozycja.Name == "FakturyZakupu") Wyswietl(Spis.FakturyZakupu, pozycja.Name);
-			else if (pozycja.Name == "FakturySprzedazy") Wyswietl(Spis.FakturySprzedazy, pozycja.Name);
-			else if (pozycja.Name == "PozycjeFaktur") Wyswietl(Spis.PozycjeFaktur, pozycja.Name);
-			else if (pozycja.Name == "Wplaty") Wyswietl(Spis.Wplaty, pozycja.Name);
-			else if (pozycja.Name == "Numeratory") Wyswietl(Spis.Numeratory, pozycja.Name);
-			else if (pozycja.Name == "StanyNumeratorow") Wyswietl(Spis.StanyNumeratorow, pozycja.Name);
+			if (pozycja.Name == "JednostkiMiar") Wyswietl(Spis.JednostkiMiar(), pozycja.Name);
+			else if (pozycja.Name == "Kontrahenci") Wyswietl(Spis.Kontrahenci(), pozycja.Name);
+			else if (pozycja.Name == "SposobyPlatnosci") Wyswietl(Spis.SposobyPlatnosci(), pozycja.Name);
+			else if (pozycja.Name == "StawkiVat") Wyswietl(Spis.StawkiVat(), pozycja.Name);
+			else if (pozycja.Name == "Waluty") Wyswietl(Spis.Waluty(), pozycja.Name);
+			else if (pozycja.Name == "Towary") Wyswietl(Spis.Towary(), pozycja.Name);
+			else if (pozycja.Name == "FakturyZakupu") Wyswietl(Spis.FakturyZakupu(), pozycja.Name);
+			else if (pozycja.Name == "FakturySprzedazy") Wyswietl(Spis.FakturySprzedazy(), pozycja.Name);
+			else if (pozycja.Name == "PozycjeFaktur") Wyswietl(Spis.PozycjeFaktur(), pozycja.Name);
+			else if (pozycja.Name == "Wplaty") Wyswietl(Spis.Wplaty(), pozycja.Name);
+			else if (pozycja.Name == "Numeratory") Wyswietl(Spis.Numeratory(), pozycja.Name);
+			else if (pozycja.Name == "StanyNumeratorow") Wyswietl(Spis.StanyNumeratorow(), pozycja.Name);
 		}
 
-		private void Wyswietl(Func<Kontekst, Control> generator, string nazwa)
+		private void Wyswietl<TRekord>(SpisZAkcjami<TRekord> kontrolka, string nazwa)
+			where TRekord : DB.Rekord<TRekord>
 		{
 			var kontekst = new Kontekst();
-			var kontrolka = generator(kontekst);
+			kontrolka.Spis.Kontekst = kontekst;
 			kontrolka.Name = nazwa;
 			kontrolka.Disposed += delegate { kontekst.Dispose(); };
 			kontrolka.Dock = DockStyle.Fill;

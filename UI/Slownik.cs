@@ -17,10 +17,10 @@ namespace ProFak.UI
 		private readonly Func<IEnumerable<T>> pobierzWartosci;
 		private readonly Func<T, string> wyswietlanaWartosc;
 		private readonly Action<T> ustawWartosc;
-		private readonly Func<Kontekst, SpisZAkcjami<T>> generatorSpisu;
+		private readonly Func<SpisZAkcjami<T>> generatorSpisu;
 		private bool gotowy;
 
-		public Slownik(Kontekst kontekst, ComboBox comboBox, Button button, Func<IEnumerable<T>> pobierzWartosci, Func<T, string> wyswietlanaWartosc, Action<T> ustawWartosc, Func<Kontekst, SpisZAkcjami<T>> generatorSpisu)
+		public Slownik(Kontekst kontekst, ComboBox comboBox, Button button, Func<IEnumerable<T>> pobierzWartosci, Func<T, string> wyswietlanaWartosc, Action<T> ustawWartosc, Func<SpisZAkcjami<T>> generatorSpisu)
 		{
 			this.kontekst = kontekst;
 			this.comboBox = comboBox;
