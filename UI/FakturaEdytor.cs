@@ -49,6 +49,8 @@ namespace ProFak.UI
 			kontroler.Powiazanie(textBoxUwagiWewnetrzne, faktura => faktura.UwagiWewnetrzne);
 
 			Wymagane(textBoxNumer);
+			Wymagane(textBoxDaneNabywcy);
+			Wymagane(textBoxDaneSprzedawcy);
 			Wymagane(comboBoxNazwaNabywcy);
 			Wymagane(comboBoxNazwaSprzedawcy);
 			Wymagane(comboBoxSposobPlatnosci);

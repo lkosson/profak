@@ -43,7 +43,7 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.NabywcaId);
 			builder.Property(e => e.FakturaKorygowanaId);
 			builder.Property(e => e.FakturaKorygujacaId);
-			builder.Property(e => e.WalutaId).IsRequired();
+			builder.Property(e => e.WalutaId);
 			builder.Property(e => e.SposobPlatnosciId);
 
 			builder.Ignore(e => e.SprzedawcaRef);

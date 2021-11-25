@@ -17,8 +17,6 @@ namespace ProFak.DB.Model
 			builder.HasKey(e => e.Id);
 
 			builder.Property(e => e.Id).ValueGeneratedOnAdd().IsRequired();
-			builder.Property(e => e.FakturaId).IsRequired();
-			builder.Property(e => e.TowarId).IsRequired();
 			builder.Property(e => e.Opis).HasDefaultValue("").IsRequired();
 			builder.Property(e => e.CenaNetto).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.CenaVat).HasDefaultValue(0).IsRequired();
@@ -29,6 +27,9 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.WartoscBrutto).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.CzyWedlugCenBrutto).HasDefaultValue(false).IsRequired();
 			builder.Property(e => e.CzyWartosciReczne).HasDefaultValue(false).IsRequired();
+
+			builder.Property(e => e.FakturaId);
+			builder.Property(e => e.TowarId);
 
 			builder.Ignore(e => e.FakturaRef);
 			builder.Ignore(e => e.TowarRef);

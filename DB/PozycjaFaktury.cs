@@ -10,7 +10,7 @@ namespace ProFak.DB
 	class PozycjaFaktury : Rekord<PozycjaFaktury>
 	{
 		public int FakturaId { get; set; }
-		public int TowarId { get; set; }
+		public int? TowarId { get; set; }
 		public string Opis { get; set; } = "";
 		public decimal CenaNetto { get; set; }
 		public decimal CenaVat { get; set; }
@@ -27,14 +27,6 @@ namespace ProFak.DB
 
 		public Faktura Faktura { get; set; }
 		public Towar Towar { get; set; }
-
-		public override void WypelnijDomyslnePola(Baza baza)
-		{
-			base.WypelnijDomyslnePola(baza);
-			var towar = baza.Towary.OrderBy(towar => towar.CzyArchiwalny).ThenBy(towar => towar.Id).FirstOrDefault();
-			TowarRef = towar;
-			Opis = towar.Nazwa;
-		}
 
 		public void PrzeliczCeny(Baza baza)
 		{

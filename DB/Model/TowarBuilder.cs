@@ -23,8 +23,9 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.CenaBrutto).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.CzyWedlugCenBrutto).HasDefaultValue(false).IsRequired();
 			builder.Property(e => e.CzyArchiwalny).HasDefaultValue(false).IsRequired();
-			builder.Property(e => e.StawkaVatId).IsRequired();
-			builder.Property(e => e.JednostkaMiaryId).IsRequired();
+
+			builder.Property(e => e.StawkaVatId);
+			builder.Property(e => e.JednostkaMiaryId);
 
 			builder.Ignore(e => e.StawkaVatRef);
 			builder.Ignore(e => e.JednostkaMiaryRef);

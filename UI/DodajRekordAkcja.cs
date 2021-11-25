@@ -31,7 +31,6 @@ namespace ProFak.UI
 			using var nowyKontekst = new Kontekst(kontekst);
 			using var transakcja = nowyKontekst.Transakcja();
 			var rekord = new TRekord();
-			rekord.WypelnijDomyslnePola(nowyKontekst.Baza);
 			if (przygotujRekord != null) przygotujRekord(rekord);
 			nowyKontekst.Baza.Set<TRekord>().Add(rekord);
 			nowyKontekst.Baza.Zapisz();
