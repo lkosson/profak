@@ -27,6 +27,7 @@ namespace ProFak.UI
 			Zawartosc = zawartosc;
 			kontekst.Dialog = this;
 			KeyPreview = true;
+			AutoValidate = AutoValidate.EnableAllowFocusChange;
 		}
 
 		private void UstawZawartosc(Control zawartosc)
@@ -45,6 +46,15 @@ namespace ProFak.UI
 				DialogResult = DialogResult.Cancel;
 				Close();
 			}
+		}
+
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			if (DialogResult == DialogResult.OK)
+			{
+				e.Cancel = !ValidateChildren();
+			}
+			base.OnFormClosing(e);
 		}
 	}
 }

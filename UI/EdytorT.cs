@@ -15,6 +15,7 @@ namespace ProFak.UI
 	{
 		private readonly Kontroler<TRekord> kontroler;
 		private readonly Container container;
+		private readonly ErrorProvider errorProvider;
 		private int szerokoscEtykiet;
 		private int szerokoscKontrolek;
 
@@ -25,6 +26,7 @@ namespace ProFak.UI
 		{
 			container = new Container();
 			kontroler = new Kontroler<TRekord>();
+			errorProvider = new ErrorProvider(container);
 
 			ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
 			ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
@@ -66,12 +68,13 @@ namespace ProFak.UI
 			if (Width < minimalnaSzerokosc) Width = minimalnaSzerokosc;
 		}
 
-		public void DodajTextBox(Expression<Func<TRekord, string>> wlasciwosc, string etykieta)
+		public void DodajTextBox(Expression<Func<TRekord, string>> wlasciwosc, string etykieta, bool wymagane = false)
 		{
 			var textbox = new TextBox();
 			textbox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 			kontroler.Powiazanie(textbox, wlasciwosc);
 			DodajWiersz(textbox, etykieta);
+			if (wymagane) Wymagane(textbox);
 		}
 
 		public void DodajCheckBox(Expression<Func<TRekord, bool>> wlasciwosc, string etykieta)
@@ -110,6 +113,26 @@ namespace ProFak.UI
 			dateTimePicker.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 			kontroler.Powiazanie(dateTimePicker, wlasciwosc);
 			DodajWiersz(dateTimePicker, etykieta);
+		}
+
+		public void Wymagane(TextBox textBox)
+		{
+			textBox.Validating += TextBox_Wymagane_Validating;
+		}
+
+		private void TextBox_Wymagane_Validating(object sender, CancelEventArgs e)
+		{
+			var textBox = (TextBox)sender;
+			if (String.IsNullOrEmpty(textBox.Text))
+			{
+				errorProvider.SetIconAlignment(textBox, ErrorIconAlignment.MiddleLeft);
+				errorProvider.SetError(textBox, "Należy uzupełnić pole.");
+				e.Cancel = true;
+			}
+			else
+			{
+				errorProvider.SetError(textBox, "");
+			}
 		}
 
 		protected override void Dispose(bool disposing)

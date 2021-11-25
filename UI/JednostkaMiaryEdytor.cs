@@ -12,8 +12,8 @@ namespace ProFak.UI
 	{
 		public JednostkaMiaryEdytor()
 		{
-			DodajTextBox(jednostkaMiary => jednostkaMiary.Skrot, "Skrót");
-			DodajTextBox(jednostkaMiary => jednostkaMiary.Nazwa, "Nazwa");
+			DodajTextBox(jednostkaMiary => jednostkaMiary.Skrot, "Skrót", wymagane: true);
+			DodajTextBox(jednostkaMiary => jednostkaMiary.Nazwa, "Nazwa", wymagane: true);
 			DodajCheckBox(jednostkaMiary => jednostkaMiary.CzyDomyslna, "Domyślna");
 			DodajNumericUpDown(jednostkaMiary => jednostkaMiary.LiczbaMiescPoPrzecinku, "Liczba miejsc po przecinku");
 			MinimumSize = new Size(250, 100);
