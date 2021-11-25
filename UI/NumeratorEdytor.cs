@@ -15,6 +15,7 @@ namespace ProFak.UI
 	{
 		public Numerator Rekord { get => kontroler.Model; private set { kontroler.Model = value; } }
 		public Kontekst Kontekst { get; private set; }
+		private readonly SpisZAkcjami<StanNumeratora, StanNumeratoraSpis> stanyNumeratora;
 		private readonly Kontroler<Numerator> kontroler;
 
 		public NumeratorEdytor()
@@ -27,12 +28,19 @@ namespace ProFak.UI
 
 			kontroler.Powiazanie(comboBoxPrzeznaczenie, numerator => numerator.Przeznaczenie);
 			kontroler.Powiazanie(textBoxFormat, numerator => numerator.Format);
+
+			stanyNumeratora = Spis.StanyNumeratorow(Kontekst);
+			panelStan.Controls.Add(stanyNumeratora);
+
+			MinimumSize = new Size(800, 200);
 		}
 
 		public void Przygotuj(Kontekst kontekst, Numerator rekord)
 		{
 			Kontekst = kontekst;
 			Rekord = rekord;
+			stanyNumeratora.Spis.NumeratorRef = rekord;
+			stanyNumeratora.Spis.Kontekst = kontekst;
 		}
 	}
 }

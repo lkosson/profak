@@ -55,6 +55,7 @@ namespace ProFak.UI
 			else if (pozycja.Name == "PozycjeFaktur") Wyswietl(Spis.PozycjeFaktur, pozycja.Name);
 			else if (pozycja.Name == "Wplaty") Wyswietl(Spis.Wplaty, pozycja.Name);
 			else if (pozycja.Name == "Numeratory") Wyswietl(Spis.Numeratory, pozycja.Name);
+			else if (pozycja.Name == "StanyNumeratorow") Wyswietl(Spis.StanyNumeratorow, pozycja.Name);
 		}
 
 		private void Wyswietl(Func<Kontekst, Control> generator, string nazwa)

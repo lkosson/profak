@@ -107,6 +107,16 @@ namespace ProFak.UI
 			);
 		}
 
+		public static SpisZAkcjami<StanNumeratora, StanNumeratoraSpis> StanyNumeratorow(Kontekst kontekst)
+		{
+			var spis = new StanNumeratoraSpis { Kontekst = kontekst };
+			return SpisZAkcjami.Utworz(spis,
+				new DodajRekordAkcja<StanNumeratora, StanNumeratoraEdytor>("Nowy stan", stanNumeratora => stanNumeratora.NumeratorRef = spis.NumeratorRef),
+				new EdytujRekordAkcja<StanNumeratora, StanNumeratoraEdytor>("Edycja stanu"),
+				new UsunRekordAkcja<StanNumeratora>()
+			);
+		}
+
 		public static SpisZAkcjami<StawkaVat, StawkaVatSpis> StawkiVat(Kontekst kontekst)
 		{
 			return SpisZAkcjami.Utworz(new StawkaVatSpis { Kontekst = kontekst },
