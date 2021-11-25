@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProFak.UI
 {
-	class SposobPlatnosciEdytor : Edytor<SposobPlatnosci>
+	class SposobPlatnosciEdytor : EdytorDwieKolumny<SposobPlatnosci>
 	{
 		public SposobPlatnosciEdytor()
 		{

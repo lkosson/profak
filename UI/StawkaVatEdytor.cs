@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	partial class StawkaVatEdytor : Edytor<StawkaVat>
+	class StawkaVatEdytor : EdytorDwieKolumny<StawkaVat>
 	{
 		public StawkaVatEdytor()
 		{

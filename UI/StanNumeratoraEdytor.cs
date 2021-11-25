@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProFak.UI
 {
-	class StanNumeratoraEdytor : Edytor<StanNumeratora>
+	class StanNumeratoraEdytor : EdytorDwieKolumny<StanNumeratora>
 	{
 		public StanNumeratoraEdytor()
 		{

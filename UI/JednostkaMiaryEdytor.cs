@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProFak.UI
 {
-	class JednostkaMiaryEdytor : Edytor<JednostkaMiary>
+	class JednostkaMiaryEdytor : EdytorDwieKolumny<JednostkaMiary>
 	{
 		public JednostkaMiaryEdytor()
 		{

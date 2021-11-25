@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProFak.UI
 {
-	class WalutaEdytor : Edytor<Waluta>
+	class WalutaEdytor : EdytorDwieKolumny<Waluta>
 	{
 		public WalutaEdytor()
 		{

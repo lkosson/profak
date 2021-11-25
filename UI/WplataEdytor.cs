@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProFak.UI
 {
-	class WplataEdytor : Edytor<Wplata>
+	class WplataEdytor : EdytorDwieKolumny<Wplata>
 	{
 		public WplataEdytor()
 		{
