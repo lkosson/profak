@@ -49,22 +49,7 @@ namespace ProFak.UI
 		private void Rows_CollectionChanged(object sender, CollectionChangeEventArgs e)
 		{
 			if (RekordPoczatkowy == default) return;
-			/*
-			ClearSelection();
-			foreach (DataGridViewRow row in Rows)
-			{
-				if (row.DataBoundItem is not T rekord) continue;
-				if (rekord.Ref != RekordPoczatkowy) continue;
-				row.Selected = true;
-				foreach (DataGridViewCell cell in row.Cells)
-				{
-					if (!cell.Visible) continue;
-					CurrentCell = cell;
-					break;
-				}
-				break;
-			}
-			*/
+
 			foreach (DataGridViewRow row in Rows)
 			{
 				if (row.DataBoundItem is not T rekord) continue;
@@ -77,23 +62,30 @@ namespace ProFak.UI
 		protected override void OnCreateControl()
 		{
 			base.OnCreateControl();
-			if (Kontekst != null)
-			{
-				try
-				{
-					Przeladuj();
-				}
-				catch (Exception exc)
-				{
-					MessageBox.Show($"Nie udało się załadować danych do spisu.\n\n{exc}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			}
+			if (Kontekst != null) PrzeladujBezpiecznie();
 			bindingSource.ResetBindings(true);
+		}
+
+		private void PrzeladujBezpiecznie()
+		{
+			try
+			{
+				Przeladuj();
+			}
+			catch (Exception exc)
+			{
+				MessageBox.Show($"Nie udało się załadować danych do spisu.\n\n{exc}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
 		}
 
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Enter) e.Handled = true;
+			else if (e.KeyCode == Keys.F5)
+			{
+				PrzeladujBezpiecznie();
+				e.Handled = true;
+			}
 			base.OnKeyDown(e);
 		}
 

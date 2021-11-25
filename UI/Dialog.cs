@@ -38,9 +38,9 @@ namespace ProFak.UI
 			zawartosc.Dock = DockStyle.Fill;
 		}
 
-		protected override void OnKeyUp(KeyEventArgs e)
+		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			base.OnKeyUp(e);
+			base.OnKeyDown(e);
 			if (e.KeyCode == Keys.Escape)
 			{
 				DialogResult = DialogResult.Cancel;
