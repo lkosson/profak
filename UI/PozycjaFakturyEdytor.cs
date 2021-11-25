@@ -40,7 +40,18 @@ namespace ProFak.UI
 				Kontekst, comboBoxTowar, buttonTowar,
 				Kontekst.Baza.Towary.ToList,
 				towar => towar.Nazwa,
-				towar => { if (towar == null || Rekord.TowarRef == towar.Ref) return; Rekord.TowarRef = towar; Rekord.Opis = towar.Nazwa; Rekord.CzyWedlugCenBrutto = towar.CzyWedlugCenBrutto; KonfigurujPoleIlosci(); KonfigurujCeny(); PrzeliczCeny(); },
+				towar =>
+				{
+					if (towar == null || Rekord.TowarRef == towar.Ref) return;
+					Rekord.TowarRef = towar;
+					Rekord.Opis = towar.Nazwa;
+					Rekord.CzyWedlugCenBrutto = towar.CzyWedlugCenBrutto;
+					Rekord.CenaBrutto = towar.CenaBrutto;
+					Rekord.CenaNetto = towar.CenaNetto;
+					KonfigurujPoleIlosci();
+					KonfigurujCeny();
+					PrzeliczCeny();
+				},
 				Spis.Towary)
 				.Zainstaluj();
 		}
