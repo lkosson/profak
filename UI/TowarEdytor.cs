@@ -11,16 +11,11 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	partial class TowarEdytor : UserControl, IEdytor<Towar>
+	partial class TowarEdytor : TowarEdytorBase
 	{
-		public Towar Rekord { get => kontroler.Model; private set { UzupelnijPowiazaneWlasciwosci(value); kontroler.Model = value; PrzeliczCeny(); } }
-		public Kontekst Kontekst { get; private set; }
-		private readonly Kontroler<Towar> kontroler;
-
 		public TowarEdytor()
 		{
 			InitializeComponent();
-			kontroler = new Kontroler<Towar>();
 
 			kontroler.Slownik<RodzajTowaru>(comboBoxRodzaj);
 			kontroler.Slownik(comboBoxSposobLiczenia, "według brutto", "według netto");
@@ -36,15 +31,10 @@ namespace ProFak.UI
 			kontroler.Powiazanie(comboBoxWidocznosc, towar => towar.CzyArchiwalny);
 		}
 
-		public void Przygotuj(Kontekst kontekst, Towar rekord)
+		protected override void KontekstGotowy()
 		{
-			Kontekst = kontekst;
-			WypelnijSpisy();
-			Rekord = rekord;
-		}
+			base.KontekstGotowy();
 
-		private void WypelnijSpisy()
-		{
 			new Slownik<JednostkaMiary>(
 				Kontekst, comboBoxJednostkaMiary, buttonJednostkaMiary,
 				Kontekst.Baza.JednostkiMiar.ToList,
@@ -62,10 +52,13 @@ namespace ProFak.UI
 				.Zainstaluj();
 		}
 
-		private void UzupelnijPowiazaneWlasciwosci(Towar rekord)
+		protected override void RekordGotowy()
 		{
-			rekord.StawkaVat = Kontekst.Baza.StawkiVat.Single(stawka => stawka.Id == rekord.StawkaVatId);
-			rekord.JednostkaMiary = Kontekst.Baza.JednostkiMiar.Single(jednostka => jednostka.Id == rekord.JednostkaMiaryId);
+			base.RekordGotowy();
+
+			Rekord.StawkaVat = Kontekst.Baza.StawkiVat.Single(stawka => stawka.Id == Rekord.StawkaVatId);
+			Rekord.JednostkaMiary = Kontekst.Baza.JednostkiMiar.Single(jednostka => jednostka.Id == Rekord.JednostkaMiaryId);
+			PrzeliczCeny();
 		}
 
 		private void PrzeliczCeny()
@@ -96,5 +89,9 @@ namespace ProFak.UI
 			if (!Rekord.CzyWedlugCenBrutto) return;
 			numericUpDownCenaNetto.Value = Decimal.Round(numericUpDownCenaBrutto.Value * 100m / (100 + Rekord.StawkaVat.Wartosc), 2, MidpointRounding.AwayFromZero);
 		}
+	}
+
+	class TowarEdytorBase : Edytor<Towar>
+	{
 	}
 }

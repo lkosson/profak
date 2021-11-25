@@ -11,19 +11,14 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	partial class FakturaEdytor : UserControl, IEdytor<Faktura>
+	partial class FakturaEdytor : FakturaEdytorBase
 	{
-		public Faktura Rekord { get => kontroler.Model; private set => kontroler.Model = value; }
-		public Kontekst Kontekst { get; private set; }
 		private readonly SpisZAkcjami<Wplata, WplataSpis> wplaty;
 		private readonly SpisZAkcjami<PozycjaFaktury, PozycjaFakturySpis> pozycjeFaktury;
-		private readonly Kontroler<Faktura> kontroler;
 
 		public FakturaEdytor()
 		{
 			InitializeComponent();
-			kontroler = new Kontroler<Faktura>();
-
 			kontroler.Slownik<RodzajFaktury>(comboBoxRodzaj);
 
 			kontroler.Powiazanie(comboBoxRodzaj, faktura => faktura.Rodzaj);
@@ -67,19 +62,10 @@ namespace ProFak.UI
 			kontroler.AktualizujKontrolki();
 		}
 
-		public void Przygotuj(Kontekst kontekst, Faktura rekord)
+		protected override void KontekstGotowy()
 		{
-			Kontekst = kontekst;
-			WypelnijSpisy();
-			Rekord = rekord;
-			wplaty.Spis.FakturaRef = rekord;
-			wplaty.Spis.Kontekst = kontekst;
-			pozycjeFaktury.Spis.FakturaRef = rekord;
-			pozycjeFaktury.Spis.Kontekst = kontekst;
-		}
+			base.KontekstGotowy();
 
-		private void WypelnijSpisy()
-		{
 			new Slownik<Waluta>(
 				Kontekst, comboBoxWaluta, buttonWaluta,
 				Kontekst.Baza.Waluty.ToList,
@@ -128,5 +114,18 @@ namespace ProFak.UI
 				Spis.Kontrahenci)
 				.Zainstaluj();
 		}
+
+		protected override void RekordGotowy()
+		{
+			base.RekordGotowy();
+			wplaty.Spis.FakturaRef = Rekord;
+			wplaty.Spis.Kontekst = Kontekst;
+			pozycjeFaktury.Spis.FakturaRef = Rekord;
+			pozycjeFaktury.Spis.Kontekst = Kontekst;
+		}
+	}
+
+	class FakturaEdytorBase : Edytor<Faktura>
+	{
 	}
 }

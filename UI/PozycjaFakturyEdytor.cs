@@ -12,16 +12,11 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	partial class PozycjaFakturyEdytor : UserControl, IEdytor<PozycjaFaktury>
+	partial class PozycjaFakturyEdytor : PozycjaFakturyEdytorBase
 	{
-		public PozycjaFaktury Rekord { get => kontroler.Model; private set { kontroler.Model = value; KonfigurujPoleIlosci(); KonfigurujCeny(); } }
-		public Kontekst Kontekst { get; private set; }
-		private readonly Kontroler<PozycjaFaktury> kontroler;
-
 		public PozycjaFakturyEdytor()
 		{
 			InitializeComponent();
-			kontroler = new Kontroler<PozycjaFaktury>();
 
 			kontroler.Powiazanie(comboBoxTowar, pozycja => pozycja.Opis);
 			kontroler.Powiazanie(numericUpDownIlosc, pozycja => pozycja.Ilosc, PrzeliczCeny);
@@ -35,15 +30,10 @@ namespace ProFak.UI
 			kontroler.Powiazanie(checkBoxRecznie, pozycja => pozycja.CzyWartosciReczne, KonfigurujCeny);
 		}
 
-		public void Przygotuj(Kontekst kontekst, PozycjaFaktury rekord)
+		protected override void KontekstGotowy()
 		{
-			Kontekst = kontekst;
-			WypelnijSpisy();
-			Rekord = rekord;
-		}
+			base.KontekstGotowy();
 
-		private void WypelnijSpisy()
-		{
 			new Slownik<Towar>(
 				Kontekst, comboBoxTowar, buttonTowar,
 				Kontekst.Baza.Towary.ToList,
@@ -51,6 +41,13 @@ namespace ProFak.UI
 				towar => { if (towar == null || Rekord.TowarRef == towar.Ref) return; Rekord.TowarRef = towar; Rekord.Opis = towar.Nazwa; Rekord.CzyWedlugCenBrutto = towar.CzyWedlugCenBrutto; KonfigurujPoleIlosci(); KonfigurujCeny(); PrzeliczCeny(); },
 				Spis.Towary)
 				.Zainstaluj();
+		}
+
+		protected override void RekordGotowy()
+		{
+			base.RekordGotowy();
+			KonfigurujPoleIlosci();
+			KonfigurujCeny();
 		}
 
 		private void KonfigurujPoleIlosci()
@@ -83,5 +80,9 @@ namespace ProFak.UI
 			Rekord.PrzeliczCeny(Kontekst.Baza);
 			kontroler.AktualizujKontrolki();
 		}
+	}
+
+	class PozycjaFakturyEdytorBase : Edytor<PozycjaFaktury>
+	{
 	}
 }

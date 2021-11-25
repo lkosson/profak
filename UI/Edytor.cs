@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	abstract class Edytor<TRekord> : UserControl, IEdytor<TRekord>
+	class Edytor<TRekord> : UserControl, IEdytor<TRekord>
 		where TRekord : Rekord<TRekord>
 	{
 		protected readonly Kontroler<TRekord> kontroler;
 		private readonly Container container;
 		private readonly ErrorProvider errorProvider;
 
-		public TRekord Rekord { get => kontroler.Model; set => kontroler.Model = value; }
+		public TRekord Rekord { get => kontroler.Model; private set => kontroler.Model = value; }
 		public Kontekst Kontekst { get; private set; }
 
 		public Edytor()
@@ -30,7 +30,17 @@ namespace ProFak.UI
 		public void Przygotuj(Kontekst kontekst, TRekord rekord)
 		{
 			Kontekst = kontekst;
+			KontekstGotowy();
 			Rekord = rekord;
+			RekordGotowy();
+		}
+
+		protected virtual void KontekstGotowy()
+		{
+		}
+
+		protected virtual void RekordGotowy()
+		{
 		}
 
 		public void Wymagane(TextBox textBox)

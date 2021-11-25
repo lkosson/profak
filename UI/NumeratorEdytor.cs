@@ -11,18 +11,13 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	partial class NumeratorEdytor : UserControl, IEdytor<Numerator>
+	partial class NumeratorEdytor : NumeratorEdytorBase
 	{
-		public Numerator Rekord { get => kontroler.Model; private set { kontroler.Model = value; } }
-		public Kontekst Kontekst { get; private set; }
 		private readonly SpisZAkcjami<StanNumeratora, StanNumeratoraSpis> stanyNumeratora;
-		private readonly Kontroler<Numerator> kontroler;
 
 		public NumeratorEdytor()
 		{
 			InitializeComponent();
-
-			kontroler = new Kontroler<Numerator>();
 
 			kontroler.Slownik<PrzeznaczenieNumeratora>(comboBoxPrzeznaczenie);
 
@@ -35,12 +30,15 @@ namespace ProFak.UI
 			MinimumSize = new Size(800, 200);
 		}
 
-		public void Przygotuj(Kontekst kontekst, Numerator rekord)
+		protected override void RekordGotowy()
 		{
-			Kontekst = kontekst;
-			Rekord = rekord;
-			stanyNumeratora.Spis.NumeratorRef = rekord;
-			stanyNumeratora.Spis.Kontekst = kontekst;
+			base.RekordGotowy();
+			stanyNumeratora.Spis.NumeratorRef = Rekord;
+			stanyNumeratora.Spis.Kontekst = Kontekst;
 		}
+	}
+
+	class NumeratorEdytorBase : Edytor<Numerator>
+	{
 	}
 }
