@@ -19,9 +19,7 @@ namespace ProFak.UI
 		public FakturaEdytor()
 		{
 			InitializeComponent();
-			kontroler.Slownik<RodzajFaktury>(comboBoxRodzaj);
 
-			kontroler.Powiazanie(comboBoxRodzaj, faktura => faktura.Rodzaj);
 			kontroler.Powiazanie(textBoxNumer, faktura => faktura.Numer);
 			kontroler.Powiazanie(comboBoxWaluta, faktura => faktura.WalutaRef);
 
@@ -55,7 +53,6 @@ namespace ProFak.UI
 			Wymagane(comboBoxNazwaSprzedawcy);
 			Wymagane(comboBoxSposobPlatnosci);
 			Wymagane(comboBoxWaluta);
-			Wymagane(comboBoxRodzaj);
 
 			tabPageWplaty.Controls.Add(wplaty = Spis.Wplaty());
 			tabPagePozycje.Controls.Add(pozycjeFaktury = Spis.PozycjeFaktur());
@@ -128,6 +125,12 @@ namespace ProFak.UI
 			wplaty.Spis.Kontekst = Kontekst;
 			pozycjeFaktury.Spis.FakturaRef = Rekord;
 			pozycjeFaktury.Spis.Kontekst = Kontekst;
+			if (Rekord.Rodzaj == RodzajFaktury.Sprzedaż) labelRodzaj.Text = "Sprzedaż";
+			else if (Rekord.Rodzaj == RodzajFaktury.Zakup) labelRodzaj.Text = "Zakup";
+			else if (Rekord.Rodzaj == RodzajFaktury.KorektaSprzedaży) labelRodzaj.Text = "Korekta sprzedaży";
+			else if (Rekord.Rodzaj == RodzajFaktury.KorektaZakupu) labelRodzaj.Text = "Korekta zakupu";
+			else if (Rekord.Rodzaj == RodzajFaktury.Proforma) labelRodzaj.Text = "Proforma";
+			else labelRodzaj.Text = Rekord.Rodzaj.ToString();
 		}
 	}
 

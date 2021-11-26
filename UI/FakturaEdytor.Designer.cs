@@ -60,8 +60,7 @@ namespace ProFak.UI
 			this.textBoxUwagiWewnetrzne = new System.Windows.Forms.TextBox();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.textBoxNumer = new System.Windows.Forms.TextBox();
-			this.comboBoxRodzaj = new System.Windows.Forms.ComboBox();
-			this.label1 = new System.Windows.Forms.Label();
+			this.labelRodzaj = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.buttonWaluta = new System.Windows.Forms.Button();
 			this.label15 = new System.Windows.Forms.Label();
@@ -480,8 +479,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel1.Controls.Add(this.textBoxNumer, 4, 0);
-			this.tableLayoutPanel1.Controls.Add(this.comboBoxRodzaj, 1, 0);
-			this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
+			this.tableLayoutPanel1.Controls.Add(this.labelRodzaj, 0, 0);
 			this.tableLayoutPanel1.Controls.Add(this.label2, 3, 0);
 			this.tableLayoutPanel1.Controls.Add(this.buttonWaluta, 8, 0);
 			this.tableLayoutPanel1.Controls.Add(this.label15, 6, 0);
@@ -496,36 +494,27 @@ namespace ProFak.UI
 			// textBoxNumer
 			// 
 			this.textBoxNumer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxNumer.Location = new System.Drawing.Point(241, 4);
+			this.textBoxNumer.Location = new System.Drawing.Point(193, 4);
 			this.textBoxNumer.Name = "textBoxNumer";
-			this.textBoxNumer.Size = new System.Drawing.Size(279, 23);
+			this.textBoxNumer.Size = new System.Drawing.Size(327, 23);
 			this.textBoxNumer.TabIndex = 2;
 			// 
-			// comboBoxRodzaj
+			// labelRodzaj
 			// 
-			this.comboBoxRodzaj.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.comboBoxRodzaj.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBoxRodzaj.FormattingEnabled = true;
-			this.comboBoxRodzaj.Location = new System.Drawing.Point(51, 4);
-			this.comboBoxRodzaj.Name = "comboBoxRodzaj";
-			this.comboBoxRodzaj.Size = new System.Drawing.Size(114, 23);
-			this.comboBoxRodzaj.TabIndex = 1;
-			// 
-			// label1
-			// 
-			this.label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(3, 8);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(42, 15);
-			this.label1.TabIndex = 0;
-			this.label1.Text = "Rodzaj";
+			this.labelRodzaj.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelRodzaj.AutoSize = true;
+			this.tableLayoutPanel1.SetColumnSpan(this.labelRodzaj, 2);
+			this.labelRodzaj.Location = new System.Drawing.Point(3, 8);
+			this.labelRodzaj.Name = "labelRodzaj";
+			this.labelRodzaj.Size = new System.Drawing.Size(50, 15);
+			this.labelRodzaj.TabIndex = 0;
+			this.labelRodzaj.Text = "[Rodzaj]";
 			// 
 			// label2
 			// 
 			this.label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(191, 8);
+			this.label2.Location = new System.Drawing.Point(143, 8);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(44, 15);
 			this.label2.TabIndex = 2;
@@ -851,6 +840,11 @@ namespace ProFak.UI
             0,
             0,
             0});
+			this.numericUpDownNetto.Minimum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            -2147483648});
 			this.numericUpDownNetto.Name = "numericUpDownNetto";
 			this.numericUpDownNetto.Size = new System.Drawing.Size(85, 23);
 			this.numericUpDownNetto.TabIndex = 50;
@@ -867,6 +861,11 @@ namespace ProFak.UI
             0,
             0,
             0});
+			this.numericUpDownVat.Minimum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            -2147483648});
 			this.numericUpDownVat.Name = "numericUpDownVat";
 			this.numericUpDownVat.Size = new System.Drawing.Size(85, 23);
 			this.numericUpDownVat.TabIndex = 51;
@@ -883,6 +882,11 @@ namespace ProFak.UI
             0,
             0,
             0});
+			this.numericUpDownBrutto.Minimum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            -2147483648});
 			this.numericUpDownBrutto.Name = "numericUpDownBrutto";
 			this.numericUpDownBrutto.Size = new System.Drawing.Size(85, 23);
 			this.numericUpDownBrutto.TabIndex = 52;
@@ -938,8 +942,7 @@ namespace ProFak.UI
 
 		#endregion
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.ComboBox comboBoxRodzaj;
+		private System.Windows.Forms.Label labelRodzaj;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.TextBox textBoxNumer;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelKontrahenci;

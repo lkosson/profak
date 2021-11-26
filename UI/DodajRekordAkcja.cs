@@ -16,7 +16,7 @@ namespace ProFak.UI
 		private readonly string tytul;
 		private readonly Action<TRekord> przygotujRekord;
 
-		public override string Nazwa => "Dodaj nową pozycję";
+		public override string Nazwa => tytul;
 		
 		public DodajRekordAkcja(string tytul, Action<TRekord> przygotujRekord = null)
 		{
@@ -26,14 +26,20 @@ namespace ProFak.UI
 
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<TRekord> zaznaczoneRekordy) => true;
 
+		protected virtual TRekord UtworzRekord(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy)
+		{
+			var rekord = new TRekord();
+			if (przygotujRekord != null) przygotujRekord(rekord);
+			kontekst.Baza.Set<TRekord>().Add(rekord);
+			kontekst.Baza.Zapisz();
+			return rekord;
+		}
+
 		public override void Uruchom(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy)
 		{
 			using var nowyKontekst = new Kontekst(kontekst);
 			using var transakcja = nowyKontekst.Transakcja();
-			var rekord = new TRekord();
-			if (przygotujRekord != null) przygotujRekord(rekord);
-			nowyKontekst.Baza.Set<TRekord>().Add(rekord);
-			nowyKontekst.Baza.Zapisz();
+			var rekord = UtworzRekord(nowyKontekst, zaznaczoneRekordy);
 			while (true)
 			{
 				try
