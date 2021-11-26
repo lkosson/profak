@@ -14,13 +14,15 @@ namespace ProFak.UI
 		where TEdytor : Control, IEdytor<TRekord>, new()
 	{
 		private readonly string tytul;
+		private readonly bool pelnyEkran;
 
 		public override bool CzyDomyslna => true;
 		public override string Nazwa => "Wyświetl zaznaczoną pozycję";
 
-		public EdytujRekordAkcja(string tytul)
+		public EdytujRekordAkcja(string tytul, bool pelnyEkran = false)
 		{
 			this.tytul = tytul;
+			this.pelnyEkran = pelnyEkran;
 		}
 
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<TRekord> zaznaczoneRekordy) => zaznaczoneRekordy.Count() == 1;
@@ -37,6 +39,7 @@ namespace ProFak.UI
 				{
 					using var edytor = new TEdytor();
 					using var okno = new Dialog(tytul, edytor, nowyKontekst);
+					if (pelnyEkran) okno.WindowState = FormWindowState.Maximized;
 					edytor.Przygotuj(nowyKontekst, rekord);
 					if (okno.ShowDialog() == DialogResult.OK)
 					{

@@ -14,7 +14,7 @@ namespace ProFak.UI
 			DodajKolumne(nameof(Waluta.Skrot), "Skrót");
 			DodajKolumne(nameof(Waluta.Nazwa), "Nazwa", rozciagnij: true);
 			DodajKolumne(nameof(Waluta.CzyDomyslnaFmt), "Domyślna");
-			DodajKolumne(nameof(Waluta.Id), "Id", wyrownajDoPrawej: true);
+			DodajKolumneId();
 		}
 
 		public override void Przeladuj()

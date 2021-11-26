@@ -28,6 +28,8 @@ namespace ProFak.DB
 		public Faktura Faktura { get; set; }
 		public Towar Towar { get; set; }
 
+		public decimal Cena => CzyWedlugCenBrutto ? CenaBrutto : CenaNetto;
+
 		public void PrzeliczCeny(Baza baza)
 		{
 			if (CzyWartosciReczne) return;

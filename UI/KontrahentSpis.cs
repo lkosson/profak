@@ -14,7 +14,7 @@ namespace ProFak.UI
 			DodajKolumne(nameof(Kontrahent.Nazwa), "Nazwa", rozciagnij: true);
 			DodajKolumne(nameof(Kontrahent.NIP), "NIP");
 			DodajKolumne(nameof(Kontrahent.AdresRejestrowy), "Adres");
-			DodajKolumne(nameof(Kontrahent.Id), "Id", wyrownajDoPrawej: true);
+			DodajKolumneId();
 		}
 
 		public override void Przeladuj()

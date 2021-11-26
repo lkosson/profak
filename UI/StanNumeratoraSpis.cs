@@ -15,7 +15,7 @@ namespace ProFak.UI
 		{
 			DodajKolumne(nameof(StanNumeratora.Parametry), "Parametry", rozciagnij: true);
 			DodajKolumne(nameof(StanNumeratora.OstatniaWartosc), "Ostatnia wartość");
-			DodajKolumne(nameof(StanNumeratora.Id), "Id", wyrownajDoPrawej: true);
+			DodajKolumneId();
 		}
 
 		public override void Przeladuj()

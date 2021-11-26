@@ -15,13 +15,15 @@ namespace ProFak.UI
 	{
 		private readonly string tytul;
 		private readonly Action<TRekord> przygotujRekord;
+		private readonly bool pelnyEkran;
 
 		public override string Nazwa => tytul;
 		
-		public DodajRekordAkcja(string tytul, Action<TRekord> przygotujRekord = null)
+		public DodajRekordAkcja(string tytul, Action<TRekord> przygotujRekord = null, bool pelnyEkran = false)
 		{
 			this.tytul = tytul;
 			this.przygotujRekord = przygotujRekord;
+			this.pelnyEkran = pelnyEkran;
 		}
 
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<TRekord> zaznaczoneRekordy) => true;
@@ -46,6 +48,7 @@ namespace ProFak.UI
 				{
 					using var edytor = new TEdytor();
 					using var okno = new Dialog(tytul, edytor, nowyKontekst);
+					if (pelnyEkran) okno.WindowState = FormWindowState.Maximized;
 					edytor.Przygotuj(nowyKontekst, rekord);
 					if (okno.ShowDialog() == DialogResult.OK)
 					{

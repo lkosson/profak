@@ -18,7 +18,7 @@ namespace ProFak.UI
 			DodajKolumne(nameof(StawkaVat.Skrot), "Skrót", rozciagnij: true);
 			DodajKolumne(nameof(StawkaVat.Wartosc), "Wartość", wyrownajDoPrawej: true, format: "0");
 			DodajKolumne(nameof(StawkaVat.CzyDomyslnaFmt), "Domyślna");
-			DodajKolumne(nameof(StawkaVat.Id), "Id", wyrownajDoPrawej: true);
+			DodajKolumneId();
 		}
 
 		public override void Przeladuj()

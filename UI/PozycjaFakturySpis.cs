@@ -14,14 +14,13 @@ namespace ProFak.UI
 
 		public PozycjaFakturySpis()
 		{
-			DodajKolumne(nameof(PozycjaFaktury.Opis), "Opis");
-			DodajKolumne(nameof(PozycjaFaktury.Ilosc), "Ilość", wyrownajDoPrawej: true);
-			DodajKolumne(nameof(PozycjaFaktury.CenaNetto), "Cena netto", wyrownajDoPrawej: true, format: "#,##0.00");
-			DodajKolumne(nameof(PozycjaFaktury.CenaBrutto), "Cena brutto", wyrownajDoPrawej: true, format: "#,##0.00");
-			DodajKolumne(nameof(PozycjaFaktury.WartoscNetto), "Wartość netto", wyrownajDoPrawej: true, format: "#,##0.00");
-			DodajKolumne(nameof(PozycjaFaktury.WartoscVat), "VAT", wyrownajDoPrawej: true, format: "#,##0.00");
-			DodajKolumne(nameof(PozycjaFaktury.WartoscBrutto), "Wartość brutto", wyrownajDoPrawej: true, format: "#,##0.00");
-			DodajKolumne(nameof(PozycjaFaktury.Id), "Id", wyrownajDoPrawej: true);
+			DodajKolumne(nameof(PozycjaFaktury.Opis), "Opis", rozciagnij: true);
+			DodajKolumne(nameof(PozycjaFaktury.Ilosc), "Ilość", wyrownajDoPrawej: true, szerokosc: 80);
+			DodajKolumneKwota(nameof(PozycjaFaktury.Cena), "Cena");
+			DodajKolumneKwota(nameof(PozycjaFaktury.WartoscNetto), "Netto");
+			DodajKolumneKwota(nameof(PozycjaFaktury.WartoscVat), "VAT");
+			DodajKolumneKwota(nameof(PozycjaFaktury.WartoscBrutto), "Brutto");
+			DodajKolumneId();
 		}
 
 		public override void Przeladuj()

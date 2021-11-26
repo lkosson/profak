@@ -109,6 +109,9 @@ namespace ProFak.UI
 			Columns.Add(kolumna);
 		}
 
+		public void DodajKolumneKwota(string wlasciwosc, string naglowek) => DodajKolumne(wlasciwosc, naglowek, wyrownajDoPrawej: true, format: "#,##0.00", szerokosc: 80);
+		public void DodajKolumneId() => DodajKolumne("Id", "Id", wyrownajDoPrawej: true, szerokosc: 40);
+
 		public abstract void Przeladuj();
 	}
 }

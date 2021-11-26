@@ -14,8 +14,8 @@ namespace ProFak.UI
 		public WplataSpis()
 		{
 			DodajKolumne(nameof(Wplata.Data), "Data");
-			DodajKolumne(nameof(Wplata.Kwota), "Kwota", rozciagnij: true, wyrownajDoPrawej: true, format: "#,##0.00");
-			DodajKolumne(nameof(Wplata.Id), "Id", wyrownajDoPrawej: true);
+			DodajKolumneKwota(nameof(Wplata.Kwota), "Kwota");
+			DodajKolumneId();
 		}
 
 		public override void Przeladuj()

@@ -17,11 +17,11 @@ namespace ProFak.UI
 			DodajKolumne(nameof(Faktura.DataSprzedazy), "Data sprzedaży", format: "yyyy-MM-dd", szerokosc: 120);
 			DodajKolumne(nameof(Faktura.NazwaSprzedawcy), "Sprzedawca", rozciagnij: true);
 			DodajKolumne(nameof(Faktura.NIPSprzedawcy), "NIP sprzedawcy", rozciagnij: true);
-			DodajKolumne(nameof(Faktura.RazemNetto), "Netto", wyrownajDoPrawej: true, format: "#,##0.00");
-			DodajKolumne(nameof(Faktura.RazemVat), "VAT", wyrownajDoPrawej: true, format: "#,##0.00");
-			DodajKolumne(nameof(Faktura.RazemBrutto), "Brutto", wyrownajDoPrawej: true, format: "#,##0.00");
-			DodajKolumne(nameof(Faktura.Waluta), "Waluta");
-			DodajKolumne(nameof(Faktura.Id), "Id", wyrownajDoPrawej: true);
+			DodajKolumneKwota(nameof(Faktura.RazemNetto), "Netto");
+			DodajKolumneKwota(nameof(Faktura.RazemVat), "VAT");
+			DodajKolumneKwota(nameof(Faktura.RazemBrutto), "Brutto");
+			DodajKolumne(nameof(Faktura.WalutaFmt), "Waluta", szerokosc: 70);
+			DodajKolumneId();
 		}
 
 		public override void Przeladuj()

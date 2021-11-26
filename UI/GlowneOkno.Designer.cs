@@ -134,6 +134,7 @@ namespace ProFak.UI
 			this.KeyPreview = true;
 			this.Name = "GlowneOkno";
 			this.Text = "ProFak";
+			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
 			this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.GlowneOkno_KeyPress);
 			this.panel1.ResumeLayout(false);
 			this.ResumeLayout(false);

@@ -26,8 +26,6 @@ namespace ProFak.UI
 			Text = tytul;
 			Zawartosc = zawartosc;
 			kontekst.Dialog = this;
-			KeyPreview = true;
-			AutoValidate = AutoValidate.EnableAllowFocusChange;
 		}
 
 		private void UstawZawartosc(Control zawartosc)

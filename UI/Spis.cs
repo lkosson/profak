@@ -47,10 +47,10 @@ namespace ProFak.UI
 		public static SpisZAkcjami<Faktura, FakturaSprzedazySpis> FakturySprzedazy()
 		{
 			return SpisZAkcjami.Utworz(new FakturaSprzedazySpis(),
-				new DodajRekordAkcja<Faktura, FakturaEdytor>("Nowa faktura sprzedaży", faktura => faktura.Rodzaj = RodzajFaktury.Sprzedaż),
-				new DodajRekordAkcja<Faktura, FakturaEdytor>("Nowa faktura pro forma", faktura => faktura.Rodzaj = RodzajFaktury.Proforma),
+				new DodajRekordAkcja<Faktura, FakturaEdytor>("Nowa faktura sprzedaży", faktura => faktura.Rodzaj = RodzajFaktury.Sprzedaż /*, pelnyEkran: true */),
+				new DodajRekordAkcja<Faktura, FakturaEdytor>("Nowa faktura pro forma", faktura => faktura.Rodzaj = RodzajFaktury.Proforma/*, pelnyEkran: true */),
 				new KorektaFakturyAkcja(),
-				new EdytujRekordAkcja<Faktura, FakturaEdytor>("Edycja faktury"),
+				new EdytujRekordAkcja<Faktura, FakturaEdytor>("Edycja faktury"/*, pelnyEkran: true */),
 				new UsunRekordAkcja<Faktura>()
 			);
 		}
@@ -58,9 +58,9 @@ namespace ProFak.UI
 		public static SpisZAkcjami<Faktura, FakturaZakupuSpis> FakturyZakupu()
 		{
 			return SpisZAkcjami.Utworz(new FakturaZakupuSpis(),
-				new DodajRekordAkcja<Faktura, FakturaEdytor>("Nowa faktura zakupu", faktura => faktura.Rodzaj = RodzajFaktury.Zakup),
+				new DodajRekordAkcja<Faktura, FakturaEdytor>("Nowa faktura zakupu", faktura => faktura.Rodzaj = RodzajFaktury.Zakup/*, pelnyEkran: true */),
 				new KorektaFakturyAkcja(),
-				new EdytujRekordAkcja<Faktura, FakturaEdytor>("Edycja faktury"),
+				new EdytujRekordAkcja<Faktura, FakturaEdytor>("Edycja faktury"/*, pelnyEkran: true */),
 				new UsunRekordAkcja<Faktura>()
 			);
 		}

@@ -71,7 +71,7 @@ namespace ProFak.UI
 			this.tableLayoutPanelZawartosc.RowCount = 2;
 			this.tableLayoutPanelZawartosc.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanelZawartosc.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelZawartosc.Size = new System.Drawing.Size(231, 163);
+			this.tableLayoutPanelZawartosc.Size = new System.Drawing.Size(227, 163);
 			this.tableLayoutPanelZawartosc.TabIndex = 3;
 			// 
 			// flowLayoutPanelPrzyciski
@@ -91,19 +91,22 @@ namespace ProFak.UI
 			this.panelZawartosc.Location = new System.Drawing.Point(3, 3);
 			this.panelZawartosc.MinimumSize = new System.Drawing.Size(200, 100);
 			this.panelZawartosc.Name = "panelZawartosc";
-			this.panelZawartosc.Size = new System.Drawing.Size(225, 122);
+			this.panelZawartosc.Size = new System.Drawing.Size(221, 122);
 			this.panelZawartosc.TabIndex = 1;
 			// 
-			// OknoEdycji
+			// Dialog
 			// 
 			this.AcceptButton = this.buttonZapisz;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
+			this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
 			this.CancelButton = this.buttonAnuluj;
 			this.ClientSize = new System.Drawing.Size(227, 163);
 			this.Controls.Add(this.tableLayoutPanelZawartosc);
-			this.Name = "OknoEdycji";
+			this.KeyPreview = true;
+			this.Name = "Dialog";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "OknoEdycji";
 			this.tableLayoutPanelZawartosc.ResumeLayout(false);
 			this.tableLayoutPanelZawartosc.PerformLayout();

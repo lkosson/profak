@@ -54,6 +54,8 @@ namespace ProFak.DB
 		public List<PozycjaFaktury> Pozycje { get; set; }
 		public List<Wplata> Wplaty { get; set; }
 
+		public string WalutaFmt => Waluta?.Skrot;
+
 		public void PrzeliczRazem(Baza baza)
 		{
 			var pozycje = baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == Id).ToList();

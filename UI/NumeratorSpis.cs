@@ -13,7 +13,7 @@ namespace ProFak.UI
 		{
 			DodajKolumne(nameof(Numerator.Przeznaczenie), "Przeznaczenie", rozciagnij: true);
 			DodajKolumne(nameof(Numerator.Format), "Format");
-			DodajKolumne(nameof(Kontrahent.Id), "Id", wyrownajDoPrawej: true);
+			DodajKolumneId();
 		}
 
 		public override void Przeladuj()
