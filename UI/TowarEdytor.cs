@@ -55,12 +55,16 @@ namespace ProFak.UI
 				.Zainstaluj();
 		}
 
+		protected override void PrzygotujRekord(Towar rekord)
+		{
+			base.PrzygotujRekord(rekord);
+			rekord.StawkaVat = Kontekst.Baza.StawkiVat.Single(stawka => stawka.Id == rekord.StawkaVatId);
+			rekord.JednostkaMiary = Kontekst.Baza.JednostkiMiar.Single(jednostka => jednostka.Id == rekord.JednostkaMiaryId);
+		}
+
 		protected override void RekordGotowy()
 		{
 			base.RekordGotowy();
-
-			Rekord.StawkaVat = Kontekst.Baza.StawkiVat.Single(stawka => stawka.Id == Rekord.StawkaVatId);
-			Rekord.JednostkaMiary = Kontekst.Baza.JednostkiMiar.Single(jednostka => jednostka.Id == Rekord.JednostkaMiaryId);
 			PrzeliczCeny();
 		}
 

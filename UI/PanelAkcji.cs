@@ -70,7 +70,7 @@ namespace ProFak.UI
 			var adapter = (AdapterAkcji)przycisk.Tag;
 			przycisk.Text = adapter.Nazwa;
 			przycisk.Enabled = adapter.CzyDostepna;
-			if (CzyGlownySpis && adapter.CzyDomyslna) FindForm().AcceptButton = przycisk;
+			//if (CzyGlownySpis && adapter.CzyDomyslna) FindForm().AcceptButton = przycisk;
 		}
 
 		private void Przycisk_Click(object sender, EventArgs e)

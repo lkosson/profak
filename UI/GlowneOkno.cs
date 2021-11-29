@@ -76,10 +76,12 @@ namespace ProFak.UI
 			if (e.KeyChar == 27)
 			{
 				var kontrolka = ActiveControl;
-				if (kontrolka.Parent != panelZawartosc) return;
+				while (kontrolka != null && kontrolka.Parent != panelZawartosc) kontrolka = kontrolka.Parent;
+				if (kontrolka == null) return;
 				e.Handled = true;
 				panelZawartosc.Controls.Remove(kontrolka);
 				kontrolka.Dispose();
+				treeViewMenu.Focus();
 			}
 		}
 	}

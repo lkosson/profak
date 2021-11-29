@@ -105,6 +105,12 @@ namespace ProFak.UI
 			base.OnCreateControl();
 		}
 
+		protected override void OnGotFocus(EventArgs e)
+		{
+			base.OnGotFocus(e);
+			Spis.Focus();
+		}
+
 		protected override void ObsluzKlawisz(Keys klawisz, Keys modyfikatory)
 		{
 			base.ObsluzKlawisz(klawisz, modyfikatory);
