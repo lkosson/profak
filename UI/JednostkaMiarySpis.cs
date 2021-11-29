@@ -1,9 +1,11 @@
 ﻿using ProFak.DB;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ProFak.UI
 {
@@ -21,6 +23,12 @@ namespace ProFak.UI
 		public override void Przeladuj()
 		{
 			Rekordy = Kontekst.Baza.JednostkiMiar.ToList();
+		}
+
+		protected override void UstawStylWiersza(JednostkaMiary rekord, string kolumna, DataGridViewCellStyle styl)
+		{
+			base.UstawStylWiersza(rekord, kolumna, styl);
+			if (rekord.CzyDomyslna) styl.Font = new Font(styl.Font, FontStyle.Bold);
 		}
 	}
 }

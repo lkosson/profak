@@ -46,12 +46,13 @@ namespace ProFak.UI
 			this.label6 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
+			this.checkBoxPodmiot = new System.Windows.Forms.CheckBox();
+			this.checkBoxNieaktywny = new System.Windows.Forms.CheckBox();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.textBoxUwagi = new System.Windows.Forms.TextBox();
 			this.textBoxNazwa = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			this.checkBoxPodmiot = new System.Windows.Forms.CheckBox();
 			this.tabControl.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
@@ -68,7 +69,7 @@ namespace ProFak.UI
 			this.tabControl.Location = new System.Drawing.Point(3, 32);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
-			this.tabControl.Size = new System.Drawing.Size(394, 356);
+			this.tabControl.Size = new System.Drawing.Size(394, 385);
 			this.tabControl.TabIndex = 2;
 			// 
 			// tabPage1
@@ -77,7 +78,7 @@ namespace ProFak.UI
 			this.tabPage1.Location = new System.Drawing.Point(4, 24);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(386, 328);
+			this.tabPage1.Size = new System.Drawing.Size(386, 357);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "Dane podstawowe";
 			this.tabPage1.UseVisualStyleBackColor = true;
@@ -102,10 +103,12 @@ namespace ProFak.UI
 			this.tableLayoutPanel1.Controls.Add(this.label7, 0, 5);
 			this.tableLayoutPanel1.Controls.Add(this.label8, 0, 6);
 			this.tableLayoutPanel1.Controls.Add(this.checkBoxPodmiot, 1, 7);
+			this.tableLayoutPanel1.Controls.Add(this.checkBoxNieaktywny, 1, 8);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 9;
+			this.tableLayoutPanel1.RowCount = 10;
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -115,7 +118,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(380, 322);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(380, 351);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// label2
@@ -246,13 +249,33 @@ namespace ProFak.UI
 			this.label8.TabIndex = 2;
 			this.label8.Text = "Rachunek bankowy";
 			// 
+			// checkBoxPodmiot
+			// 
+			this.checkBoxPodmiot.AutoSize = true;
+			this.checkBoxPodmiot.Location = new System.Drawing.Point(146, 290);
+			this.checkBoxPodmiot.Name = "checkBoxPodmiot";
+			this.checkBoxPodmiot.Size = new System.Drawing.Size(114, 19);
+			this.checkBoxPodmiot.TabIndex = 8;
+			this.checkBoxPodmiot.Text = "Podmiot główny";
+			this.checkBoxPodmiot.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxNieaktywny
+			// 
+			this.checkBoxNieaktywny.AutoSize = true;
+			this.checkBoxNieaktywny.Location = new System.Drawing.Point(146, 315);
+			this.checkBoxNieaktywny.Name = "checkBoxNieaktywny";
+			this.checkBoxNieaktywny.Size = new System.Drawing.Size(88, 19);
+			this.checkBoxNieaktywny.TabIndex = 9;
+			this.checkBoxNieaktywny.Text = "Nieaktywny";
+			this.checkBoxNieaktywny.UseVisualStyleBackColor = true;
+			// 
 			// tabPage2
 			// 
 			this.tabPage2.Controls.Add(this.textBoxUwagi);
 			this.tabPage2.Location = new System.Drawing.Point(4, 24);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(386, 312);
+			this.tabPage2.Size = new System.Drawing.Size(386, 369);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "Uwagi";
 			this.tabPage2.UseVisualStyleBackColor = true;
@@ -263,7 +286,7 @@ namespace ProFak.UI
 			this.textBoxUwagi.Location = new System.Drawing.Point(3, 3);
 			this.textBoxUwagi.Multiline = true;
 			this.textBoxUwagi.Name = "textBoxUwagi";
-			this.textBoxUwagi.Size = new System.Drawing.Size(380, 306);
+			this.textBoxUwagi.Size = new System.Drawing.Size(380, 363);
 			this.textBoxUwagi.TabIndex = 0;
 			// 
 			// textBoxNazwa
@@ -299,18 +322,8 @@ namespace ProFak.UI
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(400, 391);
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(400, 420);
 			this.tableLayoutPanel2.TabIndex = 3;
-			// 
-			// checkBoxPodmiot
-			// 
-			this.checkBoxPodmiot.AutoSize = true;
-			this.checkBoxPodmiot.Location = new System.Drawing.Point(146, 290);
-			this.checkBoxPodmiot.Name = "checkBoxPodmiot";
-			this.checkBoxPodmiot.Size = new System.Drawing.Size(114, 19);
-			this.checkBoxPodmiot.TabIndex = 8;
-			this.checkBoxPodmiot.Text = "Podmiot główny";
-			this.checkBoxPodmiot.UseVisualStyleBackColor = true;
 			// 
 			// KontrahentEdytor
 			// 
@@ -319,7 +332,7 @@ namespace ProFak.UI
 			this.Controls.Add(this.tableLayoutPanel2);
 			this.MinimumSize = new System.Drawing.Size(400, 375);
 			this.Name = "KontrahentEdytor";
-			this.Size = new System.Drawing.Size(400, 391);
+			this.Size = new System.Drawing.Size(400, 420);
 			this.tabControl.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
 			this.tableLayoutPanel1.ResumeLayout(false);
@@ -356,5 +369,6 @@ namespace ProFak.UI
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.TextBox textBoxUwagi;
 		private System.Windows.Forms.CheckBox checkBoxPodmiot;
+		private System.Windows.Forms.CheckBox checkBoxNieaktywny;
 	}
 }

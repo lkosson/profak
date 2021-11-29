@@ -2,9 +2,11 @@
 using ProFak.DB;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ProFak.UI
 {
@@ -28,6 +30,12 @@ namespace ProFak.UI
 			IQueryable<PozycjaFaktury> q = Kontekst.Baza.PozycjeFaktur;
 			if (FakturaRef.IsNotNull) q = q.Where(pozycja => pozycja.FakturaId == FakturaRef.Id);
 			Rekordy = q.ToList();
+		}
+
+		protected override void UstawStylWiersza(PozycjaFaktury rekord, string kolumna, DataGridViewCellStyle styl)
+		{
+			base.UstawStylWiersza(rekord, kolumna, styl);
+			if (rekord.Ilosc < 0) styl.ForeColor = Color.LightGray;
 		}
 	}
 }

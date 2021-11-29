@@ -113,5 +113,16 @@ namespace ProFak.UI
 		public void DodajKolumneId() => DodajKolumne("Id", "Id", wyrownajDoPrawej: true, szerokosc: 40);
 
 		public abstract void Przeladuj();
+
+		protected override void OnCellPainting(DataGridViewCellPaintingEventArgs e)
+		{
+			base.OnCellPainting(e);
+			if (e.RowIndex == -1) e.CellStyle.SelectionBackColor = System.Drawing.SystemColors.Control;
+			else UstawStylWiersza((T)Rows[e.RowIndex].DataBoundItem, Columns[e.ColumnIndex].DataPropertyName, e.CellStyle);
+		}
+
+		protected virtual void UstawStylWiersza(T rekord, string kolumna, DataGridViewCellStyle styl)
+		{
+		}
 	}
 }

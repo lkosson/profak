@@ -1,9 +1,11 @@
 ﻿using ProFak.DB;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ProFak.UI
 {
@@ -21,6 +23,15 @@ namespace ProFak.UI
 		public override void Przeladuj()
 		{
 			Rekordy = Kontekst.Baza.Towary.ToList();
+		}
+
+		protected override void UstawStylWiersza(Towar rekord, string kolumna, DataGridViewCellStyle styl)
+		{
+			base.UstawStylWiersza(rekord, kolumna, styl);
+			if (rekord.CzyArchiwalny) styl.ForeColor = Color.LightGray;
+			else if (rekord.Rodzaj == RodzajTowaru.Usługa) styl.ForeColor = Color.DarkBlue;
+			if (rekord.CzyWedlugCenBrutto && kolumna == nameof(Towar.CenaBrutto)) styl.Font = new Font(styl.Font, FontStyle.Bold);
+			if (!rekord.CzyWedlugCenBrutto && kolumna == nameof(Towar.CenaNetto)) styl.Font = new Font(styl.Font, FontStyle.Bold);
 		}
 	}
 }

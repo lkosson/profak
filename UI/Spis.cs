@@ -22,6 +22,7 @@ namespace ProFak.UI
 			ShowCellToolTips = true;
 			ReadOnly = true;
 			SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+			EnableHeadersVisualStyles = false;
 			TabIndex = 50;
 		}
 
