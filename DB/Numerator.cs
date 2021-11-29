@@ -21,7 +21,7 @@ namespace ProFak.DB
 		{
 			var numerator = baza.Numeratory.FirstOrDefault(numerator => numerator.Przeznaczenie == przeznaczenie);
 			if (numerator == null) throw new ApplicationException($"Brak definicji numeratora \"{przeznaczenie}\".");
-			var regexFragment = new Regex(@"\[(?<nazwa>\w+)(:(?<format>[^\]]))?\]");
+			var regexFragment = new Regex(@"\[(?<nazwa>\w+)(:(?<format>[^\]]+))?\]");
 			var szablon = regexFragment.Replace(numerator.Format, fragment =>
 			{
 				var nazwa = fragment.Groups["nazwa"]?.Value;

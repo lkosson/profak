@@ -18,8 +18,8 @@ namespace ProFak.UI
 
 		protected override void ZapiszRekord(Kontekst kontekst, Faktura rekord)
 		{
+			rekord.Numer = Numerator.NadajNumer(kontekst.Baza, PrzeznaczenieNumeratora.Faktura, rekord.Podstawienie);
 			base.ZapiszRekord(kontekst, rekord);
-			rekord.Numer = Numerator.NadajNumer(kontekst.Baza, PrzeznaczenieNumeratora.Faktura, rekord.Podstawienie, false);
 		}
 	}
 }

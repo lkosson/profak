@@ -79,12 +79,12 @@ namespace ProFak.UI
 		{
 			var dostepneWartosci = pobierzWartosci();
 			comboBox.BeginUpdate();
-			//comboBox.Items.Clear();
 			var pozycje = new List<PozycjaListyRekordu<T>>();
 			foreach (var wartosc in dostepneWartosci)
 			{
-				var pozycja = new PozycjaListyRekordu<T> { Wartosc = wartosc, Opis = wyswietlanaWartosc(wartosc) };
-				//comboBox.Items.Add(pozycja);
+				var opis = wyswietlanaWartosc(wartosc);
+				if (String.IsNullOrEmpty(opis)) continue;
+				var pozycja = new PozycjaListyRekordu<T> { Wartosc = wartosc, Opis = opis };
 				pozycje.Add(pozycja);
 			}
 			comboBox.DataSource = pozycje;

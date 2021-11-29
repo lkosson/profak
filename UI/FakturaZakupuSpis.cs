@@ -2,9 +2,11 @@
 using ProFak.DB;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ProFak.UI
 {
@@ -30,6 +32,13 @@ namespace ProFak.UI
 				.Where(faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu)
 				.Include(faktura => faktura.Waluta)
 				.ToList();
+		}
+
+		protected override void UstawStylWiersza(Faktura rekord, string kolumna, DataGridViewCellStyle styl)
+		{
+			base.UstawStylWiersza(rekord, kolumna, styl);
+			if (rekord.FakturaKorygujacaRef.IsNotNull) styl.ForeColor = Color.Gray;
+			else if (rekord.Rodzaj == RodzajFaktury.KorektaZakupu) styl.ForeColor = Color.DarkBlue;
 		}
 	}
 }

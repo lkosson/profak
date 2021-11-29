@@ -17,7 +17,7 @@ namespace ProFak.UI
 		public override void Uruchom(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy)
 		{
 			using var nowyKontekst = new Kontekst(kontekst);
-			if (MessageBox.Show("Czy na pewno chcesz usunąć zaznaczoną pozycję?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+			if (MessageBox.Show("Czy na pewno chcesz usunąć zaznaczoną pozycję?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
 			using var transakcja = nowyKontekst.Transakcja();
 			nowyKontekst.Baza.Usun(zaznaczoneRekordy);
 			transakcja.Zatwierdz();
