@@ -11,25 +11,47 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	class SpisZAkcjami : TableLayoutPanel
+	class SpisZAkcjami
+	{
+		public static SpisZAkcjami<TRekord, TSpis> Utworz<TRekord, TSpis>(TSpis spis, params AkcjaNaSpisie<TRekord>[] akcje)
+			where TRekord : Rekord<TRekord>
+			where TSpis : Spis<TRekord>
+		{
+			var okno = new SpisZAkcjami<TRekord, TSpis>(spis);
+			okno.Akcje.AddRange(akcje);
+			return okno;
+		}
+	}
+
+	class SpisZAkcjami<TRekord> : TableLayoutPanel
+		where TRekord : Rekord<TRekord>
 	{
 		protected readonly PanelAkcji panelAkcji;
 		protected readonly Wyszukiwarka wyszukiwarka;
-		protected AdapterAkcji domyslnaAkcja;
+		protected AdapterAkcji domyslnaAkcja; 
+		protected readonly List<AkcjaNaSpisie<TRekord>> akcje;
 
-		public SpisZAkcjami(Spis spis)
+		public Spis<TRekord> Spis { get; }
+		public List<AkcjaNaSpisie<TRekord>> Akcje => akcje;
+
+		public SpisZAkcjami(Spis<TRekord> spis)
 		{
+			akcje = new List<AkcjaNaSpisie<TRekord>>();
+			panelAkcji = new PanelAkcji();
+			wyszukiwarka = new Wyszukiwarka();
+
+			Spis = spis;
+
 			Dock = DockStyle.Fill;
 
 			ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
 			ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
 			RowStyles.Add(new RowStyle(SizeType.Percent, 100));
 
-			panelAkcji = new PanelAkcji();
 			Controls.Add(panelAkcji, 1, 0);
 
-			wyszukiwarka = new Wyszukiwarka();
 			panelAkcji.DodajKontrolke(wyszukiwarka);
+			wyszukiwarka.TextChanged += wyszukiwarka_TextChanged;
 
 			spis.Dock = DockStyle.Fill;
 			spis.SelectionChanged += spis_SelectionChanged;
@@ -37,6 +59,11 @@ namespace ProFak.UI
 			spis.KeyDown += spis_KeyDown;
 			Controls.Add(spis, 0, 0);
 			MinimumSize = new Size(panelAkcji.MinimumSize.Width + spis.MinimumSize.Width, panelAkcji.MinimumSize.Height + spis.MinimumSize.Height);
+		}
+
+		private void wyszukiwarka_TextChanged(object sender, EventArgs e)
+		{
+			Spis.Filtr = wyszukiwarka.Text;
 		}
 
 		private void spis_KeyDown(object sender, KeyEventArgs e)
@@ -56,35 +83,15 @@ namespace ProFak.UI
 
 		protected virtual void ObsluzKlawisz(Keys klawisz, Keys modyfikatory)
 		{
-			if (klawisz == Keys.F3 || (klawisz == Keys.F && modyfikatory == Keys.Control))
-			{
-				wyszukiwarka.Focus();
-			}
+			if (klawisz == Keys.F3 || (klawisz == Keys.F && modyfikatory == Keys.Control)) wyszukiwarka.Focus();
+			else if (klawisz == Keys.F5) Spis.PrzeladujBezpiecznie();
+			else panelAkcji.ObsluzKlawisz(klawisz, modyfikatory);
 		}
 
-		public static SpisZAkcjami<TRekord, TSpis> Utworz<TRekord, TSpis>(TSpis spis, params AkcjaNaSpisie<TRekord>[] akcje)
-			where TRekord : Rekord<TRekord>
-			where TSpis : Spis<TRekord>
+		protected override void OnGotFocus(EventArgs e)
 		{
-			var okno = new SpisZAkcjami<TRekord, TSpis>(spis);
-			okno.Akcje.AddRange(akcje);
-			return okno;
-		}
-	}
-
-	class SpisZAkcjami<TRekord> : SpisZAkcjami
-		where TRekord : Rekord<TRekord>
-	{
-		protected readonly List<AkcjaNaSpisie<TRekord>> akcje;
-
-		public Spis<TRekord> Spis { get; }
-		public List<AkcjaNaSpisie<TRekord>> Akcje => akcje;
-
-		public SpisZAkcjami(Spis<TRekord> spis)
-			: base(spis)
-		{
-			Spis = spis;
-			akcje = new List<AkcjaNaSpisie<TRekord>>();
+			base.OnGotFocus(e);
+			Spis.Focus();
 		}
 	}
 
@@ -111,19 +118,6 @@ namespace ProFak.UI
 			}
 			panelAkcji.AktualizujUklad();
 			base.OnCreateControl();
-		}
-
-		protected override void OnGotFocus(EventArgs e)
-		{
-			base.OnGotFocus(e);
-			Spis.Focus();
-		}
-
-		protected override void ObsluzKlawisz(Keys klawisz, Keys modyfikatory)
-		{
-			base.ObsluzKlawisz(klawisz, modyfikatory);
-			if (klawisz == Keys.F5) Spis.PrzeladujBezpiecznie();
-			panelAkcji.ObsluzKlawisz(klawisz, modyfikatory);
 		}
 	}
 }

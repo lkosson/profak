@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,6 +15,8 @@ namespace ProFak.UI
 	{
 		private readonly Container container;
 		private readonly BindingSource bindingSource;
+		private IEnumerable<T> oryginalneRekordy;
+		private string filtr;
 
 		public Kontekst Kontekst { get; set; }
 		public IEnumerable<T> WybraneRekordy
@@ -29,12 +32,14 @@ namespace ProFak.UI
 		public IEnumerable<T> Rekordy
 		{
 			get => bindingSource.DataSource as IEnumerable<T>;
-			set { bindingSource.DataSource = value; if (RekordyZmienione != null) RekordyZmienione(); }
+			set { oryginalneRekordy = value; var rekordy = Filtruj(value); bindingSource.DataSource = rekordy.ToList(); if (RekordyZmienione != null) RekordyZmienione(); }
 		}
 
 		public event Action RekordyZmienione;
 
 		public Ref<T> RekordPoczatkowy { get; set; }
+
+		public string Filtr { get => filtr; set { filtr = value; Rekordy = oryginalneRekordy; } }
 
 		public Spis()
 		{
@@ -77,18 +82,7 @@ namespace ProFak.UI
 				MessageBox.Show($"Nie udało się załadować danych do spisu.\n\n{exc}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
-		/*
-		protected override void OnKeyDown(KeyEventArgs e)
-		{
-			if (e.KeyCode == Keys.Enter) e.Handled = true;
-			else if (e.KeyCode == Keys.F5)
-			{
-				PrzeladujBezpiecznie();
-				e.Handled = true;
-			}
-			base.OnKeyDown(e);
-		}
-		*/
+
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing) container.Dispose();
@@ -123,6 +117,22 @@ namespace ProFak.UI
 
 		protected virtual void UstawStylWiersza(T rekord, string kolumna, DataGridViewCellStyle styl)
 		{
+		}
+
+		private IEnumerable<T> Filtruj(IEnumerable<T> rekordy)
+		{
+			if (String.IsNullOrWhiteSpace(Filtr)) return rekordy;
+			var fragmenty = Regex.Matches(Filtr, @"(?:[^\s""]+|""[^""]*"")+");
+			List<Func<T, bool>> dopasowania = new List<Func<T, bool>>();
+			foreach (Match fragment in fragmenty)
+			{
+				if (!fragment.Success) continue;
+				var fraza = fragment.Value;
+				Func<T, bool> dopasowanieFragmentu = rekord => rekord.CzyPasuje(fraza);
+				dopasowania.Add(dopasowanieFragmentu);
+			}
+			var dopasowanie = (Func<T, bool>)Delegate.Combine(dopasowania.ToArray());
+			return rekordy.Where(dopasowanie);
 		}
 	}
 }

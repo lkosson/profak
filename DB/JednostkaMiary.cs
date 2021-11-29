@@ -14,5 +14,12 @@ namespace ProFak.DB
 		public int LiczbaMiescPoPrzecinku { get; set; }
 
 		public string CzyDomyslnaFmt => CzyDomyslna ? "Tak" : "Nie";
+
+		public override bool CzyPasuje(string fraza)
+			=> base.CzyPasuje(fraza)
+			|| CzyPasuje(Skrot, fraza)
+			|| CzyPasuje(Nazwa, fraza)
+			|| CzyPasuje(LiczbaMiescPoPrzecinku, fraza)
+			|| CzyPasuje(CzyDomyslna ? "Domyślna" : "", fraza);
 	}
 }

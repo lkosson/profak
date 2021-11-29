@@ -19,5 +19,19 @@ namespace ProFak.DB
 		public string Uwagi { get; set; } = "";
 		public bool CzyArchiwalny { get; set; }
 		public bool CzyPodmiot { get; set; }
+
+		public override bool CzyPasuje(string fraza)
+			=> base.CzyPasuje(fraza)
+			|| CzyPasuje(Nazwa, fraza)
+			|| CzyPasuje(PelnaNazwa, fraza)
+			|| CzyPasuje(NIP, fraza)
+			|| CzyPasuje(AdresRejestrowy, fraza)
+			|| CzyPasuje(AdresKorespondencyjny, fraza)
+			|| CzyPasuje(RachunekBankowy, fraza)
+			|| CzyPasuje(Telefon, fraza)
+			|| CzyPasuje(EMail, fraza)
+			|| CzyPasuje(Uwagi, fraza)
+			|| CzyPasuje(CzyArchiwalny ? "Archiwalny" : "", fraza)
+			|| CzyPasuje(CzyPodmiot ? "Podmiot" : "", fraza);
 	}
 }

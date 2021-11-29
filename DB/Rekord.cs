@@ -19,8 +19,6 @@ namespace ProFak.DB
 		public static bool operator ==(Rekord<T> rekord1, Rekord<T> rekord2) => rekord1 is null ? rekord2 is null : rekord2 is not null && rekord1.Id == rekord2.Id;
 		public static bool operator !=(Rekord<T> rekord1, Rekord<T> rekord2) => !(rekord1 == rekord2);
 
-		public T Kopia() => (T)MemberwiseClone();
-
 		public TypeCode GetTypeCode() => TypeCode.Object;
 		public bool ToBoolean(IFormatProvider provider) => throw new NotSupportedException();
 		public byte ToByte(IFormatProvider provider) => throw new NotSupportedException();
@@ -42,5 +40,13 @@ namespace ProFak.DB
 		public virtual void WypelnijDomyslnePola(Baza baza)
 		{
 		}
+
+		public virtual bool CzyPasuje(string fraza) => CzyPasuje(Id, fraza);
+
+		protected static bool CzyPasuje(string pole, string fraza) => pole != null && pole.Contains(fraza, StringComparison.CurrentCultureIgnoreCase);
+		protected static bool CzyPasuje(int pole, string fraza) => Int32.TryParse(fraza, out var wartosc) && pole == wartosc;
+		protected static bool CzyPasuje(decimal pole, string fraza) => Decimal.TryParse(fraza, out var wartosc) && pole == wartosc;
+		protected static bool CzyPasuje(DateTime pole, string fraza) => CzyPasuje(pole.ToString("yyyy-MM-dd"), fraza);
+		protected static bool CzyPasuje(object pole, string fraza) => pole != null && CzyPasuje(pole.ToString(), fraza);
 	}
 }

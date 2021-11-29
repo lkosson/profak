@@ -30,6 +30,19 @@ namespace ProFak.DB
 
 		public decimal Cena => CzyWedlugCenBrutto ? CenaBrutto : CenaNetto;
 
+		public override bool CzyPasuje(string fraza)
+			=> base.CzyPasuje(fraza)
+			|| CzyPasuje(Opis, fraza)
+			|| CzyPasuje(CenaNetto, fraza)
+			|| CzyPasuje(CenaVat, fraza)
+			|| CzyPasuje(CenaBrutto, fraza)
+			|| CzyPasuje(Ilosc, fraza)
+			|| CzyPasuje(WartoscNetto, fraza)
+			|| CzyPasuje(WartoscVat, fraza)
+			|| CzyPasuje(WartoscBrutto, fraza)
+			|| CzyPasuje(CzyWartosciReczne ? "Ręczne" : "", fraza)
+			|| CzyPasuje(CzyWedlugCenBrutto ? "Brutto" : "Netto", fraza);
+
 		public void PrzeliczCeny(Baza baza)
 		{
 			if (CzyWartosciReczne) return;

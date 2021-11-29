@@ -23,6 +23,15 @@ namespace ProFak.DB
 
 		public StawkaVat StawkaVat { get; set; }
 		public JednostkaMiary JednostkaMiary { get; set; }
+
+		public override bool CzyPasuje(string fraza)
+			=> base.CzyPasuje(fraza)
+			|| CzyPasuje(Nazwa, fraza)
+			|| CzyPasuje(Rodzaj, fraza)
+			|| CzyPasuje(CenaNetto, fraza)
+			|| CzyPasuje(CenaBrutto, fraza)
+			|| CzyPasuje(CzyWedlugCenBrutto ? "Brutto" : "Netto", fraza)
+			|| CzyPasuje(CzyArchiwalny ? "Archiwalny" : "", fraza);
 	}
 
 	enum RodzajTowaru

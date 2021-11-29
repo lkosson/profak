@@ -15,5 +15,10 @@ namespace ProFak.DB
 		public Ref<Faktura> FakturaRef { get => FakturaId; set => FakturaId = value; }
 
 		public Faktura Faktura { get; set; }
+
+		public override bool CzyPasuje(string fraza)
+			=> base.CzyPasuje(fraza)
+			|| CzyPasuje(Data, fraza)
+			|| CzyPasuje(Kwota, fraza);
 	}
 }

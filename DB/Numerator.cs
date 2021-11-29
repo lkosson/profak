@@ -17,6 +17,11 @@ namespace ProFak.DB
 
 		public List<StanNumeratora> Stany { get; set; }
 
+		public override bool CzyPasuje(string fraza)
+			=> base.CzyPasuje(fraza)
+			|| CzyPasuje(Przeznaczenie, fraza)
+			|| CzyPasuje(Format, fraza);
+
 		public static string NadajNumer(Baza baza, PrzeznaczenieNumeratora przeznaczenie, Func<string, IFormattable> podstawienie, bool zwiekszLicznik = true)
 		{
 			var numerator = baza.Numeratory.FirstOrDefault(numerator => numerator.Przeznaczenie == przeznaczenie);

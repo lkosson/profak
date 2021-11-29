@@ -75,6 +75,28 @@ namespace ProFak.DB
 			if (String.Equals(pole, "data", StringComparison.CurrentCultureIgnoreCase)) return DataWystawienia;
 			return null;
 		}
+
+		public override bool CzyPasuje(string fraza)
+			=> base.CzyPasuje(fraza)
+			|| CzyPasuje(Numer, fraza)
+			|| CzyPasuje(DataWystawienia, fraza)
+			|| CzyPasuje(DataSprzedazy, fraza)
+			|| CzyPasuje(DataWprowadzenia, fraza)
+			|| CzyPasuje(TerminPlatnosci, fraza)
+			|| CzyPasuje(NIPSprzedawcy, fraza)
+			|| CzyPasuje(NazwaSprzedawcy, fraza)
+			|| CzyPasuje(NIPNabywcy, fraza)
+			|| CzyPasuje(NazwaNabywcy, fraza)
+			|| CzyPasuje(DaneNabywcy, fraza)
+			|| CzyPasuje(UwagiPubliczne, fraza)
+			|| CzyPasuje(UwagiWewnetrzne, fraza)
+			|| CzyPasuje(RazemNetto, fraza)
+			|| CzyPasuje(RazemVat, fraza)
+			|| CzyPasuje(RazemBrutto, fraza)
+			|| CzyPasuje(KursWaluty, fraza)
+			|| CzyPasuje(OpisSposobuPlatnosci, fraza)
+			|| CzyPasuje(Rodzaj, fraza)
+			|| CzyPasuje(CzyWartosciReczne ? "Ręczne" : "", fraza);
 	}
 
 	enum RodzajFaktury

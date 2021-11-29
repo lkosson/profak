@@ -13,5 +13,11 @@ namespace ProFak.DB
 		public bool CzyDomyslna { get; set; }
 
 		public string CzyDomyslnaFmt => CzyDomyslna ? "Tak" : "Nie";
+
+		public override bool CzyPasuje(string fraza)
+			=> base.CzyPasuje(fraza)
+			|| CzyPasuje(Skrot, fraza)
+			|| CzyPasuje(Wartosc, fraza)
+			|| CzyPasuje(CzyDomyslna ? "Domyślna" : "", fraza);
 	}
 }
