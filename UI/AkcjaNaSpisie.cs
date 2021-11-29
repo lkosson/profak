@@ -16,6 +16,6 @@ namespace ProFak.UI
 		public abstract void Uruchom(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy);
 		public virtual bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => false;
 
-		public AdapterAkcji UtworzAdapter(ISpis<TRekord> spis) => new AdapterAkcji<TRekord>(this, spis);
+		public AdapterAkcji UtworzAdapter(Spis<TRekord> spis) => new AdapterAkcji<TRekord>(this, spis);
 	}
 }

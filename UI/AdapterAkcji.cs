@@ -15,20 +15,21 @@ namespace ProFak.UI
 		public abstract bool CzyDomyslna { get; }
 
 		public abstract void Uruchom();
-		public abstract void ObsluzKlawisz(Keys klawisz, Keys modyfikatory);
+		public abstract bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory);
 	}
 
 	class AdapterAkcji<TRekord> : AdapterAkcji
 		where TRekord : Rekord<TRekord>
 	{
 		private readonly AkcjaNaSpisie<TRekord> akcja;
-		private readonly ISpis<TRekord> spis;
+		private readonly Spis<TRekord> spis;
 
 		public override string Nazwa => akcja.Nazwa;
 		public override bool CzyDostepna => akcja.CzyDostepnaDlaRekordow(spis.WybraneRekordy);
 		public override bool CzyDomyslna => akcja.CzyKlawiszSkrotu(Keys.Enter, Keys.None);
+		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => akcja.CzyKlawiszSkrotu(klawisz, modyfikatory);
 
-		public AdapterAkcji(AkcjaNaSpisie<TRekord> akcja, ISpis<TRekord> spis)
+		public AdapterAkcji(AkcjaNaSpisie<TRekord> akcja, Spis<TRekord> spis)
 		{
 			this.akcja = akcja;
 			this.spis = spis;
@@ -38,11 +39,9 @@ namespace ProFak.UI
 		{
 			try
 			{
+				if (!CzyDostepna) return;
 				akcja.Uruchom(spis.Kontekst, spis.WybraneRekordy);
-				if (spis.Kontekst.Dialog == null || spis.Kontekst.Dialog.DialogResult == System.Windows.Forms.DialogResult.None)
-				{
-					spis.Przeladuj();
-				}
+				if (spis.Kontekst.Dialog != null && spis.Kontekst.Dialog.DialogResult != DialogResult.None) return;
 			}
 			catch (ApplicationException ae) when (ae.GetType() == typeof(ApplicationException))
 			{
@@ -52,11 +51,8 @@ namespace ProFak.UI
 			{
 				MessageBox.Show($"Wystąpił nieobsłużony błąd. Uruchom ponownie program i spróbuj ponownie wykonać operację.\n\n{exc}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
-		}
 
-		public override void ObsluzKlawisz(Keys klawisz, Keys modyfikatory)
-		{
-			if (akcja.CzyKlawiszSkrotu(klawisz, modyfikatory)) Uruchom();
+			spis.PrzeladujBezpiecznie();
 		}
 	}
 }

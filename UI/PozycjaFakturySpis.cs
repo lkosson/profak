@@ -25,7 +25,7 @@ namespace ProFak.UI
 			DodajKolumneId();
 		}
 
-		public override void Przeladuj()
+		protected override void Przeladuj()
 		{
 			IQueryable<PozycjaFaktury> q = Kontekst.Baza.PozycjeFaktur;
 			if (FakturaRef.IsNotNull) q = q.Where(pozycja => pozycja.FakturaId == FakturaRef.Id);

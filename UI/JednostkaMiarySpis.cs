@@ -20,7 +20,7 @@ namespace ProFak.UI
 			DodajKolumneId();
 		}
 
-		public override void Przeladuj()
+		protected override void Przeladuj()
 		{
 			Rekordy = Kontekst.Baza.JednostkiMiar.ToList();
 		}

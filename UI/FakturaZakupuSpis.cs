@@ -26,7 +26,7 @@ namespace ProFak.UI
 			DodajKolumneId();
 		}
 
-		public override void Przeladuj()
+		protected override void Przeladuj()
 		{
 			Rekordy = Kontekst.Baza.Faktury
 				.Where(faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu)

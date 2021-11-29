@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	abstract class Spis<T> : Spis, ISpis<T>
+	abstract class Spis<T> : Spis
 		where T : Rekord<T>
 	{
 		private readonly Container container;
@@ -66,7 +66,7 @@ namespace ProFak.UI
 			bindingSource.ResetBindings(true);
 		}
 
-		private void PrzeladujBezpiecznie()
+		public void PrzeladujBezpiecznie()
 		{
 			try
 			{
@@ -77,7 +77,7 @@ namespace ProFak.UI
 				MessageBox.Show($"Nie udało się załadować danych do spisu.\n\n{exc}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
-
+		/*
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Enter) e.Handled = true;
@@ -88,7 +88,7 @@ namespace ProFak.UI
 			}
 			base.OnKeyDown(e);
 		}
-
+		*/
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing) container.Dispose();
@@ -112,7 +112,7 @@ namespace ProFak.UI
 		public void DodajKolumneKwota(string wlasciwosc, string naglowek) => DodajKolumne(wlasciwosc, naglowek, wyrownajDoPrawej: true, format: "#,##0.00", szerokosc: 80);
 		public void DodajKolumneId() => DodajKolumne("Id", "Id", wyrownajDoPrawej: true, szerokosc: 40);
 
-		public abstract void Przeladuj();
+		protected abstract void Przeladuj();
 
 		protected override void OnCellPainting(DataGridViewCellPaintingEventArgs e)
 		{

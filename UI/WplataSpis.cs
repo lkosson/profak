@@ -18,7 +18,7 @@ namespace ProFak.UI
 			DodajKolumneId();
 		}
 
-		public override void Przeladuj()
+		protected override void Przeladuj()
 		{
 			IQueryable<Wplata> q = Kontekst.Baza.Wplaty;
 			if (FakturaRef.IsNotNull) q = q.Where(wplata => wplata.FakturaId == FakturaRef.Id);

@@ -18,7 +18,7 @@ namespace ProFak.UI
 			DodajKolumneId();
 		}
 
-		public override void Przeladuj()
+		protected override void Przeladuj()
 		{
 			IQueryable<StanNumeratora> q = Kontekst.Baza.StanyNumeratorow;
 			if (NumeratorRef.IsNotNull) q = q.Where(stanNumeratora => stanNumeratora.NumeratorId == NumeratorRef.Id);

@@ -14,6 +14,7 @@ namespace ProFak.UI
 	class SpisZAkcjami : TableLayoutPanel
 	{
 		protected readonly PanelAkcji panelAkcji;
+		protected readonly Wyszukiwarka wyszukiwarka;
 		protected AdapterAkcji domyslnaAkcja;
 
 		public SpisZAkcjami(Spis spis)
@@ -26,6 +27,9 @@ namespace ProFak.UI
 
 			panelAkcji = new PanelAkcji();
 			Controls.Add(panelAkcji, 1, 0);
+
+			wyszukiwarka = new Wyszukiwarka();
+			panelAkcji.DodajKontrolke(wyszukiwarka);
 
 			spis.Dock = DockStyle.Fill;
 			spis.SelectionChanged += spis_SelectionChanged;
@@ -52,6 +56,10 @@ namespace ProFak.UI
 
 		protected virtual void ObsluzKlawisz(Keys klawisz, Keys modyfikatory)
 		{
+			if (klawisz == Keys.F3 || (klawisz == Keys.F && modyfikatory == Keys.Control))
+			{
+				wyszukiwarka.Focus();
+			}
 		}
 
 		public static SpisZAkcjami<TRekord, TSpis> Utworz<TRekord, TSpis>(TSpis spis, params AkcjaNaSpisie<TRekord>[] akcje)
@@ -98,7 +106,7 @@ namespace ProFak.UI
 			foreach (var akcja in akcje)
 			{
 				var adapter = akcja.UtworzAdapter(Spis);
-				if (adapter.CzyDomyslna) domyslnaAkcja = adapter;
+				if (adapter.CzyDomyslna && domyslnaAkcja == null) domyslnaAkcja = adapter;
 				panelAkcji.DodajAkcje(adapter);
 			}
 			panelAkcji.AktualizujUklad();
@@ -114,6 +122,7 @@ namespace ProFak.UI
 		protected override void ObsluzKlawisz(Keys klawisz, Keys modyfikatory)
 		{
 			base.ObsluzKlawisz(klawisz, modyfikatory);
+			if (klawisz == Keys.F5) Spis.PrzeladujBezpiecznie();
 			panelAkcji.ObsluzKlawisz(klawisz, modyfikatory);
 		}
 	}

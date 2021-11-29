@@ -34,7 +34,7 @@ namespace ProFak.UI
 			using var transakcja = nowyKontekst.Transakcja();
 			using var spis = generatorSpisu();
 			using var dialog = new Dialog(tytul, spis, nowyKontekst);
-			spis.Akcje.Add(wybor);
+			spis.Akcje.Insert(0, wybor);
 			spis.Spis.Kontekst = nowyKontekst;
 			spis.Spis.RekordPoczatkowy = biezacaWartosc;
 			dialog.CzyPrzyciskiWidoczne = false;
