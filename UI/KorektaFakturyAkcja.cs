@@ -12,7 +12,7 @@ namespace ProFak.UI
 	class KorektaFakturyAkcja : DodajRekordAkcja<Faktura, FakturaEdytor>
 	{
 		public KorektaFakturyAkcja()
-			: base("Nowa korekta faktury", pelnyEkran: true)
+			: base("Nowa korekta faktury" /*, pelnyEkran: true */)
 		{
 		}
 

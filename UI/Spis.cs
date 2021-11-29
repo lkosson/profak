@@ -47,8 +47,8 @@ namespace ProFak.UI
 		public static SpisZAkcjami<Faktura, FakturaSprzedazySpis> FakturySprzedazy()
 		{
 			return SpisZAkcjami.Utworz(new FakturaSprzedazySpis(),
-				new DodajRekordAkcja<Faktura, FakturaEdytor>("Nowa faktura sprzedaży", faktura => faktura.Rodzaj = RodzajFaktury.Sprzedaż /*, pelnyEkran: true */),
-				new DodajRekordAkcja<Faktura, FakturaEdytor>("Nowa faktura pro forma", faktura => faktura.Rodzaj = RodzajFaktury.Proforma/*, pelnyEkran: true */),
+				new FakturaSprzedazyAkcja(),
+				new FakturaProformaAkcja(),
 				new KorektaFakturyAkcja(),
 				new EdytujRekordAkcja<Faktura, FakturaEdytor>("Edycja faktury"/*, pelnyEkran: true */),
 				new UsunRekordAkcja<Faktura>()

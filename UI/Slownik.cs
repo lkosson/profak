@@ -38,6 +38,7 @@ namespace ProFak.UI
 			comboBox.HandleCreated += ComboBox_HandleCreated;
 			comboBox.KeyDown += ComboBox_KeyDown;
 			if (button != null) button.Click += button_Click;
+			gotowy = comboBox.IsHandleCreated;
 		}
 
 		private void ComboBox_KeyDown(object sender, KeyEventArgs e)

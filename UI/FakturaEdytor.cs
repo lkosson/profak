@@ -81,7 +81,7 @@ namespace ProFak.UI
 				Kontekst, comboBoxSposobPlatnosci, buttonSposobPlatnosci,
 				Kontekst.Baza.SposobyPlatnosci.ToList,
 				sposobPlatnosci => sposobPlatnosci.Nazwa,
-				sposobPlatnosci => { UstawSposobPlatnosci(Rekord, sposobPlatnosci); kontroler.AktualizujKontrolki(); },
+				sposobPlatnosci => { if (UstawSposobPlatnosci(Rekord, sposobPlatnosci)) kontroler.AktualizujKontrolki(); },
 				Spis.SposobyPlatnosci)
 				.Zainstaluj();
 
@@ -89,7 +89,7 @@ namespace ProFak.UI
 				Kontekst, comboBoxNIPNabywcy, buttonNabywca,
 				Kontekst.Baza.Kontrahenci.ToList,
 				kontrahent => kontrahent.NIP,
-				kontrahent => { UstawNabywce(Rekord, kontrahent); kontroler.AktualizujKontrolki(); },
+				kontrahent => { if (UstawNabywce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
 				Spis.Kontrahenci)
 				.Zainstaluj();
 
@@ -97,7 +97,7 @@ namespace ProFak.UI
 				Kontekst, comboBoxNazwaNabywcy, null,
 				Kontekst.Baza.Kontrahenci.ToList,
 				kontrahent => kontrahent.PelnaNazwa,
-				kontrahent => { UstawNabywce(Rekord, kontrahent); kontroler.AktualizujKontrolki(); },
+				kontrahent => { if (UstawNabywce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
 				Spis.Kontrahenci)
 				.Zainstaluj();
 
@@ -105,7 +105,7 @@ namespace ProFak.UI
 				Kontekst, comboBoxNIPSprzedawcy, buttonSprzedawca,
 				Kontekst.Baza.Kontrahenci.ToList,
 				kontrahent => kontrahent.NIP,
-				kontrahent => { UstawSprzedawce(Rekord, kontrahent); kontroler.AktualizujKontrolki(); },
+				kontrahent => { if (UstawSprzedawce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
 				Spis.Kontrahenci)
 				.Zainstaluj();
 
@@ -113,36 +113,39 @@ namespace ProFak.UI
 				Kontekst, comboBoxNazwaSprzedawcy, null,
 				Kontekst.Baza.Kontrahenci.ToList,
 				kontrahent => kontrahent.PelnaNazwa,
-				kontrahent => { UstawSprzedawce(Rekord, kontrahent); kontroler.AktualizujKontrolki(); },
+				kontrahent => { if (UstawSprzedawce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
 				Spis.Kontrahenci)
 				.Zainstaluj();
 		}
 
-		private void UstawNabywce(Faktura rekord, Kontrahent kontrahent)
+		private bool UstawNabywce(Faktura rekord, Kontrahent kontrahent)
 		{
-			if (kontrahent == null || rekord.NabywcaRef == kontrahent.Ref) return;
+			if (kontrahent == null || rekord.NabywcaRef == kontrahent.Ref) return false;
 			rekord.NabywcaRef = kontrahent;
 			rekord.NIPNabywcy = kontrahent.NIP;
 			rekord.NazwaNabywcy = kontrahent.PelnaNazwa;
 			rekord.DaneNabywcy = kontrahent.AdresRejestrowy;
+			return true;
 		}
 
-		private void UstawSprzedawce(Faktura rekord, Kontrahent kontrahent)
+		private bool UstawSprzedawce(Faktura rekord, Kontrahent kontrahent)
 		{
-			if (kontrahent == null || rekord.SprzedawcaRef == kontrahent.Ref) return;
+			if (kontrahent == null || rekord.SprzedawcaRef == kontrahent.Ref) return false;
 			rekord.SprzedawcaRef = kontrahent;
 			rekord.NIPSprzedawcy = kontrahent.NIP;
 			rekord.NazwaSprzedawcy = kontrahent.PelnaNazwa;
 			rekord.DaneSprzedawcy = kontrahent.AdresRejestrowy;
 			rekord.RachunekBankowy = kontrahent.RachunekBankowy;
+			return true;
 		}
 
-		private void UstawSposobPlatnosci(Faktura rekord, SposobPlatnosci sposobPlatnosci)
+		private bool UstawSposobPlatnosci(Faktura rekord, SposobPlatnosci sposobPlatnosci)
 		{
-			if (sposobPlatnosci == null || rekord.SposobPlatnosciRef == sposobPlatnosci.Ref) return;
+			if (sposobPlatnosci == null || rekord.SposobPlatnosciRef == sposobPlatnosci.Ref) return false;
 			rekord.SposobPlatnosciRef = sposobPlatnosci;
 			rekord.OpisSposobuPlatnosci = sposobPlatnosci.Nazwa;
 			rekord.TerminPlatnosci = rekord.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
+			return true;
 		}
 
 		protected override void PrzygotujRekord(Faktura rekord)
@@ -152,6 +155,7 @@ namespace ProFak.UI
 			if (rekord.SposobPlatnosciRef.IsNull) UstawSposobPlatnosci(rekord, Kontekst.Baza.SposobyPlatnosci.FirstOrDefault(sposobPlatnosci => sposobPlatnosci.CzyDomyslny));
 			if (rekord.SprzedawcaRef.IsNull && (rekord.Rodzaj == RodzajFaktury.Sprzedaż || rekord.Rodzaj == RodzajFaktury.Proforma)) UstawSprzedawce(rekord, Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot && !kontrahent.CzyArchiwalny));
 			if (rekord.NabywcaRef.IsNull && rekord.Rodzaj == RodzajFaktury.Zakup) UstawNabywce(rekord, Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot && !kontrahent.CzyArchiwalny));
+			if (String.IsNullOrWhiteSpace(rekord.Numer) && (rekord.Rodzaj == RodzajFaktury.Sprzedaż || rekord.Rodzaj == RodzajFaktury.Proforma)) rekord.Numer = "[AUTONUMERACJA]";
 		}
 
 		protected override void RekordGotowy()

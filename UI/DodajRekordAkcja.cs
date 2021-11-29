@@ -37,6 +37,10 @@ namespace ProFak.UI
 			return rekord;
 		}
 
+		protected virtual void PrzedZapisem(Kontekst kontekst, TRekord rekord)
+		{
+		}
+
 		public override void Uruchom(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy)
 		{
 			using var nowyKontekst = new Kontekst(kontekst);
@@ -52,6 +56,7 @@ namespace ProFak.UI
 					edytor.Przygotuj(nowyKontekst, rekord);
 					if (okno.ShowDialog() == DialogResult.OK)
 					{
+						PrzedZapisem(nowyKontekst, rekord);
 						nowyKontekst.Baza.Zapisz();
 						transakcja.Zatwierdz();
 					}

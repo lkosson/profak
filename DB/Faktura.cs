@@ -17,6 +17,7 @@ namespace ProFak.DB
 		public string NazwaSprzedawcy { get; set; } = "";
 		public string DaneSprzedawcy { get; set; } = "";
 		public string NIPNabywcy { get; set; } = "";
+
 		public string NazwaNabywcy { get; set; } = "";
 		public string DaneNabywcy { get; set; } = "";
 		public string RachunekBankowy { get; set; } = "";
@@ -62,6 +63,17 @@ namespace ProFak.DB
 			RazemNetto = pozycje.Sum(pozycja => pozycja.WartoscNetto);
 			RazemVat = pozycje.Sum(pozycja => pozycja.WartoscVat);
 			RazemBrutto = pozycje.Sum(pozycja => pozycja.WartoscBrutto);
+		}
+
+		internal IFormattable Podstawienie(string pole)
+		{
+			if (String.Equals(pole, "dzien", StringComparison.CurrentCultureIgnoreCase)) return DataWystawienia.Day;
+			if (String.Equals(pole, "dzień", StringComparison.CurrentCultureIgnoreCase)) return DataWystawienia.Day;
+			if (String.Equals(pole, "miesiac", StringComparison.CurrentCultureIgnoreCase)) return DataWystawienia.Month;
+			if (String.Equals(pole, "miesiąc", StringComparison.CurrentCultureIgnoreCase)) return DataWystawienia.Month;
+			if (String.Equals(pole, "rok", StringComparison.CurrentCultureIgnoreCase)) return DataWystawienia.Year;
+			if (String.Equals(pole, "data", StringComparison.CurrentCultureIgnoreCase)) return DataWystawienia;
+			return null;
 		}
 	}
 
