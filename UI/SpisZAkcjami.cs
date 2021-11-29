@@ -30,14 +30,14 @@ namespace ProFak.UI
 			spis.Dock = DockStyle.Fill;
 			spis.SelectionChanged += spis_SelectionChanged;
 			spis.CellDoubleClick += spis_CellDoubleClick;
-			spis.KeyPress += spis_KeyPress;
+			spis.KeyDown += spis_KeyDown;
 			Controls.Add(spis, 0, 0);
 			MinimumSize = new Size(panelAkcji.MinimumSize.Width + spis.MinimumSize.Width, panelAkcji.MinimumSize.Height + spis.MinimumSize.Height);
 		}
 
-		private void spis_KeyPress(object sender, KeyPressEventArgs e)
+		private void spis_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyChar == '\r' && domyslnaAkcja != null) domyslnaAkcja.Uruchom();
+			ObsluzKlawisz(e.KeyCode, e.Modifiers);
 		}
 
 		private void spis_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -48,6 +48,10 @@ namespace ProFak.UI
 		private void spis_SelectionChanged(object sender, EventArgs e)
 		{
 			panelAkcji.Aktualizuj();
+		}
+
+		protected virtual void ObsluzKlawisz(Keys klawisz, Keys modyfikatory)
+		{
 		}
 
 		public static SpisZAkcjami<TRekord, TSpis> Utworz<TRekord, TSpis>(TSpis spis, params AkcjaNaSpisie<TRekord>[] akcje)
@@ -94,11 +98,17 @@ namespace ProFak.UI
 			foreach (var akcja in akcje)
 			{
 				var adapter = akcja.UtworzAdapter(Spis);
-				if (akcja.CzyDomyslna) domyslnaAkcja = adapter;
+				if (adapter.CzyDomyslna) domyslnaAkcja = adapter;
 				panelAkcji.DodajAkcje(adapter);
 			}
 			panelAkcji.AktualizujUklad();
 			base.OnCreateControl();
+		}
+
+		protected override void ObsluzKlawisz(Keys klawisz, Keys modyfikatory)
+		{
+			base.ObsluzKlawisz(klawisz, modyfikatory);
+			panelAkcji.ObsluzKlawisz(klawisz, modyfikatory);
 		}
 	}
 }

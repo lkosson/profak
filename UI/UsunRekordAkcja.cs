@@ -13,6 +13,7 @@ namespace ProFak.UI
 	{
 		public override string Nazwa => "Usuń zaznaczone pozycje";
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<TRekord> zaznaczoneRekordy) => zaznaczoneRekordy.Count() >= 1;
+		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.None && klawisz == Keys.Delete;
 
 		public override void Uruchom(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy)
 		{

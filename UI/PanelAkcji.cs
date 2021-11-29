@@ -80,5 +80,14 @@ namespace ProFak.UI
 			if (!adapter.CzyDostepna) return;
 			adapter.Uruchom();
 		}
+
+		public void ObsluzKlawisz(Keys klawisz, Keys modyfikatory)
+		{
+			foreach (Button przycisk in Controls)
+			{
+				var adapter = (AdapterAkcji)przycisk.Tag;
+				adapter.ObsluzKlawisz(klawisz, modyfikatory);
+			}
+		}
 	}
 }

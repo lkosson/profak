@@ -27,6 +27,7 @@ namespace ProFak.UI
 		}
 
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<TRekord> zaznaczoneRekordy) => true;
+		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.None && klawisz == Keys.Insert;
 
 		protected virtual TRekord UtworzRekord(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy)
 		{

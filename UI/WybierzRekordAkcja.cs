@@ -12,7 +12,6 @@ namespace ProFak.UI
 	class WybierzRekordAkcja<TRekord> : AkcjaNaSpisie<TRekord>
 		where TRekord : Rekord<TRekord>
 	{
-		public override bool CzyDomyslna => true;
 		public override string Nazwa => "Wybierz zaznaczoną pozycję";
 		public TRekord WybranyRekord { get; private set; }
 
@@ -21,6 +20,8 @@ namespace ProFak.UI
 		}
 
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<TRekord> zaznaczoneRekordy) => zaznaczoneRekordy.Count() == 1;
+
+		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.None && klawisz == Keys.Enter;
 
 		public override void Uruchom(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy)
 		{

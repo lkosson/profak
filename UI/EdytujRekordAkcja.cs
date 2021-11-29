@@ -16,7 +16,6 @@ namespace ProFak.UI
 		private readonly string tytul;
 		private readonly bool pelnyEkran;
 
-		public override bool CzyDomyslna => true;
 		public override string Nazwa => "Wyświetl zaznaczoną pozycję";
 
 		public EdytujRekordAkcja(string tytul, bool pelnyEkran = false)
@@ -26,6 +25,8 @@ namespace ProFak.UI
 		}
 
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<TRekord> zaznaczoneRekordy) => zaznaczoneRekordy.Count() == 1;
+
+		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.None && (klawisz == Keys.Enter || klawisz == Keys.F2);
 
 		public override void Uruchom(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy)
 		{

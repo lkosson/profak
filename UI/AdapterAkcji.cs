@@ -15,6 +15,7 @@ namespace ProFak.UI
 		public abstract bool CzyDomyslna { get; }
 
 		public abstract void Uruchom();
+		public abstract void ObsluzKlawisz(Keys klawisz, Keys modyfikatory);
 	}
 
 	class AdapterAkcji<TRekord> : AdapterAkcji
@@ -25,7 +26,7 @@ namespace ProFak.UI
 
 		public override string Nazwa => akcja.Nazwa;
 		public override bool CzyDostepna => akcja.CzyDostepnaDlaRekordow(spis.WybraneRekordy);
-		public override bool CzyDomyslna => akcja.CzyDomyslna;
+		public override bool CzyDomyslna => akcja.CzyKlawiszSkrotu(Keys.Enter, Keys.None);
 
 		public AdapterAkcji(AkcjaNaSpisie<TRekord> akcja, ISpis<TRekord> spis)
 		{
@@ -51,6 +52,11 @@ namespace ProFak.UI
 			{
 				MessageBox.Show($"Wystąpił nieobsłużony błąd. Uruchom ponownie program i spróbuj ponownie wykonać operację.\n\n{exc}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
+		}
+
+		public override void ObsluzKlawisz(Keys klawisz, Keys modyfikatory)
+		{
+			if (akcja.CzyKlawiszSkrotu(klawisz, modyfikatory)) Uruchom();
 		}
 	}
 }
