@@ -31,8 +31,13 @@ namespace ProFak.UI
 		{
 			Kontekst = kontekst;
 			KontekstGotowy();
+			PrzygotujRekord(rekord);
 			Rekord = rekord;
 			RekordGotowy();
+		}
+
+		protected virtual void PrzygotujRekord(TRekord rekord)
+		{
 		}
 
 		protected virtual void KontekstGotowy()

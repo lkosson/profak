@@ -25,6 +25,7 @@ namespace ProFak.UI
 			kontroler.Powiazanie(textBoxEMail, kontrahent => kontrahent.EMail);
 			kontroler.Powiazanie(textBoxRachunekBankowy, kontrahent => kontrahent.RachunekBankowy);
 			kontroler.Powiazanie(textBoxUwagi, kontrahent => kontrahent.Uwagi);
+			kontroler.Powiazanie(checkBoxPodmiot, kontrahent => kontrahent.CzyPodmiot);
 
 			Wymagane(textBoxNazwa);
 			Wymagane(textBoxPelnaNazwa);
