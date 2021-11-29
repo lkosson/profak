@@ -32,13 +32,13 @@ namespace ProFak.UI
 		{
 			var rekord = new TRekord();
 			if (przygotujRekord != null) przygotujRekord(rekord);
-			kontekst.Baza.Set<TRekord>().Add(rekord);
-			kontekst.Baza.Zapisz();
+			kontekst.Baza.Zapisz(rekord);
 			return rekord;
 		}
 
-		protected virtual void PrzedZapisem(Kontekst kontekst, TRekord rekord)
+		protected virtual void ZapiszRekord(Kontekst kontekst, TRekord rekord)
 		{
+			kontekst.Baza.Zapisz(rekord);
 		}
 
 		public override void Uruchom(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy)
@@ -56,13 +56,8 @@ namespace ProFak.UI
 					edytor.Przygotuj(nowyKontekst, rekord);
 					if (okno.ShowDialog() == DialogResult.OK)
 					{
-						PrzedZapisem(nowyKontekst, rekord);
-						nowyKontekst.Baza.Zapisz();
+						ZapiszRekord(nowyKontekst, rekord);
 						transakcja.Zatwierdz();
-					}
-					else
-					{
-						nowyKontekst.Baza.Entry(rekord).State = EntityState.Detached;
 					}
 					break;
 				}

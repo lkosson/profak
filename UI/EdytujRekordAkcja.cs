@@ -29,10 +29,9 @@ namespace ProFak.UI
 
 		public override void Uruchom(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy)
 		{
-			var rekord = zaznaczoneRekordy.Single();
-			var kopiaRekordu = rekord.Kopia();
 			using var nowyKontekst = new Kontekst(kontekst);
 			using var transakcja = nowyKontekst.Transakcja();
+			var rekord = nowyKontekst.Baza.Znajdz(zaznaczoneRekordy.Single().Ref);
 			while (true)
 			{
 				try
@@ -43,13 +42,8 @@ namespace ProFak.UI
 					edytor.Przygotuj(nowyKontekst, rekord);
 					if (okno.ShowDialog() == DialogResult.OK)
 					{
-						nowyKontekst.Baza.Zapisz();
+						nowyKontekst.Baza.Zapisz(rekord);
 						transakcja.Zatwierdz();
-					}
-					else
-					{
-						nowyKontekst.Baza.Entry(rekord).State = EntityState.Detached;
-						nowyKontekst.Baza.Entry(kopiaRekordu).State = EntityState.Unchanged;
 					}
 					break;
 				}

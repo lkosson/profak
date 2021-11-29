@@ -26,20 +26,21 @@ namespace ProFak.DB
 
 		public static string Sciezka { get; set; }
 
-		public DbSet<Faktura> Faktury => Set<Faktura>();
-		public DbSet<JednostkaMiary> JednostkiMiar => Set<JednostkaMiary>();
-		public DbSet<Kontrahent> Kontrahenci => Set<Kontrahent>();
-		public DbSet<Numerator> Numeratory => Set<Numerator>();
-		public DbSet<PozycjaFaktury> PozycjeFaktur => Set<PozycjaFaktury>();
-		public DbSet<StawkaVat> StawkiVat => Set<StawkaVat>();
-		public DbSet<Towar> Towary => Set<Towar>();
-		public DbSet<Waluta> Waluty => Set<Waluta>();
-		public DbSet<SposobPlatnosci> SposobyPlatnosci => Set<SposobPlatnosci>();
-		public DbSet<StanNumeratora> StanyNumeratorow => Set<StanNumeratora>();
-		public DbSet<Wplata> Wplaty => Set<Wplata>();
+		public IQueryable<Faktura> Faktury => Set<Faktura>();
+		public IQueryable<JednostkaMiary> JednostkiMiar => Set<JednostkaMiary>();
+		public IQueryable<Kontrahent> Kontrahenci => Set<Kontrahent>();
+		public IQueryable<Numerator> Numeratory => Set<Numerator>();
+		public IQueryable<PozycjaFaktury> PozycjeFaktur => Set<PozycjaFaktury>();
+		public IQueryable<StawkaVat> StawkiVat => Set<StawkaVat>();
+		public IQueryable<Towar> Towary => Set<Towar>();
+		public IQueryable<Waluta> Waluty => Set<Waluta>();
+		public IQueryable<SposobPlatnosci> SposobyPlatnosci => Set<SposobPlatnosci>();
+		public IQueryable<StanNumeratora> StanyNumeratorow => Set<StanNumeratora>();
+		public IQueryable<Wplata> Wplaty => Set<Wplata>();
 
 		public Baza()
 		{
+			ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 		}
 
 		public static bool Przygotuj()
@@ -69,6 +70,46 @@ namespace ProFak.DB
 			DB.Model.ProFakModelBuilder.Configure(modelBuilder);
 		}
 
-		public void Zapisz() => SaveChanges();
+		public void Zapisz<TRekord>(TRekord rekord)
+			where TRekord : Rekord<TRekord>
+			=> Zapisz(new[] { rekord });
+
+		public void Zapisz<TRekord>(IEnumerable<TRekord> rekordy)
+			where TRekord : Rekord<TRekord>
+		{
+			var set = Set<TRekord>();
+			foreach (var rekord in rekordy)
+			{
+				if (rekord.Id <= 0)
+				{
+					rekord.Id = 0;
+					set.Add(rekord);
+				}
+				else
+				{
+					Entry(rekord).State = EntityState.Modified;
+				}
+			}
+			SaveChanges();
+			foreach (var rekord in rekordy)
+			{
+				Entry(rekord).State = EntityState.Detached;
+			}
+		}
+
+		public void Usun<TRekord>(TRekord rekord)
+			where TRekord : Rekord<TRekord>
+			=> Usun(new[] { rekord });
+
+		public void Usun<TRekord>(IEnumerable<TRekord> rekordy)
+			where TRekord : Rekord<TRekord>
+		{
+			Set<TRekord>().RemoveRange(rekordy);
+			SaveChanges();
+		}
+
+		public TRekord Znajdz<TRekord>(Ref<TRekord> rekordRef)
+			where TRekord : Rekord<TRekord>
+			=> Set<TRekord>().FirstOrDefault(r => r.Id == rekordRef.Id);
 	}
 }

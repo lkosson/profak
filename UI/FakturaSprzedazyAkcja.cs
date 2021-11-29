@@ -16,9 +16,9 @@ namespace ProFak.UI
 		{
 		}
 
-		protected override void PrzedZapisem(Kontekst kontekst, Faktura rekord)
+		protected override void ZapiszRekord(Kontekst kontekst, Faktura rekord)
 		{
-			base.PrzedZapisem(kontekst, rekord);
+			base.ZapiszRekord(kontekst, rekord);
 			rekord.Numer = Numerator.NadajNumer(kontekst.Baza, PrzeznaczenieNumeratora.Faktura, rekord.Podstawienie, false);
 		}
 	}

@@ -24,7 +24,7 @@ namespace ProFak.UI
 
 			while (bazowa.FakturaKorygujacaRef.IsNotNull)
 			{
-				bazowa = kontekst.Baza.Faktury.Find(bazowa.FakturaKorygujacaId);
+				bazowa = kontekst.Baza.Znajdz(bazowa.FakturaKorygujacaRef);
 			}
 
 			var korekta = base.UtworzRekord(kontekst, zaznaczoneRekordy);
@@ -52,6 +52,7 @@ namespace ProFak.UI
 			korekta.SposobPlatnosciRef = bazowa.SposobPlatnosciRef;
 
 			var starePozycje = kontekst.Baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == bazowa.Id).ToList();
+			var nowePozycje = new List<PozycjaFaktury>();
 			foreach (var staraPozycja in starePozycje)
 			{
 				var pozycjaPrzed = new PozycjaFaktury();
@@ -67,7 +68,7 @@ namespace ProFak.UI
 				pozycjaPrzed.WartoscBrutto = -staraPozycja.WartoscBrutto;
 				pozycjaPrzed.CzyWedlugCenBrutto = staraPozycja.CzyWedlugCenBrutto;
 				pozycjaPrzed.CzyWartosciReczne = staraPozycja.CzyWartosciReczne;
-				kontekst.Baza.PozycjeFaktur.Add(pozycjaPrzed);
+				nowePozycje.Add(pozycjaPrzed);
 
 				var pozycjaPo = new PozycjaFaktury();
 				pozycjaPo.FakturaId = korekta.Id;
@@ -82,11 +83,11 @@ namespace ProFak.UI
 				pozycjaPo.WartoscBrutto = staraPozycja.WartoscBrutto;
 				pozycjaPo.CzyWedlugCenBrutto = staraPozycja.CzyWedlugCenBrutto;
 				pozycjaPo.CzyWartosciReczne = staraPozycja.CzyWartosciReczne;
-				kontekst.Baza.PozycjeFaktur.Add(pozycjaPo);
+				nowePozycje.Add(pozycjaPo);
 			}
 
-			kontekst.Baza.Zapisz();
-			kontekst.Baza.Entry(bazowa).State = EntityState.Detached;
+			kontekst.Baza.Zapisz(nowePozycje);
+			kontekst.Baza.Zapisz(bazowa);
 
 			return korekta;
 		}

@@ -35,18 +35,14 @@ namespace ProFak.DB
 			var parametry = String.Format(szablon, "");
 
 			var stanNumeratora = baza.StanyNumeratorow.FirstOrDefault(stan => stan.NumeratorId == numerator.Id && stan.Parametry == parametry);
-			if (stanNumeratora == null)
-			{
-				stanNumeratora = new StanNumeratora { NumeratorRef = numerator, Parametry = parametry, OstatniaWartosc = 0 };
-				baza.StanyNumeratorow.Add(stanNumeratora);
-			}
+			if (stanNumeratora == null) stanNumeratora = new StanNumeratora { NumeratorRef = numerator, Parametry = parametry, OstatniaWartosc = 0 };
 
 			var licznik = stanNumeratora.OstatniaWartosc + 1;
 			var numer = String.Format(szablon, licznik);
 			if (zwiekszLicznik)
 			{
 				stanNumeratora.OstatniaWartosc = licznik;
-				baza.Zapisz();
+				baza.Zapisz(stanNumeratora);
 			}
 
 			return numer;
