@@ -11,7 +11,7 @@ namespace ProFak.UI
 {
 	class DodajRekordAkcja<TRekord, TEdytor> : AkcjaNaSpisie<TRekord>
 		where TRekord : Rekord<TRekord>, new()
-		where TEdytor : Control, IEdytor<TRekord>, new()
+		where TEdytor : Edytor<TRekord>, new()
 	{
 		private readonly string tytul;
 		private readonly Action<TRekord> przygotujRekord;

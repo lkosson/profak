@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	class Edytor<TRekord> : UserControl, IEdytor<TRekord>
+	class Edytor<TRekord> : UserControl
 		where TRekord : Rekord<TRekord>
 	{
 		protected readonly Kontroler<TRekord> kontroler;
