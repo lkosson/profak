@@ -15,6 +15,7 @@ namespace ProFak.DB.Model
 			modelBuilder.Entity<JednostkaMiary>(JednostkaMiaryBuilder.Configure);
 			modelBuilder.Entity<Kontrahent>(KontrahentBuilder.Configure);
 			modelBuilder.Entity<Numerator>(NumeratorBuilder.Configure);
+			modelBuilder.Entity<Plik>(PlikBuilder.Configure);
 			modelBuilder.Entity<PozycjaFaktury>(PozycjaFakturyBuilder.Configure);
 			modelBuilder.Entity<SposobPlatnosci>(SposobPlatnosciBuilder.Configure);
 			modelBuilder.Entity<StanNumeratora>(StanNumeratoraBuilder.Configure);
@@ -22,6 +23,7 @@ namespace ProFak.DB.Model
 			modelBuilder.Entity<Towar>(TowarBuilder.Configure);
 			modelBuilder.Entity<Waluta>(WalutaBuilder.Configure);
 			modelBuilder.Entity<Wplata>(WplataBuilder.Configure);
+			modelBuilder.Entity<Zawartosc>(ZawartoscBuilder.Configure);
 		}
 	}
 }

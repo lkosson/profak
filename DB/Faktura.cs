@@ -54,6 +54,7 @@ namespace ProFak.DB
 
 		public List<PozycjaFaktury> Pozycje { get; set; }
 		public List<Wplata> Wplaty { get; set; }
+		public List<Plik> Pliki { get; set; }
 
 		public string WalutaFmt => Waluta?.Skrot;
 
