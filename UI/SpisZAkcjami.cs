@@ -11,18 +11,6 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	class SpisZAkcjami
-	{
-		public static SpisZAkcjami<TRekord, TSpis> Utworz<TRekord, TSpis>(TSpis spis, params AkcjaNaSpisie<TRekord>[] akcje)
-			where TRekord : Rekord<TRekord>
-			where TSpis : Spis<TRekord>
-		{
-			var okno = new SpisZAkcjami<TRekord, TSpis>(spis);
-			okno.Akcje.AddRange(akcje);
-			return okno;
-		}
-	}
-
 	class SpisZAkcjami<TRekord> : TableLayoutPanel
 		where TRekord : Rekord<TRekord>
 	{

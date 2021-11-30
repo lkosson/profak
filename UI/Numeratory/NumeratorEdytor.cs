@@ -27,7 +27,7 @@ namespace ProFak.UI
 			Wymagane(comboBoxPrzeznaczenie);
 			Wymagane(textBoxFormat);
 
-			panelStan.Controls.Add(stanyNumeratora = Spis.StanyNumeratorow());
+			panelStan.Controls.Add(stanyNumeratora = Spisy.StanyNumeratorow());
 		}
 
 		protected override void RekordGotowy()

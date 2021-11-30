@@ -52,7 +52,7 @@ namespace ProFak.UI
 					KonfigurujCeny();
 					PrzeliczCeny();
 				},
-				Spis.Towary)
+				Spisy.Towary)
 				.Zainstaluj();
 		}
 

@@ -54,8 +54,8 @@ namespace ProFak.UI
 			Wymagane(comboBoxSposobPlatnosci);
 			Wymagane(comboBoxWaluta);
 
-			tabPageWplaty.Controls.Add(wplaty = Spis.Wplaty());
-			tabPagePozycje.Controls.Add(pozycjeFaktury = Spis.PozycjeFaktur());
+			tabPageWplaty.Controls.Add(wplaty = Spisy.Wplaty());
+			tabPagePozycje.Controls.Add(pozycjeFaktury = Spisy.PozycjeFaktur());
 			pozycjeFaktury.Spis.RekordyZmienione += pozycjeFakturySpis_RekordyZmienione;
 		}
 
@@ -74,7 +74,7 @@ namespace ProFak.UI
 				Kontekst.Baza.Waluty.ToList,
 				waluta => waluta.Skrot,
 				waluta => { },
-				Spis.Waluty)
+				Spisy.Waluty)
 				.Zainstaluj();
 
 			new Slownik<SposobPlatnosci>(
@@ -82,7 +82,7 @@ namespace ProFak.UI
 				Kontekst.Baza.SposobyPlatnosci.ToList,
 				sposobPlatnosci => sposobPlatnosci.Nazwa,
 				sposobPlatnosci => { if (UstawSposobPlatnosci(Rekord, sposobPlatnosci)) kontroler.AktualizujKontrolki(); },
-				Spis.SposobyPlatnosci)
+				Spisy.SposobyPlatnosci)
 				.Zainstaluj();
 
 			new Slownik<Kontrahent>(
@@ -90,7 +90,7 @@ namespace ProFak.UI
 				Kontekst.Baza.Kontrahenci.ToList,
 				kontrahent => kontrahent.NIP,
 				kontrahent => { if (UstawNabywce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
-				Spis.Kontrahenci)
+				Spisy.Kontrahenci)
 				.Zainstaluj();
 
 			new Slownik<Kontrahent>(
@@ -98,7 +98,7 @@ namespace ProFak.UI
 				Kontekst.Baza.Kontrahenci.ToList,
 				kontrahent => kontrahent.PelnaNazwa,
 				kontrahent => { if (UstawNabywce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
-				Spis.Kontrahenci)
+				Spisy.Kontrahenci)
 				.Zainstaluj();
 
 			new Slownik<Kontrahent>(
@@ -106,7 +106,7 @@ namespace ProFak.UI
 				Kontekst.Baza.Kontrahenci.ToList,
 				kontrahent => kontrahent.NIP,
 				kontrahent => { if (UstawSprzedawce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
-				Spis.Kontrahenci)
+				Spisy.Kontrahenci)
 				.Zainstaluj();
 
 			new Slownik<Kontrahent>(
@@ -114,7 +114,7 @@ namespace ProFak.UI
 				Kontekst.Baza.Kontrahenci.ToList,
 				kontrahent => kontrahent.PelnaNazwa,
 				kontrahent => { if (UstawSprzedawce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
-				Spis.Kontrahenci)
+				Spisy.Kontrahenci)
 				.Zainstaluj();
 		}
 

@@ -1,15 +1,46 @@
 ﻿using ProFak.DB;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	class Spis : DataGridView
+	abstract class Spis<T> : DataGridView
+		where T : Rekord<T>
 	{
+		private readonly Container container;
+		private readonly BindingSource bindingSource;
+		private IEnumerable<T> oryginalneRekordy;
+		private string filtr;
+
+		public Kontekst Kontekst { get; set; }
+		public IEnumerable<T> WybraneRekordy
+		{
+			get => SelectedRows.Cast<DataGridViewRow>().Select(row => row.DataBoundItem).Cast<T>();
+
+			set
+			{
+				foreach (DataGridViewRow row in Rows) if (row.DataBoundItem is T rekord) row.Selected = value.Contains(rekord);
+			}
+		}
+
+		public IEnumerable<T> Rekordy
+		{
+			get => bindingSource.DataSource as IEnumerable<T>;
+			set { oryginalneRekordy = value; var rekordy = Filtruj(value); bindingSource.DataSource = rekordy.ToList(); if (RekordyZmienione != null) RekordyZmienione(); }
+		}
+
+		public event Action RekordyZmienione;
+
+		public Ref<T> RekordPoczatkowy { get; set; }
+
+		public string Filtr { get => filtr; set { filtr = value; Rekordy = oryginalneRekordy; } }
+
 		public Spis()
 		{
 			DoubleBuffered = true;
@@ -24,138 +55,97 @@ namespace ProFak.UI
 			SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 			EnableHeadersVisualStyles = false;
 			TabIndex = 50;
+
+			container = new Container();
+			bindingSource = new BindingSource(container);
+			bindingSource.DataSource = typeof(T);
+			DataSource = bindingSource;
+			MinimumSize = new System.Drawing.Size(500, 100);
+			Rows.CollectionChanged += Rows_CollectionChanged;
 		}
 
-		public static TRekord Wybierz<TRekord>(Kontekst kontekst, Func<SpisZAkcjami<TRekord>> generatorSpisu, string tytul, Ref<TRekord> biezacaWartosc)
-			where TRekord : Rekord<TRekord>
+		private void Rows_CollectionChanged(object sender, CollectionChangeEventArgs e)
 		{
-			var wybor = new WybierzRekordAkcja<TRekord>();
-			using var nowyKontekst = new Kontekst(kontekst);
-			using var transakcja = nowyKontekst.Transakcja();
-			using var spis = generatorSpisu();
-			using var dialog = new Dialog(tytul, spis, nowyKontekst);
-			spis.Akcje.Insert(0, wybor);
-			spis.Spis.Kontekst = nowyKontekst;
-			spis.Spis.RekordPoczatkowy = biezacaWartosc;
-			dialog.CzyPrzyciskiWidoczne = false;
-			dialog.Size = new System.Drawing.Size(800, 450);
-			if (dialog.ShowDialog() != DialogResult.OK) return default;
-			transakcja.Zatwierdz();
-			return wybor.WybranyRekord;
+			if (RekordPoczatkowy == default) return;
+
+			foreach (DataGridViewRow row in Rows)
+			{
+				if (row.DataBoundItem is not T rekord) continue;
+				if (rekord.Ref != RekordPoczatkowy) continue;
+				bindingSource.Position = row.Index;
+				break;
+			}
 		}
 
-		public static SpisZAkcjami<Faktura, FakturaSprzedazySpis> FakturySprzedazy()
+		protected override void OnCreateControl()
 		{
-			return SpisZAkcjami.Utworz(new FakturaSprzedazySpis(),
-				new FakturaSprzedazyAkcja(),
-				new FakturaProformaAkcja(),
-				new KorektaFakturyAkcja(),
-				new EdytujRekordAkcja<Faktura, FakturaEdytor>("Edycja faktury"/*, pelnyEkran: true */),
-				new UsunRekordAkcja<Faktura>()
-			);
+			base.OnCreateControl();
+			if (Kontekst != null) PrzeladujBezpiecznie();
+			bindingSource.ResetBindings(true);
 		}
 
-		public static SpisZAkcjami<Faktura, FakturaZakupuSpis> FakturyZakupu()
+		public void PrzeladujBezpiecznie()
 		{
-			return SpisZAkcjami.Utworz(new FakturaZakupuSpis(),
-				new DodajRekordAkcja<Faktura, FakturaEdytor>("Nowa faktura zakupu", faktura => faktura.Rodzaj = RodzajFaktury.Zakup/*, pelnyEkran: true */),
-				new KorektaFakturyAkcja(),
-				new EdytujRekordAkcja<Faktura, FakturaEdytor>("Edycja faktury"/*, pelnyEkran: true */),
-				new UsunRekordAkcja<Faktura>()
-			);
+			try
+			{
+				Przeladuj();
+			}
+			catch (Exception exc)
+			{
+				MessageBox.Show($"Nie udało się załadować danych do spisu.\n\n{exc}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
 		}
 
-		public static SpisZAkcjami<JednostkaMiary, JednostkaMiarySpis> JednostkiMiar()
+		protected override void Dispose(bool disposing)
 		{
-			return SpisZAkcjami.Utworz(new JednostkaMiarySpis(),
-				new DodajRekordAkcja<JednostkaMiary, JednostkaMiaryEdytor>("Nowa jednostka miary"),
-				new EdytujRekordAkcja<JednostkaMiary, JednostkaMiaryEdytor>("Edycja jednostki miary"),
-				new UsunRekordAkcja<JednostkaMiary>()
-			);
+			if (disposing) container.Dispose();
+			base.Dispose(disposing);
 		}
 
-		public static SpisZAkcjami<Kontrahent, KontrahentSpis> Kontrahenci()
+		public void DodajKolumne(string wlasciwosc, string naglowek, bool wyrownajDoPrawej = false, bool rozciagnij = false, string format = null, int? szerokosc = null)
 		{
-			return SpisZAkcjami.Utworz(new KontrahentSpis(),
-				new DodajRekordAkcja<Kontrahent, KontrahentEdytor>("Nowy kontrahent"),
-				new EdytujRekordAkcja<Kontrahent, KontrahentEdytor>("Edycja kontrahenta"),
-				new UsunRekordAkcja<Kontrahent>()
-			);
+			var kolumna = new DataGridViewTextBoxColumn();
+			kolumna.HeaderText = naglowek;
+			kolumna.DataPropertyName = wlasciwosc;
+			kolumna.Name = wlasciwosc;
+			kolumna.DefaultCellStyle.Alignment = wyrownajDoPrawej ? DataGridViewContentAlignment.MiddleRight : DataGridViewContentAlignment.MiddleLeft;
+			kolumna.AutoSizeMode = rozciagnij ? DataGridViewAutoSizeColumnMode.Fill : DataGridViewAutoSizeColumnMode.NotSet;
+			if (!String.IsNullOrEmpty(format)) kolumna.DefaultCellStyle.Format = format;
+			if (szerokosc.HasValue) kolumna.Width = szerokosc.Value;
+			if (rozciagnij) kolumna.MinimumWidth = 50;
+			Columns.Add(kolumna);
 		}
 
-		public static SpisZAkcjami<Numerator, NumeratorSpis> Numeratory()
+		public void DodajKolumneKwota(string wlasciwosc, string naglowek) => DodajKolumne(wlasciwosc, naglowek, wyrownajDoPrawej: true, format: "#,##0.00", szerokosc: 80);
+		public void DodajKolumneId() => DodajKolumne("Id", "Id", wyrownajDoPrawej: true, szerokosc: 40);
+
+		protected abstract void Przeladuj();
+
+		protected override void OnCellPainting(DataGridViewCellPaintingEventArgs e)
 		{
-			return SpisZAkcjami.Utworz(new NumeratorSpis(),
-				new DodajRekordAkcja<Numerator, NumeratorEdytor>("Nowy numerator"),
-				new EdytujRekordAkcja<Numerator, NumeratorEdytor>("Edycja numeratora"),
-				new UsunRekordAkcja<Numerator>()
-			);
+			base.OnCellPainting(e);
+			if (e.RowIndex == -1) e.CellStyle.SelectionBackColor = System.Drawing.SystemColors.Control;
+			else UstawStylWiersza((T)Rows[e.RowIndex].DataBoundItem, Columns[e.ColumnIndex].DataPropertyName, e.CellStyle);
 		}
 
-		public static SpisZAkcjami<PozycjaFaktury, PozycjaFakturySpis> PozycjeFaktur()
+		protected virtual void UstawStylWiersza(T rekord, string kolumna, DataGridViewCellStyle styl)
 		{
-			var spis = new PozycjaFakturySpis();
-			return SpisZAkcjami.Utworz(spis,
-				new DodajRekordAkcja<PozycjaFaktury, PozycjaFakturyEdytor>("Nowa pozycja", pozycja => pozycja.FakturaRef = spis.FakturaRef),
-				new EdytujRekordAkcja<PozycjaFaktury, PozycjaFakturyEdytor>("Edycja pozycji"),
-				new UsunRekordAkcja<PozycjaFaktury>()
-			);
 		}
 
-		public static SpisZAkcjami<SposobPlatnosci, SposobPlatnosciSpis> SposobyPlatnosci()
+		private IEnumerable<T> Filtruj(IEnumerable<T> rekordy)
 		{
-			return SpisZAkcjami.Utworz(new SposobPlatnosciSpis(),
-				new DodajRekordAkcja<SposobPlatnosci, SposobPlatnosciEdytor>("Nowy sposób płatności"),
-				new EdytujRekordAkcja<SposobPlatnosci, SposobPlatnosciEdytor>("Edycja sposobu płatności"),
-				new UsunRekordAkcja<SposobPlatnosci>()
-			);
-		}
-
-		public static SpisZAkcjami<StanNumeratora, StanNumeratoraSpis> StanyNumeratorow()
-		{
-			var spis = new StanNumeratoraSpis();
-			return SpisZAkcjami.Utworz(spis,
-				new DodajRekordAkcja<StanNumeratora, StanNumeratoraEdytor>("Nowy stan", stanNumeratora => stanNumeratora.NumeratorRef = spis.NumeratorRef),
-				new EdytujRekordAkcja<StanNumeratora, StanNumeratoraEdytor>("Edycja stanu"),
-				new UsunRekordAkcja<StanNumeratora>()
-			);
-		}
-
-		public static SpisZAkcjami<StawkaVat, StawkaVatSpis> StawkiVat()
-		{
-			return SpisZAkcjami.Utworz(new StawkaVatSpis(),
-				new DodajRekordAkcja<StawkaVat, StawkaVatEdytor>("Nowa stawka VAT"),
-				new EdytujRekordAkcja<StawkaVat, StawkaVatEdytor>("Edycja stawki VAT"),
-				new UsunRekordAkcja<StawkaVat>()
-			);
-		}
-
-		public static SpisZAkcjami<Towar, TowarSpis> Towary()
-		{
-			return SpisZAkcjami.Utworz(new TowarSpis(),
-				new DodajRekordAkcja<Towar, TowarEdytor>("Nowy towar"),
-				new EdytujRekordAkcja<Towar, TowarEdytor>("Edycja towaru"),
-				new UsunRekordAkcja<Towar>()
-			);
-		}
-
-		public static SpisZAkcjami<Waluta, WalutaSpis> Waluty()
-		{
-			return SpisZAkcjami.Utworz(new WalutaSpis(),
-				new DodajRekordAkcja<Waluta, WalutaEdytor>("Nowa waluta"),
-				new EdytujRekordAkcja<Waluta, WalutaEdytor>("Edycja waluty"),
-				new UsunRekordAkcja<Waluta>()
-			);
-		}
-
-		public static SpisZAkcjami<Wplata, WplataSpis> Wplaty()
-		{
-			var spis = new WplataSpis();
-			return SpisZAkcjami.Utworz(spis,
-				new DodajRekordAkcja<Wplata, WplataEdytor>("Nowa wpłata", wplata => wplata.FakturaRef = spis.FakturaRef),
-				new EdytujRekordAkcja<Wplata, WplataEdytor>("Edycja wpłaty"),
-				new UsunRekordAkcja<Wplata>()
-			);
+			if (String.IsNullOrWhiteSpace(Filtr)) return rekordy;
+			var fragmenty = Regex.Matches(Filtr, @"(?:[^\s""]+|""[^""]*"")+");
+			List<Func<T, bool>> dopasowania = new List<Func<T, bool>>();
+			foreach (Match fragment in fragmenty)
+			{
+				if (!fragment.Success) continue;
+				var fraza = fragment.Value;
+				Func<T, bool> dopasowanieFragmentu = rekord => rekord.CzyPasuje(fraza);
+				dopasowania.Add(dopasowanieFragmentu);
+			}
+			var dopasowanie = (Func<T, bool>)Delegate.Combine(dopasowania.ToArray());
+			return rekordy.Where(dopasowanie);
 		}
 	}
 }

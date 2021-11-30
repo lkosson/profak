@@ -43,7 +43,7 @@ namespace ProFak.UI
 				Kontekst.Baza.JednostkiMiar.ToList,
 				jednostka => jednostka.Skrot,
 				jednostka => { if (jednostka == null) return; Rekord.JednostkaMiary = jednostka; },
-				Spis.JednostkiMiar)
+				Spisy.JednostkiMiar)
 				.Zainstaluj();
 
 			new Slownik<StawkaVat>(
@@ -51,7 +51,7 @@ namespace ProFak.UI
 				Kontekst.Baza.StawkiVat.ToList,
 				stawka => stawka.Skrot,
 				stawka => { if (stawka == null) return; Rekord.StawkaVat = stawka; PrzeliczCeny(); },
-				Spis.StawkiVat)
+				Spisy.StawkiVat)
 				.Zainstaluj();
 		}
 

@@ -33,34 +33,34 @@
     <Compile Update="UI\EdytorDwieKolumny.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="UI\NumeratorSpis.cs">
+    <Compile Update="UI\Numeratory\NumeratorSpis.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="UI\StanNumeratoraSpis.cs">
+    <Compile Update="UI\Numeratory\StanNumeratoraSpis.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="UI\StanNumeratoraEdytor.cs">
+    <Compile Update="UI\Numeratory\StanNumeratoraEdytor.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="UI\WplataSpis.cs">
+    <Compile Update="UI\Faktury\WplataSpis.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="UI\WplataEdytor.cs">
+    <Compile Update="UI\Faktury\WplataEdytor.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="UI\PozycjaFakturySpis.cs">
+    <Compile Update="UI\Faktury\PozycjaFakturySpis.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="UI\FakturaZakupuSpis.cs">
+    <Compile Update="UI\Faktury\FakturaZakupuSpis.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="UI\FakturaSprzedazySpis.cs">
+    <Compile Update="UI\Faktury\FakturaSprzedazySpis.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="UI\FakturaEdytor.cs">
+    <Compile Update="UI\Faktury\FakturaEdytor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="UI\TowarSpis.cs">
+    <Compile Update="UI\Towary\TowarSpis.cs">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
