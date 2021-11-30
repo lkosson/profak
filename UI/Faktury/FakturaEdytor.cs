@@ -15,6 +15,7 @@ namespace ProFak.UI
 	{
 		private readonly SpisZAkcjami<Wplata, WplataSpis> wplaty;
 		private readonly SpisZAkcjami<PozycjaFaktury, PozycjaFakturySpis> pozycjeFaktury;
+		private readonly SpisZAkcjami<Plik, PlikSpis> pliki;
 
 		public FakturaEdytor()
 		{
@@ -56,6 +57,7 @@ namespace ProFak.UI
 
 			tabPageWplaty.Controls.Add(wplaty = Spisy.Wplaty());
 			tabPagePozycje.Controls.Add(pozycjeFaktury = Spisy.PozycjeFaktur());
+			tabPagePliki.Controls.Add(pliki = Spisy.Pliki());
 			pozycjeFaktury.Spis.RekordyZmienione += pozycjeFakturySpis_RekordyZmienione;
 		}
 
@@ -165,6 +167,8 @@ namespace ProFak.UI
 			wplaty.Spis.Kontekst = Kontekst;
 			pozycjeFaktury.Spis.FakturaRef = Rekord;
 			pozycjeFaktury.Spis.Kontekst = Kontekst;
+			pliki.Spis.FakturaRef = Rekord;
+			pliki.Spis.Kontekst = Kontekst;
 			if (Rekord.Rodzaj == RodzajFaktury.Sprzedaż) labelRodzaj.Text = "Sprzedaż";
 			else if (Rekord.Rodzaj == RodzajFaktury.Zakup) labelRodzaj.Text = "Zakup";
 			else if (Rekord.Rodzaj == RodzajFaktury.KorektaSprzedaży) labelRodzaj.Text = "Korekta sprzedaży";

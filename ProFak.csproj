@@ -33,6 +33,9 @@
     <Compile Update="UI\EdytorDwieKolumny.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="UI\Faktury\PlikSpis.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="UI\Numeratory\NumeratorSpis.cs">
       <SubType>Component</SubType>
     </Compile>

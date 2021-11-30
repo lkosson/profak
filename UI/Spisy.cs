@@ -76,6 +76,16 @@ namespace ProFak.UI
 			);
 		}
 
+		public static SpisZAkcjami<Plik, PlikSpis> Pliki()
+		{
+			var spis = new PlikSpis();
+			return Utworz(spis,
+				new DodajPlikAction(spis),
+				new PokazPlikAction(),
+				new UsunRekordAkcja<Plik>()
+			);
+		}
+
 		public static SpisZAkcjami<PozycjaFaktury, PozycjaFakturySpis> PozycjeFaktur()
 		{
 			var spis = new PozycjaFakturySpis();

@@ -52,7 +52,8 @@ namespace ProFak.UI
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPagePozycje = new System.Windows.Forms.TabPage();
 			this.tabPageWplaty = new System.Windows.Forms.TabPage();
-			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.tabPagePliki = new System.Windows.Forms.TabPage();
+			this.tabPageUwagi = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.textBoxUwagiPubliczne = new System.Windows.Forms.TextBox();
@@ -98,7 +99,7 @@ namespace ProFak.UI
 			this.groupBox3.SuspendLayout();
 			this.tableLayoutPanel6.SuspendLayout();
 			this.tabControl1.SuspendLayout();
-			this.tabPage3.SuspendLayout();
+			this.tabPageUwagi.SuspendLayout();
 			this.tableLayoutPanel2.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
@@ -131,7 +132,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel.Size = new System.Drawing.Size(751, 462);
+			this.tableLayoutPanel.Size = new System.Drawing.Size(751, 500);
 			this.tableLayoutPanel.TabIndex = 0;
 			// 
 			// tableLayoutPanelKontrahenci
@@ -373,19 +374,20 @@ namespace ProFak.UI
 			// 
 			this.tabControl1.Controls.Add(this.tabPagePozycje);
 			this.tabControl1.Controls.Add(this.tabPageWplaty);
-			this.tabControl1.Controls.Add(this.tabPage3);
+			this.tabControl1.Controls.Add(this.tabPagePliki);
+			this.tabControl1.Controls.Add(this.tabPageUwagi);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl1.Location = new System.Drawing.Point(3, 322);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(745, 137);
+			this.tabControl1.Size = new System.Drawing.Size(745, 175);
 			this.tabControl1.TabIndex = 4;
 			// 
 			// tabPagePozycje
 			// 
 			this.tabPagePozycje.Location = new System.Drawing.Point(4, 24);
 			this.tabPagePozycje.Name = "tabPagePozycje";
-			this.tabPagePozycje.Size = new System.Drawing.Size(737, 109);
+			this.tabPagePozycje.Size = new System.Drawing.Size(737, 147);
 			this.tabPagePozycje.TabIndex = 0;
 			this.tabPagePozycje.Text = "Pozycje";
 			this.tabPagePozycje.UseVisualStyleBackColor = true;
@@ -399,15 +401,24 @@ namespace ProFak.UI
 			this.tabPageWplaty.Text = "Wpłaty";
 			this.tabPageWplaty.UseVisualStyleBackColor = true;
 			// 
-			// tabPage3
+			// tabPagePliki
 			// 
-			this.tabPage3.Controls.Add(this.tableLayoutPanel2);
-			this.tabPage3.Location = new System.Drawing.Point(4, 24);
-			this.tabPage3.Name = "tabPage3";
-			this.tabPage3.Size = new System.Drawing.Size(737, 109);
-			this.tabPage3.TabIndex = 2;
-			this.tabPage3.Text = "Uwagi";
-			this.tabPage3.UseVisualStyleBackColor = true;
+			this.tabPagePliki.Location = new System.Drawing.Point(4, 24);
+			this.tabPagePliki.Name = "tabPagePliki";
+			this.tabPagePliki.Size = new System.Drawing.Size(737, 109);
+			this.tabPagePliki.TabIndex = 3;
+			this.tabPagePliki.Text = "Pliki";
+			this.tabPagePliki.UseVisualStyleBackColor = true;
+			// 
+			// tabPageUwagi
+			// 
+			this.tabPageUwagi.Controls.Add(this.tableLayoutPanel2);
+			this.tabPageUwagi.Location = new System.Drawing.Point(4, 24);
+			this.tabPageUwagi.Name = "tabPageUwagi";
+			this.tabPageUwagi.Size = new System.Drawing.Size(737, 109);
+			this.tabPageUwagi.TabIndex = 2;
+			this.tabPageUwagi.Text = "Uwagi";
+			this.tabPageUwagi.UseVisualStyleBackColor = true;
 			// 
 			// tableLayoutPanel2
 			// 
@@ -897,9 +908,9 @@ namespace ProFak.UI
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.tableLayoutPanel);
-			this.MinimumSize = new System.Drawing.Size(750, 450);
+			this.MinimumSize = new System.Drawing.Size(750, 500);
 			this.Name = "FakturaEdytor";
-			this.Size = new System.Drawing.Size(751, 462);
+			this.Size = new System.Drawing.Size(751, 500);
 			this.tableLayoutPanel.ResumeLayout(false);
 			this.tableLayoutPanel.PerformLayout();
 			this.tableLayoutPanelKontrahenci.ResumeLayout(false);
@@ -911,7 +922,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel6.ResumeLayout(false);
 			this.tableLayoutPanel6.PerformLayout();
 			this.tabControl1.ResumeLayout(false);
-			this.tabPage3.ResumeLayout(false);
+			this.tabPageUwagi.ResumeLayout(false);
 			this.tableLayoutPanel2.ResumeLayout(false);
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox4.PerformLayout();
@@ -988,7 +999,7 @@ namespace ProFak.UI
 		private System.Windows.Forms.ComboBoxFix comboBoxWaluta;
 		private System.Windows.Forms.ComboBoxFix comboBoxNazwaNabywcy;
 		private System.Windows.Forms.Button buttonWaluta;
-		private System.Windows.Forms.TabPage tabPage3;
+		private System.Windows.Forms.TabPage tabPageUwagi;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
 		private System.Windows.Forms.GroupBox groupBox5;
 		private System.Windows.Forms.TextBox textBoxUwagiWewnetrzne;
@@ -1003,5 +1014,6 @@ namespace ProFak.UI
 		private System.Windows.Forms.NumericUpDown numericUpDownVat;
 		private System.Windows.Forms.NumericUpDown numericUpDownBrutto;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelDatyKwoty;
+		private System.Windows.Forms.TabPage tabPagePliki;
 	}
 }

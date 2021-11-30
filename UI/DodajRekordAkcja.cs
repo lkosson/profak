@@ -47,26 +47,13 @@ namespace ProFak.UI
 			using var nowyKontekst = new Kontekst(kontekst);
 			using var transakcja = nowyKontekst.Transakcja();
 			var rekord = UtworzRekord(nowyKontekst, zaznaczoneRekordy);
-			while (true)
-			{
-				try
-				{
-					using var edytor = new TEdytor();
-					using var okno = new Dialog(tytul, edytor, nowyKontekst);
-					if (pelnyEkran) okno.WindowState = FormWindowState.Maximized;
-					edytor.Przygotuj(nowyKontekst, rekord);
-					if (okno.ShowDialog() == DialogResult.OK)
-					{
-						ZapiszRekord(nowyKontekst, rekord);
-						transakcja.Zatwierdz();
-					}
-					break;
-				}
-				catch (Exception exc)
-				{
-					MessageBox.Show($"Wystąpił nieobsłużony błąd. Uruchom ponownie program i spróbuj ponownie wykonać operację.\n\n{exc}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			}
+			using var edytor = new TEdytor();
+			using var okno = new Dialog(tytul, edytor, nowyKontekst);
+			if (pelnyEkran) okno.WindowState = FormWindowState.Maximized;
+			edytor.Przygotuj(nowyKontekst, rekord);
+			if (okno.ShowDialog() != DialogResult.OK) return;
+			ZapiszRekord(nowyKontekst, rekord);
+			transakcja.Zatwierdz();
 		}
 	}
 }
