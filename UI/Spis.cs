@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -16,7 +18,8 @@ namespace ProFak.UI
 		private readonly Container container;
 		private readonly BindingSource bindingSource;
 		private IEnumerable<T> oryginalneRekordy;
-		private string filtr;
+		private Func<T, bool> filtr;
+		private List<(string kolumna, bool malejaco, Func<T, IComparable> metoda)> kolumnyKolejnosci;
 
 		public Kontekst Kontekst { get; set; }
 		public IEnumerable<T> WybraneRekordy
@@ -32,14 +35,12 @@ namespace ProFak.UI
 		public IEnumerable<T> Rekordy
 		{
 			get => bindingSource.DataSource as IEnumerable<T>;
-			set { oryginalneRekordy = value; var rekordy = Filtruj(value); bindingSource.DataSource = rekordy.ToList(); if (RekordyZmienione != null) RekordyZmienione(); }
+			set { oryginalneRekordy = value; var rekordy = Sortuj(value.Where(filtr)).ToList(); bindingSource.DataSource = rekordy; if (RekordyZmienione != null) RekordyZmienione(); }
 		}
 
 		public event Action RekordyZmienione;
 
 		public Ref<T> RekordPoczatkowy { get; set; }
-
-		public string Filtr { get => filtr; set { filtr = value; Rekordy = oryginalneRekordy; } }
 
 		public Spis()
 		{
@@ -55,6 +56,9 @@ namespace ProFak.UI
 			SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 			EnableHeadersVisualStyles = false;
 			TabIndex = 50;
+
+			kolumnyKolejnosci = new List<(string kolumna, bool malejaco, Func<T, IComparable> metoda)>();
+			filtr = x => true;
 
 			container = new Container();
 			bindingSource = new BindingSource(container);
@@ -124,28 +128,128 @@ namespace ProFak.UI
 		protected override void OnCellPainting(DataGridViewCellPaintingEventArgs e)
 		{
 			base.OnCellPainting(e);
-			if (e.RowIndex == -1) e.CellStyle.SelectionBackColor = System.Drawing.SystemColors.Control;
-			else UstawStylWiersza((T)Rows[e.RowIndex].DataBoundItem, Columns[e.ColumnIndex].DataPropertyName, e.CellStyle);
+			if (e.RowIndex == -1)
+			{
+				e.CellStyle.SelectionBackColor = System.Drawing.SystemColors.Control;
+			}
+			else
+			{
+				if (Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection == SortOrder.Ascending) e.CellStyle.BackColor = Color.FromArgb(210, 242, 167);
+				else if (Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection == SortOrder.Descending) e.CellStyle.BackColor = Color.FromArgb(242, 219, 167);
+
+				UstawStylWiersza((T)Rows[e.RowIndex].DataBoundItem, Columns[e.ColumnIndex].DataPropertyName, e.CellStyle);
+			}
 		}
 
 		protected virtual void UstawStylWiersza(T rekord, string kolumna, DataGridViewCellStyle styl)
 		{
 		}
 
-		private IEnumerable<T> Filtruj(IEnumerable<T> rekordy)
+		protected override void OnCellClick(DataGridViewCellEventArgs e)
 		{
-			if (String.IsNullOrWhiteSpace(Filtr)) return rekordy;
-			var fragmenty = Regex.Matches(Filtr, @"(?:[^\s""]+|""[^""]*"")+");
-			List<Func<T, bool>> dopasowania = new List<Func<T, bool>>();
-			foreach (Match fragment in fragmenty)
+			base.OnCellClick(e);
+			if (e.RowIndex == -1)
 			{
-				if (!fragment.Success) continue;
-				var fraza = fragment.Value;
-				Func<T, bool> dopasowanieFragmentu = rekord => rekord.CzyPasuje(fraza);
-				dopasowania.Add(dopasowanieFragmentu);
+				UstawKolejnosc(Columns[e.ColumnIndex].DataPropertyName, ModifierKeys != Keys.Control && ModifierKeys != Keys.Shift);
+				foreach (DataGridViewColumn kolumna in Columns)
+				{
+					kolumna.HeaderCell.SortGlyphDirection = SortOrder.None;
+				}
+				foreach (var kolumna in kolumnyKolejnosci)
+				{
+					Columns[kolumna.kolumna].HeaderCell.SortGlyphDirection = kolumna.malejaco ? SortOrder.Descending : SortOrder.Ascending;
+				}
 			}
-			var dopasowanie = (Func<T, bool>)Delegate.Combine(dopasowania.ToArray());
-			return rekordy.Where(dopasowanie);
+		}
+
+		public void UstawFiltr(string wyrazenieFiltra)
+		{
+			if (String.IsNullOrWhiteSpace(wyrazenieFiltra))
+			{
+				filtr = rekord => true;
+			}
+			else
+			{
+				var fragmenty = Regex.Matches(wyrazenieFiltra, @"(?:[^\s""]+|""[^""]*"")+");
+				List<Func<T, bool>> dopasowania = new List<Func<T, bool>>();
+				foreach (Match fragment in fragmenty)
+				{
+					if (!fragment.Success) continue;
+					var fraza = fragment.Value;
+					Func<T, bool> dopasowanieFragmentu = rekord => rekord.CzyPasuje(fraza);
+					dopasowania.Add(dopasowanieFragmentu);
+				}
+				filtr = (Func<T, bool>)Delegate.Combine(dopasowania.ToArray());
+			}
+
+			Rekordy = oryginalneRekordy;
+		}
+
+		public void UstawKolejnosc(string kolumna, bool zastap)
+		{
+			var getter = typeof(T).GetProperty(kolumna)?.GetGetMethod();
+			if (getter == null) return;
+			if (!getter.ReturnType.IsAssignableTo(typeof(IComparable))) return;
+
+			bool dodaj;
+			if (zastap)
+			{
+				for (int i = 0; i < kolumnyKolejnosci.Count; i++)
+				{
+					if (kolumnyKolejnosci[i].kolumna == kolumna)
+					{
+						kolumnyKolejnosci[i] = (kolumna, !kolumnyKolejnosci[i].malejaco, kolumnyKolejnosci[i].metoda);
+						zastap = false;
+						break;
+					}
+				}
+
+				if (zastap)
+				{
+					kolumnyKolejnosci.Clear();
+					dodaj = true;
+				}
+				else
+				{
+					dodaj = false;
+				}
+			}
+			else
+			{
+				dodaj = true;
+				for (int i = 0; i < kolumnyKolejnosci.Count; i++)
+				{
+					if (kolumnyKolejnosci[i].kolumna == kolumna)
+					{
+						kolumnyKolejnosci[i] = (kolumna, !kolumnyKolejnosci[i].malejaco, kolumnyKolejnosci[i].metoda);
+						dodaj = false;
+						break;
+					}
+				}
+			}
+
+			if (dodaj)
+			{
+				var parametr = Expression.Parameter(typeof(T), "rekord");
+				var wartoscExpr = Expression.Call(parametr, getter);
+				var wartoscCompExpr = Expression.Convert(wartoscExpr, typeof(IComparable));
+				var lambdaExpr = Expression.Lambda<Func<T, IComparable>>(wartoscCompExpr, parametr);
+				var metoda = lambdaExpr.Compile();
+				kolumnyKolejnosci.Add((kolumna, false, metoda));
+			}
+
+			Rekordy = oryginalneRekordy;
+		}
+
+		private IEnumerable<T> Sortuj(IEnumerable<T> rekordy)
+		{
+			var posortowane = rekordy.OrderBy(r => 0);
+			foreach (var kolumna in kolumnyKolejnosci)
+			{
+				if (kolumna.malejaco) posortowane = posortowane.ThenByDescending(kolumna.metoda);
+				else posortowane = posortowane.ThenBy(kolumna.metoda);
+			}
+			return posortowane;
 		}
 	}
 }

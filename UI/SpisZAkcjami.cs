@@ -51,7 +51,7 @@ namespace ProFak.UI
 
 		private void wyszukiwarka_TextChanged(object sender, EventArgs e)
 		{
-			Spis.Filtr = wyszukiwarka.Text;
+			Spis.UstawFiltr(wyszukiwarka.Text);
 		}
 
 		private void spis_KeyDown(object sender, KeyEventArgs e)
