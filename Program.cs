@@ -7,11 +7,17 @@ using System.Windows.Forms;
 
 namespace ProFak
 {
-	static class Program
+	public static class Program
 	{
 		[STAThread]
-		static void Main()
+		public static void Main(string[] args)
 		{
+			if (args.Length > 0)
+			{
+				if (args[0] == "xsd") Wydruki.GeneratorXSD.Utworz();
+				return;
+			}
+
 			Application.SetHighDpiMode(HighDpiMode.SystemAware);
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);

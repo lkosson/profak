@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ProFak.Wydruki
+{
+	public class FakturaDTO
+	{
+		public string Tytul { get; set; }
+		public string Podtytul { get; set; }
+		public string Naglowek { get; set; }
+		public string DaneSprzedawcy { get; set; }
+		public string DaneNabywcy { get; set; }
+		public string Stopka { get; set; }
+
+		public string NaglowekPozycji { get; set; }
+		public string OpisPozycji { get; set; }
+		public decimal CenaNetto { get; set; }
+		public decimal Ilosc { get; set; }
+		public decimal WartoscNetto { get; set; }
+		public string StawkaVAT { get; set; }
+		public decimal WartoscVat { get; set; }
+		public decimal WartoscBrutto { get; set; }
+	}
+}

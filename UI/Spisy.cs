@@ -35,7 +35,8 @@ namespace ProFak.UI
 				new FakturaProformaAkcja(),
 				new KorektaFakturyAkcja(),
 				new EdytujRekordAkcja<Faktura, FakturaEdytor>("Edycja faktury"/*, pelnyEkran: true */),
-				new UsunRekordAkcja<Faktura>()
+				new UsunRekordAkcja<Faktura>(),
+				new WydrukFakturyAction()
 			);
 		}
 

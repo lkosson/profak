@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified" id="Wydruki" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="FakturaDTO" nillable="true" type="FakturaDTO" />
+  <xs:complexType name="FakturaDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="Tytul" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Podtytul" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Naglowek" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="DaneSprzedawcy" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="DaneNabywcy" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Stopka" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="NaglowekPozycji" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="OpisPozycji" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="CenaNetto" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Ilosc" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="WartoscNetto" type="xs:decimal" />
+      <xs:element minOccurs="0" maxOccurs="1" name="StawkaVAT" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="WartoscVat" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="WartoscBrutto" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

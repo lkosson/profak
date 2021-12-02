@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "ProFak": {
+      "commandName": "Project"
+    },
+    "XSD": {
+      "commandName": "Project",
+      "commandLineArgs": "xsd"
+    }
+  }
+}
