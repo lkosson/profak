@@ -26,27 +26,27 @@ namespace ProFak.Wydruki
 				var waluta = baza.Znajdz(faktura.WalutaRef);
 
 				var fakturaDTO = new FakturaDTO();
-				if (faktura.Rodzaj == RodzajFaktury.Sprzedaż) fakturaDTO.Tytul = "Faktura VAT numer ";
-				else if (faktura.Rodzaj == RodzajFaktury.Proforma) fakturaDTO.Tytul = "Faktura pro forma numer ";
-				else if (faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży) fakturaDTO.Tytul = "Korekta faktury VAT numer ";
-				else fakturaDTO.Tytul = faktura.Rodzaj + " ";
+				if (faktura.Rodzaj == RodzajFaktury.Sprzedaż) fakturaDTO.Tytul = "<b>Faktura VAT</b><br/>";
+				else if (faktura.Rodzaj == RodzajFaktury.Proforma) fakturaDTO.Tytul = "<b>Faktura pro forma</b><br/>";
+				else if (faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży) fakturaDTO.Tytul = "<b>Korekta faktury VAT</b><br/>";
+				else fakturaDTO.Tytul = "<b>" + faktura.Rodzaj + "</b><br/>";
 
-				fakturaDTO.Tytul += "<b>" + faktura.Numer + "</b>";
+				fakturaDTO.Tytul += faktura.Numer;
 
 				if (faktura.FakturaKorygowanaRef.IsNotNull)
 				{
 					var fakturaBazowa = baza.Znajdz(faktura.FakturaKorygowanaRef);
-					if (fakturaBazowa.Rodzaj == RodzajFaktury.Proforma) fakturaDTO.Podtytul = "do faktury pro forma numer <b>" + fakturaBazowa.Numer + "</b>";
-					else fakturaDTO.Podtytul = "do faktury VAT numer <b>" + fakturaBazowa.Numer + "</b><br/>z dnia " + fakturaBazowa.DataWystawienia.ToLongDateString() + "<br/>";
+					if (fakturaBazowa.Rodzaj == RodzajFaktury.Proforma) fakturaDTO.Podtytul = "do faktury pro forma <b>" + fakturaBazowa.Numer + "</b>";
+					else fakturaDTO.Podtytul = "do faktury VAT <b>" + fakturaBazowa.Numer + "</b><br/>z dnia " + fakturaBazowa.DataWystawienia.ToLongDateString() + "<br/>";
 				}
 
 				fakturaDTO.Naglowek = "<b>Data wystawienia:</b> " + faktura.DataWystawienia.ToLongDateString()
 					+ "<br/><b>Data sprzedaży:</b> " + faktura.DataSprzedazy.ToLongDateString();
 
-				fakturaDTO.DaneNabywcy = faktura.DaneNabywcy.ToString().Replace("\n", "<br/>");
+				fakturaDTO.DaneNabywcy = faktura.NazwaNabywcy + "<br/>" + faktura.DaneNabywcy.ToString().Replace("\n", "<br/>");
 				if (!String.IsNullOrEmpty(faktura.NIPNabywcy)) fakturaDTO.DaneNabywcy += "<br/><b>NIP:</b> " + faktura.NIPNabywcy;
 
-				fakturaDTO.DaneSprzedawcy = faktura.DaneSprzedawcy.ToString().Replace("\n", "<br/>");
+				fakturaDTO.DaneSprzedawcy = faktura.NazwaSprzedawcy + "<br/>" + faktura.DaneSprzedawcy.ToString().Replace("\n", "<br/>");
 				if (!String.IsNullOrEmpty(faktura.NIPSprzedawcy)) fakturaDTO.DaneSprzedawcy += "<br/><b>NIP:</b> " + faktura.NIPSprzedawcy;
 
 				if (dozaplaty < 0)
