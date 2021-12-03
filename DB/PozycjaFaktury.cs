@@ -21,12 +21,15 @@ namespace ProFak.DB
 		public decimal WartoscBrutto { get; set; }
 		public bool CzyWedlugCenBrutto { get; set; }
 		public bool CzyWartosciReczne { get; set; }
+		public int StawkaVatId { get; set; }
 
 		public Ref<Faktura> FakturaRef { get => FakturaId; set => FakturaId = value; }
 		public Ref<Towar> TowarRef { get => TowarId; set => TowarId = value; }
+		public Ref<StawkaVat> StawkaVatRef { get => StawkaVatId; set => StawkaVatId = value; }
 
 		public Faktura Faktura { get; set; }
 		public Towar Towar { get; set; }
+		public StawkaVat StawkaVat { get; set; }
 
 		public decimal Cena => CzyWedlugCenBrutto ? CenaBrutto : CenaNetto;
 

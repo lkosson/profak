@@ -28,14 +28,17 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.CzyWedlugCenBrutto).HasDefaultValue(false).IsRequired();
 			builder.Property(e => e.CzyWartosciReczne).HasDefaultValue(false).IsRequired();
 
-			builder.Property(e => e.FakturaId);
+			builder.Property(e => e.FakturaId).IsRequired();
 			builder.Property(e => e.TowarId);
+			builder.Property(e => e.StawkaVatId).IsRequired();
 
 			builder.Ignore(e => e.FakturaRef);
 			builder.Ignore(e => e.TowarRef);
+			builder.Ignore(e => e.StawkaVatRef);
 
 			builder.HasOne(e => e.Faktura).WithMany(e => e.Pozycje).HasForeignKey(e => e.FakturaId).OnDelete(DeleteBehavior.Cascade);
-			builder.HasOne(e => e.Towar).WithMany().HasForeignKey(e => e.TowarId).OnDelete(DeleteBehavior.Cascade);
+			builder.HasOne(e => e.Towar).WithMany().HasForeignKey(e => e.TowarId).OnDelete(DeleteBehavior.SetNull);
+			builder.HasOne(e => e.StawkaVat).WithMany().HasForeignKey(e => e.StawkaVatId).OnDelete(DeleteBehavior.NoAction);
 		}
 	}
 }
