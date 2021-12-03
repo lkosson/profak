@@ -30,7 +30,7 @@ namespace ProFak.DB.Model
 
 			builder.Property(e => e.FakturaId).IsRequired();
 			builder.Property(e => e.TowarId);
-			builder.Property(e => e.StawkaVatId).IsRequired();
+			builder.Property(e => e.StawkaVatId);
 
 			builder.Ignore(e => e.FakturaRef);
 			builder.Ignore(e => e.TowarRef);

@@ -21,7 +21,7 @@ namespace ProFak.DB
 		public decimal WartoscBrutto { get; set; }
 		public bool CzyWedlugCenBrutto { get; set; }
 		public bool CzyWartosciReczne { get; set; }
-		public int StawkaVatId { get; set; }
+		public int? StawkaVatId { get; set; }
 
 		public Ref<Faktura> FakturaRef { get => FakturaId; set => FakturaId = value; }
 		public Ref<Towar> TowarRef { get => TowarId; set => TowarId = value; }
@@ -49,8 +49,8 @@ namespace ProFak.DB
 		public void PrzeliczCeny(Baza baza)
 		{
 			if (CzyWartosciReczne) return;
-			var towar = baza.Towary.Include(towar => towar.StawkaVat).FirstOrDefault(towar => towar.Id == TowarId);
-			var procentVat = towar?.StawkaVat?.Wartosc ?? 0;
+			var stawkaVat = baza.Znajdz(StawkaVatRef);
+			var procentVat = stawkaVat?.Wartosc ?? 0;
 
 			if (CzyWedlugCenBrutto)
 			{

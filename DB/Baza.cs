@@ -113,5 +113,38 @@ namespace ProFak.DB
 		public TRekord Znajdz<TRekord>(Ref<TRekord> rekordRef)
 			where TRekord : Rekord<TRekord>
 			=> Set<TRekord>().FirstOrDefault(r => r.Id == rekordRef.Id);
+
+		public IEnumerable<Dictionary<string, object>> Zapytanie(FormattableString zapytanie)
+		{
+			using var polaczenie = Database.GetDbConnection();
+			polaczenie.Open();
+			using var polecenie = polaczenie.CreateCommand();
+			var nazwyParametrow = new List<string>();
+			for (int i = 0; i < zapytanie.ArgumentCount; i++)
+			{
+				var nazwaParametru = "@P" + i;
+				nazwyParametrow.Add(nazwaParametru);
+				var wartoscParametru = zapytanie.GetArgument(i);
+				if (wartoscParametru == null) wartoscParametru = DBNull.Value;
+				var parametr = polecenie.CreateParameter();
+				parametr.ParameterName = nazwaParametru;
+				parametr.Value = wartoscParametru;
+				polecenie.Parameters.Add(parametr);
+			}
+			var sql = String.Format(zapytanie.Format, nazwyParametrow);
+			polecenie.CommandText = sql;
+			using var reader = polecenie.ExecuteReader();
+			var wynik = new List<Dictionary<string, object>>();
+			while (reader.Read())
+			{
+				var wiersz = new Dictionary<string, object>();
+				for (int i = 0; i < reader.FieldCount; i++)
+				{
+					wiersz[reader.GetName(i)] = reader.GetValue(i);
+				}
+				wynik.Add(wiersz);
+			}
+			return wynik;
+		}
 	}
 }

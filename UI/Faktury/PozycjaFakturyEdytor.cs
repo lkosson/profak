@@ -28,8 +28,10 @@ namespace ProFak.UI
 			kontroler.Powiazanie(numericUpDownWartoscBrutto, pozycja => pozycja.WartoscBrutto, PrzeliczCeny);
 			kontroler.Powiazanie(checkBoxWedlugBrutto, pozycja => pozycja.CzyWedlugCenBrutto, KonfigurujCeny);
 			kontroler.Powiazanie(checkBoxRecznie, pozycja => pozycja.CzyWartosciReczne, KonfigurujCeny);
+			kontroler.Powiazanie(comboBoxStawkaVat, pozycja => pozycja.StawkaVatRef);
 
 			Wymagane(comboBoxTowar);
+			Wymagane(comboBoxStawkaVat);
 		}
 
 		protected override void KontekstGotowy()
@@ -48,11 +50,20 @@ namespace ProFak.UI
 					Rekord.CzyWedlugCenBrutto = towar.CzyWedlugCenBrutto;
 					Rekord.CenaBrutto = towar.CenaBrutto;
 					Rekord.CenaNetto = towar.CenaNetto;
+					Rekord.StawkaVatRef = towar.StawkaVatRef;
 					KonfigurujPoleIlosci();
 					KonfigurujCeny();
 					PrzeliczCeny();
 				},
 				Spisy.Towary)
+				.Zainstaluj();
+
+			new Slownik<StawkaVat>(
+				Kontekst, comboBoxStawkaVat, buttonStawkaVat,
+				Kontekst.Baza.StawkiVat.ToList,
+				stawka => stawka.Skrot,
+				stawka => { PrzeliczCeny(); },
+				Spisy.StawkiVat)
 				.Zainstaluj();
 		}
 
