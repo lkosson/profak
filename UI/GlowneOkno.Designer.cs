@@ -49,11 +49,15 @@ namespace ProFak.UI
 			System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Wpłaty");
 			System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Numeracja");
 			System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Stany numeratorów");
-			System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Serwisowe", new System.Windows.Forms.TreeNode[] {
+			System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Polecenie SQL");
+			System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Bezpośrednia edycja");
+			System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Serwisowe", new System.Windows.Forms.TreeNode[] {
             treeNode11,
             treeNode12,
             treeNode13,
-            treeNode14});
+            treeNode14,
+            treeNode15,
+            treeNode16});
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.treeViewMenu = new System.Windows.Forms.TreeView();
 			this.panelZawartosc = new System.Windows.Forms.Panel();
@@ -103,14 +107,18 @@ namespace ProFak.UI
 			treeNode13.Text = "Numeracja";
 			treeNode14.Name = "StanyNumeratorow";
 			treeNode14.Text = "Stany numeratorów";
-			treeNode15.Name = "Node1";
-			treeNode15.Text = "Serwisowe";
+			treeNode15.Name = "SQL";
+			treeNode15.Text = "Polecenie SQL";
+			treeNode16.Name = "Tabele";
+			treeNode16.Text = "Bezpośrednia edycja";
+			treeNode17.Name = "Node1";
+			treeNode17.Text = "Serwisowe";
 			this.treeViewMenu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode3,
             treeNode4,
             treeNode5,
             treeNode10,
-            treeNode15});
+            treeNode17});
 			this.treeViewMenu.Size = new System.Drawing.Size(247, 593);
 			this.treeViewMenu.TabIndex = 1;
 			this.treeViewMenu.DoubleClick += new System.EventHandler(this.treeViewMenu_DoubleClick);

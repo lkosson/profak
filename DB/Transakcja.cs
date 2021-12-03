@@ -14,7 +14,11 @@ namespace ProFak
 		private readonly IDbContextTransaction dbContextTransaction;
 		private readonly string savepoint;
 		private bool zatwierdzona;
+		private bool zakonczona;
 		private static int sp;
+
+		public bool CzyZatwierdzona => zatwierdzona;
+		public bool CzyZamknieta => zakonczona;
 
 		public Transakcja(Baza baza)
 		{
@@ -42,6 +46,7 @@ namespace ProFak
 			if (zatwierdzona) return;
 			if (savepoint != null) dbContextTransaction.RollbackToSavepoint(savepoint);
 			if (poprzednia == null) dbContextTransaction.Dispose();
+			zakonczona = true;
 		}
 	}
 }

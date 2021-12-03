@@ -99,6 +99,12 @@ namespace ProFak.DB
 			}
 		}
 
+		public void Zapisz(object rekord)
+		{
+			Entry(rekord).State = EntityState.Modified;
+			SaveChanges();
+		}
+
 		public void Usun<TRekord>(TRekord rekord)
 			where TRekord : Rekord<TRekord>
 			=> Usun(new[] { rekord });

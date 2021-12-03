@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	class SpisZAkcjami<TRekord> : TableLayoutPanel
+	class SpisZAkcjami<TRekord> : TableLayoutPanel, IKontrolkaZKontekstem
 		where TRekord : Rekord<TRekord>
 	{
 		protected readonly PanelAkcji panelAkcji;
@@ -21,6 +21,8 @@ namespace ProFak.UI
 
 		public Spis<TRekord> Spis { get; }
 		public List<AkcjaNaSpisie<TRekord>> Akcje => akcje;
+
+		public Kontekst Kontekst { get => Spis.Kontekst; set => Spis.Kontekst = value; }
 
 		public SpisZAkcjami(Spis<TRekord> spis)
 		{

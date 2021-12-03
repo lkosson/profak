@@ -56,13 +56,15 @@ namespace ProFak.UI
 			else if (pozycja.Name == "Wplaty") Wyswietl(Spisy.Wplaty(), pozycja.Name);
 			else if (pozycja.Name == "Numeratory") Wyswietl(Spisy.Numeratory(), pozycja.Name);
 			else if (pozycja.Name == "StanyNumeratorow") Wyswietl(Spisy.StanyNumeratorow(), pozycja.Name);
+			else if (pozycja.Name == "SQL") Wyswietl(new EkranSQL(), pozycja.Name);
+			else if (pozycja.Name == "Tabele") Wyswietl(new EdytorTabeli(), pozycja.Name);
 		}
 
-		private void Wyswietl<TRekord>(SpisZAkcjami<TRekord> kontrolka, string nazwa)
-			where TRekord : DB.Rekord<TRekord>
+		private void Wyswietl<TKontrolka>(TKontrolka kontrolka, string nazwa)
+			where TKontrolka : Control, IKontrolkaZKontekstem
 		{
 			var kontekst = new Kontekst();
-			kontrolka.Spis.Kontekst = kontekst;
+			kontrolka.Kontekst = kontekst;
 			kontrolka.Name = nazwa;
 			kontrolka.Disposed += delegate { kontekst.Dispose(); };
 			kontrolka.Dock = DockStyle.Fill;
