@@ -13,14 +13,12 @@ namespace ProFak.UI
 		where TRekord : Rekord<TRekord>, new()
 		where TEdytor : Edytor<TRekord>, new()
 	{
-		private readonly string tytul;
 		private readonly bool pelnyEkran;
 
-		public override string Nazwa => "✎ Wyświetl zaznaczoną pozycję";
+		public override string Nazwa => "✎ Wyświetl [F4]";
 
-		public EdytujRekordAkcja(string tytul, bool pelnyEkran = false)
+		public EdytujRekordAkcja(bool pelnyEkran = false)
 		{
-			this.tytul = tytul;
 			this.pelnyEkran = pelnyEkran;
 		}
 
@@ -34,7 +32,7 @@ namespace ProFak.UI
 			using var transakcja = nowyKontekst.Transakcja();
 			var rekord = nowyKontekst.Baza.Znajdz(zaznaczoneRekordy.Single().Ref);
 			using var edytor = new TEdytor();
-			using var okno = new Dialog(tytul, edytor, nowyKontekst);
+			using var okno = new Dialog("Edycja danych", edytor, nowyKontekst);
 			if (pelnyEkran) okno.WindowState = FormWindowState.Maximized;
 			edytor.Przygotuj(nowyKontekst, rekord);
 			if (okno.ShowDialog() != DialogResult.OK) return;

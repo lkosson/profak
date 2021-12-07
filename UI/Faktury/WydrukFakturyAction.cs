@@ -12,8 +12,9 @@ namespace ProFak.UI
 {
 	class WydrukFakturyAction : AkcjaNaSpisie<Faktura>
 	{
-		public override string Nazwa => "🖶 Drukuj fakturę";
+		public override string Nazwa => "🖶 Drukuj [CTRL-P]";
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) => zaznaczoneRekordy.Any();
+		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => klawisz == Keys.P && modyfikatory == Keys.Control;
 
 		public override void Uruchom(Kontekst kontekst, IEnumerable<Faktura> zaznaczoneRekordy)
 		{

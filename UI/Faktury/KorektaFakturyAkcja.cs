@@ -11,8 +11,9 @@ namespace ProFak.UI
 {
 	class KorektaFakturyAkcja : DodajRekordAkcja<Faktura, FakturaEdytor>
 	{
+		public override string Nazwa => "➕ Wystaw korektę";
+
 		public KorektaFakturyAkcja()
-			: base("Nowa korekta faktury" /*, pelnyEkran: true */)
 		{
 		}
 

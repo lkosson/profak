@@ -34,7 +34,7 @@ namespace ProFak.UI
 				new FakturaSprzedazyAkcja(),
 				new FakturaProformaAkcja(),
 				new KorektaFakturyAkcja(),
-				new EdytujRekordAkcja<Faktura, FakturaEdytor>("Edycja faktury"/*, pelnyEkran: true */),
+				new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
 				new UsunRekordAkcja<Faktura>(),
 				new WydrukFakturyAction(),
 				new PrzeladujAkcja<Faktura>()
@@ -44,9 +44,9 @@ namespace ProFak.UI
 		public static SpisZAkcjami<Faktura, FakturaZakupuSpis> FakturyZakupu()
 		{
 			return Utworz(new FakturaZakupuSpis(),
-				new DodajRekordAkcja<Faktura, FakturaEdytor>("Nowa faktura zakupu", faktura => faktura.Rodzaj = RodzajFaktury.Zakup/*, pelnyEkran: true */),
+				new DodajRekordAkcja<Faktura, FakturaEdytor>(faktura => faktura.Rodzaj = RodzajFaktury.Zakup),
 				new KorektaFakturyAkcja(),
-				new EdytujRekordAkcja<Faktura, FakturaEdytor>("Edycja faktury"/*, pelnyEkran: true */),
+				new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
 				new UsunRekordAkcja<Faktura>(),
 				new PrzeladujAkcja<Faktura>()
 			);
@@ -55,8 +55,8 @@ namespace ProFak.UI
 		public static SpisZAkcjami<JednostkaMiary, JednostkaMiarySpis> JednostkiMiar()
 		{
 			return Utworz(new JednostkaMiarySpis(),
-				new DodajRekordAkcja<JednostkaMiary, JednostkaMiaryEdytor>("Nowa jednostka miary"),
-				new EdytujRekordAkcja<JednostkaMiary, JednostkaMiaryEdytor>("Edycja jednostki miary"),
+				new DodajRekordAkcja<JednostkaMiary, JednostkaMiaryEdytor>(),
+				new EdytujRekordAkcja<JednostkaMiary, JednostkaMiaryEdytor>(),
 				new UsunRekordAkcja<JednostkaMiary>(),
 				new PrzeladujAkcja<JednostkaMiary>()
 			);
@@ -65,8 +65,8 @@ namespace ProFak.UI
 		public static SpisZAkcjami<Kontrahent, KontrahentSpis> Kontrahenci()
 		{
 			return Utworz(new KontrahentSpis(),
-				new DodajRekordAkcja<Kontrahent, KontrahentEdytor>("Nowy kontrahent"),
-				new EdytujRekordAkcja<Kontrahent, KontrahentEdytor>("Edycja kontrahenta"),
+				new DodajRekordAkcja<Kontrahent, KontrahentEdytor>(),
+				new EdytujRekordAkcja<Kontrahent, KontrahentEdytor>(),
 				new UsunRekordAkcja<Kontrahent>(),
 				new PrzeladujAkcja<Kontrahent>()
 			);
@@ -75,8 +75,8 @@ namespace ProFak.UI
 		public static SpisZAkcjami<Numerator, NumeratorSpis> Numeratory()
 		{
 			return Utworz(new NumeratorSpis(),
-				new DodajRekordAkcja<Numerator, NumeratorEdytor>("Nowy numerator"),
-				new EdytujRekordAkcja<Numerator, NumeratorEdytor>("Edycja numeratora"),
+				new DodajRekordAkcja<Numerator, NumeratorEdytor>(),
+				new EdytujRekordAkcja<Numerator, NumeratorEdytor>(),
 				new UsunRekordAkcja<Numerator>(),
 				new PrzeladujAkcja<Numerator>()
 			);
@@ -97,8 +97,8 @@ namespace ProFak.UI
 		{
 			var spis = new PozycjaFakturySpis();
 			return Utworz(spis,
-				new DodajRekordAkcja<PozycjaFaktury, PozycjaFakturyEdytor>("Nowa pozycja", pozycja => pozycja.FakturaRef = spis.FakturaRef),
-				new EdytujRekordAkcja<PozycjaFaktury, PozycjaFakturyEdytor>("Edycja pozycji"),
+				new DodajRekordAkcja<PozycjaFaktury, PozycjaFakturyEdytor>(pozycja => pozycja.FakturaRef = spis.FakturaRef),
+				new EdytujRekordAkcja<PozycjaFaktury, PozycjaFakturyEdytor>(),
 				new UsunRekordAkcja<PozycjaFaktury>(),
 				new PrzeladujAkcja<PozycjaFaktury>()
 			);
@@ -107,8 +107,8 @@ namespace ProFak.UI
 		public static SpisZAkcjami<SposobPlatnosci, SposobPlatnosciSpis> SposobyPlatnosci()
 		{
 			return Utworz(new SposobPlatnosciSpis(),
-				new DodajRekordAkcja<SposobPlatnosci, SposobPlatnosciEdytor>("Nowy sposób płatności"),
-				new EdytujRekordAkcja<SposobPlatnosci, SposobPlatnosciEdytor>("Edycja sposobu płatności"),
+				new DodajRekordAkcja<SposobPlatnosci, SposobPlatnosciEdytor>(),
+				new EdytujRekordAkcja<SposobPlatnosci, SposobPlatnosciEdytor>(),
 				new UsunRekordAkcja<SposobPlatnosci>(),
 				new PrzeladujAkcja<SposobPlatnosci>()
 			);
@@ -118,8 +118,8 @@ namespace ProFak.UI
 		{
 			var spis = new StanNumeratoraSpis();
 			return Utworz(spis,
-				new DodajRekordAkcja<StanNumeratora, StanNumeratoraEdytor>("Nowy stan", stanNumeratora => stanNumeratora.NumeratorRef = spis.NumeratorRef),
-				new EdytujRekordAkcja<StanNumeratora, StanNumeratoraEdytor>("Edycja stanu"),
+				new DodajRekordAkcja<StanNumeratora, StanNumeratoraEdytor>(stanNumeratora => stanNumeratora.NumeratorRef = spis.NumeratorRef),
+				new EdytujRekordAkcja<StanNumeratora, StanNumeratoraEdytor>(),
 				new UsunRekordAkcja<StanNumeratora>(),
 				new PrzeladujAkcja<StanNumeratora>()
 			);
@@ -128,8 +128,8 @@ namespace ProFak.UI
 		public static SpisZAkcjami<StawkaVat, StawkaVatSpis> StawkiVat()
 		{
 			return Utworz(new StawkaVatSpis(),
-				new DodajRekordAkcja<StawkaVat, StawkaVatEdytor>("Nowa stawka VAT"),
-				new EdytujRekordAkcja<StawkaVat, StawkaVatEdytor>("Edycja stawki VAT"),
+				new DodajRekordAkcja<StawkaVat, StawkaVatEdytor>(),
+				new EdytujRekordAkcja<StawkaVat, StawkaVatEdytor>(),
 				new UsunRekordAkcja<StawkaVat>(),
 				new PrzeladujAkcja<StawkaVat>()
 			);
@@ -138,8 +138,8 @@ namespace ProFak.UI
 		public static SpisZAkcjami<Towar, TowarSpis> Towary()
 		{
 			return Utworz(new TowarSpis(),
-				new DodajRekordAkcja<Towar, TowarEdytor>("Nowy towar"),
-				new EdytujRekordAkcja<Towar, TowarEdytor>("Edycja towaru"),
+				new DodajRekordAkcja<Towar, TowarEdytor>(),
+				new EdytujRekordAkcja<Towar, TowarEdytor>(),
 				new UsunRekordAkcja<Towar>(),
 				new PrzeladujAkcja<Towar>()
 			);
@@ -148,8 +148,8 @@ namespace ProFak.UI
 		public static SpisZAkcjami<Waluta, WalutaSpis> Waluty()
 		{
 			return Utworz(new WalutaSpis(),
-				new DodajRekordAkcja<Waluta, WalutaEdytor>("Nowa waluta"),
-				new EdytujRekordAkcja<Waluta, WalutaEdytor>("Edycja waluty"),
+				new DodajRekordAkcja<Waluta, WalutaEdytor>(),
+				new EdytujRekordAkcja<Waluta, WalutaEdytor>(),
 				new UsunRekordAkcja<Waluta>(),
 				new PrzeladujAkcja<Waluta>()
 			);
@@ -159,8 +159,8 @@ namespace ProFak.UI
 		{
 			var spis = new WplataSpis();
 			return Utworz(spis,
-				new DodajRekordAkcja<Wplata, WplataEdytor>("Nowa wpłata", wplata => wplata.FakturaRef = spis.FakturaRef),
-				new EdytujRekordAkcja<Wplata, WplataEdytor>("Edycja wpłaty"),
+				new DodajRekordAkcja<Wplata, WplataEdytor>(wplata => wplata.FakturaRef = spis.FakturaRef),
+				new EdytujRekordAkcja<Wplata, WplataEdytor>(),
 				new UsunRekordAkcja<Wplata>(),
 				new PrzeladujAkcja<Wplata>()
 			);

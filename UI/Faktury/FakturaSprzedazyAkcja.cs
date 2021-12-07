@@ -11,8 +11,10 @@ namespace ProFak.UI
 {
 	class FakturaSprzedazyAkcja : DodajRekordAkcja<Faktura, FakturaEdytor>
 	{
+		public override string Nazwa => "➕ Wystaw fakturę [INS]";
+
 		public FakturaSprzedazyAkcja()
-			: base("Nowa faktura sprzedaży", faktura => faktura.Rodzaj = RodzajFaktury.Sprzedaż /*, pelnyEkran: true */)
+			: base(faktura => faktura.Rodzaj = RodzajFaktury.Sprzedaż)
 		{
 		}
 
