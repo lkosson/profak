@@ -42,6 +42,7 @@ namespace ProFak.UI
 
 			panelAkcji.DodajKontrolke(wyszukiwarka);
 			wyszukiwarka.TextChanged += wyszukiwarka_TextChanged;
+			wyszukiwarka.KeyDown += wyszukiwarka_KeyDown;
 
 			spis.Dock = DockStyle.Fill;
 			spis.SelectionChanged += spis_SelectionChanged;
@@ -51,6 +52,21 @@ namespace ProFak.UI
 			MinimumSize = new Size(panelAkcji.MinimumSize.Width + spis.MinimumSize.Width, panelAkcji.MinimumSize.Height + spis.MinimumSize.Height);
 		}
 
+		private void wyszukiwarka_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Escape)
+			{
+				wyszukiwarka.Text = "";
+				Spis.Focus();
+				e.Handled = true;
+			}
+			else if (e.KeyCode == Keys.Enter)
+			{
+				Spis.Focus();
+				e.Handled = true;
+			}
+		}
+
 		private void wyszukiwarka_TextChanged(object sender, EventArgs e)
 		{
 			Spis.UstawFiltr(wyszukiwarka.Text);
@@ -58,7 +74,7 @@ namespace ProFak.UI
 
 		private void spis_KeyDown(object sender, KeyEventArgs e)
 		{
-			ObsluzKlawisz(e.KeyCode, e.Modifiers);
+			e.Handled = ObsluzKlawisz(e.KeyCode, e.Modifiers);
 		}
 
 		private void spis_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -71,11 +87,11 @@ namespace ProFak.UI
 			panelAkcji.Aktualizuj();
 		}
 
-		protected virtual void ObsluzKlawisz(Keys klawisz, Keys modyfikatory)
+		protected virtual bool ObsluzKlawisz(Keys klawisz, Keys modyfikatory)
 		{
-			if (klawisz == Keys.F3 || (klawisz == Keys.F && modyfikatory == Keys.Control)) wyszukiwarka.Focus();
-			else if (klawisz == Keys.F5) Spis.PrzeladujBezpiecznie();
-			else panelAkcji.ObsluzKlawisz(klawisz, modyfikatory);
+			if (klawisz == Keys.Escape) { Dispose(); return true; }
+			else if (klawisz == Keys.F3 || (klawisz == Keys.F && modyfikatory == Keys.Control)) { wyszukiwarka.Focus(); return true; }
+			else return panelAkcji.ObsluzKlawisz(klawisz, modyfikatory);
 		}
 
 		protected override void OnGotFocus(EventArgs e)

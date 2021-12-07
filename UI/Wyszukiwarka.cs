@@ -11,7 +11,7 @@ namespace ProFak.UI
 	{
 		public Wyszukiwarka()
 		{
-			PlaceholderText = "Wyszukaj ...";
+			PlaceholderText = "[F3] Wyszukaj ...";
 		}
 	}
 }

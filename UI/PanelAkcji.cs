@@ -78,16 +78,17 @@ namespace ProFak.UI
 			przycisk.Enabled = adapter.CzyDostepna;
 		}
 
-		public void ObsluzKlawisz(Keys klawisz, Keys modyfikatory)
+		public bool ObsluzKlawisz(Keys klawisz, Keys modyfikatory)
 		{
 			foreach ((_, var adapter) in przyciski)
 			{
 				if (adapter.CzyKlawiszSkrotu(klawisz, modyfikatory))
 				{
 					adapter.Uruchom();
-					return;
+					return true;
 				}
 			}
+			return false;
 		}
 	}
 }

@@ -66,25 +66,11 @@ namespace ProFak.UI
 			var kontekst = new Kontekst();
 			kontrolka.Kontekst = kontekst;
 			kontrolka.Name = nazwa;
-			kontrolka.Disposed += delegate { kontekst.Dispose(); };
+			kontrolka.Disposed += delegate { panelZawartosc.Controls.Remove(kontrolka); treeViewMenu.Focus(); kontekst.Dispose(); };
 			kontrolka.Dock = DockStyle.Fill;
 			panelZawartosc.Controls.Add(kontrolka);
 			kontrolka.BringToFront();
 			kontrolka.Focus();
-		}
-
-		private void GlowneOkno_KeyPress(object sender, KeyPressEventArgs e)
-		{
-			if (e.KeyChar == 27)
-			{
-				var kontrolka = ActiveControl;
-				while (kontrolka != null && kontrolka.Parent != panelZawartosc) kontrolka = kontrolka.Parent;
-				if (kontrolka == null) return;
-				e.Handled = true;
-				panelZawartosc.Controls.Remove(kontrolka);
-				kontrolka.Dispose();
-				treeViewMenu.Focus();
-			}
 		}
 	}
 }

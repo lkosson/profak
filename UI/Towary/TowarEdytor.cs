@@ -58,8 +58,30 @@ namespace ProFak.UI
 		protected override void PrzygotujRekord(Towar rekord)
 		{
 			base.PrzygotujRekord(rekord);
-			rekord.StawkaVat = Kontekst.Baza.StawkiVat.Single(stawka => stawka.Id == rekord.StawkaVatId);
-			rekord.JednostkaMiary = Kontekst.Baza.JednostkiMiar.Single(jednostka => jednostka.Id == rekord.JednostkaMiaryId);
+			if (rekord.StawkaVatRef.IsNull)
+			{
+				var domyslna = Kontekst.Baza.StawkiVat.OrderByDescending(stawka => stawka.CzyDomyslna).ThenBy(stawka => stawka.Id).FirstOrDefault();
+				if (domyslna != null)
+				{
+					rekord.StawkaVat = domyslna;
+					rekord.StawkaVatRef = domyslna;
+				}
+			}
+			else
+			{
+				rekord.StawkaVat = Kontekst.Baza.StawkiVat.Single(stawka => stawka.Id == rekord.StawkaVatId);
+			}
+
+			if (rekord.JednostkaMiaryRef.IsNull)
+			{
+				var domyslna = Kontekst.Baza.JednostkiMiar.OrderByDescending(jednostka => jednostka.CzyDomyslna).ThenBy(jednostka => jednostka.Id).FirstOrDefault();
+				rekord.JednostkaMiary = domyslna;
+				rekord.JednostkaMiaryRef = domyslna;
+			}
+			else
+			{
+				rekord.JednostkaMiary = Kontekst.Baza.JednostkiMiar.Single(jednostka => jednostka.Id == rekord.JednostkaMiaryId);
+			}
 		}
 
 		protected override void RekordGotowy()
