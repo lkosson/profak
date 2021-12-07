@@ -16,7 +16,7 @@ namespace ProFak.UI
 		private readonly string tytul;
 		private readonly bool pelnyEkran;
 
-		public override string Nazwa => "Wyświetl zaznaczoną pozycję";
+		public override string Nazwa => "✎ Wyświetl zaznaczoną pozycję";
 
 		public EdytujRekordAkcja(string tytul, bool pelnyEkran = false)
 		{

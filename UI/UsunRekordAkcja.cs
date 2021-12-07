@@ -11,7 +11,7 @@ namespace ProFak.UI
 	class UsunRekordAkcja<TRekord> : AkcjaNaSpisie<TRekord>
 		where TRekord : Rekord<TRekord>, new()
 	{
-		public override string Nazwa => "Usuń zaznaczone pozycje";
+		public override string Nazwa => "❌ Usuń zaznaczone pozycje";
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<TRekord> zaznaczoneRekordy) => zaznaczoneRekordy.Count() >= 1;
 		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.None && (klawisz == Keys.Delete || klawisz == Keys.F8);
 

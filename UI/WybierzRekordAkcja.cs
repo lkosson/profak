@@ -12,7 +12,7 @@ namespace ProFak.UI
 	class WybierzRekordAkcja<TRekord> : AkcjaNaSpisie<TRekord>
 		where TRekord : Rekord<TRekord>
 	{
-		public override string Nazwa => "Wybierz zaznaczoną pozycję";
+		public override string Nazwa => "✔️ Wybierz zaznaczoną pozycję";
 		public TRekord WybranyRekord { get; private set; }
 
 		public WybierzRekordAkcja()

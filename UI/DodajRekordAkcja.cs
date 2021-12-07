@@ -17,7 +17,7 @@ namespace ProFak.UI
 		private readonly Action<TRekord> przygotujRekord;
 		private readonly bool pelnyEkran;
 
-		public override string Nazwa => tytul;
+		public override string Nazwa => "➕ " + tytul;
 		
 		public DodajRekordAkcja(string tytul, Action<TRekord> przygotujRekord = null, bool pelnyEkran = false)
 		{
