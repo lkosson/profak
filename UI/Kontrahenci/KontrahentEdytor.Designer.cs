@@ -159,6 +159,7 @@ namespace ProFak.UI
 			// 
 			// textBoxAdresRejestrowy
 			// 
+			this.textBoxAdresRejestrowy.AcceptsReturn = true;
 			this.textBoxAdresRejestrowy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxAdresRejestrowy.Location = new System.Drawing.Point(146, 61);
 			this.textBoxAdresRejestrowy.Multiline = true;
@@ -168,6 +169,7 @@ namespace ProFak.UI
 			// 
 			// textBoxAdresKorespondencyjny
 			// 
+			this.textBoxAdresKorespondencyjny.AcceptsReturn = true;
 			this.textBoxAdresKorespondencyjny.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxAdresKorespondencyjny.Location = new System.Drawing.Point(146, 132);
 			this.textBoxAdresKorespondencyjny.Multiline = true;
@@ -275,7 +277,7 @@ namespace ProFak.UI
 			this.tabPage2.Location = new System.Drawing.Point(4, 24);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(386, 369);
+			this.tabPage2.Size = new System.Drawing.Size(386, 357);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "Uwagi";
 			this.tabPage2.UseVisualStyleBackColor = true;
@@ -286,7 +288,7 @@ namespace ProFak.UI
 			this.textBoxUwagi.Location = new System.Drawing.Point(3, 3);
 			this.textBoxUwagi.Multiline = true;
 			this.textBoxUwagi.Name = "textBoxUwagi";
-			this.textBoxUwagi.Size = new System.Drawing.Size(380, 363);
+			this.textBoxUwagi.Size = new System.Drawing.Size(380, 351);
 			this.textBoxUwagi.TabIndex = 0;
 			// 
 			// textBoxNazwa

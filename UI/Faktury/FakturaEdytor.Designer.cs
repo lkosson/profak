@@ -225,6 +225,7 @@ namespace ProFak.UI
 			// 
 			// textBoxDaneSprzedawcy
 			// 
+			this.textBoxDaneSprzedawcy.AcceptsReturn = true;
 			this.tableLayoutPanel5.SetColumnSpan(this.textBoxDaneSprzedawcy, 2);
 			this.textBoxDaneSprzedawcy.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.textBoxDaneSprzedawcy.Location = new System.Drawing.Point(51, 63);
@@ -332,6 +333,7 @@ namespace ProFak.UI
 			// 
 			// textBoxDaneNabywcy
 			// 
+			this.textBoxDaneNabywcy.AcceptsReturn = true;
 			this.tableLayoutPanel6.SetColumnSpan(this.textBoxDaneNabywcy, 2);
 			this.textBoxDaneNabywcy.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.textBoxDaneNabywcy.Location = new System.Drawing.Point(51, 63);
@@ -396,7 +398,7 @@ namespace ProFak.UI
 			// 
 			this.tabPageWplaty.Location = new System.Drawing.Point(4, 24);
 			this.tabPageWplaty.Name = "tabPageWplaty";
-			this.tabPageWplaty.Size = new System.Drawing.Size(737, 109);
+			this.tabPageWplaty.Size = new System.Drawing.Size(737, 147);
 			this.tabPageWplaty.TabIndex = 1;
 			this.tabPageWplaty.Text = "Wpłaty";
 			this.tabPageWplaty.UseVisualStyleBackColor = true;
@@ -405,7 +407,7 @@ namespace ProFak.UI
 			// 
 			this.tabPagePliki.Location = new System.Drawing.Point(4, 24);
 			this.tabPagePliki.Name = "tabPagePliki";
-			this.tabPagePliki.Size = new System.Drawing.Size(737, 109);
+			this.tabPagePliki.Size = new System.Drawing.Size(737, 147);
 			this.tabPagePliki.TabIndex = 3;
 			this.tabPagePliki.Text = "Pliki";
 			this.tabPagePliki.UseVisualStyleBackColor = true;
@@ -415,7 +417,7 @@ namespace ProFak.UI
 			this.tabPageUwagi.Controls.Add(this.tableLayoutPanel2);
 			this.tabPageUwagi.Location = new System.Drawing.Point(4, 24);
 			this.tabPageUwagi.Name = "tabPageUwagi";
-			this.tabPageUwagi.Size = new System.Drawing.Size(737, 109);
+			this.tabPageUwagi.Size = new System.Drawing.Size(737, 147);
 			this.tabPageUwagi.TabIndex = 2;
 			this.tabPageUwagi.Text = "Uwagi";
 			this.tabPageUwagi.UseVisualStyleBackColor = true;
@@ -432,7 +434,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
 			this.tableLayoutPanel2.RowCount = 1;
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(737, 109);
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(737, 147);
 			this.tableLayoutPanel2.TabIndex = 2;
 			// 
 			// groupBox4
@@ -441,18 +443,19 @@ namespace ProFak.UI
 			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox4.Location = new System.Drawing.Point(3, 3);
 			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(362, 103);
+			this.groupBox4.Size = new System.Drawing.Size(362, 141);
 			this.groupBox4.TabIndex = 1;
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Uwagi (drukowane na fakturze)";
 			// 
 			// textBoxUwagiPubliczne
 			// 
+			this.textBoxUwagiPubliczne.AcceptsReturn = true;
 			this.textBoxUwagiPubliczne.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.textBoxUwagiPubliczne.Location = new System.Drawing.Point(3, 19);
 			this.textBoxUwagiPubliczne.Multiline = true;
 			this.textBoxUwagiPubliczne.Name = "textBoxUwagiPubliczne";
-			this.textBoxUwagiPubliczne.Size = new System.Drawing.Size(356, 81);
+			this.textBoxUwagiPubliczne.Size = new System.Drawing.Size(356, 119);
 			this.textBoxUwagiPubliczne.TabIndex = 0;
 			// 
 			// groupBox5
@@ -461,18 +464,19 @@ namespace ProFak.UI
 			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox5.Location = new System.Drawing.Point(371, 3);
 			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(363, 103);
+			this.groupBox5.Size = new System.Drawing.Size(363, 141);
 			this.groupBox5.TabIndex = 1;
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Uwagi (wewnętrzne)";
 			// 
 			// textBoxUwagiWewnetrzne
 			// 
+			this.textBoxUwagiWewnetrzne.AcceptsReturn = true;
 			this.textBoxUwagiWewnetrzne.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.textBoxUwagiWewnetrzne.Location = new System.Drawing.Point(3, 19);
 			this.textBoxUwagiWewnetrzne.Multiline = true;
 			this.textBoxUwagiWewnetrzne.Name = "textBoxUwagiWewnetrzne";
-			this.textBoxUwagiWewnetrzne.Size = new System.Drawing.Size(357, 81);
+			this.textBoxUwagiWewnetrzne.Size = new System.Drawing.Size(357, 119);
 			this.textBoxUwagiWewnetrzne.TabIndex = 0;
 			// 
 			// tableLayoutPanel1
