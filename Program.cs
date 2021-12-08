@@ -33,7 +33,8 @@ namespace ProFak
 				if (podmiot == null)
 				{
 					MessageBox.Show("Przed rozpoczêciem korzystania z programu nale¿y uzupe³niæ dane firmy.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
-					new UI.MojaFirmaAkcja().Uruchom(kontekst, null);
+					var _ = Enumerable.Empty<DB.Kontrahent>();
+					new UI.MojaFirmaAkcja().Uruchom(kontekst, ref _);
 				}
 			}
 

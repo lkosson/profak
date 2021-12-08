@@ -21,7 +21,7 @@ namespace ProFak.UI
 			this.spis = spis;
 		}
 
-		public override void Uruchom(Kontekst kontekst, IEnumerable<Plik> zaznaczoneRekordy)
+		public override void Uruchom(Kontekst kontekst, ref IEnumerable<Plik> zaznaczoneRekordy)
 		{
 			using var dialog = new OpenFileDialog();
 			dialog.Title = "Wybierz pliki do dołączenia do faktury";

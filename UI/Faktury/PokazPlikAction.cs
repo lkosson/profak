@@ -15,7 +15,7 @@ namespace ProFak.UI
 		public override string Nazwa => "Otwórz plik";
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<Plik> zaznaczoneRekordy) => zaznaczoneRekordy.Any();
 
-		public override void Uruchom(Kontekst kontekst, IEnumerable<Plik> zaznaczoneRekordy)
+		public override void Uruchom(Kontekst kontekst, ref IEnumerable<Plik> zaznaczoneRekordy)
 		{
 			var plik = zaznaczoneRekordy.Single();
 			using var nowyKontekst = new Kontekst(kontekst);

@@ -40,7 +40,7 @@ namespace ProFak.UI
 			kontekst.Baza.Zapisz(rekord);
 		}
 
-		public override void Uruchom(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy)
+		public override void Uruchom(Kontekst kontekst, ref IEnumerable<TRekord> zaznaczoneRekordy)
 		{
 			using var nowyKontekst = new Kontekst(kontekst);
 			using var transakcja = nowyKontekst.Transakcja();
@@ -53,6 +53,7 @@ namespace ProFak.UI
 			edytor.KoniecEdycji();
 			ZapiszRekord(nowyKontekst, rekord);
 			transakcja.Zatwierdz();
+			zaznaczoneRekordy = new[] { rekord };
 		}
 	}
 }

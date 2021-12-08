@@ -40,8 +40,12 @@ namespace ProFak.UI
 			try
 			{
 				if (!CzyDostepna) return;
-				akcja.Uruchom(spis.Kontekst, spis.WybraneRekordy);
+				IEnumerable<TRekord> wybraneRekordy = spis.WybraneRekordy.ToList();
+				akcja.Uruchom(spis.Kontekst, ref wybraneRekordy);
 				if (spis.Kontekst.Dialog != null && spis.Kontekst.Dialog.DialogResult != DialogResult.None) return;
+				spis.PrzeladujBezpiecznie();
+				spis.WybraneRekordy = wybraneRekordy;
+				spis.Focus();
 			}
 			catch (ApplicationException ae) when (ae.GetType() == typeof(ApplicationException))
 			{
@@ -51,8 +55,6 @@ namespace ProFak.UI
 			{
 				MessageBox.Show($"Wystąpił nieobsłużony błąd. Uruchom ponownie program i spróbuj ponownie wykonać operację.\n\n{exc}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
-
-			spis.PrzeladujBezpiecznie();
 		}
 	}
 }

@@ -17,7 +17,7 @@ namespace ProFak.UI
 
 		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => false;
 
-		public override void Uruchom(Kontekst kontekst, IEnumerable<Kontrahent> zaznaczoneRekordy)
+		public override void Uruchom(Kontekst kontekst, ref IEnumerable<Kontrahent> zaznaczoneRekordy)
 		{
 			using var nowyKontekst = new Kontekst(kontekst);
 			using var transakcja = nowyKontekst.Transakcja();
