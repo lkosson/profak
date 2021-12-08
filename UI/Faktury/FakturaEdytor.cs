@@ -17,6 +17,8 @@ namespace ProFak.UI
 		private readonly SpisZAkcjami<PozycjaFaktury, PozycjaFakturySpis> pozycjeFaktury;
 		private readonly SpisZAkcjami<Plik, PlikSpis> pliki;
 
+		public virtual bool CzySprzedaz => true;
+
 		public FakturaEdytor()
 		{
 			InitializeComponent();
@@ -89,7 +91,7 @@ namespace ProFak.UI
 
 			new Slownik<Kontrahent>(
 				Kontekst, comboBoxNIPNabywcy, buttonNabywca,
-				Kontekst.Baza.Kontrahenci.ToList,
+				Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == !CzySprzedaz).ToList,
 				kontrahent => kontrahent.NIP,
 				kontrahent => { if (UstawNabywce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
 				Spisy.Kontrahenci)
@@ -97,7 +99,7 @@ namespace ProFak.UI
 
 			new Slownik<Kontrahent>(
 				Kontekst, comboBoxNazwaNabywcy, null,
-				Kontekst.Baza.Kontrahenci.ToList,
+				Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == !CzySprzedaz).ToList,
 				kontrahent => kontrahent.PelnaNazwa,
 				kontrahent => { if (UstawNabywce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
 				Spisy.Kontrahenci)
@@ -105,7 +107,7 @@ namespace ProFak.UI
 
 			new Slownik<Kontrahent>(
 				Kontekst, comboBoxNIPSprzedawcy, buttonSprzedawca,
-				Kontekst.Baza.Kontrahenci.ToList,
+				Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == CzySprzedaz).ToList,
 				kontrahent => kontrahent.NIP,
 				kontrahent => { if (UstawSprzedawce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
 				Spisy.Kontrahenci)
@@ -113,7 +115,7 @@ namespace ProFak.UI
 
 			new Slownik<Kontrahent>(
 				Kontekst, comboBoxNazwaSprzedawcy, null,
-				Kontekst.Baza.Kontrahenci.ToList,
+				Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == CzySprzedaz).ToList,
 				kontrahent => kontrahent.PelnaNazwa,
 				kontrahent => { if (UstawSprzedawce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
 				Spisy.Kontrahenci)

@@ -33,7 +33,7 @@ namespace ProFak.UI
 			return Utworz(new FakturaSprzedazySpis(),
 				new FakturaSprzedazyAkcja(),
 				new FakturaProformaAkcja(),
-				new KorektaFakturyAkcja(),
+				new KorektaSprzedazyAkcja(),
 				new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
 				new UsunRekordAkcja<Faktura>(),
 				new WydrukFakturyAction(),
@@ -44,9 +44,9 @@ namespace ProFak.UI
 		public static SpisZAkcjami<Faktura, FakturaZakupuSpis> FakturyZakupu()
 		{
 			return Utworz(new FakturaZakupuSpis(),
-				new DodajRekordAkcja<Faktura, FakturaEdytor>(faktura => faktura.Rodzaj = RodzajFaktury.Zakup),
-				new KorektaFakturyAkcja(),
-				new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
+				new FakturaZakupuAkcja(),
+				new KorektaZakupuAkcja(),
+				new EdytujRekordAkcja<Faktura, FakturaZakupuEdytor>(),
 				new UsunRekordAkcja<Faktura>(),
 				new PrzeladujAkcja<Faktura>()
 			);
@@ -66,6 +66,7 @@ namespace ProFak.UI
 		{
 			return Utworz(new KontrahentSpis(),
 				new DodajRekordAkcja<Kontrahent, KontrahentEdytor>(),
+				new MojaFirmaAkcja(),
 				new EdytujRekordAkcja<Kontrahent, KontrahentEdytor>(),
 				new UsunRekordAkcja<Kontrahent>(),
 				new PrzeladujAkcja<Kontrahent>()

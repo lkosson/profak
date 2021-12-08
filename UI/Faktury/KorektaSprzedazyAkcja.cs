@@ -9,11 +9,11 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	class KorektaFakturyAkcja : DodajRekordAkcja<Faktura, FakturaEdytor>
+	class KorektaSprzedazyAkcja : DodajRekordAkcja<Faktura, FakturaEdytor>
 	{
 		public override string Nazwa => "➕ Wystaw korektę";
 
-		public KorektaFakturyAkcja()
+		public KorektaSprzedazyAkcja()
 		{
 		}
 
@@ -29,12 +29,7 @@ namespace ProFak.UI
 			}
 
 			var korekta = base.UtworzRekord(kontekst, zaznaczoneRekordy);
-			if (bazowa.Rodzaj == RodzajFaktury.Zakup || bazowa.Rodzaj == RodzajFaktury.KorektaZakupu) korekta.Rodzaj = RodzajFaktury.KorektaZakupu;
-			else if (bazowa.Rodzaj == RodzajFaktury.Sprzedaż || bazowa.Rodzaj == RodzajFaktury.KorektaSprzedaży) korekta.Rodzaj = RodzajFaktury.KorektaSprzedaży;
-			else korekta.Rodzaj = bazowa.Rodzaj;
-
-			bazowa.FakturaKorygujaca = korekta;
-
+			korekta.Rodzaj = RodzajFaktury.KorektaSprzedaży;
 			korekta.DataSprzedazy = bazowa.DataSprzedazy;
 			korekta.FakturaKorygowana = bazowa;
 			korekta.NIPSprzedawcy = bazowa.NIPSprzedawcy;
@@ -51,6 +46,8 @@ namespace ProFak.UI
 			korekta.NabywcaRef = bazowa.NabywcaRef;
 			korekta.WalutaRef = bazowa.WalutaRef;
 			korekta.SposobPlatnosciRef = bazowa.SposobPlatnosciRef;
+
+			bazowa.FakturaKorygujaca = korekta;
 
 			var starePozycje = kontekst.Baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == bazowa.Id).ToList();
 			var nowePozycje = new List<PozycjaFaktury>();
@@ -69,6 +66,7 @@ namespace ProFak.UI
 				pozycjaPrzed.WartoscBrutto = -staraPozycja.WartoscBrutto;
 				pozycjaPrzed.CzyWedlugCenBrutto = staraPozycja.CzyWedlugCenBrutto;
 				pozycjaPrzed.CzyWartosciReczne = staraPozycja.CzyWartosciReczne;
+				pozycjaPrzed.StawkaVatRef = staraPozycja.StawkaVatRef;
 				nowePozycje.Add(pozycjaPrzed);
 
 				var pozycjaPo = new PozycjaFaktury();
@@ -84,6 +82,7 @@ namespace ProFak.UI
 				pozycjaPo.WartoscBrutto = staraPozycja.WartoscBrutto;
 				pozycjaPo.CzyWedlugCenBrutto = staraPozycja.CzyWedlugCenBrutto;
 				pozycjaPo.CzyWartosciReczne = staraPozycja.CzyWartosciReczne;
+				pozycjaPo.StawkaVatRef = staraPozycja.StawkaVatRef;
 				nowePozycje.Add(pozycjaPo);
 			}
 

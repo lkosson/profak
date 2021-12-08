@@ -27,6 +27,16 @@ namespace ProFak
 				if (pierwszyStart.ShowDialog() != DialogResult.OK) return;
 			}
 
+			using (var kontekst = new UI.Kontekst())
+			{
+				var podmiot = kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot);
+				if (podmiot == null)
+				{
+					MessageBox.Show("Przed rozpoczêciem korzystania z programu nale¿y uzupe³niæ dane firmy.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					new UI.MojaFirmaAkcja().Uruchom(kontekst, null);
+				}
+			}
+
 			Application.Run(new UI.GlowneOkno());
 		}
 	}

@@ -16,6 +16,9 @@ namespace ProFak.UI
 		public KontrahentEdytor()
 		{
 			InitializeComponent();
+
+			kontroler.Slownik(comboBoxStan, "archiwalny", "aktywny");
+
 			kontroler.Powiazanie(textBoxNazwa, kontrahent => kontrahent.Nazwa);
 			kontroler.Powiazanie(textBoxPelnaNazwa, kontrahent => kontrahent.PelnaNazwa);
 			kontroler.Powiazanie(textBoxNIP, kontrahent => kontrahent.NIP);
@@ -25,8 +28,7 @@ namespace ProFak.UI
 			kontroler.Powiazanie(textBoxEMail, kontrahent => kontrahent.EMail);
 			kontroler.Powiazanie(textBoxRachunekBankowy, kontrahent => kontrahent.RachunekBankowy);
 			kontroler.Powiazanie(textBoxUwagi, kontrahent => kontrahent.Uwagi);
-			kontroler.Powiazanie(checkBoxPodmiot, kontrahent => kontrahent.CzyPodmiot);
-			kontroler.Powiazanie(checkBoxNieaktywny, kontrahent => kontrahent.CzyArchiwalny);
+			kontroler.Powiazanie(comboBoxStan, kontrahent => kontrahent.CzyArchiwalny);
 
 			Wymagane(textBoxNazwa);
 			Wymagane(textBoxPelnaNazwa);

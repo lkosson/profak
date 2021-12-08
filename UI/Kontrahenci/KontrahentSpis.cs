@@ -21,7 +21,7 @@ namespace ProFak.UI
 
 		protected override void Przeladuj()
 		{
-			Rekordy = Kontekst.Baza.Kontrahenci.ToList();
+			Rekordy = Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyPodmiot).ToList();
 		}
 
 		protected override void UstawStylWiersza(Kontrahent rekord, string kolumna, DataGridViewCellStyle styl)
