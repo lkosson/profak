@@ -18,6 +18,7 @@ namespace ProFak.UI
 		{
 			InitializeComponent();
 
+			kontroler.Powiazanie(numericUpDownLP, pozycja => pozycja.LP);
 			kontroler.Powiazanie(comboBoxTowar, pozycja => pozycja.Opis);
 			kontroler.Powiazanie(numericUpDownIlosc, pozycja => pozycja.Ilosc, PrzeliczCeny);
 			kontroler.Powiazanie(numericUpDownCenaNetto, pozycja => pozycja.CenaNetto, PrzeliczCeny);

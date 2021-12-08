@@ -20,7 +20,13 @@ namespace ProFak.Wydruki
 			foreach (var fakturaRef in fakturyRefs)
 			{
 				var faktura = baza.Znajdz(fakturaRef);
-				var pozycje = baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == faktura.Id).Include(pozycja => pozycja.StawkaVat).Include(pozycja => pozycja.Towar).ThenInclude(towar => towar.JednostkaMiary).ToList();
+				var pozycje = baza.PozycjeFaktur
+					.Where(pozycja => pozycja.FakturaId == faktura.Id)
+					.Include(pozycja => pozycja.StawkaVat)
+					.Include(pozycja => pozycja.Towar).ThenInclude(towar => towar.JednostkaMiary)
+					.OrderBy(pozycja => pozycja.LP)
+					.ThenBy(pozycja => pozycja.CzyPrzedKorekta)
+					.ToList();
 				var wplaty = baza.Wplaty.Where(wplata => wplata.FakturaId == faktura.Id).ToList();
 				var zaplacono = wplaty.Sum(wplata => wplata.Kwota);
 				var dozaplaty = faktura.RazemBrutto - zaplacono;
@@ -77,7 +83,7 @@ namespace ProFak.Wydruki
 					pozycjaDTO.Podtytul = fakturaDTO.Podtytul;
 
 					if (faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży)
-						pozycjaDTO.NaglowekPozycji = pozycja.Ilosc < 0 ? "Przed korektą" : "Po korekcie";
+						pozycjaDTO.NaglowekPozycji = pozycja.CzyPrzedKorekta ? "Przed korektą" : "Po korekcie";
 					else
 						pozycjaDTO.NaglowekPozycji = "";
 

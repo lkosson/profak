@@ -16,6 +16,7 @@ namespace ProFak.UI
 
 		public PozycjaFakturySpis()
 		{
+			DodajKolumne(nameof(PozycjaFaktury.LP), "LP", szerokosc: 30);
 			DodajKolumne(nameof(PozycjaFaktury.Opis), "Opis", rozciagnij: true);
 			DodajKolumne(nameof(PozycjaFaktury.Ilosc), "Ilość", wyrownajDoPrawej: true, szerokosc: 80);
 			DodajKolumneKwota(nameof(PozycjaFaktury.Cena), "Cena");
@@ -29,13 +30,14 @@ namespace ProFak.UI
 		{
 			IQueryable<PozycjaFaktury> q = Kontekst.Baza.PozycjeFaktur;
 			if (FakturaRef.IsNotNull) q = q.Where(pozycja => pozycja.FakturaId == FakturaRef.Id);
+			q = q.OrderBy(pozycja => pozycja.LP).ThenBy(pozycja => pozycja.CzyPrzedKorekta);
 			Rekordy = q.ToList();
 		}
 
 		protected override void UstawStylWiersza(PozycjaFaktury rekord, string kolumna, DataGridViewCellStyle styl)
 		{
 			base.UstawStylWiersza(rekord, kolumna, styl);
-			if (rekord.Ilosc < 0) styl.ForeColor = Color.LightGray;
+			if (rekord.CzyPrzedKorekta) styl.ForeColor = Color.LightGray;
 		}
 	}
 }

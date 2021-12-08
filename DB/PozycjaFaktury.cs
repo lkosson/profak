@@ -22,6 +22,8 @@ namespace ProFak.DB
 		public bool CzyWedlugCenBrutto { get; set; }
 		public bool CzyWartosciReczne { get; set; }
 		public int? StawkaVatId { get; set; }
+		public int LP { get; set; }
+		public bool CzyPrzedKorekta { get; set; }
 
 		public Ref<Faktura> FakturaRef { get => FakturaId; set => FakturaId = value; }
 		public Ref<Towar> TowarRef { get => TowarId; set => TowarId = value; }
