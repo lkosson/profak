@@ -47,12 +47,14 @@ namespace ProFak.UI
 			korekta.WalutaRef = bazowa.WalutaRef;
 			korekta.SposobPlatnosciRef = bazowa.SposobPlatnosciRef;
 
-			bazowa.FakturaKorygujaca = korekta;
+			bazowa.FakturaKorygujacaRef = korekta;
 
 			var starePozycje = kontekst.Baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == bazowa.Id).ToList();
 			var nowePozycje = new List<PozycjaFaktury>();
 			foreach (var staraPozycja in starePozycje)
 			{
+				if (staraPozycja.Ilosc < 0) continue;
+
 				var pozycjaPrzed = new PozycjaFaktury();
 				pozycjaPrzed.FakturaId = korekta.Id;
 				pozycjaPrzed.TowarId = staraPozycja.TowarId;
@@ -90,6 +92,12 @@ namespace ProFak.UI
 			kontekst.Baza.Zapisz(bazowa);
 
 			return korekta;
+		}
+
+		protected override void ZapiszRekord(Kontekst kontekst, Faktura rekord)
+		{
+			rekord.Numer = Numerator.NadajNumer(kontekst.Baza, PrzeznaczenieNumeratora.Korekta, rekord.Podstawienie);
+			base.ZapiszRekord(kontekst, rekord);
 		}
 	}
 }

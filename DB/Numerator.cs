@@ -57,6 +57,7 @@ namespace ProFak.DB
 	enum PrzeznaczenieNumeratora
 	{
 		Faktura,
-		Proforma
+		Proforma,
+		Korekta
 	}
 }

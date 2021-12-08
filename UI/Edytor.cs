@@ -48,6 +48,10 @@ namespace ProFak.UI
 		{
 		}
 
+		public virtual void KoniecEdycji()
+		{
+		}
+
 		public void Wymagane(TextBox textBox)
 		{
 			textBox.Validating += TextBox_Wymagane_Validating;

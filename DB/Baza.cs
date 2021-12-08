@@ -92,17 +92,13 @@ namespace ProFak.DB
 					Entry(rekord).State = EntityState.Modified;
 				}
 			}
-			SaveChanges();
-			foreach (var rekord in rekordy)
-			{
-				Entry(rekord).State = EntityState.Detached;
-			}
+			ZapiszZmiany();
 		}
 
 		public void Zapisz(object rekord)
 		{
 			Entry(rekord).State = EntityState.Modified;
-			SaveChanges();
+			ZapiszZmiany();
 		}
 
 		public void Usun<TRekord>(TRekord rekord)
@@ -113,7 +109,19 @@ namespace ProFak.DB
 			where TRekord : Rekord<TRekord>
 		{
 			Set<TRekord>().RemoveRange(rekordy);
-			SaveChanges();
+			ZapiszZmiany();
+		}
+
+		private void ZapiszZmiany()
+		{
+			try
+			{
+				SaveChanges();
+			}
+			finally
+			{
+				ChangeTracker.Entries().Where(e => e.Entity != null).ToList().ForEach(e => e.State = EntityState.Detached);
+			}
 		}
 
 		public TRekord Znajdz<TRekord>(Ref<TRekord> rekordRef)

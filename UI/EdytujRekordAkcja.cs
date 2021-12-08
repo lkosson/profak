@@ -36,6 +36,7 @@ namespace ProFak.UI
 			if (pelnyEkran) okno.WindowState = FormWindowState.Maximized;
 			edytor.Przygotuj(nowyKontekst, rekord);
 			if (okno.ShowDialog() != DialogResult.OK) return;
+			edytor.KoniecEdycji();
 			nowyKontekst.Baza.Zapisz(rekord);
 			transakcja.Zatwierdz();
 		}

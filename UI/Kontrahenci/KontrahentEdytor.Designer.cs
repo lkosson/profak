@@ -166,6 +166,7 @@ namespace ProFak.UI
 			this.textBoxAdresRejestrowy.Name = "textBoxAdresRejestrowy";
 			this.textBoxAdresRejestrowy.Size = new System.Drawing.Size(231, 65);
 			this.textBoxAdresRejestrowy.TabIndex = 3;
+			this.textBoxAdresRejestrowy.TextChanged += new System.EventHandler(this.textBoxAdresRejestrowy_TextChanged);
 			// 
 			// textBoxAdresKorespondencyjny
 			// 
@@ -277,7 +278,7 @@ namespace ProFak.UI
 			this.tabPage2.Location = new System.Drawing.Point(4, 24);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(386, 357);
+			this.tabPage2.Size = new System.Drawing.Size(386, 337);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "Uwagi";
 			this.tabPage2.UseVisualStyleBackColor = true;
@@ -288,7 +289,7 @@ namespace ProFak.UI
 			this.textBoxUwagi.Location = new System.Drawing.Point(3, 3);
 			this.textBoxUwagi.Multiline = true;
 			this.textBoxUwagi.Name = "textBoxUwagi";
-			this.textBoxUwagi.Size = new System.Drawing.Size(380, 351);
+			this.textBoxUwagi.Size = new System.Drawing.Size(380, 331);
 			this.textBoxUwagi.TabIndex = 0;
 			// 
 			// textBoxNazwa
@@ -298,6 +299,7 @@ namespace ProFak.UI
 			this.textBoxNazwa.Name = "textBoxNazwa";
 			this.textBoxNazwa.Size = new System.Drawing.Size(346, 23);
 			this.textBoxNazwa.TabIndex = 1;
+			this.textBoxNazwa.TextChanged += new System.EventHandler(this.textBoxNazwa_TextChanged);
 			// 
 			// label1
 			// 

@@ -31,7 +31,23 @@ namespace ProFak.UI
 			kontroler.Powiazanie(comboBoxStan, kontrahent => kontrahent.CzyArchiwalny);
 
 			Wymagane(textBoxNazwa);
-			Wymagane(textBoxPelnaNazwa);
+		}
+
+		private void textBoxNazwa_TextChanged(object sender, EventArgs e)
+		{
+			textBoxPelnaNazwa.PlaceholderText = textBoxNazwa.Text;
+		}
+
+		private void textBoxAdresRejestrowy_TextChanged(object sender, EventArgs e)
+		{
+			textBoxAdresKorespondencyjny.PlaceholderText = textBoxAdresRejestrowy.Text;
+		}
+
+		public override void KoniecEdycji()
+		{
+			base.KoniecEdycji();
+			if (String.IsNullOrEmpty(Rekord.PelnaNazwa)) Rekord.PelnaNazwa = Rekord.Nazwa;
+			if (String.IsNullOrEmpty(Rekord.AdresKorespondencyjny)) Rekord.AdresKorespondencyjny = Rekord.AdresRejestrowy;
 		}
 	}
 

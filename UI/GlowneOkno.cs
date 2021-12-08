@@ -52,8 +52,6 @@ namespace ProFak.UI
 			else if (pozycja.Name == "Towary") Wyswietl(Spisy.Towary(), pozycja.Name);
 			else if (pozycja.Name == "FakturyZakupu") Wyswietl(Spisy.FakturyZakupu(), pozycja.Name);
 			else if (pozycja.Name == "FakturySprzedazy") Wyswietl(Spisy.FakturySprzedazy(), pozycja.Name);
-			else if (pozycja.Name == "PozycjeFaktur") Wyswietl(Spisy.PozycjeFaktur(), pozycja.Name);
-			else if (pozycja.Name == "Wplaty") Wyswietl(Spisy.Wplaty(), pozycja.Name);
 			else if (pozycja.Name == "Numeratory") Wyswietl(Spisy.Numeratory(), pozycja.Name);
 			else if (pozycja.Name == "StanyNumeratorow") Wyswietl(Spisy.StanyNumeratorow(), pozycja.Name);
 			else if (pozycja.Name == "SQL") Wyswietl(new EkranSQL(), pozycja.Name);

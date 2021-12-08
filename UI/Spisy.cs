@@ -99,7 +99,7 @@ namespace ProFak.UI
 			var spis = new PozycjaFakturySpis();
 			return Utworz(spis,
 				new DodajRekordAkcja<PozycjaFaktury, PozycjaFakturyEdytor>(pozycja => pozycja.FakturaRef = spis.FakturaRef),
-				new EdytujRekordAkcja<PozycjaFaktury, PozycjaFakturyEdytor>(),
+				new EdytujPozycjeFakturyAkcja(),
 				new UsunRekordAkcja<PozycjaFaktury>(),
 				new PrzeladujAkcja<PozycjaFaktury>()
 			);

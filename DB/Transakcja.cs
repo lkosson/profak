@@ -13,6 +13,7 @@ namespace ProFak
 		private readonly Transakcja poprzednia;
 		private readonly IDbContextTransaction dbContextTransaction;
 		private readonly string savepoint;
+		private readonly Baza baza;
 		private bool zatwierdzona;
 		private bool zakonczona;
 		private static int sp;
@@ -22,6 +23,7 @@ namespace ProFak
 
 		public Transakcja(Baza baza)
 		{
+			this.baza = baza;
 			dbContextTransaction = baza.Database.BeginTransaction();
 		}
 
