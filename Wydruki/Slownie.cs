@@ -100,7 +100,9 @@ namespace ProFak.Wydruki
 
 		public static string Slownie(decimal kwota, string waluta)
 		{
-			return Slownie((long)Math.Floor(kwota)) + " " + waluta + " " + (((kwota - Math.Floor(kwota)) * 100).ToString("00") + "/100");
+			var zlote = (long)Math.Floor(kwota);
+			var grosze = (long)((kwota - zlote) * 100);
+			return Slownie(zlote) + " " + waluta + " i " + Slownie(grosze) + " " + waluta + "/100";
 		}
 	}
 }

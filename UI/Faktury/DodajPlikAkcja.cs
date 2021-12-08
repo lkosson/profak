@@ -9,14 +9,14 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	class DodajPlikAction : AkcjaNaSpisie<Plik>
+	class DodajPlikAkcja : AkcjaNaSpisie<Plik>
 	{
 		private readonly PlikSpis spis;
 
 		public override string Nazwa => "Dołącz plik";
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<Plik> zaznaczoneRekordy) => true;
 
-		public DodajPlikAction(PlikSpis spis)
+		public DodajPlikAkcja(PlikSpis spis)
 		{
 			this.spis = spis;
 		}

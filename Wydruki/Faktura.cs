@@ -20,7 +20,7 @@ namespace ProFak.Wydruki
 			foreach (var fakturaRef in fakturyRefs)
 			{
 				var faktura = baza.Znajdz(fakturaRef);
-				var pozycje = baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == faktura.Id).Include(pozycja => pozycja.StawkaVat).ToList();
+				var pozycje = baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == faktura.Id).Include(pozycja => pozycja.StawkaVat).Include(pozycja => pozycja.Towar).ThenInclude(towar => towar.JednostkaMiary).ToList();
 				var wplaty = baza.Wplaty.Where(wplata => wplata.FakturaId == faktura.Id).ToList();
 				var zaplacono = wplaty.Sum(wplata => wplata.Kwota);
 				var dozaplaty = faktura.RazemBrutto - zaplacono;
@@ -83,7 +83,7 @@ namespace ProFak.Wydruki
 
 					pozycjaDTO.OpisPozycji = pozycja.Opis;
 					pozycjaDTO.CenaNetto = pozycja.Cena;
-					pozycjaDTO.Ilosc = Math.Abs(pozycja.Ilosc);
+					pozycjaDTO.Ilosc = Math.Abs(pozycja.Ilosc / 1.000000000000m) + " " + pozycja.Towar?.JednostkaMiary?.Skrot;
 					pozycjaDTO.WartoscNetto = pozycja.WartoscNetto;
 					pozycjaDTO.WartoscVat = pozycja.WartoscVat;
 					pozycjaDTO.WartoscBrutto = pozycja.WartoscBrutto;

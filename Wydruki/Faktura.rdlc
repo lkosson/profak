@@ -188,16 +188,16 @@
                                 <Width>1.62687cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.19126cm</Width>
+                                <Width>1.56167cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.12958cm</Width>
+                                <Width>2.02375cm</Width>
                               </TablixColumn>
                               <TablixColumn>
                                 <Width>1.17708cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.05021cm</Width>
+                                <Width>1.78563cm</Width>
                               </TablixColumn>
                               <TablixColumn>
                                 <Width>2.10313cm</Width>
@@ -1938,7 +1938,7 @@
                           <DataSetName>DSFaktury</DataSetName>
                           <Top>3.19828cm</Top>
                           <Height>4.2cm</Height>
-                          <Width>17.00001cm</Width>
+                          <Width>17cm</Width>
                           <ZIndex>2</ZIndex>
                           <Style>
                             <Border>

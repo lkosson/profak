@@ -12,7 +12,7 @@
       <xs:element minOccurs="0" maxOccurs="1" name="NaglowekPozycji" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="OpisPozycji" type="xs:string" />
       <xs:element minOccurs="1" maxOccurs="1" name="CenaNetto" type="xs:decimal" />
-      <xs:element minOccurs="1" maxOccurs="1" name="Ilosc" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Ilosc" type="xs:string" />
       <xs:element minOccurs="1" maxOccurs="1" name="WartoscNetto" type="xs:decimal" />
       <xs:element minOccurs="0" maxOccurs="1" name="StawkaVAT" type="xs:string" />
       <xs:element minOccurs="1" maxOccurs="1" name="WartoscVat" type="xs:decimal" />

@@ -18,7 +18,7 @@ namespace ProFak.Wydruki
 		public string NaglowekPozycji { get; set; }
 		public string OpisPozycji { get; set; }
 		public decimal CenaNetto { get; set; }
-		public decimal Ilosc { get; set; }
+		public string Ilosc { get; set; }
 		public decimal WartoscNetto { get; set; }
 		public string StawkaVAT { get; set; }
 		public decimal WartoscVat { get; set; }

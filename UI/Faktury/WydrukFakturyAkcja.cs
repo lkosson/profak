@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	class WydrukFakturyAction : AkcjaNaSpisie<Faktura>
+	class WydrukFakturyAkcja : AkcjaNaSpisie<Faktura>
 	{
 		public override string Nazwa => "🖶 Drukuj [CTRL-P]";
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) => zaznaczoneRekordy.Any();

@@ -35,8 +35,8 @@ namespace ProFak.UI
 				new FakturaProformaAkcja(),
 				new KorektaSprzedazyAkcja(),
 				new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
-				new UsunRekordAkcja<Faktura>(),
-				new WydrukFakturyAction(),
+				new UsunFaktureAkcja(),
+				new WydrukFakturyAkcja(),
 				new PrzeladujAkcja<Faktura>()
 			);
 		}
@@ -47,7 +47,7 @@ namespace ProFak.UI
 				new FakturaZakupuAkcja(),
 				new KorektaZakupuAkcja(),
 				new EdytujRekordAkcja<Faktura, FakturaZakupuEdytor>(),
-				new UsunRekordAkcja<Faktura>(),
+				new UsunFaktureAkcja(),
 				new PrzeladujAkcja<Faktura>()
 			);
 		}
@@ -87,7 +87,7 @@ namespace ProFak.UI
 		{
 			var spis = new PlikSpis();
 			return Utworz(spis,
-				new DodajPlikAction(spis),
+				new DodajPlikAkcja(spis),
 				new PokazPlikAction(),
 				new UsunRekordAkcja<Plik>(),
 				new PrzeladujAkcja<Plik>()
@@ -100,7 +100,7 @@ namespace ProFak.UI
 			return Utworz(spis,
 				new DodajRekordAkcja<PozycjaFaktury, PozycjaFakturyEdytor>(pozycja => pozycja.FakturaRef = spis.FakturaRef),
 				new EdytujPozycjeFakturyAkcja(),
-				new UsunRekordAkcja<PozycjaFaktury>(),
+				new UsunPozycjeFakturyAkcja(),
 				new PrzeladujAkcja<PozycjaFaktury>()
 			);
 		}
