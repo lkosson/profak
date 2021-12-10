@@ -15,6 +15,7 @@ namespace ProFak.Wydruki
 		public string DaneNabywcy { get; set; }
 		public string Stopka { get; set; }
 
+		public string LP { get; set; }
 		public string NaglowekPozycji { get; set; }
 		public string OpisPozycji { get; set; }
 		public decimal CenaNetto { get; set; }

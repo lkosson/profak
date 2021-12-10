@@ -79,6 +79,7 @@ namespace ProFak.Wydruki
 				foreach (var pozycja in pozycje)
 				{
 					var pozycjaDTO = new FakturaDTO();
+					pozycjaDTO.LP = pozycja.LP.ToString();
 					pozycjaDTO.Tytul = fakturaDTO.Tytul;
 					pozycjaDTO.Podtytul = fakturaDTO.Podtytul;
 
