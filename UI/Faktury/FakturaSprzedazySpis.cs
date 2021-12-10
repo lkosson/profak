@@ -12,6 +12,9 @@ namespace ProFak.UI
 {
 	class FakturaSprzedazySpis : Spis<Faktura>
 	{
+		private readonly DateTime? odDaty;
+		private readonly DateTime? doDaty;
+
 		public FakturaSprzedazySpis()
 		{
 			DodajKolumne(nameof(Faktura.Numer), "Numer");
@@ -27,13 +30,38 @@ namespace ProFak.UI
 			DodajKolumneId();
 		}
 
+		public FakturaSprzedazySpis(string[] parametry)
+			: this()
+		{
+			int? rok = null;
+			int? miesiac = null;
+			foreach (var parametr in parametry)
+			{
+				if (parametr.Length == 4) rok = Int32.Parse(parametr);
+				if (parametr.Length >= 1 && parametr.Length <= 2) miesiac = Int32.Parse(parametr);
+			}
+			if (!rok.HasValue) return;
+			if (miesiac.HasValue)
+			{
+				odDaty = new DateTime(rok.Value, miesiac.Value, 1);
+				doDaty = odDaty.Value.AddMonths(1);
+			}
+			else
+			{
+				odDaty = new DateTime(rok.Value, 1, 1);
+				doDaty = odDaty.Value.AddYears(1);
+			}
+		}
+
 		protected override void Przeladuj()
 		{
-			Rekordy = Kontekst.Baza.Faktury
-				.Where(faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży || faktura.Rodzaj == RodzajFaktury.Proforma)
+			var q = Kontekst.Baza.Faktury
 				.Include(faktura => faktura.Waluta)
 				.Include(faktura => faktura.Wplaty)
-				.ToList();
+				.Where(faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży || faktura.Rodzaj == RodzajFaktury.Proforma);
+			if (odDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy >= odDaty.Value);
+			if (doDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy < doDaty.Value);
+			Rekordy = q.ToList();
 		}
 
 		protected override void UstawStylWiersza(Faktura rekord, string kolumna, DataGridViewCellStyle styl)
