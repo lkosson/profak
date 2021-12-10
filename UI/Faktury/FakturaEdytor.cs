@@ -49,7 +49,6 @@ namespace ProFak.UI
 			kontroler.Powiazanie(textBoxUwagiPubliczne, faktura => faktura.UwagiPubliczne);
 			kontroler.Powiazanie(textBoxUwagiWewnetrzne, faktura => faktura.UwagiWewnetrzne);
 
-			Wymagane(textBoxNumer);
 			Wymagane(textBoxDaneNabywcy);
 			Wymagane(textBoxDaneSprzedawcy);
 			Wymagane(comboBoxNazwaNabywcy);
@@ -159,7 +158,6 @@ namespace ProFak.UI
 			if (rekord.SposobPlatnosciRef.IsNull) UstawSposobPlatnosci(rekord, Kontekst.Baza.SposobyPlatnosci.FirstOrDefault(sposobPlatnosci => sposobPlatnosci.CzyDomyslny));
 			if (rekord.SprzedawcaRef.IsNull && (rekord.Rodzaj == RodzajFaktury.Sprzedaż || rekord.Rodzaj == RodzajFaktury.Proforma)) UstawSprzedawce(rekord, Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot && !kontrahent.CzyArchiwalny));
 			if (rekord.NabywcaRef.IsNull && rekord.Rodzaj == RodzajFaktury.Zakup) UstawNabywce(rekord, Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot && !kontrahent.CzyArchiwalny));
-			if (String.IsNullOrWhiteSpace(rekord.Numer) && (rekord.Rodzaj == RodzajFaktury.Sprzedaż || rekord.Rodzaj == RodzajFaktury.KorektaSprzedaży || rekord.Rodzaj == RodzajFaktury.Proforma)) rekord.Numer = "[AUTONUMERACJA]";
 		}
 
 		protected override void RekordGotowy()
@@ -177,6 +175,20 @@ namespace ProFak.UI
 			else if (Rekord.Rodzaj == RodzajFaktury.KorektaZakupu) labelRodzaj.Text = "Korekta zakupu";
 			else if (Rekord.Rodzaj == RodzajFaktury.Proforma) labelRodzaj.Text = "Proforma";
 			else labelRodzaj.Text = Rekord.Rodzaj.ToString();
+
+			if (String.IsNullOrWhiteSpace(Rekord.Numer) && (Rekord.Rodzaj == RodzajFaktury.Sprzedaż || Rekord.Rodzaj == RodzajFaktury.KorektaSprzedaży || Rekord.Rodzaj == RodzajFaktury.Proforma))
+			{
+				var numer = Numerator.NadajNumer(Kontekst.Baza, Rekord.Numerator, Rekord.Podstawienie, zwiekszLicznik: false);
+				textBoxNumer.PlaceholderText = numer;
+				comboBoxNazwaNabywcy.Focus();
+				ActiveControl = comboBoxNazwaNabywcy;
+			}
+			else
+			{
+				Wymagane(textBoxNumer);
+				textBoxNumer.Focus();
+				ActiveControl = textBoxNumer;
+			}
 		}
 	}
 

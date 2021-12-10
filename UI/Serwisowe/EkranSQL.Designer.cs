@@ -31,13 +31,13 @@ namespace ProFak.UI
 		{
 			this.textBoxSQL = new System.Windows.Forms.TextBox();
 			this.groupBoxWynik = new System.Windows.Forms.GroupBox();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.buttonUruchom = new System.Windows.Forms.Button();
-			this.textBoxStatus = new System.Windows.Forms.TextBox();
 			this.dataGridViewWynik = new System.Windows.Forms.DataGridView();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.textBoxStatus = new System.Windows.Forms.TextBox();
+			this.buttonUruchom = new System.Windows.Forms.Button();
 			this.groupBoxWynik.SuspendLayout();
-			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridViewWynik)).BeginInit();
+			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// textBoxSQL
@@ -50,6 +50,7 @@ namespace ProFak.UI
 			this.textBoxSQL.Name = "textBoxSQL";
 			this.textBoxSQL.Size = new System.Drawing.Size(379, 51);
 			this.textBoxSQL.TabIndex = 0;
+			this.textBoxSQL.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxSQL_KeyDown);
 			// 
 			// groupBoxWynik
 			// 
@@ -63,6 +64,16 @@ namespace ProFak.UI
 			this.groupBoxWynik.TabIndex = 3;
 			this.groupBoxWynik.TabStop = false;
 			this.groupBoxWynik.Text = "Wynik";
+			// 
+			// dataGridViewWynik
+			// 
+			this.dataGridViewWynik.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dataGridViewWynik.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dataGridViewWynik.Location = new System.Drawing.Point(3, 19);
+			this.dataGridViewWynik.Name = "dataGridViewWynik";
+			this.dataGridViewWynik.RowTemplate.Height = 25;
+			this.dataGridViewWynik.Size = new System.Drawing.Size(554, 163);
+			this.dataGridViewWynik.TabIndex = 0;
 			// 
 			// groupBox1
 			// 
@@ -78,6 +89,15 @@ namespace ProFak.UI
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Treść polecenia";
 			// 
+			// textBoxStatus
+			// 
+			this.textBoxStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxStatus.Location = new System.Drawing.Point(391, 50);
+			this.textBoxStatus.Name = "textBoxStatus";
+			this.textBoxStatus.ReadOnly = true;
+			this.textBoxStatus.Size = new System.Drawing.Size(163, 23);
+			this.textBoxStatus.TabIndex = 2;
+			// 
 			// buttonUruchom
 			// 
 			this.buttonUruchom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -89,25 +109,6 @@ namespace ProFak.UI
 			this.buttonUruchom.UseVisualStyleBackColor = true;
 			this.buttonUruchom.Click += new System.EventHandler(this.buttonUruchom_Click);
 			// 
-			// textBoxStatus
-			// 
-			this.textBoxStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxStatus.Location = new System.Drawing.Point(391, 50);
-			this.textBoxStatus.Name = "textBoxStatus";
-			this.textBoxStatus.ReadOnly = true;
-			this.textBoxStatus.Size = new System.Drawing.Size(163, 23);
-			this.textBoxStatus.TabIndex = 2;
-			// 
-			// dataGridViewWynik
-			// 
-			this.dataGridViewWynik.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridViewWynik.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dataGridViewWynik.Location = new System.Drawing.Point(3, 19);
-			this.dataGridViewWynik.Name = "dataGridViewWynik";
-			this.dataGridViewWynik.RowTemplate.Height = 25;
-			this.dataGridViewWynik.Size = new System.Drawing.Size(554, 163);
-			this.dataGridViewWynik.TabIndex = 0;
-			// 
 			// EkranSQL
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -117,9 +118,9 @@ namespace ProFak.UI
 			this.Name = "EkranSQL";
 			this.Size = new System.Drawing.Size(566, 282);
 			this.groupBoxWynik.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.dataGridViewWynik)).EndInit();
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridViewWynik)).EndInit();
 			this.ResumeLayout(false);
 
 		}

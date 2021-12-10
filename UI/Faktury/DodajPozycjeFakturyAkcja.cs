@@ -21,7 +21,7 @@ namespace ProFak.UI
 			var rekord = base.UtworzRekord(kontekst, zaznaczoneRekordy);
 
 			var ostatniaIstniejacaPozycja = kontekst.Baza.PozycjeFaktur
-				.Where(pozycja => pozycja.FakturaId == rekord.FakturaId && pozycja.Id != rekord.Id)
+				.Where(pozycja => pozycja.FakturaId == rekord.FakturaId && pozycja.Id != rekord.Id && !pozycja.CzyPrzedKorekta)
 				.OrderByDescending(pozycja => pozycja.LP)
 				.FirstOrDefault();
 			if (ostatniaIstniejacaPozycja != null) rekord.LP = ostatniaIstniejacaPozycja.LP + 1;

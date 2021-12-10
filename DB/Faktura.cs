@@ -61,6 +61,13 @@ namespace ProFak.DB
 		public bool CzyZaplacona => PozostaloDoZaplaty == 0;
 
 		public string WalutaFmt => Waluta?.Skrot;
+		public PrzeznaczenieNumeratora Numerator => Rodzaj switch
+		{
+			RodzajFaktury.Sprzedaż => PrzeznaczenieNumeratora.Faktura,
+			RodzajFaktury.Proforma => PrzeznaczenieNumeratora.Proforma,
+			RodzajFaktury.KorektaSprzedaży => PrzeznaczenieNumeratora.Korekta,
+			_ => (PrzeznaczenieNumeratora)(-1)
+		};
 
 		public void PrzeliczRazem(Baza baza)
 		{

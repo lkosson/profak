@@ -10,7 +10,7 @@ namespace ProFak.UI
 {
 	class DodajWplateAkcja : AkcjaNaSpisie<Faktura>
 	{
-		public override string Nazwa => "💰 Dodaj wpłatę [ALT-W]";
+		public override string Nazwa => "💰 Dodaj wpłatę [CTRL-W]";
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) => zaznaczoneRekordy.Count() == 1 && !zaznaczoneRekordy.Single().CzyZaplacona;
 		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => klawisz == Keys.W && modyfikatory == Keys.Control;
 

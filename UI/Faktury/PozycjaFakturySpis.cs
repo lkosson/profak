@@ -30,7 +30,7 @@ namespace ProFak.UI
 		{
 			IQueryable<PozycjaFaktury> q = Kontekst.Baza.PozycjeFaktur;
 			if (FakturaRef.IsNotNull) q = q.Where(pozycja => pozycja.FakturaId == FakturaRef.Id);
-			q = q.OrderBy(pozycja => pozycja.LP).ThenBy(pozycja => pozycja.CzyPrzedKorekta);
+			q = q.OrderBy(pozycja => pozycja.LP).ThenByDescending(pozycja => pozycja.CzyPrzedKorekta);
 			Rekordy = q.ToList();
 		}
 

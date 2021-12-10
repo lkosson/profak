@@ -47,5 +47,10 @@ namespace ProFak.UI
 				textBoxStatus.Text = exc.GetType() + ": " + exc.Message;
 			}
 		}
+
+		private void textBoxSQL_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.F5) buttonUruchom_Click(sender, e);
+		}
 	}
 }
