@@ -11,7 +11,14 @@ namespace ProFak.UI
 	{
 		public Wyszukiwarka()
 		{
-			PlaceholderText = "[F3] Wyszukaj ...";
+			PlaceholderText = "🔍 Wyszukaj [F3]";
+			TextAlign = HorizontalAlignment.Center;
+		}
+
+		protected override void OnTextChanged(EventArgs e)
+		{
+			base.OnTextChanged(e);
+			TextAlign = String.IsNullOrEmpty(Text) ? HorizontalAlignment.Center : HorizontalAlignment.Left;
 		}
 	}
 }

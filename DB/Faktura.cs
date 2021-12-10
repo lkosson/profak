@@ -56,6 +56,10 @@ namespace ProFak.DB
 		public List<Wplata> Wplaty { get; set; }
 		public List<Plik> Pliki { get; set; }
 
+		public decimal SumaWplat => Wplaty?.Sum(wplata => wplata.Kwota) ?? 0;
+		public decimal PozostaloDoZaplaty => Math.Max(RazemBrutto - SumaWplat, 0);
+		public bool CzyZaplacona => PozostaloDoZaplaty == 0;
+
 		public string WalutaFmt => Waluta?.Skrot;
 
 		public void PrzeliczRazem(Baza baza)

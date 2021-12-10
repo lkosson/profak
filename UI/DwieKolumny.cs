@@ -73,6 +73,7 @@ namespace ProFak.UI
 			numericUpDown.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 			numericUpDown.TextAlign = HorizontalAlignment.Right;
 			numericUpDown.DecimalPlaces = poprzecinku;
+			numericUpDown.Maximum = 999999999;
 			DodajWiersz(numericUpDown, etykieta);
 			return numericUpDown;
 		}

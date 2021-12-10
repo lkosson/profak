@@ -36,6 +36,7 @@ namespace ProFak.UI
 				new KorektaSprzedazyAkcja(),
 				new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
 				new UsunFaktureAkcja(),
+				new DodajWplateAkcja(),
 				new WydrukFakturyAkcja(),
 				new PrzeladujAkcja<Faktura>()
 			);
@@ -48,6 +49,7 @@ namespace ProFak.UI
 				new KorektaZakupuAkcja(),
 				new EdytujRekordAkcja<Faktura, FakturaZakupuEdytor>(),
 				new UsunFaktureAkcja(),
+				new DodajWplateAkcja(),
 				new PrzeladujAkcja<Faktura>()
 			);
 		}

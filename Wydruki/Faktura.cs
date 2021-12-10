@@ -62,7 +62,7 @@ namespace ProFak.Wydruki
 				}
 				else
 				{
-					fakturaDTO.Stopka = "<b>Do zapłaty:</b> " + dozaplaty.ToString("n2") + waluta.Skrot
+					fakturaDTO.Stopka = "<b>Do zapłaty:</b> " + dozaplaty.ToString("n2") + " " + waluta.Skrot
 						+ "<br/><b>Słownie:</b> " + SlowniePL.Slownie(dozaplaty, waluta.Skrot)
 						+ "<br/><b>Termin płatności:</b> " + faktura.TerminPlatnosci.ToLongDateString()
 						+ "<br/><b>Forma płatności:</b> przelew, mechanizm podzielonej płatności";

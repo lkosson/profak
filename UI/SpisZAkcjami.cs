@@ -45,7 +45,7 @@ namespace ProFak.UI
 			wyszukiwarka.KeyDown += wyszukiwarka_KeyDown;
 
 			spis.Dock = DockStyle.Fill;
-			spis.SelectionChanged += spis_SelectionChanged;
+			spis.ZaznaczenieZmienione += spis_ZaznaczenieZmienione;
 			spis.CellDoubleClick += spis_CellDoubleClick;
 			spis.KeyDown += spis_KeyDown;
 			Controls.Add(spis, 0, 0);
@@ -82,7 +82,7 @@ namespace ProFak.UI
 			if (e.RowIndex != -1 && domyslnaAkcja != null) domyslnaAkcja.Uruchom();
 		}
 
-		private void spis_SelectionChanged(object sender, EventArgs e)
+		private void spis_ZaznaczenieZmienione()
 		{
 			panelAkcji.Aktualizuj();
 		}
@@ -91,6 +91,8 @@ namespace ProFak.UI
 		{
 			if (klawisz == Keys.Escape) { Dispose(); return true; }
 			else if (klawisz == Keys.F3 || (klawisz == Keys.F && modyfikatory == Keys.Control)) { wyszukiwarka.Focus(); return true; }
+			else if (klawisz == Keys.Home) { Spis.WybraneRekordy = new[] { Spis.Rekordy.FirstOrDefault() }; return true; }
+			else if (klawisz == Keys.End) { Spis.WybraneRekordy = new[] { Spis.Rekordy.LastOrDefault() }; return true; }
 			else return panelAkcji.ObsluzKlawisz(klawisz, modyfikatory);
 		}
 

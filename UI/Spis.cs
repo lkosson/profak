@@ -20,6 +20,7 @@ namespace ProFak.UI
 		private IEnumerable<T> oryginalneRekordy;
 		private Func<T, bool> filtr;
 		private List<(string kolumna, bool malejaco, Func<T, IComparable> metoda)> kolumnyKolejnosci;
+		private bool rekordyPodczasZmiany;
 
 		public Kontekst Kontekst { get; set; }
 		public IEnumerable<T> WybraneRekordy
@@ -28,17 +29,39 @@ namespace ProFak.UI
 
 			set
 			{
-				foreach (DataGridViewRow row in Rows) if (row.DataBoundItem is T rekord) row.Selected = value.Contains(rekord);
+				var pierwszy = true;
+				foreach (DataGridViewRow row in Rows)
+				{
+					if (!(row.DataBoundItem is T rekord)) continue;
+					var wybrany = value.Contains(rekord);
+					row.Selected = wybrany;
+					if (pierwszy && wybrany)
+					{
+						CurrentCell = row.Cells[0];
+						pierwszy = false;
+					}
+				}
 			}
 		}
 
 		public IEnumerable<T> Rekordy
 		{
 			get => bindingSource.DataSource as IEnumerable<T>;
-			set { oryginalneRekordy = value; var rekordy = Sortuj(value.Where(filtr)).ToList(); bindingSource.DataSource = rekordy; if (RekordyZmienione != null) RekordyZmienione(); }
+			set
+			{
+				var zaznaczoneRekordy = WybraneRekordy.ToList();
+				oryginalneRekordy = value; 
+				var rekordy = Sortuj(value.Where(filtr)).ToList(); 
+				rekordyPodczasZmiany = true; 
+				bindingSource.DataSource = rekordy; 
+				rekordyPodczasZmiany = false; 
+				RekordyZmienione?.Invoke();
+				WybraneRekordy = zaznaczoneRekordy;
+			}
 		}
 
 		public event Action RekordyZmienione;
+		public event Action ZaznaczenieZmienione;
 
 		public Ref<T> RekordPoczatkowy { get; set; }
 
@@ -81,6 +104,13 @@ namespace ProFak.UI
 			}
 		}
 
+		protected override void OnSelectionChanged(EventArgs e)
+		{
+			if (rekordyPodczasZmiany) return;
+			ZaznaczenieZmienione?.Invoke();
+			base.OnSelectionChanged(e);
+		}
+
 		protected override void OnCreateControl()
 		{
 			base.OnCreateControl();
@@ -120,8 +150,20 @@ namespace ProFak.UI
 			Columns.Add(kolumna);
 		}
 
+
+		public void DodajKolumneBool(string wlasciwosc, string naglowek, int? szerokosc = null)
+		{
+			var kolumna = new DataGridViewCheckBoxColumn();
+			kolumna.HeaderText = naglowek;
+			kolumna.DataPropertyName = wlasciwosc;
+			kolumna.Name = wlasciwosc;
+			if (szerokosc.HasValue) kolumna.Width = szerokosc.Value;
+			kolumna.SortMode = DataGridViewColumnSortMode.Programmatic;
+			Columns.Add(kolumna);
+		}
+
 		public void DodajKolumneKwota(string wlasciwosc, string naglowek) => DodajKolumne(wlasciwosc, naglowek, wyrownajDoPrawej: true, format: "#,##0.00", szerokosc: 80);
-		public void DodajKolumneId() => DodajKolumne("Id", "Id", wyrownajDoPrawej: true, szerokosc: 40);
+		public void DodajKolumneId() => DodajKolumne("Id", "Id", wyrownajDoPrawej: true, szerokosc: 60);
 
 		protected abstract void Przeladuj();
 
