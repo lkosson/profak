@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -51,6 +53,7 @@ namespace ProFak.DB
 			if (String.IsNullOrEmpty(Sciezka)) return false;
 			using var baza = new DB.Baza();
 			baza.Database.Migrate();
+			baza.PrzygotujDaneStartowe();
 			return true;
 		}
 
@@ -65,6 +68,7 @@ namespace ProFak.DB
 		{
 			base.OnConfiguring(optionsBuilder);
 			optionsBuilder.UseSqlite($"Data Source={Sciezka}");
+			if (Debugger.IsAttached) optionsBuilder.LogTo(message => Debug.WriteLine(message), new[] { RelationalEventId.CommandExecuting }).EnableSensitiveDataLogging();
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -159,6 +163,43 @@ namespace ProFak.DB
 				wynik.Add(wiersz);
 			}
 			return wynik;
+		}
+
+		public void PrzygotujDaneStartowe()
+		{
+			if (!JednostkiMiar.Any())
+			{
+				Zapisz(new JednostkaMiary { CzyDomyslna = true, LiczbaMiescPoPrzecinku = 0, Nazwa = "Sztuka", Skrot = "szt" });
+				Zapisz(new JednostkaMiary { CzyDomyslna = false, LiczbaMiescPoPrzecinku = 0, Nazwa = "Komplet", Skrot = "kpl" });
+				Zapisz(new JednostkaMiary { CzyDomyslna = false, LiczbaMiescPoPrzecinku = 0, Nazwa = "Godzina", Skrot = "h" });
+				Zapisz(new JednostkaMiary { CzyDomyslna = false, LiczbaMiescPoPrzecinku = 3, Nazwa = "Kilogram", Skrot = "kg" });
+				Zapisz(new JednostkaMiary { CzyDomyslna = false, LiczbaMiescPoPrzecinku = 3, Nazwa = "Litr", Skrot = "l" });
+			}
+
+			if (!Numeratory.Any())
+			{
+				Zapisz(new Numerator { Przeznaczenie = PrzeznaczenieNumeratora.Faktura, Format = "FV/[Numer]/[Rok]" });
+				Zapisz(new Numerator { Przeznaczenie = PrzeznaczenieNumeratora.Korekta, Format = "FK/[Numer]/[Rok]" });
+				Zapisz(new Numerator { Przeznaczenie = PrzeznaczenieNumeratora.Proforma, Format = "FP/[Numer]/[Rok]" });
+			}
+
+			if (!SposobyPlatnosci.Any())
+			{
+				Zapisz(new SposobPlatnosci { CzyDomyslny = true, LiczbaDni = 7, Nazwa = "Przelew 7" });
+				Zapisz(new SposobPlatnosci { CzyDomyslny = false, LiczbaDni = 14, Nazwa = "Przelew 14" });
+				Zapisz(new SposobPlatnosci { CzyDomyslny = false, LiczbaDni = 30, Nazwa = "Przelew 30" });
+				Zapisz(new SposobPlatnosci { CzyDomyslny = false, LiczbaDni = 0, Nazwa = "Gotówka" });
+			}
+
+			if (!StawkiVat.Any())
+			{
+				Zapisz(new StawkaVat { CzyDomyslna = true, Wartosc = 23, Skrot = "23%" });
+				Zapisz(new StawkaVat { CzyDomyslna = false, Wartosc = 8, Skrot = "8%" });
+				Zapisz(new StawkaVat { CzyDomyslna = false, Wartosc = 5, Skrot = "5%" });
+				Zapisz(new StawkaVat { CzyDomyslna = false, Wartosc = 0, Skrot = "0%" });
+				Zapisz(new StawkaVat { CzyDomyslna = false, Wartosc = 0, Skrot = "NP" });
+				Zapisz(new StawkaVat { CzyDomyslna = false, Wartosc = 0, Skrot = "ZW" });
+			}
 		}
 	}
 }

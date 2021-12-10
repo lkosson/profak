@@ -102,6 +102,9 @@ namespace ProFak.UI
 			backgroundWorker.ReportProgress(0, "Aktualizacja struktury");
 			db.Database.Migrate();
 
+			backgroundWorker.ReportProgress(0, "Tworzenie danych startowych");
+			db.PrzygotujDaneStartowe();
+
 			backgroundWorker.ReportProgress(0, "Baza gotowa");
 		}
 
