@@ -136,7 +136,7 @@ namespace ProFak.UI
 			foreach (var (rok, miesiace) in lata)
 			{
 				var treeNodeRok = new TreeNode { Name = "#" + rok.ToString(), Text = rok.ToString() };
-				var treeNodeWszystko = new TreeNode { Name = "#" + rok.ToString(), Text = "(wszystkie)" };
+				var treeNodeWszystko = new TreeNode { Name = "#" + rok.ToString(), Text = "(cały rok)" };
 				treeNodeRok.Nodes.Add(treeNodeWszystko);
 				foreach (var miesiac in miesiace)
 				{

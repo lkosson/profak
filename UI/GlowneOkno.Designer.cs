@@ -77,11 +77,11 @@ namespace ProFak.UI
 			this.treeViewMenu.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.treeViewMenu.Location = new System.Drawing.Point(0, 0);
 			this.treeViewMenu.Name = "treeViewMenu";
-			treeNode1.Name = "Wszystkie";
+			treeNode1.Name = "#";
 			treeNode1.Text = "(wszystkie)";
 			treeNode2.Name = "FakturySprzedazy";
 			treeNode2.Text = "Faktury sprzedaży";
-			treeNode3.Name = "Wszystkie";
+			treeNode3.Name = "#";
 			treeNode3.Text = "(wszystkie)";
 			treeNode4.Name = "FakturyZakupu";
 			treeNode4.Text = "Faktury zakupu";
