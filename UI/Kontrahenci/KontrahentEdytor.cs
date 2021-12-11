@@ -29,6 +29,7 @@ namespace ProFak.UI
 			kontroler.Powiazanie(textBoxRachunekBankowy, kontrahent => kontrahent.RachunekBankowy);
 			kontroler.Powiazanie(textBoxUwagi, kontrahent => kontrahent.Uwagi);
 			kontroler.Powiazanie(comboBoxStan, kontrahent => kontrahent.CzyArchiwalny);
+			kontroler.Powiazanie(checkBoxTP, kontrahent => kontrahent.CzyTP);
 
 			Wymagane(textBoxNazwa);
 		}
@@ -41,6 +42,12 @@ namespace ProFak.UI
 		private void textBoxAdresRejestrowy_TextChanged(object sender, EventArgs e)
 		{
 			textBoxAdresKorespondencyjny.PlaceholderText = textBoxAdresRejestrowy.Text;
+		}
+
+		protected override void RekordGotowy()
+		{
+			base.RekordGotowy();
+			checkBoxTP.Visible = !Rekord.CzyPodmiot;
 		}
 
 		public override void KoniecEdycji()

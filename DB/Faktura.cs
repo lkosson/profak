@@ -31,6 +31,10 @@ namespace ProFak.DB
 		public RodzajFaktury Rodzaj { get; set; } = RodzajFaktury.Sprzedaż;
 		public bool CzyWartosciReczne { get; set; }
 
+		public decimal ProcentVatNaliczonego { get; set; }
+		public decimal ProcentKosztow { get; set; }
+		public bool CzyTP { get; set; }
+
 		public int? SprzedawcaId { get; set; }
 		public int? NabywcaId { get; set; }
 		public int? FakturaKorygowanaId { get; set; }
@@ -59,6 +63,11 @@ namespace ProFak.DB
 		public decimal SumaWplat => Wplaty?.Sum(wplata => wplata.Kwota) ?? 0;
 		public decimal PozostaloDoZaplaty => Math.Max(RazemBrutto - SumaWplat, 0);
 		public bool CzyZaplacona => PozostaloDoZaplaty == 0;
+
+		public decimal VatNaliczony => Zaokragl(RazemVat * ProcentVatNaliczonego / 100m);
+		public decimal VatJakoKoszty => Zaokragl((RazemVat - VatNaliczony) * ProcentKosztow / 100m);
+		public decimal NettoJakoKoszty => Zaokragl(RazemNetto * ProcentKosztow / 100m);
+		public decimal Koszty => VatJakoKoszty + NettoJakoKoszty;
 
 		public string WalutaFmt => Waluta?.Skrot;
 		public PrzeznaczenieNumeratora Numerator => Rodzaj switch

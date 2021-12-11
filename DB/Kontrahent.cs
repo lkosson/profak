@@ -19,6 +19,7 @@ namespace ProFak.DB
 		public string Uwagi { get; set; } = "";
 		public bool CzyArchiwalny { get; set; }
 		public bool CzyPodmiot { get; set; }
+		public bool CzyTP { get; set; }
 
 		public override bool CzyPasuje(string fraza)
 			=> base.CzyPasuje(fraza)

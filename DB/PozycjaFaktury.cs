@@ -24,6 +24,7 @@ namespace ProFak.DB
 		public int? StawkaVatId { get; set; }
 		public int LP { get; set; }
 		public bool CzyPrzedKorekta { get; set; }
+		public int GTU { get; set; }
 
 		public Ref<Faktura> FakturaRef { get => FakturaId; set => FakturaId = value; }
 		public Ref<Towar> TowarRef { get => TowarId; set => TowarId = value; }
@@ -56,19 +57,19 @@ namespace ProFak.DB
 
 			if (CzyWedlugCenBrutto)
 			{
-				CenaNetto = Decimal.Round(CenaBrutto * 100m / (100 + procentVat), 2, MidpointRounding.AwayFromZero);
-				CenaVat = Decimal.Round(CenaBrutto - CenaNetto, 2, MidpointRounding.AwayFromZero);
-				WartoscBrutto = Decimal.Round(Ilosc * CenaBrutto, 2, MidpointRounding.AwayFromZero);
-				WartoscNetto = Decimal.Round(WartoscBrutto * 100m / (100 + procentVat), 2, MidpointRounding.AwayFromZero);
-				WartoscVat = Decimal.Round(WartoscBrutto - WartoscNetto, 2, MidpointRounding.AwayFromZero);
+				CenaNetto = Zaokragl(CenaBrutto * 100m / (100 + procentVat));
+				CenaVat = Zaokragl(CenaBrutto - CenaNetto);
+				WartoscBrutto = Zaokragl(Ilosc * CenaBrutto);
+				WartoscNetto = Zaokragl(WartoscBrutto * 100m / (100 + procentVat));
+				WartoscVat = Zaokragl(WartoscBrutto - WartoscNetto);
 			}
 			else
 			{
-				CenaVat = Decimal.Round(CenaNetto * procentVat / 100, 2, MidpointRounding.AwayFromZero);
-				CenaBrutto = Decimal.Round(CenaNetto + CenaVat, 2, MidpointRounding.AwayFromZero);
-				WartoscNetto = Decimal.Round(Ilosc * CenaNetto, 2, MidpointRounding.AwayFromZero);
-				WartoscVat = Decimal.Round(WartoscNetto * procentVat / 100, 2, MidpointRounding.AwayFromZero);
-				WartoscBrutto = Decimal.Round(WartoscNetto + WartoscVat, 2, MidpointRounding.AwayFromZero);
+				CenaVat = Zaokragl(CenaNetto * procentVat / 100);
+				CenaBrutto = Zaokragl(CenaNetto + CenaVat);
+				WartoscNetto = Zaokragl(Ilosc * CenaNetto);
+				WartoscVat = Zaokragl(WartoscNetto * procentVat / 100);
+				WartoscBrutto = Zaokragl(WartoscNetto + WartoscVat);
 			}
 		}
 	}

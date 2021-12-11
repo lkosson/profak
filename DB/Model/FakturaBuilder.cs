@@ -38,6 +38,9 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.OpisSposobuPlatnosci).HasDefaultValue("").IsRequired();
 			builder.Property(e => e.Rodzaj).HasDefaultValue(RodzajFaktury.Sprzedaż).IsRequired();
 			builder.Property(e => e.CzyWartosciReczne).HasDefaultValue(false).IsRequired();
+			builder.Property(e => e.ProcentVatNaliczonego).HasDefaultValue(100m).IsRequired();
+			builder.Property(e => e.ProcentKosztow).HasDefaultValue(100m).IsRequired();
+			builder.Property(e => e.CzyTP).HasDefaultValue(false).IsRequired();
 
 			builder.Property(e => e.SprzedawcaId);
 			builder.Property(e => e.NabywcaId);

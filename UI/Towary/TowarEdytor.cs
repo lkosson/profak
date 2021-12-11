@@ -29,6 +29,7 @@ namespace ProFak.UI
 			kontroler.Powiazanie(numericUpDownCenaBrutto, towar => towar.CenaBrutto);
 			kontroler.Powiazanie(comboBoxJednostkaMiary, towar => towar.JednostkaMiaryRef);
 			kontroler.Powiazanie(comboBoxWidocznosc, towar => towar.CzyArchiwalny);
+			kontroler.Powiazanie(comboBoxGTU, towar => towar.GTU);
 
 			Wymagane(textBoxNazwa);
 			Wymagane(comboBoxStawkaVat);

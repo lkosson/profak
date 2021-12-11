@@ -49,6 +49,10 @@ namespace ProFak.UI
 			kontroler.Powiazanie(textBoxUwagiPubliczne, faktura => faktura.UwagiPubliczne);
 			kontroler.Powiazanie(textBoxUwagiWewnetrzne, faktura => faktura.UwagiWewnetrzne);
 
+			kontroler.Powiazanie(checkBoxTP, faktura => faktura.CzyTP);
+			kontroler.Powiazanie(comboBoxProcentKosztow, faktura => faktura.ProcentKosztow.ToString("0") + "%", (faktura, wartosc) => faktura.ProcentKosztow = Int32.TryParse(wartosc.TrimEnd(' ', '%'), out var liczba) ? liczba : 100);
+			kontroler.Powiazanie(comboBoxProcentVat, faktura => faktura.ProcentVatNaliczonego.ToString("0") + "%", (faktura, wartosc) => faktura.ProcentVatNaliczonego = Int32.TryParse(wartosc.TrimEnd(' ', '%'), out var liczba) ? liczba : 100);
+
 			Wymagane(textBoxDaneNabywcy);
 			Wymagane(textBoxDaneSprzedawcy);
 			Wymagane(comboBoxNazwaNabywcy);
@@ -128,6 +132,7 @@ namespace ProFak.UI
 			rekord.NIPNabywcy = kontrahent.NIP;
 			rekord.NazwaNabywcy = kontrahent.PelnaNazwa;
 			rekord.DaneNabywcy = kontrahent.AdresRejestrowy;
+			rekord.CzyTP = kontrahent.CzyTP;
 			return true;
 		}
 
@@ -188,6 +193,19 @@ namespace ProFak.UI
 				Wymagane(textBoxNumer);
 				textBoxNumer.Focus();
 				ActiveControl = textBoxNumer;
+			}
+
+			if (Rekord.Rodzaj == RodzajFaktury.Sprzedaż || Rekord.Rodzaj == RodzajFaktury.KorektaSprzedaży || Rekord.Rodzaj == RodzajFaktury.Proforma)
+			{
+				checkBoxTP.Enabled = true;
+				comboBoxProcentKosztow.Enabled = false;
+				comboBoxProcentVat.Enabled = false;
+			}
+			else
+			{
+				checkBoxTP.Enabled = false;
+				comboBoxProcentKosztow.Enabled = true;
+				comboBoxProcentVat.Enabled = true;
 			}
 		}
 	}

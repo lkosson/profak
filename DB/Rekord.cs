@@ -48,5 +48,7 @@ namespace ProFak.DB
 		protected static bool CzyPasuje(decimal pole, string fraza) => Decimal.TryParse(fraza, out var wartosc) && pole == wartosc;
 		protected static bool CzyPasuje(DateTime pole, string fraza) => CzyPasuje(pole.ToString("yyyy-MM-dd"), fraza);
 		protected static bool CzyPasuje(object pole, string fraza) => pole != null && CzyPasuje(pole.ToString(), fraza);
+
+		protected decimal Zaokragl(decimal wartosc) => Decimal.Round(wartosc, 2, MidpointRounding.AwayFromZero);
 	}
 }

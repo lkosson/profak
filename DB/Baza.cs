@@ -200,6 +200,11 @@ namespace ProFak.DB
 				Zapisz(new StawkaVat { CzyDomyslna = false, Wartosc = 0, Skrot = "NP" });
 				Zapisz(new StawkaVat { CzyDomyslna = false, Wartosc = 0, Skrot = "ZW" });
 			}
+
+			if (!Waluty.Any())
+			{
+				Zapisz(new Waluta { CzyDomyslna = true, Skrot = "PLN", Nazwa = "Polski złoty" });
+			}
 		}
 	}
 }

@@ -30,6 +30,7 @@ namespace ProFak.UI
 			kontroler.Powiazanie(checkBoxWedlugBrutto, pozycja => pozycja.CzyWedlugCenBrutto, KonfigurujCeny);
 			kontroler.Powiazanie(checkBoxRecznie, pozycja => pozycja.CzyWartosciReczne, KonfigurujCeny);
 			kontroler.Powiazanie(comboBoxStawkaVat, pozycja => pozycja.StawkaVatRef);
+			kontroler.Powiazanie(comboBoxGTU, pozycja => pozycja.GTU);
 
 			Wymagane(comboBoxTowar);
 			Wymagane(comboBoxStawkaVat);
@@ -52,6 +53,7 @@ namespace ProFak.UI
 					Rekord.CenaBrutto = towar.CenaBrutto;
 					Rekord.CenaNetto = towar.CenaNetto;
 					Rekord.StawkaVatRef = towar.StawkaVatRef;
+					Rekord.GTU = towar.GTU;
 					KonfigurujPoleIlosci();
 					KonfigurujCeny();
 					PrzeliczCeny();
