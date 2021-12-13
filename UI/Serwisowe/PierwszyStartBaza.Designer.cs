@@ -211,12 +211,12 @@ namespace ProFak.UI
 			// openFileDialogBaza
 			// 
 			this.openFileDialogBaza.FileName = "profak.sqlite3";
-			this.openFileDialogBaza.Filter = "profak.sqlite3|Baza danych ProFak (profak.sqlite3)|*.*|Wszystkie pliki (*.*)";
+			this.openFileDialogBaza.Filter = "Baza danych ProFak (profak.sqlite3)|profak.sqlite3|Wszystkie pliki (*.*)|*.*";
 			this.openFileDialogBaza.RestoreDirectory = true;
 			// 
 			// openFileDialogBackup
 			// 
-			this.openFileDialogBackup.Filter = "*.probak|Kopia zapasowa programu ProFak (*.probak)|*.*|Wszystkie pliki (*.*)";
+			this.openFileDialogBackup.Filter = "Kopia zapasowa programu ProFak (*.probak)|*.probak|Wszystkie pliki (*.*)|*.*";
 			this.openFileDialogBackup.RestoreDirectory = true;
 			// 
 			// PierwszyStartBaza
