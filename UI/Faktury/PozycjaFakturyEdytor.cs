@@ -14,6 +14,8 @@ namespace ProFak.UI
 {
 	partial class PozycjaFakturyEdytor : PozycjaFakturyEdytorBase
 	{
+		private Slownik<Towar> slownikTowarow;
+
 		public PozycjaFakturyEdytor()
 		{
 			InitializeComponent();
@@ -40,26 +42,13 @@ namespace ProFak.UI
 		{
 			base.KontekstGotowy();
 
-			new Slownik<Towar>(
+			slownikTowarow = new Slownik<Towar>(
 				Kontekst, comboBoxTowar, buttonTowar,
 				Kontekst.Baza.Towary.ToList,
 				towar => towar.Nazwa,
-				towar =>
-				{
-					if (towar == null || Rekord.TowarRef == towar.Ref) return;
-					Rekord.TowarRef = towar;
-					Rekord.Opis = towar.Nazwa;
-					Rekord.CzyWedlugCenBrutto = towar.CzyWedlugCenBrutto;
-					Rekord.CenaBrutto = towar.CenaBrutto;
-					Rekord.CenaNetto = towar.CenaNetto;
-					Rekord.StawkaVatRef = towar.StawkaVatRef;
-					Rekord.GTU = towar.GTU;
-					KonfigurujPoleIlosci();
-					KonfigurujCeny();
-					PrzeliczCeny();
-				},
-				Spisy.Towary)
-				.Zainstaluj();
+				UstawTowar,
+				Spisy.Towary);
+			slownikTowarow.Zainstaluj();
 
 			new Slownik<StawkaVat>(
 				Kontekst, comboBoxStawkaVat, buttonStawkaVat,
@@ -106,6 +95,38 @@ namespace ProFak.UI
 		{
 			Rekord.PrzeliczCeny(Kontekst.Baza);
 			kontroler.AktualizujKontrolki();
+		}
+
+		private void UstawTowar(Towar towar)
+		{
+			if (towar == null || Rekord.TowarRef == towar.Ref) return;
+			Rekord.TowarRef = towar;
+			Rekord.Opis = towar.Nazwa;
+			Rekord.CzyWedlugCenBrutto = towar.CzyWedlugCenBrutto;
+			Rekord.CenaBrutto = towar.CenaBrutto;
+			Rekord.CenaNetto = towar.CenaNetto;
+			Rekord.StawkaVatRef = towar.StawkaVatRef;
+			Rekord.GTU = towar.GTU;
+			KonfigurujPoleIlosci();
+			KonfigurujCeny();
+			PrzeliczCeny();
+		}
+
+		private void buttonNowyTowar_Click(object sender, EventArgs e)
+		{
+			var towar = new Towar { Nazwa = comboBoxTowar.Text, StawkaVatRef = Rekord.StawkaVatRef, CenaNetto = Rekord.CenaNetto, CenaBrutto = Rekord.CenaBrutto, GTU = Rekord.GTU, CzyWedlugCenBrutto = Rekord.CzyWedlugCenBrutto };
+			using var nowyKontekst = new Kontekst(Kontekst);
+			using var transakcja = nowyKontekst.Transakcja();
+			nowyKontekst.Baza.Zapisz(towar);
+			using var edytor = new TowarEdytor();
+			using var okno = new Dialog("Nowy towar", edytor, nowyKontekst);
+			edytor.Przygotuj(nowyKontekst, towar);
+			if (okno.ShowDialog() != DialogResult.OK) return;
+			edytor.KoniecEdycji();
+			nowyKontekst.Baza.Zapisz(towar);
+			transakcja.Zatwierdz();
+			slownikTowarow.Przeladuj();
+			UstawTowar(towar);
 		}
 	}
 

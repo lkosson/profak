@@ -56,13 +56,14 @@ namespace ProFak.UI
 			this.numericUpDownLP = new System.Windows.Forms.NumericUpDown();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-			this.checkBoxRecznie = new System.Windows.Forms.CheckBox();
 			this.label10 = new System.Windows.Forms.Label();
 			this.comboBoxGTU = new System.Windows.Forms.ComboBox();
 			this.buttonStawkaVat = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
 			this.comboBoxStawkaVat = new System.Windows.Forms.ComboBox();
+			this.checkBoxRecznie = new System.Windows.Forms.CheckBox();
 			this.checkBoxWedlugBrutto = new System.Windows.Forms.CheckBox();
+			this.buttonNowyTowar = new System.Windows.Forms.Button();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.tableLayoutPanel3.SuspendLayout();
@@ -321,7 +322,7 @@ namespace ProFak.UI
 			// tableLayoutPanel2
 			// 
 			this.tableLayoutPanel2.AutoSize = true;
-			this.tableLayoutPanel2.ColumnCount = 9;
+			this.tableLayoutPanel2.ColumnCount = 10;
 			this.tableLayoutPanel1.SetColumnSpan(this.tableLayoutPanel2, 3);
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -329,16 +330,18 @@ namespace ProFak.UI
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel2.Controls.Add(this.label1, 3, 0);
 			this.tableLayoutPanel2.Controls.Add(this.comboBoxTowar, 4, 0);
 			this.tableLayoutPanel2.Controls.Add(this.buttonTowar, 5, 0);
-			this.tableLayoutPanel2.Controls.Add(this.numericUpDownIlosc, 7, 0);
-			this.tableLayoutPanel2.Controls.Add(this.labelJednostka, 8, 0);
+			this.tableLayoutPanel2.Controls.Add(this.numericUpDownIlosc, 8, 0);
+			this.tableLayoutPanel2.Controls.Add(this.labelJednostka, 9, 0);
 			this.tableLayoutPanel2.Controls.Add(this.label9, 0, 0);
 			this.tableLayoutPanel2.Controls.Add(this.numericUpDownLP, 1, 0);
+			this.tableLayoutPanel2.Controls.Add(this.buttonNowyTowar, 6, 0);
 			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
 			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -363,14 +366,14 @@ namespace ProFak.UI
 			this.comboBoxTowar.FormattingEnabled = true;
 			this.comboBoxTowar.Location = new System.Drawing.Point(167, 4);
 			this.comboBoxTowar.Name = "comboBoxTowar";
-			this.comboBoxTowar.Size = new System.Drawing.Size(257, 23);
+			this.comboBoxTowar.Size = new System.Drawing.Size(222, 23);
 			this.comboBoxTowar.TabIndex = 1;
 			// 
 			// buttonTowar
 			// 
 			this.buttonTowar.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.buttonTowar.AutoSize = true;
-			this.buttonTowar.Location = new System.Drawing.Point(430, 3);
+			this.buttonTowar.Location = new System.Drawing.Point(395, 3);
 			this.buttonTowar.Name = "buttonTowar";
 			this.buttonTowar.Size = new System.Drawing.Size(26, 25);
 			this.buttonTowar.TabIndex = 2;
@@ -389,7 +392,7 @@ namespace ProFak.UI
             0});
 			this.numericUpDownIlosc.Name = "numericUpDownIlosc";
 			this.numericUpDownIlosc.Size = new System.Drawing.Size(73, 23);
-			this.numericUpDownIlosc.TabIndex = 3;
+			this.numericUpDownIlosc.TabIndex = 10;
 			this.numericUpDownIlosc.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// labelJednostka
@@ -463,17 +466,6 @@ namespace ProFak.UI
 			this.tableLayoutPanel5.Size = new System.Drawing.Size(288, 111);
 			this.tableLayoutPanel5.TabIndex = 0;
 			// 
-			// checkBoxRecznie
-			// 
-			this.checkBoxRecznie.AutoSize = true;
-			this.tableLayoutPanel5.SetColumnSpan(this.checkBoxRecznie, 2);
-			this.checkBoxRecznie.Location = new System.Drawing.Point(72, 88);
-			this.checkBoxRecznie.Name = "checkBoxRecznie";
-			this.checkBoxRecznie.Size = new System.Drawing.Size(133, 19);
-			this.checkBoxRecznie.TabIndex = 5;
-			this.checkBoxRecznie.Text = "Ustaw kwoty ręcznie";
-			this.checkBoxRecznie.UseVisualStyleBackColor = true;
-			// 
 			// label10
 			// 
 			this.label10.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -541,6 +533,17 @@ namespace ProFak.UI
 			this.comboBoxStawkaVat.Size = new System.Drawing.Size(181, 23);
 			this.comboBoxStawkaVat.TabIndex = 1;
 			// 
+			// checkBoxRecznie
+			// 
+			this.checkBoxRecznie.AutoSize = true;
+			this.tableLayoutPanel5.SetColumnSpan(this.checkBoxRecznie, 2);
+			this.checkBoxRecznie.Location = new System.Drawing.Point(72, 88);
+			this.checkBoxRecznie.Name = "checkBoxRecznie";
+			this.checkBoxRecznie.Size = new System.Drawing.Size(133, 19);
+			this.checkBoxRecznie.TabIndex = 5;
+			this.checkBoxRecznie.Text = "Ustaw kwoty ręcznie";
+			this.checkBoxRecznie.UseVisualStyleBackColor = true;
+			// 
 			// checkBoxWedlugBrutto
 			// 
 			this.checkBoxWedlugBrutto.AutoSize = true;
@@ -551,6 +554,18 @@ namespace ProFak.UI
 			this.checkBoxWedlugBrutto.TabIndex = 4;
 			this.checkBoxWedlugBrutto.Text = "Według ceny brutto";
 			this.checkBoxWedlugBrutto.UseVisualStyleBackColor = true;
+			// 
+			// buttonNowyTowar
+			// 
+			this.buttonNowyTowar.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.buttonNowyTowar.AutoSize = true;
+			this.buttonNowyTowar.Location = new System.Drawing.Point(427, 3);
+			this.buttonNowyTowar.Name = "buttonNowyTowar";
+			this.buttonNowyTowar.Size = new System.Drawing.Size(29, 25);
+			this.buttonNowyTowar.TabIndex = 3;
+			this.buttonNowyTowar.Text = "➕";
+			this.buttonNowyTowar.UseVisualStyleBackColor = true;
+			this.buttonNowyTowar.Click += new System.EventHandler(this.buttonNowyTowar_Click);
 			// 
 			// PozycjaFakturyEdytor
 			// 
@@ -620,5 +635,6 @@ namespace ProFak.UI
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.ComboBox comboBoxGTU;
+		private System.Windows.Forms.Button buttonNowyTowar;
 	}
 }
