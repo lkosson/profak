@@ -17,6 +17,11 @@ namespace ProFak.UI
 		private readonly SpisZAkcjami<PozycjaFaktury, PozycjaFakturySpis> pozycjeFaktury;
 		private readonly SpisZAkcjami<Plik, PlikSpis> pliki;
 
+		private Slownik<Kontrahent> slownikNabywcaNazwa;
+		private Slownik<Kontrahent> slownikNabywcaNIP;
+		private Slownik<Kontrahent> slownikSprzedawcaNazwa;
+		private Slownik<Kontrahent> slownikSprzedawcaNIP;
+
 		public virtual bool CzySprzedaz => true;
 
 		public FakturaEdytor()
@@ -92,37 +97,37 @@ namespace ProFak.UI
 				Spisy.SposobyPlatnosci)
 				.Zainstaluj();
 
-			new Slownik<Kontrahent>(
+			slownikNabywcaNIP = new Slownik<Kontrahent>(
 				Kontekst, comboBoxNIPNabywcy, buttonNabywca,
 				Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == !CzySprzedaz).ToList,
 				kontrahent => kontrahent.NIP,
 				kontrahent => { if (UstawNabywce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
-				Spisy.Kontrahenci)
-				.Zainstaluj();
+				Spisy.Kontrahenci);
+			slownikNabywcaNIP.Zainstaluj();
 
-			new Slownik<Kontrahent>(
+			slownikNabywcaNazwa = new Slownik<Kontrahent>(
 				Kontekst, comboBoxNazwaNabywcy, null,
 				Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == !CzySprzedaz).ToList,
 				kontrahent => kontrahent.PelnaNazwa,
 				kontrahent => { if (UstawNabywce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
-				Spisy.Kontrahenci)
-				.Zainstaluj();
+				Spisy.Kontrahenci);
+			slownikNabywcaNazwa.Zainstaluj();
 
-			new Slownik<Kontrahent>(
+			slownikSprzedawcaNazwa = new Slownik<Kontrahent>(
 				Kontekst, comboBoxNIPSprzedawcy, buttonSprzedawca,
 				Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == CzySprzedaz).ToList,
 				kontrahent => kontrahent.NIP,
 				kontrahent => { if (UstawSprzedawce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
-				Spisy.Kontrahenci)
-				.Zainstaluj();
+				Spisy.Kontrahenci);
+			slownikSprzedawcaNazwa.Zainstaluj();
 
-			new Slownik<Kontrahent>(
+			slownikSprzedawcaNIP = new Slownik<Kontrahent>(
 				Kontekst, comboBoxNazwaSprzedawcy, null,
 				Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == CzySprzedaz).ToList,
 				kontrahent => kontrahent.PelnaNazwa,
 				kontrahent => { if (UstawSprzedawce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
-				Spisy.Kontrahenci)
-				.Zainstaluj();
+				Spisy.Kontrahenci);
+			slownikSprzedawcaNIP.Zainstaluj();
 		}
 
 		private bool UstawNabywce(Faktura rekord, Kontrahent kontrahent)
@@ -161,8 +166,8 @@ namespace ProFak.UI
 			base.PrzygotujRekord(rekord);
 			if (rekord.WalutaRef.IsNull) rekord.WalutaRef = Kontekst.Baza.Waluty.FirstOrDefault(waluta => waluta.CzyDomyslna);
 			if (rekord.SposobPlatnosciRef.IsNull) UstawSposobPlatnosci(rekord, Kontekst.Baza.SposobyPlatnosci.FirstOrDefault(sposobPlatnosci => sposobPlatnosci.CzyDomyslny));
-			if (rekord.SprzedawcaRef.IsNull && (rekord.Rodzaj == RodzajFaktury.Sprzedaż || rekord.Rodzaj == RodzajFaktury.Proforma)) UstawSprzedawce(rekord, Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot && !kontrahent.CzyArchiwalny));
-			if (rekord.NabywcaRef.IsNull && rekord.Rodzaj == RodzajFaktury.Zakup) UstawNabywce(rekord, Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot && !kontrahent.CzyArchiwalny));
+			if (rekord.SprzedawcaRef.IsNull && rekord.CzySprzedaz) UstawSprzedawce(rekord, Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot && !kontrahent.CzyArchiwalny));
+			if (rekord.NabywcaRef.IsNull && rekord.CzyZakup) UstawNabywce(rekord, Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot && !kontrahent.CzyArchiwalny));
 		}
 
 		protected override void RekordGotowy()
@@ -181,7 +186,7 @@ namespace ProFak.UI
 			else if (Rekord.Rodzaj == RodzajFaktury.Proforma) labelRodzaj.Text = "Proforma";
 			else labelRodzaj.Text = Rekord.Rodzaj.ToString();
 
-			if (String.IsNullOrWhiteSpace(Rekord.Numer) && (Rekord.Rodzaj == RodzajFaktury.Sprzedaż || Rekord.Rodzaj == RodzajFaktury.KorektaSprzedaży || Rekord.Rodzaj == RodzajFaktury.Proforma))
+			if (String.IsNullOrWhiteSpace(Rekord.Numer) && Rekord.CzySprzedaz)
 			{
 				var numer = Numerator.NadajNumer(Kontekst.Baza, Rekord.Numerator, Rekord.Podstawienie, zwiekszLicznik: false);
 				textBoxNumer.PlaceholderText = numer;
@@ -195,18 +200,65 @@ namespace ProFak.UI
 				ActiveControl = textBoxNumer;
 			}
 
-			if (Rekord.Rodzaj == RodzajFaktury.Sprzedaż || Rekord.Rodzaj == RodzajFaktury.KorektaSprzedaży || Rekord.Rodzaj == RodzajFaktury.Proforma)
+			if (Rekord.CzySprzedaz)
 			{
 				checkBoxTP.Enabled = true;
 				comboBoxProcentKosztow.Enabled = false;
 				comboBoxProcentVat.Enabled = false;
+
+				comboBoxNIPSprzedawcy.Enabled = false;
+				comboBoxNazwaSprzedawcy.Enabled = false;
+				buttonSprzedawca.Enabled = false;
+				buttonNowySprzedawca.Enabled = false;
+				textBoxDaneSprzedawcy.Enabled = false;
 			}
 			else
 			{
 				checkBoxTP.Enabled = false;
 				comboBoxProcentKosztow.Enabled = true;
 				comboBoxProcentVat.Enabled = true;
+
+				comboBoxNIPNabywcy.Enabled = false;
+				comboBoxNazwaNabywcy.Enabled = false;
+				buttonNabywca.Enabled = false;
+				buttonNowyNabywca.Enabled = false;
+				textBoxDaneNabywcy.Enabled = false;
 			}
+		}
+
+		private void buttonNowySprzedawca_Click(object sender, EventArgs e)
+		{
+			var kontrahent = new Kontrahent { Nazwa = comboBoxNazwaSprzedawcy.Text, NIP = comboBoxNIPSprzedawcy.Text, AdresRejestrowy = textBoxDaneSprzedawcy.Text };
+			if (!EdytorNowegoKontrahenta(kontrahent)) return;
+			slownikSprzedawcaNazwa.Przeladuj();
+			slownikSprzedawcaNIP.Przeladuj();
+			UstawSprzedawce(Rekord, kontrahent);
+			kontroler.AktualizujKontrolki();
+		}
+
+		private void buttonNowyNabywca_Click(object sender, EventArgs e)
+		{
+			var kontrahent = new Kontrahent { Nazwa = comboBoxNazwaNabywcy.Text, NIP = comboBoxNIPNabywcy.Text, AdresRejestrowy = textBoxDaneNabywcy.Text };
+			if (!EdytorNowegoKontrahenta(kontrahent)) return;
+			slownikNabywcaNazwa.Przeladuj();
+			slownikNabywcaNIP.Przeladuj();
+			UstawNabywce(Rekord, kontrahent);
+			kontroler.AktualizujKontrolki();
+		}
+
+		private bool EdytorNowegoKontrahenta(Kontrahent kontrahent)
+		{
+			using var nowyKontekst = new Kontekst(Kontekst);
+			using var transakcja = nowyKontekst.Transakcja();
+			nowyKontekst.Baza.Zapisz(kontrahent);
+			using var edytor = new KontrahentEdytor();
+			using var okno = new Dialog("Nowy kontrahent", edytor, nowyKontekst);
+			edytor.Przygotuj(nowyKontekst, kontrahent);
+			if (okno.ShowDialog() != DialogResult.OK) return false;
+			edytor.KoniecEdycji();
+			nowyKontekst.Baza.Zapisz(kontrahent);
+			transakcja.Zatwierdz();
+			return true;
 		}
 	}
 

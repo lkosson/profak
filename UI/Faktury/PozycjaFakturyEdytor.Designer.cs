@@ -34,14 +34,10 @@ namespace ProFak.UI
 			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
-			this.buttonStawkaVat = new System.Windows.Forms.Button();
 			this.label5 = new System.Windows.Forms.Label();
 			this.numericUpDownCenaNetto = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDownCenaVat = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDownCenaBrutto = new System.Windows.Forms.NumericUpDown();
-			this.label2 = new System.Windows.Forms.Label();
-			this.checkBoxWedlugBrutto = new System.Windows.Forms.CheckBox();
-			this.comboBoxStawkaVat = new System.Windows.Forms.ComboBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			this.label6 = new System.Windows.Forms.Label();
@@ -50,7 +46,6 @@ namespace ProFak.UI
 			this.numericUpDownWartoscNetto = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDownWartoscVat = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDownWartoscBrutto = new System.Windows.Forms.NumericUpDown();
-			this.checkBoxRecznie = new System.Windows.Forms.CheckBox();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.label1 = new System.Windows.Forms.Label();
 			this.comboBoxTowar = new System.Windows.Forms.ComboBox();
@@ -61,8 +56,13 @@ namespace ProFak.UI
 			this.numericUpDownLP = new System.Windows.Forms.NumericUpDown();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+			this.checkBoxRecznie = new System.Windows.Forms.CheckBox();
 			this.label10 = new System.Windows.Forms.Label();
 			this.comboBoxGTU = new System.Windows.Forms.ComboBox();
+			this.buttonStawkaVat = new System.Windows.Forms.Button();
+			this.label2 = new System.Windows.Forms.Label();
+			this.comboBoxStawkaVat = new System.Windows.Forms.ComboBox();
+			this.checkBoxWedlugBrutto = new System.Windows.Forms.CheckBox();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.tableLayoutPanel3.SuspendLayout();
@@ -85,9 +85,9 @@ namespace ProFak.UI
 			// 
 			this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.tableLayoutPanel1.ColumnCount = 3;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 1);
 			this.tableLayoutPanel1.Controls.Add(this.groupBox2, 1, 1);
 			this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
@@ -98,53 +98,48 @@ namespace ProFak.UI
 			this.tableLayoutPanel1.RowCount = 2;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(600, 210);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(600, 180);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// groupBox1
 			// 
 			this.groupBox1.Controls.Add(this.tableLayoutPanel3);
-			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox1.Location = new System.Drawing.Point(3, 40);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(194, 187);
-			this.groupBox1.TabIndex = 2;
+			this.groupBox1.Size = new System.Drawing.Size(144, 133);
+			this.groupBox1.TabIndex = 4;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Cena jednostkowa";
 			// 
 			// tableLayoutPanel3
 			// 
-			this.tableLayoutPanel3.ColumnCount = 3;
+			this.tableLayoutPanel3.ColumnCount = 2;
 			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel3.Controls.Add(this.label3, 0, 0);
 			this.tableLayoutPanel3.Controls.Add(this.label4, 0, 1);
-			this.tableLayoutPanel3.Controls.Add(this.buttonStawkaVat, 2, 3);
 			this.tableLayoutPanel3.Controls.Add(this.label5, 0, 2);
 			this.tableLayoutPanel3.Controls.Add(this.numericUpDownCenaNetto, 1, 0);
 			this.tableLayoutPanel3.Controls.Add(this.numericUpDownCenaVat, 1, 1);
 			this.tableLayoutPanel3.Controls.Add(this.numericUpDownCenaBrutto, 1, 2);
-			this.tableLayoutPanel3.Controls.Add(this.label2, 0, 3);
-			this.tableLayoutPanel3.Controls.Add(this.comboBoxStawkaVat, 1, 3);
 			this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 19);
 			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-			this.tableLayoutPanel3.RowCount = 6;
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel3.RowCount = 5;
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel3.Size = new System.Drawing.Size(188, 165);
+			this.tableLayoutPanel3.Size = new System.Drawing.Size(138, 111);
 			this.tableLayoutPanel3.TabIndex = 0;
 			// 
 			// label3
 			// 
 			this.label3.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(30, 7);
+			this.label3.Location = new System.Drawing.Point(6, 7);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(37, 15);
 			this.label3.TabIndex = 0;
@@ -154,28 +149,17 @@ namespace ProFak.UI
 			// 
 			this.label4.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(43, 36);
+			this.label4.Location = new System.Drawing.Point(20, 36);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(24, 15);
+			this.label4.Size = new System.Drawing.Size(23, 15);
 			this.label4.TabIndex = 0;
 			this.label4.Text = "Vat";
-			// 
-			// buttonStawkaVat
-			// 
-			this.buttonStawkaVat.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.buttonStawkaVat.AutoSize = true;
-			this.buttonStawkaVat.Location = new System.Drawing.Point(159, 90);
-			this.buttonStawkaVat.Name = "buttonStawkaVat";
-			this.buttonStawkaVat.Size = new System.Drawing.Size(26, 25);
-			this.buttonStawkaVat.TabIndex = 2;
-			this.buttonStawkaVat.Text = "...";
-			this.buttonStawkaVat.UseVisualStyleBackColor = true;
 			// 
 			// label5
 			// 
 			this.label5.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(27, 65);
+			this.label5.Location = new System.Drawing.Point(3, 65);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(40, 15);
 			this.label5.TabIndex = 0;
@@ -184,89 +168,55 @@ namespace ProFak.UI
 			// numericUpDownCenaNetto
 			// 
 			this.numericUpDownCenaNetto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableLayoutPanel3.SetColumnSpan(this.numericUpDownCenaNetto, 2);
 			this.numericUpDownCenaNetto.DecimalPlaces = 2;
-			this.numericUpDownCenaNetto.Location = new System.Drawing.Point(73, 3);
+			this.numericUpDownCenaNetto.Location = new System.Drawing.Point(49, 3);
 			this.numericUpDownCenaNetto.Maximum = new decimal(new int[] {
             999999999,
             0,
             0,
             0});
 			this.numericUpDownCenaNetto.Name = "numericUpDownCenaNetto";
-			this.numericUpDownCenaNetto.Size = new System.Drawing.Size(112, 23);
+			this.numericUpDownCenaNetto.Size = new System.Drawing.Size(86, 23);
 			this.numericUpDownCenaNetto.TabIndex = 1;
 			this.numericUpDownCenaNetto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// numericUpDownCenaVat
 			// 
 			this.numericUpDownCenaVat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableLayoutPanel3.SetColumnSpan(this.numericUpDownCenaVat, 2);
 			this.numericUpDownCenaVat.DecimalPlaces = 2;
-			this.numericUpDownCenaVat.Location = new System.Drawing.Point(73, 32);
+			this.numericUpDownCenaVat.Location = new System.Drawing.Point(49, 32);
 			this.numericUpDownCenaVat.Maximum = new decimal(new int[] {
             999999999,
             0,
             0,
             0});
 			this.numericUpDownCenaVat.Name = "numericUpDownCenaVat";
-			this.numericUpDownCenaVat.Size = new System.Drawing.Size(112, 23);
+			this.numericUpDownCenaVat.Size = new System.Drawing.Size(86, 23);
 			this.numericUpDownCenaVat.TabIndex = 2;
 			this.numericUpDownCenaVat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// numericUpDownCenaBrutto
 			// 
 			this.numericUpDownCenaBrutto.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableLayoutPanel3.SetColumnSpan(this.numericUpDownCenaBrutto, 2);
 			this.numericUpDownCenaBrutto.DecimalPlaces = 2;
-			this.numericUpDownCenaBrutto.Location = new System.Drawing.Point(73, 61);
+			this.numericUpDownCenaBrutto.Location = new System.Drawing.Point(49, 61);
 			this.numericUpDownCenaBrutto.Maximum = new decimal(new int[] {
             999999999,
             0,
             0,
             0});
 			this.numericUpDownCenaBrutto.Name = "numericUpDownCenaBrutto";
-			this.numericUpDownCenaBrutto.Size = new System.Drawing.Size(112, 23);
+			this.numericUpDownCenaBrutto.Size = new System.Drawing.Size(86, 23);
 			this.numericUpDownCenaBrutto.TabIndex = 3;
 			this.numericUpDownCenaBrutto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
-			// label2
-			// 
-			this.label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(3, 95);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(64, 15);
-			this.label2.TabIndex = 0;
-			this.label2.Text = "Stawka Vat";
-			// 
-			// checkBoxWedlugBrutto
-			// 
-			this.checkBoxWedlugBrutto.AutoSize = true;
-			this.checkBoxWedlugBrutto.Location = new System.Drawing.Point(39, 3);
-			this.checkBoxWedlugBrutto.Name = "checkBoxWedlugBrutto";
-			this.checkBoxWedlugBrutto.Size = new System.Drawing.Size(131, 19);
-			this.checkBoxWedlugBrutto.TabIndex = 5;
-			this.checkBoxWedlugBrutto.Text = "Według ceny brutto";
-			this.checkBoxWedlugBrutto.UseVisualStyleBackColor = true;
-			// 
-			// comboBoxStawkaVat
-			// 
-			this.comboBoxStawkaVat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.comboBoxStawkaVat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBoxStawkaVat.FormattingEnabled = true;
-			this.comboBoxStawkaVat.Location = new System.Drawing.Point(73, 91);
-			this.comboBoxStawkaVat.Name = "comboBoxStawkaVat";
-			this.comboBoxStawkaVat.Size = new System.Drawing.Size(80, 23);
-			this.comboBoxStawkaVat.TabIndex = 4;
 			// 
 			// groupBox2
 			// 
 			this.groupBox2.Controls.Add(this.tableLayoutPanel4);
-			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBox2.Location = new System.Drawing.Point(203, 40);
+			this.groupBox2.Location = new System.Drawing.Point(153, 40);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(194, 187);
-			this.groupBox2.TabIndex = 3;
+			this.groupBox2.Size = new System.Drawing.Size(144, 133);
+			this.groupBox2.TabIndex = 5;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Łączna wartość";
 			// 
@@ -281,17 +231,16 @@ namespace ProFak.UI
 			this.tableLayoutPanel4.Controls.Add(this.numericUpDownWartoscNetto, 1, 0);
 			this.tableLayoutPanel4.Controls.Add(this.numericUpDownWartoscVat, 1, 1);
 			this.tableLayoutPanel4.Controls.Add(this.numericUpDownWartoscBrutto, 1, 2);
-			this.tableLayoutPanel4.Controls.Add(this.checkBoxRecznie, 1, 3);
 			this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 19);
 			this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-			this.tableLayoutPanel4.RowCount = 5;
-			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel4.RowCount = 4;
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel4.Size = new System.Drawing.Size(188, 165);
+			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel4.Size = new System.Drawing.Size(138, 111);
 			this.tableLayoutPanel4.TabIndex = 0;
 			// 
 			// label6
@@ -308,9 +257,9 @@ namespace ProFak.UI
 			// 
 			this.label7.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(19, 36);
+			this.label7.Location = new System.Drawing.Point(20, 36);
 			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(24, 15);
+			this.label7.Size = new System.Drawing.Size(23, 15);
 			this.label7.TabIndex = 0;
 			this.label7.Text = "Vat";
 			// 
@@ -335,7 +284,7 @@ namespace ProFak.UI
             0,
             0});
 			this.numericUpDownWartoscNetto.Name = "numericUpDownWartoscNetto";
-			this.numericUpDownWartoscNetto.Size = new System.Drawing.Size(136, 23);
+			this.numericUpDownWartoscNetto.Size = new System.Drawing.Size(86, 23);
 			this.numericUpDownWartoscNetto.TabIndex = 1;
 			this.numericUpDownWartoscNetto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
@@ -350,7 +299,7 @@ namespace ProFak.UI
             0,
             0});
 			this.numericUpDownWartoscVat.Name = "numericUpDownWartoscVat";
-			this.numericUpDownWartoscVat.Size = new System.Drawing.Size(136, 23);
+			this.numericUpDownWartoscVat.Size = new System.Drawing.Size(86, 23);
 			this.numericUpDownWartoscVat.TabIndex = 2;
 			this.numericUpDownWartoscVat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
@@ -365,19 +314,9 @@ namespace ProFak.UI
             0,
             0});
 			this.numericUpDownWartoscBrutto.Name = "numericUpDownWartoscBrutto";
-			this.numericUpDownWartoscBrutto.Size = new System.Drawing.Size(136, 23);
+			this.numericUpDownWartoscBrutto.Size = new System.Drawing.Size(86, 23);
 			this.numericUpDownWartoscBrutto.TabIndex = 3;
 			this.numericUpDownWartoscBrutto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
-			// checkBoxRecznie
-			// 
-			this.checkBoxRecznie.AutoSize = true;
-			this.checkBoxRecznie.Location = new System.Drawing.Point(49, 90);
-			this.checkBoxRecznie.Name = "checkBoxRecznie";
-			this.checkBoxRecznie.Size = new System.Drawing.Size(133, 19);
-			this.checkBoxRecznie.TabIndex = 4;
-			this.checkBoxRecznie.Text = "Ustaw kwoty ręcznie";
-			this.checkBoxRecznie.UseVisualStyleBackColor = true;
 			// 
 			// tableLayoutPanel2
 			// 
@@ -414,7 +353,7 @@ namespace ProFak.UI
 			this.label1.AutoSize = true;
 			this.label1.Location = new System.Drawing.Point(95, 8);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(67, 15);
+			this.label1.Size = new System.Drawing.Size(66, 15);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Towar/opis";
 			// 
@@ -422,9 +361,9 @@ namespace ProFak.UI
 			// 
 			this.comboBoxTowar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.comboBoxTowar.FormattingEnabled = true;
-			this.comboBoxTowar.Location = new System.Drawing.Point(168, 4);
+			this.comboBoxTowar.Location = new System.Drawing.Point(167, 4);
 			this.comboBoxTowar.Name = "comboBoxTowar";
-			this.comboBoxTowar.Size = new System.Drawing.Size(256, 23);
+			this.comboBoxTowar.Size = new System.Drawing.Size(257, 23);
 			this.comboBoxTowar.TabIndex = 1;
 			// 
 			// buttonTowar
@@ -484,42 +423,62 @@ namespace ProFak.UI
             0});
 			this.numericUpDownLP.Name = "numericUpDownLP";
 			this.numericUpDownLP.Size = new System.Drawing.Size(40, 23);
-			this.numericUpDownLP.TabIndex = 4;
+			this.numericUpDownLP.TabIndex = 999;
 			this.numericUpDownLP.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// groupBox3
 			// 
 			this.groupBox3.Controls.Add(this.tableLayoutPanel5);
-			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBox3.Location = new System.Drawing.Point(403, 40);
+			this.groupBox3.Location = new System.Drawing.Point(303, 40);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(194, 187);
-			this.groupBox3.TabIndex = 4;
+			this.groupBox3.Size = new System.Drawing.Size(294, 133);
+			this.groupBox3.TabIndex = 6;
 			this.groupBox3.TabStop = false;
+			this.groupBox3.Text = "Podatki";
 			// 
 			// tableLayoutPanel5
 			// 
-			this.tableLayoutPanel5.ColumnCount = 2;
+			this.tableLayoutPanel5.ColumnCount = 3;
 			this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel5.Controls.Add(this.checkBoxWedlugBrutto, 1, 0);
+			this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel5.Controls.Add(this.label10, 0, 1);
 			this.tableLayoutPanel5.Controls.Add(this.comboBoxGTU, 1, 1);
+			this.tableLayoutPanel5.Controls.Add(this.buttonStawkaVat, 2, 0);
+			this.tableLayoutPanel5.Controls.Add(this.label2, 0, 0);
+			this.tableLayoutPanel5.Controls.Add(this.comboBoxStawkaVat, 1, 0);
+			this.tableLayoutPanel5.Controls.Add(this.checkBoxRecznie, 1, 3);
+			this.tableLayoutPanel5.Controls.Add(this.checkBoxWedlugBrutto, 1, 2);
 			this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 19);
 			this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-			this.tableLayoutPanel5.RowCount = 3;
+			this.tableLayoutPanel5.RowCount = 5;
+			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel5.Size = new System.Drawing.Size(188, 165);
+			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel5.Size = new System.Drawing.Size(288, 111);
 			this.tableLayoutPanel5.TabIndex = 0;
+			// 
+			// checkBoxRecznie
+			// 
+			this.checkBoxRecznie.AutoSize = true;
+			this.tableLayoutPanel5.SetColumnSpan(this.checkBoxRecznie, 2);
+			this.checkBoxRecznie.Location = new System.Drawing.Point(72, 88);
+			this.checkBoxRecznie.Name = "checkBoxRecznie";
+			this.checkBoxRecznie.Size = new System.Drawing.Size(133, 19);
+			this.checkBoxRecznie.TabIndex = 5;
+			this.checkBoxRecznie.Text = "Ustaw kwoty ręcznie";
+			this.checkBoxRecznie.UseVisualStyleBackColor = true;
 			// 
 			// label10
 			// 
 			this.label10.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(3, 32);
+			this.label10.Location = new System.Drawing.Point(36, 38);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(30, 15);
 			this.label10.TabIndex = 6;
@@ -528,6 +487,7 @@ namespace ProFak.UI
 			// comboBoxGTU
 			// 
 			this.comboBoxGTU.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.tableLayoutPanel5.SetColumnSpan(this.comboBoxGTU, 2);
 			this.comboBoxGTU.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxGTU.FormattingEnabled = true;
 			this.comboBoxGTU.Items.AddRange(new object[] {
@@ -545,19 +505,61 @@ namespace ProFak.UI
             "11",
             "12",
             "13"});
-			this.comboBoxGTU.Location = new System.Drawing.Point(39, 28);
+			this.comboBoxGTU.Location = new System.Drawing.Point(72, 34);
 			this.comboBoxGTU.Name = "comboBoxGTU";
-			this.comboBoxGTU.Size = new System.Drawing.Size(146, 23);
-			this.comboBoxGTU.TabIndex = 7;
+			this.comboBoxGTU.Size = new System.Drawing.Size(213, 23);
+			this.comboBoxGTU.TabIndex = 3;
+			// 
+			// buttonStawkaVat
+			// 
+			this.buttonStawkaVat.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.buttonStawkaVat.AutoSize = true;
+			this.buttonStawkaVat.Location = new System.Drawing.Point(259, 3);
+			this.buttonStawkaVat.Name = "buttonStawkaVat";
+			this.buttonStawkaVat.Size = new System.Drawing.Size(26, 25);
+			this.buttonStawkaVat.TabIndex = 2;
+			this.buttonStawkaVat.Text = "...";
+			this.buttonStawkaVat.UseVisualStyleBackColor = true;
+			// 
+			// label2
+			// 
+			this.label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(3, 8);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(63, 15);
+			this.label2.TabIndex = 0;
+			this.label2.Text = "Stawka Vat";
+			// 
+			// comboBoxStawkaVat
+			// 
+			this.comboBoxStawkaVat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.comboBoxStawkaVat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxStawkaVat.FormattingEnabled = true;
+			this.comboBoxStawkaVat.Location = new System.Drawing.Point(72, 4);
+			this.comboBoxStawkaVat.Name = "comboBoxStawkaVat";
+			this.comboBoxStawkaVat.Size = new System.Drawing.Size(181, 23);
+			this.comboBoxStawkaVat.TabIndex = 1;
+			// 
+			// checkBoxWedlugBrutto
+			// 
+			this.checkBoxWedlugBrutto.AutoSize = true;
+			this.tableLayoutPanel5.SetColumnSpan(this.checkBoxWedlugBrutto, 2);
+			this.checkBoxWedlugBrutto.Location = new System.Drawing.Point(72, 63);
+			this.checkBoxWedlugBrutto.Name = "checkBoxWedlugBrutto";
+			this.checkBoxWedlugBrutto.Size = new System.Drawing.Size(131, 19);
+			this.checkBoxWedlugBrutto.TabIndex = 4;
+			this.checkBoxWedlugBrutto.Text = "Według ceny brutto";
+			this.checkBoxWedlugBrutto.UseVisualStyleBackColor = true;
 			// 
 			// PozycjaFakturyEdytor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.tableLayoutPanel1);
-			this.MinimumSize = new System.Drawing.Size(600, 210);
+			this.MinimumSize = new System.Drawing.Size(600, 180);
 			this.Name = "PozycjaFakturyEdytor";
-			this.Size = new System.Drawing.Size(600, 210);
+			this.Size = new System.Drawing.Size(600, 180);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
 			this.groupBox1.ResumeLayout(false);

@@ -78,6 +78,9 @@ namespace ProFak.DB
 			_ => (PrzeznaczenieNumeratora)(-1)
 		};
 
+		public bool CzySprzedaz => Rodzaj == RodzajFaktury.Sprzedaż || Rodzaj == RodzajFaktury.KorektaSprzedaży || Rodzaj == RodzajFaktury.Proforma;
+		public bool CzyZakup => !CzySprzedaz;
+
 		public void PrzeliczRazem(Baza baza)
 		{
 			var pozycje = baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == Id).ToList();

@@ -20,13 +20,13 @@ namespace ProFak.UI
 			using var transakcja = nowyKontekst.Transakcja();
 			var faktura = zaznaczoneRekordy.Single();
 			var wplata = new Wplata { FakturaRef = faktura, Kwota = faktura.PozostaloDoZaplaty, Data = DateTime.Now.Date };
-			kontekst.Baza.Zapisz(wplata);
+			nowyKontekst.Baza.Zapisz(wplata);
 			using var edytor = new WplataEdytor();
-			using var okno = new Dialog("Nowa pozycja", edytor, nowyKontekst);
+			using var okno = new Dialog("Nowa wpłata", edytor, nowyKontekst);
 			edytor.Przygotuj(nowyKontekst, wplata);
 			if (okno.ShowDialog() != DialogResult.OK) return;
 			edytor.KoniecEdycji();
-			kontekst.Baza.Zapisz(wplata);
+			nowyKontekst.Baza.Zapisz(wplata);
 			transakcja.Zatwierdz();
 		}
 	}

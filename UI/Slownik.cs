@@ -41,6 +41,15 @@ namespace ProFak.UI
 			gotowy = comboBox.IsHandleCreated;
 		}
 
+		public void Przeladuj()
+		{
+			var wybranaWartosc = comboBox.SelectedItem;
+			gotowy = false;
+			WypelnijListe();
+			gotowy = true;
+			comboBox.SelectedItem = wybranaWartosc;
+		}
+
 		private void ComboBox_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.F2) PokazSpis();
