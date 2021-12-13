@@ -58,6 +58,7 @@ namespace ProFak.UI
             treeNode14,
             treeNode15,
             treeNode16});
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GlowneOkno));
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.treeViewMenu = new System.Windows.Forms.TreeView();
 			this.panelZawartosc = new System.Windows.Forms.Panel();
@@ -140,6 +141,7 @@ namespace ProFak.UI
 			this.ClientSize = new System.Drawing.Size(1098, 593);
 			this.Controls.Add(this.panelZawartosc);
 			this.Controls.Add(this.panel1);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.KeyPreview = true;
 			this.Name = "GlowneOkno";
 			this.Text = "ProFak";

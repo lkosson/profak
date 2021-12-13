@@ -5,6 +5,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <Authors>Łukasz Kosson</Authors>
+    <ApplicationIcon>ikona.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
