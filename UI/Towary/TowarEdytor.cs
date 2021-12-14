@@ -41,7 +41,7 @@ namespace ProFak.UI
 
 			new Slownik<JednostkaMiary>(
 				Kontekst, comboBoxJednostkaMiary, buttonJednostkaMiary,
-				Kontekst.Baza.JednostkiMiar.ToList,
+				Kontekst.Baza.JednostkiMiar.OrderBy(jednostka => jednostka.Skrot).ToList,
 				jednostka => jednostka.Skrot,
 				jednostka => { if (jednostka == null) return; Rekord.JednostkaMiary = jednostka; },
 				Spisy.JednostkiMiar)
@@ -49,7 +49,7 @@ namespace ProFak.UI
 
 			new Slownik<StawkaVat>(
 				Kontekst, comboBoxStawkaVat, buttonStawkaVat,
-				Kontekst.Baza.StawkiVat.ToList,
+				Kontekst.Baza.StawkiVat.OrderBy(stawka => stawka.Skrot).ToList,
 				stawka => stawka.Skrot,
 				stawka => { if (stawka == null) return; Rekord.StawkaVat = stawka; PrzeliczCeny(); },
 				Spisy.StawkiVat)

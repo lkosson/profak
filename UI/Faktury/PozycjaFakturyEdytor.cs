@@ -44,7 +44,7 @@ namespace ProFak.UI
 
 			slownikTowarow = new Slownik<Towar>(
 				Kontekst, comboBoxTowar, buttonTowar,
-				Kontekst.Baza.Towary.ToList,
+				Kontekst.Baza.Towary.OrderBy(towar => towar.Nazwa).ToList,
 				towar => towar.Nazwa,
 				UstawTowar,
 				Spisy.Towary);
@@ -52,7 +52,7 @@ namespace ProFak.UI
 
 			new Slownik<StawkaVat>(
 				Kontekst, comboBoxStawkaVat, buttonStawkaVat,
-				Kontekst.Baza.StawkiVat.ToList,
+				Kontekst.Baza.StawkiVat.OrderBy(stawka => stawka.Skrot).ToList,
 				stawka => stawka.Skrot,
 				stawka => { PrzeliczCeny(); },
 				Spisy.StawkiVat)

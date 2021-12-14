@@ -83,7 +83,7 @@ namespace ProFak.UI
 
 			new Slownik<Waluta>(
 				Kontekst, comboBoxWaluta, buttonWaluta,
-				Kontekst.Baza.Waluty.ToList,
+				Kontekst.Baza.Waluty.OrderBy(waluta => waluta.Nazwa).ToList,
 				waluta => waluta.Skrot,
 				waluta => { },
 				Spisy.Waluty)
@@ -91,7 +91,7 @@ namespace ProFak.UI
 
 			new Slownik<SposobPlatnosci>(
 				Kontekst, comboBoxSposobPlatnosci, buttonSposobPlatnosci,
-				Kontekst.Baza.SposobyPlatnosci.ToList,
+				Kontekst.Baza.SposobyPlatnosci.OrderBy(sposobPlatnosci => sposobPlatnosci.Nazwa).ToList,
 				sposobPlatnosci => sposobPlatnosci.Nazwa,
 				sposobPlatnosci => { if (UstawSposobPlatnosci(Rekord, sposobPlatnosci)) kontroler.AktualizujKontrolki(); },
 				Spisy.SposobyPlatnosci)
@@ -99,7 +99,7 @@ namespace ProFak.UI
 
 			slownikNabywcaNIP = new Slownik<Kontrahent>(
 				Kontekst, comboBoxNIPNabywcy, buttonNabywca,
-				Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == !CzySprzedaz).ToList,
+				Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == !CzySprzedaz).OrderBy(kontrahent => kontrahent.NIP).ToList,
 				kontrahent => kontrahent.NIP,
 				kontrahent => { if (UstawNabywce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
 				Spisy.Kontrahenci);
@@ -107,7 +107,7 @@ namespace ProFak.UI
 
 			slownikNabywcaNazwa = new Slownik<Kontrahent>(
 				Kontekst, comboBoxNazwaNabywcy, null,
-				Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == !CzySprzedaz).ToList,
+				Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == !CzySprzedaz).OrderBy(kontrahent => kontrahent.Nazwa).ToList,
 				kontrahent => kontrahent.PelnaNazwa,
 				kontrahent => { if (UstawNabywce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
 				Spisy.Kontrahenci);
@@ -115,7 +115,7 @@ namespace ProFak.UI
 
 			slownikSprzedawcaNazwa = new Slownik<Kontrahent>(
 				Kontekst, comboBoxNIPSprzedawcy, buttonSprzedawca,
-				Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == CzySprzedaz).ToList,
+				Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == CzySprzedaz).OrderBy(kontrahent => kontrahent.NIP).ToList,
 				kontrahent => kontrahent.NIP,
 				kontrahent => { if (UstawSprzedawce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
 				Spisy.Kontrahenci);
@@ -123,7 +123,7 @@ namespace ProFak.UI
 
 			slownikSprzedawcaNIP = new Slownik<Kontrahent>(
 				Kontekst, comboBoxNazwaSprzedawcy, null,
-				Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == CzySprzedaz).ToList,
+				Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == CzySprzedaz).OrderBy(kontrahent => kontrahent.Nazwa).ToList,
 				kontrahent => kontrahent.PelnaNazwa,
 				kontrahent => { if (UstawSprzedawce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
 				Spisy.Kontrahenci);
