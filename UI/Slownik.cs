@@ -34,6 +34,11 @@ namespace ProFak.UI
 		public void Zainstaluj()
 		{
 			WypelnijListe();
+			if (comboBox.DropDownStyle != ComboBoxStyle.DropDownList)
+			{
+				comboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+				comboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
+			}
 			comboBox.SelectedIndexChanged += comboBox_SelectedIndexChanged;
 			comboBox.HandleCreated += ComboBox_HandleCreated;
 			comboBox.KeyDown += ComboBox_KeyDown;
@@ -67,9 +72,10 @@ namespace ProFak.UI
 			gotowy = false;
 			WypelnijListe();
 			gotowy = true;
-			if (wartosc == null) return;
+			if (wartosc == null) wartosc = dotychczasowaPozycja?.Wartosc;
 			var nowaPozycja = comboBox.Items.Cast<PozycjaListyRekordu<T>>().FirstOrDefault(p => p.Wartosc == wartosc);
-			if (nowaPozycja != null) comboBox.SelectedItem = nowaPozycja;
+			if (nowaPozycja == null) comboBox.SelectedIndex = -1;
+			else comboBox.SelectedItem = nowaPozycja;
 		}
 
 		private void button_Click(object sender, EventArgs e)
