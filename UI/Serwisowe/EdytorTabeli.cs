@@ -28,18 +28,29 @@ namespace ProFak.UI
 			comboBoxTabela.ValueMember = nameof(PozycjaListy<IQueryable>.Wartosc);
 			comboBoxTabela.DataSource = new[]
 			{
-				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Faktury", Wartosc = Kontekst.Baza.Faktury.Cast<object>().ToList },
-				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Jednostki miar", Wartosc = Kontekst.Baza.JednostkiMiar.Cast<object>().ToList },
-				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Kontrahenci", Wartosc = Kontekst.Baza.Kontrahenci.Cast<object>().ToList },
-				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Numeratory", Wartosc = Kontekst.Baza.Numeratory.Cast<object>().ToList },
-				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Pliki", Wartosc = Kontekst.Baza.Pliki.Cast<object>().ToList },
-				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Pozycje faktur", Wartosc = Kontekst.Baza.PozycjeFaktur.Cast<object>().ToList },
-				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Sposoby płatności", Wartosc = Kontekst.Baza.SposobyPlatnosci.Cast<object>().ToList },
-				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Stany numeratorów", Wartosc = Kontekst.Baza.StanyNumeratorow.Cast<object>().ToList },
-				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Towary", Wartosc = Kontekst.Baza.Towary.Cast<object>().ToList },
-				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Waluty", Wartosc = Kontekst.Baza.Waluty.Cast<object>().ToList },
-				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Wpłaty", Wartosc = Kontekst.Baza.Wplaty.Cast<object>().ToList },
-				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Zawartości", Wartosc = Kontekst.Baza.Zawartosci.Cast<object>().ToList }
+				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Faktury", Wartosc = GeneratorDanych(Kontekst.Baza.Faktury) },
+				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Jednostki miar", Wartosc = GeneratorDanych(Kontekst.Baza.JednostkiMiar) },
+				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Kontrahenci", Wartosc = GeneratorDanych(Kontekst.Baza.Kontrahenci) },
+				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Numeratory", Wartosc = GeneratorDanych(Kontekst.Baza.Numeratory) },
+				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Pliki", Wartosc = GeneratorDanych(Kontekst.Baza.Pliki) },
+				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Pozycje faktur", Wartosc = GeneratorDanych(Kontekst.Baza.PozycjeFaktur) },
+				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Sposoby płatności", Wartosc = GeneratorDanych(Kontekst.Baza.SposobyPlatnosci) },
+				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Stany numeratorów", Wartosc = GeneratorDanych(Kontekst.Baza.StanyNumeratorow) },
+				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Towary", Wartosc = GeneratorDanych(Kontekst.Baza.Towary) },
+				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Waluty", Wartosc = GeneratorDanych(Kontekst.Baza.Waluty) },
+				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Wpłaty", Wartosc = GeneratorDanych(Kontekst.Baza.Wplaty) },
+				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Zawartości", Wartosc = GeneratorDanych(Kontekst.Baza.Zawartosci) }
+			};
+		}
+
+		private Func<IEnumerable<object>> GeneratorDanych<T>(IQueryable<T> tabela)
+			where T : DB.Rekord<T>
+		{
+			return delegate
+			{
+				var idOd = (int)numericUpDownIDOd.Value;
+				var idDo = (int)numericUpDownIDDo.Value;
+				return tabela.Where(rekord => rekord.Id >= idOd && rekord.Id <= idDo).Cast<object>().ToList();
 			};
 		}
 
