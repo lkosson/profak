@@ -189,6 +189,7 @@ namespace ProFak.DB
 				Zapisz(new SposobPlatnosci { CzyDomyslny = false, LiczbaDni = 14, Nazwa = "Przelew 14" });
 				Zapisz(new SposobPlatnosci { CzyDomyslny = false, LiczbaDni = 30, Nazwa = "Przelew 30" });
 				Zapisz(new SposobPlatnosci { CzyDomyslny = false, LiczbaDni = 0, Nazwa = "Gotówka" });
+				Zapisz(new SposobPlatnosci { CzyDomyslny = false, LiczbaDni = 0, Nazwa = "Karta" });
 			}
 
 			if (!StawkiVat.Any())
