@@ -589,9 +589,9 @@ namespace ProFak.UI
 			this.comboBoxProcentVat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.comboBoxProcentVat.FormattingEnabled = true;
 			this.comboBoxProcentVat.Items.AddRange(new object[] {
-            "100 %",
-            "50 %",
-            "0 %"});
+            "100%",
+            "50%",
+            "0%"});
 			this.comboBoxProcentVat.Location = new System.Drawing.Point(147, 32);
 			this.comboBoxProcentVat.Name = "comboBoxProcentVat";
 			this.comboBoxProcentVat.Size = new System.Drawing.Size(165, 23);

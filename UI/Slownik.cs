@@ -71,11 +71,11 @@ namespace ProFak.UI
 			var wartosc = Spisy.Wybierz(kontekst, generatorSpisu, "Wybierz pozycję", dotychczasowaPozycja?.Wartosc);
 			gotowy = false;
 			WypelnijListe();
+			comboBox.SelectedIndex = -1;
 			gotowy = true;
 			if (wartosc == null) wartosc = dotychczasowaPozycja?.Wartosc;
 			var nowaPozycja = comboBox.Items.Cast<PozycjaListyRekordu<T>>().FirstOrDefault(p => p.Wartosc == wartosc);
-			if (nowaPozycja == null) comboBox.SelectedIndex = -1;
-			else comboBox.SelectedItem = nowaPozycja;
+			if (nowaPozycja != null) comboBox.SelectedItem = nowaPozycja;
 		}
 
 		private void button_Click(object sender, EventArgs e)

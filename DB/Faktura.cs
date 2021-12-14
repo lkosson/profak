@@ -75,7 +75,7 @@ namespace ProFak.DB
 			RodzajFaktury.Sprzedaż => PrzeznaczenieNumeratora.Faktura,
 			RodzajFaktury.Proforma => PrzeznaczenieNumeratora.Proforma,
 			RodzajFaktury.KorektaSprzedaży => PrzeznaczenieNumeratora.Korekta,
-			_ => (PrzeznaczenieNumeratora)(-1)
+			_ => PrzeznaczenieNumeratora.Faktura
 		};
 
 		public bool CzySprzedaz => Rodzaj == RodzajFaktury.Sprzedaż || Rodzaj == RodzajFaktury.KorektaSprzedaży || Rodzaj == RodzajFaktury.Proforma;

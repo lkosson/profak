@@ -28,7 +28,7 @@ namespace ProFak.UI
 			var korekta = base.UtworzRekord(kontekst, zaznaczoneRekordy);
 			korekta.Rodzaj = Rodzaj;
 			korekta.DataSprzedazy = bazowa.DataSprzedazy;
-			korekta.FakturaKorygowana = bazowa;
+			korekta.FakturaKorygowanaRef = bazowa;
 			korekta.NIPSprzedawcy = bazowa.NIPSprzedawcy;
 			korekta.NazwaSprzedawcy = bazowa.NazwaSprzedawcy;
 			korekta.DaneSprzedawcy = bazowa.DaneSprzedawcy;

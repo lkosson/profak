@@ -179,10 +179,13 @@ namespace ProFak.UI
 			pozycjeFaktury.Spis.Kontekst = Kontekst;
 			pliki.Spis.FakturaRef = Rekord;
 			pliki.Spis.Kontekst = Kontekst;
+
+			var fakturaKorygowana = Kontekst.Baza.Znajdz(Rekord.FakturaKorygowanaRef);
+
 			if (Rekord.Rodzaj == RodzajFaktury.Sprzedaż) labelRodzaj.Text = "Sprzedaż";
 			else if (Rekord.Rodzaj == RodzajFaktury.Zakup) labelRodzaj.Text = "Zakup";
-			else if (Rekord.Rodzaj == RodzajFaktury.KorektaSprzedaży) labelRodzaj.Text = "Korekta sprzedaży";
-			else if (Rekord.Rodzaj == RodzajFaktury.KorektaZakupu) labelRodzaj.Text = "Korekta zakupu";
+			else if (Rekord.Rodzaj == RodzajFaktury.KorektaSprzedaży) labelRodzaj.Text = "Korekta sprzedaży " + fakturaKorygowana?.Numer;
+			else if (Rekord.Rodzaj == RodzajFaktury.KorektaZakupu) labelRodzaj.Text = "Korekta zakupu " + fakturaKorygowana?.Numer;
 			else if (Rekord.Rodzaj == RodzajFaktury.Proforma) labelRodzaj.Text = "Proforma";
 			else labelRodzaj.Text = Rekord.Rodzaj.ToString();
 
