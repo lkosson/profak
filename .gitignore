@@ -2,3 +2,5 @@
 /obj
 /.vs
 *.user
+/Instalator/*.wixobj
+/Instalator/ProFak-pliki.wxs
