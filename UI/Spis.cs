@@ -126,7 +126,8 @@ namespace ProFak.UI
 			}
 			catch (Exception exc)
 			{
-				MessageBox.Show($"Nie udało się załadować danych do spisu.\n\n{exc}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				using var okno = new OknoBledu(exc);
+				okno.ShowDialog();
 			}
 		}
 

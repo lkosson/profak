@@ -12,33 +12,41 @@ namespace ProFak
 		[STAThread]
 		public static void Main(string[] args)
 		{
-			if (args.Length > 0)
+			try
 			{
-				if (args[0] == "xsd") Wydruki.GeneratorXSD.Utworz();
-				return;
-			}
-
-			Application.SetHighDpiMode(HighDpiMode.SystemAware);
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
-			if (!DB.Baza.Przygotuj())
-			{
-				using var pierwszyStart = new UI.PierwszyStartBaza();
-				if (pierwszyStart.ShowDialog() != DialogResult.OK) return;
-			}
-
-			using (var kontekst = new UI.Kontekst())
-			{
-				var podmiot = kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot);
-				if (podmiot == null)
+				if (args.Length > 0)
 				{
-					MessageBox.Show("Przed rozpoczêciem korzystania z programu nale¿y uzupe³niæ dane firmy.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
-					var _ = Enumerable.Empty<DB.Kontrahent>();
-					new UI.MojaFirmaAkcja().Uruchom(kontekst, ref _);
+					if (args[0] == "xsd") Wydruki.GeneratorXSD.Utworz();
+					return;
 				}
-			}
 
-			Application.Run(new UI.GlowneOkno());
+				Application.SetHighDpiMode(HighDpiMode.SystemAware);
+				Application.EnableVisualStyles();
+				Application.SetCompatibleTextRenderingDefault(false);
+				if (!DB.Baza.Przygotuj())
+				{
+					using var pierwszyStart = new UI.PierwszyStartBaza();
+					if (pierwszyStart.ShowDialog() != DialogResult.OK) return;
+				}
+
+				using (var kontekst = new UI.Kontekst())
+				{
+					var podmiot = kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot);
+					if (podmiot == null)
+					{
+						MessageBox.Show("Przed rozpoczêciem korzystania z programu nale¿y uzupe³niæ dane firmy.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+						var _ = Enumerable.Empty<DB.Kontrahent>();
+						new UI.MojaFirmaAkcja().Uruchom(kontekst, ref _);
+					}
+				}
+
+				Application.Run(new UI.GlowneOkno());
+			}
+			catch (Exception exc)
+			{
+				using var okno = new UI.OknoBledu(exc);
+				okno.ShowDialog();
+			}
 		}
 	}
 }

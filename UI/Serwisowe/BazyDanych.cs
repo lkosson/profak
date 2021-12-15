@@ -81,7 +81,8 @@ namespace ProFak.UI
 			}
 			catch (Exception exc)
 			{
-				MessageBox.Show($"Wystąpił nieobsłużony błąd. Uruchom ponownie program i spróbuj ponownie wykonać operację.\n\n{exc}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				using var okno = new OknoBledu(exc);
+				okno.ShowDialog();
 			}
 		}
 
@@ -99,13 +100,17 @@ namespace ProFak.UI
 				using var baza = new DB.Baza();
 				baza.Database.Migrate();
 			}
-			catch
+			catch (Exception exc)
 			{
 				if (File.Exists(bazaRatunkowa))
 				{
 					if (File.Exists(Baza.Sciezka)) File.Delete(Baza.Sciezka);
 					File.Move(bazaRatunkowa, Baza.Sciezka);
 				}
+
+				using var okno = new OknoBledu(exc);
+				okno.ShowDialog();
+				return;
 			}
 			MessageBox.Show("Baza danych została odtworzona.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			Wypelnij();

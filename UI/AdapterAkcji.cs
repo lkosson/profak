@@ -53,7 +53,8 @@ namespace ProFak.UI
 			}
 			catch (Exception exc)
 			{
-				MessageBox.Show($"Wystąpił nieobsłużony błąd. Uruchom ponownie program i spróbuj ponownie wykonać operację.\n\n{exc}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				using var okno = new OknoBledu(exc);
+				okno.ShowDialog();
 			}
 		}
 	}
