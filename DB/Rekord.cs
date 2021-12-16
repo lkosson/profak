@@ -50,5 +50,22 @@ namespace ProFak.DB
 		protected static bool CzyPasuje(object pole, string fraza) => pole != null && CzyPasuje(pole.ToString(), fraza);
 
 		protected decimal Zaokragl(decimal wartosc) => Decimal.Round(wartosc, 2, MidpointRounding.AwayFromZero);
+
+		protected static string Format<TEnum>(TEnum value) where TEnum : Enum
+		{
+			var raw = value.ToString();
+			var sb = new StringBuilder(raw.Length + 4);
+			for (int i = 0; i < raw.Length; i++)
+			{
+				var ch = raw[i];
+				if (Char.IsUpper(ch) && i > 0 /* && !Char.IsUpper(raw[i - 1]) ZlecenieWPrzygotowaniu */)
+				{
+					sb.Append(' ');
+					if (i < raw.Length - 1) ch = Char.ToLower(ch); /* PaczkomatB */
+				}
+				sb.Append(ch);
+			}
+			return sb.ToString();
+		}
 	}
 }

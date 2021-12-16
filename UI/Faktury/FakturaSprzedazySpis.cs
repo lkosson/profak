@@ -21,6 +21,8 @@ namespace ProFak.UI
 		public FakturaSprzedazySpis()
 		{
 			DodajKolumne(nameof(Faktura.Numer), "Numer");
+			DodajKolumne(nameof(Faktura.RodzajFmt), "Rodzaj");
+			DodajKolumne(nameof(Faktura.NumerPowiazanej), "Powiązana");
 			DodajKolumne(nameof(Faktura.DataWystawienia), "Data wystawienia", format: "yyyy-MM-dd", szerokosc: 120);
 			DodajKolumne(nameof(Faktura.DataSprzedazy), "Data sprzedaży", format: "yyyy-MM-dd", szerokosc: 120);
 			kolumnaNazwaNabywcy = DodajKolumne(nameof(Faktura.NazwaNabywcy), "Nabywca", rozciagnij: true);
@@ -65,6 +67,8 @@ namespace ProFak.UI
 			var q = Kontekst.Baza.Faktury
 				.Include(faktura => faktura.Waluta)
 				.Include(faktura => faktura.Wplaty)
+				.Include(faktura => faktura.FakturaKorygowana)
+				.Include(faktura => faktura.FakturaKorygujaca)
 				.Where(faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży || faktura.Rodzaj == RodzajFaktury.Proforma);
 			if (NabywcaRef.IsNotNull) q = q.Where(faktura => faktura.NabywcaId == NabywcaRef.Id);
 			if (odDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy >= odDaty.Value);

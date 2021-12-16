@@ -69,6 +69,9 @@ namespace ProFak.DB
 		public decimal NettoJakoKoszty => Zaokragl(RazemNetto * ProcentKosztow / 100m);
 		public decimal Koszty => VatJakoKoszty + NettoJakoKoszty;
 
+		public string RodzajFmt => Format(Rodzaj);
+		public string NumerPowiazanej => FakturaKorygowana?.Numer ?? FakturaKorygujaca?.Numer ?? "";
+
 		public string WalutaFmt => Waluta?.Skrot;
 		public PrzeznaczenieNumeratora Numerator => Rodzaj switch
 		{
