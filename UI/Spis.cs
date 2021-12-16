@@ -137,7 +137,7 @@ namespace ProFak.UI
 			base.Dispose(disposing);
 		}
 
-		public void DodajKolumne(string wlasciwosc, string naglowek, bool wyrownajDoPrawej = false, bool rozciagnij = false, string format = null, int? szerokosc = null)
+		public DataGridViewTextBoxColumn DodajKolumne(string wlasciwosc, string naglowek, bool wyrownajDoPrawej = false, bool rozciagnij = false, string format = null, int? szerokosc = null)
 		{
 			var kolumna = new DataGridViewTextBoxColumn();
 			kolumna.HeaderText = naglowek;
@@ -149,10 +149,10 @@ namespace ProFak.UI
 			if (szerokosc.HasValue) kolumna.Width = szerokosc.Value;
 			if (rozciagnij) kolumna.MinimumWidth = 50;
 			Columns.Add(kolumna);
+			return kolumna;
 		}
 
-
-		public void DodajKolumneBool(string wlasciwosc, string naglowek, int? szerokosc = null)
+		public DataGridViewCheckBoxColumn DodajKolumneBool(string wlasciwosc, string naglowek, int? szerokosc = null)
 		{
 			var kolumna = new DataGridViewCheckBoxColumn();
 			kolumna.HeaderText = naglowek;
@@ -161,10 +161,11 @@ namespace ProFak.UI
 			if (szerokosc.HasValue) kolumna.Width = szerokosc.Value;
 			kolumna.SortMode = DataGridViewColumnSortMode.Programmatic;
 			Columns.Add(kolumna);
+			return kolumna;
 		}
 
-		public void DodajKolumneKwota(string wlasciwosc, string naglowek) => DodajKolumne(wlasciwosc, naglowek, wyrownajDoPrawej: true, format: "#,##0.00", szerokosc: 80);
-		public void DodajKolumneId() => DodajKolumne("Id", "Id", wyrownajDoPrawej: true, szerokosc: 60);
+		public DataGridViewTextBoxColumn DodajKolumneKwota(string wlasciwosc, string naglowek) => DodajKolumne(wlasciwosc, naglowek, wyrownajDoPrawej: true, format: "#,##0.00", szerokosc: 80);
+		public DataGridViewTextBoxColumn DodajKolumneId() => DodajKolumne("Id", "Id", wyrownajDoPrawej: true, szerokosc: 60);
 
 		protected abstract void Przeladuj();
 

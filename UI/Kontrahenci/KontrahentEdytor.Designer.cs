@@ -48,12 +48,14 @@ namespace ProFak.UI
 			this.label8 = new System.Windows.Forms.Label();
 			this.comboBoxStan = new System.Windows.Forms.ComboBox();
 			this.label9 = new System.Windows.Forms.Label();
+			this.checkBoxTP = new System.Windows.Forms.CheckBox();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.textBoxUwagi = new System.Windows.Forms.TextBox();
+			this.tabPageFakturySprzedazy = new System.Windows.Forms.TabPage();
 			this.textBoxNazwa = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			this.checkBoxTP = new System.Windows.Forms.CheckBox();
+			this.tabPageFakturyZakupu = new System.Windows.Forms.TabPage();
 			this.tabControl.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
@@ -66,11 +68,13 @@ namespace ProFak.UI
 			this.tableLayoutPanel2.SetColumnSpan(this.tabControl, 2);
 			this.tabControl.Controls.Add(this.tabPage1);
 			this.tabControl.Controls.Add(this.tabPage2);
+			this.tabControl.Controls.Add(this.tabPageFakturySprzedazy);
+			this.tabControl.Controls.Add(this.tabPageFakturyZakupu);
 			this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl.Location = new System.Drawing.Point(3, 32);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
-			this.tabControl.Size = new System.Drawing.Size(394, 390);
+			this.tabControl.Size = new System.Drawing.Size(794, 390);
 			this.tabControl.TabIndex = 2;
 			// 
 			// tabPage1
@@ -229,9 +233,9 @@ namespace ProFak.UI
 			// 
 			this.label6.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(93, 207);
+			this.label6.Location = new System.Drawing.Point(94, 207);
 			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(47, 15);
+			this.label6.Size = new System.Drawing.Size(46, 15);
 			this.label6.TabIndex = 2;
 			this.label6.Text = "Telefon";
 			// 
@@ -275,13 +279,23 @@ namespace ProFak.UI
 			this.label9.TabIndex = 2;
 			this.label9.Text = "Stan";
 			// 
+			// checkBoxTP
+			// 
+			this.checkBoxTP.AutoSize = true;
+			this.checkBoxTP.Location = new System.Drawing.Point(146, 319);
+			this.checkBoxTP.Name = "checkBoxTP";
+			this.checkBoxTP.Size = new System.Drawing.Size(131, 19);
+			this.checkBoxTP.TabIndex = 9;
+			this.checkBoxTP.Text = "Podmiot powiązany";
+			this.checkBoxTP.UseVisualStyleBackColor = true;
+			// 
 			// tabPage2
 			// 
 			this.tabPage2.Controls.Add(this.textBoxUwagi);
 			this.tabPage2.Location = new System.Drawing.Point(4, 24);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(386, 337);
+			this.tabPage2.Size = new System.Drawing.Size(386, 362);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "Uwagi";
 			this.tabPage2.UseVisualStyleBackColor = true;
@@ -292,15 +306,25 @@ namespace ProFak.UI
 			this.textBoxUwagi.Location = new System.Drawing.Point(3, 3);
 			this.textBoxUwagi.Multiline = true;
 			this.textBoxUwagi.Name = "textBoxUwagi";
-			this.textBoxUwagi.Size = new System.Drawing.Size(380, 331);
+			this.textBoxUwagi.Size = new System.Drawing.Size(380, 356);
 			this.textBoxUwagi.TabIndex = 0;
+			// 
+			// tabPageFakturySprzedazy
+			// 
+			this.tabPageFakturySprzedazy.Location = new System.Drawing.Point(4, 24);
+			this.tabPageFakturySprzedazy.Name = "tabPageFakturySprzedazy";
+			this.tabPageFakturySprzedazy.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageFakturySprzedazy.Size = new System.Drawing.Size(386, 362);
+			this.tabPageFakturySprzedazy.TabIndex = 2;
+			this.tabPageFakturySprzedazy.Text = "Sprzedaż do";
+			this.tabPageFakturySprzedazy.UseVisualStyleBackColor = true;
 			// 
 			// textBoxNazwa
 			// 
 			this.textBoxNazwa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxNazwa.Location = new System.Drawing.Point(51, 3);
 			this.textBoxNazwa.Name = "textBoxNazwa";
-			this.textBoxNazwa.Size = new System.Drawing.Size(346, 23);
+			this.textBoxNazwa.Size = new System.Drawing.Size(746, 23);
 			this.textBoxNazwa.TabIndex = 1;
 			this.textBoxNazwa.TextChanged += new System.EventHandler(this.textBoxNazwa_TextChanged);
 			// 
@@ -329,27 +353,27 @@ namespace ProFak.UI
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(400, 425);
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(800, 425);
 			this.tableLayoutPanel2.TabIndex = 3;
 			// 
-			// checkBoxTP
+			// tabPageFakturyZakupu
 			// 
-			this.checkBoxTP.AutoSize = true;
-			this.checkBoxTP.Location = new System.Drawing.Point(146, 319);
-			this.checkBoxTP.Name = "checkBoxTP";
-			this.checkBoxTP.Size = new System.Drawing.Size(131, 19);
-			this.checkBoxTP.TabIndex = 9;
-			this.checkBoxTP.Text = "Podmiot powiązany";
-			this.checkBoxTP.UseVisualStyleBackColor = true;
+			this.tabPageFakturyZakupu.Location = new System.Drawing.Point(4, 24);
+			this.tabPageFakturyZakupu.Name = "tabPageFakturyZakupu";
+			this.tabPageFakturyZakupu.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageFakturyZakupu.Size = new System.Drawing.Size(786, 362);
+			this.tabPageFakturyZakupu.TabIndex = 3;
+			this.tabPageFakturyZakupu.Text = "Zakup od";
+			this.tabPageFakturyZakupu.UseVisualStyleBackColor = true;
 			// 
 			// KontrahentEdytor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.tableLayoutPanel2);
-			this.MinimumSize = new System.Drawing.Size(400, 425);
+			this.MinimumSize = new System.Drawing.Size(800, 425);
 			this.Name = "KontrahentEdytor";
-			this.Size = new System.Drawing.Size(400, 425);
+			this.Size = new System.Drawing.Size(800, 425);
 			this.tabControl.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
 			this.tableLayoutPanel1.ResumeLayout(false);
@@ -388,5 +412,7 @@ namespace ProFak.UI
 		private System.Windows.Forms.ComboBox comboBoxStan;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.CheckBox checkBoxTP;
+		private System.Windows.Forms.TabPage tabPageFakturySprzedazy;
+		private System.Windows.Forms.TabPage tabPageFakturyZakupu;
 	}
 }

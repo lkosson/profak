@@ -28,7 +28,7 @@ namespace ProFak.UI
 			return wybor.WybranyRekord;
 		}
 
-		public static SpisZAkcjami<Faktura, FakturaSprzedazySpis> FakturySprzedazy(string[] parametry)
+		public static SpisZAkcjami<Faktura, FakturaSprzedazySpis> FakturySprzedazy(string[] parametry = null)
 		{
 			return Utworz(new FakturaSprzedazySpis(parametry),
 				new FakturaSprzedazyAkcja(),
@@ -42,7 +42,7 @@ namespace ProFak.UI
 			);
 		}
 
-		public static SpisZAkcjami<Faktura, FakturaZakupuSpis> FakturyZakupu(string[] parametry)
+		public static SpisZAkcjami<Faktura, FakturaZakupuSpis> FakturyZakupu(string[] parametry = null)
 		{
 			return Utworz(new FakturaZakupuSpis(parametry),
 				new FakturaZakupuAkcja(),

@@ -14,14 +14,17 @@ namespace ProFak.UI
 	{
 		private readonly DateTime? odDaty;
 		private readonly DateTime? doDaty;
+		private readonly DataGridViewTextBoxColumn kolumnaNazwaNabywcy;
+		private readonly DataGridViewTextBoxColumn kolumnaNIPNabywcy;
+		public Ref<Kontrahent> NabywcaRef { get; set; }
 
 		public FakturaSprzedazySpis()
 		{
 			DodajKolumne(nameof(Faktura.Numer), "Numer");
 			DodajKolumne(nameof(Faktura.DataWystawienia), "Data wystawienia", format: "yyyy-MM-dd", szerokosc: 120);
 			DodajKolumne(nameof(Faktura.DataSprzedazy), "Data sprzedaży", format: "yyyy-MM-dd", szerokosc: 120);
-			DodajKolumne(nameof(Faktura.NazwaNabywcy), "Nabywca", rozciagnij: true);
-			DodajKolumne(nameof(Faktura.NIPNabywcy), "NIP nabywcy", szerokosc: 120);
+			kolumnaNazwaNabywcy = DodajKolumne(nameof(Faktura.NazwaNabywcy), "Nabywca", rozciagnij: true);
+			kolumnaNIPNabywcy = DodajKolumne(nameof(Faktura.NIPNabywcy), "NIP nabywcy", szerokosc: 120);
 			DodajKolumneKwota(nameof(Faktura.RazemNetto), "Netto");
 			DodajKolumneKwota(nameof(Faktura.RazemVat), "VAT");
 			DodajKolumneKwota(nameof(Faktura.RazemBrutto), "Brutto");
@@ -33,6 +36,7 @@ namespace ProFak.UI
 		public FakturaSprzedazySpis(string[] parametry)
 			: this()
 		{
+			if (parametry == null) return;
 			int? rok = null;
 			int? miesiac = null;
 			foreach (var parametr in parametry)
@@ -55,10 +59,14 @@ namespace ProFak.UI
 
 		protected override void Przeladuj()
 		{
+			kolumnaNazwaNabywcy.Visible = NabywcaRef.IsNull;
+			kolumnaNIPNabywcy.Visible = NabywcaRef.IsNull;
+
 			var q = Kontekst.Baza.Faktury
 				.Include(faktura => faktura.Waluta)
 				.Include(faktura => faktura.Wplaty)
 				.Where(faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży || faktura.Rodzaj == RodzajFaktury.Proforma);
+			if (NabywcaRef.IsNotNull) q = q.Where(faktura => faktura.NabywcaId == NabywcaRef.Id);
 			if (odDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy >= odDaty.Value);
 			if (doDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy < doDaty.Value);
 			Rekordy = q.ToList();

@@ -13,6 +13,9 @@ namespace ProFak.UI
 {
 	partial class KontrahentEdytor : KontrahentEdytorBase
 	{
+		private readonly SpisZAkcjami<Faktura, FakturaSprzedazySpis> fakturySprzedazy;
+		private readonly SpisZAkcjami<Faktura, FakturaZakupuSpis> fakturyZakupu;
+
 		public KontrahentEdytor()
 		{
 			InitializeComponent();
@@ -32,6 +35,9 @@ namespace ProFak.UI
 			kontroler.Powiazanie(checkBoxTP, kontrahent => kontrahent.CzyTP);
 
 			Wymagane(textBoxNazwa);
+
+			tabPageFakturySprzedazy.Controls.Add(fakturySprzedazy = Spisy.FakturySprzedazy());
+			tabPageFakturyZakupu.Controls.Add(fakturyZakupu = Spisy.FakturyZakupu());
 		}
 
 		private void textBoxNazwa_TextChanged(object sender, EventArgs e)
@@ -48,6 +54,11 @@ namespace ProFak.UI
 		{
 			base.RekordGotowy();
 			checkBoxTP.Visible = !Rekord.CzyPodmiot;
+
+			fakturySprzedazy.Spis.NabywcaRef = Rekord;
+			fakturySprzedazy.Spis.Kontekst = Kontekst;
+			fakturyZakupu.Spis.SprzedawcaRef = Rekord;
+			fakturyZakupu.Spis.Kontekst = Kontekst;
 		}
 
 		public override void KoniecEdycji()
