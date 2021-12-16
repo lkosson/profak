@@ -21,6 +21,8 @@ namespace ProFak.DB
 		public bool CzyPodmiot { get; set; }
 		public bool CzyTP { get; set; }
 
+		public string AdresRejestrowyFmt => (AdresRejestrowy ?? "").Replace("\n", ", ");
+
 		public override bool CzyPasuje(string fraza)
 			=> base.CzyPasuje(fraza)
 			|| CzyPasuje(Nazwa, fraza)

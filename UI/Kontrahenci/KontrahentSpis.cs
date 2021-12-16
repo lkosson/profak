@@ -15,7 +15,7 @@ namespace ProFak.UI
 		{
 			DodajKolumne(nameof(Kontrahent.Nazwa), "Nazwa", rozciagnij: true);
 			DodajKolumne(nameof(Kontrahent.NIP), "NIP");
-			DodajKolumne(nameof(Kontrahent.AdresRejestrowy), "Adres", szerokosc: 200);
+			DodajKolumne(nameof(Kontrahent.AdresRejestrowyFmt), "Adres", szerokosc: 300);
 			DodajKolumneId();
 		}
 

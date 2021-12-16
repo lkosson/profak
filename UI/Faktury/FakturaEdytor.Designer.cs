@@ -611,9 +611,8 @@ namespace ProFak.UI
 			// 
 			this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanel1.AutoSize = true;
-			this.tableLayoutPanel1.ColumnCount = 9;
+			this.tableLayoutPanel1.ColumnCount = 8;
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -621,12 +620,13 @@ namespace ProFak.UI
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.Controls.Add(this.textBoxNumer, 4, 0);
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel1.Controls.Add(this.textBoxNumer, 3, 0);
 			this.tableLayoutPanel1.Controls.Add(this.labelRodzaj, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.label2, 3, 0);
-			this.tableLayoutPanel1.Controls.Add(this.buttonWaluta, 8, 0);
-			this.tableLayoutPanel1.Controls.Add(this.label15, 6, 0);
-			this.tableLayoutPanel1.Controls.Add(this.comboBoxWaluta, 7, 0);
+			this.tableLayoutPanel1.Controls.Add(this.label2, 2, 0);
+			this.tableLayoutPanel1.Controls.Add(this.buttonWaluta, 7, 0);
+			this.tableLayoutPanel1.Controls.Add(this.label15, 5, 0);
+			this.tableLayoutPanel1.Controls.Add(this.comboBoxWaluta, 6, 0);
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 1;
@@ -637,16 +637,15 @@ namespace ProFak.UI
 			// textBoxNumer
 			// 
 			this.textBoxNumer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxNumer.Location = new System.Drawing.Point(193, 4);
+			this.textBoxNumer.Location = new System.Drawing.Point(129, 4);
 			this.textBoxNumer.Name = "textBoxNumer";
-			this.textBoxNumer.Size = new System.Drawing.Size(327, 23);
+			this.textBoxNumer.Size = new System.Drawing.Size(391, 23);
 			this.textBoxNumer.TabIndex = 2;
 			// 
 			// labelRodzaj
 			// 
 			this.labelRodzaj.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelRodzaj.AutoSize = true;
-			this.tableLayoutPanel1.SetColumnSpan(this.labelRodzaj, 2);
 			this.labelRodzaj.Location = new System.Drawing.Point(3, 8);
 			this.labelRodzaj.Name = "labelRodzaj";
 			this.labelRodzaj.Size = new System.Drawing.Size(50, 15);
@@ -657,7 +656,7 @@ namespace ProFak.UI
 			// 
 			this.label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(143, 8);
+			this.label2.Location = new System.Drawing.Point(79, 8);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(44, 15);
 			this.label2.TabIndex = 2;

@@ -79,8 +79,8 @@ namespace ProFak.UI
 		protected override void UstawStylWiersza(Faktura rekord, string kolumna, DataGridViewCellStyle styl)
 		{
 			base.UstawStylWiersza(rekord, kolumna, styl);
-			if (rekord.Rodzaj == RodzajFaktury.Proforma) styl.ForeColor = Color.FromArgb(30, 150, 20);
-			else if (!rekord.CzyZaplacona) styl.ForeColor = Color.FromArgb(240, 80, 40);
+			if (!rekord.CzyZaplacona) styl.ForeColor = Color.FromArgb(240, 80, 40);
+			else if (rekord.Rodzaj == RodzajFaktury.Proforma) styl.ForeColor = Color.FromArgb(30, 150, 20);
 			else if (rekord.FakturaKorygujacaRef.IsNotNull) styl.ForeColor = Color.FromArgb(120, 120, 120);
 			else if (rekord.Rodzaj == RodzajFaktury.KorektaSprzedaży) styl.ForeColor = Color.FromArgb(50, 60, 220);
 		}
