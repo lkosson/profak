@@ -10,7 +10,6 @@ cd bin\Publish
 attrib +r *.dll
 attrib +r *.json
 attrib +r ProFak.exe
-attrib +r *.probak
 attrib +r pl\*.dll
 del /s /q *.* 2> nul >nul
 attrib /s -r *.*

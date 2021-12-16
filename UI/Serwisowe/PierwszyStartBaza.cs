@@ -14,6 +14,7 @@ namespace ProFak.UI
 {
 	public partial class PierwszyStartBaza : Form
 	{
+		private const string BazaDemo = "(demo)";
 		private string bazaZrodlowa;
 		private string bazaDocelowa;
 
@@ -26,17 +27,17 @@ namespace ProFak.UI
 		{
 			if (radioButtonNowaPrywatnaBaza.Checked)
 			{
-				bazaZrodlowa = DB.Baza.BazaStartowa;
+				bazaZrodlowa = null;
 				bazaDocelowa = DB.Baza.PrywatnaSciezka;
 			}
 			else if (radioButtonNowaPublicznaBaza.Checked)
 			{
-				bazaZrodlowa = DB.Baza.BazaStartowa;
+				bazaZrodlowa = null;
 				bazaDocelowa = DB.Baza.PublicznaSciezka;
 			}
 			else if (radioButtonNowaLokalnaBaza.Checked)
 			{
-				bazaZrodlowa = DB.Baza.BazaStartowa;
+				bazaZrodlowa = null;
 				bazaDocelowa = DB.Baza.LokalnaSciezka;
 			}
 			else if (radioButtonZewnetrznaBaza.Checked)
@@ -47,7 +48,7 @@ namespace ProFak.UI
 			}
 			else if (radioButtonBazaDemo.Checked)
 			{
-				bazaZrodlowa = DB.Baza.BazaDemo;
+				bazaZrodlowa = BazaDemo;
 				bazaDocelowa = null;
 			}
 			else if (radioButtonOdtworzKopie.Checked)
@@ -68,11 +69,13 @@ namespace ProFak.UI
 		private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
 		{
 			backgroundWorker.ReportProgress(0, "Weryfikacja bazy źródłowej");
-			if (!File.Exists(bazaZrodlowa)) throw new ApplicationException($"Nie znaleziono pliku \"{bazaZrodlowa}\" z bazą danych.");
+			var zrodloJestPlikiem = !String.IsNullOrEmpty(bazaZrodlowa) && bazaZrodlowa != BazaDemo;
+			if (zrodloJestPlikiem && !File.Exists(bazaZrodlowa)) throw new ApplicationException($"Nie znaleziono pliku \"{bazaZrodlowa}\" z bazą danych.");
 
 			if (String.IsNullOrEmpty(bazaDocelowa))
 			{
-				DB.Baza.Sciezka = bazaZrodlowa;
+				if (zrodloJestPlikiem) DB.Baza.Sciezka = bazaZrodlowa;
+				else DB.Baza.Sciezka = null;
 			}
 			else
 			{
@@ -89,21 +92,29 @@ namespace ProFak.UI
 					File.Move(bazaDocelowa, kopiaBazyDocelowej);
 				}
 
-				backgroundWorker.ReportProgress(0, "Kopiowanie bazy");
-				File.Copy(bazaZrodlowa, bazaDocelowa);
+				if (zrodloJestPlikiem)
+				{
+					backgroundWorker.ReportProgress(0, "Kopiowanie bazy");
+					File.Copy(bazaZrodlowa, bazaDocelowa);
+				}
 
 				DB.Baza.Sciezka = bazaDocelowa;
 			}
 
-			backgroundWorker.ReportProgress(0, "Weryfikacja bazy");
+			backgroundWorker.ReportProgress(0, "Podłączanie bazy");
 			using var db = new DB.Baza();
-			if (!db.Database.CanConnect()) throw new ApplicationException("Nie udało się otworzyć bazy danych.");
 
 			backgroundWorker.ReportProgress(0, "Aktualizacja struktury");
 			db.Database.Migrate();
 
 			backgroundWorker.ReportProgress(0, "Tworzenie danych startowych");
-			db.PrzygotujDaneStartowe();
+			DB.DaneStartowe.Zaladuj(db);
+
+			if (bazaZrodlowa == BazaDemo)
+			{
+				backgroundWorker.ReportProgress(0, "Tworzenie danych demo");
+				DB.DaneDemo.Zaladuj(db);
+			}
 
 			backgroundWorker.ReportProgress(0, "Baza gotowa");
 		}

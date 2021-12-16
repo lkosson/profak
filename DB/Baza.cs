@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using System;
 using System.Collections.Generic;
@@ -15,18 +16,16 @@ namespace ProFak.DB
 	{
 		public static string NazwaKataloguProgramu => "ProFak";
 		public static string NazwaPlikuBazy => "profak.sqlite3";
-		public static string NazwaPlikuDemo => "profak-demo.probak";
-		public static string NazwaPlikuStartowego => "profak-start.probak";
 		public static string PrywatnyKatalog => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 		public static string PublicznyKatalog => Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 		public static string LokalnyKatalog => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 		public static string PrywatnaSciezka => Path.Combine(PrywatnyKatalog, NazwaKataloguProgramu, NazwaPlikuBazy);
 		public static string PublicznaSciezka => Path.Combine(PublicznyKatalog, NazwaKataloguProgramu, NazwaPlikuBazy);
 		public static string LokalnaSciezka => Path.Combine(LokalnyKatalog, NazwaPlikuBazy);
-		public static string BazaDemo = Path.Combine(LokalnyKatalog, NazwaPlikuDemo);
-		public static string BazaStartowa = Path.Combine(LokalnyKatalog, NazwaPlikuStartowego);
 
 		public static string Sciezka { get; set; }
+
+		private static SqliteConnection bazaTymczasowa;
 
 		public IQueryable<Faktura> Faktury => Set<Faktura>();
 		public IQueryable<JednostkaMiary> JednostkiMiar => Set<JednostkaMiary>();
@@ -53,7 +52,7 @@ namespace ProFak.DB
 			if (String.IsNullOrEmpty(Sciezka)) return false;
 			using var baza = new DB.Baza();
 			baza.Database.Migrate();
-			baza.PrzygotujDaneStartowe();
+			DaneStartowe.Zaladuj(baza);
 			return true;
 		}
 
@@ -67,7 +66,21 @@ namespace ProFak.DB
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			base.OnConfiguring(optionsBuilder);
-			optionsBuilder.UseSqlite($"Data Source={Sciezka}");
+			string polaczenie;
+			if (Sciezka == null)
+			{
+				polaczenie = "Data Source=ProFak;Mode=Memory;Cache=Shared";
+				if (bazaTymczasowa == null)
+				{
+					bazaTymczasowa = new SqliteConnection(polaczenie);
+					bazaTymczasowa.Open();
+				}
+			}
+			else
+			{
+				polaczenie = $"Data Source={Sciezka}";
+			}
+			optionsBuilder.UseSqlite(polaczenie);
 			if (Debugger.IsAttached) optionsBuilder.LogTo(message => Debug.WriteLine(message), new[] { RelationalEventId.CommandExecuting }).EnableSensitiveDataLogging();
 		}
 
@@ -163,49 +176,6 @@ namespace ProFak.DB
 				wynik.Add(wiersz);
 			}
 			return wynik;
-		}
-
-		public void PrzygotujDaneStartowe()
-		{
-			if (!JednostkiMiar.Any())
-			{
-				Zapisz(new JednostkaMiary { CzyDomyslna = true, LiczbaMiescPoPrzecinku = 0, Nazwa = "Sztuka", Skrot = "szt" });
-				Zapisz(new JednostkaMiary { CzyDomyslna = false, LiczbaMiescPoPrzecinku = 0, Nazwa = "Komplet", Skrot = "kpl" });
-				Zapisz(new JednostkaMiary { CzyDomyslna = false, LiczbaMiescPoPrzecinku = 0, Nazwa = "Godzina", Skrot = "h" });
-				Zapisz(new JednostkaMiary { CzyDomyslna = false, LiczbaMiescPoPrzecinku = 3, Nazwa = "Kilogram", Skrot = "kg" });
-				Zapisz(new JednostkaMiary { CzyDomyslna = false, LiczbaMiescPoPrzecinku = 3, Nazwa = "Litr", Skrot = "l" });
-			}
-
-			if (!Numeratory.Any())
-			{
-				Zapisz(new Numerator { Przeznaczenie = PrzeznaczenieNumeratora.Faktura, Format = "FV/[Numer]/[Rok]" });
-				Zapisz(new Numerator { Przeznaczenie = PrzeznaczenieNumeratora.Korekta, Format = "FK/[Numer]/[Rok]" });
-				Zapisz(new Numerator { Przeznaczenie = PrzeznaczenieNumeratora.Proforma, Format = "FP/[Numer]/[Rok]" });
-			}
-
-			if (!SposobyPlatnosci.Any())
-			{
-				Zapisz(new SposobPlatnosci { CzyDomyslny = true, LiczbaDni = 7, Nazwa = "Przelew 7" });
-				Zapisz(new SposobPlatnosci { CzyDomyslny = false, LiczbaDni = 14, Nazwa = "Przelew 14" });
-				Zapisz(new SposobPlatnosci { CzyDomyslny = false, LiczbaDni = 30, Nazwa = "Przelew 30" });
-				Zapisz(new SposobPlatnosci { CzyDomyslny = false, LiczbaDni = 0, Nazwa = "Gotówka" });
-				Zapisz(new SposobPlatnosci { CzyDomyslny = false, LiczbaDni = 0, Nazwa = "Karta" });
-			}
-
-			if (!StawkiVat.Any())
-			{
-				Zapisz(new StawkaVat { CzyDomyslna = true, Wartosc = 23, Skrot = "23%" });
-				Zapisz(new StawkaVat { CzyDomyslna = false, Wartosc = 8, Skrot = "8%" });
-				Zapisz(new StawkaVat { CzyDomyslna = false, Wartosc = 5, Skrot = "5%" });
-				Zapisz(new StawkaVat { CzyDomyslna = false, Wartosc = 0, Skrot = "0%" });
-				Zapisz(new StawkaVat { CzyDomyslna = false, Wartosc = 0, Skrot = "NP" });
-				Zapisz(new StawkaVat { CzyDomyslna = false, Wartosc = 0, Skrot = "ZW" });
-			}
-
-			if (!Waluty.Any())
-			{
-				Zapisz(new Waluta { CzyDomyslna = true, Skrot = "PLN", Nazwa = "Polski złoty" });
-			}
 		}
 	}
 }
