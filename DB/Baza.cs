@@ -81,7 +81,7 @@ namespace ProFak.DB
 				polaczenie = $"Data Source={Sciezka}";
 			}
 			optionsBuilder.UseSqlite(polaczenie);
-			if (Debugger.IsAttached) optionsBuilder.LogTo(message => Debug.WriteLine(message), new[] { RelationalEventId.CommandExecuting }).EnableSensitiveDataLogging();
+			//if (Debugger.IsAttached) optionsBuilder.LogTo(message => Debug.WriteLine(message), new[] { RelationalEventId.CommandExecuting }).EnableSensitiveDataLogging();
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)

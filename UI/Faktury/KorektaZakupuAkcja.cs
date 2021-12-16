@@ -12,6 +12,5 @@ namespace ProFak.UI
 	class KorektaZakupuAkcja : KorektaAkcja<FakturaZakupuEdytor>
 	{
 		public override string Nazwa => "➕ Wprowadź korektę";
-		protected override RodzajFaktury Rodzaj => RodzajFaktury.KorektaZakupu;
 	}
 }

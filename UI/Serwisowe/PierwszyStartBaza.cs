@@ -129,7 +129,11 @@ namespace ProFak.UI
 			}
 
 			if (e.Error is ApplicationException ae) MessageBox.Show(ae.Message, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-			else MessageBox.Show("W trakcie przygotowywania bazy danych wystąpił nieobsłużony błąd.\n\n" + e.Error.Message, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			else
+			{
+				var okno = new OknoBledu(e.Error);
+				okno.ShowDialog();
+			}
 			buttonDalej.Enabled = true;
 			progressBar.Visible = false;
 			labelStatus.Visible = false;

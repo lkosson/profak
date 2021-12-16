@@ -84,6 +84,11 @@ namespace ProFak.DB
 		public void PrzeliczRazem(Baza baza)
 		{
 			var pozycje = baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == Id).ToList();
+			PrzeliczRazem(pozycje);
+		}
+
+		public void PrzeliczRazem(IEnumerable<PozycjaFaktury> pozycje)
+		{
 			RazemNetto = pozycje.Sum(pozycja => pozycja.WartoscNetto);
 			RazemVat = pozycje.Sum(pozycja => pozycja.WartoscVat);
 			RazemBrutto = pozycje.Sum(pozycja => pozycja.WartoscBrutto);
@@ -121,6 +126,89 @@ namespace ProFak.DB
 			|| CzyPasuje(OpisSposobuPlatnosci, fraza)
 			|| CzyPasuje(Rodzaj, fraza)
 			|| CzyPasuje(CzyWartosciReczne ? "Ręczne" : "", fraza);
+
+		public Faktura PrzygotujKorekte(Baza baza)
+		{
+			var bazowa = this;
+
+			while (bazowa.FakturaKorygujacaRef.IsNotNull)
+			{
+				bazowa = baza.Znajdz(bazowa.FakturaKorygujacaRef);
+			}
+
+			var korekta = new Faktura();
+			baza.Zapisz(korekta);
+			if (bazowa.Rodzaj == RodzajFaktury.Sprzedaż || bazowa.Rodzaj == RodzajFaktury.KorektaSprzedaży) korekta.Rodzaj = RodzajFaktury.KorektaSprzedaży;
+			else if (bazowa.Rodzaj == RodzajFaktury.Zakup || bazowa.Rodzaj == RodzajFaktury.KorektaZakupu) korekta.Rodzaj = RodzajFaktury.KorektaZakupu;
+			else throw new ApplicationException($"Nie można korygować faktury {bazowa.Rodzaj}.");
+			korekta.DataSprzedazy = bazowa.DataSprzedazy;
+			korekta.FakturaKorygowanaRef = bazowa;
+			korekta.NIPSprzedawcy = bazowa.NIPSprzedawcy;
+			korekta.NazwaSprzedawcy = bazowa.NazwaSprzedawcy;
+			korekta.DaneSprzedawcy = bazowa.DaneSprzedawcy;
+			korekta.NIPNabywcy = bazowa.NIPNabywcy;
+			korekta.NazwaNabywcy = bazowa.NazwaNabywcy;
+			korekta.DaneNabywcy = bazowa.DaneNabywcy;
+			korekta.RachunekBankowy = bazowa.RachunekBankowy;
+			korekta.UwagiPubliczne = bazowa.UwagiPubliczne;
+			korekta.KursWaluty = bazowa.KursWaluty;
+			korekta.OpisSposobuPlatnosci = bazowa.OpisSposobuPlatnosci;
+			korekta.SprzedawcaRef = bazowa.SprzedawcaRef;
+			korekta.NabywcaRef = bazowa.NabywcaRef;
+			korekta.WalutaRef = bazowa.WalutaRef;
+			korekta.SposobPlatnosciRef = bazowa.SposobPlatnosciRef;
+
+			bazowa.FakturaKorygujacaRef = korekta;
+
+			var starePozycje = baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == bazowa.Id).ToList();
+			var nowePozycje = new List<PozycjaFaktury>();
+			foreach (var staraPozycja in starePozycje)
+			{
+				if (staraPozycja.CzyPrzedKorekta) continue;
+
+				var pozycjaPrzed = new PozycjaFaktury();
+				pozycjaPrzed.FakturaId = korekta.Id;
+				pozycjaPrzed.TowarId = staraPozycja.TowarId;
+				pozycjaPrzed.Opis = staraPozycja.Opis;
+				pozycjaPrzed.CenaNetto = staraPozycja.CenaNetto;
+				pozycjaPrzed.CenaVat = staraPozycja.CenaVat;
+				pozycjaPrzed.CenaBrutto = staraPozycja.CenaBrutto;
+				pozycjaPrzed.Ilosc = -staraPozycja.Ilosc;
+				pozycjaPrzed.WartoscNetto = -staraPozycja.WartoscNetto;
+				pozycjaPrzed.WartoscVat = -staraPozycja.WartoscVat;
+				pozycjaPrzed.WartoscBrutto = -staraPozycja.WartoscBrutto;
+				pozycjaPrzed.CzyWedlugCenBrutto = staraPozycja.CzyWedlugCenBrutto;
+				pozycjaPrzed.CzyWartosciReczne = staraPozycja.CzyWartosciReczne;
+				pozycjaPrzed.StawkaVatRef = staraPozycja.StawkaVatRef;
+				pozycjaPrzed.CzyPrzedKorekta = true;
+				pozycjaPrzed.LP = staraPozycja.LP;
+				nowePozycje.Add(pozycjaPrzed);
+
+				var pozycjaPo = new PozycjaFaktury();
+				pozycjaPo.FakturaId = korekta.Id;
+				pozycjaPo.TowarId = staraPozycja.TowarId;
+				pozycjaPo.Opis = staraPozycja.Opis;
+				pozycjaPo.CenaNetto = staraPozycja.CenaNetto;
+				pozycjaPo.CenaVat = staraPozycja.CenaVat;
+				pozycjaPo.CenaBrutto = staraPozycja.CenaBrutto;
+				pozycjaPo.Ilosc = staraPozycja.Ilosc;
+				pozycjaPo.WartoscNetto = staraPozycja.WartoscNetto;
+				pozycjaPo.WartoscVat = staraPozycja.WartoscVat;
+				pozycjaPo.WartoscBrutto = staraPozycja.WartoscBrutto;
+				pozycjaPo.CzyWedlugCenBrutto = staraPozycja.CzyWedlugCenBrutto;
+				pozycjaPo.CzyWartosciReczne = staraPozycja.CzyWartosciReczne;
+				pozycjaPo.StawkaVatRef = staraPozycja.StawkaVatRef;
+				pozycjaPo.CzyPrzedKorekta = false;
+				pozycjaPo.LP = staraPozycja.LP;
+				nowePozycje.Add(pozycjaPo);
+			}
+
+			baza.Zapisz(nowePozycje);
+			baza.Zapisz(bazowa);
+
+			return korekta;
+		}
+
 	}
 
 	enum RodzajFaktury
