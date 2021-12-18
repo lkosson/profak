@@ -26,17 +26,7 @@ namespace ProFak.DB
 		{
 			var numerator = baza.Numeratory.FirstOrDefault(numerator => numerator.Przeznaczenie == przeznaczenie);
 			if (numerator == null) throw new ApplicationException($"Brak definicji numeratora \"{przeznaczenie}\".");
-			var regexFragment = new Regex(@"\[(?<nazwa>\w+)(:(?<format>[^\]]+))?\]");
-			var szablon = regexFragment.Replace(numerator.Format, fragment =>
-			{
-				var nazwa = fragment.Groups["nazwa"]?.Value;
-				var format = fragment.Groups["format"]?.Value;
-				if (String.Equals(nazwa, "numer", StringComparison.CurrentCultureIgnoreCase)) return "{0" + (String.IsNullOrEmpty(format) ? "" : ":" + format) + "}";
-				var wartosc = podstawienie(nazwa);
-				if (wartosc == null) throw new ApplicationException($"Nieznane wyrażenie numeratora \"{nazwa}\".");
-				var tekst = String.IsNullOrWhiteSpace(format) ? wartosc.ToString() : wartosc.ToString(format, CultureInfo.CurrentCulture);
-				return tekst;
-			});
+			var szablon = PrzygotujWzorzec(numerator.Format, podstawienie);
 			var parametry = String.Format(szablon, "");
 
 			var stanNumeratora = baza.StanyNumeratorow.FirstOrDefault(stan => stan.NumeratorId == numerator.Id && stan.Parametry == parametry);
@@ -51,6 +41,20 @@ namespace ProFak.DB
 			}
 
 			return numer;
+		}
+
+		public static string PrzygotujWzorzec(string format, Func<string, IFormattable> podstawienie)
+		{
+			return Regex.Replace(format, @"\[(?<nazwa>\w+)(:(?<format>[^\]]+))?\]", fragment =>
+			{
+				var nazwa = fragment.Groups["nazwa"]?.Value;
+				var format = fragment.Groups["format"]?.Value;
+				if (String.Equals(nazwa, "numer", StringComparison.CurrentCultureIgnoreCase)) return "{0" + (String.IsNullOrEmpty(format) ? "" : ":" + format) + "}";
+				var wartosc = podstawienie(nazwa);
+				if (wartosc == null) throw new ApplicationException($"Nieznane wyrażenie numeratora \"{nazwa}\".");
+				var tekst = String.IsNullOrWhiteSpace(format) ? wartosc.ToString() : wartosc.ToString(format, CultureInfo.CurrentCulture);
+				return tekst;
+			});
 		}
 	}
 
