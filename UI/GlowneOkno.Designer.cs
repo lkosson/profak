@@ -53,11 +53,13 @@ namespace ProFak.UI
 			System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Baza danych");
 			System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Polecenie SQL");
 			System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Bezpośrednia edycja");
-			System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Serwisowe", new System.Windows.Forms.TreeNode[] {
+			System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("O programie");
+			System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Serwisowe", new System.Windows.Forms.TreeNode[] {
             treeNode13,
             treeNode14,
             treeNode15,
-            treeNode16});
+            treeNode16,
+            treeNode17});
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GlowneOkno));
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.treeViewMenu = new System.Windows.Forms.TreeView();
@@ -112,14 +114,16 @@ namespace ProFak.UI
 			treeNode15.Text = "Polecenie SQL";
 			treeNode16.Name = "Tabele";
 			treeNode16.Text = "Bezpośrednia edycja";
-			treeNode17.Name = "Node1";
-			treeNode17.Text = "Serwisowe";
+			treeNode17.Name = "OProgramie";
+			treeNode17.Text = "O programie";
+			treeNode18.Name = "Node1";
+			treeNode18.Text = "Serwisowe";
 			this.treeViewMenu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode5,
             treeNode6,
             treeNode7,
             treeNode12,
-            treeNode17});
+            treeNode18});
 			this.treeViewMenu.Size = new System.Drawing.Size(247, 593);
 			this.treeViewMenu.TabIndex = 1;
 			this.treeViewMenu.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeViewMenu_BeforeExpand);

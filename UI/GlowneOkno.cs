@@ -67,6 +67,7 @@ namespace ProFak.UI
 			else if (pozycja.Name == "SQL") Wyswietl(new EkranSQL(), pozycja.Name);
 			else if (pozycja.Name == "Tabele") Wyswietl(new EdytorTabeli(), pozycja.Name);
 			else if (pozycja.Name == "Baza") Wyswietl(new BazyDanych(), pozycja.Name);
+			else if (pozycja.Name == "OProgramie") Wyswietl(new OProgramie(), pozycja.Name);
 		}
 
 		private void Wyswietl<TKontrolka>(TKontrolka kontrolka, string nazwa)

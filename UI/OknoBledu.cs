@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -25,7 +26,7 @@ namespace ProFak.UI
 
 		private void linkLabelURL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			// https://github.com/lkosson/profak/issues
+			Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = "https://github.com/lkosson/profak/issues" });
 		}
 	}
 }
