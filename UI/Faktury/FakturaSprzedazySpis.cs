@@ -14,6 +14,7 @@ namespace ProFak.UI
 	{
 		private readonly DateTime? odDaty;
 		private readonly DateTime? doDaty;
+		private readonly bool doZaplaty;
 		private readonly DataGridViewTextBoxColumn kolumnaNazwaNabywcy;
 		private readonly DataGridViewTextBoxColumn kolumnaNIPNabywcy;
 		public Ref<Kontrahent> NabywcaRef { get; set; }
@@ -48,6 +49,7 @@ namespace ProFak.UI
 				else if (parametr.StartsWith("M:")) miesiac = Int32.Parse(parametr[2..]);
 				else if (parametr.StartsWith("K:")) NabywcaRef = Int32.Parse(parametr[2..]);
 				else if (parametr.StartsWith("T:")) TowarRef = Int32.Parse(parametr[2..]);
+				else if (parametr == "DoZaplaty") doZaplaty = true;
 			}
 			if (!rok.HasValue) return;
 			if (miesiac.HasValue)
@@ -78,6 +80,7 @@ namespace ProFak.UI
 			if (doDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy < doDaty.Value);
 			if (TowarRef.IsNotNull) q = q.Where(faktura => faktura.Pozycje.Any(pozycja => pozycja.TowarId == TowarRef.Id));
 			Rekordy = q.ToList();
+			if (doZaplaty) Rekordy = Rekordy.Where(faktura => !faktura.CzyZaplacona).ToList();
 		}
 
 		protected override void UstawStylWiersza(Faktura rekord, string kolumna, DataGridViewCellStyle styl)
