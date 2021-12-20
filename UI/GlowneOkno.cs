@@ -30,6 +30,9 @@ namespace ProFak.UI
 			treeViewMenu.Nodes["Faktury"].Nodes["FakturyZakupu"].Nodes["WedlugDaty"].Expand();
 			treeViewMenu.Nodes["Faktury"].Nodes["FakturyZakupu"].Nodes["WedlugDaty"].Nodes.Cast<TreeNode>().LastOrDefault()?.Expand();
 			treeViewMenu.Nodes["Slowniki"].Expand();
+			var doWybrania = treeViewMenu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["WedlugDaty"].Nodes.Cast<TreeNode>().LastOrDefault()?.Nodes?.Cast<TreeNode>()?.LastOrDefault();
+			if (doWybrania == null) doWybrania = treeViewMenu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["Wszystkie"];
+			Wyswietl(doWybrania);
 			base.OnLoad(e);
 		}
 
