@@ -29,7 +29,6 @@ namespace ProFak.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Dialog));
 			this.buttonZapisz = new System.Windows.Forms.Button();
 			this.buttonAnuluj = new System.Windows.Forms.Button();
 			this.tableLayoutPanelZawartosc = new System.Windows.Forms.TableLayoutPanel();
@@ -105,7 +104,6 @@ namespace ProFak.UI
 			this.CancelButton = this.buttonAnuluj;
 			this.ClientSize = new System.Drawing.Size(227, 163);
 			this.Controls.Add(this.tableLayoutPanelZawartosc);
-			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.KeyPreview = true;
 			this.Name = "Dialog";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

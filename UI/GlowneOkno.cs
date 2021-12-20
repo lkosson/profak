@@ -20,6 +20,8 @@ namespace ProFak.UI
 			InitializeComponent();
 		}
 
+		public static Icon Ikona => (Icon)new ComponentResourceManager(typeof(GlowneOkno)).GetObject("$this.Icon");
+
 		protected override void OnLoad(EventArgs e)
 		{
 			treeViewMenu.Nodes["Faktury"].Expand();

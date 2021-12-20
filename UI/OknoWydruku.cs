@@ -14,6 +14,7 @@ namespace ProFak.UI
 
 		public OknoWydruku(Wydruki.Wydruk wydruk)
 		{
+			Icon = GlowneOkno.Ikona;
 			WindowState = FormWindowState.Maximized;
 			reportViewer = new Microsoft.Reporting.WinForms.ReportViewer();
 			reportViewer.Dock = DockStyle.Fill;

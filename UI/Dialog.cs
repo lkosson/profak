@@ -18,6 +18,7 @@ namespace ProFak.UI
 		private Dialog()
 		{
 			InitializeComponent();
+			Icon = GlowneOkno.Ikona;
 		}
 
 		public Dialog(string tytul, Control zawartosc, Kontekst kontekst)
