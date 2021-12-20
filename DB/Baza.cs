@@ -43,7 +43,9 @@ namespace ProFak.DB
 
 		public Baza()
 		{
-			ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+			// IdentityResolution potrzebne, żeby dało się jednocześnie skasować dwie faktury z dołączoną taką samą walutą;
+			// bez tego RemoveRange próbuje dodać dwie takie same waluty do konktekstu i wywala się na duplikacji.
+			ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTrackingWithIdentityResolution;
 		}
 
 		public static bool Przygotuj()
