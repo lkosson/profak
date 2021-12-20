@@ -31,6 +31,14 @@ namespace ProFak.UI
 
 		private void Wypelnij()
 		{
+			if (String.IsNullOrEmpty(Baza.Sciezka))
+			{
+				textBoxPlik.Text = "(baza tymczasowa)";
+				comboBoxKatalog.Enabled = false;
+				buttonUtworzKopie.Enabled = false;
+				buttonPrzywrocKopie.Enabled = false;
+				return;
+			}
 			gotowy = false;
 			var plik = new FileInfo(Baza.Sciezka);
 			textBoxPlik.Text = plik.FullName;

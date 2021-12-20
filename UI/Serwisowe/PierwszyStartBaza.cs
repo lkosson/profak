@@ -92,6 +92,9 @@ namespace ProFak.UI
 					File.Move(bazaDocelowa, kopiaBazyDocelowej);
 				}
 
+				var katalogDocelowy = Path.GetDirectoryName(bazaDocelowa);
+				Directory.CreateDirectory(katalogDocelowy);
+
 				if (zrodloJestPlikiem)
 				{
 					backgroundWorker.ReportProgress(0, "Kopiowanie bazy");
