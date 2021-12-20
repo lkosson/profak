@@ -49,8 +49,24 @@ namespace ProFak.UI
 			}
 		}
 
+		private void WyczyscKolor(TreeNode wezel)
+		{
+			wezel.ForeColor = Color.Empty;
+			wezel.BackColor = Color.Empty;
+
+			foreach (TreeNode podrzedny in wezel.Nodes) WyczyscKolor(podrzedny);
+		}
+
 		private void Wyswietl(TreeNode pozycja, string[] parametry = null)
 		{
+			if (parametry == null)
+			{
+				foreach (TreeNode wezel in treeViewMenu.Nodes) WyczyscKolor(wezel);
+			}
+
+			pozycja.BackColor = SystemColors.Highlight;
+			pozycja.ForeColor = SystemColors.HighlightText;
+
 			if (pozycja.Name == "JednostkiMiar") Wyswietl(Spisy.JednostkiMiar(), pozycja.Name);
 			else if (pozycja.Name == "Kontrahenci") Wyswietl(Spisy.Kontrahenci(), pozycja.Name);
 			else if (pozycja.Name == "SposobyPlatnosci") Wyswietl(Spisy.SposobyPlatnosci(), pozycja.Name);
