@@ -17,6 +17,7 @@ namespace ProFak.UI
 		private readonly DataGridViewTextBoxColumn kolumnaNazwaSprzedawcy;
 		private readonly DataGridViewTextBoxColumn kolumnaNIPSprzedawcy;
 		public Ref<Kontrahent> SprzedawcaRef { get; set; }
+		public Ref<Towar> TowarRef { get; set; }
 
 		public FakturaZakupuSpis()
 		{
@@ -43,8 +44,10 @@ namespace ProFak.UI
 			int? miesiac = null;
 			foreach (var parametr in parametry)
 			{
-				if (parametr.Length == 4) rok = Int32.Parse(parametr);
-				if (parametr.Length >= 1 && parametr.Length <= 2) miesiac = Int32.Parse(parametr);
+				if (parametr.StartsWith("R:")) rok = Int32.Parse(parametr[2..]);
+				else if (parametr.StartsWith("M:")) miesiac = Int32.Parse(parametr[2..]);
+				else if (parametr.StartsWith("K:")) SprzedawcaRef = Int32.Parse(parametr[2..]);
+				else if (parametr.StartsWith("T:")) TowarRef = Int32.Parse(parametr[2..]);
 			}
 			if (!rok.HasValue) return;
 			if (miesiac.HasValue)
@@ -73,6 +76,7 @@ namespace ProFak.UI
 			if (SprzedawcaRef.IsNotNull) q = q.Where(faktura => faktura.SprzedawcaId == SprzedawcaRef.Id);
 			if (odDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy >= odDaty.Value);
 			if (doDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy < doDaty.Value);
+			if (TowarRef.IsNotNull) q = q.Where(faktura => faktura.Pozycje.Any(pozycja => pozycja.TowarId == TowarRef.Id));
 			Rekordy = q.ToList();
 		}
 

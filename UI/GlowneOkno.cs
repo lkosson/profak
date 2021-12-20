@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using ProFak.DB;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,12 +18,26 @@ namespace ProFak.UI
 		public GlowneOkno()
 		{
 			InitializeComponent();
-			treeViewMenu.ExpandAll();
+		}
+
+		protected override void OnLoad(EventArgs e)
+		{
+			treeViewMenu.Nodes["Faktury"].Expand();
+			treeViewMenu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Expand();
+			treeViewMenu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["WedlugDaty"].Expand();
+			treeViewMenu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["WedlugDaty"].Nodes.Cast<TreeNode>().LastOrDefault()?.Expand();
+			treeViewMenu.Nodes["Faktury"].Nodes["FakturyZakupu"].Expand();
+			treeViewMenu.Nodes["Faktury"].Nodes["FakturyZakupu"].Nodes["WedlugDaty"].Expand();
+			treeViewMenu.Nodes["Faktury"].Nodes["FakturyZakupu"].Nodes["WedlugDaty"].Nodes.Cast<TreeNode>().LastOrDefault()?.Expand();
+			treeViewMenu.Nodes["Slowniki"].Expand();
+			base.OnLoad(e);
 		}
 
 		private void treeViewMenu_DoubleClick(object sender, EventArgs e)
 		{
-			Wyswietl(treeViewMenu.SelectedNode);
+			var wybrany = treeViewMenu.SelectedNode;
+			if (wybrany.Nodes.Count > 0) return;
+			Wyswietl(wybrany);
 		}
 
 		private void treeViewMenu_KeyPress(object sender, KeyPressEventArgs e)
@@ -34,26 +51,6 @@ namespace ProFak.UI
 
 		private void Wyswietl(TreeNode pozycja, string[] parametry = null)
 		{
-			if (pozycja.Nodes.Count > 0 && parametry == null) return;
-
-			if (pozycja.Name.StartsWith("#"))
-			{
-				Wyswietl(pozycja.Parent, (parametry ?? Enumerable.Empty<string>()).Append(pozycja.Name[1..]).ToArray());
-				return;
-			}
-
-			/*
-			foreach (Control istniejace in panelZawartosc.Controls)
-			{
-				if (istniejace.Name == pozycja.Name)
-				{
-					istniejace.BringToFront();
-					istniejace.Focus();
-					return;
-				}
-			}
-			*/
-
 			if (pozycja.Name == "JednostkiMiar") Wyswietl(Spisy.JednostkiMiar(), pozycja.Name);
 			else if (pozycja.Name == "Kontrahenci") Wyswietl(Spisy.Kontrahenci(), pozycja.Name);
 			else if (pozycja.Name == "SposobyPlatnosci") Wyswietl(Spisy.SposobyPlatnosci(), pozycja.Name);
@@ -68,6 +65,7 @@ namespace ProFak.UI
 			else if (pozycja.Name == "Tabele") Wyswietl(new EdytorTabeli(), pozycja.Name);
 			else if (pozycja.Name == "Baza") Wyswietl(new BazyDanych(), pozycja.Name);
 			else if (pozycja.Name == "OProgramie") Wyswietl(new OProgramie(), pozycja.Name);
+			else if (pozycja.Parent != null) Wyswietl(pozycja.Parent, (parametry ?? Enumerable.Empty<string>()).Append(pozycja.Name).ToArray());
 		}
 
 		private void Wyswietl<TKontrolka>(TKontrolka kontrolka, string nazwa)
@@ -93,59 +91,77 @@ namespace ProFak.UI
 
 		private void treeViewMenu_BeforeExpand(object sender, TreeViewCancelEventArgs e)
 		{
-			if (e.Node.Name == "FakturySprzedazy") WypelnijDatyFakturSprzedazy(e.Node);
-			else if (e.Node.Name == "FakturyZakupu") WypelnijDatyFakturZakupu(e.Node);
+			if (e.Node.Name == "WedlugDaty" && e.Node.Parent.Name == "FakturySprzedazy") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży || faktura.Rodzaj == RodzajFaktury.Proforma);
+			else if (e.Node.Name == "WedlugDaty" && e.Node.Parent.Name == "FakturyZakupu") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu);
+			else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent.Name == "FakturySprzedazy") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży || faktura.Rodzaj == RodzajFaktury.Proforma, faktura => faktura.Nabywca);
+			else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent.Name == "FakturyZakupu") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu, faktura => faktura.Sprzedawca);
+			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent.Name == "FakturySprzedazy") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura.Rodzaj == RodzajFaktury.Sprzedaż || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży || pozycja.Faktura.Rodzaj == RodzajFaktury.Proforma);
+			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent.Name == "FakturyZakupu") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura.Rodzaj == RodzajFaktury.Zakup || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaZakupu);
 		}
 
-		private void WypelnijDatyFakturSprzedazy(TreeNode treeNode)
+		private void WypelnijDatyFaktur(TreeNode treeNode, Expression<Func<Faktura, bool>> warunek)
 		{
-			while (treeNode.Nodes.Count > 1) treeNode.Nodes.RemoveAt(1);
-
 			using var kontekst = new Kontekst();
 			var daty = kontekst.Baza.Faktury
-				.Where(faktura => faktura.Rodzaj == DB.RodzajFaktury.Sprzedaż || faktura.Rodzaj == DB.RodzajFaktury.KorektaSprzedaży || faktura.Rodzaj == DB.RodzajFaktury.Proforma)
+				.Where(warunek)
 				.Select(faktura => faktura.DataSprzedazy)
 				.Distinct()
 				.ToList();
 
+			while (treeNode.Nodes.Count > 0) treeNode.Nodes.RemoveAt(0);
+
 			var lata = daty.OrderBy(data => data).GroupBy(data => data.Year).Select(rok => (rok.Key, miesiace: rok.Select(data => data.Month).Distinct().ToList())).ToList();
 			foreach (var (rok, miesiace) in lata)
 			{
-				var treeNodeRok = new TreeNode { Name = "#" + rok.ToString(), Text = rok.ToString() };
-				var treeNodeWszystko = new TreeNode { Name = "#" + rok.ToString(), Text = "(wszystkie)" };
+				var treeNodeRok = new TreeNode { Name = rok.ToString(), Text = rok.ToString() };
+				var treeNodeWszystko = new TreeNode { Name = "R:" + rok, Text = "(cały rok)" };
 				treeNodeRok.Nodes.Add(treeNodeWszystko);
 				foreach (var miesiac in miesiace)
 				{
-					var treeNodeMiesiac = new TreeNode { Name = "#" + miesiac.ToString(), Text = new DateTime(rok, miesiac, 1).ToString("MMMM") };
+					var treeNodeMiesiac = new TreeNode { Name = "M:" + miesiac, Text = new DateTime(rok, miesiac, 1).ToString("MMMM") };
 					treeNodeRok.Nodes.Add(treeNodeMiesiac);
 				}
 				treeNode.Nodes.Add(treeNodeRok);
 			}
 		}
 
-		private void WypelnijDatyFakturZakupu(TreeNode treeNode)
+		private void WypelnijKontrahentowFaktur(TreeNode treeNode, Expression<Func<Faktura, bool>> warunek, Expression<Func<Faktura, Kontrahent>> pole)
 		{
-			while (treeNode.Nodes.Count > 1) treeNode.Nodes.RemoveAt(1);
-
 			using var kontekst = new Kontekst();
-			var daty = kontekst.Baza.Faktury
-				.Where(faktura => faktura.Rodzaj == DB.RodzajFaktury.Zakup || faktura.Rodzaj == DB.RodzajFaktury.KorektaZakupu)
-				.Select(faktura => faktura.DataSprzedazy)
+			var kontrahenci = kontekst.Baza.Faktury
+				.Where(warunek)
+				.Include(pole)
+				.Select(pole)
 				.Distinct()
+				.Where(kontrahent => !kontrahent.CzyArchiwalny)
+				.OrderBy(kontrahent => kontrahent.Nazwa)
 				.ToList();
 
-			var lata = daty.OrderBy(data => data).GroupBy(data => data.Year).Select(rok => (rok.Key, miesiace: rok.Select(data => data.Month).Distinct().ToList())).ToList();
-			foreach (var (rok, miesiace) in lata)
+			while (treeNode.Nodes.Count > 0) treeNode.Nodes.RemoveAt(0);
+
+			foreach (var kontrahent in kontrahenci)
 			{
-				var treeNodeRok = new TreeNode { Name = "#" + rok.ToString(), Text = rok.ToString() };
-				var treeNodeWszystko = new TreeNode { Name = "#" + rok.ToString(), Text = "(cały rok)" };
-				treeNodeRok.Nodes.Add(treeNodeWszystko);
-				foreach (var miesiac in miesiace)
-				{
-					var treeNodeMiesiac = new TreeNode { Name = "#" + miesiac.ToString(), Text = new DateTime(rok, miesiac, 1).ToString("MMMM") };
-					treeNodeRok.Nodes.Add(treeNodeMiesiac);
-				}
-				treeNode.Nodes.Add(treeNodeRok);
+				treeNode.Nodes.Add(new TreeNode { Name = "K:" + kontrahent.Id, Text = kontrahent.Nazwa.ToString() });
+			}
+		}
+
+		private void WypelnijTowaryFaktur(TreeNode treeNode, Expression<Func<PozycjaFaktury, bool>> warunek)
+		{
+			using var kontekst = new Kontekst();
+			var towary = kontekst.Baza.PozycjeFaktur
+				.Where(warunek)
+				.Include(pozycja => pozycja.Towar)
+				.Select(pozycja => pozycja.Towar)
+				.Distinct()
+				.Where(towar => !towar.CzyArchiwalny)
+				.OrderBy(towar => towar.Nazwa)
+				.ToList();
+
+			while (treeNode.Nodes.Count > 0) treeNode.Nodes.RemoveAt(0);
+
+			foreach (var towar in towary)
+			{
+				treeNode.Nodes.Add(new TreeNode { Name = "T:" + towar.Id, Text = towar.Nazwa.ToString() });
 			}
 		}
 	}
