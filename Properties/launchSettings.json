@@ -6,6 +6,10 @@
     "XSD": {
       "commandName": "Project",
       "commandLineArgs": "xsd"
+    },
+    "SQL": {
+      "commandName": "Project",
+      "commandLineArgs": "sql"
     }
   }
 }

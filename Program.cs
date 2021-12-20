@@ -14,12 +14,6 @@ namespace ProFak
 		{
 			try
 			{
-				if (args.Length > 0)
-				{
-					if (args[0] == "xsd") Wydruki.GeneratorXSD.Utworz();
-					return;
-				}
-
 				Application.SetHighDpiMode(HighDpiMode.SystemAware);
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
@@ -27,6 +21,18 @@ namespace ProFak
 				{
 					using var pierwszyStart = new UI.PierwszyStartBaza();
 					if (pierwszyStart.ShowDialog() != DialogResult.OK) return;
+				}
+
+				if (args.Length > 0)
+				{
+					if (args[0] == "xsd") Wydruki.GeneratorXSD.Utworz();
+					if (args[0] == "sql")
+					{
+						using var kontekst = new UI.Kontekst();
+						using var dialog = new UI.Dialog("ProFak", new UI.EkranSQL() { Kontekst = kontekst }, kontekst) { CzyPrzyciskiWidoczne = false };
+						dialog.ShowDialog();
+					}
+					return;
 				}
 
 				using (var kontekst = new UI.Kontekst())
