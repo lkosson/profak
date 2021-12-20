@@ -110,7 +110,7 @@ namespace ProFak.UI
 			this.treeViewMenu.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.treeViewMenu.Location = new System.Drawing.Point(0, 0);
 			this.treeViewMenu.Name = "treeViewMenu";
-			treeNode1.Name = "";
+			treeNode1.Name = "Wszystkie";
 			treeNode1.Text = "Wszystkie";
 			treeNode2.Name = "DoZaplaty";
 			treeNode2.Text = "Do zapłaty";
@@ -128,7 +128,7 @@ namespace ProFak.UI
 			treeNode8.Text = "Według towaru";
 			treeNode9.Name = "FakturySprzedazy";
 			treeNode9.Text = "Faktury sprzedaży";
-			treeNode10.Name = "";
+			treeNode10.Name = "Wszystkie";
 			treeNode10.Text = "Wszystkie";
 			treeNode11.Name = "DoZaplaty";
 			treeNode11.Text = "Do zapłaty";
