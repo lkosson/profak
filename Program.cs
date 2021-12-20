@@ -32,6 +32,12 @@ namespace ProFak
 						using var dialog = new UI.Dialog("ProFak", new UI.EkranSQL() { Kontekst = kontekst }, kontekst) { CzyPrzyciskiWidoczne = false };
 						dialog.ShowDialog();
 					}
+					if (args[0] == "db")
+					{
+						using var kontekst = new UI.Kontekst();
+						using var dialog = new UI.Dialog("ProFak", new UI.BazyDanych() { Kontekst = kontekst }, kontekst) { CzyPrzyciskiWidoczne = false };
+						dialog.ShowDialog();
+					}
 					return;
 				}
 
