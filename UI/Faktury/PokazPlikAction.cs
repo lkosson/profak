@@ -12,8 +12,9 @@ namespace ProFak.UI
 {
 	class PokazPlikAction : AkcjaNaSpisie<Plik>
 	{
-		public override string Nazwa => "Otwórz plik";
+		public override string Nazwa => "Otwórz plik [ENTER]";
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<Plik> zaznaczoneRekordy) => zaznaczoneRekordy.Any();
+		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.None && klawisz == Keys.Enter;
 
 		public override void Uruchom(Kontekst kontekst, ref IEnumerable<Plik> zaznaczoneRekordy)
 		{

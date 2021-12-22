@@ -13,8 +13,9 @@ namespace ProFak.UI
 	{
 		private readonly PlikSpis spis;
 
-		public override string Nazwa => "Dołącz plik";
+		public override string Nazwa => "➕ Dołącz plik [INS]";
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<Plik> zaznaczoneRekordy) => true;
+		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.None && klawisz == Keys.Insert;
 
 		public DodajPlikAkcja(PlikSpis spis)
 		{
