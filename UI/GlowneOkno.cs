@@ -69,8 +69,11 @@ namespace ProFak.UI
 				foreach (TreeNode wezel in treeViewMenu.Nodes) WyczyscKolor(wezel);
 			}
 
-			pozycja.BackColor = SystemColors.Highlight;
-			pozycja.ForeColor = SystemColors.HighlightText;
+			if (parametry == null)
+			{
+				pozycja.BackColor = SystemColors.Highlight;
+				pozycja.ForeColor = SystemColors.HighlightText;
+			}
 
 			if (pozycja.Name == "JednostkiMiar") Wyswietl(Spisy.JednostkiMiar(), pozycja.Name);
 			else if (pozycja.Name == "Kontrahenci") Wyswietl(Spisy.Kontrahenci(), pozycja.Name);
@@ -134,7 +137,7 @@ namespace ProFak.UI
 			var lata = daty.OrderBy(data => data).GroupBy(data => data.Year).Select(rok => (rok.Key, miesiace: rok.Select(data => data.Month).Distinct().ToList())).ToList();
 			foreach (var (rok, miesiace) in lata)
 			{
-				var treeNodeRok = new TreeNode { Name = rok.ToString(), Text = rok.ToString() };
+				var treeNodeRok = new TreeNode { Name = "R:" + rok, Text = rok.ToString() };
 				var treeNodeWszystko = new TreeNode { Name = "R:" + rok, Text = "(cały rok)" };
 				treeNodeRok.Nodes.Add(treeNodeWszystko);
 				foreach (var miesiac in miesiace)
