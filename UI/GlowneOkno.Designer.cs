@@ -90,14 +90,14 @@ namespace ProFak.UI
             treeNode31});
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GlowneOkno));
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.treeViewMenu = new System.Windows.Forms.TreeView();
+			this.menu = new Menu();
 			this.panelZawartosc = new System.Windows.Forms.Panel();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panel1
 			// 
-			this.panel1.Controls.Add(this.treeViewMenu);
+			this.panel1.Controls.Add(this.menu);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
 			this.panel1.Location = new System.Drawing.Point(0, 0);
 			this.panel1.Name = "panel1";
@@ -106,10 +106,10 @@ namespace ProFak.UI
 			// 
 			// treeViewMenu
 			// 
-			this.treeViewMenu.Cursor = System.Windows.Forms.Cursors.Default;
-			this.treeViewMenu.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.treeViewMenu.Location = new System.Drawing.Point(0, 0);
-			this.treeViewMenu.Name = "treeViewMenu";
+			this.menu.Cursor = System.Windows.Forms.Cursors.Default;
+			this.menu.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.menu.Location = new System.Drawing.Point(0, 0);
+			this.menu.Name = "treeViewMenu";
 			treeNode1.Name = "Wszystkie";
 			treeNode1.Text = "Wszystkie";
 			treeNode2.Name = "DoZaplaty";
@@ -174,17 +174,17 @@ namespace ProFak.UI
 			treeNode31.Text = "O programie";
 			treeNode32.Name = "Node1";
 			treeNode32.Text = "Serwisowe";
-			this.treeViewMenu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+			this.menu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode19,
             treeNode20,
             treeNode21,
             treeNode26,
             treeNode32});
-			this.treeViewMenu.Size = new System.Drawing.Size(247, 593);
-			this.treeViewMenu.TabIndex = 1;
-			this.treeViewMenu.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeViewMenu_BeforeExpand);
-			this.treeViewMenu.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewMenu_AfterSelect);
-			this.treeViewMenu.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.treeViewMenu_KeyPress);
+			this.menu.Size = new System.Drawing.Size(247, 593);
+			this.menu.TabIndex = 1;
+			this.menu.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.menu_BeforeExpand);
+			this.menu.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.menu_AfterSelect);
+			this.menu.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.menu_KeyPress);
 			// 
 			// panelZawartosc
 			// 
@@ -214,7 +214,7 @@ namespace ProFak.UI
 		#endregion
 
 		private System.Windows.Forms.Panel panel1;
-		private System.Windows.Forms.TreeView treeViewMenu;
+		private Menu menu;
 		private System.Windows.Forms.Panel panelZawartosc;
 	}
 }

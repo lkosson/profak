@@ -26,35 +26,35 @@ namespace ProFak.UI
 
 		protected override void OnLoad(EventArgs e)
 		{
-			treeViewMenu.Nodes["Faktury"].Expand();
-			treeViewMenu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Expand();
-			treeViewMenu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["WedlugDaty"].Expand();
-			treeViewMenu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["WedlugDaty"].Nodes.Cast<TreeNode>().LastOrDefault()?.Expand();
-			treeViewMenu.Nodes["Faktury"].Nodes["FakturyZakupu"].Expand();
-			treeViewMenu.Nodes["Faktury"].Nodes["FakturyZakupu"].Nodes["WedlugDaty"].Expand();
-			treeViewMenu.Nodes["Faktury"].Nodes["FakturyZakupu"].Nodes["WedlugDaty"].Nodes.Cast<TreeNode>().LastOrDefault()?.Expand();
-			treeViewMenu.Nodes["Slowniki"].Expand();
-			var doWybrania = treeViewMenu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["WedlugDaty"].Nodes.Cast<TreeNode>().LastOrDefault()?.Nodes?.Cast<TreeNode>()?.LastOrDefault();
-			if (doWybrania == null) doWybrania = treeViewMenu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["Wszystkie"];
+			menu.Nodes["Faktury"].Expand();
+			menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Expand();
+			menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["WedlugDaty"].Expand();
+			menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["WedlugDaty"].Nodes.Cast<TreeNode>().LastOrDefault()?.Expand();
+			menu.Nodes["Faktury"].Nodes["FakturyZakupu"].Expand();
+			menu.Nodes["Faktury"].Nodes["FakturyZakupu"].Nodes["WedlugDaty"].Expand();
+			menu.Nodes["Faktury"].Nodes["FakturyZakupu"].Nodes["WedlugDaty"].Nodes.Cast<TreeNode>().LastOrDefault()?.Expand();
+			menu.Nodes["Slowniki"].Expand();
+			var doWybrania = menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["WedlugDaty"].Nodes.Cast<TreeNode>().LastOrDefault()?.Nodes?.Cast<TreeNode>()?.LastOrDefault();
+			if (doWybrania == null) doWybrania = menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["Wszystkie"];
 			Wyswietl(doWybrania);
 			base.OnLoad(e);
 		}
 
-		private void treeViewMenu_AfterSelect(object sender, TreeViewEventArgs e)
+		private void menu_AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			if ((e.Action & TreeViewAction.ByKeyboard) == TreeViewAction.ByKeyboard) return;
-			var wybrany = treeViewMenu.SelectedNode;
+			var wybrany = menu.SelectedNode;
 			if (wybrany == null) return;
 			if (wybrany.Nodes.Count > 0) return;
 			Wyswietl(wybrany);
 		}
 
-		private void treeViewMenu_KeyPress(object sender, KeyPressEventArgs e)
+		private void menu_KeyPress(object sender, KeyPressEventArgs e)
 		{
 			if (e.KeyChar == '\r')
 			{
 				e.Handled = true;
-				Wyswietl(treeViewMenu.SelectedNode);
+				Wyswietl(menu.SelectedNode);
 			}
 		}
 
@@ -97,7 +97,7 @@ namespace ProFak.UI
 			var kontekst = new Kontekst();
 			kontrolka.Kontekst = kontekst;
 			kontrolka.Name = nazwa;
-			kontrolka.Disposed += delegate { panelZawartosc.Controls.Remove(kontrolka); treeViewMenu.Focus(); kontekst.Dispose(); };
+			kontrolka.Disposed += delegate { panelZawartosc.Controls.Remove(kontrolka); menu.Focus(); kontekst.Dispose(); };
 			kontrolka.Dock = DockStyle.Fill;
 			panelZawartosc.Controls.Add(kontrolka);
 			kontrolka.BringToFront();
@@ -110,7 +110,7 @@ namespace ProFak.UI
 			kontrolka.Focus();
 		}
 
-		private void treeViewMenu_BeforeExpand(object sender, TreeViewCancelEventArgs e)
+		private void menu_BeforeExpand(object sender, TreeViewCancelEventArgs e)
 		{
 			if (e.Node.Name == "WedlugDaty" && e.Node.Parent.Name == "FakturySprzedazy") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży || faktura.Rodzaj == RodzajFaktury.Proforma);
 			else if (e.Node.Name == "WedlugDaty" && e.Node.Parent.Name == "FakturyZakupu") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu);
