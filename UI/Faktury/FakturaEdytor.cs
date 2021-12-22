@@ -39,7 +39,7 @@ namespace ProFak.UI
 			kontroler.Powiazanie(comboBoxNazwaNabywcy, faktura => faktura.NazwaNabywcy);
 			kontroler.Powiazanie(textBoxDaneNabywcy, faktura => faktura.DaneNabywcy);
 
-			kontroler.Powiazanie(dateTimePickerDataWystawienia, faktura => faktura.DataWystawienia);
+			kontroler.Powiazanie(dateTimePickerDataWystawienia, faktura => faktura.DataWystawienia, UstawDateWystawienia);
 			kontroler.Powiazanie(dateTimePickerDataSprzedazy, faktura => faktura.DataSprzedazy);
 			kontroler.Powiazanie(dateTimePickerDataWprowadzenia, faktura => faktura.DataWprowadzenia);
 			kontroler.Powiazanie(dateTimePickerTerminPlatnosci, faktura => faktura.TerminPlatnosci);
@@ -150,6 +150,16 @@ namespace ProFak.UI
 			rekord.DaneSprzedawcy = kontrahent.AdresRejestrowy;
 			rekord.RachunekBankowy = kontrahent.RachunekBankowy;
 			return true;
+		}
+
+		private void UstawDateWystawienia(Faktura rekord, DateTime dataWystawienia)
+		{
+			if (rekord.DataWystawienia == dataWystawienia) return;
+			rekord.DataWystawienia = dataWystawienia;
+			var sposobPlatnosci = Kontekst.Baza.Znajdz(Rekord.SposobPlatnosciRef);
+			if (sposobPlatnosci == null) return;
+			Rekord.TerminPlatnosci = Rekord.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
+			kontroler.AktualizujKontrolki();
 		}
 
 		private bool UstawSposobPlatnosci(Faktura rekord, SposobPlatnosci sposobPlatnosci)
