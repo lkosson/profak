@@ -15,6 +15,8 @@ namespace ProFak.UI
 {
 	public partial class GlowneOkno : Form
 	{
+		private TreeNode ostatnioWybrany;
+
 		public GlowneOkno()
 		{
 			InitializeComponent();
@@ -38,9 +40,11 @@ namespace ProFak.UI
 			base.OnLoad(e);
 		}
 
-		private void treeViewMenu_DoubleClick(object sender, EventArgs e)
+		private void treeViewMenu_AfterSelect(object sender, TreeViewEventArgs e)
 		{
+			if ((e.Action & TreeViewAction.ByKeyboard) == TreeViewAction.ByKeyboard) return;
 			var wybrany = treeViewMenu.SelectedNode;
+			if (wybrany == null) return;
 			if (wybrany.Nodes.Count > 0) return;
 			Wyswietl(wybrany);
 		}
@@ -54,23 +58,16 @@ namespace ProFak.UI
 			}
 		}
 
-		private void WyczyscKolor(TreeNode wezel)
-		{
-			wezel.ForeColor = Color.Empty;
-			wezel.BackColor = Color.Empty;
-
-			foreach (TreeNode podrzedny in wezel.Nodes) WyczyscKolor(podrzedny);
-		}
-
 		private void Wyswietl(TreeNode pozycja, string[] parametry = null)
 		{
 			if (parametry == null)
 			{
-				foreach (TreeNode wezel in treeViewMenu.Nodes) WyczyscKolor(wezel);
-			}
-
-			if (parametry == null)
-			{
+				if (ostatnioWybrany != null)
+				{
+					ostatnioWybrany.BackColor = Color.Empty;
+					ostatnioWybrany.ForeColor = Color.Empty;
+				}
+				ostatnioWybrany = pozycja;
 				pozycja.BackColor = SystemColors.Highlight;
 				pozycja.ForeColor = SystemColors.HighlightText;
 			}
