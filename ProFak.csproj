@@ -68,6 +68,9 @@
     <Compile Update="UI\Towary\TowarSpis.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="UI\Podsumowanie.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
 
 </Project>

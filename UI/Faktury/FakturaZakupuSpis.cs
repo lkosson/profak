@@ -20,6 +20,20 @@ namespace ProFak.UI
 		public Ref<Kontrahent> SprzedawcaRef { get; set; }
 		public Ref<Towar> TowarRef { get; set; }
 
+		public override string Podsumowanie
+		{
+			get
+			{
+				var podsumowanie = base.Podsumowanie;
+				if (WybraneRekordy.Count() > 1)
+				{
+					podsumowanie += $"\nRazem netto: {WybraneRekordy.Sum(faktura => faktura.RazemNetto).ToString("n2")}";
+					podsumowanie += $"\nRazem brutto: {WybraneRekordy.Sum(faktura => faktura.RazemBrutto).ToString("n2")}";
+				}
+				return podsumowanie;
+			}
+		}
+
 		public FakturaZakupuSpis()
 		{
 			DodajKolumne(nameof(Faktura.Numer), "Numer");

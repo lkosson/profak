@@ -70,6 +70,7 @@ namespace ProFak.UI
 			{
 				AktualizujPrzycisk(przycisk, adapter);
 			}
+			AktualizujUklad();
 		}
 
 		private void AktualizujPrzycisk(Button przycisk, AdapterAkcji adapter)

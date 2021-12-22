@@ -60,6 +60,20 @@ namespace ProFak.UI
 			}
 		}
 
+		public virtual string Podsumowanie
+		{
+			get
+			{
+				var liczbaWszystkich = Rekordy.Count();
+				var liczbaWybranych = WybraneRekordy.Count();
+				string tekst;
+				if (liczbaWszystkich == 0) tekst = "Spis nie zawiera danych";
+				else tekst = $"Liczba pozycji: {liczbaWszystkich}";
+				if (liczbaWybranych > 1) tekst += $"\nLiczba zaznaczonych: {liczbaWybranych}";
+				return tekst;
+			}
+		}
+
 		public event Action RekordyZmienione;
 		public event Action ZaznaczenieZmienione;
 
@@ -107,6 +121,7 @@ namespace ProFak.UI
 		protected override void OnSelectionChanged(EventArgs e)
 		{
 			if (rekordyPodczasZmiany) return;
+			if (bindingSource.DataSource == null) return;
 			ZaznaczenieZmienione?.Invoke();
 			base.OnSelectionChanged(e);
 		}

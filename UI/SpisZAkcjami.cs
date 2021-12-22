@@ -16,6 +16,7 @@ namespace ProFak.UI
 	{
 		protected readonly PanelAkcji panelAkcji;
 		protected readonly Wyszukiwarka wyszukiwarka;
+		protected readonly Podsumowanie podsumowanie;
 		protected AdapterAkcji domyslnaAkcja; 
 		protected readonly List<AkcjaNaSpisie<TRekord>> akcje;
 
@@ -29,6 +30,7 @@ namespace ProFak.UI
 			akcje = new List<AkcjaNaSpisie<TRekord>>();
 			panelAkcji = new PanelAkcji();
 			wyszukiwarka = new Wyszukiwarka();
+			podsumowanie = new Podsumowanie();
 
 			Spis = spis;
 
@@ -84,6 +86,7 @@ namespace ProFak.UI
 
 		private void spis_ZaznaczenieZmienione()
 		{
+			podsumowanie.Text = Spis.Podsumowanie;
 			panelAkcji.Aktualizuj();
 		}
 
@@ -124,6 +127,7 @@ namespace ProFak.UI
 				if (adapter.CzyDomyslna && domyslnaAkcja == null) domyslnaAkcja = adapter;
 				panelAkcji.DodajAkcje(adapter);
 			}
+			panelAkcji.DodajKontrolke(podsumowanie);
 			panelAkcji.AktualizujUklad();
 			base.OnCreateControl();
 		}
