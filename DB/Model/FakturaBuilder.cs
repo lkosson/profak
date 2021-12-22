@@ -41,6 +41,7 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.ProcentVatNaliczonego).HasDefaultValue(100m).IsRequired();
 			builder.Property(e => e.ProcentKosztow).HasDefaultValue(100m).IsRequired();
 			builder.Property(e => e.CzyTP).HasDefaultValue(false).IsRequired();
+			builder.Property(e => e.CzyZakupSrodkowTrwalych).HasDefaultValue(false).IsRequired();
 
 			builder.Property(e => e.SprzedawcaId);
 			builder.Property(e => e.NabywcaId);

@@ -68,6 +68,7 @@ namespace ProFak.UI
 			this.comboBoxProcentKosztow = new System.Windows.Forms.ComboBox();
 			this.comboBoxProcentVat = new System.Windows.Forms.ComboBox();
 			this.checkBoxTP = new System.Windows.Forms.CheckBox();
+			this.checkBoxZakupSrodkowTrwalych = new System.Windows.Forms.CheckBox();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.textBoxNumer = new System.Windows.Forms.TextBox();
 			this.labelRodzaj = new System.Windows.Forms.Label();
@@ -540,14 +541,16 @@ namespace ProFak.UI
 			this.tableLayoutPanel7.Controls.Add(this.comboBoxProcentKosztow, 1, 0);
 			this.tableLayoutPanel7.Controls.Add(this.comboBoxProcentVat, 1, 1);
 			this.tableLayoutPanel7.Controls.Add(this.checkBoxTP, 1, 2);
+			this.tableLayoutPanel7.Controls.Add(this.checkBoxZakupSrodkowTrwalych, 1, 3);
 			this.tableLayoutPanel7.Location = new System.Drawing.Point(6, 6);
 			this.tableLayoutPanel7.Name = "tableLayoutPanel7";
-			this.tableLayoutPanel7.RowCount = 4;
+			this.tableLayoutPanel7.RowCount = 5;
+			this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel7.Size = new System.Drawing.Size(315, 100);
+			this.tableLayoutPanel7.Size = new System.Drawing.Size(315, 135);
 			this.tableLayoutPanel7.TabIndex = 0;
 			// 
 			// label1
@@ -606,6 +609,16 @@ namespace ProFak.UI
 			this.checkBoxTP.TabIndex = 1;
 			this.checkBoxTP.Text = "Podmiot powiązany";
 			this.checkBoxTP.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxZakupSrodkowTrwalych
+			// 
+			this.checkBoxZakupSrodkowTrwalych.AutoSize = true;
+			this.checkBoxZakupSrodkowTrwalych.Location = new System.Drawing.Point(147, 86);
+			this.checkBoxZakupSrodkowTrwalych.Name = "checkBoxZakupSrodkowTrwalych";
+			this.checkBoxZakupSrodkowTrwalych.Size = new System.Drawing.Size(155, 19);
+			this.checkBoxZakupSrodkowTrwalych.TabIndex = 1;
+			this.checkBoxZakupSrodkowTrwalych.Text = "Zakup środków trwałych";
+			this.checkBoxZakupSrodkowTrwalych.UseVisualStyleBackColor = true;
 			// 
 			// tableLayoutPanel1
 			// 
@@ -1158,5 +1171,6 @@ namespace ProFak.UI
 		private System.Windows.Forms.ComboBox comboBoxProcentVat;
 		private System.Windows.Forms.Button buttonNowySprzedawca;
 		private System.Windows.Forms.Button buttonNowyNabywca;
+		private System.Windows.Forms.CheckBox checkBoxZakupSrodkowTrwalych;
 	}
 }

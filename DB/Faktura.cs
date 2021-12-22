@@ -34,6 +34,7 @@ namespace ProFak.DB
 		public decimal ProcentVatNaliczonego { get; set; }
 		public decimal ProcentKosztow { get; set; }
 		public bool CzyTP { get; set; }
+		public bool CzyZakupSrodkowTrwalych { get; set; }
 
 		public int? SprzedawcaId { get; set; }
 		public int? NabywcaId { get; set; }
