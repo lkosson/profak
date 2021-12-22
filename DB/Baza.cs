@@ -16,12 +16,14 @@ namespace ProFak.DB
 	{
 		public static string NazwaKataloguProgramu => "ProFak";
 		public static string NazwaPlikuBazy => "profak.sqlite3";
+		public static string NazwaOdnosnikaDoBazy => "baza.txt";
 		public static string PrywatnyKatalog => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 		public static string PublicznyKatalog => Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 		public static string LokalnyKatalog => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 		public static string PrywatnaSciezka => Path.Combine(PrywatnyKatalog, NazwaKataloguProgramu, NazwaPlikuBazy);
 		public static string PublicznaSciezka => Path.Combine(PublicznyKatalog, NazwaKataloguProgramu, NazwaPlikuBazy);
 		public static string LokalnaSciezka => Path.Combine(LokalnyKatalog, NazwaPlikuBazy);
+		public static string OdnosnikDoBazy => Path.Combine(LokalnyKatalog, NazwaOdnosnikaDoBazy);
 
 		public static string Sciezka { get; set; }
 
@@ -60,9 +62,28 @@ namespace ProFak.DB
 
 		private static void UstalSciezkeBazy()
 		{
-			if (File.Exists(LokalnaSciezka)) Sciezka = LokalnaSciezka;
+			if (File.Exists(OdnosnikDoBazy)) Sciezka = File.ReadAllLines(OdnosnikDoBazy)[0];
+			else if (File.Exists(LokalnaSciezka)) Sciezka = LokalnaSciezka;
 			else if (File.Exists(PrywatnaSciezka)) Sciezka = PrywatnaSciezka;
 			else if (File.Exists(PublicznaSciezka)) Sciezka = PublicznaSciezka;
+		}
+
+		public static void ZapiszOdnosnikDoBazy()
+		{
+			try
+			{
+				if (Sciezka == PublicznaSciezka || Sciezka == PrywatnaSciezka || Sciezka == Baza.LokalnaSciezka)
+				{
+					if (File.Exists(OdnosnikDoBazy)) File.Delete(OdnosnikDoBazy);
+				}
+				else
+				{
+					File.WriteAllText(OdnosnikDoBazy, Sciezka);
+				}
+			}
+			catch
+			{
+			}
 		}
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -33,32 +33,32 @@ namespace ProFak.UI
 		{
 			if (String.IsNullOrEmpty(Baza.Sciezka))
 			{
-				textBoxPlik.Text = "(baza tymczasowa)";
-				comboBoxKatalog.Enabled = false;
+				comboBoxPlik.Text = "(baza tymczasowa)";
+				comboBoxPlik.Enabled = false;
 				buttonUtworzKopie.Enabled = false;
 				buttonPrzywrocKopie.Enabled = false;
 				return;
 			}
 			gotowy = false;
 			var plik = new FileInfo(Baza.Sciezka);
-			textBoxPlik.Text = plik.FullName;
+			comboBoxPlik.Text = plik.FullName;
 			textBoxRozmiar.Text = plik.Length.ToString("#,##0");
 			textBoxDataModyfikacji.Text = plik.LastWriteTime.ToString("d MMMM yyyy, H:mm:ss");
-			comboBoxKatalog.Items.Clear();
-			comboBoxKatalog.Items.Add(Baza.PublicznaSciezka);
-			comboBoxKatalog.Items.Add(Baza.PrywatnaSciezka);
-			comboBoxKatalog.Items.Add(Baza.LokalnaSciezka);
-			if (Baza.Sciezka == Baza.PublicznaSciezka) comboBoxKatalog.SelectedIndex = 0;
-			if (Baza.Sciezka == Baza.PrywatnaSciezka) comboBoxKatalog.SelectedIndex = 1;
-			if (Baza.Sciezka == Baza.LokalnaSciezka) comboBoxKatalog.SelectedIndex = 2;
+			comboBoxPlik.Items.Clear();
+			comboBoxPlik.Items.Add(Baza.PublicznaSciezka);
+			comboBoxPlik.Items.Add(Baza.PrywatnaSciezka);
+			comboBoxPlik.Items.Add(Baza.LokalnaSciezka);
+			if (Baza.Sciezka == Baza.PublicznaSciezka) comboBoxPlik.SelectedIndex = 0;
+			if (Baza.Sciezka == Baza.PrywatnaSciezka) comboBoxPlik.SelectedIndex = 1;
+			if (Baza.Sciezka == Baza.LokalnaSciezka) comboBoxPlik.SelectedIndex = 2;
 			gotowy = true;
 		}
 
-		private void comboBoxKatalog_SelectedIndexChanged(object sender, EventArgs e)
+		private void buttonPrzenies_Click(object sender, EventArgs e)
 		{
 			if (!gotowy) return;
 			var staryPlik = Baza.Sciezka;
-			var nowyPlik = comboBoxKatalog.Text;
+			var nowyPlik = comboBoxPlik.Text;
 			if (File.Exists(nowyPlik))
 			{
 				MessageBox.Show($"Plik {nowyPlik} już istnieje. Przed przeniesieniem bazy przenieś go w inne miejsce.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -67,7 +67,7 @@ namespace ProFak.UI
 			if (MessageBox.Show("Czy na pewno chcesz przenieść bazę danych do nowego miejsca?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
 			{
 				gotowy = false;
-				comboBoxKatalog.Text = staryPlik;
+				comboBoxPlik.Text = staryPlik;
 				gotowy = true;
 				return;
 			}
@@ -75,6 +75,7 @@ namespace ProFak.UI
 			Directory.CreateDirectory(katalog);
 			File.Move(staryPlik, nowyPlik);
 			Baza.Sciezka = nowyPlik;
+			Baza.ZapiszOdnosnikDoBazy();
 			Wypelnij();
 		}
 

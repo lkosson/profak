@@ -74,7 +74,11 @@ namespace ProFak.UI
 
 			if (String.IsNullOrEmpty(bazaDocelowa))
 			{
-				if (zrodloJestPlikiem) DB.Baza.Sciezka = bazaZrodlowa;
+				if (zrodloJestPlikiem)
+				{
+					DB.Baza.Sciezka = bazaZrodlowa;
+					DB.Baza.ZapiszOdnosnikDoBazy();
+				}
 				else DB.Baza.Sciezka = null;
 			}
 			else
