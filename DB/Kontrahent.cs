@@ -21,6 +21,11 @@ namespace ProFak.DB
 		public bool CzyPodmiot { get; set; }
 		public bool CzyTP { get; set; }
 
+		public string KodUrzedu { get; set; }
+		public string OsobaFizycznaImie { get; set; }
+		public string OsobaFizycznaNazwisko { get; set; }
+		public DateTime? OsobaFizycznaDataUrodzenia { get; set; }
+
 		public string AdresRejestrowyFmt => String.Join(", ", (AdresRejestrowy ?? "").Split('\r', '\n').Where(linia => !String.IsNullOrWhiteSpace(linia)));
 
 		public override bool CzyPasuje(string fraza)

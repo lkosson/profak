@@ -52,14 +52,26 @@ namespace ProFak.UI
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.textBoxUwagi = new System.Windows.Forms.TextBox();
 			this.tabPageFakturySprzedazy = new System.Windows.Forms.TabPage();
+			this.tabPageFakturyZakupu = new System.Windows.Forms.TabPage();
+			this.tabPagePodatki = new System.Windows.Forms.TabPage();
+			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+			this.label10 = new System.Windows.Forms.Label();
+			this.label11 = new System.Windows.Forms.Label();
+			this.label12 = new System.Windows.Forms.Label();
+			this.label13 = new System.Windows.Forms.Label();
+			this.comboBoxKodUrzedu = new System.Windows.Forms.ComboBox();
+			this.textBoxOsobaFizycznaImie = new System.Windows.Forms.TextBox();
+			this.textBoxOsobaFizycznaNazwisko = new System.Windows.Forms.TextBox();
+			this.dateTimePickerOsobaFizycznaDataUrodzenia = new System.Windows.Forms.DateTimePicker();
 			this.textBoxNazwa = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			this.tabPageFakturyZakupu = new System.Windows.Forms.TabPage();
 			this.tabControl.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.tabPage2.SuspendLayout();
+			this.tabPagePodatki.SuspendLayout();
+			this.tableLayoutPanel3.SuspendLayout();
 			this.tableLayoutPanel2.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -70,6 +82,7 @@ namespace ProFak.UI
 			this.tabControl.Controls.Add(this.tabPage2);
 			this.tabControl.Controls.Add(this.tabPageFakturySprzedazy);
 			this.tabControl.Controls.Add(this.tabPageFakturyZakupu);
+			this.tabControl.Controls.Add(this.tabPagePodatki);
 			this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl.Location = new System.Drawing.Point(3, 32);
 			this.tabControl.Name = "tabControl";
@@ -83,7 +96,7 @@ namespace ProFak.UI
 			this.tabPage1.Location = new System.Drawing.Point(4, 24);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(386, 362);
+			this.tabPage1.Size = new System.Drawing.Size(786, 362);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "Dane podstawowe";
 			this.tabPage1.UseVisualStyleBackColor = true;
@@ -125,7 +138,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(380, 356);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(780, 356);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// label2
@@ -143,7 +156,7 @@ namespace ProFak.UI
 			this.textBoxPelnaNazwa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxPelnaNazwa.Location = new System.Drawing.Point(146, 3);
 			this.textBoxPelnaNazwa.Name = "textBoxPelnaNazwa";
-			this.textBoxPelnaNazwa.Size = new System.Drawing.Size(231, 23);
+			this.textBoxPelnaNazwa.Size = new System.Drawing.Size(631, 23);
 			this.textBoxPelnaNazwa.TabIndex = 1;
 			// 
 			// label3
@@ -161,7 +174,7 @@ namespace ProFak.UI
 			this.textBoxNIP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxNIP.Location = new System.Drawing.Point(146, 32);
 			this.textBoxNIP.Name = "textBoxNIP";
-			this.textBoxNIP.Size = new System.Drawing.Size(231, 23);
+			this.textBoxNIP.Size = new System.Drawing.Size(631, 23);
 			this.textBoxNIP.TabIndex = 2;
 			// 
 			// textBoxAdresRejestrowy
@@ -171,7 +184,7 @@ namespace ProFak.UI
 			this.textBoxAdresRejestrowy.Location = new System.Drawing.Point(146, 61);
 			this.textBoxAdresRejestrowy.Multiline = true;
 			this.textBoxAdresRejestrowy.Name = "textBoxAdresRejestrowy";
-			this.textBoxAdresRejestrowy.Size = new System.Drawing.Size(231, 65);
+			this.textBoxAdresRejestrowy.Size = new System.Drawing.Size(631, 65);
 			this.textBoxAdresRejestrowy.TabIndex = 3;
 			this.textBoxAdresRejestrowy.TextChanged += new System.EventHandler(this.textBoxAdresRejestrowy_TextChanged);
 			// 
@@ -182,7 +195,7 @@ namespace ProFak.UI
 			this.textBoxAdresKorespondencyjny.Location = new System.Drawing.Point(146, 132);
 			this.textBoxAdresKorespondencyjny.Multiline = true;
 			this.textBoxAdresKorespondencyjny.Name = "textBoxAdresKorespondencyjny";
-			this.textBoxAdresKorespondencyjny.Size = new System.Drawing.Size(231, 65);
+			this.textBoxAdresKorespondencyjny.Size = new System.Drawing.Size(631, 65);
 			this.textBoxAdresKorespondencyjny.TabIndex = 4;
 			// 
 			// textBoxTelefon
@@ -190,7 +203,7 @@ namespace ProFak.UI
 			this.textBoxTelefon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxTelefon.Location = new System.Drawing.Point(146, 203);
 			this.textBoxTelefon.Name = "textBoxTelefon";
-			this.textBoxTelefon.Size = new System.Drawing.Size(231, 23);
+			this.textBoxTelefon.Size = new System.Drawing.Size(631, 23);
 			this.textBoxTelefon.TabIndex = 5;
 			// 
 			// textBoxEMail
@@ -198,7 +211,7 @@ namespace ProFak.UI
 			this.textBoxEMail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxEMail.Location = new System.Drawing.Point(146, 232);
 			this.textBoxEMail.Name = "textBoxEMail";
-			this.textBoxEMail.Size = new System.Drawing.Size(231, 23);
+			this.textBoxEMail.Size = new System.Drawing.Size(631, 23);
 			this.textBoxEMail.TabIndex = 6;
 			// 
 			// textBoxRachunekBankowy
@@ -206,7 +219,7 @@ namespace ProFak.UI
 			this.textBoxRachunekBankowy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxRachunekBankowy.Location = new System.Drawing.Point(146, 261);
 			this.textBoxRachunekBankowy.Name = "textBoxRachunekBankowy";
-			this.textBoxRachunekBankowy.Size = new System.Drawing.Size(231, 23);
+			this.textBoxRachunekBankowy.Size = new System.Drawing.Size(631, 23);
 			this.textBoxRachunekBankowy.TabIndex = 7;
 			// 
 			// label4
@@ -266,7 +279,7 @@ namespace ProFak.UI
 			this.comboBoxStan.FormattingEnabled = true;
 			this.comboBoxStan.Location = new System.Drawing.Point(146, 290);
 			this.comboBoxStan.Name = "comboBoxStan";
-			this.comboBoxStan.Size = new System.Drawing.Size(231, 23);
+			this.comboBoxStan.Size = new System.Drawing.Size(631, 23);
 			this.comboBoxStan.TabIndex = 8;
 			// 
 			// label9
@@ -295,7 +308,7 @@ namespace ProFak.UI
 			this.tabPage2.Location = new System.Drawing.Point(4, 24);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(386, 362);
+			this.tabPage2.Size = new System.Drawing.Size(786, 362);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "Uwagi";
 			this.tabPage2.UseVisualStyleBackColor = true;
@@ -306,7 +319,7 @@ namespace ProFak.UI
 			this.textBoxUwagi.Location = new System.Drawing.Point(3, 3);
 			this.textBoxUwagi.Multiline = true;
 			this.textBoxUwagi.Name = "textBoxUwagi";
-			this.textBoxUwagi.Size = new System.Drawing.Size(380, 356);
+			this.textBoxUwagi.Size = new System.Drawing.Size(780, 356);
 			this.textBoxUwagi.TabIndex = 0;
 			// 
 			// tabPageFakturySprzedazy
@@ -314,10 +327,129 @@ namespace ProFak.UI
 			this.tabPageFakturySprzedazy.Location = new System.Drawing.Point(4, 24);
 			this.tabPageFakturySprzedazy.Name = "tabPageFakturySprzedazy";
 			this.tabPageFakturySprzedazy.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageFakturySprzedazy.Size = new System.Drawing.Size(386, 362);
+			this.tabPageFakturySprzedazy.Size = new System.Drawing.Size(786, 362);
 			this.tabPageFakturySprzedazy.TabIndex = 2;
 			this.tabPageFakturySprzedazy.Text = "Sprzedaż do";
 			this.tabPageFakturySprzedazy.UseVisualStyleBackColor = true;
+			// 
+			// tabPageFakturyZakupu
+			// 
+			this.tabPageFakturyZakupu.Location = new System.Drawing.Point(4, 24);
+			this.tabPageFakturyZakupu.Name = "tabPageFakturyZakupu";
+			this.tabPageFakturyZakupu.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageFakturyZakupu.Size = new System.Drawing.Size(786, 362);
+			this.tabPageFakturyZakupu.TabIndex = 3;
+			this.tabPageFakturyZakupu.Text = "Zakup od";
+			this.tabPageFakturyZakupu.UseVisualStyleBackColor = true;
+			// 
+			// tabPagePodatki
+			// 
+			this.tabPagePodatki.Controls.Add(this.tableLayoutPanel3);
+			this.tabPagePodatki.Location = new System.Drawing.Point(4, 24);
+			this.tabPagePodatki.Name = "tabPagePodatki";
+			this.tabPagePodatki.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPagePodatki.Size = new System.Drawing.Size(786, 362);
+			this.tabPagePodatki.TabIndex = 4;
+			this.tabPagePodatki.Text = "Podatki";
+			this.tabPagePodatki.UseVisualStyleBackColor = true;
+			// 
+			// tableLayoutPanel3
+			// 
+			this.tableLayoutPanel3.ColumnCount = 2;
+			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel3.Controls.Add(this.label10, 0, 0);
+			this.tableLayoutPanel3.Controls.Add(this.label11, 0, 1);
+			this.tableLayoutPanel3.Controls.Add(this.label12, 0, 2);
+			this.tableLayoutPanel3.Controls.Add(this.label13, 0, 3);
+			this.tableLayoutPanel3.Controls.Add(this.comboBoxKodUrzedu, 1, 0);
+			this.tableLayoutPanel3.Controls.Add(this.textBoxOsobaFizycznaImie, 1, 1);
+			this.tableLayoutPanel3.Controls.Add(this.textBoxOsobaFizycznaNazwisko, 1, 2);
+			this.tableLayoutPanel3.Controls.Add(this.dateTimePickerOsobaFizycznaDataUrodzenia, 1, 3);
+			this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
+			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+			this.tableLayoutPanel3.RowCount = 5;
+			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel3.Size = new System.Drawing.Size(780, 356);
+			this.tableLayoutPanel3.TabIndex = 0;
+			// 
+			// label10
+			// 
+			this.label10.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.label10.AutoSize = true;
+			this.label10.Location = new System.Drawing.Point(3, 7);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(134, 15);
+			this.label10.TabIndex = 0;
+			this.label10.Text = "Kod urzędu skarbowego";
+			// 
+			// label11
+			// 
+			this.label11.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.label11.AutoSize = true;
+			this.label11.Location = new System.Drawing.Point(59, 36);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(78, 15);
+			this.label11.TabIndex = 0;
+			this.label11.Text = "Pierwsze imię";
+			// 
+			// label12
+			// 
+			this.label12.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.label12.AutoSize = true;
+			this.label12.Location = new System.Drawing.Point(80, 65);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(57, 15);
+			this.label12.TabIndex = 0;
+			this.label12.Text = "Nazwisko";
+			// 
+			// label13
+			// 
+			this.label13.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.label13.AutoSize = true;
+			this.label13.Location = new System.Drawing.Point(51, 94);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(86, 15);
+			this.label13.TabIndex = 0;
+			this.label13.Text = "Data urodzenia";
+			// 
+			// comboBoxKodUrzedu
+			// 
+			this.comboBoxKodUrzedu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.comboBoxKodUrzedu.FormattingEnabled = true;
+			this.comboBoxKodUrzedu.Location = new System.Drawing.Point(143, 3);
+			this.comboBoxKodUrzedu.Name = "comboBoxKodUrzedu";
+			this.comboBoxKodUrzedu.Size = new System.Drawing.Size(634, 23);
+			this.comboBoxKodUrzedu.TabIndex = 1;
+			// 
+			// textBoxOsobaFizycznaImie
+			// 
+			this.textBoxOsobaFizycznaImie.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxOsobaFizycznaImie.Location = new System.Drawing.Point(143, 32);
+			this.textBoxOsobaFizycznaImie.Name = "textBoxOsobaFizycznaImie";
+			this.textBoxOsobaFizycznaImie.Size = new System.Drawing.Size(634, 23);
+			this.textBoxOsobaFizycznaImie.TabIndex = 2;
+			// 
+			// textBoxOsobaFizycznaNazwisko
+			// 
+			this.textBoxOsobaFizycznaNazwisko.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxOsobaFizycznaNazwisko.Location = new System.Drawing.Point(143, 61);
+			this.textBoxOsobaFizycznaNazwisko.Name = "textBoxOsobaFizycznaNazwisko";
+			this.textBoxOsobaFizycznaNazwisko.Size = new System.Drawing.Size(634, 23);
+			this.textBoxOsobaFizycznaNazwisko.TabIndex = 2;
+			// 
+			// dateTimePickerOsobaFizycznaDataUrodzenia
+			// 
+			this.dateTimePickerOsobaFizycznaDataUrodzenia.Location = new System.Drawing.Point(143, 90);
+			this.dateTimePickerOsobaFizycznaDataUrodzenia.Name = "dateTimePickerOsobaFizycznaDataUrodzenia";
+			this.dateTimePickerOsobaFizycznaDataUrodzenia.ShowCheckBox = true;
+			this.dateTimePickerOsobaFizycznaDataUrodzenia.Size = new System.Drawing.Size(200, 23);
+			this.dateTimePickerOsobaFizycznaDataUrodzenia.TabIndex = 3;
 			// 
 			// textBoxNazwa
 			// 
@@ -356,16 +488,6 @@ namespace ProFak.UI
 			this.tableLayoutPanel2.Size = new System.Drawing.Size(800, 425);
 			this.tableLayoutPanel2.TabIndex = 3;
 			// 
-			// tabPageFakturyZakupu
-			// 
-			this.tabPageFakturyZakupu.Location = new System.Drawing.Point(4, 24);
-			this.tabPageFakturyZakupu.Name = "tabPageFakturyZakupu";
-			this.tabPageFakturyZakupu.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageFakturyZakupu.Size = new System.Drawing.Size(786, 362);
-			this.tabPageFakturyZakupu.TabIndex = 3;
-			this.tabPageFakturyZakupu.Text = "Zakup od";
-			this.tabPageFakturyZakupu.UseVisualStyleBackColor = true;
-			// 
 			// KontrahentEdytor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -380,6 +502,9 @@ namespace ProFak.UI
 			this.tableLayoutPanel1.PerformLayout();
 			this.tabPage2.ResumeLayout(false);
 			this.tabPage2.PerformLayout();
+			this.tabPagePodatki.ResumeLayout(false);
+			this.tableLayoutPanel3.ResumeLayout(false);
+			this.tableLayoutPanel3.PerformLayout();
 			this.tableLayoutPanel2.ResumeLayout(false);
 			this.tableLayoutPanel2.PerformLayout();
 			this.ResumeLayout(false);
@@ -414,5 +539,15 @@ namespace ProFak.UI
 		private System.Windows.Forms.CheckBox checkBoxTP;
 		private System.Windows.Forms.TabPage tabPageFakturySprzedazy;
 		private System.Windows.Forms.TabPage tabPageFakturyZakupu;
+		private System.Windows.Forms.TabPage tabPagePodatki;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+		private System.Windows.Forms.Label label10;
+		private System.Windows.Forms.Label label11;
+		private System.Windows.Forms.Label label12;
+		private System.Windows.Forms.Label label13;
+		private System.Windows.Forms.ComboBox comboBoxKodUrzedu;
+		private System.Windows.Forms.TextBox textBoxOsobaFizycznaImie;
+		private System.Windows.Forms.TextBox textBoxOsobaFizycznaNazwisko;
+		private System.Windows.Forms.DateTimePicker dateTimePickerOsobaFizycznaDataUrodzenia;
 	}
 }

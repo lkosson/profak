@@ -34,6 +34,11 @@ namespace ProFak.UI
 			kontroler.Powiazanie(comboBoxStan, kontrahent => kontrahent.CzyArchiwalny);
 			kontroler.Powiazanie(checkBoxTP, kontrahent => kontrahent.CzyTP);
 
+			kontroler.Powiazanie(comboBoxKodUrzedu, kontrahent => kontrahent.KodUrzedu);
+			kontroler.Powiazanie(textBoxOsobaFizycznaImie, kontrahent => kontrahent.OsobaFizycznaImie);
+			kontroler.Powiazanie(textBoxOsobaFizycznaNazwisko, kontrahent => kontrahent.OsobaFizycznaNazwisko);
+			kontroler.Powiazanie(dateTimePickerOsobaFizycznaDataUrodzenia, kontrahent => kontrahent.OsobaFizycznaDataUrodzenia);
+
 			Wymagane(textBoxNazwa);
 
 			tabPageFakturySprzedazy.Controls.Add(fakturySprzedazy = Spisy.FakturySprzedazy());
@@ -59,6 +64,16 @@ namespace ProFak.UI
 			fakturySprzedazy.Spis.Kontekst = Kontekst;
 			fakturyZakupu.Spis.SprzedawcaRef = Rekord;
 			fakturyZakupu.Spis.Kontekst = Kontekst;
+
+			if (Rekord.CzyPodmiot)
+			{
+				tabControl.TabPages.Remove(tabPageFakturySprzedazy);
+				tabControl.TabPages.Remove(tabPageFakturyZakupu);
+			}
+			else
+			{
+				tabControl.TabPages.Remove(tabPagePodatki);
+			}
 		}
 
 		public override void KoniecEdycji()

@@ -24,6 +24,7 @@ namespace ProFak.UI
 		}
 
 		public void Powiazanie(DateTimePicker dateTimePicker, Expression<Func<TModel, DateTime>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(dateTimePicker, wlasciwosc, Powiazanie, wartoscZmieniona);
+		public void Powiazanie(DateTimePicker dateTimePicker, Expression<Func<TModel, DateTime?>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(dateTimePicker, wlasciwosc, Powiazanie, wartoscZmieniona);
 		public void Powiazanie(NumericUpDown numericUpDown, Expression<Func<TModel, decimal>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(numericUpDown, wlasciwosc, Powiazanie, wartoscZmieniona);
 		public void Powiazanie(NumericUpDown numericUpDown, Expression<Func<TModel, int>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(numericUpDown, wlasciwosc, Powiazanie, wartoscZmieniona);
 		public void Powiazanie(TextBox textBox, Expression<Func<TModel, string>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(textBox, wlasciwosc, Powiazanie, wartoscZmieniona);
@@ -43,8 +44,16 @@ namespace ProFak.UI
 
 		public void Powiazanie(DateTimePicker dateTimePicker, Func<TModel, DateTime> pobierzWartosc, Action<TModel, DateTime> ustawWartosc, Action wartoscZmieniona = null)
 		{
-			dateTimePicker.ValueChanged += delegate { AktualizujModel(dateTimePicker, ustawWartosc, nud => nud.Value); if (wartoscZmieniona != null) wartoscZmieniona(); };
-			Action powiazanie = delegate { AktualizujKontrolke(dateTimePicker, pobierzWartosc, (nud, wartosc) => nud.Value = wartosc); };
+			dateTimePicker.ValueChanged += delegate { AktualizujModel(dateTimePicker, ustawWartosc, dtp => dtp.Value); if (wartoscZmieniona != null) wartoscZmieniona(); };
+			Action powiazanie = delegate { AktualizujKontrolke(dateTimePicker, pobierzWartosc, (dtp, wartosc) => dtp.Value = wartosc); };
+			if (model != null) powiazanie();
+			powiazania.Add(powiazanie);
+		}
+
+		public void Powiazanie(DateTimePicker dateTimePicker, Func<TModel, DateTime?> pobierzWartosc, Action<TModel, DateTime?> ustawWartosc, Action wartoscZmieniona = null)
+		{
+			dateTimePicker.ValueChanged += delegate { AktualizujModel(dateTimePicker, ustawWartosc, dtp => dtp.Checked ? (DateTime?)dtp.Value : null); if (wartoscZmieniona != null) wartoscZmieniona(); };
+			Action powiazanie = delegate { AktualizujKontrolke(dateTimePicker, pobierzWartosc, (dtp, wartosc) => { dtp.Checked = wartosc.HasValue; if (wartosc.HasValue) dtp.Value = wartosc.Value; }); };
 			if (model != null) powiazanie();
 			powiazania.Add(powiazanie);
 		}
