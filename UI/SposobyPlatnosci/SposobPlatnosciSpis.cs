@@ -21,7 +21,7 @@ namespace ProFak.UI
 
 		protected override void Przeladuj()
 		{
-			Rekordy = Kontekst.Baza.SposobyPlatnosci.ToList();
+			Rekordy = Kontekst.Baza.SposobyPlatnosci.AsEnumerable().OrderBy(sposob => sposob.Nazwa);
 		}
 
 		protected override void UstawStylWiersza(SposobPlatnosci rekord, string kolumna, DataGridViewCellStyle styl)

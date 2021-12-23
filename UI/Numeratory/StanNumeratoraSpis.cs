@@ -22,6 +22,7 @@ namespace ProFak.UI
 		{
 			IQueryable<StanNumeratora> q = Kontekst.Baza.StanyNumeratorow;
 			if (NumeratorRef.IsNotNull) q = q.Where(stanNumeratora => stanNumeratora.NumeratorId == NumeratorRef.Id);
+			q = q.OrderBy(stanNumeratora => stanNumeratora.Parametry).ThenBy(stanNumeratora => stanNumeratora.Id);
 			Rekordy = q.ToList();
 		}
 	}

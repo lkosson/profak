@@ -23,7 +23,7 @@ namespace ProFak.UI
 
 		protected override void Przeladuj()
 		{
-			Rekordy = Kontekst.Baza.StawkiVat.ToList();
+			Rekordy = Kontekst.Baza.StawkiVat.AsEnumerable().OrderBy(stawka => stawka.Skrot);
 		}
 
 		protected override void UstawStylWiersza(StawkaVat rekord, string kolumna, DataGridViewCellStyle styl)

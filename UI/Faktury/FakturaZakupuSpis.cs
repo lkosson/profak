@@ -93,6 +93,7 @@ namespace ProFak.UI
 			if (odDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy >= odDaty.Value);
 			if (doDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy < doDaty.Value);
 			if (TowarRef.IsNotNull) q = q.Where(faktura => faktura.Pozycje.Any(pozycja => pozycja.TowarId == TowarRef.Id));
+			q = q.OrderBy(faktura => faktura.DataWystawienia).ThenBy(faktura => faktura.Id);
 			Rekordy = q.ToList();
 			if (doZaplaty) Rekordy = Rekordy.Where(faktura => !faktura.CzyZaplacona).ToList();
 		}

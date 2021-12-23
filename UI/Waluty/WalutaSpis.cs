@@ -21,7 +21,7 @@ namespace ProFak.UI
 
 		protected override void Przeladuj()
 		{
-			Rekordy = Kontekst.Baza.Waluty.ToList();
+			Rekordy = Kontekst.Baza.Waluty.AsEnumerable().OrderBy(waluta => waluta.Skrot);
 		}
 
 		protected override void UstawStylWiersza(Waluta rekord, string kolumna, DataGridViewCellStyle styl)

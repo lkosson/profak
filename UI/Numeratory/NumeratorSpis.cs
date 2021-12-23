@@ -18,7 +18,7 @@ namespace ProFak.UI
 
 		protected override void Przeladuj()
 		{
-			Rekordy = Kontekst.Baza.Numeratory.ToList();
+			Rekordy = Kontekst.Baza.Numeratory.OrderBy(numerator => numerator.Przeznaczenie).ThenBy(numerator => numerator.Id).ToList();
 		}
 	}
 }

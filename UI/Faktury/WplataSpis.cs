@@ -22,6 +22,7 @@ namespace ProFak.UI
 		{
 			IQueryable<Wplata> q = Kontekst.Baza.Wplaty;
 			if (FakturaRef.IsNotNull) q = q.Where(wplata => wplata.FakturaId == FakturaRef.Id);
+			q = q.OrderBy(wplata => wplata.Data).ThenBy(wplata => wplata.Id);
 			Rekordy = q.ToList();
 		}
 	}
