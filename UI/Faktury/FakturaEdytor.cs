@@ -58,6 +58,8 @@ namespace ProFak.UI
 			kontroler.Powiazanie(comboBoxProcentKosztow, faktura => faktura.ProcentKosztow.ToString("0") + "%", (faktura, wartosc) => faktura.ProcentKosztow = Int32.TryParse(wartosc.TrimEnd(' ', '%'), out var liczba) ? liczba : 100);
 			kontroler.Powiazanie(comboBoxProcentVat, faktura => faktura.ProcentVatNaliczonego.ToString("0") + "%", (faktura, wartosc) => faktura.ProcentVatNaliczonego = Int32.TryParse(wartosc.TrimEnd(' ', '%'), out var liczba) ? liczba : 100);
 			kontroler.Powiazanie(checkBoxZakupSrodkowTrwalych, faktura => faktura.CzyZakupSrodkowTrwalych);
+			kontroler.Powiazanie(checkBoxWDT, faktura => faktura.CzyWDT);
+			kontroler.Powiazanie(checkBoxWNT, faktura => faktura.CzyWNT);
 
 			Wymagane(textBoxDaneNabywcy);
 			Wymagane(textBoxDaneSprzedawcy);
@@ -220,6 +222,8 @@ namespace ProFak.UI
 				comboBoxProcentKosztow.Enabled = false;
 				comboBoxProcentVat.Enabled = false;
 				checkBoxZakupSrodkowTrwalych.Enabled = false;
+				checkBoxWDT.Enabled = true;
+				checkBoxWNT.Enabled = false;
 
 				comboBoxNIPSprzedawcy.Enabled = false;
 				comboBoxNazwaSprzedawcy.Enabled = false;
@@ -233,6 +237,8 @@ namespace ProFak.UI
 				comboBoxProcentKosztow.Enabled = true;
 				comboBoxProcentVat.Enabled = true;
 				checkBoxZakupSrodkowTrwalych.Enabled = true;
+				checkBoxWDT.Enabled = false;
+				checkBoxWNT.Enabled = true;
 
 				comboBoxNIPNabywcy.Enabled = false;
 				comboBoxNazwaNabywcy.Enabled = false;

@@ -102,6 +102,8 @@ namespace ProFak.UI
 			this.numericUpDownNetto = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDownVat = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDownBrutto = new System.Windows.Forms.NumericUpDown();
+			this.checkBoxWDT = new System.Windows.Forms.CheckBox();
+			this.checkBoxWNT = new System.Windows.Forms.CheckBox();
 			this.tableLayoutPanel.SuspendLayout();
 			this.tableLayoutPanelKontrahenci.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -533,15 +535,20 @@ namespace ProFak.UI
 			// 
 			// tableLayoutPanel7
 			// 
-			this.tableLayoutPanel7.ColumnCount = 2;
+			this.tableLayoutPanel7.ColumnCount = 4;
 			this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel7.Controls.Add(this.label1, 0, 0);
 			this.tableLayoutPanel7.Controls.Add(this.label19, 0, 1);
 			this.tableLayoutPanel7.Controls.Add(this.comboBoxProcentKosztow, 1, 0);
 			this.tableLayoutPanel7.Controls.Add(this.comboBoxProcentVat, 1, 1);
-			this.tableLayoutPanel7.Controls.Add(this.checkBoxTP, 1, 2);
-			this.tableLayoutPanel7.Controls.Add(this.checkBoxZakupSrodkowTrwalych, 1, 3);
+			this.tableLayoutPanel7.Controls.Add(this.checkBoxWDT, 3, 0);
+			this.tableLayoutPanel7.Controls.Add(this.checkBoxWNT, 3, 1);
+			this.tableLayoutPanel7.Controls.Add(this.checkBoxTP, 3, 2);
+			this.tableLayoutPanel7.Controls.Add(this.checkBoxZakupSrodkowTrwalych, 3, 3);
 			this.tableLayoutPanel7.Location = new System.Drawing.Point(6, 6);
 			this.tableLayoutPanel7.Name = "tableLayoutPanel7";
 			this.tableLayoutPanel7.RowCount = 5;
@@ -550,7 +557,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel7.Size = new System.Drawing.Size(315, 135);
+			this.tableLayoutPanel7.Size = new System.Drawing.Size(583, 135);
 			this.tableLayoutPanel7.TabIndex = 0;
 			// 
 			// label1
@@ -584,7 +591,7 @@ namespace ProFak.UI
             "0%"});
 			this.comboBoxProcentKosztow.Location = new System.Drawing.Point(147, 3);
 			this.comboBoxProcentKosztow.Name = "comboBoxProcentKosztow";
-			this.comboBoxProcentKosztow.Size = new System.Drawing.Size(165, 23);
+			this.comboBoxProcentKosztow.Size = new System.Drawing.Size(203, 23);
 			this.comboBoxProcentKosztow.TabIndex = 2;
 			// 
 			// comboBoxProcentVat
@@ -597,26 +604,28 @@ namespace ProFak.UI
             "0%"});
 			this.comboBoxProcentVat.Location = new System.Drawing.Point(147, 32);
 			this.comboBoxProcentVat.Name = "comboBoxProcentVat";
-			this.comboBoxProcentVat.Size = new System.Drawing.Size(165, 23);
-			this.comboBoxProcentVat.TabIndex = 2;
+			this.comboBoxProcentVat.Size = new System.Drawing.Size(203, 23);
+			this.comboBoxProcentVat.TabIndex = 3;
 			// 
 			// checkBoxTP
 			// 
+			this.checkBoxTP.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.checkBoxTP.AutoSize = true;
-			this.checkBoxTP.Location = new System.Drawing.Point(147, 61);
+			this.checkBoxTP.Location = new System.Drawing.Point(376, 61);
 			this.checkBoxTP.Name = "checkBoxTP";
 			this.checkBoxTP.Size = new System.Drawing.Size(131, 19);
-			this.checkBoxTP.TabIndex = 1;
+			this.checkBoxTP.TabIndex = 12;
 			this.checkBoxTP.Text = "Podmiot powiązany";
 			this.checkBoxTP.UseVisualStyleBackColor = true;
 			// 
 			// checkBoxZakupSrodkowTrwalych
 			// 
+			this.checkBoxZakupSrodkowTrwalych.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.checkBoxZakupSrodkowTrwalych.AutoSize = true;
-			this.checkBoxZakupSrodkowTrwalych.Location = new System.Drawing.Point(147, 86);
+			this.checkBoxZakupSrodkowTrwalych.Location = new System.Drawing.Point(376, 86);
 			this.checkBoxZakupSrodkowTrwalych.Name = "checkBoxZakupSrodkowTrwalych";
 			this.checkBoxZakupSrodkowTrwalych.Size = new System.Drawing.Size(155, 19);
-			this.checkBoxZakupSrodkowTrwalych.TabIndex = 1;
+			this.checkBoxZakupSrodkowTrwalych.TabIndex = 13;
 			this.checkBoxZakupSrodkowTrwalych.Text = "Zakup środków trwałych";
 			this.checkBoxZakupSrodkowTrwalych.UseVisualStyleBackColor = true;
 			// 
@@ -1047,6 +1056,28 @@ namespace ProFak.UI
 			this.numericUpDownBrutto.TabIndex = 52;
 			this.numericUpDownBrutto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
+			// checkBoxWDT
+			// 
+			this.checkBoxWDT.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.checkBoxWDT.AutoSize = true;
+			this.checkBoxWDT.Location = new System.Drawing.Point(376, 5);
+			this.checkBoxWDT.Name = "checkBoxWDT";
+			this.checkBoxWDT.Size = new System.Drawing.Size(51, 19);
+			this.checkBoxWDT.TabIndex = 10;
+			this.checkBoxWDT.Text = "WDT";
+			this.checkBoxWDT.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxWNT
+			// 
+			this.checkBoxWNT.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.checkBoxWNT.AutoSize = true;
+			this.checkBoxWNT.Location = new System.Drawing.Point(376, 34);
+			this.checkBoxWNT.Name = "checkBoxWNT";
+			this.checkBoxWNT.Size = new System.Drawing.Size(53, 19);
+			this.checkBoxWNT.TabIndex = 11;
+			this.checkBoxWNT.Text = "WNT";
+			this.checkBoxWNT.UseVisualStyleBackColor = true;
+			// 
 			// FakturaEdytor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1172,5 +1203,7 @@ namespace ProFak.UI
 		private System.Windows.Forms.Button buttonNowySprzedawca;
 		private System.Windows.Forms.Button buttonNowyNabywca;
 		private System.Windows.Forms.CheckBox checkBoxZakupSrodkowTrwalych;
+		private System.Windows.Forms.CheckBox checkBoxWDT;
+		private System.Windows.Forms.CheckBox checkBoxWNT;
 	}
 }
