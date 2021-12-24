@@ -1,4 +1,5 @@
-﻿using ProFak.DB;
+﻿using Microsoft.EntityFrameworkCore;
+using ProFak.DB;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +21,7 @@ namespace ProFak.UI
 		{
 			InitializeComponent();
 
+			kontroler.Powiazanie(dateTimePickerMiesiac, deklaracja => deklaracja.Miesiac);
 			kontroler.Powiazanie(numericUpDownNettoZW, deklaracja => deklaracja.NettoZW);
 			kontroler.Powiazanie(numericUpDownNetto0, deklaracja => deklaracja.Netto0);
 			kontroler.Powiazanie(numericUpDownNetto5, deklaracja => deklaracja.Netto5);
@@ -58,7 +60,101 @@ namespace ProFak.UI
 
 		private void buttonPrzelicz_Click(object sender, EventArgs e)
 		{
+			Rekord.NettoZW = 0;
+			Rekord.Netto0 = 0;
+			Rekord.Netto5 = 0;
+			Rekord.Netto8 = 0;
+			Rekord.Netto23 = 0;
+			Rekord.NettoWDT = 0;
+			Rekord.NettoWNT = 0;
 
+			Rekord.Nalezny5 = 0;
+			Rekord.Nalezny8 = 0;
+			Rekord.Nalezny23 = 0;
+			Rekord.NaleznyWNT = 0;
+
+			Rekord.NettoSrodkiTrwale = 0;
+			Rekord.NettoPozostale = 0;
+
+			Rekord.NaliczonyPrzeniesiony = 0;
+			Rekord.NaliczonySrodkiTrwale = 0;
+			Rekord.NaliczonyPozostale = 0;
+
+			var poprzedniaDeklaracja = Kontekst.Baza.DeklaracjeVat
+				.Where(deklaracja => deklaracja.Miesiac < Rekord.Miesiac)
+				.OrderByDescending(deklaracja => deklaracja.Miesiac)
+				.FirstOrDefault();
+
+			if (poprzedniaDeklaracja != null) Rekord.NaliczonyPrzeniesiony = poprzedniaDeklaracja.DoPrzeniesienia;
+
+			var nieaktualneFaktury = Kontekst.Baza.Faktury.Where(faktura => faktura.DeklaracjaVatId == Rekord.Id).ToDictionary(faktura => faktura.Ref);
+			var zmienioneFaktury = new List<Faktura>();
+
+			var faktury = Kontekst.Baza.Faktury
+				.Where(faktura => faktura.DataSprzedazy < Rekord.Miesiac.Date.AddMonths(1) && (faktura.DeklaracjaVatId == null || faktura.DeklaracjaVatId == Rekord.Id))
+				.Include(faktura => faktura.Pozycje).ThenInclude(pozycja => pozycja.StawkaVat)
+				.ToList();
+
+			foreach (var faktura in faktury)
+			{
+				if (!nieaktualneFaktury.Remove(faktura))
+				{
+					faktura.DeklaracjaVatRef = Rekord;
+					zmienioneFaktury.Add(faktura);
+				}
+
+				if (faktura.CzySprzedaz)
+				{
+					foreach (var pozycja in faktura.Pozycje)
+					{
+						if (pozycja.StawkaVat == null) continue;
+						if (faktura.CzyWDT) { Rekord.NettoWDT += pozycja.WartoscNetto; }
+						else if (pozycja.StawkaVat.Skrot.ToLower().Contains("zw")) { Rekord.NettoZW += pozycja.WartoscNetto; }
+						else if (pozycja.StawkaVat.Wartosc == 0) { Rekord.Netto0 += pozycja.WartoscNetto; }
+						else if (pozycja.StawkaVat.Wartosc <= 5) { Rekord.Netto5 += pozycja.WartoscNetto; Rekord.Nalezny5 += pozycja.WartoscVat; }
+						else if (pozycja.StawkaVat.Wartosc <= 8) { Rekord.Netto8 += pozycja.WartoscNetto; Rekord.Nalezny8 += pozycja.WartoscVat; }
+						else { Rekord.Netto23 += pozycja.WartoscNetto; Rekord.Nalezny23 += pozycja.WartoscVat; }
+					}
+				}
+				else if (faktura.CzyZakup)
+				{
+					if (faktura.CzyWNT) { Rekord.NettoWNT += faktura.RazemNetto; Rekord.NaleznyWNT += faktura.VatNaliczony; }
+					else if (faktura.CzyZakupSrodkowTrwalych) { Rekord.NettoSrodkiTrwale += faktura.RazemNetto; Rekord.NaliczonySrodkiTrwale += faktura.VatNaliczony; }
+					else { Rekord.NettoSrodkiTrwale += faktura.RazemNetto; Rekord.NaliczonySrodkiTrwale += faktura.VatNaliczony; }
+				}
+			}
+
+			foreach (var faktura in nieaktualneFaktury.Values)
+			{
+				faktura.DeklaracjaVatRef = default;
+				zmienioneFaktury.Add(faktura);
+			}
+
+			Kontekst.Baza.Zapisz(zmienioneFaktury);
+
+			Rekord.NettoZW = Decimal.Round(Rekord.NettoZW, MidpointRounding.AwayFromZero);
+			Rekord.Netto0 = Decimal.Round(Rekord.Netto0, MidpointRounding.AwayFromZero);
+			Rekord.Netto5 = Decimal.Round(Rekord.Netto5, MidpointRounding.AwayFromZero);
+			Rekord.Netto8 = Decimal.Round(Rekord.Netto8, MidpointRounding.AwayFromZero);
+			Rekord.Netto23 = Decimal.Round(Rekord.Netto23, MidpointRounding.AwayFromZero);
+			Rekord.NettoWDT = Decimal.Round(Rekord.NettoWDT, MidpointRounding.AwayFromZero);
+			Rekord.NettoWNT = Decimal.Round(Rekord.NettoWNT, MidpointRounding.AwayFromZero);
+
+			Rekord.Nalezny5 = Decimal.Round(Rekord.Nalezny5, MidpointRounding.AwayFromZero);
+			Rekord.Nalezny8 = Decimal.Round(Rekord.Nalezny8, MidpointRounding.AwayFromZero);
+			Rekord.Nalezny23 = Decimal.Round(Rekord.Nalezny23, MidpointRounding.AwayFromZero);
+			Rekord.NaleznyWNT = Decimal.Round(Rekord.NaleznyWNT, MidpointRounding.AwayFromZero);
+
+			Rekord.NettoSrodkiTrwale = Decimal.Round(Rekord.NettoSrodkiTrwale, MidpointRounding.AwayFromZero);
+			Rekord.NettoPozostale = Decimal.Round(Rekord.NettoPozostale, MidpointRounding.AwayFromZero);
+
+			Rekord.NaliczonyPrzeniesiony = Decimal.Round(Rekord.NaliczonyPrzeniesiony, MidpointRounding.AwayFromZero);
+			Rekord.NaliczonySrodkiTrwale = Decimal.Round(Rekord.NaliczonySrodkiTrwale, MidpointRounding.AwayFromZero);
+			Rekord.NaliczonyPozostale = Decimal.Round(Rekord.NaliczonyPozostale, MidpointRounding.AwayFromZero);
+
+			kontroler.AktualizujKontrolki();
+			fakturySprzedazy.Spis.PrzeladujBezpiecznie();
+			fakturyZakupu.Spis.PrzeladujBezpiecznie();
 		}
 	}
 

@@ -14,10 +14,10 @@ namespace ProFak.UI
 		public DeklaracjaVatSpis()
 		{
 			DodajKolumne(nameof(DeklaracjaVat.MiesiacFmt), "Miesiąc");
-			DodajKolumneKwota(nameof(DeklaracjaVat.NettoRazem), "Podstawa");
-			DodajKolumneKwota(nameof(DeklaracjaVat.NaleznyRazem), "Należny");
-			DodajKolumneKwota(nameof(DeklaracjaVat.NaliczonyRazem), "Naliczony");
-			DodajKolumneKwota(nameof(DeklaracjaVat.DoWplaty), "Do wpłaty");
+			DodajKolumne(nameof(DeklaracjaVat.NettoRazem), "Podstawa", wyrownajDoPrawej: true, format: "#,##0", szerokosc: 80);
+			DodajKolumne(nameof(DeklaracjaVat.NaleznyRazem), "Należny", wyrownajDoPrawej: true, format: "#,##0", szerokosc: 80);
+			DodajKolumne(nameof(DeklaracjaVat.NaliczonyRazem), "Naliczony", wyrownajDoPrawej: true, format: "#,##0", szerokosc: 80);
+			DodajKolumne(nameof(DeklaracjaVat.DoWplaty), "Do wpłaty", wyrownajDoPrawej: true, format: "#,##0", szerokosc: 80);
 			DodajKolumneId();
 		}
 
