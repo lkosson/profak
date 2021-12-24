@@ -37,6 +37,8 @@ namespace ProFak.DB
 		public decimal DoWplaty => Math.Max(NaleznyRazem - NaliczonyRazem, 0);
 		public decimal DoPrzeniesienia => Math.Max(NaliczonyRazem - NaleznyRazem, 0);
 
+		public List<Faktura> Faktury { get; set; }
+
 		public override bool CzyPasuje(string fraza)
 			=> base.CzyPasuje(fraza)
 			|| CzyPasuje(Miesiac, fraza)

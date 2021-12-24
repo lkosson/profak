@@ -51,6 +51,7 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.FakturaKorygujacaId);
 			builder.Property(e => e.WalutaId);
 			builder.Property(e => e.SposobPlatnosciId);
+			builder.Property(e => e.DeklaracjaVatId);
 
 			builder.Ignore(e => e.SprzedawcaRef);
 			builder.Ignore(e => e.NabywcaRef);
@@ -58,6 +59,7 @@ namespace ProFak.DB.Model
 			builder.Ignore(e => e.FakturaKorygujacaRef);
 			builder.Ignore(e => e.WalutaRef);
 			builder.Ignore(e => e.SposobPlatnosciRef);
+			builder.Ignore(e => e.DeklaracjaVatRef);
 
 			builder.HasOne(e => e.Sprzedawca).WithMany().HasForeignKey(e => e.SprzedawcaId).OnDelete(DeleteBehavior.Restrict);
 			builder.HasOne(e => e.Nabywca).WithMany().HasForeignKey(e => e.NabywcaId).OnDelete(DeleteBehavior.Restrict);
@@ -65,6 +67,7 @@ namespace ProFak.DB.Model
 			builder.HasOne(e => e.FakturaKorygujaca).WithMany().HasForeignKey(e => e.FakturaKorygujacaId).OnDelete(DeleteBehavior.Restrict);
 			builder.HasOne(e => e.Waluta).WithMany().HasForeignKey(e => e.WalutaId).OnDelete(DeleteBehavior.Restrict);
 			builder.HasOne(e => e.SposobPlatnosci).WithMany().HasForeignKey(e => e.SposobPlatnosciId).OnDelete(DeleteBehavior.Restrict);
+			builder.HasOne(e => e.DeklaracjaVat).WithMany(e => e.Faktury).HasForeignKey(e => e.DeklaracjaVatId).OnDelete(DeleteBehavior.SetNull);
 		}
 	}
 }

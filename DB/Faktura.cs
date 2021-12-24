@@ -44,6 +44,7 @@ namespace ProFak.DB
 		public int? FakturaKorygujacaId { get; set; }
 		public int? WalutaId { get; set; }
 		public int? SposobPlatnosciId { get; set; }
+		public int? DeklaracjaVatId { get; set; }
 
 		public Ref<Kontrahent> SprzedawcaRef { get => SprzedawcaId; set => SprzedawcaId = value; }
 		public Ref<Kontrahent> NabywcaRef { get => NabywcaId; set => NabywcaId = value; }
@@ -51,6 +52,7 @@ namespace ProFak.DB
 		public Ref<Faktura> FakturaKorygujacaRef { get => FakturaKorygujacaId; set => FakturaKorygujacaId = value; }
 		public Ref<Waluta> WalutaRef { get => WalutaId; set => WalutaId = value; }
 		public Ref<SposobPlatnosci> SposobPlatnosciRef { get => SposobPlatnosciId; set => SposobPlatnosciId = value; }
+		public Ref<DeklaracjaVat> DeklaracjaVatRef { get => DeklaracjaVatId; set => DeklaracjaVatId = value; }
 
 		public Kontrahent Sprzedawca { get; set; }
 		public Kontrahent Nabywca { get; set; }
@@ -58,6 +60,7 @@ namespace ProFak.DB
 		public Faktura FakturaKorygujaca { get; set; }
 		public Waluta Waluta { get; set; }
 		public SposobPlatnosci SposobPlatnosci { get; set; }
+		public DeklaracjaVat DeklaracjaVat { get; set; }
 
 		public List<PozycjaFaktury> Pozycje { get; set; }
 		public List<Wplata> Wplaty { get; set; }
@@ -131,7 +134,11 @@ namespace ProFak.DB
 			|| CzyPasuje(KursWaluty, fraza)
 			|| CzyPasuje(OpisSposobuPlatnosci, fraza)
 			|| CzyPasuje(Rodzaj, fraza)
-			|| CzyPasuje(CzyWartosciReczne ? "Ręczne" : "", fraza);
+			|| CzyPasuje(CzyWartosciReczne ? "Ręczne" : "", fraza)
+			|| CzyPasuje(CzyTP ? "TP" : "", fraza)
+			|| CzyPasuje(CzyWDT ? "WDT" : "", fraza)
+			|| CzyPasuje(CzyWNT? "WNT" : "", fraza)
+			;
 
 		public Faktura PrzygotujKorekte(Baza baza)
 		{
