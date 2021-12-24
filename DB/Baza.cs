@@ -29,6 +29,7 @@ namespace ProFak.DB
 
 		private static SqliteConnection bazaTymczasowa;
 
+		public IQueryable<DeklaracjaVat> DeklaracjeVat => Set<DeklaracjaVat>();
 		public IQueryable<Faktura> Faktury => Set<Faktura>();
 		public IQueryable<JednostkaMiary> JednostkiMiar => Set<JednostkaMiary>();
 		public IQueryable<Kontrahent> Kontrahenci => Set<Kontrahent>();

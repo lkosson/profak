@@ -11,6 +11,7 @@ namespace ProFak.DB.Model
 	{
 		public static void Configure(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<DeklaracjaVat>(DeklaracjaVatBuilder.Configure);
 			modelBuilder.Entity<Faktura>(FakturaBuilder.Configure);
 			modelBuilder.Entity<JednostkaMiary>(JednostkaMiaryBuilder.Configure);
 			modelBuilder.Entity<Kontrahent>(KontrahentBuilder.Configure);
