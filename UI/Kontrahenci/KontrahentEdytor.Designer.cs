@@ -66,6 +66,7 @@ namespace ProFak.UI
 			this.textBoxNazwa = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+			this.buttonUrzadSkarbowy = new System.Windows.Forms.Button();
 			this.tabControl.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
@@ -355,9 +356,10 @@ namespace ProFak.UI
 			// 
 			// tableLayoutPanel3
 			// 
-			this.tableLayoutPanel3.ColumnCount = 2;
+			this.tableLayoutPanel3.ColumnCount = 3;
 			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel3.Controls.Add(this.label10, 0, 0);
 			this.tableLayoutPanel3.Controls.Add(this.label11, 0, 1);
 			this.tableLayoutPanel3.Controls.Add(this.label12, 0, 2);
@@ -366,6 +368,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel3.Controls.Add(this.textBoxOsobaFizycznaImie, 1, 1);
 			this.tableLayoutPanel3.Controls.Add(this.textBoxOsobaFizycznaNazwisko, 1, 2);
 			this.tableLayoutPanel3.Controls.Add(this.dateTimePickerOsobaFizycznaDataUrodzenia, 1, 3);
+			this.tableLayoutPanel3.Controls.Add(this.buttonUrzadSkarbowy, 2, 0);
 			this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
 			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -382,7 +385,7 @@ namespace ProFak.UI
 			// 
 			this.label10.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(3, 7);
+			this.label10.Location = new System.Drawing.Point(3, 8);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(134, 15);
 			this.label10.TabIndex = 0;
@@ -392,7 +395,7 @@ namespace ProFak.UI
 			// 
 			this.label11.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label11.AutoSize = true;
-			this.label11.Location = new System.Drawing.Point(59, 36);
+			this.label11.Location = new System.Drawing.Point(59, 38);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(78, 15);
 			this.label11.TabIndex = 0;
@@ -402,7 +405,7 @@ namespace ProFak.UI
 			// 
 			this.label12.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label12.AutoSize = true;
-			this.label12.Location = new System.Drawing.Point(80, 65);
+			this.label12.Location = new System.Drawing.Point(80, 67);
 			this.label12.Name = "label12";
 			this.label12.Size = new System.Drawing.Size(57, 15);
 			this.label12.TabIndex = 0;
@@ -412,7 +415,7 @@ namespace ProFak.UI
 			// 
 			this.label13.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label13.AutoSize = true;
-			this.label13.Location = new System.Drawing.Point(51, 94);
+			this.label13.Location = new System.Drawing.Point(51, 96);
 			this.label13.Name = "label13";
 			this.label13.Size = new System.Drawing.Size(86, 15);
 			this.label13.TabIndex = 0;
@@ -422,15 +425,16 @@ namespace ProFak.UI
 			// 
 			this.comboBoxKodUrzedu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.comboBoxKodUrzedu.FormattingEnabled = true;
-			this.comboBoxKodUrzedu.Location = new System.Drawing.Point(143, 3);
+			this.comboBoxKodUrzedu.Location = new System.Drawing.Point(143, 4);
 			this.comboBoxKodUrzedu.Name = "comboBoxKodUrzedu";
-			this.comboBoxKodUrzedu.Size = new System.Drawing.Size(634, 23);
+			this.comboBoxKodUrzedu.Size = new System.Drawing.Size(602, 23);
 			this.comboBoxKodUrzedu.TabIndex = 1;
 			// 
 			// textBoxOsobaFizycznaImie
 			// 
 			this.textBoxOsobaFizycznaImie.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxOsobaFizycznaImie.Location = new System.Drawing.Point(143, 32);
+			this.tableLayoutPanel3.SetColumnSpan(this.textBoxOsobaFizycznaImie, 2);
+			this.textBoxOsobaFizycznaImie.Location = new System.Drawing.Point(143, 34);
 			this.textBoxOsobaFizycznaImie.Name = "textBoxOsobaFizycznaImie";
 			this.textBoxOsobaFizycznaImie.Size = new System.Drawing.Size(634, 23);
 			this.textBoxOsobaFizycznaImie.TabIndex = 2;
@@ -438,14 +442,15 @@ namespace ProFak.UI
 			// textBoxOsobaFizycznaNazwisko
 			// 
 			this.textBoxOsobaFizycznaNazwisko.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxOsobaFizycznaNazwisko.Location = new System.Drawing.Point(143, 61);
+			this.tableLayoutPanel3.SetColumnSpan(this.textBoxOsobaFizycznaNazwisko, 2);
+			this.textBoxOsobaFizycznaNazwisko.Location = new System.Drawing.Point(143, 63);
 			this.textBoxOsobaFizycznaNazwisko.Name = "textBoxOsobaFizycznaNazwisko";
 			this.textBoxOsobaFizycznaNazwisko.Size = new System.Drawing.Size(634, 23);
 			this.textBoxOsobaFizycznaNazwisko.TabIndex = 2;
 			// 
 			// dateTimePickerOsobaFizycznaDataUrodzenia
 			// 
-			this.dateTimePickerOsobaFizycznaDataUrodzenia.Location = new System.Drawing.Point(143, 90);
+			this.dateTimePickerOsobaFizycznaDataUrodzenia.Location = new System.Drawing.Point(143, 92);
 			this.dateTimePickerOsobaFizycznaDataUrodzenia.Name = "dateTimePickerOsobaFizycznaDataUrodzenia";
 			this.dateTimePickerOsobaFizycznaDataUrodzenia.ShowCheckBox = true;
 			this.dateTimePickerOsobaFizycznaDataUrodzenia.Size = new System.Drawing.Size(200, 23);
@@ -487,6 +492,17 @@ namespace ProFak.UI
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel2.Size = new System.Drawing.Size(800, 425);
 			this.tableLayoutPanel2.TabIndex = 3;
+			// 
+			// buttonUrzadSkarbowy
+			// 
+			this.buttonUrzadSkarbowy.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.buttonUrzadSkarbowy.AutoSize = true;
+			this.buttonUrzadSkarbowy.Location = new System.Drawing.Point(751, 3);
+			this.buttonUrzadSkarbowy.Name = "buttonUrzadSkarbowy";
+			this.buttonUrzadSkarbowy.Size = new System.Drawing.Size(26, 25);
+			this.buttonUrzadSkarbowy.TabIndex = 12;
+			this.buttonUrzadSkarbowy.Text = "...";
+			this.buttonUrzadSkarbowy.UseVisualStyleBackColor = true;
 			// 
 			// KontrahentEdytor
 			// 
@@ -549,5 +565,6 @@ namespace ProFak.UI
 		private System.Windows.Forms.TextBox textBoxOsobaFizycznaImie;
 		private System.Windows.Forms.TextBox textBoxOsobaFizycznaNazwisko;
 		private System.Windows.Forms.DateTimePicker dateTimePickerOsobaFizycznaDataUrodzenia;
+		private System.Windows.Forms.Button buttonUrzadSkarbowy;
 	}
 }

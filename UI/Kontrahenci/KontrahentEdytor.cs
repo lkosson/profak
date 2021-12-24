@@ -55,6 +55,19 @@ namespace ProFak.UI
 			textBoxAdresKorespondencyjny.PlaceholderText = textBoxAdresRejestrowy.Text;
 		}
 
+		protected override void KontekstGotowy()
+		{
+			base.KontekstGotowy();
+
+			new Slownik<UrzadSkarbowy>(
+				Kontekst, comboBoxKodUrzedu, buttonUrzadSkarbowy,
+				Kontekst.Baza.UrzedySkarbowe.OrderBy(urzad => urzad.Kod).ToList,
+				urzad => urzad.Kod,
+				urzad => { if (Rekord.KodUrzedu == urzad.Kod) return; Rekord.KodUrzedu = urzad.Kod; kontroler.AktualizujKontrolki(); },
+				Spisy.UrzedySkarbowe)
+				.Zainstaluj();
+		}
+
 		protected override void RekordGotowy()
 		{
 			base.RekordGotowy();

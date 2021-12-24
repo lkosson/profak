@@ -74,6 +74,10 @@
     <Compile Update="UI\Menu.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="UI\UrzedySkarbowe\UrzadSkarbowyEdytor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UI\UrzedySkarbowe\UrzadSkarbowySpis.cs" />
   </ItemGroup>
 
 </Project>

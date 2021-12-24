@@ -148,6 +148,16 @@ namespace ProFak.UI
 			);
 		}
 
+		public static SpisZAkcjami<UrzadSkarbowy, UrzadSkarbowySpis> UrzedySkarbowe()
+		{
+			return Utworz(new UrzadSkarbowySpis(),
+				new DodajRekordAkcja<UrzadSkarbowy, UrzadSkarbowyEdytor>(),
+				new EdytujRekordAkcja<UrzadSkarbowy, UrzadSkarbowyEdytor>(),
+				new UsunRekordAkcja<UrzadSkarbowy>(),
+				new PrzeladujAkcja<UrzadSkarbowy>()
+			);
+		}
+
 		public static SpisZAkcjami<Waluta, WalutaSpis> Waluty()
 		{
 			return Utworz(new WalutaSpis(),

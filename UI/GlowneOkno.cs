@@ -78,6 +78,7 @@ namespace ProFak.UI
 			else if (pozycja.Name == "StawkiVat") Wyswietl(Spisy.StawkiVat(), pozycja.Name);
 			else if (pozycja.Name == "Waluty") Wyswietl(Spisy.Waluty(), pozycja.Name);
 			else if (pozycja.Name == "Towary") Wyswietl(Spisy.Towary(), pozycja.Name);
+			else if (pozycja.Name == "UrzedySkarbowe") Wyswietl(Spisy.UrzedySkarbowe(), pozycja.Name);
 			else if (pozycja.Name == "FakturyZakupu") Wyswietl(Spisy.FakturyZakupu(parametry), pozycja.Name);
 			else if (pozycja.Name == "FakturySprzedazy") Wyswietl(Spisy.FakturySprzedazy(parametry), pozycja.Name);
 			else if (pozycja.Name == "Numeratory") Wyswietl(Spisy.Numeratory(), pozycja.Name);
