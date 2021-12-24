@@ -28,6 +28,16 @@ namespace ProFak.UI
 			return wybor.WybranyRekord;
 		}
 
+		public static SpisZAkcjami<DeklaracjaVat, DeklaracjaVatSpis> DeklaracjeVat()
+		{
+			return Utworz(new DeklaracjaVatSpis(),
+				new DodajRekordAkcja<DeklaracjaVat, DeklaracjaVatEdytor>(),
+				new EdytujRekordAkcja<DeklaracjaVat, DeklaracjaVatEdytor>(),
+				new UsunRekordAkcja<DeklaracjaVat>(),
+				new PrzeladujAkcja<DeklaracjaVat>()
+			);
+		}
+
 		public static SpisZAkcjami<Faktura, FakturaSprzedazySpis> FakturySprzedazy(string[] parametry = null)
 		{
 			return Utworz(new FakturaSprzedazySpis(parametry),
@@ -42,6 +52,15 @@ namespace ProFak.UI
 			);
 		}
 
+		public static SpisZAkcjami<Faktura, FakturaSprzedazySpis> FakturySprzedazyBezAkcji()
+		{
+			return Utworz(new FakturaSprzedazySpis(),
+				new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
+				new WydrukFakturyAkcja(),
+				new PrzeladujAkcja<Faktura>()
+			);
+		}
+
 		public static SpisZAkcjami<Faktura, FakturaZakupuSpis> FakturyZakupu(string[] parametry = null)
 		{
 			return Utworz(new FakturaZakupuSpis(parametry),
@@ -50,6 +69,14 @@ namespace ProFak.UI
 				new EdytujRekordAkcja<Faktura, FakturaZakupuEdytor>(),
 				new UsunFaktureAkcja(),
 				new DodajWplateAkcja(),
+				new PrzeladujAkcja<Faktura>()
+			);
+		}
+
+		public static SpisZAkcjami<Faktura, FakturaZakupuSpis> FakturyZakupuBezAkcji()
+		{
+			return Utworz(new FakturaZakupuSpis(),
+				new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
 				new PrzeladujAkcja<Faktura>()
 			);
 		}

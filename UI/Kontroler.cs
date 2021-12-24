@@ -38,7 +38,7 @@ namespace ProFak.UI
 			var exp = (MemberExpression)wlasciwosc.Body;
 			var pi = (PropertyInfo)exp.Member;
 			var getter = (Func<TModel, TWartosc>)pi.GetGetMethod().CreateDelegate(typeof(Func<TModel, TWartosc>));
-			var setter = (Action<TModel, TWartosc>)pi.GetSetMethod().CreateDelegate(typeof(Action<TModel, TWartosc>));
+			var setter = pi.CanWrite ? (Action<TModel, TWartosc>)pi.GetSetMethod().CreateDelegate(typeof(Action<TModel, TWartosc>)) : null;
 			powiazanie(kontrolka, getter, setter, wartoscZmieniona);
 		}
 

@@ -19,6 +19,7 @@ namespace ProFak.UI
 		private readonly DataGridViewTextBoxColumn kolumnaNIPSprzedawcy;
 		public Ref<Kontrahent> SprzedawcaRef { get; set; }
 		public Ref<Towar> TowarRef { get; set; }
+		public Ref<DeklaracjaVat> DeklaracjaVatRef { get; set; }
 
 		public override string Podsumowanie
 		{
@@ -93,6 +94,7 @@ namespace ProFak.UI
 			if (odDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy >= odDaty.Value);
 			if (doDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy < doDaty.Value);
 			if (TowarRef.IsNotNull) q = q.Where(faktura => faktura.Pozycje.Any(pozycja => pozycja.TowarId == TowarRef.Id));
+			if (DeklaracjaVatRef.IsNotNull) q = q.Where(faktura => faktura.DeklaracjaVatId == DeklaracjaVatRef.Id);
 			q = q.OrderBy(faktura => faktura.DataWystawienia).ThenBy(faktura => faktura.Id);
 			Rekordy = q.ToList();
 			if (doZaplaty) Rekordy = Rekordy.Where(faktura => !faktura.CzyZaplacona).ToList();

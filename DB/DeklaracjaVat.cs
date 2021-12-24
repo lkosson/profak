@@ -30,6 +30,8 @@ namespace ProFak.DB
 		public decimal NaliczonySrodkiTrwale { get; set; }
 		public decimal NaliczonyPozostale { get; set; }
 
+		public string MiesiacFmt => Miesiac.ToString("MM/yyyy");
+
 		public decimal NettoRazem => NettoZW + Netto0 + Netto5 + Netto8 + Netto23 + NettoWDT + NettoWNT;
 		public decimal NaleznyRazem => Nalezny5 + Nalezny8 + Nalezny23 + NaleznyWNT;
 		public decimal NaliczonyRazem => NaliczonyPrzeniesiony + NaliczonySrodkiTrwale + NaliczonyPozostale;

@@ -34,6 +34,7 @@ namespace ProFak.UI
 			menu.Nodes["Faktury"].Nodes["FakturyZakupu"].Nodes["WedlugDaty"].Expand();
 			menu.Nodes["Faktury"].Nodes["FakturyZakupu"].Nodes["WedlugDaty"].Nodes.Cast<TreeNode>().LastOrDefault()?.Expand();
 			menu.Nodes["Slowniki"].Expand();
+			menu.Nodes["Podatki"].Expand();
 			var doWybrania = menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["WedlugDaty"].Nodes.Cast<TreeNode>().LastOrDefault()?.Nodes?.Cast<TreeNode>()?.LastOrDefault();
 			if (doWybrania == null) doWybrania = menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["Wszystkie"];
 			Wyswietl(doWybrania);
@@ -78,6 +79,7 @@ namespace ProFak.UI
 			else if (pozycja.Name == "StawkiVat") Wyswietl(Spisy.StawkiVat(), pozycja.Name);
 			else if (pozycja.Name == "Waluty") Wyswietl(Spisy.Waluty(), pozycja.Name);
 			else if (pozycja.Name == "Towary") Wyswietl(Spisy.Towary(), pozycja.Name);
+			else if (pozycja.Name == "DeklaracjeVat") Wyswietl(Spisy.DeklaracjeVat(), pozycja.Name);
 			else if (pozycja.Name == "UrzedySkarbowe") Wyswietl(Spisy.UrzedySkarbowe(), pozycja.Name);
 			else if (pozycja.Name == "FakturyZakupu") Wyswietl(Spisy.FakturyZakupu(parametry), pozycja.Name);
 			else if (pozycja.Name == "FakturySprzedazy") Wyswietl(Spisy.FakturySprzedazy(parametry), pozycja.Name);

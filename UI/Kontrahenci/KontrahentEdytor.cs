@@ -41,8 +41,8 @@ namespace ProFak.UI
 
 			Wymagane(textBoxNazwa);
 
-			tabPageFakturySprzedazy.Controls.Add(fakturySprzedazy = Spisy.FakturySprzedazy());
-			tabPageFakturyZakupu.Controls.Add(fakturyZakupu = Spisy.FakturyZakupu());
+			tabPageFakturySprzedazy.Controls.Add(fakturySprzedazy = Spisy.FakturySprzedazyBezAkcji());
+			tabPageFakturyZakupu.Controls.Add(fakturyZakupu = Spisy.FakturyZakupuBezAkcji());
 		}
 
 		private void textBoxNazwa_TextChanged(object sender, EventArgs e)

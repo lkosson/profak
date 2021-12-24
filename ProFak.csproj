@@ -26,6 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="UI\DeklaracjeVat\DeklaracjaVatEdytor.cs" />
+    <Compile Update="UI\DeklaracjeVat\DeklaracjaVatSpis.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="UI\EdytorDwieKolumny.cs">
       <SubType>Component</SubType>
     </Compile>
