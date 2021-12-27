@@ -68,7 +68,8 @@ namespace ProFak.UI
 		private void PokazSpis()
 		{
 			var dotychczasowaPozycja = (PozycjaListyRekordu<T>)comboBox.SelectedItem;
-			var wartosc = Spisy.Wybierz(kontekst, generatorSpisu, "Wybierz pozycję", dotychczasowaPozycja?.Wartosc);
+			using var spis = generatorSpisu();
+			var wartosc = Spisy.Wybierz(kontekst, spis, "Wybierz pozycję", dotychczasowaPozycja?.Wartosc);
 			gotowy = false;
 			WypelnijListe();
 			comboBox.SelectedIndex = -1;

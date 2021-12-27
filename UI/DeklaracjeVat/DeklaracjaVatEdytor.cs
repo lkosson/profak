@@ -44,8 +44,42 @@ namespace ProFak.UI
 			kontroler.Powiazanie(numericUpDownDoWplaty, deklaracja => deklaracja.DoWplaty);
 			kontroler.Powiazanie(numericUpDownDoPrzeniesienia, deklaracja => deklaracja.DoPrzeniesienia);
 
-			tabPageFakturySprzedazy.Controls.Add(fakturySprzedazy = Spisy.FakturySprzedazyBezAkcji());
-			tabPageFakturyZakupu.Controls.Add(fakturyZakupu = Spisy.FakturyZakupuBezAkcji());
+			var dodajSprzedazDoDeklaracji = new DynamicznaAkcja<Faktura>("➕ Dodaj do deklaracji [INS]", kontekst =>
+			{
+				using var spis = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazySpis { CzyBezDeklaracjiVat = true });
+				var faktura = Spisy.Wybierz(kontekst, spis, "Wybierz fakturę", default);
+				if (faktura == null) return;
+				faktura.DeklaracjaVatRef = Rekord;
+				kontekst.Baza.Zapisz(faktura);
+				Przelicz();
+			}, Keys.Insert, Keys.None);
+
+			var dodajZakupDoDeklaracji = new DynamicznaAkcja<Faktura>("➕ Dodaj do deklaracji [INS]", kontekst =>
+			{
+				using var spis = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis { CzyBezDeklaracjiVat = true });
+				var faktura = Spisy.Wybierz(kontekst, spis, "Wybierz fakturę", default);
+				if (faktura == null) return;
+				faktura.DeklaracjaVatRef = Rekord;
+				kontekst.Baza.Zapisz(faktura);
+				Przelicz();
+			}, Keys.Insert, Keys.None);
+
+
+			var usunZDeklaracji = new DynamicznaAkcja<Faktura>("❌ Usuń z deklaracji [DEL]", (kontekst, rekordy) =>
+			{
+				foreach (var rekord in rekordy)
+				{
+					rekord.DeklaracjaVatRef = default;
+				}
+				kontekst.Baza.Zapisz(rekordy);
+				Przelicz();
+			}, Keys.Delete, Keys.None);
+
+			fakturySprzedazy = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazySpis(), new AkcjaNaSpisie<Faktura>[] { dodajSprzedazDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new WydrukFakturyAkcja(), new PrzeladujAkcja<Faktura>()});
+			fakturyZakupu = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis(), new AkcjaNaSpisie<Faktura>[] { dodajZakupDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new PrzeladujAkcja<Faktura>()});
+
+			tabPageFakturySprzedazy.Controls.Add(fakturySprzedazy);
+			tabPageFakturyZakupu.Controls.Add(fakturyZakupu);
 		}
 
 		protected override void RekordGotowy()
@@ -59,6 +93,42 @@ namespace ProFak.UI
 		}
 
 		private void buttonPrzelicz_Click(object sender, EventArgs e)
+		{
+			WybierzFaktury();
+			Przelicz();
+		}
+
+		private void WybierzFaktury()
+		{
+			var nieaktualneFaktury = Kontekst.Baza.Faktury.Where(faktura => faktura.DeklaracjaVatId == Rekord.Id).ToDictionary(faktura => faktura.Ref);
+			var zmienioneFaktury = new List<Faktura>();
+
+			var faktury = Kontekst.Baza.Faktury
+				.Where(faktura => faktura.DataSprzedazy < Rekord.Miesiac.Date.AddMonths(1) && (faktura.DeklaracjaVatId == null || faktura.DeklaracjaVatId == Rekord.Id))
+				.ToList();
+
+			foreach (var faktura in faktury)
+			{
+				if (!nieaktualneFaktury.Remove(faktura))
+				{
+					faktura.DeklaracjaVatRef = Rekord;
+					zmienioneFaktury.Add(faktura);
+				}
+			}
+
+			foreach (var faktura in nieaktualneFaktury.Values)
+			{
+				faktura.DeklaracjaVatRef = default;
+				zmienioneFaktury.Add(faktura);
+			}
+
+			Kontekst.Baza.Zapisz(zmienioneFaktury);
+
+			fakturySprzedazy.Spis.PrzeladujBezpiecznie();
+			fakturyZakupu.Spis.PrzeladujBezpiecznie();
+		}
+
+		private void Przelicz()
 		{
 			Rekord.NettoZW = 0;
 			Rekord.Netto0 = 0;
@@ -87,22 +157,13 @@ namespace ProFak.UI
 
 			if (poprzedniaDeklaracja != null) Rekord.NaliczonyPrzeniesiony = poprzedniaDeklaracja.DoPrzeniesienia;
 
-			var nieaktualneFaktury = Kontekst.Baza.Faktury.Where(faktura => faktura.DeklaracjaVatId == Rekord.Id).ToDictionary(faktura => faktura.Ref);
-			var zmienioneFaktury = new List<Faktura>();
-
 			var faktury = Kontekst.Baza.Faktury
-				.Where(faktura => faktura.DataSprzedazy < Rekord.Miesiac.Date.AddMonths(1) && (faktura.DeklaracjaVatId == null || faktura.DeklaracjaVatId == Rekord.Id))
+				.Where(faktura => faktura.DeklaracjaVatId == Rekord.Id)
 				.Include(faktura => faktura.Pozycje).ThenInclude(pozycja => pozycja.StawkaVat)
 				.ToList();
 
 			foreach (var faktura in faktury)
 			{
-				if (!nieaktualneFaktury.Remove(faktura))
-				{
-					faktura.DeklaracjaVatRef = Rekord;
-					zmienioneFaktury.Add(faktura);
-				}
-
 				if (faktura.CzySprzedaz)
 				{
 					foreach (var pozycja in faktura.Pozycje)
@@ -125,14 +186,6 @@ namespace ProFak.UI
 				}
 			}
 
-			foreach (var faktura in nieaktualneFaktury.Values)
-			{
-				faktura.DeklaracjaVatRef = default;
-				zmienioneFaktury.Add(faktura);
-			}
-
-			Kontekst.Baza.Zapisz(zmienioneFaktury);
-
 			Rekord.NettoZW = Decimal.Round(Rekord.NettoZW, MidpointRounding.AwayFromZero);
 			Rekord.Netto0 = Decimal.Round(Rekord.Netto0, MidpointRounding.AwayFromZero);
 			Rekord.Netto5 = Decimal.Round(Rekord.Netto5, MidpointRounding.AwayFromZero);
@@ -154,8 +207,6 @@ namespace ProFak.UI
 			Rekord.NaliczonyPozostale = Decimal.Round(Rekord.NaliczonyPozostale, MidpointRounding.AwayFromZero);
 
 			kontroler.AktualizujKontrolki();
-			fakturySprzedazy.Spis.PrzeladujBezpiecznie();
-			fakturyZakupu.Spis.PrzeladujBezpiecznie();
 		}
 	}
 

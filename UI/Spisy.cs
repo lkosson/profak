@@ -10,13 +10,12 @@ namespace ProFak.UI
 {
 	class Spisy
 	{
-		public static TRekord Wybierz<TRekord>(Kontekst kontekst, Func<SpisZAkcjami<TRekord>> generatorSpisu, string tytul, Ref<TRekord> biezacaWartosc)
+		public static TRekord Wybierz<TRekord>(Kontekst kontekst, SpisZAkcjami<TRekord> spis, string tytul, Ref<TRekord> biezacaWartosc)
 			where TRekord : Rekord<TRekord>
 		{
 			var wybor = new WybierzRekordAkcja<TRekord>();
 			using var nowyKontekst = new Kontekst(kontekst);
 			using var transakcja = nowyKontekst.Transakcja();
-			using var spis = generatorSpisu();
 			using var dialog = new Dialog(tytul, spis, nowyKontekst);
 			spis.Akcje.Insert(0, wybor);
 			spis.Spis.Kontekst = nowyKontekst;
@@ -52,15 +51,6 @@ namespace ProFak.UI
 			);
 		}
 
-		public static SpisZAkcjami<Faktura, FakturaSprzedazySpis> FakturySprzedazyBezAkcji()
-		{
-			return Utworz(new FakturaSprzedazySpis(),
-				new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
-				new WydrukFakturyAkcja(),
-				new PrzeladujAkcja<Faktura>()
-			);
-		}
-
 		public static SpisZAkcjami<Faktura, FakturaZakupuSpis> FakturyZakupu(string[] parametry = null)
 		{
 			return Utworz(new FakturaZakupuSpis(parametry),
@@ -69,14 +59,6 @@ namespace ProFak.UI
 				new EdytujRekordAkcja<Faktura, FakturaZakupuEdytor>(),
 				new UsunFaktureAkcja(),
 				new DodajWplateAkcja(),
-				new PrzeladujAkcja<Faktura>()
-			);
-		}
-
-		public static SpisZAkcjami<Faktura, FakturaZakupuSpis> FakturyZakupuBezAkcji()
-		{
-			return Utworz(new FakturaZakupuSpis(),
-				new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
 				new PrzeladujAkcja<Faktura>()
 			);
 		}
@@ -209,10 +191,6 @@ namespace ProFak.UI
 		private static SpisZAkcjami<TRekord, TSpis> Utworz<TRekord, TSpis>(TSpis spis, params AkcjaNaSpisie<TRekord>[] akcje)
 			where TRekord : Rekord<TRekord>
 			where TSpis : Spis<TRekord>
-		{
-			var okno = new SpisZAkcjami<TRekord, TSpis>(spis);
-			okno.Akcje.AddRange(akcje);
-			return okno;
-		}
+			=> new SpisZAkcjami<TRekord, TSpis>(spis, akcje);
 	}
 }

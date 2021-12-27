@@ -112,10 +112,11 @@ namespace ProFak.UI
 	{
 		public new TSpis Spis { get; }
 
-		public SpisZAkcjami(TSpis spis)
+		public SpisZAkcjami(TSpis spis, IEnumerable<AkcjaNaSpisie<TRekord>> akcje = null)
 			: base(spis)
 		{
 			Spis = spis;
+			if (akcje != null) Akcje.AddRange(akcje);
 		}
 
 		protected override void OnCreateControl()
