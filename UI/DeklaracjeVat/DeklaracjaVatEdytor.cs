@@ -121,7 +121,7 @@ namespace ProFak.UI
 					if (faktura.CzyWNT) { Rekord.NettoWNT += faktura.RazemNetto; Rekord.NaleznyWNT += faktura.VatNaliczony; }
 					/* bez else */
 					if (faktura.CzyZakupSrodkowTrwalych) { Rekord.NettoSrodkiTrwale += faktura.RazemNetto; Rekord.NaliczonySrodkiTrwale += faktura.VatNaliczony; }
-					else { Rekord.NettoSrodkiTrwale += faktura.RazemNetto; Rekord.NaliczonySrodkiTrwale += faktura.VatNaliczony; }
+					else { Rekord.NettoPozostale += faktura.RazemNetto; Rekord.NaliczonyPozostale += faktura.VatNaliczony; }
 				}
 			}
 
