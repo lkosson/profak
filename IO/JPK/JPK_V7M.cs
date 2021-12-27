@@ -5,12 +5,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace ProFak.IO.JPK
 {
 	class JPK_V7M
 	{
-		public static void Zbuduj(Baza baza, DeklaracjaVat deklaracja)
+		public static void Utworz(string plik, Baza baza, DeklaracjaVat deklaracja)
+		{
+			var jpk = Zbuduj(baza, deklaracja);
+			var xo = new XmlAttributeOverrides();
+			var xs = new XmlSerializer(typeof(JPK), xo);
+			using var xw = XmlWriter.Create(plik, new XmlWriterSettings() { OmitXmlDeclaration = false, Indent = true });
+			var nss = new XmlSerializerNamespaces();
+			xs.Serialize(xw, jpk, nss);
+		}
+
+		private static JPK Zbuduj(Baza baza, DeklaracjaVat deklaracja)
 		{
 			var podmiot = baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot);
 			var faktury = baza.Faktury.Where(faktura => faktura.DeklaracjaVatId == deklaracja.Id)
@@ -185,6 +197,8 @@ namespace ProFak.IO.JPK
 			jpk.Deklaracja.PozycjeSzczegolowe.P_48 = deklaracja.NaliczonyRazem > 0 ? deklaracja.NaliczonyRazem.ToString() : null;
 			jpk.Deklaracja.PozycjeSzczegolowe.P_51 = deklaracja.DoWplaty.ToString();
 			jpk.Deklaracja.PozycjeSzczegolowe.P_62 = deklaracja.DoPrzeniesienia > 0 ? deklaracja.DoPrzeniesienia.ToString() : null;
+
+			return jpk;
 		}
 
 		private static string Wymagane(string wartosc, string komunikat) => String.IsNullOrWhiteSpace(wartosc) ? throw new ApplicationException(komunikat) : wartosc;

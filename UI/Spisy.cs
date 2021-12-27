@@ -33,6 +33,7 @@ namespace ProFak.UI
 				new DodajRekordAkcja<DeklaracjaVat, DeklaracjaVatEdytor>(),
 				new EdytujRekordAkcja<DeklaracjaVat, DeklaracjaVatEdytor>(),
 				new UsunRekordAkcja<DeklaracjaVat>(),
+				new GenerujJPKAkcja(),
 				new PrzeladujAkcja<DeklaracjaVat>()
 			);
 		}
