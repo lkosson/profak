@@ -2,6 +2,7 @@
 using ProFak.DB;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,10 @@ namespace ProFak.IO.JPK
 		{
 			var jpk = Zbuduj(baza, deklaracja);
 			var xo = new XmlAttributeOverrides();
+			xo.Add(typeof(JPKDeklaracjaPozycjeSzczegolowe), "Item", new XmlAttributes() { XmlIgnore = true });
+			xo.Add(typeof(JPKDeklaracjaPozycjeSzczegolowe), "P_59", new XmlAttributes() { XmlIgnore = true });
+			xo.Add(typeof(JPKEwidencjaSprzedazWiersz), "KorektaPodstawyOpodt", new XmlAttributes() { XmlIgnore = true });
+			xo.Add(typeof(JPKEwidencjaSprzedazWiersz), "Item", new XmlAttributes() { XmlIgnore = true });
 			var xs = new XmlSerializer(typeof(JPK), xo);
 			using var xw = XmlWriter.Create(plik, new XmlWriterSettings() { OmitXmlDeclaration = false, Indent = true });
 			var nss = new XmlSerializerNamespaces();
@@ -48,7 +53,7 @@ namespace ProFak.IO.JPK
 			jpk.Podmiot1.Item = jpkpodmiot;
 			jpkpodmiot.NIP = Wymagane(podmiot.NIP, "Nie uzupełniono NIPu firmy.");
 			jpkpodmiot.ImiePierwsze = Wymagane(podmiot.OsobaFizycznaImie, "Nie podano imienia w karcie podmiotu.");
-			jpkpodmiot.Nazwisko = Wymagane(podmiot.OsobaFizycznaImie, "Nie podano nazwiska w karcie podmiotu.");
+			jpkpodmiot.Nazwisko = Wymagane(podmiot.OsobaFizycznaNazwisko, "Nie podano nazwiska w karcie podmiotu.");
 			jpkpodmiot.DataUrodzenia = podmiot.OsobaFizycznaDataUrodzenia.HasValue ? podmiot.OsobaFizycznaDataUrodzenia.Value : throw new ApplicationException("Nie podano daty urodzenia w karcie podmiotu.");
 			jpkpodmiot.Email = Wymagane(podmiot.EMail, "Nie podano adresu e-mail w karcie podmiotu.");
 			jpkpodmiot.Telefon = podmiot.Telefon;
@@ -79,6 +84,7 @@ namespace ProFak.IO.JPK
 					jpksprzedaz.DowodSprzedazy = faktura.Numer;
 					jpksprzedaz.DataWystawienia = faktura.DataWystawienia;
 					jpksprzedaz.DataSprzedazy = faktura.DataSprzedazy;
+					jpksprzedaz.DataSprzedazySpecified = true;
 
 					foreach (var pozycja in faktura.Pozycje)
 					{
@@ -131,6 +137,7 @@ namespace ProFak.IO.JPK
 						jpksprzedaz.DowodSprzedazy = faktura.Numer;
 						jpksprzedaz.DataWystawienia = faktura.DataWystawienia;
 						jpksprzedaz.DataSprzedazy = faktura.DataSprzedazy;
+						jpksprzedaz.DataSprzedazySpecified = true;
 						jpksprzedaz.K_23 = faktura.RazemNetto;
 						jpksprzedaz.K_24 = faktura.VatNaliczony;
 						jpk.Ewidencja.SprzedazCtrl.PodatekNalezny += faktura.RazemVat;
@@ -173,34 +180,36 @@ namespace ProFak.IO.JPK
 			jpk.Deklaracja.Naglowek.KodFormularzaDekl = new JPKDeklaracjaNaglowekKodFormularzaDekl();
 			jpk.Deklaracja.Naglowek.KodFormularzaDekl.Value = TKodFormularzaVAT7.VAT7;
 			jpk.Deklaracja.Naglowek.KodFormularzaDekl.wersjaSchemy = "1-2E";
+			jpk.Deklaracja.Naglowek.KodFormularzaDekl.kodSystemowy = "VAT-7 (21)";
 			jpk.Deklaracja.Naglowek.WariantFormularzaDekl = 21;
 			jpk.Deklaracja.Pouczenia = 1;
 			jpk.Deklaracja.PozycjeSzczegolowe = new JPKDeklaracjaPozycjeSzczegolowe();
-			jpk.Deklaracja.PozycjeSzczegolowe.P_10 = deklaracja.NettoZW > 0 ? deklaracja.NettoZW.ToString() : null;
-			jpk.Deklaracja.PozycjeSzczegolowe.P_13 = deklaracja.Netto0 > 0 ? deklaracja.Netto0.ToString() : null;
-			jpk.Deklaracja.PozycjeSzczegolowe.P_15 = deklaracja.Netto5 > 0 ? deklaracja.Netto5.ToString() : null;
-			jpk.Deklaracja.PozycjeSzczegolowe.P_16 = deklaracja.Nalezny5 > 0 ? deklaracja.Nalezny5.ToString() : null;
-			jpk.Deklaracja.PozycjeSzczegolowe.P_17 = deklaracja.Netto8 > 0 ? deklaracja.Netto8.ToString() : null;
-			jpk.Deklaracja.PozycjeSzczegolowe.P_18 = deklaracja.Nalezny8 > 0 ? deklaracja.Nalezny8.ToString() : null;
-			jpk.Deklaracja.PozycjeSzczegolowe.P_19 = deklaracja.Netto23 > 0 ? deklaracja.Netto23.ToString() : null;
-			jpk.Deklaracja.PozycjeSzczegolowe.P_20 = deklaracja.Nalezny23 > 0 ? deklaracja.Nalezny23.ToString() : null;
-			jpk.Deklaracja.PozycjeSzczegolowe.P_21 = deklaracja.NettoWDT > 0 ? deklaracja.NettoWDT.ToString() : null;
-			jpk.Deklaracja.PozycjeSzczegolowe.P_23 = deklaracja.NettoWNT > 0 ? deklaracja.NettoWNT.ToString() : null;
-			jpk.Deklaracja.PozycjeSzczegolowe.P_24 = deklaracja.NaleznyWNT > 0 ? deklaracja.NaleznyWNT.ToString() : null;
-			jpk.Deklaracja.PozycjeSzczegolowe.P_37 = deklaracja.NettoRazem > 0 ? deklaracja.NettoRazem.ToString() : null;
-			jpk.Deklaracja.PozycjeSzczegolowe.P_38 = deklaracja.NaleznyRazem > 0 ? deklaracja.NaleznyRazem.ToString() : null;
-			jpk.Deklaracja.PozycjeSzczegolowe.P_39 = deklaracja.NaliczonyPrzeniesiony > 0 ? deklaracja.NaliczonyPrzeniesiony.ToString() : null;
-			jpk.Deklaracja.PozycjeSzczegolowe.P_40 = deklaracja.NettoSrodkiTrwale > 0 ? deklaracja.NettoSrodkiTrwale.ToString() : null;
-			jpk.Deklaracja.PozycjeSzczegolowe.P_41 = deklaracja.NaliczonySrodkiTrwale > 0 ? deklaracja.NaliczonySrodkiTrwale.ToString() : null;
-			jpk.Deklaracja.PozycjeSzczegolowe.P_42 = deklaracja.NettoPozostale > 0 ? deklaracja.NettoPozostale.ToString() : null;
-			jpk.Deklaracja.PozycjeSzczegolowe.P_43 = deklaracja.NaliczonyPozostale > 0 ? deklaracja.NaliczonyPozostale.ToString() : null;
-			jpk.Deklaracja.PozycjeSzczegolowe.P_48 = deklaracja.NaliczonyRazem > 0 ? deklaracja.NaliczonyRazem.ToString() : null;
-			jpk.Deklaracja.PozycjeSzczegolowe.P_51 = deklaracja.DoWplaty.ToString();
-			jpk.Deklaracja.PozycjeSzczegolowe.P_62 = deklaracja.DoPrzeniesienia > 0 ? deklaracja.DoPrzeniesienia.ToString() : null;
+			jpk.Deklaracja.PozycjeSzczegolowe.P_10 = LiczbaLubNull(deklaracja.NettoZW);
+			jpk.Deklaracja.PozycjeSzczegolowe.P_13 = LiczbaLubNull(deklaracja.Netto0);
+			jpk.Deklaracja.PozycjeSzczegolowe.P_15 = LiczbaLubNull(deklaracja.Netto5);
+			jpk.Deklaracja.PozycjeSzczegolowe.P_16 = LiczbaLubNull(deklaracja.Nalezny5);
+			jpk.Deklaracja.PozycjeSzczegolowe.P_17 = LiczbaLubNull(deklaracja.Netto8);
+			jpk.Deklaracja.PozycjeSzczegolowe.P_18 = LiczbaLubNull(deklaracja.Nalezny8);
+			jpk.Deklaracja.PozycjeSzczegolowe.P_19 = LiczbaLubNull(deklaracja.Netto23);
+			jpk.Deklaracja.PozycjeSzczegolowe.P_20 = LiczbaLubNull(deklaracja.Nalezny23);
+			jpk.Deklaracja.PozycjeSzczegolowe.P_21 = LiczbaLubNull(deklaracja.NettoWDT);
+			jpk.Deklaracja.PozycjeSzczegolowe.P_23 = LiczbaLubNull(deklaracja.NettoWNT);
+			jpk.Deklaracja.PozycjeSzczegolowe.P_24 = LiczbaLubNull(deklaracja.NaleznyWNT);
+			jpk.Deklaracja.PozycjeSzczegolowe.P_37 = LiczbaLubNull(deklaracja.NettoRazem);
+			jpk.Deklaracja.PozycjeSzczegolowe.P_38 = LiczbaLubNull(deklaracja.NaleznyRazem);
+			jpk.Deklaracja.PozycjeSzczegolowe.P_39 = LiczbaLubNull(deklaracja.NaliczonyPrzeniesiony);
+			jpk.Deklaracja.PozycjeSzczegolowe.P_40 = LiczbaLubNull(deklaracja.NettoSrodkiTrwale);
+			jpk.Deklaracja.PozycjeSzczegolowe.P_41 = LiczbaLubNull(deklaracja.NaliczonySrodkiTrwale);
+			jpk.Deklaracja.PozycjeSzczegolowe.P_42 = LiczbaLubNull(deklaracja.NettoPozostale);
+			jpk.Deklaracja.PozycjeSzczegolowe.P_43 = LiczbaLubNull(deklaracja.NaliczonyPozostale);
+			jpk.Deklaracja.PozycjeSzczegolowe.P_48 = LiczbaLubNull(deklaracja.NaliczonyRazem);
+			jpk.Deklaracja.PozycjeSzczegolowe.P_51 = deklaracja.DoWplaty.ToString("0", CultureInfo.InvariantCulture);
+			jpk.Deklaracja.PozycjeSzczegolowe.P_62 = LiczbaLubNull(deklaracja.DoPrzeniesienia);
 
 			return jpk;
 		}
 
 		private static string Wymagane(string wartosc, string komunikat) => String.IsNullOrWhiteSpace(wartosc) ? throw new ApplicationException(komunikat) : wartosc;
+		private static string LiczbaLubNull(decimal wartosc) => wartosc > 0 ? wartosc.ToString("0", CultureInfo.InvariantCulture) : null;
 	}
 }
