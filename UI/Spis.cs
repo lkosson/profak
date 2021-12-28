@@ -12,7 +12,22 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	abstract class Spis<T> : DataGridView
+	class Spis : DataGridView
+	{
+		public Spis()
+		{
+			DoubleBuffered = true;
+			AllowUserToAddRows = false;
+			AllowUserToDeleteRows = false;
+			AllowUserToResizeRows = false;
+			AllowUserToOrderColumns = true;
+			RowHeadersVisible = false;
+			ShowCellToolTips = true;
+			EnableHeadersVisualStyles = false;
+		}
+	}
+
+	abstract class Spis<T> : Spis
 		where T : Rekord<T>
 	{
 		private readonly Container container;
@@ -81,17 +96,9 @@ namespace ProFak.UI
 
 		public Spis()
 		{
-			DoubleBuffered = true;
 			AutoGenerateColumns = false;
-			AllowUserToAddRows = false;
-			AllowUserToDeleteRows = false;
-			AllowUserToResizeRows = false;
-			AllowUserToOrderColumns = true;
-			RowHeadersVisible = false;
-			ShowCellToolTips = true;
 			ReadOnly = true;
 			SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-			EnableHeadersVisualStyles = false;
 			TabIndex = 50;
 
 			kolumnyKolejnosci = new List<(string kolumna, bool malejaco, Func<T, IComparable> metoda)>();

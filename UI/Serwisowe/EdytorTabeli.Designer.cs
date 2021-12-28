@@ -30,7 +30,7 @@ namespace ProFak.UI
 		private void InitializeComponent()
 		{
 			this.groupBoxWynik = new System.Windows.Forms.GroupBox();
-			this.dataGridViewWynik = new System.Windows.Forms.DataGridView();
+			this.dataGridViewWynik = new Spis();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.comboBoxTabela = new System.Windows.Forms.ComboBox();
 			this.textBoxStatus = new System.Windows.Forms.TextBox();
@@ -194,7 +194,7 @@ namespace ProFak.UI
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.Button buttonPokaz;
 		private System.Windows.Forms.TextBox textBoxStatus;
-		private System.Windows.Forms.DataGridView dataGridViewWynik;
+		private Spis dataGridViewWynik;
 		private System.Windows.Forms.ComboBox comboBoxTabela;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label1;
