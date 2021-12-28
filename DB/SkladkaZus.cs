@@ -20,5 +20,7 @@ namespace ProFak.DB
 		public decimal SkladkaFunduszPracy { get; set; }
 		public decimal SumaSkladek { get; set; }
 		public decimal OdliczenieOdDochodu { get; set; }
+
+		public string MiesiacFmt => Miesiac.ToString("MM/yyyy");
 	}
 }

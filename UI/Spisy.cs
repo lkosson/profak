@@ -117,6 +117,16 @@ namespace ProFak.UI
 			);
 		}
 
+		public static SpisZAkcjami<SkladkaZus, SkladkaZusSpis> SkladkiZus()
+		{
+			return Utworz(new SkladkaZusSpis(),
+				new DodajRekordAkcja<SkladkaZus, SkladkaZusEdytor>(),
+				new EdytujRekordAkcja<SkladkaZus, SkladkaZusEdytor>(),
+				new UsunRekordAkcja<SkladkaZus>(),
+				new PrzeladujAkcja<SkladkaZus>()
+			);
+		}
+
 		public static SpisZAkcjami<SposobPlatnosci, SposobPlatnosciSpis> SposobyPlatnosci()
 		{
 			return Utworz(new SposobPlatnosciSpis(),

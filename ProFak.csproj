@@ -69,6 +69,10 @@
     <Compile Update="UI\Serwisowe\EdytorTabeli.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="UI\SkladkiZus\SkladkaZusEdytor.cs" />
+    <Compile Update="UI\SkladkiZus\SkladkaZusSpis.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="UI\Towary\TowarSpis.cs">
       <SubType>Component</SubType>
     </Compile>
