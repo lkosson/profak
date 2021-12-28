@@ -105,9 +105,12 @@ namespace ProFak.UI
 			panelZawartosc.Controls.Add(kontrolka);
 			kontrolka.BringToFront();
 
-			foreach (var istniejace in doUsuniecia)
+			if (ModifierKeys != Keys.Control)
 			{
-				istniejace.Dispose();
+				foreach (var istniejace in doUsuniecia)
+				{
+					istniejace.Dispose();
+				}
 			}
 
 			kontrolka.Focus();
