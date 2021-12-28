@@ -36,12 +36,13 @@ namespace ProFak.DB
 		public IQueryable<Numerator> Numeratory => Set<Numerator>();
 		public IQueryable<Plik> Pliki => Set<Plik>();
 		public IQueryable<PozycjaFaktury> PozycjeFaktur => Set<PozycjaFaktury>();
+		public IQueryable<SkladkaZus> SkladkiZus => Set<SkladkaZus>();
+		public IQueryable<SposobPlatnosci> SposobyPlatnosci => Set<SposobPlatnosci>();
+		public IQueryable<StanNumeratora> StanyNumeratorow => Set<StanNumeratora>();
 		public IQueryable<StawkaVat> StawkiVat => Set<StawkaVat>();
 		public IQueryable<Towar> Towary => Set<Towar>();
 		public IQueryable<UrzadSkarbowy> UrzedySkarbowe => Set<UrzadSkarbowy>();
 		public IQueryable<Waluta> Waluty => Set<Waluta>();
-		public IQueryable<SposobPlatnosci> SposobyPlatnosci => Set<SposobPlatnosci>();
-		public IQueryable<StanNumeratora> StanyNumeratorow => Set<StanNumeratora>();
 		public IQueryable<Wplata> Wplaty => Set<Wplata>();
 		public IQueryable<Zawartosc> Zawartosci => Set<Zawartosc>();
 
