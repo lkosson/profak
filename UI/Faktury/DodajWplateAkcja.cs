@@ -20,6 +20,8 @@ namespace ProFak.UI
 			using var transakcja = nowyKontekst.Transakcja();
 			var faktura = zaznaczoneRekordy.Single();
 			var wplata = new Wplata { FakturaRef = faktura, Kwota = faktura.PozostaloDoZaplaty, Data = DateTime.Now.Date };
+			nowyKontekst.Dodaj(faktura);
+			nowyKontekst.Dodaj(wplata);
 			nowyKontekst.Baza.Zapisz(wplata);
 			using var edytor = new WplataEdytor();
 			using var okno = new Dialog("Nowa wpłata", edytor, nowyKontekst);

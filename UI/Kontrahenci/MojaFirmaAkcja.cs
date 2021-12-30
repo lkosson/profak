@@ -23,6 +23,7 @@ namespace ProFak.UI
 			using var transakcja = nowyKontekst.Transakcja();
 			var rekord = nowyKontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot);
 			if (rekord == null) rekord = new Kontrahent { CzyPodmiot = true };
+			nowyKontekst.Dodaj(rekord);
 			using var edytor = new KontrahentEdytor();
 			using var okno = new Dialog("Edycja danych", edytor, nowyKontekst);
 			edytor.Przygotuj(nowyKontekst, rekord);

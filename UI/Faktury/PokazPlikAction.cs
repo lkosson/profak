@@ -20,6 +20,7 @@ namespace ProFak.UI
 		{
 			var plik = zaznaczoneRekordy.Single();
 			using var nowyKontekst = new Kontekst(kontekst);
+			nowyKontekst.Dodaj(plik);
 			using var transakcja = nowyKontekst.Transakcja();
 			var zawartosc = nowyKontekst.Baza.Zawartosci.FirstOrDefault(zawartosc => zawartosc.Id == plik.ZawartoscId);
 			var sciezka = Path.GetTempFileName();

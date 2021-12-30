@@ -45,6 +45,7 @@ namespace ProFak.UI
 			using var nowyKontekst = new Kontekst(kontekst);
 			using var transakcja = nowyKontekst.Transakcja();
 			var rekord = UtworzRekord(nowyKontekst, zaznaczoneRekordy);
+			nowyKontekst.Dodaj(rekord);
 			using var edytor = new TEdytor();
 			using var okno = new Dialog("Nowa pozycja", edytor, nowyKontekst);
 			if (pelnyEkran) okno.WindowState = FormWindowState.Maximized;

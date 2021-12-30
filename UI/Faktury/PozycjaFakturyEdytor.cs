@@ -117,6 +117,7 @@ namespace ProFak.UI
 			var towar = new Towar { Nazwa = comboBoxTowar.Text, StawkaVatRef = Rekord.StawkaVatRef, CenaNetto = Rekord.CenaNetto, CenaBrutto = Rekord.CenaBrutto, GTU = Rekord.GTU, CzyWedlugCenBrutto = Rekord.CzyWedlugCenBrutto };
 			using var nowyKontekst = new Kontekst(Kontekst);
 			using var transakcja = nowyKontekst.Transakcja();
+			nowyKontekst.Dodaj(towar);
 			nowyKontekst.Baza.Zapisz(towar);
 			using var edytor = new TowarEdytor();
 			using var okno = new Dialog("Nowy towar", edytor, nowyKontekst);

@@ -26,6 +26,7 @@ namespace ProFak.UI
 			if (dialog.ShowDialog() != DialogResult.OK) return;
 
 			using var nowyKontekst = new Kontekst(kontekst);
+			nowyKontekst.Dodaj(deklaracja);
 			JPK_V7M.Utworz(dialog.FileName, nowyKontekst.Baza, deklaracja);
 			MessageBox.Show("Plik został zapisany pomyślnie.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}

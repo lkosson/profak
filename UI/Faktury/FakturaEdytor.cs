@@ -272,6 +272,7 @@ namespace ProFak.UI
 		{
 			using var nowyKontekst = new Kontekst(Kontekst);
 			using var transakcja = nowyKontekst.Transakcja();
+			nowyKontekst.Dodaj(kontrahent);
 			nowyKontekst.Baza.Zapisz(kontrahent);
 			using var edytor = new KontrahentEdytor();
 			using var okno = new Dialog("Nowy kontrahent", edytor, nowyKontekst);

@@ -17,6 +17,7 @@ namespace ProFak.UI
 		public Kontekst Poprzedni { get; }
 		private Transakcja AktywnaTransakcja => lokalnaTransakcja ?? Poprzedni?.AktywnaTransakcja;
 		private Transakcja lokalnaTransakcja;
+		private readonly HashSet<object> obiekty = new HashSet<object>();
 
 		public Kontekst()
 		{
@@ -27,6 +28,21 @@ namespace ProFak.UI
 		{
 			Baza = poprzedni.Baza;
 			Poprzedni = poprzedni;
+		}
+
+		public void Dodaj<T>(T obiekt)
+		{
+			obiekty.Add(obiekt);
+		}
+
+		public T Znajdz<T>()
+		{
+			foreach (var obiekt in obiekty)
+			{
+				if (obiekt is T t) return t;
+			}
+			if (Poprzedni != null) return Poprzedni.Znajdz<T>();
+			return default;
 		}
 
 		public Transakcja Transakcja()
