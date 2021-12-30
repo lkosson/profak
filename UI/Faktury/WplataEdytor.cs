@@ -21,7 +21,8 @@ namespace ProFak.UI
 		protected override void PrzygotujRekord(Wplata rekord)
 		{
 			base.PrzygotujRekord(rekord);
-			if (rekord.Kwota == 0) rekord.Kwota = Kontekst.Baza.Faktury.Where(faktura => faktura.Id == rekord.FakturaId).Include(faktura => faktura.Wplaty).First().PozostaloDoZaplaty;
+			var faktura = Kontekst.Znajdz<Faktura>();
+			if (rekord.Kwota == 0 && faktura != null) rekord.Kwota = faktura.PozostaloDoZaplaty;
 		}
 	}
 }
