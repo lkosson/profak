@@ -32,13 +32,31 @@ namespace ProFak.UI
 			kontroler.Powiazanie(numericUpDownOdliczenieOdDochodu, skladka => skladka.OdliczenieOdDochodu);
 		}
 
-	private void buttonPrzelicz_Click(object sender, EventArgs e)
+		private void buttonPrzelicz_Click(object sender, EventArgs e)
 		{
 			Przelicz();
 		}
 
 		private void Przelicz()
 		{
+			if (Rekord.Miesiac.Month != 1)
+			{
+				var poprzedniMiesiac = Kontekst.Baza.SkladkiZus.Where(skladka => skladka.Miesiac < Rekord.Miesiac).OrderBy(skladka => skladka.Miesiac).FirstOrDefault();
+				if (poprzedniMiesiac != null && poprzedniMiesiac.Miesiac.Year == Rekord.Miesiac.Year)
+				{
+					if (Rekord.PodstawaSpoleczne == 0) Rekord.PodstawaSpoleczne = poprzedniMiesiac.PodstawaSpoleczne;
+					if (Rekord.PodstawaZdrowotne == 0) Rekord.PodstawaZdrowotne = poprzedniMiesiac.PodstawaZdrowotne;
+				}
+			}
+
+			Rekord.SkladkaEmerytalna = Decimal.Round(Rekord.PodstawaSpoleczne * (0.0976m + 0.0976m), 2, MidpointRounding.AwayFromZero);
+			Rekord.SkladkaRentowa = Decimal.Round(Rekord.PodstawaSpoleczne * (0.015m + 0.065m), 2, MidpointRounding.AwayFromZero);
+			Rekord.SkladkaWypadkowa = Decimal.Round(Rekord.PodstawaSpoleczne * 0.0167m, 2, MidpointRounding.AwayFromZero);
+			Rekord.SkladkaSpoleczna = Rekord.SkladkaEmerytalna + Rekord.SkladkaRentowa + Rekord.SkladkaWypadkowa;
+			Rekord.OdliczenieOdDochodu = Rekord.SkladkaSpoleczna;
+			Rekord.SkladkaZdrowotna = Decimal.Round(Rekord.PodstawaZdrowotne * 0.09m, 2, MidpointRounding.AwayFromZero);
+			Rekord.SkladkaFunduszPracy = Decimal.Round(Rekord.PodstawaSpoleczne * 0.0245m, 2, MidpointRounding.AwayFromZero);
+			Rekord.SumaSkladek = Rekord.SkladkaSpoleczna + Rekord.SkladkaZdrowotna + Rekord.SkladkaFunduszPracy;
 
 			kontroler.AktualizujKontrolki();
 		}
