@@ -24,7 +24,7 @@ namespace ProFak.DB
 
 		protected decimal Zaokragl(decimal wartosc) => Decimal.Round(wartosc, 2, MidpointRounding.AwayFromZero);
 
-		protected static string Format<TEnum>(TEnum value) where TEnum : Enum
+		public static string Format<TEnum>(TEnum value) where TEnum : Enum
 		{
 			var raw = value.ToString();
 			var sb = new StringBuilder(raw.Length + 4);

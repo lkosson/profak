@@ -21,6 +21,7 @@ namespace ProFak.UI
 			InitializeComponent();
 
 			kontroler.Slownik(comboBoxStan, "archiwalny", "aktywny");
+			kontroler.Slownik<FormaOpodatkowania>(comboBoxFormaOpodatkowania, dopuscPuste: true);
 
 			kontroler.Powiazanie(textBoxNazwa, kontrahent => kontrahent.Nazwa);
 			kontroler.Powiazanie(textBoxPelnaNazwa, kontrahent => kontrahent.PelnaNazwa);
@@ -38,6 +39,7 @@ namespace ProFak.UI
 			kontroler.Powiazanie(textBoxOsobaFizycznaImie, kontrahent => kontrahent.OsobaFizycznaImie);
 			kontroler.Powiazanie(textBoxOsobaFizycznaNazwisko, kontrahent => kontrahent.OsobaFizycznaNazwisko);
 			kontroler.Powiazanie(dateTimePickerOsobaFizycznaDataUrodzenia, kontrahent => kontrahent.OsobaFizycznaDataUrodzenia);
+			kontroler.Powiazanie(comboBoxFormaOpodatkowania, kontrahent => kontrahent.FormaOpodatkowania);
 
 			Wymagane(textBoxNazwa);
 

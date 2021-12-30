@@ -63,10 +63,12 @@ namespace ProFak.UI
 			this.textBoxOsobaFizycznaImie = new System.Windows.Forms.TextBox();
 			this.textBoxOsobaFizycznaNazwisko = new System.Windows.Forms.TextBox();
 			this.dateTimePickerOsobaFizycznaDataUrodzenia = new System.Windows.Forms.DateTimePicker();
+			this.buttonUrzadSkarbowy = new System.Windows.Forms.Button();
 			this.textBoxNazwa = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			this.buttonUrzadSkarbowy = new System.Windows.Forms.Button();
+			this.label14 = new System.Windows.Forms.Label();
+			this.comboBoxFormaOpodatkowania = new System.Windows.Forms.ComboBox();
 			this.tabControl.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
@@ -369,10 +371,13 @@ namespace ProFak.UI
 			this.tableLayoutPanel3.Controls.Add(this.textBoxOsobaFizycznaNazwisko, 1, 2);
 			this.tableLayoutPanel3.Controls.Add(this.dateTimePickerOsobaFizycznaDataUrodzenia, 1, 3);
 			this.tableLayoutPanel3.Controls.Add(this.buttonUrzadSkarbowy, 2, 0);
+			this.tableLayoutPanel3.Controls.Add(this.label14, 0, 4);
+			this.tableLayoutPanel3.Controls.Add(this.comboBoxFormaOpodatkowania, 1, 4);
 			this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
 			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-			this.tableLayoutPanel3.RowCount = 5;
+			this.tableLayoutPanel3.RowCount = 6;
+			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -456,6 +461,17 @@ namespace ProFak.UI
 			this.dateTimePickerOsobaFizycznaDataUrodzenia.Size = new System.Drawing.Size(200, 23);
 			this.dateTimePickerOsobaFizycznaDataUrodzenia.TabIndex = 3;
 			// 
+			// buttonUrzadSkarbowy
+			// 
+			this.buttonUrzadSkarbowy.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.buttonUrzadSkarbowy.AutoSize = true;
+			this.buttonUrzadSkarbowy.Location = new System.Drawing.Point(751, 3);
+			this.buttonUrzadSkarbowy.Name = "buttonUrzadSkarbowy";
+			this.buttonUrzadSkarbowy.Size = new System.Drawing.Size(26, 25);
+			this.buttonUrzadSkarbowy.TabIndex = 12;
+			this.buttonUrzadSkarbowy.Text = "...";
+			this.buttonUrzadSkarbowy.UseVisualStyleBackColor = true;
+			// 
 			// textBoxNazwa
 			// 
 			this.textBoxNazwa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -493,16 +509,26 @@ namespace ProFak.UI
 			this.tableLayoutPanel2.Size = new System.Drawing.Size(800, 425);
 			this.tableLayoutPanel2.TabIndex = 3;
 			// 
-			// buttonUrzadSkarbowy
+			// label14
 			// 
-			this.buttonUrzadSkarbowy.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.buttonUrzadSkarbowy.AutoSize = true;
-			this.buttonUrzadSkarbowy.Location = new System.Drawing.Point(751, 3);
-			this.buttonUrzadSkarbowy.Name = "buttonUrzadSkarbowy";
-			this.buttonUrzadSkarbowy.Size = new System.Drawing.Size(26, 25);
-			this.buttonUrzadSkarbowy.TabIndex = 12;
-			this.buttonUrzadSkarbowy.Text = "...";
-			this.buttonUrzadSkarbowy.UseVisualStyleBackColor = true;
+			this.label14.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.label14.AutoSize = true;
+			this.label14.Location = new System.Drawing.Point(11, 125);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(126, 15);
+			this.label14.TabIndex = 0;
+			this.label14.Text = "Forma opodatkowania";
+			// 
+			// comboBoxFormaOpodatkowania
+			// 
+			this.comboBoxFormaOpodatkowania.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.tableLayoutPanel3.SetColumnSpan(this.comboBoxFormaOpodatkowania, 2);
+			this.comboBoxFormaOpodatkowania.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxFormaOpodatkowania.FormattingEnabled = true;
+			this.comboBoxFormaOpodatkowania.Location = new System.Drawing.Point(143, 121);
+			this.comboBoxFormaOpodatkowania.Name = "comboBoxFormaOpodatkowania";
+			this.comboBoxFormaOpodatkowania.Size = new System.Drawing.Size(634, 23);
+			this.comboBoxFormaOpodatkowania.TabIndex = 5;
 			// 
 			// KontrahentEdytor
 			// 
@@ -566,5 +592,7 @@ namespace ProFak.UI
 		private System.Windows.Forms.TextBox textBoxOsobaFizycznaNazwisko;
 		private System.Windows.Forms.DateTimePicker dateTimePickerOsobaFizycznaDataUrodzenia;
 		private System.Windows.Forms.Button buttonUrzadSkarbowy;
+		private System.Windows.Forms.Label label14;
+		private System.Windows.Forms.ComboBox comboBoxFormaOpodatkowania;
 	}
 }

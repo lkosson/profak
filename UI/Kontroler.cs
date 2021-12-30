@@ -107,7 +107,7 @@ namespace ProFak.UI
 		public void Powiazanie<TWartosc>(ComboBox comboBox, Func<TModel, TWartosc> pobierzWartosc, Action<TModel, TWartosc> ustawWartosc, Action wartoscZmieniona = null)
 		{
 			comboBox.SelectedIndexChanged += delegate { AktualizujModel(comboBox, ustawWartosc, comboBox => (TWartosc)comboBox.SelectedValue); if (wartoscZmieniona != null) wartoscZmieniona(); };
-			Action powiazanie = delegate { AktualizujKontrolke(comboBox, pobierzWartosc, (comboBox, wartosc) => { if (comboBox.SelectedIndex != -1) comboBox.SelectedIndex = -1; comboBox.SelectedValue = wartosc; }); };
+			Action powiazanie = delegate { AktualizujKontrolke(comboBox, pobierzWartosc, (comboBox, wartosc) => { if (comboBox.SelectedIndex != -1) comboBox.SelectedIndex = -1; if (wartosc != null) comboBox.SelectedValue = wartosc; }); };
 			if (model != null) powiazanie();
 			powiazania.Add(powiazanie);
 		}
@@ -151,12 +151,18 @@ namespace ProFak.UI
 			foreach (var powiazanie in powiazania) powiazanie();
 		}
 
-		public void Slownik<TEnum>(ComboBox comboBox) where TEnum : Enum
+		public void Slownik<TEnum>(ComboBox comboBox, bool dopuscPuste = false) where TEnum : struct, Enum
 		{
 			comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 			comboBox.DisplayMember = "Opis";
 			comboBox.ValueMember = "Wartosc";
-			comboBox.DataSource = Enum.GetValues(typeof(TEnum)).Cast<TEnum>().Select(r => new PozycjaListy<TEnum> { Wartosc = r, Opis = r.ToString() }).ToArray();
+			var pozycje = new List<PozycjaListy<TEnum?>>();
+			if (dopuscPuste) pozycje.Add(new PozycjaListy<TEnum?> { Opis = "" });
+			foreach (TEnum wartosc in Enum.GetValues(typeof(TEnum)))
+			{
+				pozycje.Add(new PozycjaListy<TEnum?> { Wartosc = wartosc, Opis = DB.Rekord.Format(wartosc) });
+			}
+			comboBox.DataSource = pozycje.ToArray();
 		}
 
 		public void Slownik(ComboBox comboBox, string opisTrue, string opisFalse)

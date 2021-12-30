@@ -33,6 +33,7 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.OsobaFizycznaImie).HasDefaultValue("");
 			builder.Property(e => e.OsobaFizycznaNazwisko).HasDefaultValue("");
 			builder.Property(e => e.OsobaFizycznaDataUrodzenia);
+			builder.Property(e => e.FormaOpodatkowania);
 		}
 	}
 }

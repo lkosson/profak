@@ -25,6 +25,7 @@ namespace ProFak.DB
 		public string OsobaFizycznaImie { get; set; }
 		public string OsobaFizycznaNazwisko { get; set; }
 		public DateTime? OsobaFizycznaDataUrodzenia { get; set; }
+		public FormaOpodatkowania? FormaOpodatkowania { get; set; }
 
 		public string AdresRejestrowyFmt => String.Join(", ", (AdresRejestrowy ?? "").Split('\r', '\n').Where(linia => !String.IsNullOrWhiteSpace(linia)));
 
@@ -41,5 +42,12 @@ namespace ProFak.DB
 			|| CzyPasuje(Uwagi, fraza)
 			|| CzyPasuje(CzyArchiwalny ? "Archiwalny" : "", fraza)
 			|| CzyPasuje(CzyPodmiot ? "Podmiot" : "", fraza);
+	}
+
+	enum FormaOpodatkowania
+	{
+		Liniowy,
+		Skala,
+		Ryczałt
 	}
 }
