@@ -39,6 +39,23 @@ namespace ProFak.UI
 
 		private void Przelicz()
 		{
+			var podmiot = Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot);
+			if (podmiot == null || !podmiot.FormaOpodatkowania.HasValue) throw new ApplicationException("Przed wyliczeniem składek ZUS należy uzupełnić formę opodatkowania firmy.");
+
+			var minimalneWynagrodzenie = 3000.00m;
+
+			var przychod = 0m;
+			var koszty = 0m;
+			var poczatekRoku = new DateTime(Rekord.Miesiac.Year, 1, 1);
+			var dataKoncowa = Rekord.Miesiac.Date.AddDays(1 - Rekord.Miesiac.Day).AddMonths(1);
+
+			var faktury = Kontekst.Baza.Faktury.Where(faktura => faktura.DataSprzedazy >= poczatekRoku && faktura.DataSprzedazy < dataKoncowa).ToList();
+			foreach (var faktura in faktury)
+			{
+				if (faktura.CzyZakup) koszty += faktura.Koszty;
+				if (faktura.CzySprzedaz) przychod += faktura.RazemNetto;
+			}
+
 			if (Rekord.Miesiac.Month != 1)
 			{
 				var poprzedniMiesiac = Kontekst.Baza.SkladkiZus.Where(skladka => skladka.Miesiac < Rekord.Miesiac).OrderBy(skladka => skladka.Miesiac).FirstOrDefault();
@@ -56,6 +73,29 @@ namespace ProFak.UI
 			Rekord.OdliczenieOdDochodu = Rekord.SkladkaSpoleczna;
 			Rekord.SkladkaZdrowotna = Decimal.Round(Rekord.PodstawaZdrowotne * 0.09m, 2, MidpointRounding.AwayFromZero);
 			Rekord.SkladkaFunduszPracy = Decimal.Round(Rekord.PodstawaSpoleczne * 0.0245m, 2, MidpointRounding.AwayFromZero);
+
+			przychod -= Rekord.SkladkaSpoleczna;
+			var dochod = przychod - koszty;
+
+			if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Liniowy)
+			{
+				Rekord.PodstawaZdrowotne = Math.Max(dochod, minimalneWynagrodzenie);
+				Rekord.SkladkaZdrowotna = Decimal.Round(Rekord.PodstawaZdrowotne * 0.049m, 2, MidpointRounding.AwayFromZero);
+			}
+			else if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Ryczałt)
+			{
+				var przecietneWynagrodzenie = Rekord.PodstawaSpoleczne / 0.60m;
+				if (przychod < 60000) Rekord.PodstawaZdrowotne = przecietneWynagrodzenie * 0.60m;
+				else if (przychod < 300000) Rekord.PodstawaZdrowotne = przecietneWynagrodzenie;
+				else Rekord.PodstawaZdrowotne = przecietneWynagrodzenie * 1.80m;
+				Rekord.SkladkaZdrowotna = Decimal.Round(Rekord.PodstawaZdrowotne * 0.09m, 2, MidpointRounding.AwayFromZero);
+			}
+			else if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Skala)
+			{
+				Rekord.PodstawaZdrowotne = Math.Max(dochod, minimalneWynagrodzenie);
+				Rekord.SkladkaZdrowotna = Decimal.Round(Rekord.PodstawaZdrowotne * 0.09m, 2, MidpointRounding.AwayFromZero);
+			}
+
 			Rekord.SumaSkladek = Rekord.SkladkaSpoleczna + Rekord.SkladkaZdrowotna + Rekord.SkladkaFunduszPracy;
 
 			kontroler.AktualizujKontrolki();
