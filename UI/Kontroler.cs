@@ -172,5 +172,13 @@ namespace ProFak.UI
 			comboBox.ValueMember = "Wartosc";
 			comboBox.DataSource = new[] { new PozycjaListy<bool> { Wartosc = false, Opis = opisFalse }, new PozycjaListy<bool> { Wartosc = true, Opis = opisTrue } };
 		}
+
+		public void Slownik<T>(ComboBox comboBox, params T[] wartosci)
+		{
+			comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+			comboBox.DisplayMember = "Opis";
+			comboBox.ValueMember = "Wartosc";
+			comboBox.DataSource = wartosci.Select(wartosc => new PozycjaListy<T> { Wartosc = wartosc, Opis = wartosc.ToString() }).ToArray();
+		}
 	}
 }

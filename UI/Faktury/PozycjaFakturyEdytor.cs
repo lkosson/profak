@@ -20,6 +20,8 @@ namespace ProFak.UI
 		{
 			InitializeComponent();
 
+			kontroler.Slownik<decimal?>(comboBoxStawkaRyczaltu, null, 17m, 15m, 14m, 12.5m, 12m, 10m, 8.5m, 5.5m, 3m, 2m);
+
 			kontroler.Powiazanie(numericUpDownLP, pozycja => pozycja.LP);
 			kontroler.Powiazanie(comboBoxTowar, pozycja => pozycja.Opis);
 			kontroler.Powiazanie(numericUpDownIlosc, pozycja => pozycja.Ilosc, PrzeliczCeny);
@@ -33,6 +35,7 @@ namespace ProFak.UI
 			kontroler.Powiazanie(checkBoxRecznie, pozycja => pozycja.CzyWartosciReczne, KonfigurujCeny);
 			kontroler.Powiazanie(comboBoxStawkaVat, pozycja => pozycja.StawkaVatRef);
 			kontroler.Powiazanie(comboBoxGTU, pozycja => pozycja.GTU);
+			kontroler.Powiazanie(comboBoxStawkaRyczaltu, pozycja => pozycja.StawkaRyczaltu);
 
 			Wymagane(comboBoxTowar);
 			Wymagane(comboBoxStawkaVat);

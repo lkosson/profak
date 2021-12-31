@@ -50,6 +50,8 @@ namespace ProFak.UI
 			this.buttonJednostkaMiary = new System.Windows.Forms.Button();
 			this.label9 = new System.Windows.Forms.Label();
 			this.comboBoxGTU = new System.Windows.Forms.ComboBox();
+			this.label10 = new System.Windows.Forms.Label();
+			this.comboBoxStawkaRyczaltu = new System.Windows.Forms.ComboBox();
 			this.tableLayoutPanel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownCenaBrutto)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownCenaNetto)).BeginInit();
@@ -81,10 +83,13 @@ namespace ProFak.UI
 			this.tableLayoutPanel.Controls.Add(this.buttonJednostkaMiary, 2, 6);
 			this.tableLayoutPanel.Controls.Add(this.label9, 0, 8);
 			this.tableLayoutPanel.Controls.Add(this.comboBoxGTU, 1, 8);
+			this.tableLayoutPanel.Controls.Add(this.label10, 0, 9);
+			this.tableLayoutPanel.Controls.Add(this.comboBoxStawkaRyczaltu, 1, 9);
 			this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
 			this.tableLayoutPanel.Name = "tableLayoutPanel";
-			this.tableLayoutPanel.RowCount = 10;
+			this.tableLayoutPanel.RowCount = 11;
+			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -95,7 +100,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel.Size = new System.Drawing.Size(300, 275);
+			this.tableLayoutPanel.Size = new System.Drawing.Size(300, 300);
 			this.tableLayoutPanel.TabIndex = 0;
 			// 
 			// comboBoxStawkaVat
@@ -203,9 +208,9 @@ namespace ProFak.UI
 			// 
 			this.label5.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(74, 95);
+			this.label5.Location = new System.Drawing.Point(76, 95);
 			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(69, 15);
+			this.label5.Size = new System.Drawing.Size(67, 15);
 			this.label5.TabIndex = 1;
 			this.label5.Text = "Stawka VAT";
 			// 
@@ -333,14 +338,36 @@ namespace ProFak.UI
 			this.comboBoxGTU.Size = new System.Drawing.Size(148, 23);
 			this.comboBoxGTU.TabIndex = 12;
 			// 
+			// label10
+			// 
+			this.label10.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.label10.AutoSize = true;
+			this.label10.Location = new System.Drawing.Point(55, 272);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(88, 15);
+			this.label10.TabIndex = 11;
+			this.label10.Text = "Stawka ryczałtu";
+			// 
+			// comboBoxStawkaRyczaltu
+			// 
+			this.comboBoxStawkaRyczaltu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.tableLayoutPanel.SetColumnSpan(this.comboBoxStawkaRyczaltu, 2);
+			this.comboBoxStawkaRyczaltu.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxStawkaRyczaltu.FormattingEnabled = true;
+			this.comboBoxStawkaRyczaltu.Location = new System.Drawing.Point(149, 268);
+			this.comboBoxStawkaRyczaltu.Name = "comboBoxStawkaRyczaltu";
+			this.comboBoxStawkaRyczaltu.Size = new System.Drawing.Size(148, 23);
+			this.comboBoxStawkaRyczaltu.TabIndex = 13;
+			this.comboBoxStawkaRyczaltu.SelectedIndexChanged += new System.EventHandler(this.comboBoxSposobLiczenia_SelectedIndexChanged);
+			// 
 			// TowarEdytor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.tableLayoutPanel);
-			this.MinimumSize = new System.Drawing.Size(300, 275);
+			this.MinimumSize = new System.Drawing.Size(300, 300);
 			this.Name = "TowarEdytor";
-			this.Size = new System.Drawing.Size(300, 275);
+			this.Size = new System.Drawing.Size(300, 300);
 			this.tableLayoutPanel.ResumeLayout(false);
 			this.tableLayoutPanel.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownCenaBrutto)).EndInit();
@@ -371,5 +398,7 @@ namespace ProFak.UI
 		private System.Windows.Forms.Button buttonJednostkaMiary;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.ComboBox comboBoxGTU;
+		private System.Windows.Forms.Label label10;
+		private System.Windows.Forms.ComboBox comboBoxStawkaRyczaltu;
 	}
 }

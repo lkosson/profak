@@ -20,6 +20,7 @@ namespace ProFak.UI
 			kontroler.Slownik<RodzajTowaru>(comboBoxRodzaj);
 			kontroler.Slownik(comboBoxSposobLiczenia, "według brutto", "według netto");
 			kontroler.Slownik(comboBoxWidocznosc, "ukryty", "widoczny");
+			kontroler.Slownik<decimal?>(comboBoxStawkaRyczaltu, null, 17m, 15m, 14m, 12.5m, 12m, 10m, 8.5m, 5.5m, 3m, 2m);
 
 			kontroler.Powiazanie(textBoxNazwa, towar => towar.Nazwa);
 			kontroler.Powiazanie(comboBoxRodzaj, towar => towar.Rodzaj);
@@ -30,6 +31,7 @@ namespace ProFak.UI
 			kontroler.Powiazanie(comboBoxJednostkaMiary, towar => towar.JednostkaMiaryRef);
 			kontroler.Powiazanie(comboBoxWidocznosc, towar => towar.CzyArchiwalny);
 			kontroler.Powiazanie(comboBoxGTU, towar => towar.GTU);
+			kontroler.Powiazanie(comboBoxStawkaRyczaltu, towar => towar.StawkaRyczaltu);
 
 			Wymagane(textBoxNazwa);
 			Wymagane(comboBoxStawkaVat);

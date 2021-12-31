@@ -15,6 +15,7 @@ namespace ProFak.DB
 		public bool CzyWedlugCenBrutto { get; set; }
 		public bool CzyArchiwalny { get; set; }
 		public int GTU { get; set; }
+		public decimal? StawkaRyczaltu { get; set; }
 
 		public int? StawkaVatId { get; set; }
 		public int? JednostkaMiaryId { get; set; }

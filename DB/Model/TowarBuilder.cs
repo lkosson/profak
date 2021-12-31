@@ -24,6 +24,7 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.CzyWedlugCenBrutto).HasDefaultValue(false).IsRequired();
 			builder.Property(e => e.CzyArchiwalny).HasDefaultValue(false).IsRequired();
 			builder.Property(e => e.GTU).HasDefaultValue(0).IsRequired();
+			builder.Property(e => e.StawkaRyczaltu);
 
 			builder.Property(e => e.StawkaVatId);
 			builder.Property(e => e.JednostkaMiaryId);
