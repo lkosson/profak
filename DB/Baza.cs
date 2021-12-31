@@ -45,6 +45,7 @@ namespace ProFak.DB
 		public IQueryable<Waluta> Waluty => Set<Waluta>();
 		public IQueryable<Wplata> Wplaty => Set<Wplata>();
 		public IQueryable<Zawartosc> Zawartosci => Set<Zawartosc>();
+		public IQueryable<ZaliczkaPit> ZaliczkiPit => Set<ZaliczkaPit>();
 
 		public Baza()
 		{

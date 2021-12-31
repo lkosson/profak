@@ -27,6 +27,7 @@ namespace ProFak.DB.Model
 			modelBuilder.Entity<Waluta>(WalutaBuilder.Configure);
 			modelBuilder.Entity<Wplata>(WplataBuilder.Configure);
 			modelBuilder.Entity<Zawartosc>(ZawartoscBuilder.Configure);
+			modelBuilder.Entity<ZaliczkaPit>(ZaliczkaPitBuilder.Configure);
 		}
 	}
 }
