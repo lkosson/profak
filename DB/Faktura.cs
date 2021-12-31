@@ -45,6 +45,7 @@ namespace ProFak.DB
 		public int? WalutaId { get; set; }
 		public int? SposobPlatnosciId { get; set; }
 		public int? DeklaracjaVatId { get; set; }
+		public int? ZaliczkaPitId { get; set; }
 
 		public Ref<Kontrahent> SprzedawcaRef { get => SprzedawcaId; set => SprzedawcaId = value; }
 		public Ref<Kontrahent> NabywcaRef { get => NabywcaId; set => NabywcaId = value; }
@@ -53,6 +54,7 @@ namespace ProFak.DB
 		public Ref<Waluta> WalutaRef { get => WalutaId; set => WalutaId = value; }
 		public Ref<SposobPlatnosci> SposobPlatnosciRef { get => SposobPlatnosciId; set => SposobPlatnosciId = value; }
 		public Ref<DeklaracjaVat> DeklaracjaVatRef { get => DeklaracjaVatId; set => DeklaracjaVatId = value; }
+		public Ref<ZaliczkaPit> ZaliczkaPitRef { get => ZaliczkaPitId; set => ZaliczkaPitId = value; }
 
 		public Kontrahent Sprzedawca { get; set; }
 		public Kontrahent Nabywca { get; set; }
@@ -61,6 +63,7 @@ namespace ProFak.DB
 		public Waluta Waluta { get; set; }
 		public SposobPlatnosci SposobPlatnosci { get; set; }
 		public DeklaracjaVat DeklaracjaVat { get; set; }
+		public ZaliczkaPit ZaliczkaPit { get; set; }
 
 		public List<PozycjaFaktury> Pozycje { get; set; }
 		public List<Wplata> Wplaty { get; set; }

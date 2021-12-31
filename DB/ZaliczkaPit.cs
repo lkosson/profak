@@ -17,5 +17,7 @@ namespace ProFak.DB
 		public decimal DoWplaty { get; set; }
 
 		public string MiesiacFmt => Miesiac.ToString("MM/yyyy");
+
+		public List<Faktura> Faktury { get; set; }
 	}
 }
