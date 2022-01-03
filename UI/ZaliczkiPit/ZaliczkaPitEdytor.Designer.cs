@@ -44,14 +44,14 @@ namespace ProFak.UI
 			this.numericUpDownPrzeniesiony = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDownDoPrzeniesienia = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDownDoWplaty = new System.Windows.Forms.NumericUpDown();
+			this.label8 = new System.Windows.Forms.Label();
+			this.numericUpDownSkladkiZus = new System.Windows.Forms.NumericUpDown();
 			this.tabPageFakturySprzedazy = new System.Windows.Forms.TabPage();
 			this.tabPageFakturyZakupu = new System.Windows.Forms.TabPage();
 			this.label1 = new System.Windows.Forms.Label();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.dateTimePickerMiesiac = new System.Windows.Forms.DateTimePicker();
 			this.buttonPrzelicz = new System.Windows.Forms.Button();
-			this.label8 = new System.Windows.Forms.Label();
-			this.numericUpDownSkladkiZus = new System.Windows.Forms.NumericUpDown();
 			this.tabControl.SuspendLayout();
 			this.tabPageObliczenia.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
@@ -61,8 +61,8 @@ namespace ProFak.UI
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownPrzeniesiony)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownDoPrzeniesienia)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownDoWplaty)).BeginInit();
-			this.tableLayoutPanel2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownSkladkiZus)).BeginInit();
+			this.tableLayoutPanel2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabControl
@@ -186,6 +186,7 @@ namespace ProFak.UI
 			// numericUpDownPrzychody
 			// 
 			this.numericUpDownPrzychody.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.numericUpDownPrzychody.DecimalPlaces = 2;
 			this.numericUpDownPrzychody.Location = new System.Drawing.Point(102, 3);
 			this.numericUpDownPrzychody.Maximum = new decimal(new int[] {
             999999999,
@@ -200,6 +201,7 @@ namespace ProFak.UI
 			// numericUpDownKoszty
 			// 
 			this.numericUpDownKoszty.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.numericUpDownKoszty.DecimalPlaces = 2;
 			this.numericUpDownKoszty.Location = new System.Drawing.Point(102, 32);
 			this.numericUpDownKoszty.Maximum = new decimal(new int[] {
             999999999,
@@ -214,6 +216,7 @@ namespace ProFak.UI
 			// numericUpDownPodatek
 			// 
 			this.numericUpDownPodatek.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.numericUpDownPodatek.DecimalPlaces = 2;
 			this.numericUpDownPodatek.Location = new System.Drawing.Point(102, 90);
 			this.numericUpDownPodatek.Maximum = new decimal(new int[] {
             999999999,
@@ -228,6 +231,7 @@ namespace ProFak.UI
 			// numericUpDownPrzeniesiony
 			// 
 			this.numericUpDownPrzeniesiony.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.numericUpDownPrzeniesiony.DecimalPlaces = 2;
 			this.numericUpDownPrzeniesiony.Location = new System.Drawing.Point(102, 119);
 			this.numericUpDownPrzeniesiony.Maximum = new decimal(new int[] {
             999999999,
@@ -242,6 +246,7 @@ namespace ProFak.UI
 			// numericUpDownDoPrzeniesienia
 			// 
 			this.numericUpDownDoPrzeniesienia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.numericUpDownDoPrzeniesienia.DecimalPlaces = 2;
 			this.numericUpDownDoPrzeniesienia.Location = new System.Drawing.Point(102, 148);
 			this.numericUpDownDoPrzeniesienia.Maximum = new decimal(new int[] {
             999999999,
@@ -256,6 +261,7 @@ namespace ProFak.UI
 			// numericUpDownDoWplaty
 			// 
 			this.numericUpDownDoWplaty.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.numericUpDownDoWplaty.DecimalPlaces = 2;
 			this.numericUpDownDoWplaty.Location = new System.Drawing.Point(102, 177);
 			this.numericUpDownDoWplaty.Maximum = new decimal(new int[] {
             999999999,
@@ -266,6 +272,31 @@ namespace ProFak.UI
 			this.numericUpDownDoWplaty.Size = new System.Drawing.Size(675, 23);
 			this.numericUpDownDoWplaty.TabIndex = 9;
 			this.numericUpDownDoWplaty.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// label8
+			// 
+			this.label8.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.label8.AutoSize = true;
+			this.label8.Location = new System.Drawing.Point(30, 65);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(66, 15);
+			this.label8.TabIndex = 2;
+			this.label8.Text = "Składki Zus";
+			// 
+			// numericUpDownSkladkiZus
+			// 
+			this.numericUpDownSkladkiZus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.numericUpDownSkladkiZus.DecimalPlaces = 2;
+			this.numericUpDownSkladkiZus.Location = new System.Drawing.Point(102, 61);
+			this.numericUpDownSkladkiZus.Maximum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
+			this.numericUpDownSkladkiZus.Name = "numericUpDownSkladkiZus";
+			this.numericUpDownSkladkiZus.Size = new System.Drawing.Size(675, 23);
+			this.numericUpDownSkladkiZus.TabIndex = 5;
+			this.numericUpDownSkladkiZus.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// tabPageFakturySprzedazy
 			// 
@@ -338,30 +369,6 @@ namespace ProFak.UI
 			this.buttonPrzelicz.UseVisualStyleBackColor = true;
 			this.buttonPrzelicz.Click += new System.EventHandler(this.buttonPrzelicz_Click);
 			// 
-			// label8
-			// 
-			this.label8.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(30, 65);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(66, 15);
-			this.label8.TabIndex = 2;
-			this.label8.Text = "Składki Zus";
-			// 
-			// numericUpDownSkladkiZus
-			// 
-			this.numericUpDownSkladkiZus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.numericUpDownSkladkiZus.Location = new System.Drawing.Point(102, 61);
-			this.numericUpDownSkladkiZus.Maximum = new decimal(new int[] {
-            999999999,
-            0,
-            0,
-            0});
-			this.numericUpDownSkladkiZus.Name = "numericUpDownSkladkiZus";
-			this.numericUpDownSkladkiZus.Size = new System.Drawing.Size(675, 23);
-			this.numericUpDownSkladkiZus.TabIndex = 5;
-			this.numericUpDownSkladkiZus.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
 			// ZaliczkaPitEdytor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -380,9 +387,9 @@ namespace ProFak.UI
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownPrzeniesiony)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownDoPrzeniesienia)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownDoWplaty)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownSkladkiZus)).EndInit();
 			this.tableLayoutPanel2.ResumeLayout(false);
 			this.tableLayoutPanel2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDownSkladkiZus)).EndInit();
 			this.ResumeLayout(false);
 
 		}

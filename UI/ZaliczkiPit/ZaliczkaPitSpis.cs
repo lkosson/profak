@@ -16,7 +16,6 @@ namespace ProFak.UI
 			DodajKolumne(nameof(ZaliczkaPit.MiesiacFmt), "Miesiąc");
 			DodajKolumneKwota(nameof(ZaliczkaPit.Przychody), "Przychody");
 			DodajKolumneKwota(nameof(ZaliczkaPit.Koszty), "Koszty");
-			DodajKolumneKwota(nameof(ZaliczkaPit.DoPrzeniesienia), "Do przeniesienia");
 			DodajKolumneKwota(nameof(ZaliczkaPit.DoWplaty), "Do wpłaty");
 			DodajKolumneId();
 		}

@@ -58,7 +58,7 @@ namespace ProFak.UI
 
 			if (Rekord.Miesiac.Month != 1)
 			{
-				var poprzedniMiesiac = Kontekst.Baza.SkladkiZus.Where(skladka => skladka.Miesiac < Rekord.Miesiac).OrderBy(skladka => skladka.Miesiac).FirstOrDefault();
+				var poprzedniMiesiac = Kontekst.Baza.SkladkiZus.Where(skladka => skladka.Miesiac < Rekord.Miesiac).OrderByDescending(skladka => skladka.Miesiac).FirstOrDefault();
 				if (poprzedniMiesiac != null && poprzedniMiesiac.Miesiac.Year == Rekord.Miesiac.Year)
 				{
 					if (Rekord.PodstawaSpoleczne == 0) Rekord.PodstawaSpoleczne = poprzedniMiesiac.PodstawaSpoleczne;
@@ -71,13 +71,16 @@ namespace ProFak.UI
 			Rekord.SkladkaWypadkowa = Decimal.Round(Rekord.PodstawaSpoleczne * 0.0167m, 2, MidpointRounding.AwayFromZero);
 			Rekord.SkladkaSpoleczna = Rekord.SkladkaEmerytalna + Rekord.SkladkaRentowa + Rekord.SkladkaWypadkowa;
 			Rekord.OdliczenieOdDochodu = Rekord.SkladkaSpoleczna;
-			Rekord.SkladkaZdrowotna = Decimal.Round(Rekord.PodstawaZdrowotne * 0.09m, 2, MidpointRounding.AwayFromZero);
 			Rekord.SkladkaFunduszPracy = Decimal.Round(Rekord.PodstawaSpoleczne * 0.0245m, 2, MidpointRounding.AwayFromZero);
 
 			przychod -= Rekord.SkladkaSpoleczna;
 			var dochod = przychod - koszty;
 
-			if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Liniowy)
+			if (Rekord.Miesiac.Year < 2022)
+			{
+				Rekord.SkladkaZdrowotna = Decimal.Round(Rekord.PodstawaZdrowotne * 0.09m, 2, MidpointRounding.AwayFromZero);
+			}
+			else if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Liniowy)
 			{
 				Rekord.PodstawaZdrowotne = Math.Max(dochod, minimalneWynagrodzenie);
 				Rekord.SkladkaZdrowotna = Decimal.Round(Rekord.PodstawaZdrowotne * 0.049m, 2, MidpointRounding.AwayFromZero);
