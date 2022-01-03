@@ -86,6 +86,10 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="UI\UrzedySkarbowe\UrzadSkarbowySpis.cs" />
+    <Compile Update="UI\ZaliczkiPit\ZaliczkaPitEdytor.cs" />
+    <Compile Update="UI\ZaliczkiPit\ZaliczkaPitSpis.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
 
 </Project>

@@ -199,6 +199,16 @@ namespace ProFak.UI
 			);
 		}
 
+		public static SpisZAkcjami<ZaliczkaPit, ZaliczkaPitSpis> ZaliczkiPit()
+		{
+			return Utworz(new ZaliczkaPitSpis(),
+				new DodajRekordAkcja<ZaliczkaPit, ZaliczkaPitEdytor>(),
+				new EdytujRekordAkcja<ZaliczkaPit, ZaliczkaPitEdytor>(),
+				new UsunRekordAkcja<ZaliczkaPit>(),
+				new PrzeladujAkcja<ZaliczkaPit>()
+			);
+		}
+
 		private static SpisZAkcjami<TRekord, TSpis> Utworz<TRekord, TSpis>(TSpis spis, params AkcjaNaSpisie<TRekord>[] akcje)
 			where TRekord : Rekord<TRekord>
 			where TSpis : Spis<TRekord>

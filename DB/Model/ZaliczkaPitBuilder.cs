@@ -20,6 +20,8 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.Miesiac).IsRequired();
 			builder.Property(e => e.Przychody).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.Koszty).HasDefaultValue(0).IsRequired();
+			builder.Property(e => e.SkladkiZus).HasDefaultValue(0).IsRequired();
+			builder.Property(e => e.Podatek).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.Przeniesiony).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.DoPrzeniesienia).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.DoWplaty).HasDefaultValue(0).IsRequired();

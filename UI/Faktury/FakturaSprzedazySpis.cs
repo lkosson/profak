@@ -20,7 +20,9 @@ namespace ProFak.UI
 		public Ref<Kontrahent> NabywcaRef { get; set; }
 		public Ref<Towar> TowarRef { get; set; }
 		public Ref<DeklaracjaVat> DeklaracjaVatRef { get; set; }
+		public Ref<ZaliczkaPit> ZaliczkaPitRef { get; set; }
 		public bool CzyBezDeklaracjiVat { get; set; }
+		public bool CzyBezZaliczkiPit { get; set; }
 
 		public override string Podsumowanie
 		{
@@ -97,7 +99,9 @@ namespace ProFak.UI
 			if (doDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy < doDaty.Value);
 			if (TowarRef.IsNotNull) q = q.Where(faktura => faktura.Pozycje.Any(pozycja => pozycja.TowarId == TowarRef.Id));
 			if (DeklaracjaVatRef.IsNotNull) q = q.Where(faktura => faktura.DeklaracjaVatId == DeklaracjaVatRef.Id);
+			if (ZaliczkaPitRef.IsNotNull) q = q.Where(faktura => faktura.ZaliczkaPitId == ZaliczkaPitRef.Id);
 			if (CzyBezDeklaracjiVat) q = q.Where(faktura => faktura.DeklaracjaVatId == null);
+			if (CzyBezZaliczkiPit) q = q.Where(faktura => faktura.ZaliczkaPitId == null);
 			q = q.OrderBy(faktura => faktura.DataWystawienia).ThenBy(faktura => faktura.Id);
 			Rekordy = q.ToList();
 			if (doZaplaty) Rekordy = Rekordy.Where(faktura => !faktura.CzyZaplacona).ToList();
