@@ -9,12 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Wydruki\EwidencjaPrzychodow.rdlc" />
     <None Remove="Wydruki\Faktura.rdlc" />
     <None Remove="Wydruki\PKPiR.rdlc" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Wydruki\Faktura.rdlc" />
+    <EmbeddedResource Include="Wydruki\EwidencjaPrzychodow.rdlc" />
     <EmbeddedResource Include="Wydruki\PKPiR.rdlc" />
   </ItemGroup>
 

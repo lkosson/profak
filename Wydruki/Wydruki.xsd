@@ -43,4 +43,24 @@
       <xs:element minOccurs="0" maxOccurs="1" name="Uwagi" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
+  <xs:element name="EwidencjaPrzychodowDTO" nillable="true" type="EwidencjaPrzychodowDTO" />
+  <xs:complexType name="EwidencjaPrzychodowDTO">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="LP" type="xs:int" />
+      <xs:element minOccurs="1" maxOccurs="1" name="DataWpisu" type="xs:dateTime" />
+      <xs:element minOccurs="1" maxOccurs="1" name="DataPrzychodu" type="xs:dateTime" />
+      <xs:element minOccurs="0" maxOccurs="1" name="NumerDowodu" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Przychod17" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Przychod15" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Przychod14" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Przychod125" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Przychod12" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Przychod10" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Przychod85" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Przychod55" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Przychod3" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="PrzychodRazem" type="xs:decimal" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Uwagi" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
 </xs:schema>
