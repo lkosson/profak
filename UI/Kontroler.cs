@@ -106,7 +106,7 @@ namespace ProFak.UI
 
 		public void Powiazanie<TWartosc>(ComboBox comboBox, Func<TModel, TWartosc> pobierzWartosc, Action<TModel, TWartosc> ustawWartosc, Action wartoscZmieniona = null)
 		{
-			comboBox.SelectedIndexChanged += delegate { AktualizujModel(comboBox, ustawWartosc, comboBox => (TWartosc)comboBox.SelectedValue); if (wartoscZmieniona != null) wartoscZmieniona(); };
+			comboBox.SelectedIndexChanged += delegate { AktualizujModel(comboBox, ustawWartosc, comboBox => comboBox.SelectedIndex == -1 ? default : (TWartosc)comboBox.SelectedValue); if (wartoscZmieniona != null) wartoscZmieniona(); };
 			Action powiazanie = delegate { AktualizujKontrolke(comboBox, pobierzWartosc, (comboBox, wartosc) => { if (comboBox.SelectedIndex != -1) comboBox.SelectedIndex = -1; if (wartosc != null) comboBox.SelectedValue = wartosc; }); };
 			if (model != null) powiazanie();
 			powiazania.Add(powiazanie);
