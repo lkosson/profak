@@ -11,6 +11,19 @@ namespace ProFak.UI
 {
 	class DeklaracjaVatSpis : Spis<DeklaracjaVat>
 	{
+		public override string Podsumowanie
+		{
+			get
+			{
+				var podsumowanie = base.Podsumowanie;
+				if (WybraneRekordy.Count() > 1)
+				{
+					podsumowanie += $"\nRazem: {WybraneRekordy.Sum(deklaracjaVat => deklaracjaVat.DoWplaty).ToString("n2")}";
+				}
+				return podsumowanie;
+			}
+		}
+
 		public DeklaracjaVatSpis()
 		{
 			DodajKolumne(nameof(DeklaracjaVat.MiesiacFmt), "Miesiąc");

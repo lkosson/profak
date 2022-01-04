@@ -11,6 +11,19 @@ namespace ProFak.UI
 {
 	class ZaliczkaPitSpis : Spis<ZaliczkaPit>
 	{
+		public override string Podsumowanie
+		{
+			get
+			{
+				var podsumowanie = base.Podsumowanie;
+				if (WybraneRekordy.Count() > 1)
+				{
+					podsumowanie += $"\nRazem: {WybraneRekordy.Sum(zaliczka => zaliczka.Podatek).ToString("n2")}";
+				}
+				return podsumowanie;
+			}
+		}
+
 		public ZaliczkaPitSpis()
 		{
 			DodajKolumne(nameof(ZaliczkaPit.MiesiacFmt), "Miesiąc");

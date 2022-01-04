@@ -11,6 +11,19 @@ namespace ProFak.UI
 {
 	class SkladkaZusSpis : Spis<SkladkaZus>
 	{
+		public override string Podsumowanie
+		{
+			get
+			{
+				var podsumowanie = base.Podsumowanie;
+				if (WybraneRekordy.Count() > 1)
+				{
+					podsumowanie += $"\nRazem: {WybraneRekordy.Sum(skladka => skladka.SumaSkladek).ToString("n2")}";
+				}
+				return podsumowanie;
+			}
+		}
+
 		public SkladkaZusSpis()
 		{
 			DodajKolumne(nameof(SkladkaZus.MiesiacFmt), "Miesiąc");
