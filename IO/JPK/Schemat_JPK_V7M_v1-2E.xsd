@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:etd="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2021/06/08/eD/DefinicjeTypy/" xmlns:tns="http://crd.gov.pl/wzor/2021/12/27/11148/" targetNamespace="http://crd.gov.pl/wzor/2021/12/27/11148/" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" xml:lang="pl">
-	<xsd:import namespace="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2021/06/08/eD/DefinicjeTypy/" schemaLocation="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2021/06/08/eD/DefinicjeTypy/StrukturyDanych_v8-0E.xsd"/>
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:etd="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2020/03/11/eD/DefinicjeTypy/" xmlns:tns="http://crd.gov.pl/wzor/2020/05/08/9393/" targetNamespace="http://crd.gov.pl/wzor/2020/05/08/9393/" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" xml:lang="pl">
+	<xsd:import namespace="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2020/03/11/eD/DefinicjeTypy/" schemaLocation="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2020/03/11/eD/DefinicjeTypy/StrukturyDanych_v6-0E.xsd"/>
 	<xsd:simpleType name="TKodFormularza">
 		<xsd:annotation>
 			<xsd:documentation>Symbol wzoru formularza</xsd:documentation>
@@ -11,8 +10,8 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="TDataCzas">
 		<xsd:restriction base="etd:TDataCzas">
-			<xsd:minInclusive value="2022-01-01T00:00:00Z"/>
-			<xsd:maxInclusive value="2050-12-31T23:59:59Z"/>
+			<xsd:minInclusive value="2020-07-01T00:00:00Z"/>
+			<xsd:maxInclusive value="2030-12-31T23:59:59Z"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="TDataT">
@@ -21,14 +20,7 @@
 		</xsd:annotation>
 		<xsd:restriction base="etd:TData">
 			<xsd:minInclusive value="2006-01-01"/>
-		</xsd:restriction>
-	</xsd:simpleType>
-	<xsd:simpleType name="TDataTP">
-		<xsd:annotation>
-			<xsd:documentation>Data upływu terminu płatności lub dokonania zapłaty</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="etd:TData">
-			<xsd:minInclusive value="2016-01-01"/>
+			<xsd:maxInclusive value="2030-01-01"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:complexType name="TNaglowek">
@@ -40,8 +32,8 @@
 				<xsd:complexType>
 					<xsd:simpleContent>
 						<xsd:extension base="tns:TKodFormularza">
-							<xsd:attribute name="kodSystemowy" type="xsd:string" use="required" fixed="JPK_V7M (2)"/>
-							<xsd:attribute name="wersjaSchemy" type="xsd:string" use="required" fixed="1-0E"/>
+							<xsd:attribute name="kodSystemowy" type="xsd:string" use="required" fixed="JPK_V7M (1)"/>
+							<xsd:attribute name="wersjaSchemy" type="xsd:string" use="required" fixed="1-2E"/>
 						</xsd:extension>
 					</xsd:simpleContent>
 				</xsd:complexType>
@@ -49,7 +41,7 @@
 			<xsd:element name="WariantFormularza">
 				<xsd:simpleType>
 					<xsd:restriction base="xsd:byte">
-						<xsd:enumeration value="2"/>
+						<xsd:enumeration value="1"/>
 					</xsd:restriction>
 				</xsd:simpleType>
 			</xsd:element>
@@ -81,8 +73,9 @@
 			<xsd:element name="KodUrzedu" type="etd:TKodUS"/>
 			<xsd:element name="Rok">
 				<xsd:simpleType>
-					<xsd:restriction base="etd:TRok">
-						<xsd:minInclusive value="2022"/>
+					<xsd:restriction base="xsd:gYear">
+						<xsd:minInclusive value="2020"/>
+						<xsd:maxInclusive value="2030"/>
 					</xsd:restriction>
 				</xsd:simpleType>
 			</xsd:element>
@@ -120,22 +113,44 @@
 			<xsd:documentation>Oznaczenie dowodu sprzedaży</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:string">
-			<xsd:enumeration value="RO"/>
-			<xsd:enumeration value="WEW"/>
-			<xsd:enumeration value="FP"/>
+			<xsd:enumeration value="RO">
+				<xsd:annotation>
+					<xsd:documentation>RO - Dokument zbiorczy wewnętrzny zawierający sprzedaż z kas rejestrujących</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="WEW">
+				<xsd:annotation>
+					<xsd:documentation>WEW - Dokument wewnętrzny</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="FP">
+				<xsd:annotation>
+					<xsd:documentation>FP - Faktura, o której mowa w art. 109 ust. 3d ustawy</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 		</xsd:restriction>
-		<!--Wypełnić zgodnie z § 10 ust. 5 rozporządzenia Ministra Finansów, Inwestycji i Rozwoju z dnia 15 października 2019 r. w sprawie szczegółowego zakresu danych zawartych w deklaracjach podatkowych i w ewidencji w zakresie podatku od towarów i usług (Dz. U. z 2019 r. poz. 1988, z późn. zm.)-->
 	</xsd:simpleType>
 	<xsd:simpleType name="TDowoduZakupu">
 		<xsd:annotation>
 			<xsd:documentation>Oznaczenie dowodu nabycia</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:string">
-			<xsd:enumeration value="MK"/>
-			<xsd:enumeration value="VAT_RR"/>
-			<xsd:enumeration value="WEW"/>
+			<xsd:enumeration value="MK">
+				<xsd:annotation>
+					<xsd:documentation>MK - Faktura wystawiona przez podatnika będącego dostawcą lub usługodawcą, który wybrał metodę kasową rozliczeń określoną w art. 21 ustawy</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="VAT_RR">
+				<xsd:annotation>
+					<xsd:documentation>VAT_RR - Faktura VAT RR, o której mowa w art. 116 ustawy</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="WEW">
+				<xsd:annotation>
+					<xsd:documentation>WEW - Dokument wewnętrzny</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
 		</xsd:restriction>
-		<!--Wypełnić zgodnie z § 11 ust. 8 rozporządzenia Ministra Finansów, Inwestycji i Rozwoju z dnia 15 października 2019 r. w sprawie szczegółowego zakresu danych zawartych w deklaracjach podatkowych i w ewidencji w zakresie podatku od towarów i usług.-->
 	</xsd:simpleType>
 	<xsd:simpleType name="TAdresEmail">
 		<xsd:annotation>
@@ -292,10 +307,10 @@
 											<xsd:complexType>
 												<xsd:simpleContent>
 													<xsd:extension base="tns:TKodFormularzaVAT7">
-														<xsd:attribute name="kodSystemowy" type="xsd:string" use="required" fixed="VAT-7 (22)"/>
+														<xsd:attribute name="kodSystemowy" type="xsd:string" use="required" fixed="VAT-7 (21)"/>
 														<xsd:attribute name="kodPodatku" type="xsd:string" use="required" fixed="VAT"/>
 														<xsd:attribute name="rodzajZobowiazania" type="xsd:token" use="required" fixed="Z"/>
-														<xsd:attribute name="wersjaSchemy" type="xsd:string" use="required" fixed="1-0E"/>
+														<xsd:attribute name="wersjaSchemy" type="xsd:string" use="required" fixed="1-2E"/>
 													</xsd:extension>
 												</xsd:simpleContent>
 											</xsd:complexType>
@@ -306,7 +321,7 @@
 											</xsd:annotation>
 											<xsd:simpleType>
 												<xsd:restriction base="xsd:byte">
-													<xsd:enumeration value="22"/>
+													<xsd:enumeration value="21"/>
 												</xsd:restriction>
 											</xsd:simpleType>
 										</xsd:element>
@@ -414,7 +429,7 @@
 											</xsd:element>
 											<xsd:element name="P_26" type="etd:TKwotaC">
 												<xsd:annotation>
-													<xsd:documentation>Wysokość podatku należnego z tytułu importu towarów rozliczanego zgodnie z art. 33a ustawy</xsd:documentation>
+													<xsd:documentation>Wysokość podatku należnego z tytuł importu towarów rozliczanego zgodnie z art. 33a ustawy</xsd:documentation>
 												</xsd:annotation>
 											</xsd:element>
 										</xsd:sequence>
@@ -574,7 +589,7 @@
 											<xsd:annotation>
 												<xsd:documentation>Wysokość nadwyżki podatku naliczonego nad należnym</xsd:documentation>
 											</xsd:annotation>
-											<!--Jeżeli P_51 > 0 to P_53 = 0 w przeciwnym wypadku jeżeli (P_48 + P_49 + P_50  + P_52) – P_38 >  0 to P_53 = P_48 - P_38 + P_49 + P_50  + P_52 w pozostałych przypadkach P_53 = 0.-->
+											<!--Jeżeli różnica kwot pomiędzy P_48 i P_38 jest większa lub równa 0, wówczas P_53 = P_48 - P_38 + P_52, w przeciwnym wypadku należy wykazać 0.-->
 										</xsd:element>
 										<xsd:sequence minOccurs="0">
 											<xsd:element name="P_54" type="etd:TKwotaCNieujemna">
@@ -583,40 +598,34 @@
 												</xsd:annotation>
 											</xsd:element>
 											<xsd:choice>
-												<xsd:element name="P_540" type="etd:TWybor1">
-													<xsd:annotation>
-														<xsd:documentation>Zwrot na rachunek rozliczeniowy podatnika w terminie 15 dni: 1 - tak</xsd:documentation>
-													</xsd:annotation>
-												</xsd:element>
 												<xsd:element name="P_55" type="etd:TWybor1">
 													<xsd:annotation>
-														<xsd:documentation>Zwrot na rachunek VAT podatnika w terminie 25 dni: 1 - tak</xsd:documentation>
+														<xsd:documentation>Zwrot na rachunek VAT, o którym mowa w art. 87 ust. 6a ustawy: 1 - tak</xsd:documentation>
 													</xsd:annotation>
+													<!--Zwrot na rachunek VAT podatnika w terminie 25 dni-->
 												</xsd:element>
 												<xsd:element name="P_56" type="etd:TWybor1">
 													<xsd:annotation>
-														<xsd:documentation>Zwrot na rachunek rozliczeniowy podatnika w terminie 25 dni (art. 87 ust. 6 ustawy): 1 - tak</xsd:documentation>
+														<xsd:documentation>Zwrot w terminie, o którym mowa w art. 87 ust. 6 ustawy: 1 - tak</xsd:documentation>
 													</xsd:annotation>
-												</xsd:element>
-												<xsd:element name="P_560" type="etd:TWybor1">
-													<xsd:annotation>
-														<xsd:documentation>Zwrot na rachunek rozliczeniowy podatnika w terminie 40 dni: 1 - tak</xsd:documentation>
-													</xsd:annotation>
+													<!--Zwrot na rachunek rozliczeniowy podatnika w terminie 25 dni-->
 												</xsd:element>
 												<xsd:element name="P_57" type="etd:TWybor1">
 													<xsd:annotation>
-														<xsd:documentation>Zwrot na rachunek rozliczeniowy podatnika w terminie 60 dni: 1 - tak</xsd:documentation>
+														<xsd:documentation>Zwrot w terminie, o którym mowa w art. 87 ust. 2 ustawy: 1 - tak</xsd:documentation>
 													</xsd:annotation>
+													<!--Zwrot na rachunek rozliczeniowy podatnika w terminie 60 dni-->
 												</xsd:element>
 												<xsd:element name="P_58" type="etd:TWybor1">
 													<xsd:annotation>
-														<xsd:documentation>Zwrot na rachunek rozliczeniowy podatnika w terminie 180 dni: 1 - tak</xsd:documentation>
+														<xsd:documentation>Zwrot w terminie, o którym mowa w art. 87 ust. 5a zdanie pierwsze ustawy: 1 - tak</xsd:documentation>
 													</xsd:annotation>
 												</xsd:element>
+												<!--Zwrot na rachunek rozliczeniowy podatnika w terminie 180 dni-->
 											</xsd:choice>
 											<xsd:sequence minOccurs="0">
 												<xsd:annotation>
-													<xsd:documentation>Podatnik wnosi o zaliczenie zwrotu podatku na poczet przyszłych zobowiązań podatkowych, zgodnie z art. 76 § 1 i art. 76b § 1 ustawy z dnia 29 sierpnia 1997 r. - Ordynacja podatkowa (Dz.U. z 2021 r. poz. 1540, z późn. zm.), wraz z podaniem wysokości zaliczenia oraz rodzaju zobowiązania podatkowego</xsd:documentation>
+													<xsd:documentation>Podatnik wnosi o zaliczenie zwrotu podatku na poczet przyszłych zobowiązań podatkowych, zgodnie z art. 76 § 1 i art. 76b § 1 ustawy z dnia 29 sierpnia 1997 r. - Ordynacja podatkowa (Dz. U. z 2019 r. poz. 900, z późn. zm.), wraz z podaniem wysokości zaliczenia oraz rodzaju zobowiązania podatkowego</xsd:documentation>
 												</xsd:annotation>
 												<xsd:element name="P_59" type="etd:TWybor1">
 													<xsd:annotation>
@@ -664,11 +673,6 @@
 										<xsd:element name="P_66" type="etd:TWybor1" minOccurs="0">
 											<xsd:annotation>
 												<xsd:documentation>Podatnik wykonywał w okresie rozliczeniowym czynności, o których mowa w art. 136 ustawy: 1 - tak</xsd:documentation>
-											</xsd:annotation>
-										</xsd:element>
-										<xsd:element name="P_660" type="etd:TWybor1" minOccurs="0">
-											<xsd:annotation>
-												<xsd:documentation>Podatnik ułatwiał w okresie rozliczeniowym dokonanie czynności, o których mowa w art. 109b ust. 4 ustawy: 1 - tak</xsd:documentation>
 											</xsd:annotation>
 										</xsd:element>
 										<xsd:element name="P_67" type="etd:TWybor1" minOccurs="0">
@@ -781,60 +785,149 @@ Za podanie nieprawdy lub zatajenie prawdy i przez to narażenie podatku na uszcz
 											</xsd:element>
 											<xsd:sequence minOccurs="0">
 												<xsd:annotation>
-													<xsd:documentation>Oznaczenie dotyczące dostawy towarów i świadczenia usług</xsd:documentation>
+													<xsd:documentation>Oznaczenie dotyczące dostawy i świadczenia usług</xsd:documentation>
 												</xsd:annotation>
-												<!--Wypełnić zgodnie z § 10 ust. 3 rozporządzenia Ministra Finansów, Inwestycji i Rozwoju z dnia 15 października 2019 r. w sprawie szczegółowego zakresu danych zawartych w deklaracjach podatkowych i w ewidencji w zakresie podatku od towarów i usług.-->
-												<xsd:element name="GTU_01" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="GTU_02" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="GTU_03" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="GTU_04" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="GTU_05" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="GTU_06" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="GTU_07" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="GTU_08" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="GTU_09" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="GTU_10" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="GTU_11" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="GTU_12" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="GTU_13" type="etd:TWybor1" minOccurs="0"/>
+												<xsd:element name="GTU_01" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Dostawa napojów alkoholowych - alkoholu etylowego, piwa, wina, napojów fermentowanych i wyrobów pośrednich, w rozumieniu przepisów o podatku akcyzowym</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="GTU_02" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Dostawa towarów, o których mowa w art. 103 ust. 5aa ustawy</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="GTU_03" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Dostawa oleju opałowego w rozumieniu przepisów o podatku akcyzowym oraz olejów smarowych, pozostałych olejów o kodach CN od 2710 19 71 do 2710 19 99, z wyłączeniem wyrobów o kodzie CN 2710 19 85 (oleje białe, parafina ciekła) oraz smarów plastycznych zaliczanych do kodu CN 2710 19 99, olejów smarowych o kodzie CN 2710 20 90, preparatów smarowych objętych pozycją CN 3403, z wyłączeniem smarów plastycznych objętych tą pozycją</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="GTU_04" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Dostawa wyrobów tytoniowych, suszu tytoniowego, płynu do papierosów elektronicznych i wyrobów nowatorskich, w rozumieniu przepisów o podatku akcyzowym</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="GTU_05" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Dostawa odpadów - wyłącznie określonych w poz. 79-91 załącznika nr 15 do ustawy</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="GTU_06" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Dostawa urządzeń elektronicznych oraz części i materiałów do nich, wyłącznie określonych w poz. 7-9, 59-63, 65, 66, 69 i 94-96 załącznika nr 15 do ustawy</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="GTU_07" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Dostawa pojazdów oraz części samochodowych o kodach wyłącznie CN 8701 - 8708 oraz CN 8708 10</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="GTU_08" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Dostawa metali szlachetnych oraz nieszlachetnych - wyłącznie określonych w poz. 1-3 załącznika nr 12 do ustawy oraz w poz. 12-25, 33-40, 45, 46, 56 i 78 załącznika nr 15 do ustawy</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="GTU_09" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Dostawa leków oraz wyrobów medycznych - produktów leczniczych, środków spożywczych specjalnego przeznaczenia żywieniowego oraz wyrobów medycznych, objętych obowiązkiem zgłoszenia, o którym mowa w art. 37av ust. 1 ustawy z dnia 6 września 2001 r. - Prawo farmaceutyczne (Dz. U. z 2019 r. poz. 499, z późn. zm.)</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="GTU_10" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Dostawa budynków, budowli i gruntów</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="GTU_11" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Świadczenie usług w zakresie przenoszenia uprawnień do emisji gazów cieplarnianych, o których mowa w ustawie z dnia 12 czerwca 2015 r. o systemie handlu uprawnieniami do emisji gazów cieplarnianych (Dz. U. z 2018 r. poz. 1201 i 2538 oraz z 2019 r. poz. 730, 1501 i 1532)</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="GTU_12" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Świadczenie usług o charakterze niematerialnym - wyłącznie: doradczych, księgowych, prawnych, zarządczych, szkoleniowych, marketingowych, firm centralnych (head offices), reklamowych, badania rynku i opinii publicznej, w zakresie badań naukowych i prac rozwojowych</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="GTU_13" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Świadczenie usług transportowych i gospodarki magazynowej - Sekcja H PKWiU 2015 symbol ex 49.4, ex 52.1</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
 											</xsd:sequence>
 											<xsd:sequence minOccurs="0">
 												<xsd:annotation>
 													<xsd:documentation>Oznaczenia dotyczące procedur</xsd:documentation>
 												</xsd:annotation>
-												<!--Wypełnić zgodnie z § 10 ust. 4 rozporządzenia Ministra Finansów, Inwestycji i Rozwoju z dnia 15 października 2019 r. w sprawie szczegółowego zakresu danych zawartych w deklaracjach podatkowych i w ewidencji w zakresie podatku od towarów i usług.-->
-												<xsd:element name="WSTO_EE" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="IED" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="TP" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="TT_WNT" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="TT_D" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="MR_T" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="MR_UZ" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="I_42" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="I_63" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="B_SPV" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="B_SPV_DOSTAWA" type="etd:TWybor1" minOccurs="0"/>
-												<xsd:element name="B_MPV_PROWIZJA" type="etd:TWybor1" minOccurs="0"/>
-											</xsd:sequence>
-											<xsd:sequence minOccurs="0">
-												<xsd:element name="KorektaPodstawyOpodt" type="etd:TWybor1">
+												<xsd:element name="SW" type="etd:TWybor1" minOccurs="0">
 													<xsd:annotation>
-														<xsd:documentation>Korekta podstawy opodatkowania oraz podatku należnego, o której mowa w art. 89a ust. 1 i 4 ustawy</xsd:documentation>
+														<xsd:documentation>Dostawa w ramach sprzedaży wysyłkowej z terytorium kraju, o której mowa w art. 23 ustawy</xsd:documentation>
 													</xsd:annotation>
 												</xsd:element>
-												<xsd:choice>
-													<xsd:element name="TerminPlatnosci" type="tns:TDataTP">
-														<xsd:annotation>
-															<xsd:documentation>Data upływu terminu płatności w przypadku korekt dokonanych zgodnie z art. 89a ust. 1 ustawy</xsd:documentation>
-														</xsd:annotation>
-													</xsd:element>
-													<xsd:element name="DataZaplaty" type="tns:TDataTP">
-														<xsd:annotation>
-															<xsd:documentation>Data uregulowania lub zbycia należności w przypadku korekty dokonanej zgodnie z art. 89a ust. 4 ustawy</xsd:documentation>
-														</xsd:annotation>
-													</xsd:element>
-												</xsd:choice>
+												<xsd:element name="EE" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Świadczenie usług telekomunikacyjnych, nadawczych i elektronicznych, o których mowa w art. 28k ustawy</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="TP" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Istniejące powiązania między nabywcą a dokonującym dostawy towarów lub usługodawcą, o których mowa w art. 32 ust. 2 pkt 1 ustawy</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="TT_WNT" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Wewnątrzwspólnotowe nabycie towarów dokonane przez drugiego w kolejności podatnika VAT w ramach transakcji trójstronnej w procedurze uproszczonej, o której mowa w dziale XII rozdziale 8 ustawy</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="TT_D" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Dostawa towarów poza terytorium kraju dokonana przez drugiego w kolejności podatnika VAT w ramach transakcji trójstronnej w procedurze uproszczonej, o której mowa w dziale XII rozdziale 8 ustawy</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="MR_T" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Świadczenie usług turystyki opodatkowane na zasadach marży zgodnie z art. 119 ustawy</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="MR_UZ" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Dostawa towarów używanych, dzieł sztuki, przedmiotów kolekcjonerskich i antyków, opodatkowana na zasadach marży zgodnie z art. 120 ustawy</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="I_42" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Wewnątrzwspólnotowa dostawa towarów następująca po imporcie tych towarów w ramach procedury celnej 42 (import)</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="I_63" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Wewnątrzwspólnotowa dostawa towarów następująca po imporcie tych towarów w ramach procedury celnej 63 (import)</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="B_SPV" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Transfer bonu jednego przeznaczenia dokonany przez podatnika działającego we własnym imieniu, opodatkowany zgodnie z art. 8a ust. 1 ustawy</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="B_SPV_DOSTAWA" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Dostawa towarów oraz świadczenie usług, których dotyczy bon jednego przeznaczenia na rzecz podatnika, który wyemitował bon zgodnie z art. 8a ust. 4 ustawy</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="B_MPV_PROWIZJA" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Świadczenie usług pośrednictwa oraz innych usług dotyczących transferu bonu różnego przeznaczenia, opodatkowane zgodnie z art. 8b ust. 2 ustawy</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="MPP" type="etd:TWybor1" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Transakcja objęta obowiązkiem stosowania mechanizmu podzielonej płatności</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
 											</xsd:sequence>
+											<xsd:element name="KorektaPodstawyOpodt" type="etd:TWybor1" minOccurs="0">
+												<xsd:annotation>
+													<xsd:documentation>Korekta podstawy opodatkowania oraz podatku należnego, o której mowa w art. 89a ust. 1 i 4 ustawy</xsd:documentation>
+												</xsd:annotation>
+											</xsd:element>
 											<xsd:element name="K_10" type="tns:TKwotowy" minOccurs="0">
 												<xsd:annotation>
 													<xsd:documentation>Wysokość podstawy opodatkowania wynikająca z dostawy towarów oraz świadczenia usług na terytorium kraju, zwolnionych od podatku</xsd:documentation>
@@ -1063,8 +1156,15 @@ Za podanie nieprawdy lub zatajenie prawdy i przez to narażenie podatku na uszcz
 													<xsd:documentation>Oznaczenie dowodu zakupu</xsd:documentation>
 												</xsd:annotation>
 											</xsd:element>
+											<xsd:element name="MPP" type="etd:TWybor1" minOccurs="0">
+												<xsd:annotation>
+													<xsd:documentation>Transakcja objęta obowiązkiem stosowania mechanizmu podzielonej płatności</xsd:documentation>
+												</xsd:annotation>
+											</xsd:element>
 											<xsd:element name="IMP" type="etd:TWybor1" minOccurs="0">
-												<!--Wypełnić zgodnie z § 11 ust. 2 pkt 1 rozporządzenia Ministra Finansów, Inwestycji i Rozwoju z dnia 15 października 2019 r. w sprawie szczegółowego zakresu danych zawartych w deklaracjach podatkowych i w ewidencji w zakresie podatku od towarów i usług.-->
+												<xsd:annotation>
+													<xsd:documentation>Oznaczenie dotyczące podatku naliczonego z tytułu importu towarów, w tym importu towarów rozliczanego zgodnie z art. 33a ustawy</xsd:documentation>
+												</xsd:annotation>
 											</xsd:element>
 											<xsd:sequence minOccurs="0">
 												<xsd:element name="K_40" type="tns:TKwotowy">

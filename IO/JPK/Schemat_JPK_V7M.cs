@@ -20,8 +20,8 @@ namespace ProFak.IO.JPK {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/", IsNullable=false)]
     public partial class JPK {
         
         private JPKNaglowek naglowekField;
@@ -78,7 +78,7 @@ namespace ProFak.IO.JPK {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public partial class JPKNaglowek : TNaglowek {
     }
     
@@ -87,7 +87,7 @@ namespace ProFak.IO.JPK {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public partial class TNaglowek {
         
         private TNaglowekKodFormularza kodFormularzaField;
@@ -194,7 +194,7 @@ namespace ProFak.IO.JPK {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public partial class TNaglowekKodFormularza {
         
         private string kodSystemowyField;
@@ -204,8 +204,8 @@ namespace ProFak.IO.JPK {
         private TKodFormularza valueField;
         
         public TNaglowekKodFormularza() {
-            this.kodSystemowyField = "JPK_V7M (2)";
-            this.wersjaSchemyField = "1-0E";
+            this.kodSystemowyField = "JPK_V7M (1)";
+            this.wersjaSchemyField = "1-2E";
         }
         
         /// <remarks/>
@@ -245,7 +245,7 @@ namespace ProFak.IO.JPK {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public enum TKodFormularza {
         
         /// <remarks/>
@@ -257,7 +257,7 @@ namespace ProFak.IO.JPK {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public partial class TIdentyfikatorOsobyNiefizycznej {
         
         private string nIPField;
@@ -291,7 +291,7 @@ namespace ProFak.IO.JPK {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2021/06/08/eD/DefinicjeTypy/")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2020/03/11/eD/DefinicjeTypy/")]
     public partial class TIdentyfikatorOsobyFizycznej2 {
         
         private string nIPField;
@@ -351,7 +351,7 @@ namespace ProFak.IO.JPK {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public partial class TPodmiotDowolnyBezAdresu {
         
         private object itemField;
@@ -374,7 +374,7 @@ namespace ProFak.IO.JPK {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public partial class TPodmiotDowolnyBezAdresuOsobaFizyczna : TIdentyfikatorOsobyFizycznej2 {
         
         private string emailField;
@@ -409,7 +409,7 @@ namespace ProFak.IO.JPK {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public partial class TPodmiotDowolnyBezAdresuOsobaNiefizyczna : TIdentyfikatorOsobyNiefizycznej {
         
         private string emailField;
@@ -444,7 +444,7 @@ namespace ProFak.IO.JPK {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public partial class TNaglowekCelZlozenia {
         
         private string pozField;
@@ -481,7 +481,7 @@ namespace ProFak.IO.JPK {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2021/06/08/eD/DefinicjeTypy/")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2020/03/11/eD/DefinicjeTypy/")]
     public enum TKodUS {
         
         /// <remarks/>
@@ -2090,7 +2090,7 @@ namespace ProFak.IO.JPK {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public partial class JPKPodmiot1 : TPodmiotDowolnyBezAdresu {
         
         private string rolaField;
@@ -2116,7 +2116,7 @@ namespace ProFak.IO.JPK {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public partial class JPKDeklaracja {
         
         private JPKDeklaracjaNaglowek naglowekField;
@@ -2161,7 +2161,7 @@ namespace ProFak.IO.JPK {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public partial class JPKDeklaracjaNaglowek {
         
         private JPKDeklaracjaNaglowekKodFormularzaDekl kodFormularzaDeklField;
@@ -2194,7 +2194,7 @@ namespace ProFak.IO.JPK {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public partial class JPKDeklaracjaNaglowekKodFormularzaDekl {
         
         private string kodSystemowyField;
@@ -2208,10 +2208,10 @@ namespace ProFak.IO.JPK {
         private TKodFormularzaVAT7 valueField;
         
         public JPKDeklaracjaNaglowekKodFormularzaDekl() {
-            this.kodSystemowyField = "VAT-7 (22)";
+            this.kodSystemowyField = "VAT-7 (21)";
             this.kodPodatkuField = "VAT";
             this.rodzajZobowiazaniaField = "Z";
-            this.wersjaSchemyField = "1-0E";
+            this.wersjaSchemyField = "1-2E";
         }
         
         /// <remarks/>
@@ -2273,7 +2273,7 @@ namespace ProFak.IO.JPK {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public enum TKodFormularzaVAT7 {
         
         /// <remarks/>
@@ -2286,7 +2286,7 @@ namespace ProFak.IO.JPK {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public partial class JPKDeklaracjaPozycjeSzczegolowe {
         
         private string p_10Field;
@@ -2406,10 +2406,6 @@ namespace ProFak.IO.JPK {
         private sbyte p_66Field;
         
         private bool p_66FieldSpecified;
-        
-        private sbyte p_660Field;
-        
-        private bool p_660FieldSpecified;
         
         private sbyte p_67Field;
         
@@ -2917,10 +2913,8 @@ namespace ProFak.IO.JPK {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("P_540", typeof(sbyte))]
         [System.Xml.Serialization.XmlElementAttribute("P_55", typeof(sbyte))]
         [System.Xml.Serialization.XmlElementAttribute("P_56", typeof(sbyte))]
-        [System.Xml.Serialization.XmlElementAttribute("P_560", typeof(sbyte))]
         [System.Xml.Serialization.XmlElementAttribute("P_57", typeof(sbyte))]
         [System.Xml.Serialization.XmlElementAttribute("P_58", typeof(sbyte))]
         [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemElementName")]
@@ -3072,27 +3066,6 @@ namespace ProFak.IO.JPK {
         }
         
         /// <remarks/>
-        public sbyte P_660 {
-            get {
-                return this.p_660Field;
-            }
-            set {
-                this.p_660Field = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool P_660Specified {
-            get {
-                return this.p_660FieldSpecified;
-            }
-            set {
-                this.p_660FieldSpecified = value;
-            }
-        }
-        
-        /// <remarks/>
         public sbyte P_67 {
             get {
                 return this.p_67Field;
@@ -3149,20 +3122,14 @@ namespace ProFak.IO.JPK {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/", IncludeInSchema=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/", IncludeInSchema=false)]
     public enum ItemChoiceType {
-        
-        /// <remarks/>
-        P_540,
         
         /// <remarks/>
         P_55,
         
         /// <remarks/>
         P_56,
-        
-        /// <remarks/>
-        P_560,
         
         /// <remarks/>
         P_57,
@@ -3176,7 +3143,7 @@ namespace ProFak.IO.JPK {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public partial class JPKEwidencja {
         
         private JPKEwidencjaSprzedazWiersz[] sprzedazWierszField;
@@ -3235,7 +3202,7 @@ namespace ProFak.IO.JPK {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public partial class JPKEwidencjaSprzedazWiersz {
         
         private string lpSprzedazyField;
@@ -3310,13 +3277,13 @@ namespace ProFak.IO.JPK {
         
         private bool gTU_13FieldSpecified;
         
-        private sbyte wSTO_EEField;
+        private sbyte swField;
         
-        private bool wSTO_EEFieldSpecified;
+        private bool swFieldSpecified;
         
-        private sbyte iEDField;
+        private sbyte eeField;
         
-        private bool iEDFieldSpecified;
+        private bool eeFieldSpecified;
         
         private sbyte tpField;
         
@@ -3358,11 +3325,13 @@ namespace ProFak.IO.JPK {
         
         private bool b_MPV_PROWIZJAFieldSpecified;
         
+        private sbyte mPPField;
+        
+        private bool mPPFieldSpecified;
+        
         private sbyte korektaPodstawyOpodtField;
         
-        private System.DateTime itemField;
-        
-        private ItemChoiceType1 itemElementNameField;
+        private bool korektaPodstawyOpodtFieldSpecified;
         
         private decimal k_10Field;
         
@@ -3825,44 +3794,44 @@ namespace ProFak.IO.JPK {
         }
         
         /// <remarks/>
-        public sbyte WSTO_EE {
+        public sbyte SW {
             get {
-                return this.wSTO_EEField;
+                return this.swField;
             }
             set {
-                this.wSTO_EEField = value;
+                this.swField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool WSTO_EESpecified {
+        public bool SWSpecified {
             get {
-                return this.wSTO_EEFieldSpecified;
+                return this.swFieldSpecified;
             }
             set {
-                this.wSTO_EEFieldSpecified = value;
+                this.swFieldSpecified = value;
             }
         }
         
         /// <remarks/>
-        public sbyte IED {
+        public sbyte EE {
             get {
-                return this.iEDField;
+                return this.eeField;
             }
             set {
-                this.iEDField = value;
+                this.eeField = value;
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool IEDSpecified {
+        public bool EESpecified {
             get {
-                return this.iEDFieldSpecified;
+                return this.eeFieldSpecified;
             }
             set {
-                this.iEDFieldSpecified = value;
+                this.eeFieldSpecified = value;
             }
         }
         
@@ -4077,6 +4046,27 @@ namespace ProFak.IO.JPK {
         }
         
         /// <remarks/>
+        public sbyte MPP {
+            get {
+                return this.mPPField;
+            }
+            set {
+                this.mPPField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool MPPSpecified {
+            get {
+                return this.mPPFieldSpecified;
+            }
+            set {
+                this.mPPFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
         public sbyte KorektaPodstawyOpodt {
             get {
                 return this.korektaPodstawyOpodtField;
@@ -4087,26 +4077,13 @@ namespace ProFak.IO.JPK {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("DataZaplaty", typeof(System.DateTime), DataType="date")]
-        [System.Xml.Serialization.XmlElementAttribute("TerminPlatnosci", typeof(System.DateTime), DataType="date")]
-        [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemElementName")]
-        public System.DateTime Item {
-            get {
-                return this.itemField;
-            }
-            set {
-                this.itemField = value;
-            }
-        }
-        
-        /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public ItemChoiceType1 ItemElementName {
+        public bool KorektaPodstawyOpodtSpecified {
             get {
-                return this.itemElementNameField;
+                return this.korektaPodstawyOpodtFieldSpecified;
             }
             set {
-                this.itemElementNameField = value;
+                this.korektaPodstawyOpodtFieldSpecified = value;
             }
         }
         
@@ -4526,7 +4503,7 @@ namespace ProFak.IO.JPK {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public enum TDowoduSprzedazy {
         
         /// <remarks/>
@@ -4542,22 +4519,9 @@ namespace ProFak.IO.JPK {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/", IncludeInSchema=false)]
-    public enum ItemChoiceType1 {
-        
-        /// <remarks/>
-        DataZaplaty,
-        
-        /// <remarks/>
-        TerminPlatnosci,
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
-    [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public partial class JPKEwidencjaSprzedazCtrl {
         
         private string liczbaWierszySprzedazyField;
@@ -4591,7 +4555,7 @@ namespace ProFak.IO.JPK {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public partial class JPKEwidencjaZakupWiersz {
         
         private string lpZakupuField;
@@ -4613,6 +4577,10 @@ namespace ProFak.IO.JPK {
         private TDowoduZakupu dokumentZakupuField;
         
         private bool dokumentZakupuFieldSpecified;
+        
+        private sbyte mPPField;
+        
+        private bool mPPFieldSpecified;
         
         private sbyte iMPField;
         
@@ -4750,6 +4718,27 @@ namespace ProFak.IO.JPK {
             }
             set {
                 this.dokumentZakupuFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public sbyte MPP {
+            get {
+                return this.mPPField;
+            }
+            set {
+                this.mPPField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool MPPSpecified {
+            get {
+                return this.mPPFieldSpecified;
+            }
+            set {
+                this.mPPFieldSpecified = value;
             }
         }
         
@@ -4923,7 +4912,7 @@ namespace ProFak.IO.JPK {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public enum TDowoduZakupu {
         
         /// <remarks/>
@@ -4941,7 +4930,7 @@ namespace ProFak.IO.JPK {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2021/07/08/07081/")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://crd.gov.pl/wzor/2020/05/08/9393/")]
     public partial class JPKEwidencjaZakupCtrl {
         
         private string liczbaWierszyZakupowField;
