@@ -27,7 +27,7 @@ namespace ProFak.DB
 		public DateTime? OsobaFizycznaDataUrodzenia { get; set; }
 		public FormaOpodatkowania? FormaOpodatkowania { get; set; }
 
-		public string AdresRejestrowyFmt => String.Join(", ", (AdresRejestrowy ?? "").Split('\r', '\n').Where(linia => !String.IsNullOrWhiteSpace(linia)));
+		public string AdresRejestrowyFmt => AdresRejestrowy.JakoJednaLinia();
 
 		public override bool CzyPasuje(string fraza)
 			=> base.CzyPasuje(fraza)

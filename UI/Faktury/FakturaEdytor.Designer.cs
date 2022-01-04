@@ -67,6 +67,8 @@ namespace ProFak.UI
 			this.label19 = new System.Windows.Forms.Label();
 			this.comboBoxProcentKosztow = new System.Windows.Forms.ComboBox();
 			this.comboBoxProcentVat = new System.Windows.Forms.ComboBox();
+			this.checkBoxWDT = new System.Windows.Forms.CheckBox();
+			this.checkBoxWNT = new System.Windows.Forms.CheckBox();
 			this.checkBoxTP = new System.Windows.Forms.CheckBox();
 			this.checkBoxZakupSrodkowTrwalych = new System.Windows.Forms.CheckBox();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -102,8 +104,8 @@ namespace ProFak.UI
 			this.numericUpDownNetto = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDownVat = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDownBrutto = new System.Windows.Forms.NumericUpDown();
-			this.checkBoxWDT = new System.Windows.Forms.CheckBox();
-			this.checkBoxWNT = new System.Windows.Forms.CheckBox();
+			this.label20 = new System.Windows.Forms.Label();
+			this.textBoxOpisZdarzenia = new System.Windows.Forms.TextBox();
 			this.tableLayoutPanel.SuspendLayout();
 			this.tableLayoutPanelKontrahenci.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -549,6 +551,8 @@ namespace ProFak.UI
 			this.tableLayoutPanel7.Controls.Add(this.checkBoxWNT, 3, 1);
 			this.tableLayoutPanel7.Controls.Add(this.checkBoxTP, 3, 2);
 			this.tableLayoutPanel7.Controls.Add(this.checkBoxZakupSrodkowTrwalych, 3, 3);
+			this.tableLayoutPanel7.Controls.Add(this.label20, 0, 2);
+			this.tableLayoutPanel7.Controls.Add(this.textBoxOpisZdarzenia, 1, 2);
 			this.tableLayoutPanel7.Location = new System.Drawing.Point(6, 6);
 			this.tableLayoutPanel7.Name = "tableLayoutPanel7";
 			this.tableLayoutPanel7.RowCount = 5;
@@ -607,11 +611,33 @@ namespace ProFak.UI
 			this.comboBoxProcentVat.Size = new System.Drawing.Size(203, 23);
 			this.comboBoxProcentVat.TabIndex = 3;
 			// 
+			// checkBoxWDT
+			// 
+			this.checkBoxWDT.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.checkBoxWDT.AutoSize = true;
+			this.checkBoxWDT.Location = new System.Drawing.Point(376, 5);
+			this.checkBoxWDT.Name = "checkBoxWDT";
+			this.checkBoxWDT.Size = new System.Drawing.Size(51, 19);
+			this.checkBoxWDT.TabIndex = 10;
+			this.checkBoxWDT.Text = "WDT";
+			this.checkBoxWDT.UseVisualStyleBackColor = true;
+			// 
+			// checkBoxWNT
+			// 
+			this.checkBoxWNT.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.checkBoxWNT.AutoSize = true;
+			this.checkBoxWNT.Location = new System.Drawing.Point(376, 34);
+			this.checkBoxWNT.Name = "checkBoxWNT";
+			this.checkBoxWNT.Size = new System.Drawing.Size(53, 19);
+			this.checkBoxWNT.TabIndex = 11;
+			this.checkBoxWNT.Text = "WNT";
+			this.checkBoxWNT.UseVisualStyleBackColor = true;
+			// 
 			// checkBoxTP
 			// 
 			this.checkBoxTP.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.checkBoxTP.AutoSize = true;
-			this.checkBoxTP.Location = new System.Drawing.Point(376, 61);
+			this.checkBoxTP.Location = new System.Drawing.Point(376, 63);
 			this.checkBoxTP.Name = "checkBoxTP";
 			this.checkBoxTP.Size = new System.Drawing.Size(131, 19);
 			this.checkBoxTP.TabIndex = 12;
@@ -622,7 +648,7 @@ namespace ProFak.UI
 			// 
 			this.checkBoxZakupSrodkowTrwalych.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.checkBoxZakupSrodkowTrwalych.AutoSize = true;
-			this.checkBoxZakupSrodkowTrwalych.Location = new System.Drawing.Point(376, 86);
+			this.checkBoxZakupSrodkowTrwalych.Location = new System.Drawing.Point(376, 90);
 			this.checkBoxZakupSrodkowTrwalych.Name = "checkBoxZakupSrodkowTrwalych";
 			this.checkBoxZakupSrodkowTrwalych.Size = new System.Drawing.Size(155, 19);
 			this.checkBoxZakupSrodkowTrwalych.TabIndex = 13;
@@ -1056,27 +1082,23 @@ namespace ProFak.UI
 			this.numericUpDownBrutto.TabIndex = 52;
 			this.numericUpDownBrutto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
-			// checkBoxWDT
+			// label20
 			// 
-			this.checkBoxWDT.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.checkBoxWDT.AutoSize = true;
-			this.checkBoxWDT.Location = new System.Drawing.Point(376, 5);
-			this.checkBoxWDT.Name = "checkBoxWDT";
-			this.checkBoxWDT.Size = new System.Drawing.Size(51, 19);
-			this.checkBoxWDT.TabIndex = 10;
-			this.checkBoxWDT.Text = "WDT";
-			this.checkBoxWDT.UseVisualStyleBackColor = true;
+			this.label20.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.label20.AutoSize = true;
+			this.label20.Location = new System.Drawing.Point(8, 65);
+			this.label20.Name = "label20";
+			this.label20.Size = new System.Drawing.Size(133, 15);
+			this.label20.TabIndex = 14;
+			this.label20.Text = "Opis zdarzenia na PKPiR";
 			// 
-			// checkBoxWNT
+			// textBoxOpisZdarzenia
 			// 
-			this.checkBoxWNT.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.checkBoxWNT.AutoSize = true;
-			this.checkBoxWNT.Location = new System.Drawing.Point(376, 34);
-			this.checkBoxWNT.Name = "checkBoxWNT";
-			this.checkBoxWNT.Size = new System.Drawing.Size(53, 19);
-			this.checkBoxWNT.TabIndex = 11;
-			this.checkBoxWNT.Text = "WNT";
-			this.checkBoxWNT.UseVisualStyleBackColor = true;
+			this.textBoxOpisZdarzenia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxOpisZdarzenia.Location = new System.Drawing.Point(147, 61);
+			this.textBoxOpisZdarzenia.Name = "textBoxOpisZdarzenia";
+			this.textBoxOpisZdarzenia.Size = new System.Drawing.Size(203, 23);
+			this.textBoxOpisZdarzenia.TabIndex = 15;
 			// 
 			// FakturaEdytor
 			// 
@@ -1205,5 +1227,7 @@ namespace ProFak.UI
 		private System.Windows.Forms.CheckBox checkBoxZakupSrodkowTrwalych;
 		private System.Windows.Forms.CheckBox checkBoxWDT;
 		private System.Windows.Forms.CheckBox checkBoxWNT;
+		private System.Windows.Forms.Label label20;
+		private System.Windows.Forms.TextBox textBoxOpisZdarzenia;
 	}
 }

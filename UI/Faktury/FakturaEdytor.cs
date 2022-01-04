@@ -60,6 +60,7 @@ namespace ProFak.UI
 			kontroler.Powiazanie(checkBoxZakupSrodkowTrwalych, faktura => faktura.CzyZakupSrodkowTrwalych);
 			kontroler.Powiazanie(checkBoxWDT, faktura => faktura.CzyWDT);
 			kontroler.Powiazanie(checkBoxWNT, faktura => faktura.CzyWNT);
+			kontroler.Powiazanie(textBoxOpisZdarzenia, faktura => faktura.OpisZdarzenia);
 
 			Wymagane(textBoxDaneNabywcy);
 			Wymagane(textBoxDaneSprzedawcy);

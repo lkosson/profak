@@ -13,11 +13,34 @@
       <xs:element minOccurs="0" maxOccurs="1" name="NaglowekPozycji" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="OpisPozycji" type="xs:string" />
       <xs:element minOccurs="1" maxOccurs="1" name="CenaNetto" type="xs:decimal" />
-      <xs:element minOccurs="1" maxOccurs="1" name="Ilosc" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Ilosc" type="xs:string" />
       <xs:element minOccurs="1" maxOccurs="1" name="WartoscNetto" type="xs:decimal" />
       <xs:element minOccurs="0" maxOccurs="1" name="StawkaVAT" type="xs:string" />
       <xs:element minOccurs="1" maxOccurs="1" name="WartoscVat" type="xs:decimal" />
       <xs:element minOccurs="1" maxOccurs="1" name="WartoscBrutto" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PKPiRDTO" nillable="true" type="PKPiRDTO" />
+  <xs:complexType name="PKPiRDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="Tytul" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Podmiot" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="LP" type="xs:int" />
+      <xs:element minOccurs="1" maxOccurs="1" name="Data" type="xs:dateTime" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Numer" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Kontrahent" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Adres" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Opis" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="PrzychodWartosc" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="PrzychodPozostale" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="PrzychodRazem" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="KosztyZakup" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="KosztyUboczne" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="KosztyWynagrodzenia" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="KosztyPozostale" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="KosztyRazem" type="xs:decimal" />
+      <xs:element minOccurs="1" maxOccurs="1" name="KosztyInne" type="xs:decimal" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Uwagi" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

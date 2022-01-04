@@ -37,6 +37,7 @@ namespace ProFak.DB
 		public bool CzyZakupSrodkowTrwalych { get; set; }
 		public bool CzyWDT { get; set; }
 		public bool CzyWNT { get; set; }
+		public string OpisZdarzenia { get; set; }
 
 		public int? SprzedawcaId { get; set; }
 		public int? NabywcaId { get; set; }

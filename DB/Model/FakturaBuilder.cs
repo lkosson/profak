@@ -44,6 +44,7 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.CzyZakupSrodkowTrwalych).HasDefaultValue(false).IsRequired();
 			builder.Property(e => e.CzyWDT).HasDefaultValue(false).IsRequired();
 			builder.Property(e => e.CzyWNT).HasDefaultValue(false).IsRequired();
+			builder.Property(e => e.OpisZdarzenia).HasDefaultValue("").IsRequired();
 
 			builder.Property(e => e.SprzedawcaId);
 			builder.Property(e => e.NabywcaId);

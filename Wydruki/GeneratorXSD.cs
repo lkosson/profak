@@ -12,7 +12,7 @@ namespace ProFak.Wydruki
 	{
 		public static void Utworz()
 		{
-			var types = new[] { typeof(FakturaDTO) };
+			var types = new[] { typeof(FakturaDTO), typeof(PKPiRDTO) };
 			var xri = new XmlReflectionImporter();
 			var xss = new XmlSchemas();
 			var xse = new XmlSchemaExporter(xss);
