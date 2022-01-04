@@ -45,6 +45,11 @@ namespace ProFak.UI
 				DialogResult = DialogResult.Cancel;
 				Close();
 			}
+			else if (e.KeyCode == Keys.F10 && CzyPrzyciskiWidoczne)
+			{
+				DialogResult = DialogResult.OK;
+				Close();
+			}
 		}
 
 		protected override void OnFormClosing(FormClosingEventArgs e)

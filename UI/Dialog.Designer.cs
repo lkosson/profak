@@ -40,22 +40,24 @@ namespace ProFak.UI
 			// 
 			// buttonZapisz
 			// 
+			this.buttonZapisz.AutoSize = true;
 			this.buttonZapisz.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.buttonZapisz.Location = new System.Drawing.Point(3, 3);
 			this.buttonZapisz.Name = "buttonZapisz";
-			this.buttonZapisz.Size = new System.Drawing.Size(75, 23);
+			this.buttonZapisz.Size = new System.Drawing.Size(79, 25);
 			this.buttonZapisz.TabIndex = 1000;
-			this.buttonZapisz.Text = "Zapisz";
+			this.buttonZapisz.Text = "Zapisz [F10]";
 			this.buttonZapisz.UseVisualStyleBackColor = true;
 			// 
 			// buttonAnuluj
 			// 
+			this.buttonAnuluj.AutoSize = true;
 			this.buttonAnuluj.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.buttonAnuluj.Location = new System.Drawing.Point(84, 3);
+			this.buttonAnuluj.Location = new System.Drawing.Point(88, 3);
 			this.buttonAnuluj.Name = "buttonAnuluj";
-			this.buttonAnuluj.Size = new System.Drawing.Size(75, 23);
+			this.buttonAnuluj.Size = new System.Drawing.Size(83, 25);
 			this.buttonAnuluj.TabIndex = 1001;
-			this.buttonAnuluj.Text = "Anuluj";
+			this.buttonAnuluj.Text = "Anuluj [ESC]";
 			this.buttonAnuluj.UseVisualStyleBackColor = true;
 			// 
 			// tableLayoutPanelZawartosc
@@ -80,9 +82,9 @@ namespace ProFak.UI
 			this.flowLayoutPanelPrzyciski.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.flowLayoutPanelPrzyciski.Controls.Add(this.buttonZapisz);
 			this.flowLayoutPanelPrzyciski.Controls.Add(this.buttonAnuluj);
-			this.flowLayoutPanelPrzyciski.Location = new System.Drawing.Point(3, 131);
+			this.flowLayoutPanelPrzyciski.Location = new System.Drawing.Point(3, 129);
 			this.flowLayoutPanelPrzyciski.Name = "flowLayoutPanelPrzyciski";
-			this.flowLayoutPanelPrzyciski.Size = new System.Drawing.Size(162, 29);
+			this.flowLayoutPanelPrzyciski.Size = new System.Drawing.Size(174, 31);
 			this.flowLayoutPanelPrzyciski.TabIndex = 999;
 			// 
 			// panelZawartosc
@@ -91,7 +93,7 @@ namespace ProFak.UI
 			this.panelZawartosc.Location = new System.Drawing.Point(3, 3);
 			this.panelZawartosc.MinimumSize = new System.Drawing.Size(200, 100);
 			this.panelZawartosc.Name = "panelZawartosc";
-			this.panelZawartosc.Size = new System.Drawing.Size(221, 122);
+			this.panelZawartosc.Size = new System.Drawing.Size(221, 120);
 			this.panelZawartosc.TabIndex = 1;
 			// 
 			// Dialog
@@ -111,6 +113,7 @@ namespace ProFak.UI
 			this.tableLayoutPanelZawartosc.ResumeLayout(false);
 			this.tableLayoutPanelZawartosc.PerformLayout();
 			this.flowLayoutPanelPrzyciski.ResumeLayout(false);
+			this.flowLayoutPanelPrzyciski.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
