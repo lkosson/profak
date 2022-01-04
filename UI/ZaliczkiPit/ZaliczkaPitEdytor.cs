@@ -191,6 +191,11 @@ namespace ProFak.UI
 					var podstawa = Rekord.Przychody - Rekord.Koszty - Rekord.SkladkiZus - ulga;
 					var zmniejszenie = 0m;
 
+					if (podstawa <= 8001.49m) zmniejszenie = podstawa * 0.17m;
+					else if (podstawa <= 13000.49m) zmniejszenie = 1360 - 834.88m * (podstawa - 8000) / 5000;
+					else if (podstawa <= 85528.49m) zmniejszenie = 525.12m;
+					else if (podstawa <= 127000.59m) zmniejszenie = 525.12m - 525.12m * (podstawa - 85528) / 41472;
+
 					if (podstawa <= 85528) Rekord.Podatek = Decimal.Round(podstawa * 0.17m - zmniejszenie, 0, MidpointRounding.AwayFromZero);
 					else if (podstawa <= 1000000) Rekord.Podatek = 14539.76m + Decimal.Round((podstawa - 85528) * 0.32m - zmniejszenie, 0, MidpointRounding.AwayFromZero);
 					else Rekord.Podatek = 14539.76m + Decimal.Round((podstawa - 85528) * 0.32m + (podstawa - 1000000) * 0.04m, 0, MidpointRounding.AwayFromZero);
@@ -198,7 +203,6 @@ namespace ProFak.UI
 
 				if (Rekord.Miesiac.Year < 2022) Rekord.Podatek -= Decimal.Round(podstawaZdrowotna * 0.0775m, 0, MidpointRounding.AwayFromZero);
 			}
-
 
 			foreach (var poprzedniaZaliczka in poprzednieZaliczki)
 			{
