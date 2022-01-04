@@ -1,0 +1,749 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:etd="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2018/08/24/eD/DefinicjeTypy/" xmlns:kck="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2013/05/23/eD/KodyCECHKRAJOW/" xmlns:tns="http://jpk.mf.gov.pl/wzor/2019/09/27/09271/" targetNamespace="http://jpk.mf.gov.pl/wzor/2019/09/27/09271/" elementFormDefault="qualified" attributeFormDefault="unqualified" xml:lang="pl">
+	<xsd:import namespace="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2018/08/24/eD/DefinicjeTypy/" schemaLocation="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2018/08/24/eD/DefinicjeTypy/StrukturyDanych_v5-0E.xsd"/>
+	<xsd:import namespace="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2013/05/23/eD/KodyCECHKRAJOW/" schemaLocation="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2013/05/23/eD/KodyCECHKRAJOW/KodyCechKrajow_v3-0E.xsd"/>
+	<xsd:simpleType name="TKodFormularza">
+		<xsd:annotation>
+			<xsd:documentation>Symbol wzoru formularza</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="JPK_FA"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TCelZlozenia">
+		<xsd:annotation>
+			<xsd:documentation>Określenie celu złożenia JPK</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:byte">
+			<xsd:enumeration value="1">
+				<xsd:annotation>
+					<xsd:documentation>złożenie JPK po raz pierwszy</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="TNaglowek">
+		<xsd:annotation>
+			<xsd:documentation>Nagłówek JPK_FA</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="KodFormularza">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="tns:TKodFormularza">
+							<xsd:attribute name="kodSystemowy" type="xsd:string" use="required" fixed="JPK_FA (3)"/>
+							<xsd:attribute name="wersjaSchemy" type="xsd:string" use="required" fixed="1-0"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="WariantFormularza">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:byte">
+						<xsd:enumeration value="3"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="CelZlozenia" type="tns:TCelZlozenia"/>
+			<xsd:element name="DataWytworzeniaJPK" type="etd:TDataCzas">
+				<xsd:annotation>
+					<xsd:documentation>Data i czas wytworzenia JPK_FA</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataOd" type="tns:TData">
+				<xsd:annotation>
+					<xsd:documentation>Data początkowa okresu, którego dotyczy JPK_FA</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataDo" type="tns:TData">
+				<xsd:annotation>
+					<xsd:documentation>Data końcowa okresu, którego dotyczy JPK_FA</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="KodUrzedu" type="etd:TKodUS">
+				<xsd:annotation>
+					<xsd:documentation>Kod urzędu skarbowego, właściwy dla podatnika przekazującego JPK_FA</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="TKwotowy">
+		<xsd:annotation>
+			<xsd:documentation>Wartość numeryczna 18 znaków max, w tym 2 znaki po przecinku</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="18"/>
+			<xsd:fractionDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TNaturalnyJPK">
+		<xsd:annotation>
+			<xsd:documentation>Liczby naturalne większe od zera</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="etd:TNaturalny">
+			<xsd:minExclusive value="0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TZnakowyJPK">
+		<xsd:annotation>
+			<xsd:documentation>Typ znakowy ograniczony do 256 znaków</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="256"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TIlosciJPK">
+		<xsd:annotation>
+			<xsd:documentation>Wykorzystywany do określenia ilości. Wartość numeryczna 22 znaki max, w tym 6 po przecinku.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="22"/>
+			<xsd:fractionDigits value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TData">
+		<xsd:restriction base="etd:TData">
+			<xsd:minInclusive value="2016-07-01"/>
+			<xsd:maxInclusive value="2030-01-01"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TDataT">
+		<xsd:annotation>
+			<xsd:documentation>Data transakcji lub zdarzenia</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="etd:TData">
+			<xsd:minInclusive value="2006-01-01"/>
+			<xsd:maxInclusive value="2030-01-01"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="JPK">
+		<xsd:annotation>
+			<xsd:documentation>Jednolity plik kontrolny dla faktur VAT</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Naglowek">
+					<xsd:annotation>
+						<xsd:documentation>Nagłówek JPK_FA</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:complexContent>
+							<xsd:extension base="tns:TNaglowek"/>
+						</xsd:complexContent>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="Podmiot1">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="IdentyfikatorPodmiotu" type="etd:TIdentyfikatorOsobyNiefizycznej1">
+								<xsd:annotation>
+									<xsd:documentation>Dane identyfikujące podmiot</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:choice>
+								<xsd:element name="AdresPodmiotu" type="etd:TAdresPolski1">
+									<xsd:annotation>
+										<xsd:documentation>Adres podmiotu w Polsce</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="AdresPodmiotu2" type="etd:TAdresZagraniczny">
+									<xsd:annotation>
+										<xsd:documentation>Adres podmiotu zagraniczny</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:choice>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="Faktura" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation>Na podstawie art. 106 a-q ustawy z 11 marca 2004 r. o podatku od towarów i usług (Dz. U. z 2018 r. poz. 2174 z późn. zm.). Wartości sprzedaży i kwoty podatku wypełnia się w walucie, w której wystawiono fakturę, z wyjątkiem pól, w których kwoty podatku zostały przeliczone zgodnie z art. 31a w związku z art. 106e ust. 11 ustawy</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="KodWaluty" type="kck:currCode_Type">
+								<xsd:annotation>
+									<xsd:documentation>Trzyliterowy kod waluty (ISO-4217), w której faktura, zamówienie lub umowa zostały wystawione</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_1" type="tns:TDataT">
+								<xsd:annotation>
+									<xsd:documentation>Data wystawienia</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_2A" type="tns:TZnakowyJPK">
+								<xsd:annotation>
+									<xsd:documentation>Kolejny numer faktury, nadany w ramach jednej lub więcej serii, który w sposób jednoznaczny indentyfikuje fakturę</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_3A" type="tns:TZnakowyJPK" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Imię i nazwisko lub nazwa nabywcy towarów lub usług. Pole opcjonalne dla przypadku określonego w art. 106e ust. 5 pkt 3 ustawy</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_3B" type="tns:TZnakowyJPK" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Adres nabywcy. Pole opcjonalne dla przypadków określonych w art. 106e ust. 5 pkt 3 ustawy oraz w § 3 pkt 4 rozporządzenia Ministra Finansów z dnia 3 grudnia 2013 r. w sprawie wystawiania faktur (Dz. U. z 2013 r., poz. 1485)</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_3C" type="tns:TZnakowyJPK">
+								<xsd:annotation>
+									<xsd:documentation>Imię i nazwisko lub nazwa sprzedawcy towarów lub usług</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_3D" type="tns:TZnakowyJPK">
+								<xsd:annotation>
+									<xsd:documentation>Adres sprzedawcy</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_4A" type="kck:MSCountryCode_Type" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Kod (prefiks) podatnika VAT UE dla przypadków określonych w art. 97 ust. 10 ustawy</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_4B" type="etd:TNrIdentyfikacjiPodatkowej" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Numer, za pomocą którego podatnik jest zidentyfikowany na potrzeby podatku, z zastrzeżeniem pkt 24 lit. a ustawy. Pole opcjonalne dla przypadku określonego w art. 106e ust. 4 pkt 2 ustawy. W przypadku faktur wystawianych w procedurze uproszczonej przez drugiego w kolejności podatnika, o którym mowa w art. 135 ust. 1 pkt 4 lit. b i c oraz ust. 2 ustawy, numer, o którym mowa w art. 136 ust. 1 pkt 3 ustawy</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_5A" type="kck:MSCountryCode_Type" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Kod (prefiks) nabywcy - podatnika VAT UE dla przypadków określonych w art. 97 ust. 10 ustawy</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_5B" type="etd:TNrIdentyfikacjiPodatkowej" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Numer, za pomocą którego nabywca towarów lub usług jest identyfikowany dla podatku lub podatku od wartości dodanej, pod którym otrzymał on towary lub usługi, z zastrzeżeniem pkt 24 lit. b ustawy. Pole opcjonalne dla przypadku określonego w art. 106e ust. 5 pkt 2 ustawy. W przypadku faktur wystawianych w procedurze uproszczonej przez drugiego w kolejności podatnika, o którym mowa w art. 135 ust. 1 pkt 4 lit. b i c oraz ust. 2 ustawy, numer, o którym mowa w art. 136 ust. 1 pkt 4 ustawy</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_6" type="tns:TDataT" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Data dokonania lub zakończenia dostawy towarów lub wykonania usługi lub data otrzymania zapłaty, o której mowa w art. 106b ust. 1 pkt 4, o ile taka data jest określona i różni się od daty wystawienia faktury</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:sequence minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Pola opcjonalne dla przypadków określonych w art. 106e ust. 2 i 3 oraz ust. 4 pkt 1, a także ust. 4 pkt 3 i ust. 5 pkt 1-3 ustawy</xsd:documentation>
+								</xsd:annotation>
+								<!--gdy przynajmniej jedno z pól P_106E_2 i P_106E_3 przyjmuje wartość "true" oraz gdy pole P_18 przyjmuje wartość "true"-->
+								<xsd:element name="P_13_1" type="tns:TKwotowy">
+									<xsd:annotation>
+										<xsd:documentation>Suma wartości sprzedaży netto ze stawką podstawową - aktualnie 23% albo 22%. W przypadku faktur zaliczkowych, kwota zaliczki netto</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="P_14_1" type="tns:TKwotowy">
+									<xsd:annotation>
+										<xsd:documentation>Kwota podatku od sumy wartości sprzedaży netto ze stawką podstawową - aktualnie 23% albo 22%. W przypadku faktur zaliczkowych, kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="P_14_1W" type="tns:TKwotowy" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>W przypadku gdy faktura jest wystawiona w walucie obcej, kwota podatku od sumy wartości sprzedaży netto ze stawką podstawową, przeliczona zgodnie z art. 31a w związku z art. 106e ust. 11 ustawy - aktualnie 23% albo 22%. W przypadku faktur zaliczkowych, kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy </xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+							<xsd:sequence minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Pola opcjonalne dla przypadków określonych w art. 106e ust. 2 i 3 oraz ust. 4 pkt 1, a także ust. 4 pkt 3 i ust. 5 pkt 1-3 ustawy</xsd:documentation>
+								</xsd:annotation>
+								<!--gdy przynajmniej jedno z pól P_106E_2 i P_106E_3 przyjmuje wartość "true" oraz gdy pole P_18 przyjmuje wartość "true"-->
+								<xsd:element name="P_13_2" type="tns:TKwotowy">
+									<xsd:annotation>
+										<xsd:documentation>Suma wartości sprzedaży netto ze stawką obniżoną pierwszą - aktualnie 8 % albo 7%. W przypadku faktur zaliczkowych, kwota zaliczki netto</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="P_14_2" type="tns:TKwotowy">
+									<xsd:annotation>
+										<xsd:documentation>Kwota podatku od sumy wartości sprzedaży netto ze stawką obniżoną pierwszą - aktualnie 8% albo 7%. W przypadku faktur zaliczkowych, kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="P_14_2W" type="tns:TKwotowy" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>W przypadku gdy faktura jest wystawiona w walucie obcej, kwota podatku od sumy wartości sprzedaży netto ze stawką obniżoną, przeliczona zgodnie z art. 31a w związku z art. 106e ust. 11 ustawy - aktualnie 8% albo 7%. W przypadku faktur zaliczkowych, kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+							<xsd:sequence minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Pola opcjonalne dla przypadków określonych w art. 106e ust. 2 i 3 oraz ust. 4 pkt 1, a także ust. 4 pkt 3 i ust. 5 pkt 1-3 ustawy</xsd:documentation>
+								</xsd:annotation>
+								<!--gdy przynajmniej jedno z pól P_106E_2 i P_106E_3 przyjmuje wartość "true" oraz gdy pole P_18 przyjmuje wartość "true"-->
+								<xsd:element name="P_13_3" type="tns:TKwotowy">
+									<xsd:annotation>
+										<xsd:documentation>Suma wartości sprzedaży netto ze stawką obniżoną drugą - aktualnie 5%. W przypadku faktur zaliczkowych, kwota zaliczki netto</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="P_14_3" type="tns:TKwotowy">
+									<xsd:annotation>
+										<xsd:documentation>Kwota podatku od sumy wartości sprzedaży netto ze stawką obniżoną drugą - aktualnie 5%. W przypadku faktur zaliczkowych, kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="P_14_3W" type="tns:TKwotowy" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>W przypadku gdy faktura jest wystawiona w walucie obcej, kwota podatku od sumy wartości sprzedaży netto ze stawką obniżoną drugą, przeliczona zgodnie z art. 31a w związku z art. 106e ust. 11 ustawy - aktualnie 5%. W przypadku faktur zaliczkowych, kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+							<xsd:sequence minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Pola opcjonalne dla przypadków określonych w art. 106e ust. 2 i 3 oraz ust. 4 pkt 1, a także ust. 4 pkt 3 i ust. 5 pkt 1-3 ustawy</xsd:documentation>
+								</xsd:annotation>
+								<!--gdy przynajmniej jedno z pól P_106E_2 i P_106E_3 przyjmuje wartość "true" oraz gdy pole P_18 przyjmuje wartość "true"-->
+								<xsd:element name="P_13_4" type="tns:TKwotowy">
+									<xsd:annotation>
+										<xsd:documentation>Suma wartości sprzedaży netto ze stawką obniżoną trzecią w walucie, w której faktura została wystawiona - procedura odwrotnego obciążenia, dla której podatnikiem jest nabywca zgodnie z art. 17 ust. 1 pkt 7 i 8 ustawy VAT oraz dla stawki 4% w przypadku ryczałtu dla taksówek osobowych. W przypadku faktur zaliczkowych, kwota zaliczki netto</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="P_14_4" type="tns:TKwotowy">
+									<xsd:annotation>
+										<xsd:documentation>Kwota "0" dla procedury odwrotnego obciążenia, dla której podatnikiem jest nabywca zgodnie z art. 17 ust. 1 pkt 7 i 8 ustawy VAT oraz kwota podatku od sumy wartości sprzedaży netto dla stawki 4% w walucie, w której faktura została wystawiona w przypadku ryczałtu dla taksówek osobowych. W przypadku faktur zaliczkowych, kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="P_14_4W" type="tns:TKwotowy" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>W przypadku gdy faktura jest wystawiona w walucie obcej, kwota "0" dla procedury odwrotnego obciążenia, dla której podatnikiem jest nabywca zgodnie z art. 17 ust. 1 pkt 7 i 8 ustawy VAT oraz kwota podatku od sumy wartości sprzedaży netto w walucie obcej dla stawki 4% w przypadku ryczałtu dla taksówek osobowych, przeliczona zgodnie z art. 31a w związku z art. 106e ust. 11 ustawy. W przypadku faktur zaliczkowych, kwota podatku wyliczona według wzoru, o którym mowa w art. 106f ust. 1 pkt 3 ustawy</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+							<xsd:element name="P_13_5" type="tns:TKwotowy" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Suma wartości sprzedaży netto dla transakcji dostawy towarów oraz świadczenia usług poza terytorium kraju. W przypadku faktur zaliczkowych, kwota zaliczki netto. Pole opcjonalne dla przypadków określonych w art. 106e ust.2 i 3 oraz ust. 4 pkt 1, a także ust. 4 pkt 3 i ust. 5 pkt 1-3 ustawy</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_13_6" type="tns:TKwotowy" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Suma wartości sprzedaży netto ze stawką 0%. W przypadku faktur zaliczkowych, kwota zaliczki netto. Pole opcjonalne dla przypadków określonych w art. 106e ust. 2 i 3, a także ust. 4 pkt 3 i ust. 5 pkt 1-3 ustawy</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_13_7" type="tns:TKwotowy" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Suma wartości sprzedaży zwolnionej. W przypadku faktur zaliczkowych, kwota zaliczki netto. Pola opcjonalne dla przypadków określonych w art. 106e ust. 2 i 3, a także ust. 4 pkt 3 i ust. 5 pkt 1-3 ustawy</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_15" type="tns:TKwotowy">
+								<xsd:annotation>
+									<xsd:documentation>Kwota należności ogółem lub w przypadku faktur zaliczkowych, otrzymana kwota zapłaty</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_16" type="xsd:boolean" default="false">
+								<xsd:annotation>
+									<xsd:documentation>W przypadku dostawy towarów lub świadczenia usług, w odniesieniu do których obowiązek podatkowy powstaje zgodnie z art. 19a ust. 5 pkt 1 lub art. 21 ust. 1 - wyrazy "metoda kasowa", należy podać wartość "true"; w przeciwnym przypadku - wartość "false"</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_17" type="xsd:boolean" default="false">
+								<xsd:annotation>
+									<xsd:documentation>W przypadku faktur, o których mowa w art. 106d ust. 1 - wyraz "samofakturowanie", należy podać wartość "true"; w przeciwnym przypadku - wartość "false"</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_18" type="xsd:boolean" default="false">
+								<xsd:annotation>
+									<xsd:documentation>W przypadku dostawy towarów lub wykonania usługi, dla których obowiązanym do rozliczenia podatku od wartości dodanej lub podatku o podobnym charakterze jest nabywca towaru lub usługi - wyrazy "odwrotne obciążenie", należy podać wartość "true", w przeciwnym przypadku - wartość "false"</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_18A" type="xsd:boolean" default="false">
+								<xsd:annotation>
+									<xsd:documentation>W przypadku faktur, w których kwota należności ogółem stanowi kwotę, o której mowa w art. 19 pkt 2 ustawy z dnia 6 marca 2018 r. - Prawo przedsiębiorców, obejmujących dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług wymienionych w załączniku nr 15 do ustawy - wyrazy „mechanizm podzielonej płatności”, należy podać wartość "true", w przeciwnym przypadku - wartość "false"</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_19" type="xsd:boolean" default="false">
+								<xsd:annotation>
+									<xsd:documentation>W przypadku dostawy towarów lub świadczenia usług zwolnionych od podatku na podstawie art. 43 ust. 1, art. 113 ust. 1 i 9 albo przepisów wydanych na podstawie art. 82 ust. 3 należy podać wartość "true", w przeciwnym przypadku - wartość "false"</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:sequence minOccurs="0">
+								<xsd:element name="P_19A" type="tns:TZnakowyJPK" default="false" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>Jeśli pole P_19 równa się "true" - należy wskazać przepis ustawy albo aktu wydanego na podstawie ustawy, na podstawie którego podatnik stosuje zwolnienie od podatku</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="P_19B" type="tns:TZnakowyJPK" default="false" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>Jeśli pole P_19 równa się "true" - należy wskazać przepis dyrektywy 2006/112/WE, który zwalnia od podatku taką dostawę towarów lub takie świadczenie usług</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="P_19C" type="tns:TZnakowyJPK" default="false" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>Jeśli pole P_19 równa się "true" - należy wskazać inną podstawę prawną wskazującą na to, że dostawa towarów lub świadczenie usług korzysta ze zwolnienia
+</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+							<xsd:element name="P_20" type="xsd:boolean" default="false">
+								<xsd:annotation>
+									<xsd:documentation>W przypadku, o którym mowa w art. 106c ustawy należy podać wartość "true", w przeciwnym przypadku - wartość "false"</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:sequence minOccurs="0">
+								<xsd:element name="P_20A" type="tns:TZnakowyJPK">
+									<xsd:annotation>
+										<xsd:documentation>Jeśli pole P_20 równa się "true" - należy podać nazwę organu egzekucyjnego lub imię i nazwisko komornika sądowego</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="P_20B" type="tns:TZnakowyJPK">
+									<xsd:annotation>
+										<xsd:documentation>Jeśli pole P_20 równa się "true" - należy podać adres organu egzekucyjnego lub komornika sądowego</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+							<xsd:element name="P_21" type="xsd:boolean" default="false">
+								<xsd:annotation>
+									<xsd:documentation>W przypadku faktur wystawianych w imieniu i na rzecz podatnika przez jego przedstawiciela podatkowego należy podać wartość "true", w przeciwnym przypadku - wartość "false"</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:sequence minOccurs="0">
+								<xsd:element name="P_21A" type="tns:TZnakowyJPK" default="false">
+									<xsd:annotation>
+										<xsd:documentation>Jeśli pole P_21 równa się "true" - należy podać nazwę lub imię i nazwisko przedstawiciela podatkowego</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="P_21B" type="tns:TZnakowyJPK" default="false">
+									<xsd:annotation>
+										<xsd:documentation>Jeśli pole P_21 równa się "true" - należy podać adres przedstawiciela podatkowego</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="P_21C" type="tns:TZnakowyJPK" default="false">
+									<xsd:annotation>
+										<xsd:documentation>Jeśli pole P_21 równa się "true" - należy podać numer przedstawiciela podatkowego, za pomocą którego jest on zidentyfikowany na potrzeby podatku</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+							<xsd:element name="P_22" type="xsd:boolean" default="false">
+								<xsd:annotation>
+									<xsd:documentation>W przypadku gdy przedmiotem wewnątrzwspólnotowej dostawy są nowe środki transportu należy podać wartość "true", w przeciwnym przypadku - wartość "false"</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:sequence minOccurs="0">
+								<xsd:element name="P_22A" type="etd:TData">
+									<xsd:annotation>
+										<xsd:documentation>Jeśli pole P_22 równa się "true" - należy podać datę dopuszczenia nowego środka transportu do użytku</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="P_22B" type="tns:TZnakowyJPK" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>Jeśli pole P_22 równa się "true" a dostawa dotyczy pojazdów lądowych, o których mowa w art. 2 pkt 10 lit. a ustawy - należy podać przebieg pojazdu</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="P_22C" type="tns:TZnakowyJPK" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>Jeśli pole P_22 równa się "true" a dostawa dotyczy jednostek pływających, o których mowa w art. 2 pkt 10 lit. b ustawy, oraz statków powietrznych, o których mowa w art. 2 pkt 10 lit. c ustawy, należy podać liczbę godzin roboczych używania nowego środka transportu</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+							<xsd:element name="P_23" type="xsd:boolean" default="false">
+								<xsd:annotation>
+									<xsd:documentation>W przypadku faktur wystawianych w procedurze uproszczonej przez drugiego w kolejności podatnika, o którym mowa w art. 135 ust. 1 pkt 4 lit. b i c oraz ust. 2, zawierającej adnotację, o której mowa w art. 136 ust. 1 pkt 1 i stwierdzenie, o którym mowa w art. 136 ust. 1 pkt 2 ustawy należy podać wartość "true", w przeciwnym przypadku - wartość "false"</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_106E_2" type="xsd:boolean" default="false">
+								<xsd:annotation>
+									<xsd:documentation>W przypadku świadczenia usług turystyki, dla których podstawę opodatkowania stanowi zgodnie z art. 119 ust. 1 kwota marży, faktura - w zakresie danych określonych w ust. 1 pkt 1-17 - powinna zawierać wyłącznie dane określone w ust. 1 pkt 1-8 i 15-17, a także wyrazy "procedura marży dla biur podróży", należy podać wartość "true", w przeciwnym przypadku - wartość "false"
+</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:sequence>
+								<xsd:element name="P_106E_3" type="xsd:boolean" default="false">
+									<xsd:annotation>
+										<xsd:documentation>W przypadku dostawy towarów używanych, dzieł sztuki, przedmiotów kolekcjonerskich i antyków, dla których podstawę opodatkowania stanowi zgodnie z art. 120 ust. 4 i 5 marża, należy podać wartość "true", w przeciwnym przypadku - wartość "false"</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="P_106E_3A" type="tns:TZnakowyJPK" default="false" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>Jeżeli pole P_106E_3 równa się "true", należy podać wyrazy: "procedura marży - towary używane" lub "procedura marży - dzieła sztuki" lub "procedura marży - przedmioty kolekcjonerskie i antyki"</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+							<xsd:element name="RodzajFaktury">
+								<xsd:annotation>
+									<xsd:documentation>Rodzaj faktury</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="tns:TZnakowyJPK">
+										<xsd:enumeration value="VAT">
+											<xsd:annotation>
+												<xsd:documentation>Faktura podstawowa oraz faktura wystawiona w związku z art. 106f ust. 3 ustawy</xsd:documentation>
+											</xsd:annotation>
+										</xsd:enumeration>
+										<xsd:enumeration value="KOREKTA">
+											<xsd:annotation>
+												<xsd:documentation>Faktura korygująca</xsd:documentation>
+											</xsd:annotation>
+										</xsd:enumeration>
+										<xsd:enumeration value="ZAL">
+											<xsd:annotation>
+												<xsd:documentation>Faktura dokumentująca otrzymanie zapłaty lub jej części przed dokonaniem czynności oraz faktura wystawiona w związku z art. 106f ust. 4 ustawy</xsd:documentation>
+											</xsd:annotation>
+										</xsd:enumeration>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:sequence minOccurs="0">
+								<xsd:element name="PrzyczynaKorekty" type="tns:TZnakowyJPK">
+									<xsd:annotation>
+										<xsd:documentation>Przyczyna korekty dla faktur korygujących</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="NrFaKorygowanej" type="tns:TZnakowyJPK">
+									<xsd:annotation>
+										<xsd:documentation>Numer faktury korygowanej</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="OkresFaKorygowanej" type="tns:TZnakowyJPK" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>Dla faktury korygującej - okres, do którego odnosi się udzielany opust lub obniżka, w przypadku gdy podatnik udziela opustu lub obniżki ceny w odniesieniu do wszystkich dostaw towarów lub usług dokonanych lub świadczonych na rzecz jednego odbiorcy w danym okresie</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+							<xsd:element name="NrFaZaliczkowej" type="tns:TZnakowyJPK" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Dla faktury, o której mowa w art. 106f ust. 3 i 4 ustawy - numery poprzednich faktur zaliczkowych</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="FakturaCtrl">
+					<xsd:annotation>
+						<xsd:documentation>Sumy kontrolne dla faktur</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="LiczbaFaktur" type="tns:TNaturalnyJPK">
+								<xsd:annotation>
+									<xsd:documentation>Liczba faktur, w okresie którego dotyczy JPK_FA</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="WartoscFaktur" type="tns:TKwotowy">
+								<xsd:annotation>
+									<xsd:documentation>Łączna wartość kolumny P_15 w tabeli Faktura w okresie, którego dotyczy JPK_FA</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="FakturaWiersz" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation>Szczegółowe pozycje faktur w walucie, w której wystawiono fakturę</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="P_2B" type="tns:TZnakowyJPK">
+								<xsd:annotation>
+									<xsd:documentation>Kolejny numer faktury, nadany w ramach jednej lub więcej serii, który w sposób jednoznaczny indentyfikuje fakturę</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_7" type="tns:TZnakowyJPK" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Nazwa (rodzaj) towaru lub usługi. Pole opcjonalne wyłącznie dla przypadku określonego w art 106j ust. 3 pkt 2 ustawy (faktura korekta)</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_8A" type="tns:TZnakowyJPK" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Miara dostarczonych towarów lub zakres wykonanych usług. Pole opcjonalne dla przypadku określonego w art. 106e ust. 5 pkt 3 ustawy</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_8B" type="tns:TIlosciJPK" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Ilość (liczba) dostarczonych towarów lub zakres wykonanych usług. Pole opcjonalne dla przypadku określonego w art. 106e ust. 5 pkt 3 ustawy</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_9A" type="tns:TKwotowy" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Cena jednostkowa towaru lub usługi bez kwoty podatku (cena jednostkowa netto). Pole opcjonalne dla przypadków określonych w art. 106e ust. 2 i 3 oraz ust. 5 pkt 3 ustawy</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_9B" type="tns:TKwotowy" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Cena wraz z kwotą podatku (cena jednostkowa brutto), w przypadku zastosowania art. 106e ust. 7 i 8 ustawy</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_10" type="tns:TKwotowy" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Kwoty wszelkich opustów lub obniżek cen, w tym w formie rabatu z tytułu wcześniejszej zapłaty, o ile nie zostały one uwzględnione w cenie jednostkowej netto. Pole opcjonalne dla przypadków określonych w art. 106e ust. 2 i 3 oraz ust. 5 pkt 1 ustawy</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_11" type="tns:TKwotowy" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Wartość dostarczonych towarów lub wykonanych usług, objętych transakcją, bez kwoty podatku (wartość sprzedaży netto). Pole opcjonalne dla przypadków określonych w art. 106e ust. 2 i 3 oraz ust. 5 pkt 3 ustawy</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_11A" type="tns:TKwotowy" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Wartość sprzedaży brutto, w przypadku zastosowania art. 106e ust. 7 i 8 ustawy</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_12" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Stawka podatku. Pole opcjonalne dla przypadków określonych w art. 106e ust. 2, 3, 4 pkt 3 i ust. 5 pkt 3 ustawy</xsd:documentation>
+								</xsd:annotation>
+								<!--gdy przynajmniej jedno z pól P_106E_2 i P_106E_3 przyjmuje wartość "true"-->
+								<xsd:simpleType>
+									<xsd:restriction base="tns:TZnakowyJPK">
+										<xsd:maxLength value="2"/>
+										<xsd:enumeration value="23"/>
+										<xsd:enumeration value="22"/>
+										<xsd:enumeration value="8"/>
+										<xsd:enumeration value="7"/>
+										<xsd:enumeration value="5"/>
+										<xsd:enumeration value="4"/>
+										<xsd:enumeration value="3"/>
+										<xsd:enumeration value="0"/>
+										<xsd:enumeration value="zw">
+											<xsd:annotation>
+												<xsd:documentation>zwolnione z opodatkowania</xsd:documentation>
+											</xsd:annotation>
+										</xsd:enumeration>
+										<xsd:enumeration value="oo">
+											<xsd:annotation>
+												<xsd:documentation>odwrotne obciążenie</xsd:documentation>
+											</xsd:annotation>
+										</xsd:enumeration>
+										<xsd:enumeration value="np">
+											<xsd:annotation>
+												<xsd:documentation>niepodlegające opodatkowaniu-transakcje dostawy towarów oraz świadczenia usług poza terytorium kraju</xsd:documentation>
+											</xsd:annotation>
+										</xsd:enumeration>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="FakturaWierszCtrl">
+					<xsd:annotation>
+						<xsd:documentation>Sumy kontrolne dla wierszy faktur</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="LiczbaWierszyFaktur" type="tns:TNaturalnyJPK">
+								<xsd:annotation>
+									<xsd:documentation>Liczba wierszy faktur, w okresie którego dotyczy JPK_FA</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="WartoscWierszyFaktur" type="tns:TKwotowy">
+								<xsd:annotation>
+									<xsd:documentation>Łączna wartość kolumny P_11 tabeli FakturaWiersz w okresie, którego dotyczy JPK_FA</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:sequence minOccurs="0">
+					<xsd:element name="Zamowienie" maxOccurs="unbounded">
+						<xsd:annotation>
+							<xsd:documentation>Zamówienia lub umowy, o których mowa w art. 106f ust. 1 pkt 4 ustawy (dla faktur zaliczkowych) w walucie, w której wystawiono fakturę zaliczkową</xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="P_2AZ" type="tns:TZnakowyJPK">
+									<xsd:annotation>
+										<xsd:documentation>Numer faktury, z którym związane jest zamówienie lub umowa, identyczny jak w polu P_2A</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="WartoscZamowienia" type="tns:TKwotowy">
+									<xsd:annotation>
+										<xsd:documentation>Wartość zamówienia lub umowy z uwzględnieniem kwoty podatku</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:sequence>
+									<xsd:element name="ZamowienieWiersz" maxOccurs="unbounded">
+										<xsd:annotation>
+											<xsd:documentation>Szczegółowe pozycje zamówienia lub umowy w walucie, w której wystawiono fakturę zaliczkową</xsd:documentation>
+										</xsd:annotation>
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element name="P_7Z" type="tns:TZnakowyJPK" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Nazwa (rodzaj) towaru lub usługi</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="P_8AZ" type="tns:TZnakowyJPK" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Miara zamówionego towaru lub zakres usługi</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="P_8BZ" type="tns:TIlosciJPK" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Ilość zamówionego towaru lub zakres usługi</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="P_9AZ" type="tns:TKwotowy" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Cena jednostkowa netto</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="P_11NettoZ" type="tns:TKwotowy" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Wartość zamówionego towaru lub usługi bez kwoty podatku</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="P_11VatZ" type="tns:TKwotowy" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Kwota podatku od zamówionego towaru lub usługi</xsd:documentation>
+													</xsd:annotation>
+												</xsd:element>
+												<xsd:element name="P_12Z" minOccurs="0">
+													<xsd:annotation>
+														<xsd:documentation>Stawka podatku</xsd:documentation>
+													</xsd:annotation>
+													<!--gdy przynajmniej jedno z pól P_106E_2 i P_106E_3 przyjmuje wartość "true"-->
+													<xsd:simpleType>
+														<xsd:restriction base="tns:TZnakowyJPK">
+															<xsd:maxLength value="2"/>
+															<xsd:enumeration value="23"/>
+															<xsd:enumeration value="22"/>
+															<xsd:enumeration value="8"/>
+															<xsd:enumeration value="7"/>
+															<xsd:enumeration value="5"/>
+															<xsd:enumeration value="4"/>
+															<xsd:enumeration value="3"/>
+															<xsd:enumeration value="0"/>
+															<xsd:enumeration value="zw">
+																<xsd:annotation>
+																	<xsd:documentation>zwolnione z opodatkowania</xsd:documentation>
+																</xsd:annotation>
+															</xsd:enumeration>
+															<xsd:enumeration value="oo">
+																<xsd:annotation>
+																	<xsd:documentation>odwrotne obciążenie</xsd:documentation>
+																</xsd:annotation>
+															</xsd:enumeration>
+															<xsd:enumeration value="np">
+																<xsd:annotation>
+																	<xsd:documentation>niepodlegające opodatkowaniu-transakcje dostawy towarów oraz świadczenia usług poza terytorium kraju</xsd:documentation>
+																</xsd:annotation>
+															</xsd:enumeration>
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:element>
+											</xsd:sequence>
+										</xsd:complexType>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="ZamowienieCtrl">
+						<xsd:annotation>
+							<xsd:documentation>Sumy kontrolne dla zamówień lub umów</xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="LiczbaZamowien" type="tns:TNaturalnyJPK">
+									<xsd:annotation>
+										<xsd:documentation>Liczba zamówień lub umów, w okresie którego dotyczy JPK_FA</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="WartoscZamowien" type="tns:TKwotowy">
+									<xsd:annotation>
+										<xsd:documentation>Łączna wartość kolumny WartoscZamowienia w Tabeli Zamowienie w okresie, którego dotyczy JPK_FA</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

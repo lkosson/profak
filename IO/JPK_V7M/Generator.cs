@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace ProFak.IO.JPK
+namespace ProFak.IO.JPK_V7M
 {
-	class JPK_V7M
+	class Generator
 	{
 		public static void Utworz(string plik, Baza baza, DeklaracjaVat deklaracja)
 		{

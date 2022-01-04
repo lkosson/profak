@@ -1,5 +1,4 @@
 ﻿using ProFak.DB;
-using ProFak.IO.JPK;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,7 +26,7 @@ namespace ProFak.UI
 
 			using var nowyKontekst = new Kontekst(kontekst);
 			nowyKontekst.Dodaj(deklaracja);
-			JPK_V7M.Utworz(dialog.FileName, nowyKontekst.Baza, deklaracja);
+			IO.JPK_V7M.Generator.Utworz(dialog.FileName, nowyKontekst.Baza, deklaracja);
 			MessageBox.Show("Plik został zapisany pomyślnie.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 	}
