@@ -64,7 +64,39 @@ namespace ProFak.DB
 			using var baza = new DB.Baza();
 			baza.Database.Migrate();
 			DaneStartowe.Zaladuj(baza);
+			WykonajAutomatycznaKopieBazy();
 			return true;
+		}
+
+		private static void WykonajAutomatycznaKopieBazy()
+		{
+			try
+			{
+				if (String.IsNullOrEmpty(Sciezka) || !File.Exists(Sciezka)) return;
+				var sciezkaKopiiDziennej = Sciezka + "~";
+				var sciezkaKopiiMiesiecznej = Sciezka + "~~";
+				var dataBazy = File.GetLastWriteTime(Sciezka);
+				var dataKopiiDziennej = File.Exists(sciezkaKopiiDziennej) ? File.GetLastWriteTime(sciezkaKopiiDziennej) : DateTime.MinValue;
+				var dataKopiiMiesiecznej = File.Exists(sciezkaKopiiMiesiecznej) ? File.GetLastWriteTime(sciezkaKopiiMiesiecznej) : DateTime.MinValue;
+				if (dataBazy.Date > dataKopiiDziennej.Date) WykonajKopie(sciezkaKopiiDziennej);
+				if (dataBazy.Month != dataKopiiMiesiecznej.Month || dataBazy.Year != dataKopiiMiesiecznej.Year) WykonajKopie(sciezkaKopiiMiesiecznej);
+			}
+			catch
+			{
+			}
+		}
+
+		private static void WykonajKopie(string plikDocelowy)
+		{
+			string plikNieaktualny = null;
+			if (File.Exists(plikDocelowy))
+			{
+				plikNieaktualny = plikDocelowy + "-del";
+				File.Move(plikDocelowy, plikNieaktualny);
+			}
+			File.Copy(Sciezka, plikDocelowy);
+			if (plikNieaktualny != null) File.Delete(plikNieaktualny);
+			File.SetAttributes(plikDocelowy, FileAttributes.Hidden | FileAttributes.Compressed);
 		}
 
 		private static void UstalSciezkeBazy()
