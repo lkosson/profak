@@ -110,6 +110,7 @@ namespace ProFak.UI
 			Rekord.CenaNetto = towar.CenaNetto;
 			Rekord.StawkaVatRef = towar.StawkaVatRef;
 			Rekord.GTU = towar.GTU;
+			Rekord.StawkaRyczaltu = towar.StawkaRyczaltu;
 			KonfigurujPoleIlosci();
 			KonfigurujCeny();
 			PrzeliczCeny();
