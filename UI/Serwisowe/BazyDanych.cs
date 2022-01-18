@@ -81,6 +81,14 @@ namespace ProFak.UI
 
 		private void buttonUtworzKopie_Click(object sender, EventArgs e)
 		{
+			try
+			{
+				if (!Directory.Exists(Baza.KatalogKopiiZapasowych)) Directory.CreateDirectory(Baza.KatalogKopiiZapasowych);
+				saveFileDialogBackup.InitialDirectory = Baza.KatalogKopiiZapasowych;
+			}
+			catch
+			{
+			}
 			saveFileDialogBackup.FileName = $"profak-{DateTime.Now:yyyyMMdd}.probak";
 			if (saveFileDialogBackup.ShowDialog() != DialogResult.OK) return;
 			try
@@ -97,6 +105,7 @@ namespace ProFak.UI
 
 		private void buttonPrzywrocKopie_Click(object sender, EventArgs e)
 		{
+			if (Directory.Exists(Baza.KatalogKopiiZapasowych)) openFileDialogBackup.InitialDirectory = Baza.KatalogKopiiZapasowych;
 			if (openFileDialogBackup.ShowDialog() != DialogResult.OK) return;
 
 			if (MessageBox.Show("Dotychczasowe dane zostaną nadpisane. Czy na pewno chcesz kontynuować?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;

@@ -17,6 +17,7 @@ namespace ProFak.DB
 		public static string NazwaKataloguProgramu => "ProFak";
 		public static string NazwaPlikuBazy => "profak.sqlite3";
 		public static string NazwaOdnosnikaDoBazy => "baza.txt";
+		public static string NazwaKataloguKopiiZapasowych => "Kopie zapasowe";
 		public static string PrywatnyKatalog => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 		public static string PublicznyKatalog => Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 		public static string LokalnyKatalog => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -24,6 +25,8 @@ namespace ProFak.DB
 		public static string PublicznaSciezka => Path.Combine(PublicznyKatalog, NazwaKataloguProgramu, NazwaPlikuBazy);
 		public static string LokalnaSciezka => Path.Combine(LokalnyKatalog, NazwaPlikuBazy);
 		public static string OdnosnikDoBazy => Path.Combine(LokalnyKatalog, NazwaOdnosnikaDoBazy);
+		public static string AktywnyKatalog => Path.GetDirectoryName(Sciezka);
+		public static string KatalogKopiiZapasowych => Path.Combine(AktywnyKatalog, NazwaKataloguKopiiZapasowych);
 
 		public static string Sciezka { get; set; }
 
