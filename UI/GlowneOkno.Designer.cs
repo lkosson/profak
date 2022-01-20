@@ -66,37 +66,43 @@ namespace ProFak.UI
 			System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Faktury", new System.Windows.Forms.TreeNode[] {
             treeNode9,
             treeNode18});
-			System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Deklaracje Vat");
-			System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Składki Zus");
-			System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("Zaliczki Pit");
-			System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("Podatki", new System.Windows.Forms.TreeNode[] {
-            treeNode20,
-            treeNode21,
+			System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("(ładowanie)");
+			System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Deklaracje Vat", new System.Windows.Forms.TreeNode[] {
+            treeNode20});
+			System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("(ładowanie)");
+			System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("Składki Zus", new System.Windows.Forms.TreeNode[] {
             treeNode22});
-			System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("Kontrahenci");
-			System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("Towary");
-			System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("Jednostki miar");
-			System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("Sposoby płatności");
-			System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("Stawki VAT");
-			System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("Urzędy skarbowe");
-			System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("Waluty");
-			System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("Słowniki", new System.Windows.Forms.TreeNode[] {
-            treeNode26,
-            treeNode27,
-            treeNode28,
+			System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("(ładowanie)");
+			System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("Zaliczki Pit", new System.Windows.Forms.TreeNode[] {
+            treeNode24});
+			System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("Podatki", new System.Windows.Forms.TreeNode[] {
+            treeNode21,
+            treeNode23,
+            treeNode25});
+			System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("Kontrahenci");
+			System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("Towary");
+			System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("Jednostki miar");
+			System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("Sposoby płatności");
+			System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("Stawki VAT");
+			System.Windows.Forms.TreeNode treeNode32 = new System.Windows.Forms.TreeNode("Urzędy skarbowe");
+			System.Windows.Forms.TreeNode treeNode33 = new System.Windows.Forms.TreeNode("Waluty");
+			System.Windows.Forms.TreeNode treeNode34 = new System.Windows.Forms.TreeNode("Słowniki", new System.Windows.Forms.TreeNode[] {
             treeNode29,
-            treeNode30});
-			System.Windows.Forms.TreeNode treeNode32 = new System.Windows.Forms.TreeNode("Numeracja");
-			System.Windows.Forms.TreeNode treeNode33 = new System.Windows.Forms.TreeNode("Baza danych");
-			System.Windows.Forms.TreeNode treeNode34 = new System.Windows.Forms.TreeNode("Polecenie SQL");
-			System.Windows.Forms.TreeNode treeNode35 = new System.Windows.Forms.TreeNode("Bezpośrednia edycja");
-			System.Windows.Forms.TreeNode treeNode36 = new System.Windows.Forms.TreeNode("O programie");
-			System.Windows.Forms.TreeNode treeNode37 = new System.Windows.Forms.TreeNode("Serwisowe", new System.Windows.Forms.TreeNode[] {
+            treeNode30,
+            treeNode31,
             treeNode32,
-            treeNode33,
-            treeNode34,
+            treeNode33});
+			System.Windows.Forms.TreeNode treeNode35 = new System.Windows.Forms.TreeNode("Numeracja");
+			System.Windows.Forms.TreeNode treeNode36 = new System.Windows.Forms.TreeNode("Baza danych");
+			System.Windows.Forms.TreeNode treeNode37 = new System.Windows.Forms.TreeNode("Polecenie SQL");
+			System.Windows.Forms.TreeNode treeNode38 = new System.Windows.Forms.TreeNode("Bezpośrednia edycja");
+			System.Windows.Forms.TreeNode treeNode39 = new System.Windows.Forms.TreeNode("O programie");
+			System.Windows.Forms.TreeNode treeNode40 = new System.Windows.Forms.TreeNode("Serwisowe", new System.Windows.Forms.TreeNode[] {
             treeNode35,
-            treeNode36});
+            treeNode36,
+            treeNode37,
+            treeNode38,
+            treeNode39});
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GlowneOkno));
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.menu = new ProFak.UI.Menu();
@@ -157,49 +163,55 @@ namespace ProFak.UI
 			treeNode18.Text = "Faktury zakupu";
 			treeNode19.Name = "Faktury";
 			treeNode19.Text = "Faktury";
-			treeNode20.Name = "DeklaracjeVat";
-			treeNode20.Text = "Deklaracje Vat";
-			treeNode21.Name = "SkladkiZus";
-			treeNode21.Text = "Składki Zus";
-			treeNode22.Name = "ZaliczkiPit";
-			treeNode22.Text = "Zaliczki Pit";
-			treeNode23.Name = "Podatki";
-			treeNode23.Text = "Podatki";
-			treeNode24.Name = "Kontrahenci";
-			treeNode24.Text = "Kontrahenci";
-			treeNode25.Name = "Towary";
-			treeNode25.Text = "Towary";
-			treeNode26.Name = "JednostkiMiar";
-			treeNode26.Text = "Jednostki miar";
-			treeNode27.Name = "SposobyPlatnosci";
-			treeNode27.Text = "Sposoby płatności";
-			treeNode28.Name = "StawkiVat";
-			treeNode28.Text = "Stawki VAT";
-			treeNode29.Name = "UrzedySkarbowe";
-			treeNode29.Text = "Urzędy skarbowe";
-			treeNode30.Name = "Waluty";
-			treeNode30.Text = "Waluty";
-			treeNode31.Name = "Slowniki";
-			treeNode31.Text = "Słowniki";
-			treeNode32.Name = "Numeratory";
-			treeNode32.Text = "Numeracja";
-			treeNode33.Name = "Baza";
-			treeNode33.Text = "Baza danych";
-			treeNode34.Name = "SQL";
-			treeNode34.Text = "Polecenie SQL";
-			treeNode35.Name = "Tabele";
-			treeNode35.Text = "Bezpośrednia edycja";
-			treeNode36.Name = "OProgramie";
-			treeNode36.Text = "O programie";
-			treeNode37.Name = "Node1";
-			treeNode37.Text = "Serwisowe";
+			treeNode20.Name = "";
+			treeNode20.Text = "(ładowanie)";
+			treeNode21.Name = "DeklaracjeVat";
+			treeNode21.Text = "Deklaracje Vat";
+			treeNode22.Name = "";
+			treeNode22.Text = "(ładowanie)";
+			treeNode23.Name = "SkladkiZus";
+			treeNode23.Text = "Składki Zus";
+			treeNode24.Name = "";
+			treeNode24.Text = "(ładowanie)";
+			treeNode25.Name = "ZaliczkiPit";
+			treeNode25.Text = "Zaliczki Pit";
+			treeNode26.Name = "Podatki";
+			treeNode26.Text = "Podatki";
+			treeNode27.Name = "Kontrahenci";
+			treeNode27.Text = "Kontrahenci";
+			treeNode28.Name = "Towary";
+			treeNode28.Text = "Towary";
+			treeNode29.Name = "JednostkiMiar";
+			treeNode29.Text = "Jednostki miar";
+			treeNode30.Name = "SposobyPlatnosci";
+			treeNode30.Text = "Sposoby płatności";
+			treeNode31.Name = "StawkiVat";
+			treeNode31.Text = "Stawki VAT";
+			treeNode32.Name = "UrzedySkarbowe";
+			treeNode32.Text = "Urzędy skarbowe";
+			treeNode33.Name = "Waluty";
+			treeNode33.Text = "Waluty";
+			treeNode34.Name = "Slowniki";
+			treeNode34.Text = "Słowniki";
+			treeNode35.Name = "Numeratory";
+			treeNode35.Text = "Numeracja";
+			treeNode36.Name = "Baza";
+			treeNode36.Text = "Baza danych";
+			treeNode37.Name = "SQL";
+			treeNode37.Text = "Polecenie SQL";
+			treeNode38.Name = "Tabele";
+			treeNode38.Text = "Bezpośrednia edycja";
+			treeNode39.Name = "OProgramie";
+			treeNode39.Text = "O programie";
+			treeNode40.Name = "Node1";
+			treeNode40.Text = "Serwisowe";
 			this.menu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode19,
-            treeNode23,
-            treeNode24,
-            treeNode25,
-            treeNode31,
-            treeNode37});
+            treeNode26,
+            treeNode27,
+            treeNode28,
+            treeNode34,
+            treeNode40});
 			this.menu.Size = new System.Drawing.Size(247, 593);
 			this.menu.TabIndex = 1;
 			this.menu.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.menu_BeforeExpand);

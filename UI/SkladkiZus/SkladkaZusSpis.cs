@@ -11,6 +11,9 @@ namespace ProFak.UI
 {
 	class SkladkaZusSpis : Spis<SkladkaZus>
 	{
+		private readonly DateTime? odDaty;
+		private readonly DateTime? doDaty;
+
 		public override string Podsumowanie
 		{
 			get
@@ -33,9 +36,36 @@ namespace ProFak.UI
 			DodajKolumneId();
 		}
 
+		public SkladkaZusSpis(string[] parametry)
+			: this()
+		{
+			if (parametry == null) return;
+			int? rok = null;
+			int? miesiac = null;
+			foreach (var parametr in parametry)
+			{
+				if (parametr.StartsWith("R:")) rok = Int32.Parse(parametr[2..]);
+				else if (parametr.StartsWith("M:")) miesiac = Int32.Parse(parametr[2..]);
+			}
+			if (!rok.HasValue) return;
+			if (miesiac.HasValue)
+			{
+				odDaty = new DateTime(rok.Value, miesiac.Value, 1);
+				doDaty = odDaty.Value.AddMonths(1);
+			}
+			else
+			{
+				odDaty = new DateTime(rok.Value, 1, 1);
+				doDaty = odDaty.Value.AddYears(1);
+			}
+		}
+
 		protected override void Przeladuj()
 		{
-			Rekordy = Kontekst.Baza.SkladkiZus.OrderBy(skladka => skladka.Miesiac).ToList();
+			var q = Kontekst.Baza.SkladkiZus;
+			if (odDaty.HasValue) q = q.Where(skladka => skladka.Miesiac >= odDaty.Value);
+			if (doDaty.HasValue) q = q.Where(skladka => skladka.Miesiac < doDaty.Value);
+			Rekordy = q.OrderBy(skladka => skladka.Miesiac).ToList();
 		}
 	}
 }

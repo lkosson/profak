@@ -79,9 +79,9 @@ namespace ProFak.UI
 			else if (pozycja.Name == "StawkiVat") Wyswietl(Spisy.StawkiVat(), pozycja.Name);
 			else if (pozycja.Name == "Waluty") Wyswietl(Spisy.Waluty(), pozycja.Name);
 			else if (pozycja.Name == "Towary") Wyswietl(Spisy.Towary(), pozycja.Name);
-			else if (pozycja.Name == "DeklaracjeVat") Wyswietl(Spisy.DeklaracjeVat(), pozycja.Name);
-			else if (pozycja.Name == "SkladkiZus") Wyswietl(Spisy.SkladkiZus(), pozycja.Name);
-			else if (pozycja.Name == "ZaliczkiPit") Wyswietl(Spisy.ZaliczkiPit(), pozycja.Name);
+			else if (pozycja.Name == "DeklaracjeVat") Wyswietl(Spisy.DeklaracjeVat(parametry), pozycja.Name);
+			else if (pozycja.Name == "SkladkiZus") Wyswietl(Spisy.SkladkiZus(parametry), pozycja.Name);
+			else if (pozycja.Name == "ZaliczkiPit") Wyswietl(Spisy.ZaliczkiPit(parametry), pozycja.Name);
 			else if (pozycja.Name == "UrzedySkarbowe") Wyswietl(Spisy.UrzedySkarbowe(), pozycja.Name);
 			else if (pozycja.Name == "FakturyZakupu") Wyswietl(Spisy.FakturyZakupu(parametry), pozycja.Name);
 			else if (pozycja.Name == "FakturySprzedazy") Wyswietl(Spisy.FakturySprzedazy(parametry), pozycja.Name);
@@ -126,6 +126,9 @@ namespace ProFak.UI
 			else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent.Name == "FakturyZakupu") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu, faktura => faktura.Sprzedawca);
 			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent.Name == "FakturySprzedazy") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura.Rodzaj == RodzajFaktury.Sprzedaż || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży || pozycja.Faktura.Rodzaj == RodzajFaktury.Proforma);
 			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent.Name == "FakturyZakupu") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura.Rodzaj == RodzajFaktury.Zakup || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaZakupu);
+			else if (e.Node.Name == "DeklaracjeVat") WypelnijDeklaracjeVat(e.Node);
+			else if (e.Node.Name == "SkladkiZus") WypelnijSkladkiZus(e.Node);
+			else if (e.Node.Name == "ZaliczkiPit") WypelnijZaliczkiPit(e.Node);
 		}
 
 		private void WypelnijDatyFaktur(TreeNode treeNode, Expression<Func<Faktura, bool>> warunek)
@@ -191,6 +194,66 @@ namespace ProFak.UI
 			foreach (var towar in towary)
 			{
 				treeNode.Nodes.Add(new TreeNode { Name = "T:" + towar.Id, Text = towar.Nazwa.ToString() });
+			}
+		}
+
+		private void WypelnijDeklaracjeVat(TreeNode treeNode)
+		{
+			using var kontekst = new Kontekst();
+			var daty = kontekst.Baza.DeklaracjeVat
+				.Select(faktura => faktura.Miesiac)
+				.Distinct()
+				.ToList();
+
+			while (treeNode.Nodes.Count > 0) treeNode.Nodes.RemoveAt(0);
+
+			var lata = daty.Select(data => data.Year).Distinct().OrderBy(rok => rok).ToList();
+			var treeNodeWszystko = new TreeNode { Name = "", Text = "(wszystkie)" };
+			treeNode.Nodes.Add(treeNodeWszystko);
+			foreach (var rok in lata)
+			{
+				var treeNodeRok = new TreeNode { Name = "R:" + rok, Text = rok.ToString() };
+				treeNode.Nodes.Add(treeNodeRok);
+			}
+		}
+
+		private void WypelnijSkladkiZus(TreeNode treeNode)
+		{
+			using var kontekst = new Kontekst();
+			var daty = kontekst.Baza.SkladkiZus
+				.Select(faktura => faktura.Miesiac)
+				.Distinct()
+				.ToList();
+
+			while (treeNode.Nodes.Count > 0) treeNode.Nodes.RemoveAt(0);
+
+			var lata = daty.Select(data => data.Year).Distinct().OrderBy(rok => rok).ToList();
+			var treeNodeWszystko = new TreeNode { Name = "", Text = "(wszystkie)" };
+			treeNode.Nodes.Add(treeNodeWszystko);
+			foreach (var rok in lata)
+			{
+				var treeNodeRok = new TreeNode { Name = "R:" + rok, Text = rok.ToString() };
+				treeNode.Nodes.Add(treeNodeRok);
+			}
+		}
+
+		private void WypelnijZaliczkiPit(TreeNode treeNode)
+		{
+			using var kontekst = new Kontekst();
+			var daty = kontekst.Baza.ZaliczkiPit
+				.Select(faktura => faktura.Miesiac)
+				.Distinct()
+				.ToList();
+
+			while (treeNode.Nodes.Count > 0) treeNode.Nodes.RemoveAt(0);
+
+			var lata = daty.Select(data => data.Year).Distinct().OrderBy(rok => rok).ToList();
+			var treeNodeWszystko = new TreeNode { Name = "", Text = "(wszystkie)" };
+			treeNode.Nodes.Add(treeNodeWszystko);
+			foreach (var rok in lata)
+			{
+				var treeNodeRok = new TreeNode { Name = "R:" + rok, Text = rok.ToString() };
+				treeNode.Nodes.Add(treeNodeRok);
 			}
 		}
 	}

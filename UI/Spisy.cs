@@ -27,9 +27,9 @@ namespace ProFak.UI
 			return wybor.WybranyRekord;
 		}
 
-		public static SpisZAkcjami<DeklaracjaVat, DeklaracjaVatSpis> DeklaracjeVat()
+		public static SpisZAkcjami<DeklaracjaVat, DeklaracjaVatSpis> DeklaracjeVat(string[] parametry = null)
 		{
-			return Utworz(new DeklaracjaVatSpis(),
+			return Utworz(new DeklaracjaVatSpis(parametry),
 				new DodajRekordAkcja<DeklaracjaVat, DeklaracjaVatEdytor>(),
 				new EdytujRekordAkcja<DeklaracjaVat, DeklaracjaVatEdytor>(),
 				new UsunRekordAkcja<DeklaracjaVat>(),
@@ -117,9 +117,9 @@ namespace ProFak.UI
 			);
 		}
 
-		public static SpisZAkcjami<SkladkaZus, SkladkaZusSpis> SkladkiZus()
+		public static SpisZAkcjami<SkladkaZus, SkladkaZusSpis> SkladkiZus(string[] parametry = null)
 		{
-			return Utworz(new SkladkaZusSpis(),
+			return Utworz(new SkladkaZusSpis(parametry),
 				new DodajRekordAkcja<SkladkaZus, SkladkaZusEdytor>(),
 				new EdytujRekordAkcja<SkladkaZus, SkladkaZusEdytor>(),
 				new UsunRekordAkcja<SkladkaZus>(),
@@ -199,9 +199,9 @@ namespace ProFak.UI
 			);
 		}
 
-		public static SpisZAkcjami<ZaliczkaPit, ZaliczkaPitSpis> ZaliczkiPit()
+		public static SpisZAkcjami<ZaliczkaPit, ZaliczkaPitSpis> ZaliczkiPit(string[] parametry = null)
 		{
-			return Utworz(new ZaliczkaPitSpis(),
+			return Utworz(new ZaliczkaPitSpis(parametry),
 				new DodajRekordAkcja<ZaliczkaPit, ZaliczkaPitEdytor>(),
 				new EdytujRekordAkcja<ZaliczkaPit, ZaliczkaPitEdytor>(),
 				new UsunRekordAkcja<ZaliczkaPit>(),
