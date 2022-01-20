@@ -18,11 +18,11 @@ namespace ProFak.UI
 		{
 			DodajKolumne(nameof(PozycjaFaktury.LP), "LP", szerokosc: 30);
 			DodajKolumne(nameof(PozycjaFaktury.Opis), "Opis", rozciagnij: true);
-			DodajKolumne(nameof(PozycjaFaktury.Ilosc), "Ilość", wyrownajDoPrawej: true, szerokosc: 60);
-			DodajKolumneKwota(nameof(PozycjaFaktury.Cena), "Cena");
-			DodajKolumneKwota(nameof(PozycjaFaktury.WartoscNetto), "Netto");
-			DodajKolumneKwota(nameof(PozycjaFaktury.WartoscVat), "VAT");
-			DodajKolumneKwota(nameof(PozycjaFaktury.WartoscBrutto), "Brutto");
+			DodajKolumne(nameof(PozycjaFaktury.Ilosc), "Ilość", wyrownajDoPrawej: true, szerokosc: 50);
+			DodajKolumneKwota(nameof(PozycjaFaktury.Cena), "Cena", szerokosc: 70);
+			DodajKolumneKwota(nameof(PozycjaFaktury.WartoscNetto), "Netto", szerokosc: 70);
+			DodajKolumneKwota(nameof(PozycjaFaktury.WartoscVat), "VAT", szerokosc: 70);
+			DodajKolumneKwota(nameof(PozycjaFaktury.WartoscBrutto), "Brutto", szerokosc: 70);
 			DodajKolumneId();
 		}
 

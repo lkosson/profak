@@ -13,7 +13,8 @@ namespace ProFak.UI
 	{
 		public KontrahentSpis()
 		{
-			DodajKolumne(nameof(Kontrahent.Nazwa), "Nazwa", rozciagnij: true);
+			DodajKolumne(nameof(Kontrahent.Nazwa), "Nazwa", szerokosc: 200);
+			DodajKolumne(nameof(Kontrahent.PelnaNazwa), "Pełna nazwa", rozciagnij: true);
 			DodajKolumne(nameof(Kontrahent.NIP), "NIP");
 			DodajKolumne(nameof(Kontrahent.AdresRejestrowyFmt), "Adres", szerokosc: 300);
 			DodajKolumneId();
