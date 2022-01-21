@@ -147,6 +147,39 @@ namespace ProFak.UI
 				MessageBox.Show((string)e.Result, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 		}
+
+		private void buttonPobierzGUS_Click(object sender, EventArgs e)
+		{
+			buttonPobierzGUS.Enabled = false;
+			backgroundWorkerPobierzGUS.RunWorkerAsync(Rekord);
+		}
+
+		private void backgroundWorkerPobierzGUS_DoWork(object sender, DoWorkEventArgs e)
+		{
+			var kontrahent = (Kontrahent)e.Argument;
+			IO.GUS.PobierzGUS(kontrahent).GetAwaiter().GetResult();
+		}
+
+		private void backgroundWorkerPobierzGUS_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+		{
+			buttonPobierzGUS.Enabled = true;
+			if (e.Error != null)
+			{
+				if (e.Error is ApplicationException exc)
+				{
+					MessageBox.Show(exc.Message, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				}
+				else
+				{
+					var okno = new OknoBledu(e.Error);
+					okno.ShowDialog();
+				}
+			}
+			else
+			{
+				kontroler.AktualizujKontrolki();
+			}
+		}
 	}
 
 	class KontrahentEdytorBase : Edytor<Kontrahent>

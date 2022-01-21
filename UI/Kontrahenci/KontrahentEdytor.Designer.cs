@@ -49,6 +49,8 @@ namespace ProFak.UI
 			this.comboBoxStan = new System.Windows.Forms.ComboBox();
 			this.label9 = new System.Windows.Forms.Label();
 			this.checkBoxTP = new System.Windows.Forms.CheckBox();
+			this.buttonSprawdzMF = new System.Windows.Forms.Button();
+			this.buttonPobierzGUS = new System.Windows.Forms.Button();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.textBoxUwagi = new System.Windows.Forms.TextBox();
 			this.tabPageFakturySprzedazy = new System.Windows.Forms.TabPage();
@@ -69,8 +71,8 @@ namespace ProFak.UI
 			this.textBoxNazwa = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			this.buttonSprawdzMF = new System.Windows.Forms.Button();
 			this.backgroundWorkerSprawdzMF = new System.ComponentModel.BackgroundWorker();
+			this.backgroundWorkerPobierzGUS = new System.ComponentModel.BackgroundWorker();
 			this.tabControl.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
@@ -130,6 +132,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel1.Controls.Add(this.label9, 0, 7);
 			this.tableLayoutPanel1.Controls.Add(this.checkBoxTP, 1, 9);
 			this.tableLayoutPanel1.Controls.Add(this.buttonSprawdzMF, 2, 6);
+			this.tableLayoutPanel1.Controls.Add(this.buttonPobierzGUS, 2, 1);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -171,7 +174,7 @@ namespace ProFak.UI
 			// 
 			this.label3.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(114, 36);
+			this.label3.Location = new System.Drawing.Point(114, 37);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(26, 15);
 			this.label3.TabIndex = 2;
@@ -180,10 +183,9 @@ namespace ProFak.UI
 			// textBoxNIP
 			// 
 			this.textBoxNIP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableLayoutPanel1.SetColumnSpan(this.textBoxNIP, 2);
-			this.textBoxNIP.Location = new System.Drawing.Point(146, 32);
+			this.textBoxNIP.Location = new System.Drawing.Point(146, 33);
 			this.textBoxNIP.Name = "textBoxNIP";
-			this.textBoxNIP.Size = new System.Drawing.Size(631, 23);
+			this.textBoxNIP.Size = new System.Drawing.Size(465, 23);
 			this.textBoxNIP.TabIndex = 2;
 			// 
 			// textBoxAdresRejestrowy
@@ -191,7 +193,7 @@ namespace ProFak.UI
 			this.textBoxAdresRejestrowy.AcceptsReturn = true;
 			this.textBoxAdresRejestrowy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanel1.SetColumnSpan(this.textBoxAdresRejestrowy, 2);
-			this.textBoxAdresRejestrowy.Location = new System.Drawing.Point(146, 61);
+			this.textBoxAdresRejestrowy.Location = new System.Drawing.Point(146, 63);
 			this.textBoxAdresRejestrowy.Multiline = true;
 			this.textBoxAdresRejestrowy.Name = "textBoxAdresRejestrowy";
 			this.textBoxAdresRejestrowy.Size = new System.Drawing.Size(631, 65);
@@ -203,7 +205,7 @@ namespace ProFak.UI
 			this.textBoxAdresKorespondencyjny.AcceptsReturn = true;
 			this.textBoxAdresKorespondencyjny.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanel1.SetColumnSpan(this.textBoxAdresKorespondencyjny, 2);
-			this.textBoxAdresKorespondencyjny.Location = new System.Drawing.Point(146, 132);
+			this.textBoxAdresKorespondencyjny.Location = new System.Drawing.Point(146, 134);
 			this.textBoxAdresKorespondencyjny.Multiline = true;
 			this.textBoxAdresKorespondencyjny.Name = "textBoxAdresKorespondencyjny";
 			this.textBoxAdresKorespondencyjny.Size = new System.Drawing.Size(631, 65);
@@ -213,7 +215,7 @@ namespace ProFak.UI
 			// 
 			this.textBoxTelefon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanel1.SetColumnSpan(this.textBoxTelefon, 2);
-			this.textBoxTelefon.Location = new System.Drawing.Point(146, 203);
+			this.textBoxTelefon.Location = new System.Drawing.Point(146, 205);
 			this.textBoxTelefon.Name = "textBoxTelefon";
 			this.textBoxTelefon.Size = new System.Drawing.Size(631, 23);
 			this.textBoxTelefon.TabIndex = 5;
@@ -222,7 +224,7 @@ namespace ProFak.UI
 			// 
 			this.textBoxEMail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanel1.SetColumnSpan(this.textBoxEMail, 2);
-			this.textBoxEMail.Location = new System.Drawing.Point(146, 232);
+			this.textBoxEMail.Location = new System.Drawing.Point(146, 234);
 			this.textBoxEMail.Name = "textBoxEMail";
 			this.textBoxEMail.Size = new System.Drawing.Size(631, 23);
 			this.textBoxEMail.TabIndex = 6;
@@ -230,16 +232,16 @@ namespace ProFak.UI
 			// textBoxRachunekBankowy
 			// 
 			this.textBoxRachunekBankowy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxRachunekBankowy.Location = new System.Drawing.Point(146, 262);
+			this.textBoxRachunekBankowy.Location = new System.Drawing.Point(146, 264);
 			this.textBoxRachunekBankowy.Name = "textBoxRachunekBankowy";
-			this.textBoxRachunekBankowy.Size = new System.Drawing.Size(544, 23);
+			this.textBoxRachunekBankowy.Size = new System.Drawing.Size(465, 23);
 			this.textBoxRachunekBankowy.TabIndex = 7;
 			// 
 			// label4
 			// 
 			this.label4.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(46, 86);
+			this.label4.Location = new System.Drawing.Point(46, 88);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(94, 15);
 			this.label4.TabIndex = 2;
@@ -249,7 +251,7 @@ namespace ProFak.UI
 			// 
 			this.label5.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(3, 157);
+			this.label5.Location = new System.Drawing.Point(3, 159);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(137, 15);
 			this.label5.TabIndex = 2;
@@ -259,7 +261,7 @@ namespace ProFak.UI
 			// 
 			this.label6.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(94, 207);
+			this.label6.Location = new System.Drawing.Point(94, 209);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(46, 15);
 			this.label6.TabIndex = 2;
@@ -269,7 +271,7 @@ namespace ProFak.UI
 			// 
 			this.label7.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(99, 236);
+			this.label7.Location = new System.Drawing.Point(99, 238);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(41, 15);
 			this.label7.TabIndex = 2;
@@ -279,7 +281,7 @@ namespace ProFak.UI
 			// 
 			this.label8.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(30, 266);
+			this.label8.Location = new System.Drawing.Point(30, 268);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(110, 15);
 			this.label8.TabIndex = 2;
@@ -291,7 +293,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel1.SetColumnSpan(this.comboBoxStan, 2);
 			this.comboBoxStan.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxStan.FormattingEnabled = true;
-			this.comboBoxStan.Location = new System.Drawing.Point(146, 292);
+			this.comboBoxStan.Location = new System.Drawing.Point(146, 294);
 			this.comboBoxStan.Name = "comboBoxStan";
 			this.comboBoxStan.Size = new System.Drawing.Size(631, 23);
 			this.comboBoxStan.TabIndex = 8;
@@ -300,7 +302,7 @@ namespace ProFak.UI
 			// 
 			this.label9.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(110, 296);
+			this.label9.Location = new System.Drawing.Point(110, 298);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(30, 15);
 			this.label9.TabIndex = 2;
@@ -309,12 +311,34 @@ namespace ProFak.UI
 			// checkBoxTP
 			// 
 			this.checkBoxTP.AutoSize = true;
-			this.checkBoxTP.Location = new System.Drawing.Point(146, 321);
+			this.checkBoxTP.Location = new System.Drawing.Point(146, 323);
 			this.checkBoxTP.Name = "checkBoxTP";
 			this.checkBoxTP.Size = new System.Drawing.Size(131, 19);
 			this.checkBoxTP.TabIndex = 9;
 			this.checkBoxTP.Text = "Podmiot powiązany";
 			this.checkBoxTP.UseVisualStyleBackColor = true;
+			// 
+			// buttonSprawdzMF
+			// 
+			this.buttonSprawdzMF.AutoSize = true;
+			this.buttonSprawdzMF.Location = new System.Drawing.Point(617, 263);
+			this.buttonSprawdzMF.Name = "buttonSprawdzMF";
+			this.buttonSprawdzMF.Size = new System.Drawing.Size(160, 25);
+			this.buttonSprawdzMF.TabIndex = 10;
+			this.buttonSprawdzMF.Text = "Sprawdź na białej liście VAT";
+			this.buttonSprawdzMF.UseVisualStyleBackColor = true;
+			this.buttonSprawdzMF.Click += new System.EventHandler(this.buttonSprawdzMF_Click);
+			// 
+			// buttonPobierzGUS
+			// 
+			this.buttonPobierzGUS.AutoSize = true;
+			this.buttonPobierzGUS.Location = new System.Drawing.Point(617, 32);
+			this.buttonPobierzGUS.Name = "buttonPobierzGUS";
+			this.buttonPobierzGUS.Size = new System.Drawing.Size(118, 25);
+			this.buttonPobierzGUS.TabIndex = 10;
+			this.buttonPobierzGUS.Text = "Pobierz dane z GUS";
+			this.buttonPobierzGUS.UseVisualStyleBackColor = true;
+			this.buttonPobierzGUS.Click += new System.EventHandler(this.buttonPobierzGUS_Click);
 			// 
 			// tabPage2
 			// 
@@ -541,21 +565,15 @@ namespace ProFak.UI
 			this.tableLayoutPanel2.Size = new System.Drawing.Size(800, 425);
 			this.tableLayoutPanel2.TabIndex = 3;
 			// 
-			// buttonSprawdzMF
-			// 
-			this.buttonSprawdzMF.AutoSize = true;
-			this.buttonSprawdzMF.Location = new System.Drawing.Point(696, 261);
-			this.buttonSprawdzMF.Name = "buttonSprawdzMF";
-			this.buttonSprawdzMF.Size = new System.Drawing.Size(81, 25);
-			this.buttonSprawdzMF.TabIndex = 10;
-			this.buttonSprawdzMF.Text = "Sprawdź MF";
-			this.buttonSprawdzMF.UseVisualStyleBackColor = true;
-			this.buttonSprawdzMF.Click += new System.EventHandler(this.buttonSprawdzMF_Click);
-			// 
 			// backgroundWorkerSprawdzMF
 			// 
 			this.backgroundWorkerSprawdzMF.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerSprawdzMF_DoWork);
 			this.backgroundWorkerSprawdzMF.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerSprawdzMF_RunWorkerCompleted);
+			// 
+			// backgroundWorkerPobierzGUS
+			// 
+			this.backgroundWorkerPobierzGUS.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerPobierzGUS_DoWork);
+			this.backgroundWorkerPobierzGUS.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerPobierzGUS_RunWorkerCompleted);
 			// 
 			// KontrahentEdytor
 			// 
@@ -623,5 +641,7 @@ namespace ProFak.UI
 		private System.Windows.Forms.ComboBox comboBoxFormaOpodatkowania;
 		private System.Windows.Forms.Button buttonSprawdzMF;
 		private System.ComponentModel.BackgroundWorker backgroundWorkerSprawdzMF;
+		private System.Windows.Forms.Button buttonPobierzGUS;
+		private System.ComponentModel.BackgroundWorker backgroundWorkerPobierzGUS;
 	}
 }
