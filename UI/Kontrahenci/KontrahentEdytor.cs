@@ -5,10 +5,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ProFak.UI
@@ -114,17 +110,8 @@ namespace ProFak.UI
 			var dane = (string[])e.Argument;
 			var nip = dane[0];
 			var nrb = dane[1].Replace(" ", "");
-			if (String.IsNullOrEmpty(nip)) throw new ApplicationException("Nie podano NIPu kontrahenta.");
-			if (String.IsNullOrEmpty(nrb)) throw new ApplicationException("Nie podano numeru rachunku bankowego kontrahenta.");
-			var url = "https://wl-api.mf.gov.pl/api/check/nip/" + nip + "/bank-account/" + nrb;
-			using var client = new HttpClient();
-			var wynik = client.GetStringAsync(url).Result;
-			var json = JsonDocument.Parse(wynik);
-			if (!json.RootElement.TryGetProperty("result", out var jsonResult)) throw new ApplicationException($"Nieprawidłowa struktura odpowiedzi:\n\n{wynik}");
-			if (!jsonResult.TryGetProperty("accountAssigned", out var jsonResultAccountAssigned)) throw new ApplicationException($"Nieprawidłowa struktura odpowiedzi:\n\n{wynik}");
-			if (jsonResultAccountAssigned.GetString() != "TAK") throw new ApplicationException("Rachunek nie znajduje się na białej liście VAT.");
-			if (!jsonResult.TryGetProperty("requestId", out var jsonResultRequestId)) throw new ApplicationException($"Nieprawidłowa struktura odpowiedzi:\n\n{wynik}");
-			e.Result = $"Rachunek znajduje się na białej liście VAT, RequestId: {jsonResultRequestId.GetString()}";
+			var rid = IO.MF.SprawdzBialaListeVAT(nip, nrb);
+			e.Result = $"Rachunek znajduje się na białej liście VAT, RequestId: {rid}";
 		}
 
 		private void backgroundWorkerSprawdzMF_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
