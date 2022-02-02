@@ -37,9 +37,9 @@ namespace ProFak.IO.JPK_V7M
 			var jpk = new JPK();
 			jpk.Naglowek = new JPKNaglowek();
 			jpk.Naglowek.KodFormularza = new TNaglowekKodFormularza();
-			jpk.Naglowek.KodFormularza.kodSystemowy = "JPK_V7M (1)";
-			jpk.Naglowek.KodFormularza.wersjaSchemy = "1-2E";
-			jpk.Naglowek.WariantFormularza = 1;
+			jpk.Naglowek.KodFormularza.kodSystemowy = "JPK_V7M (2)";
+			jpk.Naglowek.KodFormularza.wersjaSchemy = "1-0E";
+			jpk.Naglowek.WariantFormularza = 2;
 			jpk.Naglowek.DataWytworzeniaJPK = DateTime.Now;
 			jpk.Naglowek.NazwaSystemu = "ProFak (https://github.com/lkosson/profak)";
 			jpk.Naglowek.CelZlozenia = new TNaglowekCelZlozenia();
@@ -179,9 +179,9 @@ namespace ProFak.IO.JPK_V7M
 			jpk.Deklaracja.Naglowek = new JPKDeklaracjaNaglowek();
 			jpk.Deklaracja.Naglowek.KodFormularzaDekl = new JPKDeklaracjaNaglowekKodFormularzaDekl();
 			jpk.Deklaracja.Naglowek.KodFormularzaDekl.Value = TKodFormularzaVAT7.VAT7;
-			jpk.Deklaracja.Naglowek.KodFormularzaDekl.wersjaSchemy = "1-2E";
-			jpk.Deklaracja.Naglowek.KodFormularzaDekl.kodSystemowy = "VAT-7 (21)";
-			jpk.Deklaracja.Naglowek.WariantFormularzaDekl = 21;
+			jpk.Deklaracja.Naglowek.KodFormularzaDekl.wersjaSchemy = "1-0E";
+			jpk.Deklaracja.Naglowek.KodFormularzaDekl.kodSystemowy = "VAT-7 (22)";
+			jpk.Deklaracja.Naglowek.WariantFormularzaDekl = 22;
 			jpk.Deklaracja.Pouczenia = 1;
 			jpk.Deklaracja.PozycjeSzczegolowe = new JPKDeklaracjaPozycjeSzczegolowe();
 			jpk.Deklaracja.PozycjeSzczegolowe.P_10 = LiczbaLubNull(deklaracja.NettoZW);
