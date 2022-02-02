@@ -87,10 +87,6 @@ namespace ProFak.UI
 			}
 			else if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Ryczałt)
 			{
-				var przecietneWynagrodzenie = Rekord.PodstawaSpoleczne / 0.60m;
-				if (przychod < 60000) Rekord.PodstawaZdrowotne = przecietneWynagrodzenie * 0.60m;
-				else if (przychod < 300000) Rekord.PodstawaZdrowotne = przecietneWynagrodzenie;
-				else Rekord.PodstawaZdrowotne = przecietneWynagrodzenie * 1.80m;
 				Rekord.SkladkaZdrowotna = Decimal.Round(Rekord.PodstawaZdrowotne * 0.09m, 2, MidpointRounding.AwayFromZero);
 			}
 			else if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Skala)

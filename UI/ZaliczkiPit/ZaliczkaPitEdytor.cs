@@ -165,6 +165,12 @@ namespace ProFak.UI
 						Rekord.Przychody += pozycja.WartoscNetto;
 						Rekord.Podatek += Decimal.Round(pozycja.WartoscNetto * pozycja.StawkaRyczaltu.Value / 100m, 0, MidpointRounding.AwayFromZero);
 					}
+					if (Rekord.Podatek > 0)
+					{
+						var sredniaStawkaRyczaltu = Rekord.Podatek / Rekord.Przychody;
+						var odliczenieSkladekZus = Decimal.Round(Rekord.SkladkiZus * sredniaStawkaRyczaltu, 0, MidpointRounding.AwayFromZero);
+						Rekord.Podatek -= odliczenieSkladekZus;
+					}
 				}
 			}
 			else
