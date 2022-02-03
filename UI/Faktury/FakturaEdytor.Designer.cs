@@ -71,6 +71,8 @@ namespace ProFak.UI
 			this.checkBoxWNT = new System.Windows.Forms.CheckBox();
 			this.checkBoxTP = new System.Windows.Forms.CheckBox();
 			this.checkBoxZakupSrodkowTrwalych = new System.Windows.Forms.CheckBox();
+			this.label20 = new System.Windows.Forms.Label();
+			this.textBoxOpisZdarzenia = new System.Windows.Forms.TextBox();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.textBoxNumer = new System.Windows.Forms.TextBox();
 			this.labelRodzaj = new System.Windows.Forms.Label();
@@ -104,8 +106,6 @@ namespace ProFak.UI
 			this.numericUpDownNetto = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDownVat = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDownBrutto = new System.Windows.Forms.NumericUpDown();
-			this.label20 = new System.Windows.Forms.Label();
-			this.textBoxOpisZdarzenia = new System.Windows.Forms.TextBox();
 			this.tableLayoutPanel.SuspendLayout();
 			this.tableLayoutPanelKontrahenci.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -148,7 +148,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel.Size = new System.Drawing.Size(751, 500);
+			this.tableLayoutPanel.Size = new System.Drawing.Size(900, 550);
 			this.tableLayoutPanel.TabIndex = 0;
 			// 
 			// tableLayoutPanelKontrahenci
@@ -170,7 +170,7 @@ namespace ProFak.UI
 			this.tableLayoutPanelKontrahenci.RowCount = 1;
 			this.tableLayoutPanelKontrahenci.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelKontrahenci.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 153F));
-			this.tableLayoutPanelKontrahenci.Size = new System.Drawing.Size(745, 153);
+			this.tableLayoutPanelKontrahenci.Size = new System.Drawing.Size(894, 153);
 			this.tableLayoutPanelKontrahenci.TabIndex = 2;
 			// 
 			// groupBox2
@@ -180,7 +180,7 @@ namespace ProFak.UI
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox2.Location = new System.Drawing.Point(3, 3);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(366, 147);
+			this.groupBox2.Size = new System.Drawing.Size(441, 147);
 			this.groupBox2.TabIndex = 10;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Sprzedawca";
@@ -208,7 +208,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel5.Size = new System.Drawing.Size(360, 125);
+			this.tableLayoutPanel5.Size = new System.Drawing.Size(435, 125);
 			this.tableLayoutPanel5.TabIndex = 0;
 			// 
 			// label6
@@ -249,14 +249,14 @@ namespace ProFak.UI
 			this.textBoxDaneSprzedawcy.Location = new System.Drawing.Point(51, 63);
 			this.textBoxDaneSprzedawcy.Multiline = true;
 			this.textBoxDaneSprzedawcy.Name = "textBoxDaneSprzedawcy";
-			this.textBoxDaneSprzedawcy.Size = new System.Drawing.Size(306, 59);
+			this.textBoxDaneSprzedawcy.Size = new System.Drawing.Size(381, 59);
 			this.textBoxDaneSprzedawcy.TabIndex = 30;
 			// 
 			// buttonSprzedawca
 			// 
 			this.buttonSprzedawca.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.buttonSprzedawca.AutoSize = true;
-			this.buttonSprzedawca.Location = new System.Drawing.Point(296, 3);
+			this.buttonSprzedawca.Location = new System.Drawing.Point(371, 3);
 			this.buttonSprzedawca.Name = "buttonSprzedawca";
 			this.buttonSprzedawca.Size = new System.Drawing.Size(26, 25);
 			this.buttonSprzedawca.TabIndex = 11;
@@ -269,7 +269,7 @@ namespace ProFak.UI
 			this.comboBoxNIPSprzedawcy.FormattingEnabled = true;
 			this.comboBoxNIPSprzedawcy.Location = new System.Drawing.Point(51, 4);
 			this.comboBoxNIPSprzedawcy.Name = "comboBoxNIPSprzedawcy";
-			this.comboBoxNIPSprzedawcy.Size = new System.Drawing.Size(239, 23);
+			this.comboBoxNIPSprzedawcy.Size = new System.Drawing.Size(314, 23);
 			this.comboBoxNIPSprzedawcy.TabIndex = 10;
 			// 
 			// comboBoxNazwaSprzedawcy
@@ -279,14 +279,14 @@ namespace ProFak.UI
 			this.comboBoxNazwaSprzedawcy.FormattingEnabled = true;
 			this.comboBoxNazwaSprzedawcy.Location = new System.Drawing.Point(51, 34);
 			this.comboBoxNazwaSprzedawcy.Name = "comboBoxNazwaSprzedawcy";
-			this.comboBoxNazwaSprzedawcy.Size = new System.Drawing.Size(306, 23);
+			this.comboBoxNazwaSprzedawcy.Size = new System.Drawing.Size(381, 23);
 			this.comboBoxNazwaSprzedawcy.TabIndex = 20;
 			// 
 			// buttonNowySprzedawca
 			// 
 			this.buttonNowySprzedawca.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.buttonNowySprzedawca.AutoSize = true;
-			this.buttonNowySprzedawca.Location = new System.Drawing.Point(328, 3);
+			this.buttonNowySprzedawca.Location = new System.Drawing.Point(403, 3);
 			this.buttonNowySprzedawca.Name = "buttonNowySprzedawca";
 			this.buttonNowySprzedawca.Size = new System.Drawing.Size(29, 25);
 			this.buttonNowySprzedawca.TabIndex = 12;
@@ -299,9 +299,9 @@ namespace ProFak.UI
 			this.tableLayoutPanelKontrahenci.SetColumnSpan(this.groupBox3, 3);
 			this.groupBox3.Controls.Add(this.tableLayoutPanel6);
 			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBox3.Location = new System.Drawing.Point(375, 3);
+			this.groupBox3.Location = new System.Drawing.Point(450, 3);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(367, 147);
+			this.groupBox3.Size = new System.Drawing.Size(441, 147);
 			this.groupBox3.TabIndex = 20;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Nabywca";
@@ -330,7 +330,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel6.Size = new System.Drawing.Size(361, 125);
+			this.tableLayoutPanel6.Size = new System.Drawing.Size(435, 125);
 			this.tableLayoutPanel6.TabIndex = 0;
 			// 
 			// label9
@@ -371,14 +371,14 @@ namespace ProFak.UI
 			this.textBoxDaneNabywcy.Location = new System.Drawing.Point(51, 63);
 			this.textBoxDaneNabywcy.Multiline = true;
 			this.textBoxDaneNabywcy.Name = "textBoxDaneNabywcy";
-			this.textBoxDaneNabywcy.Size = new System.Drawing.Size(307, 59);
+			this.textBoxDaneNabywcy.Size = new System.Drawing.Size(381, 59);
 			this.textBoxDaneNabywcy.TabIndex = 30;
 			// 
 			// buttonNabywca
 			// 
 			this.buttonNabywca.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.buttonNabywca.AutoSize = true;
-			this.buttonNabywca.Location = new System.Drawing.Point(294, 3);
+			this.buttonNabywca.Location = new System.Drawing.Point(368, 3);
 			this.buttonNabywca.Name = "buttonNabywca";
 			this.buttonNabywca.Size = new System.Drawing.Size(29, 25);
 			this.buttonNabywca.TabIndex = 11;
@@ -391,7 +391,7 @@ namespace ProFak.UI
 			this.comboBoxNIPNabywcy.FormattingEnabled = true;
 			this.comboBoxNIPNabywcy.Location = new System.Drawing.Point(51, 4);
 			this.comboBoxNIPNabywcy.Name = "comboBoxNIPNabywcy";
-			this.comboBoxNIPNabywcy.Size = new System.Drawing.Size(237, 23);
+			this.comboBoxNIPNabywcy.Size = new System.Drawing.Size(311, 23);
 			this.comboBoxNIPNabywcy.TabIndex = 10;
 			// 
 			// comboBoxNazwaNabywcy
@@ -401,14 +401,14 @@ namespace ProFak.UI
 			this.comboBoxNazwaNabywcy.FormattingEnabled = true;
 			this.comboBoxNazwaNabywcy.Location = new System.Drawing.Point(51, 34);
 			this.comboBoxNazwaNabywcy.Name = "comboBoxNazwaNabywcy";
-			this.comboBoxNazwaNabywcy.Size = new System.Drawing.Size(307, 23);
+			this.comboBoxNazwaNabywcy.Size = new System.Drawing.Size(381, 23);
 			this.comboBoxNazwaNabywcy.TabIndex = 20;
 			// 
 			// buttonNowyNabywca
 			// 
 			this.buttonNowyNabywca.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.buttonNowyNabywca.AutoSize = true;
-			this.buttonNowyNabywca.Location = new System.Drawing.Point(329, 3);
+			this.buttonNowyNabywca.Location = new System.Drawing.Point(403, 3);
 			this.buttonNowyNabywca.Name = "buttonNowyNabywca";
 			this.buttonNowyNabywca.Size = new System.Drawing.Size(29, 25);
 			this.buttonNowyNabywca.TabIndex = 12;
@@ -427,14 +427,14 @@ namespace ProFak.UI
 			this.tabControl1.Location = new System.Drawing.Point(3, 322);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(745, 175);
+			this.tabControl1.Size = new System.Drawing.Size(894, 225);
 			this.tabControl1.TabIndex = 4;
 			// 
 			// tabPagePozycje
 			// 
 			this.tabPagePozycje.Location = new System.Drawing.Point(4, 24);
 			this.tabPagePozycje.Name = "tabPagePozycje";
-			this.tabPagePozycje.Size = new System.Drawing.Size(737, 147);
+			this.tabPagePozycje.Size = new System.Drawing.Size(886, 197);
 			this.tabPagePozycje.TabIndex = 0;
 			this.tabPagePozycje.Text = "Pozycje";
 			this.tabPagePozycje.UseVisualStyleBackColor = true;
@@ -655,6 +655,24 @@ namespace ProFak.UI
 			this.checkBoxZakupSrodkowTrwalych.Text = "Zakup środków trwałych";
 			this.checkBoxZakupSrodkowTrwalych.UseVisualStyleBackColor = true;
 			// 
+			// label20
+			// 
+			this.label20.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.label20.AutoSize = true;
+			this.label20.Location = new System.Drawing.Point(8, 65);
+			this.label20.Name = "label20";
+			this.label20.Size = new System.Drawing.Size(133, 15);
+			this.label20.TabIndex = 14;
+			this.label20.Text = "Opis zdarzenia na PKPiR";
+			// 
+			// textBoxOpisZdarzenia
+			// 
+			this.textBoxOpisZdarzenia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.textBoxOpisZdarzenia.Location = new System.Drawing.Point(147, 61);
+			this.textBoxOpisZdarzenia.Name = "textBoxOpisZdarzenia";
+			this.textBoxOpisZdarzenia.Size = new System.Drawing.Size(203, 23);
+			this.textBoxOpisZdarzenia.TabIndex = 15;
+			// 
 			// tableLayoutPanel1
 			// 
 			this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -679,7 +697,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 1;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(745, 31);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(894, 31);
 			this.tableLayoutPanel1.TabIndex = 1;
 			// 
 			// textBoxNumer
@@ -687,7 +705,7 @@ namespace ProFak.UI
 			this.textBoxNumer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxNumer.Location = new System.Drawing.Point(129, 4);
 			this.textBoxNumer.Name = "textBoxNumer";
-			this.textBoxNumer.Size = new System.Drawing.Size(391, 23);
+			this.textBoxNumer.Size = new System.Drawing.Size(540, 23);
 			this.textBoxNumer.TabIndex = 2;
 			// 
 			// labelRodzaj
@@ -714,7 +732,7 @@ namespace ProFak.UI
 			// 
 			this.buttonWaluta.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.buttonWaluta.AutoSize = true;
-			this.buttonWaluta.Location = new System.Drawing.Point(716, 3);
+			this.buttonWaluta.Location = new System.Drawing.Point(865, 3);
 			this.buttonWaluta.Name = "buttonWaluta";
 			this.buttonWaluta.Size = new System.Drawing.Size(26, 25);
 			this.buttonWaluta.TabIndex = 4;
@@ -725,7 +743,7 @@ namespace ProFak.UI
 			// 
 			this.label15.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label15.AutoSize = true;
-			this.label15.Location = new System.Drawing.Point(546, 8);
+			this.label15.Location = new System.Drawing.Point(695, 8);
 			this.label15.Name = "label15";
 			this.label15.Size = new System.Drawing.Size(44, 15);
 			this.label15.TabIndex = 0;
@@ -736,7 +754,7 @@ namespace ProFak.UI
 			this.comboBoxWaluta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.comboBoxWaluta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxWaluta.FormattingEnabled = true;
-			this.comboBoxWaluta.Location = new System.Drawing.Point(596, 4);
+			this.comboBoxWaluta.Location = new System.Drawing.Point(745, 4);
 			this.comboBoxWaluta.Name = "comboBoxWaluta";
 			this.comboBoxWaluta.Size = new System.Drawing.Size(114, 23);
 			this.comboBoxWaluta.TabIndex = 3;
@@ -757,7 +775,7 @@ namespace ProFak.UI
 			this.tableLayoutPanelDatyKwoty.Name = "tableLayoutPanelDatyKwoty";
 			this.tableLayoutPanelDatyKwoty.RowCount = 1;
 			this.tableLayoutPanelDatyKwoty.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanelDatyKwoty.Size = new System.Drawing.Size(745, 117);
+			this.tableLayoutPanelDatyKwoty.Size = new System.Drawing.Size(894, 117);
 			this.tableLayoutPanelDatyKwoty.TabIndex = 3;
 			// 
 			// groupBox6
@@ -765,9 +783,9 @@ namespace ProFak.UI
 			this.groupBox6.AutoSize = true;
 			this.groupBox6.Controls.Add(this.tableLayoutPanel9);
 			this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBox6.Location = new System.Drawing.Point(301, 3);
+			this.groupBox6.Location = new System.Drawing.Point(360, 3);
 			this.groupBox6.Name = "groupBox6";
-			this.groupBox6.Size = new System.Drawing.Size(292, 111);
+			this.groupBox6.Size = new System.Drawing.Size(351, 111);
 			this.groupBox6.TabIndex = 40;
 			this.groupBox6.TabStop = false;
 			this.groupBox6.Text = "Płatność";
@@ -794,7 +812,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel9.Size = new System.Drawing.Size(286, 89);
+			this.tableLayoutPanel9.Size = new System.Drawing.Size(345, 89);
 			this.tableLayoutPanel9.TabIndex = 0;
 			// 
 			// label12
@@ -833,7 +851,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel9.SetColumnSpan(this.textBoxRachunekBankowy, 2);
 			this.textBoxRachunekBankowy.Location = new System.Drawing.Point(106, 63);
 			this.textBoxRachunekBankowy.Name = "textBoxRachunekBankowy";
-			this.textBoxRachunekBankowy.Size = new System.Drawing.Size(177, 23);
+			this.textBoxRachunekBankowy.Size = new System.Drawing.Size(236, 23);
 			this.textBoxRachunekBankowy.TabIndex = 43;
 			// 
 			// dateTimePickerTerminPlatnosci
@@ -842,7 +860,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel9.SetColumnSpan(this.dateTimePickerTerminPlatnosci, 2);
 			this.dateTimePickerTerminPlatnosci.Location = new System.Drawing.Point(106, 34);
 			this.dateTimePickerTerminPlatnosci.Name = "dateTimePickerTerminPlatnosci";
-			this.dateTimePickerTerminPlatnosci.Size = new System.Drawing.Size(177, 23);
+			this.dateTimePickerTerminPlatnosci.Size = new System.Drawing.Size(236, 23);
 			this.dateTimePickerTerminPlatnosci.TabIndex = 42;
 			// 
 			// comboBoxSposobPlatnosci
@@ -851,14 +869,14 @@ namespace ProFak.UI
 			this.comboBoxSposobPlatnosci.FormattingEnabled = true;
 			this.comboBoxSposobPlatnosci.Location = new System.Drawing.Point(106, 4);
 			this.comboBoxSposobPlatnosci.Name = "comboBoxSposobPlatnosci";
-			this.comboBoxSposobPlatnosci.Size = new System.Drawing.Size(145, 23);
+			this.comboBoxSposobPlatnosci.Size = new System.Drawing.Size(204, 23);
 			this.comboBoxSposobPlatnosci.TabIndex = 40;
 			// 
 			// buttonSposobPlatnosci
 			// 
 			this.buttonSposobPlatnosci.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.buttonSposobPlatnosci.AutoSize = true;
-			this.buttonSposobPlatnosci.Location = new System.Drawing.Point(257, 3);
+			this.buttonSposobPlatnosci.Location = new System.Drawing.Point(316, 3);
 			this.buttonSposobPlatnosci.Name = "buttonSposobPlatnosci";
 			this.buttonSposobPlatnosci.Size = new System.Drawing.Size(26, 25);
 			this.buttonSposobPlatnosci.TabIndex = 41;
@@ -872,7 +890,7 @@ namespace ProFak.UI
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox1.Location = new System.Drawing.Point(3, 3);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(292, 111);
+			this.groupBox1.Size = new System.Drawing.Size(351, 111);
 			this.groupBox1.TabIndex = 30;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Daty";
@@ -897,7 +915,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel4.Size = new System.Drawing.Size(286, 89);
+			this.tableLayoutPanel4.Size = new System.Drawing.Size(345, 89);
 			this.tableLayoutPanel4.TabIndex = 0;
 			// 
 			// label3
@@ -935,7 +953,7 @@ namespace ProFak.UI
 			this.dateTimePickerDataWystawienia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.dateTimePickerDataWystawienia.Location = new System.Drawing.Point(119, 3);
 			this.dateTimePickerDataWystawienia.Name = "dateTimePickerDataWystawienia";
-			this.dateTimePickerDataWystawienia.Size = new System.Drawing.Size(164, 23);
+			this.dateTimePickerDataWystawienia.Size = new System.Drawing.Size(223, 23);
 			this.dateTimePickerDataWystawienia.TabIndex = 30;
 			// 
 			// dateTimePickerDataSprzedazy
@@ -943,7 +961,7 @@ namespace ProFak.UI
 			this.dateTimePickerDataSprzedazy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.dateTimePickerDataSprzedazy.Location = new System.Drawing.Point(119, 32);
 			this.dateTimePickerDataSprzedazy.Name = "dateTimePickerDataSprzedazy";
-			this.dateTimePickerDataSprzedazy.Size = new System.Drawing.Size(164, 23);
+			this.dateTimePickerDataSprzedazy.Size = new System.Drawing.Size(223, 23);
 			this.dateTimePickerDataSprzedazy.TabIndex = 31;
 			// 
 			// dateTimePickerDataWprowadzenia
@@ -951,7 +969,7 @@ namespace ProFak.UI
 			this.dateTimePickerDataWprowadzenia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.dateTimePickerDataWprowadzenia.Location = new System.Drawing.Point(119, 62);
 			this.dateTimePickerDataWprowadzenia.Name = "dateTimePickerDataWprowadzenia";
-			this.dateTimePickerDataWprowadzenia.Size = new System.Drawing.Size(164, 23);
+			this.dateTimePickerDataWprowadzenia.Size = new System.Drawing.Size(223, 23);
 			this.dateTimePickerDataWprowadzenia.TabIndex = 32;
 			// 
 			// groupBox7
@@ -959,9 +977,9 @@ namespace ProFak.UI
 			this.groupBox7.AutoSize = true;
 			this.groupBox7.Controls.Add(this.tableLayoutPanel3);
 			this.groupBox7.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBox7.Location = new System.Drawing.Point(599, 3);
+			this.groupBox7.Location = new System.Drawing.Point(717, 3);
 			this.groupBox7.Name = "groupBox7";
-			this.groupBox7.Size = new System.Drawing.Size(143, 111);
+			this.groupBox7.Size = new System.Drawing.Size(174, 111);
 			this.groupBox7.TabIndex = 41;
 			this.groupBox7.TabStop = false;
 			this.groupBox7.Text = "Razem";
@@ -986,7 +1004,7 @@ namespace ProFak.UI
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel3.Size = new System.Drawing.Size(137, 89);
+			this.tableLayoutPanel3.Size = new System.Drawing.Size(168, 89);
 			this.tableLayoutPanel3.TabIndex = 0;
 			// 
 			// label16
@@ -1036,7 +1054,7 @@ namespace ProFak.UI
             0,
             -2147483648});
 			this.numericUpDownNetto.Name = "numericUpDownNetto";
-			this.numericUpDownNetto.Size = new System.Drawing.Size(85, 23);
+			this.numericUpDownNetto.Size = new System.Drawing.Size(116, 23);
 			this.numericUpDownNetto.TabIndex = 50;
 			this.numericUpDownNetto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
@@ -1057,7 +1075,7 @@ namespace ProFak.UI
             0,
             -2147483648});
 			this.numericUpDownVat.Name = "numericUpDownVat";
-			this.numericUpDownVat.Size = new System.Drawing.Size(85, 23);
+			this.numericUpDownVat.Size = new System.Drawing.Size(116, 23);
 			this.numericUpDownVat.TabIndex = 51;
 			this.numericUpDownVat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
@@ -1078,36 +1096,18 @@ namespace ProFak.UI
             0,
             -2147483648});
 			this.numericUpDownBrutto.Name = "numericUpDownBrutto";
-			this.numericUpDownBrutto.Size = new System.Drawing.Size(85, 23);
+			this.numericUpDownBrutto.Size = new System.Drawing.Size(116, 23);
 			this.numericUpDownBrutto.TabIndex = 52;
 			this.numericUpDownBrutto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
-			// label20
-			// 
-			this.label20.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.label20.AutoSize = true;
-			this.label20.Location = new System.Drawing.Point(8, 65);
-			this.label20.Name = "label20";
-			this.label20.Size = new System.Drawing.Size(133, 15);
-			this.label20.TabIndex = 14;
-			this.label20.Text = "Opis zdarzenia na PKPiR";
-			// 
-			// textBoxOpisZdarzenia
-			// 
-			this.textBoxOpisZdarzenia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxOpisZdarzenia.Location = new System.Drawing.Point(147, 61);
-			this.textBoxOpisZdarzenia.Name = "textBoxOpisZdarzenia";
-			this.textBoxOpisZdarzenia.Size = new System.Drawing.Size(203, 23);
-			this.textBoxOpisZdarzenia.TabIndex = 15;
 			// 
 			// FakturaEdytor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.tableLayoutPanel);
-			this.MinimumSize = new System.Drawing.Size(750, 500);
+			this.MinimumSize = new System.Drawing.Size(900, 550);
 			this.Name = "FakturaEdytor";
-			this.Size = new System.Drawing.Size(751, 500);
+			this.Size = new System.Drawing.Size(900, 550);
 			this.tableLayoutPanel.ResumeLayout(false);
 			this.tableLayoutPanel.PerformLayout();
 			this.tableLayoutPanelKontrahenci.ResumeLayout(false);
