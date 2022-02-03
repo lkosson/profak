@@ -21,7 +21,7 @@ namespace ProFak.UI
 				var podsumowanie = base.Podsumowanie;
 				if (WybraneRekordy.Count() > 1)
 				{
-					podsumowanie += $"\nRazem: {WybraneRekordy.Sum(deklaracjaVat => deklaracjaVat.DoWplaty).ToString("n2")}";
+					podsumowanie += $"\nRazem do wpłaty: {WybraneRekordy.Sum(deklaracjaVat => deklaracjaVat.DoWplaty).ToString("n2")}\nRazem należny: {WybraneRekordy.Sum(deklaracjaVat => deklaracjaVat.NaleznyRazem).ToString("n2")}\nRazem naliczony: {WybraneRekordy.Sum(deklaracjaVat => deklaracjaVat.NaliczonyRazem).ToString("n2")}";
 				}
 				return podsumowanie;
 			}
