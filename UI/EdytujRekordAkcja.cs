@@ -15,7 +15,7 @@ namespace ProFak.UI
 	{
 		private readonly bool pelnyEkran;
 
-		public override string Nazwa => "✎ Wyświetl [F4]";
+		public override string Nazwa => "✎ Wyświetl [F2]";
 
 		public EdytujRekordAkcja(bool pelnyEkran = false)
 		{
@@ -24,7 +24,7 @@ namespace ProFak.UI
 
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<TRekord> zaznaczoneRekordy) => zaznaczoneRekordy.Count() == 1;
 
-		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.None && (klawisz == Keys.Enter || klawisz == Keys.F4);
+		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.None && (klawisz == Keys.Enter || klawisz == Keys.F2);
 
 		public override void Uruchom(Kontekst kontekst, ref IEnumerable<TRekord> zaznaczoneRekordy)
 		{
