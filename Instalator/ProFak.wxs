@@ -18,6 +18,8 @@
 
 		<Property Id="WIXUI_INSTALLDIR" Value="KATALOGPROGRAMU" />
 		<UIRef Id="UI" />
+
+		<MajorUpgrade DowngradeErrorMessage="Jest już zainstalowana nowsza wersja tego programu." />
 	</Product>
 
 	<Fragment>
