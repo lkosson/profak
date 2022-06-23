@@ -14,11 +14,11 @@ ProFak to prosty, darmowy program do fakturowania; skierowany przede wszystkim d
  * Prowadzenie i generowanie księgi przychodów i rozchodów
  * Prowadzenie i generowanie ewidencji przychodów
  * Integracja z białą listą rachunków VAT
+ * Generowanie JPK_FA
+ * Integracja z GUS
 
 ## Dalsze plany
 
- * Generowanie JPK_FA
- * Integracja z GUS
  * Obsługa i rozliczanie magazynu
 
 ## Poza zakresem projektu
