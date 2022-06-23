@@ -79,7 +79,7 @@ namespace ProFak.DB
 				var dataKopiiDziennej = File.Exists(sciezkaKopiiDziennej) ? File.GetLastWriteTime(sciezkaKopiiDziennej) : DateTime.MinValue;
 				var dataKopiiMiesiecznej = File.Exists(sciezkaKopiiMiesiecznej) ? File.GetLastWriteTime(sciezkaKopiiMiesiecznej) : DateTime.MinValue;
 				if (dataBazy.Date > dataKopiiDziennej.Date) WykonajKopie(sciezkaKopiiDziennej);
-				if (dataBazy.Month != dataKopiiMiesiecznej.Month || dataBazy.Year != dataKopiiMiesiecznej.Year) WykonajKopie(sciezkaKopiiMiesiecznej);
+				else if (dataKopiiDziennej.Date != dataBazy.Date && (dataBazy.Month != dataKopiiMiesiecznej.Month || dataBazy.Year != dataKopiiMiesiecznej.Year)) WykonajKopie(sciezkaKopiiMiesiecznej);
 			}
 			catch
 			{
