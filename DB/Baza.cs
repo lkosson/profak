@@ -86,7 +86,7 @@ namespace ProFak.DB
 			}
 		}
 
-		private static void WykonajKopie(string plikDocelowy)
+		public static void WykonajKopie(string plikDocelowy)
 		{
 			string plikNieaktualny = null;
 			if (File.Exists(plikDocelowy))
@@ -94,9 +94,13 @@ namespace ProFak.DB
 				plikNieaktualny = plikDocelowy + "-del";
 				File.Move(plikDocelowy, plikNieaktualny);
 			}
-			File.Copy(Sciezka, plikDocelowy);
+			using (var zrodlo = new SqliteConnection(PrzygotujParametryPolaczenia()))
+			{
+				zrodlo.Open();
+				using var cel = new SqliteConnection($"Data Source={plikDocelowy}");
+				zrodlo.BackupDatabase(cel);
+			}
 			if (plikNieaktualny != null) File.Delete(plikNieaktualny);
-			File.SetAttributes(plikDocelowy, FileAttributes.Hidden | FileAttributes.Compressed);
 		}
 
 		private static void UstalSciezkeBazy()
@@ -125,9 +129,8 @@ namespace ProFak.DB
 			}
 		}
 
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		private static string PrzygotujParametryPolaczenia()
 		{
-			base.OnConfiguring(optionsBuilder);
 			string polaczenie;
 			if (Sciezka == null)
 			{
@@ -142,7 +145,13 @@ namespace ProFak.DB
 			{
 				polaczenie = $"Data Source={Sciezka}";
 			}
-			optionsBuilder.UseSqlite(polaczenie);
+			return polaczenie;
+		}
+
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+			base.OnConfiguring(optionsBuilder);
+			optionsBuilder.UseSqlite(PrzygotujParametryPolaczenia());
 			//if (Debugger.IsAttached) optionsBuilder.LogTo(message => Debug.WriteLine(message), new[] { RelationalEventId.CommandExecuting }).EnableSensitiveDataLogging();
 		}
 

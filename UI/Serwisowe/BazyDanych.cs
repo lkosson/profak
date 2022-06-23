@@ -93,7 +93,7 @@ namespace ProFak.UI
 			if (saveFileDialogBackup.ShowDialog() != DialogResult.OK) return;
 			try
 			{
-				File.Copy(Baza.Sciezka, saveFileDialogBackup.FileName);
+				Baza.WykonajKopie(saveFileDialogBackup.FileName);
 				MessageBox.Show("Kopia bazy danych została zapisana.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 			catch (Exception exc)
@@ -114,6 +114,7 @@ namespace ProFak.UI
 			try
 			{
 				File.Move(Baza.Sciezka, bazaRatunkowa);
+				// Tu nie potrzeba korzystać z mechanizmów SQLite'a - plik źródłowy nie jest aktywną bazą
 				File.Copy(openFileDialogBackup.FileName, Baza.Sciezka);
 				using var baza = new DB.Baza();
 				baza.Database.Migrate();

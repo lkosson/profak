@@ -102,6 +102,7 @@ namespace ProFak.UI
 				if (zrodloJestPlikiem)
 				{
 					backgroundWorker.ReportProgress(0, "Kopiowanie bazy");
+					// Tu nie potrzeba korzystać z mechanizmów SQLite'a - plik źródłowy nie jest aktywną bazą
 					File.Copy(bazaZrodlowa, bazaDocelowa);
 				}
 
