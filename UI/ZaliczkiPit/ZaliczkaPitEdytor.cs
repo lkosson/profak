@@ -188,23 +188,12 @@ namespace ProFak.UI
 				}
 				else if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Skala)
 				{
-					var przychodDlaUlgi = Rekord.Przychody - Rekord.Koszty;
-					decimal ulga;
-					if (przychodDlaUlgi < 68412) ulga = 0;
-					else if (przychodDlaUlgi < 102588) ulga = Decimal.Round((przychodDlaUlgi * 0.0688m - 4566) / 0.17m, 2, MidpointRounding.AwayFromZero);
-					else if (przychodDlaUlgi < 133692) ulga = Decimal.Round((przychodDlaUlgi * -7.35m + 9829) / 0.17m, 2, MidpointRounding.AwayFromZero);
-					else ulga = 0;
-					var podstawa = Rekord.Przychody - Rekord.Koszty - Rekord.SkladkiZus - ulga;
-					var zmniejszenie = 0m;
+					var podstawa = Rekord.Przychody - Rekord.Koszty - Rekord.SkladkiZus;
 
-					if (podstawa <= 8001.49m) zmniejszenie = podstawa * 0.17m;
-					else if (podstawa <= 13000.49m) zmniejszenie = 1360 - 834.88m * (podstawa - 8000) / 5000;
-					else if (podstawa <= 85528.49m) zmniejszenie = 525.12m;
-					else if (podstawa <= 127000.59m) zmniejszenie = 525.12m - 525.12m * (podstawa - 85528) / 41472;
-
-					if (podstawa <= 85528) Rekord.Podatek = Decimal.Round(podstawa * 0.17m - zmniejszenie, 0, MidpointRounding.AwayFromZero);
-					else if (podstawa <= 1000000) Rekord.Podatek = 14539.76m + Decimal.Round((podstawa - 85528) * 0.32m - zmniejszenie, 0, MidpointRounding.AwayFromZero);
-					else Rekord.Podatek = 14539.76m + Decimal.Round((podstawa - 85528) * 0.32m + (podstawa - 1000000) * 0.04m, 0, MidpointRounding.AwayFromZero);
+					if (podstawa <= 30000) Rekord.Podatek = 0;
+					else if (podstawa <= 120000) Rekord.Podatek = Decimal.Round(podstawa * 0.12m - 3600.00m, 0, MidpointRounding.AwayFromZero);
+					else if (podstawa <= 1000000) Rekord.Podatek = 10800.00m + Decimal.Round((podstawa - 120000) * 0.32m, 0, MidpointRounding.AwayFromZero);
+					else Rekord.Podatek = 10800.00m + Decimal.Round((podstawa - 120000) * 0.32m + (podstawa - 1000000) * 0.04m, 0, MidpointRounding.AwayFromZero);
 				}
 
 				if (Rekord.Miesiac.Year < 2022) Rekord.Podatek -= Decimal.Round(podstawaZdrowotna * 0.0775m, 0, MidpointRounding.AwayFromZero);
