@@ -150,7 +150,7 @@ namespace ProFak.UI
 
 			foreach (var skladkaZus in skladkiZus)
 			{
-				Rekord.SkladkiZus += skladkaZus.SkladkaSpoleczna;
+				Rekord.SkladkiZus += skladkaZus.OdliczenieOdDochodu;
 				podstawaZdrowotna += skladkaZus.PodstawaZdrowotne;
 			}
 

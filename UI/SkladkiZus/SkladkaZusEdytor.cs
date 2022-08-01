@@ -84,10 +84,14 @@ namespace ProFak.UI
 			{
 				Rekord.PodstawaZdrowotne = Math.Max(dochod, minimalneWynagrodzenie);
 				Rekord.SkladkaZdrowotna = Decimal.Round(Rekord.PodstawaZdrowotne * 0.049m, 2, MidpointRounding.AwayFromZero);
+				Rekord.OdliczenieOdDochodu += Rekord.SkladkaZdrowotna;
+				var sumaOdliczen = Kontekst.Baza.SkladkiZus.Where(skladka => skladka.Miesiac >= new DateTime(Rekord.Miesiac.Year, 1, 1) && skladka.Miesiac < skladka.Miesiac).Sum(skladka => skladka.OdliczenieOdDochodu);
+				Rekord.OdliczenieOdDochodu = Math.Min(Rekord.OdliczenieOdDochodu, 8700m - sumaOdliczen);
 			}
 			else if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Ryczałt)
 			{
 				Rekord.SkladkaZdrowotna = Decimal.Round(Rekord.PodstawaZdrowotne * 0.09m, 2, MidpointRounding.AwayFromZero);
+				Rekord.OdliczenieOdDochodu += Decimal.Round(Rekord.SkladkaZdrowotna * 0.5m, 2, MidpointRounding.AwayFromZero);
 			}
 			else if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Skala)
 			{
