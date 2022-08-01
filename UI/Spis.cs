@@ -228,6 +228,15 @@ namespace ProFak.UI
 			}
 		}
 
+		protected override void OnCellMouseDown(DataGridViewCellMouseEventArgs e)
+		{
+			if ((ModifierKeys & Keys.Alt) == Keys.Alt)
+			{
+				SelectionMode = DataGridViewSelectionMode.CellSelect;
+			}
+			base.OnCellMouseDown(e);
+		}
+
 		public void UstawFiltr(string wyrazenieFiltra)
 		{
 			if (String.IsNullOrWhiteSpace(wyrazenieFiltra))
