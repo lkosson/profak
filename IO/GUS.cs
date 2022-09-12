@@ -15,7 +15,8 @@ namespace ProFak.IO
 	{
 		public static async Task PobierzGUS(Kontrahent kontrahent)
 		{
-			if (String.IsNullOrEmpty(kontrahent.NIP)) throw new ApplicationException("Należy podać NIP.");
+			var nip = kontrahent.NIP?.Trim()?.Replace("-", "");
+			if (String.IsNullOrEmpty(nip)) throw new ApplicationException("Należy podać NIP.");
 			using var client = new HttpClient();
 			client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0");
 			client.DefaultRequestHeaders.AcceptLanguage.ParseAdd("pl,en-US;q=0.7,en;q=0.3");
@@ -33,7 +34,7 @@ namespace ProFak.IO
 			var zalogujOdpowiedzJson = JsonSerializer.Deserialize<JsonElement>(zalogujOdpowiedz);
 			var zalogujSid = zalogujOdpowiedzJson.GetProperty("d").GetString();
 
-			var szukajContent = JsonContent.Create(new { pParametryWyszukiwania = new { Nip = kontrahent.NIP }, jestWojPowGmnMiej = true }, options: new JsonSerializerOptions { PropertyNamingPolicy = null });
+			var szukajContent = JsonContent.Create(new { pParametryWyszukiwania = new { Nip = nip }, jestWojPowGmnMiej = true }, options: new JsonSerializerOptions { PropertyNamingPolicy = null });
 			var s = await szukajContent.ReadAsStringAsync();
 			var szukajRequest = new HttpRequestMessage(HttpMethod.Post, "https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc/ajaxEndpoint/daneSzukaj");
 			szukajRequest.Headers.Referrer = new Uri("https://wyszukiwarkaregon.stat.gov.pl/appBIR/index.aspx");
@@ -43,6 +44,7 @@ namespace ProFak.IO
 			var szukajOdpowiedz = await szukajResponse.Content.ReadAsStringAsync();
 			var szukajOdpowiedzJson = JsonSerializer.Deserialize<JsonElement>(szukajOdpowiedz);
 			var podmioty = szukajOdpowiedzJson.GetProperty("d").GetString();
+			if (String.IsNullOrEmpty(podmioty)) throw new ApplicationException("Nie znaleziono firmy w bazie GUS.");
 			var podmiotyJson = JsonSerializer.Deserialize<JsonElement>(podmioty);
 			if (podmiotyJson.GetArrayLength() == 0) throw new ApplicationException("Nie znaleziono firmy w bazie GUS.");
 			var podmiot = podmiotyJson[0];
