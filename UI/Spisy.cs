@@ -101,6 +101,7 @@ namespace ProFak.UI
 			return Utworz(spis,
 				new DodajPlikAkcja(spis),
 				new PokazPlikAction(),
+				new ZapiszPlikAction(),
 				new UsunRekordAkcja<Plik>(),
 				new PrzeladujAkcja<Plik>()
 			);
