@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -30,7 +31,8 @@ namespace ProFak.UI
 
 			var proces = new Process() { StartInfo = new ProcessStartInfo { FileName = pelnaSciezka, UseShellExecute = true }, EnableRaisingEvents = true };
 			proces.Start();
-			if (proces == null)
+			Thread.Sleep(100);
+			if (proces == null || proces.HasExited)
 			{
 				AppDomain.CurrentDomain.ProcessExit += delegate
 				{
