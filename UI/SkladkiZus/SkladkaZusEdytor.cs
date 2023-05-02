@@ -27,6 +27,7 @@ namespace ProFak.UI
 			kontroler.Powiazanie(numericUpDownSkladkaWypadkowa, skladka => skladka.SkladkaWypadkowa);
 			kontroler.Powiazanie(numericUpDownSkladkaSpoleczna, skladka => skladka.SkladkaSpoleczna);
 			kontroler.Powiazanie(numericUpDownSkladkaZdrowotna, skladka => skladka.SkladkaZdrowotna);
+			kontroler.Powiazanie(numericUpDownRozliczenieRoczneSkladkiZdrowotnej, skladka => skladka.RozliczenieRoczneSkladkiZdrowotnej);
 			kontroler.Powiazanie(numericUpDownFunduszPracy, skladka => skladka.SkladkaFunduszPracy);
 			kontroler.Powiazanie(numericUpDownSumaSkladek, skladka => skladka.SumaSkladek);
 			kontroler.Powiazanie(numericUpDownOdliczenieOdDochodu, skladka => skladka.OdliczenieOdDochodu);
@@ -84,6 +85,7 @@ namespace ProFak.UI
 			{
 				Rekord.PodstawaZdrowotne = Math.Max(dochod, minimalneWynagrodzenie);
 				Rekord.SkladkaZdrowotna = Decimal.Round(Rekord.PodstawaZdrowotne * 0.049m, 2, MidpointRounding.AwayFromZero);
+				Rekord.SkladkaZdrowotna += Rekord.RozliczenieRoczneSkladkiZdrowotnej;
 				Rekord.OdliczenieOdDochodu += Rekord.SkladkaZdrowotna;
 				var sumaOdliczen = Kontekst.Baza.SkladkiZus.Where(skladka => skladka.Miesiac >= new DateTime(Rekord.Miesiac.Year, 1, 1) && skladka.Miesiac < skladka.Miesiac).Sum(skladka => skladka.OdliczenieOdDochodu);
 				Rekord.OdliczenieOdDochodu = Math.Min(Rekord.OdliczenieOdDochodu, 8700m - sumaOdliczen);
@@ -91,6 +93,7 @@ namespace ProFak.UI
 			else if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Ryczałt)
 			{
 				Rekord.SkladkaZdrowotna = Decimal.Round(Rekord.PodstawaZdrowotne * 0.09m, 2, MidpointRounding.AwayFromZero);
+				Rekord.SkladkaZdrowotna += Rekord.RozliczenieRoczneSkladkiZdrowotnej;
 				Rekord.OdliczenieOdDochodu += Decimal.Round(Rekord.SkladkaZdrowotna * 0.5m, 2, MidpointRounding.AwayFromZero);
 			}
 			else if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Skala)

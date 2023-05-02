@@ -17,6 +17,7 @@ namespace ProFak.DB
 		public decimal SkladkaWypadkowa { get; set; }
 		public decimal SkladkaSpoleczna { get; set; }
 		public decimal SkladkaZdrowotna { get; set; }
+		public decimal RozliczenieRoczneSkladkiZdrowotnej { get; set; }
 		public decimal SkladkaFunduszPracy { get; set; }
 		public decimal SumaSkladek { get; set; }
 		public decimal OdliczenieOdDochodu { get; set; }

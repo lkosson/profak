@@ -25,6 +25,7 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.SkladkaWypadkowa).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.SkladkaSpoleczna).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.SkladkaZdrowotna).HasDefaultValue(0).IsRequired();
+			builder.Property(e => e.RozliczenieRoczneSkladkiZdrowotnej).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.SkladkaFunduszPracy).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.SumaSkladek).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.OdliczenieOdDochodu).HasDefaultValue(0).IsRequired();
