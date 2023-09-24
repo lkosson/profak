@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	class GenerujJPKAkcja : AkcjaNaSpisie<DeklaracjaVat>
+	class GenerujJPK_V7MAkcja : AkcjaNaSpisie<DeklaracjaVat>
 	{
-		public override string Nazwa => "Generuj JPK";
+		public override string Nazwa => "Generuj JPK_V7M";
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<DeklaracjaVat> zaznaczoneRekordy) => zaznaczoneRekordy.Count() == 1;
 
 		public override void Uruchom(Kontekst kontekst, ref IEnumerable<DeklaracjaVat> zaznaczoneRekordy)
