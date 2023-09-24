@@ -36,6 +36,7 @@ namespace ProFak.DB
 				baza.Zapisz(new SposobPlatnosci { CzyDomyslny = true, LiczbaDni = 7, Nazwa = "Przelew 7" });
 				baza.Zapisz(new SposobPlatnosci { CzyDomyslny = false, LiczbaDni = 14, Nazwa = "Przelew 14" });
 				baza.Zapisz(new SposobPlatnosci { CzyDomyslny = false, LiczbaDni = 30, Nazwa = "Przelew 30" });
+				baza.Zapisz(new SposobPlatnosci { CzyDomyslny = false, LiczbaDni = 30, Nazwa = "Przelew, mechanizm podzielonej płatności" });
 				baza.Zapisz(new SposobPlatnosci { CzyDomyslny = false, LiczbaDni = 0, Nazwa = "Gotówka" });
 				baza.Zapisz(new SposobPlatnosci { CzyDomyslny = false, LiczbaDni = 0, Nazwa = "Karta" });
 			}

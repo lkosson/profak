@@ -65,7 +65,7 @@ namespace ProFak.Wydruki
 					fakturaDTO.Stopka = "<b>Do zapłaty:</b> " + dozaplaty.ToString("n2") + " " + waluta.Skrot
 						+ "<br/><b>Słownie:</b> " + SlowniePL.Slownie(dozaplaty, waluta.Skrot)
 						+ "<br/><b>Termin płatności:</b> " + faktura.TerminPlatnosci.ToLongDateString()
-						+ "<br/><b>Forma płatności:</b> przelew, mechanizm podzielonej płatności";
+						+ "<br/><b>Forma płatności:</b> " + faktura.OpisSposobuPlatnosci;
 
 					if (!String.IsNullOrEmpty(faktura.RachunekBankowy)) fakturaDTO.Stopka += "<br/><b>Numer rachunku:</b> " + faktura.RachunekBankowy;
 				}
