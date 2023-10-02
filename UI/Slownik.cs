@@ -89,6 +89,7 @@ namespace ProFak.UI
 			if (!gotowy) return;
 			var pozycja = (PozycjaListyRekordu<T>)comboBox.SelectedItem;
 			ustawWartosc(pozycja?.Wartosc);
+			if (comboBox.DropDownStyle == ComboBoxStyle.DropDown) comboBox.Focus();
 		}
 
 		private void WypelnijListe()
