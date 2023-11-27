@@ -71,7 +71,6 @@ class API
 	</ns3:Context>
 </ns3:InitSessionTokenRequest>";
 
-
 		var initTokenContent = new StringContent(initToken, Encoding.UTF8, "application/octet-stream");
 		var initTokenRequest = new HttpRequestMessage(HttpMethod.Post, urlBase + "/api/online/Session/InitToken") { Content = initTokenContent };
 		var initTokenResponse = await client.SendAsync(initTokenRequest);
@@ -137,7 +136,7 @@ class API
 
 	public async Task<string> GetInvoiceAsync(string ksefReferenceNumber)
 	{
-		var fullInvoiceGetResponse = await client.GetAsync("https://ksef-test.mf.gov.pl/api/online/Invoice/Get/" + ksefReferenceNumber);
+		var fullInvoiceGetResponse = await client.GetAsync(urlBase + "/api/online/Invoice/Get/" + ksefReferenceNumber);
 		var fullInvoiceGetResponseBody = await fullInvoiceGetResponse.Content.ReadAsStringAsync();
 		return fullInvoiceGetResponseBody;
 	}
