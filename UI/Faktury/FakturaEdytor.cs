@@ -231,6 +231,9 @@ namespace ProFak.UI
 				buttonSprzedawca.Enabled = false;
 				buttonNowySprzedawca.Enabled = false;
 				textBoxDaneSprzedawcy.Enabled = false;
+
+				buttonKSeFPobierz.Enabled = false;
+				textBoxNumerKSeF.ReadOnly = true;
 			}
 			else
 			{
@@ -246,6 +249,10 @@ namespace ProFak.UI
 				buttonNabywca.Enabled = false;
 				buttonNowyNabywca.Enabled = false;
 				textBoxDaneNabywcy.Enabled = false;
+
+				buttonKSeFGeneruj.Enabled = false;
+				buttonKSeFWyslij.Enabled = false;
+				textBoxKSeFXML.ReadOnly = true;
 			}
 		}
 
@@ -283,6 +290,21 @@ namespace ProFak.UI
 			nowyKontekst.Baza.Zapisz(kontrahent);
 			transakcja.Zatwierdz();
 			return true;
+		}
+
+		private void buttonKSeFGeneruj_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void buttonKSeFWyslij_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void buttonKSeFPobierz_Click(object sender, EventArgs e)
+		{
+
 		}
 	}
 
