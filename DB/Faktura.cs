@@ -39,6 +39,9 @@ namespace ProFak.DB
 		public bool CzyWNT { get; set; }
 		public string OpisZdarzenia { get; set; }
 
+		public string NumerKSeF { get; set; } = "";
+		public string XMLKSeF { get; set; } = "";
+
 		public int? SprzedawcaId { get; set; }
 		public int? NabywcaId { get; set; }
 		public int? FakturaKorygowanaId { get; set; }
