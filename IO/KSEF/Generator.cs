@@ -9,6 +9,7 @@ using System.Xml;
 using DBFaktura = ProFak.DB.Faktura;
 using KSEFFaktura = ProFak.IO.KSEF.Faktura;
 using ProFak.DB.Migrations;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProFak.IO.KSEF;
 
@@ -18,14 +19,29 @@ class Generator
 	{
 		foreach (var dbFaktura in dbFaktury)
 		{
-			var ksefFaktura = Zbuduj(dbFaktura);
-			var xo = new XmlAttributeOverrides();
-			var xs = new XmlSerializer(typeof(KSEFFaktura), xo);
-			var xml = new StringBuilder();
-			using var xw = XmlWriter.Create(xml, new XmlWriterSettings() { OmitXmlDeclaration = false, Indent = true });
-			var nss = new XmlSerializerNamespaces();
-			xs.Serialize(xw, ksefFaktura, nss);
+			//var xml = ZbudujXML(dbFaktura);
 		}
+	}
+
+	public static string ZbudujXML(Baza baza, Ref<DBFaktura> dbFakturaRef)
+	{
+		var dbFaktura = baza.Faktury
+			.Include(e => e.Wplaty)
+			.Include(e => e.Pozycje).ThenInclude(e => e.Towar).ThenInclude(e => e.JednostkaMiary)
+			.Include(e => e.Pozycje).ThenInclude(e => e.StawkaVat)
+			.Include(e => e.Sprzedawca)
+			.Include(e => e.Nabywca)
+			.Include(e => e.Waluta)
+			.Where(e => e.Id == dbFakturaRef.Id)
+			.FirstOrDefault();
+		var ksefFaktura = Zbuduj(dbFaktura);
+		var xo = new XmlAttributeOverrides();
+		var xs = new XmlSerializer(typeof(KSEFFaktura), xo);
+		var xml = new StringBuilder();
+		using var xw = XmlWriter.Create(xml, new XmlWriterSettings() { OmitXmlDeclaration = false, Indent = true });
+		var nss = new XmlSerializerNamespaces();
+		xs.Serialize(xw, ksefFaktura, nss);
+		return xml.ToString();
 	}
 
 	private static KSEFFaktura Zbuduj(DBFaktura dbFaktura)

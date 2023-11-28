@@ -75,6 +75,13 @@ namespace ProFak.UI
 			textBoxOpisZdarzenia = new System.Windows.Forms.TextBox();
 			tabPageKSeF = new System.Windows.Forms.TabPage();
 			tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+			textBoxKSeFXML = new System.Windows.Forms.TextBox();
+			label21 = new System.Windows.Forms.Label();
+			textBoxNumerKSeF = new System.Windows.Forms.TextBox();
+			flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+			buttonKSeFGeneruj = new System.Windows.Forms.Button();
+			buttonKSeFWyslij = new System.Windows.Forms.Button();
+			buttonKSeFPobierz = new System.Windows.Forms.Button();
 			tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			textBoxNumer = new System.Windows.Forms.TextBox();
 			labelRodzaj = new System.Windows.Forms.Label();
@@ -108,13 +115,6 @@ namespace ProFak.UI
 			numericUpDownNetto = new System.Windows.Forms.NumericUpDown();
 			numericUpDownVat = new System.Windows.Forms.NumericUpDown();
 			numericUpDownBrutto = new System.Windows.Forms.NumericUpDown();
-			label21 = new System.Windows.Forms.Label();
-			textBoxNumerKSeF = new System.Windows.Forms.TextBox();
-			buttonKSeFGeneruj = new System.Windows.Forms.Button();
-			flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-			buttonKSeFPobierz = new System.Windows.Forms.Button();
-			textBoxKSeFXML = new System.Windows.Forms.TextBox();
-			buttonKSeFWyslij = new System.Windows.Forms.Button();
 			tableLayoutPanel.SuspendLayout();
 			tableLayoutPanelKontrahenci.SuspendLayout();
 			groupBox2.SuspendLayout();
@@ -130,6 +130,7 @@ namespace ProFak.UI
 			tableLayoutPanel7.SuspendLayout();
 			tabPageKSeF.SuspendLayout();
 			tableLayoutPanel8.SuspendLayout();
+			flowLayoutPanel1.SuspendLayout();
 			tableLayoutPanel1.SuspendLayout();
 			tableLayoutPanelDatyKwoty.SuspendLayout();
 			groupBox6.SuspendLayout();
@@ -141,7 +142,6 @@ namespace ProFak.UI
 			((System.ComponentModel.ISupportInitialize)numericUpDownNetto).BeginInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownVat).BeginInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownBrutto).BeginInit();
-			flowLayoutPanel1.SuspendLayout();
 			SuspendLayout();
 			// 
 			// tableLayoutPanel
@@ -708,6 +708,80 @@ namespace ProFak.UI
 			tableLayoutPanel8.Size = new System.Drawing.Size(886, 197);
 			tableLayoutPanel8.TabIndex = 0;
 			// 
+			// textBoxKSeFXML
+			// 
+			tableLayoutPanel8.SetColumnSpan(textBoxKSeFXML, 3);
+			textBoxKSeFXML.Dock = System.Windows.Forms.DockStyle.Fill;
+			textBoxKSeFXML.Location = new System.Drawing.Point(3, 40);
+			textBoxKSeFXML.Multiline = true;
+			textBoxKSeFXML.Name = "textBoxKSeFXML";
+			textBoxKSeFXML.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			textBoxKSeFXML.Size = new System.Drawing.Size(880, 154);
+			textBoxKSeFXML.TabIndex = 4;
+			// 
+			// label21
+			// 
+			label21.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			label21.AutoSize = true;
+			label21.Location = new System.Drawing.Point(3, 11);
+			label21.Name = "label21";
+			label21.Size = new System.Drawing.Size(140, 15);
+			label21.TabIndex = 0;
+			label21.Text = "Numer referencyjny KSeF";
+			// 
+			// textBoxNumerKSeF
+			// 
+			textBoxNumerKSeF.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			textBoxNumerKSeF.Location = new System.Drawing.Point(149, 7);
+			textBoxNumerKSeF.Name = "textBoxNumerKSeF";
+			textBoxNumerKSeF.Size = new System.Drawing.Size(226, 23);
+			textBoxNumerKSeF.TabIndex = 1;
+			// 
+			// flowLayoutPanel1
+			// 
+			flowLayoutPanel1.AutoSize = true;
+			flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			flowLayoutPanel1.Controls.Add(buttonKSeFGeneruj);
+			flowLayoutPanel1.Controls.Add(buttonKSeFWyslij);
+			flowLayoutPanel1.Controls.Add(buttonKSeFPobierz);
+			flowLayoutPanel1.Location = new System.Drawing.Point(381, 3);
+			flowLayoutPanel1.Name = "flowLayoutPanel1";
+			flowLayoutPanel1.Size = new System.Drawing.Size(288, 31);
+			flowLayoutPanel1.TabIndex = 3;
+			// 
+			// buttonKSeFGeneruj
+			// 
+			buttonKSeFGeneruj.AutoSize = true;
+			buttonKSeFGeneruj.Location = new System.Drawing.Point(3, 3);
+			buttonKSeFGeneruj.Name = "buttonKSeFGeneruj";
+			buttonKSeFGeneruj.Size = new System.Drawing.Size(85, 25);
+			buttonKSeFGeneruj.TabIndex = 2;
+			buttonKSeFGeneruj.Text = "Generuj XML";
+			buttonKSeFGeneruj.UseVisualStyleBackColor = true;
+			buttonKSeFGeneruj.Click += buttonKSeFGeneruj_Click;
+			// 
+			// buttonKSeFWyslij
+			// 
+			buttonKSeFWyslij.AutoSize = true;
+			buttonKSeFWyslij.Location = new System.Drawing.Point(94, 3);
+			buttonKSeFWyslij.Name = "buttonKSeFWyslij";
+			buttonKSeFWyslij.Size = new System.Drawing.Size(93, 25);
+			buttonKSeFWyslij.TabIndex = 2;
+			buttonKSeFWyslij.Text = "Wyślij do KSeF";
+			buttonKSeFWyslij.UseVisualStyleBackColor = true;
+			buttonKSeFWyslij.Click += buttonKSeFWyslij_Click;
+			// 
+			// buttonKSeFPobierz
+			// 
+			buttonKSeFPobierz.AutoSize = true;
+			buttonKSeFPobierz.Location = new System.Drawing.Point(193, 3);
+			buttonKSeFPobierz.Name = "buttonKSeFPobierz";
+			buttonKSeFPobierz.Size = new System.Drawing.Size(92, 25);
+			buttonKSeFPobierz.TabIndex = 2;
+			buttonKSeFPobierz.Text = "Pobierz z KSeF";
+			buttonKSeFPobierz.UseVisualStyleBackColor = true;
+			buttonKSeFPobierz.Click += buttonKSeFPobierz_Click;
+			// 
 			// tableLayoutPanel1
 			// 
 			tableLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
@@ -1111,79 +1185,6 @@ namespace ProFak.UI
 			numericUpDownBrutto.TabIndex = 52;
 			numericUpDownBrutto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
-			// label21
-			// 
-			label21.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			label21.AutoSize = true;
-			label21.Location = new System.Drawing.Point(3, 11);
-			label21.Name = "label21";
-			label21.Size = new System.Drawing.Size(140, 15);
-			label21.TabIndex = 0;
-			label21.Text = "Numer referencyjny KSeF";
-			// 
-			// textBoxNumerKSeF
-			// 
-			textBoxNumerKSeF.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			textBoxNumerKSeF.Location = new System.Drawing.Point(149, 7);
-			textBoxNumerKSeF.Name = "textBoxNumerKSeF";
-			textBoxNumerKSeF.Size = new System.Drawing.Size(226, 23);
-			textBoxNumerKSeF.TabIndex = 1;
-			// 
-			// buttonKSeFGeneruj
-			// 
-			buttonKSeFGeneruj.AutoSize = true;
-			buttonKSeFGeneruj.Location = new System.Drawing.Point(3, 3);
-			buttonKSeFGeneruj.Name = "buttonKSeFGeneruj";
-			buttonKSeFGeneruj.Size = new System.Drawing.Size(85, 25);
-			buttonKSeFGeneruj.TabIndex = 2;
-			buttonKSeFGeneruj.Text = "Generuj XML";
-			buttonKSeFGeneruj.UseVisualStyleBackColor = true;
-			buttonKSeFGeneruj.Click += buttonKSeFGeneruj_Click;
-			// 
-			// flowLayoutPanel1
-			// 
-			flowLayoutPanel1.AutoSize = true;
-			flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			flowLayoutPanel1.Controls.Add(buttonKSeFGeneruj);
-			flowLayoutPanel1.Controls.Add(buttonKSeFWyslij);
-			flowLayoutPanel1.Controls.Add(buttonKSeFPobierz);
-			flowLayoutPanel1.Location = new System.Drawing.Point(381, 3);
-			flowLayoutPanel1.Name = "flowLayoutPanel1";
-			flowLayoutPanel1.Size = new System.Drawing.Size(288, 31);
-			flowLayoutPanel1.TabIndex = 3;
-			// 
-			// buttonKSeFPobierz
-			// 
-			buttonKSeFPobierz.AutoSize = true;
-			buttonKSeFPobierz.Location = new System.Drawing.Point(193, 3);
-			buttonKSeFPobierz.Name = "buttonKSeFPobierz";
-			buttonKSeFPobierz.Size = new System.Drawing.Size(92, 25);
-			buttonKSeFPobierz.TabIndex = 2;
-			buttonKSeFPobierz.Text = "Pobierz z KSeF";
-			buttonKSeFPobierz.UseVisualStyleBackColor = true;
-			buttonKSeFPobierz.Click += buttonKSeFPobierz_Click;
-			// 
-			// textBoxKSeFXML
-			// 
-			tableLayoutPanel8.SetColumnSpan(textBoxKSeFXML, 3);
-			textBoxKSeFXML.Dock = System.Windows.Forms.DockStyle.Fill;
-			textBoxKSeFXML.Location = new System.Drawing.Point(3, 40);
-			textBoxKSeFXML.Multiline = true;
-			textBoxKSeFXML.Name = "textBoxKSeFXML";
-			textBoxKSeFXML.Size = new System.Drawing.Size(880, 154);
-			textBoxKSeFXML.TabIndex = 4;
-			// 
-			// buttonKSeFWyslij
-			// 
-			buttonKSeFWyslij.AutoSize = true;
-			buttonKSeFWyslij.Location = new System.Drawing.Point(94, 3);
-			buttonKSeFWyslij.Name = "buttonKSeFWyslij";
-			buttonKSeFWyslij.Size = new System.Drawing.Size(93, 25);
-			buttonKSeFWyslij.TabIndex = 2;
-			buttonKSeFWyslij.Text = "Wyślij do KSeF";
-			buttonKSeFWyslij.UseVisualStyleBackColor = true;
-			buttonKSeFWyslij.Click += buttonKSeFWyslij_Click;
-			// 
 			// FakturaEdytor
 			// 
 			AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1215,6 +1216,8 @@ namespace ProFak.UI
 			tabPageKSeF.ResumeLayout(false);
 			tableLayoutPanel8.ResumeLayout(false);
 			tableLayoutPanel8.PerformLayout();
+			flowLayoutPanel1.ResumeLayout(false);
+			flowLayoutPanel1.PerformLayout();
 			tableLayoutPanel1.ResumeLayout(false);
 			tableLayoutPanel1.PerformLayout();
 			tableLayoutPanelDatyKwoty.ResumeLayout(false);
@@ -1234,8 +1237,6 @@ namespace ProFak.UI
 			((System.ComponentModel.ISupportInitialize)numericUpDownNetto).EndInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownVat).EndInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownBrutto).EndInit();
-			flowLayoutPanel1.ResumeLayout(false);
-			flowLayoutPanel1.PerformLayout();
 			ResumeLayout(false);
 		}
 

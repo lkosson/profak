@@ -62,6 +62,9 @@ namespace ProFak.UI
 			kontroler.Powiazanie(checkBoxWNT, faktura => faktura.CzyWNT);
 			kontroler.Powiazanie(textBoxOpisZdarzenia, faktura => faktura.OpisZdarzenia);
 
+			kontroler.Powiazanie(textBoxKSeFXML, faktura => faktura.XMLKSeF);
+			kontroler.Powiazanie(textBoxNumerKSeF, faktura => faktura.NumerKSeF);
+
 			Wymagane(textBoxDaneNabywcy);
 			Wymagane(textBoxDaneSprzedawcy);
 			Wymagane(comboBoxNazwaNabywcy);
@@ -294,7 +297,9 @@ namespace ProFak.UI
 
 		private void buttonKSeFGeneruj_Click(object sender, EventArgs e)
 		{
-
+			var xml = IO.KSEF.Generator.ZbudujXML(Kontekst.Baza, Rekord);
+			Rekord.XMLKSeF = xml;
+			kontroler.AktualizujKontrolki();
 		}
 
 		private void buttonKSeFWyslij_Click(object sender, EventArgs e)
