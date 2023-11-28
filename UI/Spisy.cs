@@ -65,6 +65,13 @@ namespace ProFak.UI
 			);
 		}
 
+		public static SpisZAkcjami<Faktura, KSeFSpis> KSeF(params string[] parametry)
+		{
+			return Utworz(new KSeFSpis(parametry),
+				new PrzeladujAkcja<Faktura>()
+			);
+		}
+
 		public static SpisZAkcjami<JednostkaMiary, JednostkaMiarySpis> JednostkiMiar()
 		{
 			return Utworz(new JednostkaMiarySpis(),
