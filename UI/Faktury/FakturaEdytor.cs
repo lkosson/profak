@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -304,12 +305,46 @@ namespace ProFak.UI
 
 		private void buttonKSeFWyslij_Click(object sender, EventArgs e)
 		{
-
+			buttonKSeFWyslij.Enabled = false;
+			backgroundWorkerKSeFWyslij.RunWorkerAsync();
 		}
 
 		private void buttonKSeFPobierz_Click(object sender, EventArgs e)
 		{
 
+		}
+
+		private void backgroundWorkerKSeFWyslij_DoWork(object sender, DoWorkEventArgs e)
+		{
+			var kontrahent = Kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
+			if (String.IsNullOrEmpty(kontrahent.TokenKSeF)) throw new ApplicationException("Brak tokena dostępowego do KSeF w danych firmy.");
+			if (String.IsNullOrWhiteSpace(Rekord.XMLKSeF)) Rekord.XMLKSeF = IO.KSEF.Generator.ZbudujXML(Kontekst.Baza, Rekord);
+			var api = new IO.KSEF.API(false);
+			var cts = new CancellationTokenSource();
+			//cts.CancelAfter(TimeSpan.FromSeconds(10));
+			api.AuthenticateAsync(kontrahent.NIP, kontrahent.TokenKSeF).GetAwaiter().GetResult();
+			Rekord.NumerKSeF = api.SendInvoiceAsync(Rekord.XMLKSeF, cts.Token).GetAwaiter().GetResult();
+		}
+
+		private void backgroundWorkerKSeFWyslij_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+		{
+			buttonKSeFWyslij.Enabled = true;
+			if (e.Error != null)
+			{
+				if (e.Error is ApplicationException exc)
+				{
+					MessageBox.Show(exc.Message, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				}
+				else
+				{
+					var okno = new OknoBledu(e.Error);
+					okno.ShowDialog();
+				}
+			}
+			else
+			{
+				kontroler.AktualizujKontrolki();
+			}
 		}
 	}
 

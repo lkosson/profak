@@ -29,573 +29,595 @@ namespace ProFak.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.tabControl = new System.Windows.Forms.TabControl();
-			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.label2 = new System.Windows.Forms.Label();
-			this.textBoxPelnaNazwa = new System.Windows.Forms.TextBox();
-			this.label3 = new System.Windows.Forms.Label();
-			this.textBoxNIP = new System.Windows.Forms.TextBox();
-			this.textBoxAdresRejestrowy = new System.Windows.Forms.TextBox();
-			this.textBoxAdresKorespondencyjny = new System.Windows.Forms.TextBox();
-			this.textBoxTelefon = new System.Windows.Forms.TextBox();
-			this.textBoxEMail = new System.Windows.Forms.TextBox();
-			this.textBoxRachunekBankowy = new System.Windows.Forms.TextBox();
-			this.label4 = new System.Windows.Forms.Label();
-			this.label5 = new System.Windows.Forms.Label();
-			this.label6 = new System.Windows.Forms.Label();
-			this.label7 = new System.Windows.Forms.Label();
-			this.label8 = new System.Windows.Forms.Label();
-			this.comboBoxStan = new System.Windows.Forms.ComboBox();
-			this.label9 = new System.Windows.Forms.Label();
-			this.checkBoxTP = new System.Windows.Forms.CheckBox();
-			this.buttonSprawdzMF = new System.Windows.Forms.Button();
-			this.buttonPobierzGUS = new System.Windows.Forms.Button();
-			this.tabPage2 = new System.Windows.Forms.TabPage();
-			this.textBoxUwagi = new System.Windows.Forms.TextBox();
-			this.tabPageFakturySprzedazy = new System.Windows.Forms.TabPage();
-			this.tabPageFakturyZakupu = new System.Windows.Forms.TabPage();
-			this.tabPagePodatki = new System.Windows.Forms.TabPage();
-			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-			this.label10 = new System.Windows.Forms.Label();
-			this.label11 = new System.Windows.Forms.Label();
-			this.label12 = new System.Windows.Forms.Label();
-			this.label13 = new System.Windows.Forms.Label();
-			this.comboBoxKodUrzedu = new System.Windows.Forms.ComboBox();
-			this.textBoxOsobaFizycznaImie = new System.Windows.Forms.TextBox();
-			this.textBoxOsobaFizycznaNazwisko = new System.Windows.Forms.TextBox();
-			this.dateTimePickerOsobaFizycznaDataUrodzenia = new System.Windows.Forms.DateTimePicker();
-			this.buttonUrzadSkarbowy = new System.Windows.Forms.Button();
-			this.label14 = new System.Windows.Forms.Label();
-			this.comboBoxFormaOpodatkowania = new System.Windows.Forms.ComboBox();
-			this.textBoxNazwa = new System.Windows.Forms.TextBox();
-			this.label1 = new System.Windows.Forms.Label();
-			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			this.backgroundWorkerSprawdzMF = new System.ComponentModel.BackgroundWorker();
-			this.backgroundWorkerPobierzGUS = new System.ComponentModel.BackgroundWorker();
-			this.tabControl.SuspendLayout();
-			this.tabPage1.SuspendLayout();
-			this.tableLayoutPanel1.SuspendLayout();
-			this.tabPage2.SuspendLayout();
-			this.tabPagePodatki.SuspendLayout();
-			this.tableLayoutPanel3.SuspendLayout();
-			this.tableLayoutPanel2.SuspendLayout();
-			this.SuspendLayout();
+			tabControl = new System.Windows.Forms.TabControl();
+			tabPage1 = new System.Windows.Forms.TabPage();
+			tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			label2 = new System.Windows.Forms.Label();
+			textBoxPelnaNazwa = new System.Windows.Forms.TextBox();
+			label3 = new System.Windows.Forms.Label();
+			textBoxNIP = new System.Windows.Forms.TextBox();
+			textBoxAdresRejestrowy = new System.Windows.Forms.TextBox();
+			textBoxAdresKorespondencyjny = new System.Windows.Forms.TextBox();
+			textBoxTelefon = new System.Windows.Forms.TextBox();
+			textBoxEMail = new System.Windows.Forms.TextBox();
+			textBoxRachunekBankowy = new System.Windows.Forms.TextBox();
+			label4 = new System.Windows.Forms.Label();
+			label5 = new System.Windows.Forms.Label();
+			label6 = new System.Windows.Forms.Label();
+			label7 = new System.Windows.Forms.Label();
+			label8 = new System.Windows.Forms.Label();
+			comboBoxStan = new System.Windows.Forms.ComboBox();
+			label9 = new System.Windows.Forms.Label();
+			checkBoxTP = new System.Windows.Forms.CheckBox();
+			buttonSprawdzMF = new System.Windows.Forms.Button();
+			buttonPobierzGUS = new System.Windows.Forms.Button();
+			tabPage2 = new System.Windows.Forms.TabPage();
+			textBoxUwagi = new System.Windows.Forms.TextBox();
+			tabPageFakturySprzedazy = new System.Windows.Forms.TabPage();
+			tabPageFakturyZakupu = new System.Windows.Forms.TabPage();
+			tabPagePodatki = new System.Windows.Forms.TabPage();
+			tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+			label10 = new System.Windows.Forms.Label();
+			label11 = new System.Windows.Forms.Label();
+			label12 = new System.Windows.Forms.Label();
+			label13 = new System.Windows.Forms.Label();
+			comboBoxKodUrzedu = new System.Windows.Forms.ComboBox();
+			textBoxOsobaFizycznaImie = new System.Windows.Forms.TextBox();
+			textBoxOsobaFizycznaNazwisko = new System.Windows.Forms.TextBox();
+			dateTimePickerOsobaFizycznaDataUrodzenia = new System.Windows.Forms.DateTimePicker();
+			buttonUrzadSkarbowy = new System.Windows.Forms.Button();
+			label14 = new System.Windows.Forms.Label();
+			comboBoxFormaOpodatkowania = new System.Windows.Forms.ComboBox();
+			textBoxNazwa = new System.Windows.Forms.TextBox();
+			label1 = new System.Windows.Forms.Label();
+			tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+			backgroundWorkerSprawdzMF = new System.ComponentModel.BackgroundWorker();
+			backgroundWorkerPobierzGUS = new System.ComponentModel.BackgroundWorker();
+			label15 = new System.Windows.Forms.Label();
+			textBoxTokenKSeF = new System.Windows.Forms.TextBox();
+			tabControl.SuspendLayout();
+			tabPage1.SuspendLayout();
+			tableLayoutPanel1.SuspendLayout();
+			tabPage2.SuspendLayout();
+			tabPagePodatki.SuspendLayout();
+			tableLayoutPanel3.SuspendLayout();
+			tableLayoutPanel2.SuspendLayout();
+			SuspendLayout();
 			// 
 			// tabControl
 			// 
-			this.tableLayoutPanel2.SetColumnSpan(this.tabControl, 2);
-			this.tabControl.Controls.Add(this.tabPage1);
-			this.tabControl.Controls.Add(this.tabPage2);
-			this.tabControl.Controls.Add(this.tabPageFakturySprzedazy);
-			this.tabControl.Controls.Add(this.tabPageFakturyZakupu);
-			this.tabControl.Controls.Add(this.tabPagePodatki);
-			this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabControl.Location = new System.Drawing.Point(3, 32);
-			this.tabControl.Name = "tabControl";
-			this.tabControl.SelectedIndex = 0;
-			this.tabControl.Size = new System.Drawing.Size(794, 390);
-			this.tabControl.TabIndex = 2;
+			tableLayoutPanel2.SetColumnSpan(tabControl, 2);
+			tabControl.Controls.Add(tabPage1);
+			tabControl.Controls.Add(tabPage2);
+			tabControl.Controls.Add(tabPageFakturySprzedazy);
+			tabControl.Controls.Add(tabPageFakturyZakupu);
+			tabControl.Controls.Add(tabPagePodatki);
+			tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+			tabControl.Location = new System.Drawing.Point(3, 32);
+			tabControl.Name = "tabControl";
+			tabControl.SelectedIndex = 0;
+			tabControl.Size = new System.Drawing.Size(794, 390);
+			tabControl.TabIndex = 2;
 			// 
 			// tabPage1
 			// 
-			this.tabPage1.Controls.Add(this.tableLayoutPanel1);
-			this.tabPage1.Location = new System.Drawing.Point(4, 24);
-			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(786, 362);
-			this.tabPage1.TabIndex = 0;
-			this.tabPage1.Text = "Dane podstawowe";
-			this.tabPage1.UseVisualStyleBackColor = true;
+			tabPage1.Controls.Add(tableLayoutPanel1);
+			tabPage1.Location = new System.Drawing.Point(4, 24);
+			tabPage1.Name = "tabPage1";
+			tabPage1.Padding = new System.Windows.Forms.Padding(3);
+			tabPage1.Size = new System.Drawing.Size(786, 362);
+			tabPage1.TabIndex = 0;
+			tabPage1.Text = "Dane podstawowe";
+			tabPage1.UseVisualStyleBackColor = true;
 			// 
 			// tableLayoutPanel1
 			// 
-			this.tableLayoutPanel1.ColumnCount = 3;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.Controls.Add(this.label2, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.textBoxPelnaNazwa, 1, 0);
-			this.tableLayoutPanel1.Controls.Add(this.label3, 0, 1);
-			this.tableLayoutPanel1.Controls.Add(this.textBoxNIP, 1, 1);
-			this.tableLayoutPanel1.Controls.Add(this.textBoxAdresRejestrowy, 1, 2);
-			this.tableLayoutPanel1.Controls.Add(this.textBoxAdresKorespondencyjny, 1, 3);
-			this.tableLayoutPanel1.Controls.Add(this.textBoxTelefon, 1, 4);
-			this.tableLayoutPanel1.Controls.Add(this.textBoxEMail, 1, 5);
-			this.tableLayoutPanel1.Controls.Add(this.textBoxRachunekBankowy, 1, 6);
-			this.tableLayoutPanel1.Controls.Add(this.label4, 0, 2);
-			this.tableLayoutPanel1.Controls.Add(this.label5, 0, 3);
-			this.tableLayoutPanel1.Controls.Add(this.label6, 0, 4);
-			this.tableLayoutPanel1.Controls.Add(this.label7, 0, 5);
-			this.tableLayoutPanel1.Controls.Add(this.label8, 0, 6);
-			this.tableLayoutPanel1.Controls.Add(this.comboBoxStan, 1, 7);
-			this.tableLayoutPanel1.Controls.Add(this.label9, 0, 7);
-			this.tableLayoutPanel1.Controls.Add(this.checkBoxTP, 1, 9);
-			this.tableLayoutPanel1.Controls.Add(this.buttonSprawdzMF, 2, 6);
-			this.tableLayoutPanel1.Controls.Add(this.buttonPobierzGUS, 2, 1);
-			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 11;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(780, 356);
-			this.tableLayoutPanel1.TabIndex = 0;
+			tableLayoutPanel1.ColumnCount = 3;
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			tableLayoutPanel1.Controls.Add(label2, 0, 0);
+			tableLayoutPanel1.Controls.Add(textBoxPelnaNazwa, 1, 0);
+			tableLayoutPanel1.Controls.Add(label3, 0, 1);
+			tableLayoutPanel1.Controls.Add(textBoxNIP, 1, 1);
+			tableLayoutPanel1.Controls.Add(textBoxAdresRejestrowy, 1, 2);
+			tableLayoutPanel1.Controls.Add(textBoxAdresKorespondencyjny, 1, 3);
+			tableLayoutPanel1.Controls.Add(textBoxTelefon, 1, 4);
+			tableLayoutPanel1.Controls.Add(textBoxEMail, 1, 5);
+			tableLayoutPanel1.Controls.Add(textBoxRachunekBankowy, 1, 6);
+			tableLayoutPanel1.Controls.Add(label4, 0, 2);
+			tableLayoutPanel1.Controls.Add(label5, 0, 3);
+			tableLayoutPanel1.Controls.Add(label6, 0, 4);
+			tableLayoutPanel1.Controls.Add(label7, 0, 5);
+			tableLayoutPanel1.Controls.Add(label8, 0, 6);
+			tableLayoutPanel1.Controls.Add(comboBoxStan, 1, 7);
+			tableLayoutPanel1.Controls.Add(label9, 0, 7);
+			tableLayoutPanel1.Controls.Add(checkBoxTP, 1, 9);
+			tableLayoutPanel1.Controls.Add(buttonSprawdzMF, 2, 6);
+			tableLayoutPanel1.Controls.Add(buttonPobierzGUS, 2, 1);
+			tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+			tableLayoutPanel1.Name = "tableLayoutPanel1";
+			tableLayoutPanel1.RowCount = 11;
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel1.Size = new System.Drawing.Size(780, 356);
+			tableLayoutPanel1.TabIndex = 0;
 			// 
 			// label2
 			// 
-			this.label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(68, 7);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(72, 15);
-			this.label2.TabIndex = 2;
-			this.label2.Text = "Pełna nazwa";
+			label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			label2.AutoSize = true;
+			label2.Location = new System.Drawing.Point(68, 7);
+			label2.Name = "label2";
+			label2.Size = new System.Drawing.Size(72, 15);
+			label2.TabIndex = 2;
+			label2.Text = "Pełna nazwa";
 			// 
 			// textBoxPelnaNazwa
 			// 
-			this.textBoxPelnaNazwa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableLayoutPanel1.SetColumnSpan(this.textBoxPelnaNazwa, 2);
-			this.textBoxPelnaNazwa.Location = new System.Drawing.Point(146, 3);
-			this.textBoxPelnaNazwa.Name = "textBoxPelnaNazwa";
-			this.textBoxPelnaNazwa.Size = new System.Drawing.Size(631, 23);
-			this.textBoxPelnaNazwa.TabIndex = 1;
+			textBoxPelnaNazwa.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			tableLayoutPanel1.SetColumnSpan(textBoxPelnaNazwa, 2);
+			textBoxPelnaNazwa.Location = new System.Drawing.Point(146, 3);
+			textBoxPelnaNazwa.Name = "textBoxPelnaNazwa";
+			textBoxPelnaNazwa.Size = new System.Drawing.Size(631, 23);
+			textBoxPelnaNazwa.TabIndex = 1;
 			// 
 			// label3
 			// 
-			this.label3.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(114, 37);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(26, 15);
-			this.label3.TabIndex = 2;
-			this.label3.Text = "NIP";
+			label3.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			label3.AutoSize = true;
+			label3.Location = new System.Drawing.Point(114, 37);
+			label3.Name = "label3";
+			label3.Size = new System.Drawing.Size(26, 15);
+			label3.TabIndex = 2;
+			label3.Text = "NIP";
 			// 
 			// textBoxNIP
 			// 
-			this.textBoxNIP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxNIP.Location = new System.Drawing.Point(146, 33);
-			this.textBoxNIP.Name = "textBoxNIP";
-			this.textBoxNIP.Size = new System.Drawing.Size(465, 23);
-			this.textBoxNIP.TabIndex = 2;
+			textBoxNIP.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			textBoxNIP.Location = new System.Drawing.Point(146, 33);
+			textBoxNIP.Name = "textBoxNIP";
+			textBoxNIP.Size = new System.Drawing.Size(465, 23);
+			textBoxNIP.TabIndex = 2;
 			// 
 			// textBoxAdresRejestrowy
 			// 
-			this.textBoxAdresRejestrowy.AcceptsReturn = true;
-			this.textBoxAdresRejestrowy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableLayoutPanel1.SetColumnSpan(this.textBoxAdresRejestrowy, 2);
-			this.textBoxAdresRejestrowy.Location = new System.Drawing.Point(146, 63);
-			this.textBoxAdresRejestrowy.Multiline = true;
-			this.textBoxAdresRejestrowy.Name = "textBoxAdresRejestrowy";
-			this.textBoxAdresRejestrowy.Size = new System.Drawing.Size(631, 65);
-			this.textBoxAdresRejestrowy.TabIndex = 3;
-			this.textBoxAdresRejestrowy.TextChanged += new System.EventHandler(this.textBoxAdresRejestrowy_TextChanged);
+			textBoxAdresRejestrowy.AcceptsReturn = true;
+			textBoxAdresRejestrowy.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			tableLayoutPanel1.SetColumnSpan(textBoxAdresRejestrowy, 2);
+			textBoxAdresRejestrowy.Location = new System.Drawing.Point(146, 63);
+			textBoxAdresRejestrowy.Multiline = true;
+			textBoxAdresRejestrowy.Name = "textBoxAdresRejestrowy";
+			textBoxAdresRejestrowy.Size = new System.Drawing.Size(631, 65);
+			textBoxAdresRejestrowy.TabIndex = 3;
+			textBoxAdresRejestrowy.TextChanged += textBoxAdresRejestrowy_TextChanged;
 			// 
 			// textBoxAdresKorespondencyjny
 			// 
-			this.textBoxAdresKorespondencyjny.AcceptsReturn = true;
-			this.textBoxAdresKorespondencyjny.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableLayoutPanel1.SetColumnSpan(this.textBoxAdresKorespondencyjny, 2);
-			this.textBoxAdresKorespondencyjny.Location = new System.Drawing.Point(146, 134);
-			this.textBoxAdresKorespondencyjny.Multiline = true;
-			this.textBoxAdresKorespondencyjny.Name = "textBoxAdresKorespondencyjny";
-			this.textBoxAdresKorespondencyjny.Size = new System.Drawing.Size(631, 65);
-			this.textBoxAdresKorespondencyjny.TabIndex = 4;
+			textBoxAdresKorespondencyjny.AcceptsReturn = true;
+			textBoxAdresKorespondencyjny.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			tableLayoutPanel1.SetColumnSpan(textBoxAdresKorespondencyjny, 2);
+			textBoxAdresKorespondencyjny.Location = new System.Drawing.Point(146, 134);
+			textBoxAdresKorespondencyjny.Multiline = true;
+			textBoxAdresKorespondencyjny.Name = "textBoxAdresKorespondencyjny";
+			textBoxAdresKorespondencyjny.Size = new System.Drawing.Size(631, 65);
+			textBoxAdresKorespondencyjny.TabIndex = 4;
 			// 
 			// textBoxTelefon
 			// 
-			this.textBoxTelefon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableLayoutPanel1.SetColumnSpan(this.textBoxTelefon, 2);
-			this.textBoxTelefon.Location = new System.Drawing.Point(146, 205);
-			this.textBoxTelefon.Name = "textBoxTelefon";
-			this.textBoxTelefon.Size = new System.Drawing.Size(631, 23);
-			this.textBoxTelefon.TabIndex = 5;
+			textBoxTelefon.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			tableLayoutPanel1.SetColumnSpan(textBoxTelefon, 2);
+			textBoxTelefon.Location = new System.Drawing.Point(146, 205);
+			textBoxTelefon.Name = "textBoxTelefon";
+			textBoxTelefon.Size = new System.Drawing.Size(631, 23);
+			textBoxTelefon.TabIndex = 5;
 			// 
 			// textBoxEMail
 			// 
-			this.textBoxEMail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableLayoutPanel1.SetColumnSpan(this.textBoxEMail, 2);
-			this.textBoxEMail.Location = new System.Drawing.Point(146, 234);
-			this.textBoxEMail.Name = "textBoxEMail";
-			this.textBoxEMail.Size = new System.Drawing.Size(631, 23);
-			this.textBoxEMail.TabIndex = 6;
+			textBoxEMail.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			tableLayoutPanel1.SetColumnSpan(textBoxEMail, 2);
+			textBoxEMail.Location = new System.Drawing.Point(146, 234);
+			textBoxEMail.Name = "textBoxEMail";
+			textBoxEMail.Size = new System.Drawing.Size(631, 23);
+			textBoxEMail.TabIndex = 6;
 			// 
 			// textBoxRachunekBankowy
 			// 
-			this.textBoxRachunekBankowy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxRachunekBankowy.Location = new System.Drawing.Point(146, 264);
-			this.textBoxRachunekBankowy.Name = "textBoxRachunekBankowy";
-			this.textBoxRachunekBankowy.Size = new System.Drawing.Size(465, 23);
-			this.textBoxRachunekBankowy.TabIndex = 7;
+			textBoxRachunekBankowy.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			textBoxRachunekBankowy.Location = new System.Drawing.Point(146, 264);
+			textBoxRachunekBankowy.Name = "textBoxRachunekBankowy";
+			textBoxRachunekBankowy.Size = new System.Drawing.Size(465, 23);
+			textBoxRachunekBankowy.TabIndex = 7;
 			// 
 			// label4
 			// 
-			this.label4.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(46, 88);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(94, 15);
-			this.label4.TabIndex = 2;
-			this.label4.Text = "Adres rejestrowy";
+			label4.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			label4.AutoSize = true;
+			label4.Location = new System.Drawing.Point(46, 88);
+			label4.Name = "label4";
+			label4.Size = new System.Drawing.Size(94, 15);
+			label4.TabIndex = 2;
+			label4.Text = "Adres rejestrowy";
 			// 
 			// label5
 			// 
-			this.label5.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(3, 159);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(137, 15);
-			this.label5.TabIndex = 2;
-			this.label5.Text = "Adres korespondencyjny";
+			label5.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			label5.AutoSize = true;
+			label5.Location = new System.Drawing.Point(3, 159);
+			label5.Name = "label5";
+			label5.Size = new System.Drawing.Size(137, 15);
+			label5.TabIndex = 2;
+			label5.Text = "Adres korespondencyjny";
 			// 
 			// label6
 			// 
-			this.label6.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(94, 209);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(46, 15);
-			this.label6.TabIndex = 2;
-			this.label6.Text = "Telefon";
+			label6.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			label6.AutoSize = true;
+			label6.Location = new System.Drawing.Point(95, 209);
+			label6.Name = "label6";
+			label6.Size = new System.Drawing.Size(45, 15);
+			label6.TabIndex = 2;
+			label6.Text = "Telefon";
 			// 
 			// label7
 			// 
-			this.label7.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(99, 238);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(41, 15);
-			this.label7.TabIndex = 2;
-			this.label7.Text = "E-Mail";
+			label7.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			label7.AutoSize = true;
+			label7.Location = new System.Drawing.Point(99, 238);
+			label7.Name = "label7";
+			label7.Size = new System.Drawing.Size(41, 15);
+			label7.TabIndex = 2;
+			label7.Text = "E-Mail";
 			// 
 			// label8
 			// 
-			this.label8.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(30, 268);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(110, 15);
-			this.label8.TabIndex = 2;
-			this.label8.Text = "Rachunek bankowy";
+			label8.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			label8.AutoSize = true;
+			label8.Location = new System.Drawing.Point(30, 268);
+			label8.Name = "label8";
+			label8.Size = new System.Drawing.Size(110, 15);
+			label8.TabIndex = 2;
+			label8.Text = "Rachunek bankowy";
 			// 
 			// comboBoxStan
 			// 
-			this.comboBoxStan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableLayoutPanel1.SetColumnSpan(this.comboBoxStan, 2);
-			this.comboBoxStan.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBoxStan.FormattingEnabled = true;
-			this.comboBoxStan.Location = new System.Drawing.Point(146, 294);
-			this.comboBoxStan.Name = "comboBoxStan";
-			this.comboBoxStan.Size = new System.Drawing.Size(631, 23);
-			this.comboBoxStan.TabIndex = 8;
+			comboBoxStan.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			tableLayoutPanel1.SetColumnSpan(comboBoxStan, 2);
+			comboBoxStan.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			comboBoxStan.FormattingEnabled = true;
+			comboBoxStan.Location = new System.Drawing.Point(146, 294);
+			comboBoxStan.Name = "comboBoxStan";
+			comboBoxStan.Size = new System.Drawing.Size(631, 23);
+			comboBoxStan.TabIndex = 8;
 			// 
 			// label9
 			// 
-			this.label9.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(110, 298);
-			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(30, 15);
-			this.label9.TabIndex = 2;
-			this.label9.Text = "Stan";
+			label9.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			label9.AutoSize = true;
+			label9.Location = new System.Drawing.Point(110, 298);
+			label9.Name = "label9";
+			label9.Size = new System.Drawing.Size(30, 15);
+			label9.TabIndex = 2;
+			label9.Text = "Stan";
 			// 
 			// checkBoxTP
 			// 
-			this.checkBoxTP.AutoSize = true;
-			this.checkBoxTP.Location = new System.Drawing.Point(146, 323);
-			this.checkBoxTP.Name = "checkBoxTP";
-			this.checkBoxTP.Size = new System.Drawing.Size(131, 19);
-			this.checkBoxTP.TabIndex = 9;
-			this.checkBoxTP.Text = "Podmiot powiązany";
-			this.checkBoxTP.UseVisualStyleBackColor = true;
+			checkBoxTP.AutoSize = true;
+			checkBoxTP.Location = new System.Drawing.Point(146, 323);
+			checkBoxTP.Name = "checkBoxTP";
+			checkBoxTP.Size = new System.Drawing.Size(131, 19);
+			checkBoxTP.TabIndex = 9;
+			checkBoxTP.Text = "Podmiot powiązany";
+			checkBoxTP.UseVisualStyleBackColor = true;
 			// 
 			// buttonSprawdzMF
 			// 
-			this.buttonSprawdzMF.AutoSize = true;
-			this.buttonSprawdzMF.Location = new System.Drawing.Point(617, 263);
-			this.buttonSprawdzMF.Name = "buttonSprawdzMF";
-			this.buttonSprawdzMF.Size = new System.Drawing.Size(160, 25);
-			this.buttonSprawdzMF.TabIndex = 10;
-			this.buttonSprawdzMF.Text = "Sprawdź na białej liście VAT";
-			this.buttonSprawdzMF.UseVisualStyleBackColor = true;
-			this.buttonSprawdzMF.Click += new System.EventHandler(this.buttonSprawdzMF_Click);
+			buttonSprawdzMF.AutoSize = true;
+			buttonSprawdzMF.Location = new System.Drawing.Point(617, 263);
+			buttonSprawdzMF.Name = "buttonSprawdzMF";
+			buttonSprawdzMF.Size = new System.Drawing.Size(160, 25);
+			buttonSprawdzMF.TabIndex = 10;
+			buttonSprawdzMF.Text = "Sprawdź na białej liście VAT";
+			buttonSprawdzMF.UseVisualStyleBackColor = true;
+			buttonSprawdzMF.Click += buttonSprawdzMF_Click;
 			// 
 			// buttonPobierzGUS
 			// 
-			this.buttonPobierzGUS.AutoSize = true;
-			this.buttonPobierzGUS.Location = new System.Drawing.Point(617, 32);
-			this.buttonPobierzGUS.Name = "buttonPobierzGUS";
-			this.buttonPobierzGUS.Size = new System.Drawing.Size(118, 25);
-			this.buttonPobierzGUS.TabIndex = 10;
-			this.buttonPobierzGUS.Text = "Pobierz dane z GUS";
-			this.buttonPobierzGUS.UseVisualStyleBackColor = true;
-			this.buttonPobierzGUS.Click += new System.EventHandler(this.buttonPobierzGUS_Click);
+			buttonPobierzGUS.AutoSize = true;
+			buttonPobierzGUS.Location = new System.Drawing.Point(617, 32);
+			buttonPobierzGUS.Name = "buttonPobierzGUS";
+			buttonPobierzGUS.Size = new System.Drawing.Size(118, 25);
+			buttonPobierzGUS.TabIndex = 10;
+			buttonPobierzGUS.Text = "Pobierz dane z GUS";
+			buttonPobierzGUS.UseVisualStyleBackColor = true;
+			buttonPobierzGUS.Click += buttonPobierzGUS_Click;
 			// 
 			// tabPage2
 			// 
-			this.tabPage2.Controls.Add(this.textBoxUwagi);
-			this.tabPage2.Location = new System.Drawing.Point(4, 24);
-			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(786, 362);
-			this.tabPage2.TabIndex = 1;
-			this.tabPage2.Text = "Uwagi";
-			this.tabPage2.UseVisualStyleBackColor = true;
+			tabPage2.Controls.Add(textBoxUwagi);
+			tabPage2.Location = new System.Drawing.Point(4, 24);
+			tabPage2.Name = "tabPage2";
+			tabPage2.Padding = new System.Windows.Forms.Padding(3);
+			tabPage2.Size = new System.Drawing.Size(786, 362);
+			tabPage2.TabIndex = 1;
+			tabPage2.Text = "Uwagi";
+			tabPage2.UseVisualStyleBackColor = true;
 			// 
 			// textBoxUwagi
 			// 
-			this.textBoxUwagi.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBoxUwagi.Location = new System.Drawing.Point(3, 3);
-			this.textBoxUwagi.Multiline = true;
-			this.textBoxUwagi.Name = "textBoxUwagi";
-			this.textBoxUwagi.Size = new System.Drawing.Size(780, 356);
-			this.textBoxUwagi.TabIndex = 0;
+			textBoxUwagi.Dock = System.Windows.Forms.DockStyle.Fill;
+			textBoxUwagi.Location = new System.Drawing.Point(3, 3);
+			textBoxUwagi.Multiline = true;
+			textBoxUwagi.Name = "textBoxUwagi";
+			textBoxUwagi.Size = new System.Drawing.Size(780, 356);
+			textBoxUwagi.TabIndex = 0;
 			// 
 			// tabPageFakturySprzedazy
 			// 
-			this.tabPageFakturySprzedazy.Location = new System.Drawing.Point(4, 24);
-			this.tabPageFakturySprzedazy.Name = "tabPageFakturySprzedazy";
-			this.tabPageFakturySprzedazy.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageFakturySprzedazy.Size = new System.Drawing.Size(786, 362);
-			this.tabPageFakturySprzedazy.TabIndex = 2;
-			this.tabPageFakturySprzedazy.Text = "Sprzedaż do";
-			this.tabPageFakturySprzedazy.UseVisualStyleBackColor = true;
+			tabPageFakturySprzedazy.Location = new System.Drawing.Point(4, 24);
+			tabPageFakturySprzedazy.Name = "tabPageFakturySprzedazy";
+			tabPageFakturySprzedazy.Padding = new System.Windows.Forms.Padding(3);
+			tabPageFakturySprzedazy.Size = new System.Drawing.Size(786, 362);
+			tabPageFakturySprzedazy.TabIndex = 2;
+			tabPageFakturySprzedazy.Text = "Sprzedaż do";
+			tabPageFakturySprzedazy.UseVisualStyleBackColor = true;
 			// 
 			// tabPageFakturyZakupu
 			// 
-			this.tabPageFakturyZakupu.Location = new System.Drawing.Point(4, 24);
-			this.tabPageFakturyZakupu.Name = "tabPageFakturyZakupu";
-			this.tabPageFakturyZakupu.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageFakturyZakupu.Size = new System.Drawing.Size(786, 362);
-			this.tabPageFakturyZakupu.TabIndex = 3;
-			this.tabPageFakturyZakupu.Text = "Zakup od";
-			this.tabPageFakturyZakupu.UseVisualStyleBackColor = true;
+			tabPageFakturyZakupu.Location = new System.Drawing.Point(4, 24);
+			tabPageFakturyZakupu.Name = "tabPageFakturyZakupu";
+			tabPageFakturyZakupu.Padding = new System.Windows.Forms.Padding(3);
+			tabPageFakturyZakupu.Size = new System.Drawing.Size(786, 362);
+			tabPageFakturyZakupu.TabIndex = 3;
+			tabPageFakturyZakupu.Text = "Zakup od";
+			tabPageFakturyZakupu.UseVisualStyleBackColor = true;
 			// 
 			// tabPagePodatki
 			// 
-			this.tabPagePodatki.Controls.Add(this.tableLayoutPanel3);
-			this.tabPagePodatki.Location = new System.Drawing.Point(4, 24);
-			this.tabPagePodatki.Name = "tabPagePodatki";
-			this.tabPagePodatki.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPagePodatki.Size = new System.Drawing.Size(786, 362);
-			this.tabPagePodatki.TabIndex = 4;
-			this.tabPagePodatki.Text = "Podatki";
-			this.tabPagePodatki.UseVisualStyleBackColor = true;
+			tabPagePodatki.Controls.Add(tableLayoutPanel3);
+			tabPagePodatki.Location = new System.Drawing.Point(4, 24);
+			tabPagePodatki.Name = "tabPagePodatki";
+			tabPagePodatki.Padding = new System.Windows.Forms.Padding(3);
+			tabPagePodatki.Size = new System.Drawing.Size(786, 362);
+			tabPagePodatki.TabIndex = 4;
+			tabPagePodatki.Text = "Dane urzędowe";
+			tabPagePodatki.UseVisualStyleBackColor = true;
 			// 
 			// tableLayoutPanel3
 			// 
-			this.tableLayoutPanel3.ColumnCount = 3;
-			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel3.Controls.Add(this.label10, 0, 0);
-			this.tableLayoutPanel3.Controls.Add(this.label11, 0, 1);
-			this.tableLayoutPanel3.Controls.Add(this.label12, 0, 2);
-			this.tableLayoutPanel3.Controls.Add(this.label13, 0, 3);
-			this.tableLayoutPanel3.Controls.Add(this.comboBoxKodUrzedu, 1, 0);
-			this.tableLayoutPanel3.Controls.Add(this.textBoxOsobaFizycznaImie, 1, 1);
-			this.tableLayoutPanel3.Controls.Add(this.textBoxOsobaFizycznaNazwisko, 1, 2);
-			this.tableLayoutPanel3.Controls.Add(this.dateTimePickerOsobaFizycznaDataUrodzenia, 1, 3);
-			this.tableLayoutPanel3.Controls.Add(this.buttonUrzadSkarbowy, 2, 0);
-			this.tableLayoutPanel3.Controls.Add(this.label14, 0, 4);
-			this.tableLayoutPanel3.Controls.Add(this.comboBoxFormaOpodatkowania, 1, 4);
-			this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
-			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-			this.tableLayoutPanel3.RowCount = 6;
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel3.Size = new System.Drawing.Size(780, 356);
-			this.tableLayoutPanel3.TabIndex = 0;
+			tableLayoutPanel3.ColumnCount = 3;
+			tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			tableLayoutPanel3.Controls.Add(label10, 0, 0);
+			tableLayoutPanel3.Controls.Add(label11, 0, 1);
+			tableLayoutPanel3.Controls.Add(label12, 0, 2);
+			tableLayoutPanel3.Controls.Add(label13, 0, 3);
+			tableLayoutPanel3.Controls.Add(comboBoxKodUrzedu, 1, 0);
+			tableLayoutPanel3.Controls.Add(textBoxOsobaFizycznaImie, 1, 1);
+			tableLayoutPanel3.Controls.Add(textBoxOsobaFizycznaNazwisko, 1, 2);
+			tableLayoutPanel3.Controls.Add(dateTimePickerOsobaFizycznaDataUrodzenia, 1, 3);
+			tableLayoutPanel3.Controls.Add(buttonUrzadSkarbowy, 2, 0);
+			tableLayoutPanel3.Controls.Add(label14, 0, 4);
+			tableLayoutPanel3.Controls.Add(comboBoxFormaOpodatkowania, 1, 4);
+			tableLayoutPanel3.Controls.Add(label15, 0, 5);
+			tableLayoutPanel3.Controls.Add(textBoxTokenKSeF, 1, 5);
+			tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
+			tableLayoutPanel3.Name = "tableLayoutPanel3";
+			tableLayoutPanel3.RowCount = 7;
+			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			tableLayoutPanel3.Size = new System.Drawing.Size(780, 356);
+			tableLayoutPanel3.TabIndex = 0;
 			// 
 			// label10
 			// 
-			this.label10.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(3, 8);
-			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(134, 15);
-			this.label10.TabIndex = 0;
-			this.label10.Text = "Kod urzędu skarbowego";
+			label10.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			label10.AutoSize = true;
+			label10.Location = new System.Drawing.Point(3, 8);
+			label10.Name = "label10";
+			label10.Size = new System.Drawing.Size(134, 15);
+			label10.TabIndex = 0;
+			label10.Text = "Kod urzędu skarbowego";
 			// 
 			// label11
 			// 
-			this.label11.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.label11.AutoSize = true;
-			this.label11.Location = new System.Drawing.Point(59, 38);
-			this.label11.Name = "label11";
-			this.label11.Size = new System.Drawing.Size(78, 15);
-			this.label11.TabIndex = 0;
-			this.label11.Text = "Pierwsze imię";
+			label11.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			label11.AutoSize = true;
+			label11.Location = new System.Drawing.Point(59, 38);
+			label11.Name = "label11";
+			label11.Size = new System.Drawing.Size(78, 15);
+			label11.TabIndex = 0;
+			label11.Text = "Pierwsze imię";
 			// 
 			// label12
 			// 
-			this.label12.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.label12.AutoSize = true;
-			this.label12.Location = new System.Drawing.Point(80, 67);
-			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(57, 15);
-			this.label12.TabIndex = 0;
-			this.label12.Text = "Nazwisko";
+			label12.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			label12.AutoSize = true;
+			label12.Location = new System.Drawing.Point(80, 67);
+			label12.Name = "label12";
+			label12.Size = new System.Drawing.Size(57, 15);
+			label12.TabIndex = 0;
+			label12.Text = "Nazwisko";
 			// 
 			// label13
 			// 
-			this.label13.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.label13.AutoSize = true;
-			this.label13.Location = new System.Drawing.Point(51, 96);
-			this.label13.Name = "label13";
-			this.label13.Size = new System.Drawing.Size(86, 15);
-			this.label13.TabIndex = 0;
-			this.label13.Text = "Data urodzenia";
+			label13.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			label13.AutoSize = true;
+			label13.Location = new System.Drawing.Point(51, 96);
+			label13.Name = "label13";
+			label13.Size = new System.Drawing.Size(86, 15);
+			label13.TabIndex = 0;
+			label13.Text = "Data urodzenia";
 			// 
 			// comboBoxKodUrzedu
 			// 
-			this.comboBoxKodUrzedu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.comboBoxKodUrzedu.FormattingEnabled = true;
-			this.comboBoxKodUrzedu.Location = new System.Drawing.Point(143, 4);
-			this.comboBoxKodUrzedu.Name = "comboBoxKodUrzedu";
-			this.comboBoxKodUrzedu.Size = new System.Drawing.Size(602, 23);
-			this.comboBoxKodUrzedu.TabIndex = 1;
+			comboBoxKodUrzedu.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			comboBoxKodUrzedu.FormattingEnabled = true;
+			comboBoxKodUrzedu.Location = new System.Drawing.Point(143, 4);
+			comboBoxKodUrzedu.Name = "comboBoxKodUrzedu";
+			comboBoxKodUrzedu.Size = new System.Drawing.Size(602, 23);
+			comboBoxKodUrzedu.TabIndex = 1;
 			// 
 			// textBoxOsobaFizycznaImie
 			// 
-			this.textBoxOsobaFizycznaImie.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableLayoutPanel3.SetColumnSpan(this.textBoxOsobaFizycznaImie, 2);
-			this.textBoxOsobaFizycznaImie.Location = new System.Drawing.Point(143, 34);
-			this.textBoxOsobaFizycznaImie.Name = "textBoxOsobaFizycznaImie";
-			this.textBoxOsobaFizycznaImie.Size = new System.Drawing.Size(634, 23);
-			this.textBoxOsobaFizycznaImie.TabIndex = 2;
+			textBoxOsobaFizycznaImie.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			tableLayoutPanel3.SetColumnSpan(textBoxOsobaFizycznaImie, 2);
+			textBoxOsobaFizycznaImie.Location = new System.Drawing.Point(143, 34);
+			textBoxOsobaFizycznaImie.Name = "textBoxOsobaFizycznaImie";
+			textBoxOsobaFizycznaImie.Size = new System.Drawing.Size(634, 23);
+			textBoxOsobaFizycznaImie.TabIndex = 2;
 			// 
 			// textBoxOsobaFizycznaNazwisko
 			// 
-			this.textBoxOsobaFizycznaNazwisko.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableLayoutPanel3.SetColumnSpan(this.textBoxOsobaFizycznaNazwisko, 2);
-			this.textBoxOsobaFizycznaNazwisko.Location = new System.Drawing.Point(143, 63);
-			this.textBoxOsobaFizycznaNazwisko.Name = "textBoxOsobaFizycznaNazwisko";
-			this.textBoxOsobaFizycznaNazwisko.Size = new System.Drawing.Size(634, 23);
-			this.textBoxOsobaFizycznaNazwisko.TabIndex = 2;
+			textBoxOsobaFizycznaNazwisko.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			tableLayoutPanel3.SetColumnSpan(textBoxOsobaFizycznaNazwisko, 2);
+			textBoxOsobaFizycznaNazwisko.Location = new System.Drawing.Point(143, 63);
+			textBoxOsobaFizycznaNazwisko.Name = "textBoxOsobaFizycznaNazwisko";
+			textBoxOsobaFizycznaNazwisko.Size = new System.Drawing.Size(634, 23);
+			textBoxOsobaFizycznaNazwisko.TabIndex = 2;
 			// 
 			// dateTimePickerOsobaFizycznaDataUrodzenia
 			// 
-			this.dateTimePickerOsobaFizycznaDataUrodzenia.Location = new System.Drawing.Point(143, 92);
-			this.dateTimePickerOsobaFizycznaDataUrodzenia.Name = "dateTimePickerOsobaFizycznaDataUrodzenia";
-			this.dateTimePickerOsobaFizycznaDataUrodzenia.ShowCheckBox = true;
-			this.dateTimePickerOsobaFizycznaDataUrodzenia.Size = new System.Drawing.Size(200, 23);
-			this.dateTimePickerOsobaFizycznaDataUrodzenia.TabIndex = 3;
+			dateTimePickerOsobaFizycznaDataUrodzenia.Location = new System.Drawing.Point(143, 92);
+			dateTimePickerOsobaFizycznaDataUrodzenia.Name = "dateTimePickerOsobaFizycznaDataUrodzenia";
+			dateTimePickerOsobaFizycznaDataUrodzenia.ShowCheckBox = true;
+			dateTimePickerOsobaFizycznaDataUrodzenia.Size = new System.Drawing.Size(200, 23);
+			dateTimePickerOsobaFizycznaDataUrodzenia.TabIndex = 3;
 			// 
 			// buttonUrzadSkarbowy
 			// 
-			this.buttonUrzadSkarbowy.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.buttonUrzadSkarbowy.AutoSize = true;
-			this.buttonUrzadSkarbowy.Location = new System.Drawing.Point(751, 3);
-			this.buttonUrzadSkarbowy.Name = "buttonUrzadSkarbowy";
-			this.buttonUrzadSkarbowy.Size = new System.Drawing.Size(26, 25);
-			this.buttonUrzadSkarbowy.TabIndex = 12;
-			this.buttonUrzadSkarbowy.Text = "...";
-			this.buttonUrzadSkarbowy.UseVisualStyleBackColor = true;
+			buttonUrzadSkarbowy.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			buttonUrzadSkarbowy.AutoSize = true;
+			buttonUrzadSkarbowy.Location = new System.Drawing.Point(751, 3);
+			buttonUrzadSkarbowy.Name = "buttonUrzadSkarbowy";
+			buttonUrzadSkarbowy.Size = new System.Drawing.Size(26, 25);
+			buttonUrzadSkarbowy.TabIndex = 12;
+			buttonUrzadSkarbowy.Text = "...";
+			buttonUrzadSkarbowy.UseVisualStyleBackColor = true;
 			// 
 			// label14
 			// 
-			this.label14.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.label14.AutoSize = true;
-			this.label14.Location = new System.Drawing.Point(11, 125);
-			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(126, 15);
-			this.label14.TabIndex = 0;
-			this.label14.Text = "Forma opodatkowania";
+			label14.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			label14.AutoSize = true;
+			label14.Location = new System.Drawing.Point(11, 125);
+			label14.Name = "label14";
+			label14.Size = new System.Drawing.Size(126, 15);
+			label14.TabIndex = 0;
+			label14.Text = "Forma opodatkowania";
 			// 
 			// comboBoxFormaOpodatkowania
 			// 
-			this.comboBoxFormaOpodatkowania.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableLayoutPanel3.SetColumnSpan(this.comboBoxFormaOpodatkowania, 2);
-			this.comboBoxFormaOpodatkowania.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBoxFormaOpodatkowania.FormattingEnabled = true;
-			this.comboBoxFormaOpodatkowania.Location = new System.Drawing.Point(143, 121);
-			this.comboBoxFormaOpodatkowania.Name = "comboBoxFormaOpodatkowania";
-			this.comboBoxFormaOpodatkowania.Size = new System.Drawing.Size(634, 23);
-			this.comboBoxFormaOpodatkowania.TabIndex = 5;
+			comboBoxFormaOpodatkowania.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			tableLayoutPanel3.SetColumnSpan(comboBoxFormaOpodatkowania, 2);
+			comboBoxFormaOpodatkowania.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			comboBoxFormaOpodatkowania.FormattingEnabled = true;
+			comboBoxFormaOpodatkowania.Location = new System.Drawing.Point(143, 121);
+			comboBoxFormaOpodatkowania.Name = "comboBoxFormaOpodatkowania";
+			comboBoxFormaOpodatkowania.Size = new System.Drawing.Size(634, 23);
+			comboBoxFormaOpodatkowania.TabIndex = 5;
 			// 
 			// textBoxNazwa
 			// 
-			this.textBoxNazwa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxNazwa.Location = new System.Drawing.Point(51, 3);
-			this.textBoxNazwa.Name = "textBoxNazwa";
-			this.textBoxNazwa.Size = new System.Drawing.Size(746, 23);
-			this.textBoxNazwa.TabIndex = 1;
-			this.textBoxNazwa.TextChanged += new System.EventHandler(this.textBoxNazwa_TextChanged);
+			textBoxNazwa.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			textBoxNazwa.Location = new System.Drawing.Point(51, 3);
+			textBoxNazwa.Name = "textBoxNazwa";
+			textBoxNazwa.Size = new System.Drawing.Size(746, 23);
+			textBoxNazwa.TabIndex = 1;
+			textBoxNazwa.TextChanged += textBoxNazwa_TextChanged;
 			// 
 			// label1
 			// 
-			this.label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(3, 7);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(42, 15);
-			this.label1.TabIndex = 2;
-			this.label1.Text = "Nazwa";
+			label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			label1.AutoSize = true;
+			label1.Location = new System.Drawing.Point(3, 7);
+			label1.Name = "label1";
+			label1.Size = new System.Drawing.Size(42, 15);
+			label1.TabIndex = 2;
+			label1.Text = "Nazwa";
 			// 
 			// tableLayoutPanel2
 			// 
-			this.tableLayoutPanel2.ColumnCount = 2;
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
-			this.tableLayoutPanel2.Controls.Add(this.tabControl, 0, 1);
-			this.tableLayoutPanel2.Controls.Add(this.textBoxNazwa, 1, 0);
-			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-			this.tableLayoutPanel2.RowCount = 2;
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(800, 425);
-			this.tableLayoutPanel2.TabIndex = 3;
+			tableLayoutPanel2.ColumnCount = 2;
+			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel2.Controls.Add(label1, 0, 0);
+			tableLayoutPanel2.Controls.Add(tabControl, 0, 1);
+			tableLayoutPanel2.Controls.Add(textBoxNazwa, 1, 0);
+			tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+			tableLayoutPanel2.Name = "tableLayoutPanel2";
+			tableLayoutPanel2.RowCount = 2;
+			tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			tableLayoutPanel2.Size = new System.Drawing.Size(800, 425);
+			tableLayoutPanel2.TabIndex = 3;
 			// 
 			// backgroundWorkerSprawdzMF
 			// 
-			this.backgroundWorkerSprawdzMF.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerSprawdzMF_DoWork);
-			this.backgroundWorkerSprawdzMF.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerSprawdzMF_RunWorkerCompleted);
+			backgroundWorkerSprawdzMF.DoWork += backgroundWorkerSprawdzMF_DoWork;
+			backgroundWorkerSprawdzMF.RunWorkerCompleted += backgroundWorkerSprawdzMF_RunWorkerCompleted;
 			// 
 			// backgroundWorkerPobierzGUS
 			// 
-			this.backgroundWorkerPobierzGUS.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerPobierzGUS_DoWork);
-			this.backgroundWorkerPobierzGUS.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerPobierzGUS_RunWorkerCompleted);
+			backgroundWorkerPobierzGUS.DoWork += backgroundWorkerPobierzGUS_DoWork;
+			backgroundWorkerPobierzGUS.RunWorkerCompleted += backgroundWorkerPobierzGUS_RunWorkerCompleted;
+			// 
+			// label15
+			// 
+			label15.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			label15.AutoSize = true;
+			label15.Location = new System.Drawing.Point(71, 154);
+			label15.Name = "label15";
+			label15.Size = new System.Drawing.Size(66, 15);
+			label15.TabIndex = 0;
+			label15.Text = "Token KSeF";
+			// 
+			// textBoxTokenKSeF
+			// 
+			textBoxTokenKSeF.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			textBoxTokenKSeF.Location = new System.Drawing.Point(143, 150);
+			textBoxTokenKSeF.Name = "textBoxTokenKSeF";
+			textBoxTokenKSeF.Size = new System.Drawing.Size(602, 23);
+			textBoxTokenKSeF.TabIndex = 2;
 			// 
 			// KontrahentEdytor
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.tableLayoutPanel2);
-			this.MinimumSize = new System.Drawing.Size(800, 425);
-			this.Name = "KontrahentEdytor";
-			this.Size = new System.Drawing.Size(800, 425);
-			this.tabControl.ResumeLayout(false);
-			this.tabPage1.ResumeLayout(false);
-			this.tableLayoutPanel1.ResumeLayout(false);
-			this.tableLayoutPanel1.PerformLayout();
-			this.tabPage2.ResumeLayout(false);
-			this.tabPage2.PerformLayout();
-			this.tabPagePodatki.ResumeLayout(false);
-			this.tableLayoutPanel3.ResumeLayout(false);
-			this.tableLayoutPanel3.PerformLayout();
-			this.tableLayoutPanel2.ResumeLayout(false);
-			this.tableLayoutPanel2.PerformLayout();
-			this.ResumeLayout(false);
-
+			AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+			AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			Controls.Add(tableLayoutPanel2);
+			MinimumSize = new System.Drawing.Size(800, 425);
+			Name = "KontrahentEdytor";
+			Size = new System.Drawing.Size(800, 425);
+			tabControl.ResumeLayout(false);
+			tabPage1.ResumeLayout(false);
+			tableLayoutPanel1.ResumeLayout(false);
+			tableLayoutPanel1.PerformLayout();
+			tabPage2.ResumeLayout(false);
+			tabPage2.PerformLayout();
+			tabPagePodatki.ResumeLayout(false);
+			tableLayoutPanel3.ResumeLayout(false);
+			tableLayoutPanel3.PerformLayout();
+			tableLayoutPanel2.ResumeLayout(false);
+			tableLayoutPanel2.PerformLayout();
+			ResumeLayout(false);
 		}
 
 		#endregion
@@ -643,5 +665,7 @@ namespace ProFak.UI
 		private System.ComponentModel.BackgroundWorker backgroundWorkerSprawdzMF;
 		private System.Windows.Forms.Button buttonPobierzGUS;
 		private System.ComponentModel.BackgroundWorker backgroundWorkerPobierzGUS;
+		private System.Windows.Forms.Label label15;
+		private System.Windows.Forms.TextBox textBoxTokenKSeF;
 	}
 }

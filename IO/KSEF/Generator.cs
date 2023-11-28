@@ -15,14 +15,6 @@ namespace ProFak.IO.KSEF;
 
 class Generator
 {
-	public static void Wyslij(IEnumerable<DBFaktura> dbFaktury)
-	{
-		foreach (var dbFaktura in dbFaktury)
-		{
-			//var xml = ZbudujXML(dbFaktura);
-		}
-	}
-
 	public static string ZbudujXML(Baza baza, Ref<DBFaktura> dbFakturaRef)
 	{
 		var dbFaktura = baza.Faktury

@@ -38,9 +38,7 @@
     <Compile Update="UI\EdytorDwieKolumny.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="UI\Faktury\FakturaZakupuEdytor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Update="UI\Faktury\FakturaZakupuEdytor.cs" />
     <Compile Update="UI\Faktury\PlikSpis.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -68,9 +66,7 @@
     <Compile Update="UI\Faktury\FakturaSprzedazySpis.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="UI\Faktury\FakturaEdytor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Update="UI\Faktury\FakturaEdytor.cs" />
     <Compile Update="UI\Serwisowe\EdytorTabeli.cs">
       <SubType>UserControl</SubType>
     </Compile>

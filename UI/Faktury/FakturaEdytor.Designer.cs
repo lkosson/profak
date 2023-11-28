@@ -115,6 +115,7 @@ namespace ProFak.UI
 			numericUpDownNetto = new System.Windows.Forms.NumericUpDown();
 			numericUpDownVat = new System.Windows.Forms.NumericUpDown();
 			numericUpDownBrutto = new System.Windows.Forms.NumericUpDown();
+			backgroundWorkerKSeFWyslij = new System.ComponentModel.BackgroundWorker();
 			tableLayoutPanel.SuspendLayout();
 			tableLayoutPanelKontrahenci.SuspendLayout();
 			groupBox2.SuspendLayout();
@@ -1185,6 +1186,13 @@ namespace ProFak.UI
 			numericUpDownBrutto.TabIndex = 52;
 			numericUpDownBrutto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
+			// backgroundWorkerKSeFWyslij
+			// 
+			backgroundWorkerKSeFWyslij.WorkerReportsProgress = true;
+			backgroundWorkerKSeFWyslij.WorkerSupportsCancellation = true;
+			backgroundWorkerKSeFWyslij.DoWork += backgroundWorkerKSeFWyslij_DoWork;
+			backgroundWorkerKSeFWyslij.RunWorkerCompleted += backgroundWorkerKSeFWyslij_RunWorkerCompleted;
+			// 
 			// FakturaEdytor
 			// 
 			AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1327,5 +1335,6 @@ namespace ProFak.UI
 		private System.Windows.Forms.Button buttonKSeFPobierz;
 		private System.Windows.Forms.TextBox textBoxKSeFXML;
 		private System.Windows.Forms.Button buttonKSeFWyslij;
+		private System.ComponentModel.BackgroundWorker backgroundWorkerKSeFWyslij;
 	}
 }

@@ -164,8 +164,14 @@ class API
 		var invoiceStatusResponseBody = await invoiceStatusResponse.Content.ReadAsStringAsync();
 		var invoiceStatusResponseJson = JsonSerializer.Deserialize<JsonElement>(invoiceStatusResponseBody);
 		var processingCode = invoiceStatusResponseJson.GetProperty("processingCode").GetInt32();
-		var ksefReferenceNumber = invoiceStatusResponseJson.GetProperty("invoiceStatus").GetProperty("ksefReferenceNumber").GetString();
-		return (processingCode, ksefReferenceNumber);
+		var processingDescription = invoiceStatusResponseJson.GetProperty("processingDescription").GetString();
+		if (processingCode >= 200 && processingCode <= 299)
+		{
+			var ksefReferenceNumber = invoiceStatusResponseJson.GetProperty("invoiceStatus").GetProperty("ksefReferenceNumber").GetString();
+			return (processingCode, ksefReferenceNumber);
+		}
+		else if (processingCode >= 300 && processingCode <= 399) return (processingCode, null);
+		else throw new ApplicationException(processingDescription);
 	}
 
 	public async Task<string> SendInvoiceAsync(string invoiceXml, CancellationToken cancellationToken)

@@ -26,6 +26,7 @@ namespace ProFak.DB
 		public string OsobaFizycznaNazwisko { get; set; }
 		public DateTime? OsobaFizycznaDataUrodzenia { get; set; }
 		public FormaOpodatkowania? FormaOpodatkowania { get; set; }
+		public string TokenKSeF { get; set; }
 
 		public string AdresRejestrowyFmt => AdresRejestrowy.JakoJednaLinia();
 
