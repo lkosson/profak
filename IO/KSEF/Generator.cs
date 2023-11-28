@@ -10,6 +10,7 @@ using DBFaktura = ProFak.DB.Faktura;
 using KSEFFaktura = ProFak.IO.KSEF.Faktura;
 using ProFak.DB.Migrations;
 using Microsoft.EntityFrameworkCore;
+using ProFak.IO.JPK_V7M;
 
 namespace ProFak.IO.KSEF;
 
@@ -28,9 +29,10 @@ class Generator
 			.FirstOrDefault();
 		var ksefFaktura = Zbuduj(dbFaktura);
 		var xo = new XmlAttributeOverrides();
+		xo.Add(typeof(FakturaFA), "P_15ZK", new XmlAttributes() { XmlIgnore = true });
 		var xs = new XmlSerializer(typeof(KSEFFaktura), xo);
 		var xml = new StringBuilder();
-		using var xw = XmlWriter.Create(xml, new XmlWriterSettings() { OmitXmlDeclaration = false, Indent = true });
+		using var xw = XmlWriter.Create(xml, new XmlWriterSettings() { OmitXmlDeclaration = true, Indent = true });
 		var nss = new XmlSerializerNamespaces();
 		xs.Serialize(xw, ksefFaktura, nss);
 		return xml.ToString();
@@ -117,8 +119,11 @@ class Generator
 		ksefFaktura.Fa.Platnosc.TerminPlatnosci[0].Termin = dbFaktura.TerminPlatnosci;
 		ksefFaktura.Fa.Platnosc.TerminPlatnosci[0].TerminOpis = dbFaktura.OpisSposobuPlatnosci;
 		ksefFaktura.Fa.Platnosc.Items1 = new[] { (object)TFormaPlatnosci.Item6 };
-		ksefFaktura.Fa.Platnosc.RachunekBankowy = new[] { new TRachunekBankowy() };
-		ksefFaktura.Fa.Platnosc.RachunekBankowy[0].NrRB = dbFaktura.RachunekBankowy;
+		if (!String.IsNullOrEmpty(dbFaktura.RachunekBankowy))
+		{
+			ksefFaktura.Fa.Platnosc.RachunekBankowy = new[] { new TRachunekBankowy() };
+			ksefFaktura.Fa.Platnosc.RachunekBankowy[0].NrRB = dbFaktura.RachunekBankowy.Replace(" ", "");
+		}
 
 		var wiersze = new List<FakturaFAFaWiersz>();
 		foreach (var dbPozycja in dbFaktura.Pozycje)
@@ -135,6 +140,7 @@ class Generator
 			ksefWiersz.P_9B = dbPozycja.CenaBrutto;
 			ksefWiersz.P_9BSpecified = true;
 			ksefWiersz.P_11 = dbPozycja.WartoscNetto;
+			ksefWiersz.P_11Specified = true;
 			ksefWiersz.P_11A = dbPozycja.WartoscBrutto;
 			ksefWiersz.P_11ASpecified = true;
 			if (dbPozycja.GTU > 0) { ksefWiersz.GTU = Enum.Parse<TGTU>("GTU_" + dbPozycja.GTU.ToString("00")); ksefWiersz.GTUSpecified = true; }
@@ -145,6 +151,8 @@ class Generator
 			else if (dbPozycja.StawkaVat.Wartosc <= 5) { ksefFaktura.Fa.P_13_3 += dbPozycja.WartoscNetto; ksefFaktura.Fa.P_14_3 += dbPozycja.WartoscVat; ksefWiersz.P_12 = TStawkaPodatku.Item5; }
 			else if (dbPozycja.StawkaVat.Wartosc <= 8) { ksefFaktura.Fa.P_13_2 += dbPozycja.WartoscNetto; ksefFaktura.Fa.P_14_2 += dbPozycja.WartoscVat; ksefWiersz.P_12 = TStawkaPodatku.Item8; }
 			else { ksefFaktura.Fa.P_13_1 += dbPozycja.WartoscNetto; ksefFaktura.Fa.P_14_1 += dbPozycja.WartoscVat; ksefWiersz.P_12 = TStawkaPodatku.Item23; }
+
+			ksefWiersz.P_12Specified = true;
 
 			wiersze.Add(ksefWiersz);
 		}

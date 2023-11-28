@@ -61,7 +61,7 @@ class API
 		<DocumentType>
 			<ns2:Service>KSeF</ns2:Service>
 			<ns2:FormCode>
-				<ns2:SystemCode>FA (1)</ns2:SystemCode>
+				<ns2:SystemCode>FA (2)</ns2:SystemCode>
 				<ns2:SchemaVersion>1-0E</ns2:SchemaVersion>
 				<ns2:TargetNamespace>http://crd.gov.pl/wzor/2021/11/29/11089/</ns2:TargetNamespace>
 				<ns2:Value>FA</ns2:Value>

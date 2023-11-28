@@ -115,11 +115,13 @@ namespace ProFak.IO.JPK_FA
 					jpkwiersz.P_7 = pozycja.Opis;
 					jpkwiersz.P_8A = pozycja.Towar.JednostkaMiary.Nazwa;
 					jpkwiersz.P_8B = pozycja.Ilosc;
+					jpkwiersz.P_8BSpecified = true;
 					jpkwiersz.P_9A = pozycja.CenaNetto;
 					jpkwiersz.P_9ASpecified = true;
 					jpkwiersz.P_9B = pozycja.CenaBrutto;
 					jpkwiersz.P_9BSpecified = true;
 					jpkwiersz.P_11 = pozycja.WartoscNetto;
+					jpkwiersz.P_11Specified = true;
 					jpkwiersz.P_11A = pozycja.WartoscBrutto;
 					jpkwiersz.P_11ASpecified = true;
 
@@ -129,6 +131,7 @@ namespace ProFak.IO.JPK_FA
 					else if (pozycja.StawkaVat.Wartosc <= 5) { jpkfaktura.P_13_3 += pozycja.WartoscNetto; jpkfaktura.P_14_3 += pozycja.WartoscVat; jpkwiersz.P_12 = JPKFakturaWierszP_12.Item5; }
 					else if (pozycja.StawkaVat.Wartosc <= 8) { jpkfaktura.P_13_2 += pozycja.WartoscNetto; jpkfaktura.P_14_2 += pozycja.WartoscVat; jpkwiersz.P_12 = JPKFakturaWierszP_12.Item8; }
 					else { jpkfaktura.P_13_1 += pozycja.WartoscNetto; jpkfaktura.P_14_1 += pozycja.WartoscVat; jpkwiersz.P_12 = JPKFakturaWierszP_12.Item23; }
+					jpkwiersz.P_12Specified = true;
 				}
 			}
 

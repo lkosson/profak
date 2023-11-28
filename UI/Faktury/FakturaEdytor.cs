@@ -298,6 +298,7 @@ namespace ProFak.UI
 
 		private void buttonKSeFGeneruj_Click(object sender, EventArgs e)
 		{
+			if (!String.IsNullOrWhiteSpace(Rekord.XMLKSeF) && MessageBox.Show("Faktura ma już wygenerowaną postać ustrukturyzowaną. Czy na pewno chcesz ją wygenerować ponownie?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
 			var xml = IO.KSEF.Generator.ZbudujXML(Kontekst.Baza, Rekord);
 			Rekord.XMLKSeF = xml;
 			kontroler.AktualizujKontrolki();
@@ -305,6 +306,7 @@ namespace ProFak.UI
 
 		private void buttonKSeFWyslij_Click(object sender, EventArgs e)
 		{
+			if (!String.IsNullOrWhiteSpace(Rekord.NumerKSeF) && MessageBox.Show("Faktura już była wysłana do KSeF. Czy na pewno chcesz ją wysłać ponownie?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
 			buttonKSeFWyslij.Enabled = false;
 			backgroundWorkerKSeFWyslij.RunWorkerAsync();
 		}
