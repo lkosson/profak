@@ -38,6 +38,16 @@ class Generator
 		return xml.ToString();
 	}
 
+	public static DBFaktura ZbudujDB(string xml)
+	{
+		var xo = new XmlAttributeOverrides();
+		var xs = new XmlSerializer(typeof(KSEFFaktura), xo);
+		using var xr = XmlReader.Create(xml, new XmlReaderSettings() { });
+		var nss = new XmlSerializerNamespaces();
+		var ksefFaktura = (KSEFFaktura)xs.Deserialize(xr);
+		return Zbuduj(ksefFaktura);
+	}
+
 	private static KSEFFaktura Zbuduj(DBFaktura dbFaktura)
 	{
 		var ksefFaktura = new KSEFFaktura();
@@ -74,7 +84,7 @@ class Generator
 			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.Items = new[] { dbFaktura.NIPNabywcy };
 			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.ItemsElementName = new[] { ItemsChoiceType.NIP };
 		}
-		ksefFaktura.Podmiot2.DaneIdentyfikacyjne.Nazwa = dbFaktura.NazwaSprzedawcy;
+		ksefFaktura.Podmiot2.DaneIdentyfikacyjne.Nazwa = dbFaktura.NazwaNabywcy;
 		ksefFaktura.Podmiot2.Adres = new TAdres();
 		ksefFaktura.Podmiot2.Adres.KodKraju = TKodKraju.PL;
 		ksefFaktura.Podmiot2.Adres.AdresL1 = dbFaktura.DaneNabywcy.JakoDwieLinie().linia1;
@@ -135,6 +145,7 @@ class Generator
 			ksefWiersz.Indeks = dbPozycja.Towar.Nazwa;
 			ksefWiersz.P_8A = dbPozycja.Towar.JednostkaMiary.Nazwa;
 			ksefWiersz.P_8B = dbPozycja.Ilosc;
+			ksefWiersz.P_8BSpecified = true;
 			ksefWiersz.P_9A = dbPozycja.CenaNetto;
 			ksefWiersz.P_9ASpecified = true;
 			ksefWiersz.P_9B = dbPozycja.CenaBrutto;
@@ -159,5 +170,31 @@ class Generator
 		ksefFaktura.Fa.FaWiersz = wiersze.ToArray();
 		ksefFaktura.Stopka = new FakturaStopka();
 		return ksefFaktura;
+	}
+
+	private static DBFaktura Zbuduj(KSEFFaktura ksefFaktura)
+	{
+		var dbFaktura = new DBFaktura();
+		dbFaktura.Numer = ksefFaktura.Fa.P_2;
+		return dbFaktura;
+	}
+
+	public static DBFaktura Zbuduj(InvoiceHeader invoiceHeader)
+	{
+		var dbFaktura = new DBFaktura();
+		dbFaktura.Numer = invoiceHeader.ReferenceNumber;
+		dbFaktura.NumerKSeF = invoiceHeader.KsefReferenceNumber;
+		dbFaktura.NazwaNabywcy = invoiceHeader.IssuedToName;
+		dbFaktura.NIPNabywcy = invoiceHeader.IssuedToNIP;
+		dbFaktura.NazwaSprzedawcy = invoiceHeader.IssuedByName;
+		dbFaktura.NIPSprzedawcy = invoiceHeader.IssuedByNIP;
+		dbFaktura.RazemNetto = invoiceHeader.Net;
+		dbFaktura.RazemVat = invoiceHeader.Vat;
+		dbFaktura.RazemBrutto = invoiceHeader.Gross;
+		dbFaktura.Rodzaj = invoiceHeader.Type == "VAT" ? DB.RodzajFaktury.Zakup : DB.RodzajFaktury.KorektaZakupu;
+		dbFaktura.DataWystawienia = invoiceHeader.InvoicingDate;
+		dbFaktura.DataWprowadzenia = invoiceHeader.AcquisitionTimestamp;
+		dbFaktura.Waluta = new Waluta { Skrot = invoiceHeader.Currency };
+		return dbFaktura;
 	}
 }

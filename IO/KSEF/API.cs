@@ -8,20 +8,31 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace ProFak.IO.KSEF;
 
-class API
+class API : IDisposable
 {
 	private readonly HttpClient client;
 	private readonly string urlBase;
 	private readonly string pubkey;
+	private bool sesjaAktywna;
 
 	public API(bool prod)
 	{
 		client = new HttpClient();
 		urlBase = prod ? "" : "https://ksef-test.mf.gov.pl";
 		pubkey = prod ? "" : "-----BEGIN PUBLIC KEY-----\r\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuWosgHSpiRLadA0fQbzshi5TluliZfDsJujPlyYqp6A3qnzS3WmHxtwgO58uTbemQ1HCC2qwrMwuJqR6l8tgA4ilBMDbEEtkzgbjkJ6xoEqBptgxivP/ovOFYYoAnY6brZhXytCamSvjY9KI0g0McRk24pOueXT0cbb0tlwEEjVZ8NveQNKT2c1EEE2cjmW0XB3UlIBqNqiY2rWF86DcuFDTUy+KzSmTJTFvU/ENNyLTh5kkDOmB1SY1Zaw9/Q6+a4VJ0urKZPw+61jtzWmucp4CO2cfXg9qtF6cxFIrgfbtvLofGQg09Bh7Y6ZA5VfMRDVDYLjvHwDYUHg2dPIk0wIDAQAB\r\n-----END PUBLIC KEY-----";
+	}
+
+	private void ProcessException(JsonElement json)
+	{
+		if (!json.TryGetProperty("exception", out var exceptionNode)) return;
+		if (!exceptionNode.TryGetProperty("exceptionDetailList", out var exceptionList)) throw new ApplicationException($"Nieznany błąd podczas komunikacji z KSeF.\n{exceptionNode}");
+		var exceptionDetail = exceptionList.EnumerateArray().FirstOrDefault();
+		if (!exceptionDetail.TryGetProperty("exceptionDescription", out var exceptionDescription)) throw new ApplicationException($"Nieznany błąd podczas komunikacji z KSeF.\n{exceptionNode}");
+		throw new ApplicationException($"Błąd podczas komunikacji z KSeF: {exceptionDescription.GetString()}");
 	}
 
 	private async Task<(string challenge, DateTime timestamp)> AuthorisationChallengeAsync(string nip)
@@ -32,10 +43,11 @@ class API
 		var authorisationChallengeResponse = await client.SendAsync(authorisationChallengeRequest);
 		var authorisationChallengeResponseBody = await authorisationChallengeResponse.Content.ReadAsStringAsync();
 		var authorisationChallengeResponseJson = JsonSerializer.Deserialize<JsonElement>(authorisationChallengeResponseBody);
-		var challenge = authorisationChallengeResponseJson.GetProperty("challenge").GetString();
-		var timestamp = authorisationChallengeResponseJson.GetProperty("timestamp").GetDateTime().ToUniversalTime();
-		if (challenge == null) throw new ApplicationException("Missing challenge.");
-		return (challenge, timestamp);
+		ProcessException(authorisationChallengeResponseJson);
+		var challenge = PropertyOrNull(authorisationChallengeResponseJson, "challenge")?.GetString();
+		var timestamp = PropertyOrNull(authorisationChallengeResponseJson, "timestamp")?.GetDateTime().ToUniversalTime();
+		if (challenge == null || timestamp == null) throw new ApplicationException("Missing challenge.");
+		return (challenge, timestamp.Value);
 	}
 
 	private async Task<string> InitTokenAsync(string nip, string authorisationToken, string challenge, DateTime timestamp)
@@ -76,7 +88,8 @@ class API
 		var initTokenResponse = await client.SendAsync(initTokenRequest);
 		var initTokenResponseBody = await initTokenResponse.Content.ReadAsStringAsync();
 		var initTokenResponseJson = JsonSerializer.Deserialize<JsonElement>(initTokenResponseBody);
-		var sessionToken = initTokenResponseJson.GetProperty("sessionToken").GetProperty("token").GetString();
+		ProcessException(initTokenResponseJson);
+		var sessionToken = PropertyOrNull(initTokenResponseJson, "sessionToken", "token")?.GetString();
 		return sessionToken ?? throw new ApplicationException("Missin session token.");
 	}
 
@@ -85,36 +98,39 @@ class API
 		(var challenge, var timestamp) = await AuthorisationChallengeAsync(nip);
 		var sessionToken = await InitTokenAsync(nip, authorisationToken, challenge, timestamp);
 		client.DefaultRequestHeaders.Add("SessionToken", sessionToken);
+		sesjaAktywna = true;
+		await Task.Delay(1000); // Inaczej kolejne wywołanie wywala się z błędem
 	}
 
 	private async Task<IReadOnlyCollection<InvoiceHeader>> GetInvoicesAsync(string type, string subject, DateTime dateFrom, DateTime dateTo, int pageSize, int pageOffset)
 	{
 		var invoices = new List<InvoiceHeader>();
+		//var invoiceSync = new { queryCriteria = new { type, subjectType = subject, invoicingDateFrom = dateFrom.ToString("s"), invoicingDateTo = dateTo.ToString("s") } };
 		var invoiceSync = new { queryCriteria = new { type, subjectType = subject, acquisitionTimestampThresholdFrom = dateFrom.ToString("s"), acquisitionTimestampThresholdTo = dateTo.ToString("s") } };
 		var invoiceSyncContent = JsonContent.Create(invoiceSync);
 		var invoiceSyncRequest = new HttpRequestMessage(HttpMethod.Post, urlBase + $"/api/online/Query/Invoice/Sync?PageSize={pageSize}&PageOffset={pageOffset}") { Content = invoiceSyncContent };
 		var invoiceSyncResponse = await client.SendAsync(invoiceSyncRequest);
 		var invoiceSyncResponseBody = await invoiceSyncResponse.Content.ReadAsStringAsync();
 		var invoiceSyncResponseJson = JsonSerializer.Deserialize<JsonElement>(invoiceSyncResponseBody);
-		var invoiceHeaderList = invoiceSyncResponseJson.GetProperty("invoiceHeaderList");
+		ProcessException(invoiceSyncResponseJson);
+		var invoiceHeaderList = PropertyOrNull(invoiceSyncResponseJson, "invoiceHeaderList") ?? throw new ApplicationException("Brak faktur w odpowiedzi.");
 		foreach (var invoiceHeaderListElement in invoiceHeaderList.EnumerateArray())
 		{
 			var invoiceHeader = new InvoiceHeader();
-			invoiceHeader.ReferenceNumber = invoiceHeaderListElement.GetProperty("invoiceReferenceNumber").GetString()!;
-			invoiceHeader.KsefReferenceNumber = invoiceHeaderListElement.GetProperty("ksefReferenceNumber").GetString()!;
-			invoiceHeader.InvoicingDate = invoiceHeaderListElement.GetProperty("invoicingDate").GetDateTime();
-			invoiceHeader.AcquisitionTimestamp = invoiceHeaderListElement.GetProperty("acquisitionTimestamp").GetDateTime();
-			invoiceHeader.IssuedByNIP = invoiceHeaderListElement.GetProperty("subjectBy").GetProperty("issuedByIdentifier").GetProperty("identifier").GetString()!;
-			invoiceHeader.IssuedByName = invoiceHeaderListElement.GetProperty("subjectBy").GetProperty("issuedByName").GetProperty("fullName").GetString()!;
-			invoiceHeader.IssuedToNIP = invoiceHeaderListElement.GetProperty("subjectTo").GetProperty("issuedToIdentifier").GetProperty("identifier").GetString()!;
-			invoiceHeader.IssuedToName = invoiceHeaderListElement.GetProperty("subjectTo").GetProperty("issuedToName").GetProperty("fullName").GetString()!;
-			invoiceHeader.Net = invoiceHeaderListElement.GetProperty("net").GetDecimal();
-			invoiceHeader.Gross = invoiceHeaderListElement.GetProperty("gross").GetDecimal();
-			invoiceHeader.Vat = invoiceHeaderListElement.GetProperty("vat").GetDecimal();
-			invoiceHeader.Currency = invoiceHeaderListElement.GetProperty("currency").GetString()!;
-			invoiceHeader.Type = invoiceHeaderListElement.GetProperty("invoiceType").GetString()!;
+			invoiceHeader.ReferenceNumber = PropertyOrNull(invoiceHeaderListElement, "invoiceReferenceNumber")?.GetString();
+			invoiceHeader.KsefReferenceNumber = PropertyOrNull(invoiceHeaderListElement, "ksefReferenceNumber")?.GetString()!;
+			invoiceHeader.InvoicingDate = PropertyOrNull(invoiceHeaderListElement, "invoicingDate")?.GetDateTime() ?? default;
+			invoiceHeader.AcquisitionTimestamp = PropertyOrNull(invoiceHeaderListElement, "acquisitionTimestamp")?.GetDateTime() ?? default;
+			invoiceHeader.IssuedByNIP = PropertyOrNull(invoiceHeaderListElement, "subjectBy", "issuedByIdentifier", "identifier")?.GetString();
+			invoiceHeader.IssuedByName = PropertyOrNull(invoiceHeaderListElement, "subjectBy", "issuedByName", "fullName")?.GetString();
+			invoiceHeader.IssuedToNIP = PropertyOrNull(invoiceHeaderListElement, "subjectTo", "issuedToIdentifier", "identifier")?.GetString();
+			invoiceHeader.IssuedToName = PropertyOrNull(invoiceHeaderListElement, "subjectTo", "issuedToName", "fullName")?.GetString() ?? PropertyOrNull(invoiceHeaderListElement, "subjectTo", "issuedToName", "firstName")?.GetString() + " " + PropertyOrNull(invoiceHeaderListElement, "subjectTo", "issuedToName", "surame")?.GetString();
+			invoiceHeader.Net = Decimal.Parse(PropertyOrNull(invoiceHeaderListElement, "net")?.GetString(), CultureInfo.InvariantCulture);
+			invoiceHeader.Gross = Decimal.Parse(PropertyOrNull(invoiceHeaderListElement, "gross")?.GetString(), CultureInfo.InvariantCulture);
+			invoiceHeader.Vat = Decimal.Parse(PropertyOrNull(invoiceHeaderListElement, "vat")?.GetString(), CultureInfo.InvariantCulture);
+			invoiceHeader.Currency = PropertyOrNull(invoiceHeaderListElement, "currency")?.GetString();
+			invoiceHeader.Type = PropertyOrNull(invoiceHeaderListElement, "invoiceType")?.GetString();
 			invoices.Add(invoiceHeader);
-
 		}
 		return invoices;
 	}
@@ -154,7 +170,8 @@ class API
 		var invoiceSendResponse = await client.SendAsync(invoiceSendRequest);
 		var invoiceSendResponseBody = await invoiceSendResponse.Content.ReadAsStringAsync();
 		var invoiceSendResponseJson = JsonSerializer.Deserialize<JsonElement>(invoiceSendResponseBody);
-		var elementReferenceNumber = invoiceSendResponseJson.GetProperty("elementReferenceNumber").GetString();
+		ProcessException(invoiceSendResponseJson);
+		var elementReferenceNumber = PropertyOrNull(invoiceSendResponseJson, "elementReferenceNumber")?.GetString();
 		return elementReferenceNumber ?? throw new ApplicationException("Missin session token.");
 	}
 
@@ -163,11 +180,12 @@ class API
 		var invoiceStatusResponse = await client.GetAsync(urlBase + "/api/online/Invoice/Status/" + elementReferenceNumber);
 		var invoiceStatusResponseBody = await invoiceStatusResponse.Content.ReadAsStringAsync();
 		var invoiceStatusResponseJson = JsonSerializer.Deserialize<JsonElement>(invoiceStatusResponseBody);
-		var processingCode = invoiceStatusResponseJson.GetProperty("processingCode").GetInt32();
-		var processingDescription = invoiceStatusResponseJson.GetProperty("processingDescription").GetString();
+		ProcessException(invoiceStatusResponseJson);
+		var processingCode = PropertyOrNull(invoiceStatusResponseJson, "processingCode")?.GetInt32() ?? throw new ApplicationException("Brak statusu wysyłki faktury.");
+		var processingDescription = PropertyOrNull(invoiceStatusResponseJson, "processingDescription")?.GetString();
 		if (processingCode >= 200 && processingCode <= 299)
 		{
-			var ksefReferenceNumber = invoiceStatusResponseJson.GetProperty("invoiceStatus").GetProperty("ksefReferenceNumber").GetString();
+			var ksefReferenceNumber = PropertyOrNull(invoiceStatusResponseJson, "invoiceStatus", "ksefReferenceNumber")?.GetString();
 			return (processingCode, ksefReferenceNumber);
 		}
 		else if (processingCode >= 300 && processingCode <= 399) return (processingCode, null);
@@ -191,5 +209,34 @@ class API
 	{
 		var terminateResponse = await client.GetAsync(urlBase + "/api/online/Session/Terminate");
 		var terminateResponseBody = await terminateResponse.Content.ReadAsStringAsync();
+		sesjaAktywna = false;
+	}
+
+	private JsonElement? PropertyOrNull(JsonElement element, params string[] nodes)
+	{
+		foreach (var node in nodes)
+		{
+			if (!element.TryGetProperty(node, out element)) return null;
+		}
+		return element;
+	}
+
+	protected virtual void Dispose(bool disposing)
+	{
+		if (sesjaAktywna)
+		{
+			Terminate().ConfigureAwait(false).GetAwaiter().GetResult();
+		}
+	}
+
+	~API()
+	{
+		Dispose(disposing: false);
+	}
+
+	public void Dispose()
+	{
+		Dispose(disposing: true);
+		GC.SuppressFinalize(this);
 	}
 }

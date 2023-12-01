@@ -321,11 +321,15 @@ namespace ProFak.UI
 			var kontrahent = Kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
 			if (String.IsNullOrEmpty(kontrahent.TokenKSeF)) throw new ApplicationException("Brak tokena dostępowego do KSeF w danych firmy.");
 			if (String.IsNullOrWhiteSpace(Rekord.XMLKSeF)) Rekord.XMLKSeF = IO.KSEF.Generator.ZbudujXML(Kontekst.Baza, Rekord);
-			var api = new IO.KSEF.API(false);
-			var cts = new CancellationTokenSource();
-			//cts.CancelAfter(TimeSpan.FromSeconds(10));
-			api.AuthenticateAsync(kontrahent.NIP, kontrahent.TokenKSeF).GetAwaiter().GetResult();
-			Rekord.NumerKSeF = api.SendInvoiceAsync(Rekord.XMLKSeF, cts.Token).GetAwaiter().GetResult();
+			Task.Run(async delegate
+			{
+				using var api = new IO.KSEF.API(false);
+				var cts = new CancellationTokenSource();
+				cts.CancelAfter(TimeSpan.FromSeconds(10));
+				await api.AuthenticateAsync(kontrahent.NIP, kontrahent.TokenKSeF);
+				Rekord.NumerKSeF = await api.SendInvoiceAsync(Rekord.XMLKSeF, cts.Token);
+				await api.Terminate();
+			}).ConfigureAwait(false).GetAwaiter().GetResult();
 		}
 
 		private void backgroundWorkerKSeFWyslij_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
