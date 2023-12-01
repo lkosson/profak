@@ -75,6 +75,7 @@ namespace ProFak.UI
 			textBoxOpisZdarzenia = new System.Windows.Forms.TextBox();
 			tabPageKSeF = new System.Windows.Forms.TabPage();
 			tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+			buttonKSeFGeneruj = new System.Windows.Forms.Button();
 			textBoxKSeFXML = new System.Windows.Forms.TextBox();
 			label21 = new System.Windows.Forms.Label();
 			textBoxNumerKSeF = new System.Windows.Forms.TextBox();
@@ -111,7 +112,6 @@ namespace ProFak.UI
 			numericUpDownNetto = new System.Windows.Forms.NumericUpDown();
 			numericUpDownVat = new System.Windows.Forms.NumericUpDown();
 			numericUpDownBrutto = new System.Windows.Forms.NumericUpDown();
-			buttonKSeFGeneruj = new System.Windows.Forms.Button();
 			tableLayoutPanel.SuspendLayout();
 			tableLayoutPanelKontrahenci.SuspendLayout();
 			groupBox2.SuspendLayout();
@@ -705,6 +705,17 @@ namespace ProFak.UI
 			tableLayoutPanel8.Size = new System.Drawing.Size(886, 197);
 			tableLayoutPanel8.TabIndex = 0;
 			// 
+			// buttonKSeFGeneruj
+			// 
+			buttonKSeFGeneruj.AutoSize = true;
+			buttonKSeFGeneruj.Location = new System.Drawing.Point(381, 3);
+			buttonKSeFGeneruj.Name = "buttonKSeFGeneruj";
+			buttonKSeFGeneruj.Size = new System.Drawing.Size(85, 25);
+			buttonKSeFGeneruj.TabIndex = 5;
+			buttonKSeFGeneruj.Text = "Generuj XML";
+			buttonKSeFGeneruj.UseVisualStyleBackColor = true;
+			buttonKSeFGeneruj.Click += buttonKSeFGeneruj_Click;
+			// 
 			// textBoxKSeFXML
 			// 
 			tableLayoutPanel8.SetColumnSpan(textBoxKSeFXML, 3);
@@ -1136,16 +1147,6 @@ namespace ProFak.UI
 			numericUpDownBrutto.Size = new System.Drawing.Size(116, 23);
 			numericUpDownBrutto.TabIndex = 52;
 			numericUpDownBrutto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
-			// buttonKSeFGeneruj
-			// 
-			buttonKSeFGeneruj.AutoSize = true;
-			buttonKSeFGeneruj.Location = new System.Drawing.Point(381, 3);
-			buttonKSeFGeneruj.Name = "buttonKSeFGeneruj";
-			buttonKSeFGeneruj.Size = new System.Drawing.Size(85, 25);
-			buttonKSeFGeneruj.TabIndex = 5;
-			buttonKSeFGeneruj.Text = "Generuj XML";
-			buttonKSeFGeneruj.UseVisualStyleBackColor = true;
 			// 
 			// FakturaEdytor
 			// 

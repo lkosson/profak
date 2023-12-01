@@ -30,9 +30,11 @@ namespace ProFak.UI
 			menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Expand();
 			menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["WedlugDaty"].Expand();
 			menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["WedlugDaty"].Nodes.Cast<TreeNode>().LastOrDefault()?.Expand();
+			menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["KSeFSprzedaz"].Expand();
 			menu.Nodes["Faktury"].Nodes["FakturyZakupu"].Expand();
 			menu.Nodes["Faktury"].Nodes["FakturyZakupu"].Nodes["WedlugDaty"].Expand();
 			menu.Nodes["Faktury"].Nodes["FakturyZakupu"].Nodes["WedlugDaty"].Nodes.Cast<TreeNode>().LastOrDefault()?.Expand();
+			menu.Nodes["Faktury"].Nodes["FakturyZakupu"].Nodes["KSeFZakup"].Expand();
 			menu.Nodes["Slowniki"].Expand();
 			menu.Nodes["Podatki"].Expand();
 			var doWybrania = menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["WedlugDaty"].Nodes.Cast<TreeNode>().LastOrDefault()?.Nodes?.Cast<TreeNode>()?.LastOrDefault();
@@ -85,8 +87,8 @@ namespace ProFak.UI
 			else if (pozycja.Name == "ZaliczkiPit") Wyswietl(Spisy.ZaliczkiPit(parametry), pozycja.Name);
 			else if (pozycja.Name == "UrzedySkarbowe") Wyswietl(Spisy.UrzedySkarbowe(), pozycja.Name);
 			else if (pozycja.Name == "FakturyZakupu") Wyswietl(Spisy.FakturyZakupu(parametry), pozycja.Name);
-			else if (pozycja.Name == "KSeFZakup") Wyswietl(Spisy.KSeF("Zakup"), pozycja.Name);
-			else if (pozycja.Name == "KSeFSprzedaz") Wyswietl(Spisy.KSeF("Sprzedaz"), pozycja.Name);
+			else if (pozycja.Name == "KSeFZakup") Wyswietl(Spisy.KSeF("Zakup", parametry.FirstOrDefault()), pozycja.Name);
+			else if (pozycja.Name == "KSeFSprzedaz") Wyswietl(Spisy.KSeF("Sprzedaz", parametry.FirstOrDefault()), pozycja.Name);
 			else if (pozycja.Name == "FakturySprzedazy") Wyswietl(Spisy.FakturySprzedazy(parametry), pozycja.Name);
 			else if (pozycja.Name == "Numeratory") Wyswietl(Spisy.Numeratory(), pozycja.Name);
 			else if (pozycja.Name == "StanyNumeratorow") Wyswietl(Spisy.StanyNumeratorow(), pozycja.Name);
