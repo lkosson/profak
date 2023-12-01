@@ -47,14 +47,9 @@ namespace ProFak.UI
 				spis.WybraneRekordy = wybraneRekordy;
 				spis.Focus();
 			}
-			catch (ApplicationException ae) when (ae.GetType() == typeof(ApplicationException))
-			{
-				MessageBox.Show(ae.Message, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-			}
 			catch (Exception exc)
 			{
-				using var okno = new OknoBledu(exc);
-				okno.ShowDialog();
+				OknoBledu.Pokaz(exc);
 			}
 		}
 	}

@@ -148,8 +148,7 @@ namespace ProFak.UI
 			}
 			catch (Exception exc)
 			{
-				using var okno = new OknoBledu(exc);
-				okno.ShowDialog();
+				OknoBledu.Pokaz(exc);
 			}
 		}
 

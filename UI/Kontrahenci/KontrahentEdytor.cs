@@ -118,22 +118,8 @@ namespace ProFak.UI
 		private void backgroundWorkerSprawdzMF_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
 		{
 			buttonSprawdzMF.Enabled = true;
-			if (e.Error != null)
-			{
-				if (e.Error is ApplicationException exc)
-				{
-					MessageBox.Show(exc.Message, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-				}
-				else
-				{
-					var okno = new OknoBledu(e.Error);
-					okno.ShowDialog();
-				}
-			}
-			else
-			{
-				MessageBox.Show((string)e.Result, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
-			}
+			if (e.Error != null) OknoBledu.Pokaz(e.Error);
+			else MessageBox.Show((string)e.Result, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
 		private void buttonPobierzGUS_Click(object sender, EventArgs e)
@@ -151,22 +137,8 @@ namespace ProFak.UI
 		private void backgroundWorkerPobierzGUS_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
 		{
 			buttonPobierzGUS.Enabled = true;
-			if (e.Error != null)
-			{
-				if (e.Error is ApplicationException exc)
-				{
-					MessageBox.Show(exc.Message, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-				}
-				else
-				{
-					var okno = new OknoBledu(e.Error);
-					okno.ShowDialog();
-				}
-			}
-			else
-			{
-				kontroler.AktualizujKontrolki();
-			}
+			if (e.Error != null) OknoBledu.Pokaz(e.Error);
+			else kontroler.AktualizujKontrolki();
 		}
 	}
 

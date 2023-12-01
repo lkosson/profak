@@ -98,8 +98,7 @@ namespace ProFak.UI
 			}
 			catch (Exception exc)
 			{
-				using var okno = new OknoBledu(exc);
-				okno.ShowDialog();
+				OknoBledu.Pokaz(exc);
 			}
 		}
 
@@ -127,8 +126,7 @@ namespace ProFak.UI
 					File.Move(bazaRatunkowa, Baza.Sciezka);
 				}
 
-				using var okno = new OknoBledu(exc);
-				okno.ShowDialog();
+				OknoBledu.Pokaz(exc);
 				return;
 			}
 			MessageBox.Show("Baza danych została odtworzona.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);

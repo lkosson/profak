@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ProFak.DB;
+using ProFak.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -58,8 +59,7 @@ namespace ProFak
 			}
 			catch (Exception exc)
 			{
-				using var okno = new UI.OknoBledu(exc);
-				okno.ShowDialog();
+				OknoBledu.Pokaz(exc);
 			}
 		}
 	}

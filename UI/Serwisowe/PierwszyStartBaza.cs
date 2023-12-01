@@ -136,12 +136,7 @@ namespace ProFak.UI
 				return;
 			}
 
-			if (e.Error is ApplicationException ae) MessageBox.Show(ae.Message, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-			else
-			{
-				var okno = new OknoBledu(e.Error);
-				okno.ShowDialog();
-			}
+			OknoBledu.Pokaz(e.Error);
 			buttonDalej.Enabled = true;
 			progressBar.Visible = false;
 			labelStatus.Visible = false;

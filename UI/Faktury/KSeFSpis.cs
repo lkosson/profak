@@ -79,28 +79,43 @@ namespace ProFak.UI
 
 			Task.Run(async delegate
 			{
-				var odDaty = this.odDaty;
-				var kontrahent = Kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
-				if (String.IsNullOrEmpty(kontrahent.TokenKSeF)) throw new ApplicationException("Brak tokena dostępowego do KSeF w danych firmy.");
-				if (przyrostowo)
+				try
 				{
-					var ostatnia = Kontekst.Baza.Faktury
-						.Where(e => e.Rodzaj == RodzajFaktury.Zakup || e.Rodzaj == RodzajFaktury.KorektaZakupu)
-						.Where(e => !String.IsNullOrEmpty(e.NumerKSeF))
-						.OrderByDescending(e => e.DataWprowadzenia)
-						.FirstOrDefault();
-					if (ostatnia != null) odDaty = ostatnia.DataWprowadzenia;
+					var odDaty = this.odDaty;
+					var kontrahent = Kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
+					if (String.IsNullOrEmpty(kontrahent.TokenKSeF)) throw new ApplicationException("Brak tokena dostępowego do KSeF w danych firmy.");
+					if (przyrostowo)
+					{
+						var ostatnia = Kontekst.Baza.Faktury
+							.Where(e => e.Rodzaj == RodzajFaktury.Zakup || e.Rodzaj == RodzajFaktury.KorektaZakupu)
+							.Where(e => !String.IsNullOrEmpty(e.NumerKSeF))
+							.OrderByDescending(e => e.DataWprowadzenia)
+							.FirstOrDefault();
+						if (ostatnia != null) odDaty = ostatnia.DataWprowadzenia;
+					}
+					var istniejace = Kontekst.Baza.Faktury.Where(e => !String.IsNullOrEmpty(e.NumerKSeF)).Select(e => e.NumerKSeF).ToHashSet();
+					using var api = new IO.KSEF.API(false);
+					var cts = new CancellationTokenSource();
+					cts.CancelAfter(TimeSpan.FromSeconds(10));
+					await api.AuthenticateAsync(kontrahent.NIP, kontrahent.TokenKSeF);
+					var naglowki = await api.GetInvoicesAsync(przyrostowo ? "incremental" : "range", sprzedaz ? "subject1" : "subject2", odDaty, DateTime.Now);
+					await api.Terminate();
+					var rekordy = naglowki.Select(IO.KSEF.Generator.Zbuduj).ToList();
+					await ThreadSwitcher.ResumeForegroundAsync(this);
+					foreach (var rekord in rekordy) if (istniejace.Contains(rekord.NumerKSeF)) rekord.Id = 1;
+					Rekordy = rekordy;
 				}
-				using var api = new IO.KSEF.API(false);
-				var cts = new CancellationTokenSource();
-				cts.CancelAfter(TimeSpan.FromSeconds(10));
-				await api.AuthenticateAsync(kontrahent.NIP, kontrahent.TokenKSeF);
-				var naglowki = await api.GetInvoicesAsync(przyrostowo ? "incremental" : "range", sprzedaz ? "subject1" : "subject2", odDaty, DateTime.Now);
-				await api.Terminate();
-				var rekordy = naglowki.Select(IO.KSEF.Generator.Zbuduj).ToList();
-				await ThreadSwitcher.ResumeForegroundAsync(this);
-				Rekordy = rekordy;
+				catch (Exception exc)
+				{
+					OknoBledu.Pokaz(exc);
+				}
 			});
+		}
+
+		protected override void UstawStylWiersza(Faktura rekord, string kolumna, DataGridViewCellStyle styl)
+		{
+			base.UstawStylWiersza(rekord, kolumna, styl);
+			if (rekord.Id != 0) styl.ForeColor = Color.FromArgb(20, 170, 30);
 		}
 	}
 }

@@ -28,5 +28,18 @@ namespace ProFak.UI
 		{
 			Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = "https://github.com/lkosson/profak/issues" });
 		}
+
+		public static void Pokaz(Exception exc)
+		{
+			if (exc.GetType() == typeof(ApplicationException))
+			{
+				MessageBox.Show(exc.Message, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			}
+			else
+			{
+				using var okno = new OknoBledu(exc);
+				okno.ShowDialog();
+			}
+		}
 	}
 }

@@ -105,9 +105,9 @@ class API : IDisposable
 	private async Task<IReadOnlyCollection<InvoiceHeader>> GetInvoicesAsync(string type, string subject, DateTime dateFrom, DateTime dateTo, int pageSize, int pageOffset)
 	{
 		var invoices = new List<InvoiceHeader>();
-		//var invoiceSync = new { queryCriteria = new { type, subjectType = subject, invoicingDateFrom = dateFrom.ToString("s"), invoicingDateTo = dateTo.ToString("s") } };
-		var invoiceSync = new { queryCriteria = new { type, subjectType = subject, acquisitionTimestampThresholdFrom = dateFrom.ToString("s"), acquisitionTimestampThresholdTo = dateTo.ToString("s") } };
-		var invoiceSyncContent = JsonContent.Create(invoiceSync);
+		JsonContent invoiceSyncContent;
+		if (type == "range") invoiceSyncContent = JsonContent.Create(new { queryCriteria = new { type, subjectType = subject, invoicingDateFrom = dateFrom.ToString("s"), invoicingDateTo = dateTo.ToString("s") } });
+		else invoiceSyncContent = JsonContent.Create(new { queryCriteria = new { type, subjectType = subject, acquisitionTimestampThresholdFrom = dateFrom.ToString("s"), acquisitionTimestampThresholdTo = dateTo.ToString("s") } });
 		var invoiceSyncRequest = new HttpRequestMessage(HttpMethod.Post, urlBase + $"/api/online/Query/Invoice/Sync?PageSize={pageSize}&PageOffset={pageOffset}") { Content = invoiceSyncContent };
 		var invoiceSyncResponse = await client.SendAsync(invoiceSyncRequest);
 		var invoiceSyncResponseBody = await invoiceSyncResponse.Content.ReadAsStringAsync();
