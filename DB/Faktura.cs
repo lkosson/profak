@@ -76,6 +76,7 @@ namespace ProFak.DB
 		public decimal SumaWplat => Wplaty?.Sum(wplata => wplata.Kwota) ?? 0;
 		public decimal PozostaloDoZaplaty => Math.Max(RazemBrutto - SumaWplat, 0);
 		public bool CzyZaplacona => PozostaloDoZaplaty == 0;
+		public bool CzyKSeF => !String.IsNullOrEmpty(NumerKSeF);
 
 		public decimal VatNaliczony => Zaokragl(RazemVat * ProcentVatNaliczonego / 100m);
 		public decimal VatJakoKoszty => Zaokragl((RazemVat - VatNaliczony) * ProcentKosztow / 100m);

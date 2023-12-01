@@ -78,10 +78,6 @@ namespace ProFak.UI
 			textBoxKSeFXML = new System.Windows.Forms.TextBox();
 			label21 = new System.Windows.Forms.Label();
 			textBoxNumerKSeF = new System.Windows.Forms.TextBox();
-			flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-			buttonKSeFGeneruj = new System.Windows.Forms.Button();
-			buttonKSeFWyslij = new System.Windows.Forms.Button();
-			buttonKSeFPobierz = new System.Windows.Forms.Button();
 			tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			textBoxNumer = new System.Windows.Forms.TextBox();
 			labelRodzaj = new System.Windows.Forms.Label();
@@ -115,7 +111,7 @@ namespace ProFak.UI
 			numericUpDownNetto = new System.Windows.Forms.NumericUpDown();
 			numericUpDownVat = new System.Windows.Forms.NumericUpDown();
 			numericUpDownBrutto = new System.Windows.Forms.NumericUpDown();
-			backgroundWorkerKSeFWyslij = new System.ComponentModel.BackgroundWorker();
+			buttonKSeFGeneruj = new System.Windows.Forms.Button();
 			tableLayoutPanel.SuspendLayout();
 			tableLayoutPanelKontrahenci.SuspendLayout();
 			groupBox2.SuspendLayout();
@@ -131,7 +127,6 @@ namespace ProFak.UI
 			tableLayoutPanel7.SuspendLayout();
 			tabPageKSeF.SuspendLayout();
 			tableLayoutPanel8.SuspendLayout();
-			flowLayoutPanel1.SuspendLayout();
 			tableLayoutPanel1.SuspendLayout();
 			tableLayoutPanelDatyKwoty.SuspendLayout();
 			groupBox6.SuspendLayout();
@@ -696,16 +691,17 @@ namespace ProFak.UI
 			tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel8.Controls.Add(buttonKSeFGeneruj, 2, 0);
 			tableLayoutPanel8.Controls.Add(textBoxKSeFXML, 0, 1);
 			tableLayoutPanel8.Controls.Add(label21, 0, 0);
 			tableLayoutPanel8.Controls.Add(textBoxNumerKSeF, 1, 0);
-			tableLayoutPanel8.Controls.Add(flowLayoutPanel1, 2, 0);
 			tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
 			tableLayoutPanel8.Location = new System.Drawing.Point(0, 0);
 			tableLayoutPanel8.Name = "tableLayoutPanel8";
 			tableLayoutPanel8.RowCount = 2;
 			tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			tableLayoutPanel8.Size = new System.Drawing.Size(886, 197);
 			tableLayoutPanel8.TabIndex = 0;
 			// 
@@ -713,18 +709,18 @@ namespace ProFak.UI
 			// 
 			tableLayoutPanel8.SetColumnSpan(textBoxKSeFXML, 3);
 			textBoxKSeFXML.Dock = System.Windows.Forms.DockStyle.Fill;
-			textBoxKSeFXML.Location = new System.Drawing.Point(3, 40);
+			textBoxKSeFXML.Location = new System.Drawing.Point(3, 34);
 			textBoxKSeFXML.Multiline = true;
 			textBoxKSeFXML.Name = "textBoxKSeFXML";
 			textBoxKSeFXML.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			textBoxKSeFXML.Size = new System.Drawing.Size(880, 154);
+			textBoxKSeFXML.Size = new System.Drawing.Size(880, 160);
 			textBoxKSeFXML.TabIndex = 4;
 			// 
 			// label21
 			// 
 			label21.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			label21.AutoSize = true;
-			label21.Location = new System.Drawing.Point(3, 11);
+			label21.Location = new System.Drawing.Point(3, 8);
 			label21.Name = "label21";
 			label21.Size = new System.Drawing.Size(140, 15);
 			label21.TabIndex = 0;
@@ -733,55 +729,10 @@ namespace ProFak.UI
 			// textBoxNumerKSeF
 			// 
 			textBoxNumerKSeF.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			textBoxNumerKSeF.Location = new System.Drawing.Point(149, 7);
+			textBoxNumerKSeF.Location = new System.Drawing.Point(149, 4);
 			textBoxNumerKSeF.Name = "textBoxNumerKSeF";
 			textBoxNumerKSeF.Size = new System.Drawing.Size(226, 23);
 			textBoxNumerKSeF.TabIndex = 1;
-			// 
-			// flowLayoutPanel1
-			// 
-			flowLayoutPanel1.AutoSize = true;
-			flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			flowLayoutPanel1.Controls.Add(buttonKSeFGeneruj);
-			flowLayoutPanel1.Controls.Add(buttonKSeFWyslij);
-			flowLayoutPanel1.Controls.Add(buttonKSeFPobierz);
-			flowLayoutPanel1.Location = new System.Drawing.Point(381, 3);
-			flowLayoutPanel1.Name = "flowLayoutPanel1";
-			flowLayoutPanel1.Size = new System.Drawing.Size(288, 31);
-			flowLayoutPanel1.TabIndex = 3;
-			// 
-			// buttonKSeFGeneruj
-			// 
-			buttonKSeFGeneruj.AutoSize = true;
-			buttonKSeFGeneruj.Location = new System.Drawing.Point(3, 3);
-			buttonKSeFGeneruj.Name = "buttonKSeFGeneruj";
-			buttonKSeFGeneruj.Size = new System.Drawing.Size(85, 25);
-			buttonKSeFGeneruj.TabIndex = 2;
-			buttonKSeFGeneruj.Text = "Generuj XML";
-			buttonKSeFGeneruj.UseVisualStyleBackColor = true;
-			buttonKSeFGeneruj.Click += buttonKSeFGeneruj_Click;
-			// 
-			// buttonKSeFWyslij
-			// 
-			buttonKSeFWyslij.AutoSize = true;
-			buttonKSeFWyslij.Location = new System.Drawing.Point(94, 3);
-			buttonKSeFWyslij.Name = "buttonKSeFWyslij";
-			buttonKSeFWyslij.Size = new System.Drawing.Size(93, 25);
-			buttonKSeFWyslij.TabIndex = 2;
-			buttonKSeFWyslij.Text = "Wyślij do KSeF";
-			buttonKSeFWyslij.UseVisualStyleBackColor = true;
-			buttonKSeFWyslij.Click += buttonKSeFWyslij_Click;
-			// 
-			// buttonKSeFPobierz
-			// 
-			buttonKSeFPobierz.AutoSize = true;
-			buttonKSeFPobierz.Location = new System.Drawing.Point(193, 3);
-			buttonKSeFPobierz.Name = "buttonKSeFPobierz";
-			buttonKSeFPobierz.Size = new System.Drawing.Size(92, 25);
-			buttonKSeFPobierz.TabIndex = 2;
-			buttonKSeFPobierz.Text = "Pobierz z KSeF";
-			buttonKSeFPobierz.UseVisualStyleBackColor = true;
-			buttonKSeFPobierz.Click += buttonKSeFPobierz_Click;
 			// 
 			// tableLayoutPanel1
 			// 
@@ -1186,12 +1137,15 @@ namespace ProFak.UI
 			numericUpDownBrutto.TabIndex = 52;
 			numericUpDownBrutto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
-			// backgroundWorkerKSeFWyslij
+			// buttonKSeFGeneruj
 			// 
-			backgroundWorkerKSeFWyslij.WorkerReportsProgress = true;
-			backgroundWorkerKSeFWyslij.WorkerSupportsCancellation = true;
-			backgroundWorkerKSeFWyslij.DoWork += backgroundWorkerKSeFWyslij_DoWork;
-			backgroundWorkerKSeFWyslij.RunWorkerCompleted += backgroundWorkerKSeFWyslij_RunWorkerCompleted;
+			buttonKSeFGeneruj.AutoSize = true;
+			buttonKSeFGeneruj.Location = new System.Drawing.Point(381, 3);
+			buttonKSeFGeneruj.Name = "buttonKSeFGeneruj";
+			buttonKSeFGeneruj.Size = new System.Drawing.Size(85, 25);
+			buttonKSeFGeneruj.TabIndex = 5;
+			buttonKSeFGeneruj.Text = "Generuj XML";
+			buttonKSeFGeneruj.UseVisualStyleBackColor = true;
 			// 
 			// FakturaEdytor
 			// 
@@ -1224,8 +1178,6 @@ namespace ProFak.UI
 			tabPageKSeF.ResumeLayout(false);
 			tableLayoutPanel8.ResumeLayout(false);
 			tableLayoutPanel8.PerformLayout();
-			flowLayoutPanel1.ResumeLayout(false);
-			flowLayoutPanel1.PerformLayout();
 			tableLayoutPanel1.ResumeLayout(false);
 			tableLayoutPanel1.PerformLayout();
 			tableLayoutPanelDatyKwoty.ResumeLayout(false);
@@ -1330,11 +1282,7 @@ namespace ProFak.UI
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
 		private System.Windows.Forms.Label label21;
 		private System.Windows.Forms.TextBox textBoxNumerKSeF;
-		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-		private System.Windows.Forms.Button buttonKSeFGeneruj;
-		private System.Windows.Forms.Button buttonKSeFPobierz;
 		private System.Windows.Forms.TextBox textBoxKSeFXML;
-		private System.Windows.Forms.Button buttonKSeFWyslij;
-		private System.ComponentModel.BackgroundWorker backgroundWorkerKSeFWyslij;
+		private System.Windows.Forms.Button buttonKSeFGeneruj;
 	}
 }

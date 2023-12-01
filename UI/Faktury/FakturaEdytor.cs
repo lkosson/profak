@@ -236,7 +236,6 @@ namespace ProFak.UI
 				buttonNowySprzedawca.Enabled = false;
 				textBoxDaneSprzedawcy.Enabled = false;
 
-				buttonKSeFPobierz.Enabled = false;
 				textBoxNumerKSeF.ReadOnly = true;
 			}
 			else
@@ -255,7 +254,6 @@ namespace ProFak.UI
 				textBoxDaneNabywcy.Enabled = false;
 
 				buttonKSeFGeneruj.Enabled = false;
-				buttonKSeFWyslij.Enabled = false;
 				textBoxKSeFXML.ReadOnly = true;
 			}
 		}
@@ -302,55 +300,6 @@ namespace ProFak.UI
 			var xml = IO.KSEF.Generator.ZbudujXML(Kontekst.Baza, Rekord);
 			Rekord.XMLKSeF = xml;
 			kontroler.AktualizujKontrolki();
-		}
-
-		private void buttonKSeFWyslij_Click(object sender, EventArgs e)
-		{
-			if (!String.IsNullOrWhiteSpace(Rekord.NumerKSeF) && MessageBox.Show("Faktura już była wysłana do KSeF. Czy na pewno chcesz ją wysłać ponownie?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
-			buttonKSeFWyslij.Enabled = false;
-			backgroundWorkerKSeFWyslij.RunWorkerAsync();
-		}
-
-		private void buttonKSeFPobierz_Click(object sender, EventArgs e)
-		{
-
-		}
-
-		private void backgroundWorkerKSeFWyslij_DoWork(object sender, DoWorkEventArgs e)
-		{
-			var kontrahent = Kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
-			if (String.IsNullOrEmpty(kontrahent.TokenKSeF)) throw new ApplicationException("Brak tokena dostępowego do KSeF w danych firmy.");
-			if (String.IsNullOrWhiteSpace(Rekord.XMLKSeF)) Rekord.XMLKSeF = IO.KSEF.Generator.ZbudujXML(Kontekst.Baza, Rekord);
-			Task.Run(async delegate
-			{
-				using var api = new IO.KSEF.API(false);
-				var cts = new CancellationTokenSource();
-				cts.CancelAfter(TimeSpan.FromSeconds(10));
-				await api.AuthenticateAsync(kontrahent.NIP, kontrahent.TokenKSeF);
-				Rekord.NumerKSeF = await api.SendInvoiceAsync(Rekord.XMLKSeF, cts.Token);
-				await api.Terminate();
-			}).ConfigureAwait(false).GetAwaiter().GetResult();
-		}
-
-		private void backgroundWorkerKSeFWyslij_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-		{
-			buttonKSeFWyslij.Enabled = true;
-			if (e.Error != null)
-			{
-				if (e.Error is ApplicationException exc)
-				{
-					MessageBox.Show(exc.Message, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-				}
-				else
-				{
-					var okno = new OknoBledu(e.Error);
-					okno.ShowDialog();
-				}
-			}
-			else
-			{
-				kontroler.AktualizujKontrolki();
-			}
 		}
 	}
 

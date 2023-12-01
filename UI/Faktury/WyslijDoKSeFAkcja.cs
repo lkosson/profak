@@ -1,0 +1,56 @@
+﻿using ProFak.DB;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace ProFak.UI
+{
+	class WyslijDoKSeFAkcja : AkcjaNaSpisie<Faktura>
+	{
+		public override string Nazwa => "✉ Wyślij do KSeF [CTRL-K]";
+		public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) => zaznaczoneRekordy.Any();
+		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => klawisz == Keys.K && modyfikatory == Keys.Control;
+
+		public override void Uruchom(Kontekst kontekst, ref IEnumerable<Faktura> zaznaczoneRekordy)
+		{
+			var rekordy = zaznaczoneRekordy;
+			OknoPostepu.Uruchom(async delegate
+			{
+				var kontrahent = kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
+				if (String.IsNullOrEmpty(kontrahent.TokenKSeF)) throw new ApplicationException("Brak tokena dostępowego do KSeF w danych firmy.");
+
+				var doWyslania = new List<Faktura>();
+				foreach (var faktura in rekordy)
+				{
+					if (!String.IsNullOrWhiteSpace(faktura.NumerKSeF))
+					{
+						var res = MessageBox.Show($"Faktura {faktura.Numer} już była wysłana do KSeF. Czy chcesz ją wysłać ponownie?", "ProFak", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+						if (res == DialogResult.Cancel) return;
+						if (res == DialogResult.No) continue;
+					}
+					doWyslania.Add(faktura);
+				}
+
+				if (!doWyslania.Any()) return;
+
+				using var api = new IO.KSEF.API(false);
+				var cts = new CancellationTokenSource();
+				await api.AuthenticateAsync(kontrahent.NIP, kontrahent.TokenKSeF);
+				foreach (var faktura in doWyslania)
+				{
+					faktura.XMLKSeF = IO.KSEF.Generator.ZbudujXML(kontekst.Baza, faktura);
+					kontekst.Baza.Zapisz(faktura);
+					faktura.NumerKSeF = await api.SendInvoiceAsync(faktura.XMLKSeF, cts.Token);
+					kontekst.Baza.Zapisz(faktura);
+				}
+				await api.Terminate();
+			});
+		}
+	}
+}

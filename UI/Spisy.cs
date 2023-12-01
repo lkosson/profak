@@ -49,6 +49,7 @@ namespace ProFak.UI
 				new UsunFaktureAkcja(),
 				new DodajWplateAkcja(),
 				new WydrukFakturyAkcja(),
+				new WyslijDoKSeFAkcja(),
 				new PrzeladujAkcja<Faktura>()
 			);
 		}
