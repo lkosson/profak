@@ -11,6 +11,7 @@ using KSEFFaktura = ProFak.IO.KSEF.Faktura;
 using ProFak.DB.Migrations;
 using Microsoft.EntityFrameworkCore;
 using ProFak.IO.JPK_V7M;
+using System.IO;
 
 namespace ProFak.IO.KSEF;
 
@@ -42,10 +43,12 @@ class Generator
 	{
 		var xo = new XmlAttributeOverrides();
 		var xs = new XmlSerializer(typeof(KSEFFaktura), xo);
-		using var xr = XmlReader.Create(xml, new XmlReaderSettings() { });
+		using var xr = XmlReader.Create(new StringReader(xml), new XmlReaderSettings() { });
 		var nss = new XmlSerializerNamespaces();
 		var ksefFaktura = (KSEFFaktura)xs.Deserialize(xr);
-		return Zbuduj(ksefFaktura);
+		var dbFaktura = Zbuduj(ksefFaktura);
+		dbFaktura.XMLKSeF = xml;
+		return dbFaktura;
 	}
 
 	private static KSEFFaktura Zbuduj(DBFaktura dbFaktura)
@@ -176,6 +179,41 @@ class Generator
 	{
 		var dbFaktura = new DBFaktura();
 		dbFaktura.Numer = ksefFaktura.Fa.P_2;
+		dbFaktura.Rodzaj = ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.VAT ? DB.RodzajFaktury.Zakup : ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR ? DB.RodzajFaktury.KorektaZakupu : throw new ApplicationException($"Nieobsługiwany rodzaj faktury: {ksefFaktura.Fa.RodzajFaktury}.");
+		dbFaktura.DataWystawienia = ksefFaktura.Fa.P_1;
+		dbFaktura.DataSprzedazy = (DateTime)ksefFaktura.Fa.Item;
+		dbFaktura.Sprzedawca = new Kontrahent();
+		if (ksefFaktura.Podmiot1 != null)
+		{
+			if (ksefFaktura.Podmiot1.DaneIdentyfikacyjne != null)
+			{
+				dbFaktura.Sprzedawca.Nazwa = ksefFaktura.Podmiot1.DaneIdentyfikacyjne.Nazwa;
+				dbFaktura.Sprzedawca.NIP = ksefFaktura.Podmiot1.DaneIdentyfikacyjne.NIP;
+			}
+
+			if (ksefFaktura.Podmiot1.Adres != null) dbFaktura.Sprzedawca.AdresRejestrowy = ksefFaktura.Podmiot1.Adres.AdresL1 + "\r\n" + ksefFaktura.Podmiot1.Adres.AdresL2;
+			if (ksefFaktura.Podmiot1.AdresKoresp != null) dbFaktura.Sprzedawca.AdresKorespondencyjny = ksefFaktura.Podmiot1.AdresKoresp.AdresL1 + "\r\n" + ksefFaktura.Podmiot1.AdresKoresp.AdresL2;
+			if (ksefFaktura.Podmiot1.DaneKontaktowe != null && ksefFaktura.Podmiot1.DaneKontaktowe.Length > 0)
+			{
+				dbFaktura.Sprzedawca.Telefon = ksefFaktura.Podmiot1.DaneKontaktowe[0].Telefon;
+				dbFaktura.Sprzedawca.EMail = ksefFaktura.Podmiot1.DaneKontaktowe[0].Email;
+			}
+		}
+		if (ksefFaktura.Fa.Platnosc != null)
+		{
+		}
+		dbFaktura.Pozycje = new List<PozycjaFaktury>();
+		foreach (var pozycja in ksefFaktura.Fa.FaWiersz)
+		{
+			var dbPozycja = new PozycjaFaktury();
+			dbPozycja.Opis = pozycja.P_7;
+			dbPozycja.Ilosc = pozycja.P_8B;
+			dbPozycja.CenaNetto = pozycja.P_9A;
+			dbPozycja.CenaBrutto = pozycja.P_9B;
+			dbPozycja.WartoscNetto = pozycja.P_11;
+			dbPozycja.WartoscBrutto = pozycja.P_11A;
+			dbFaktura.Pozycje.Add(dbPozycja);
+		}
 		return dbFaktura;
 	}
 

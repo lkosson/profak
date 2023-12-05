@@ -66,9 +66,17 @@ namespace ProFak.UI
 			);
 		}
 
-		public static SpisZAkcjami<Faktura, KSeFSpis> KSeF(params string[] parametry)
+		public static SpisZAkcjami<Faktura, KSeFSpis> KSeFSprzedaz(params string[] parametry)
 		{
-			return Utworz(new KSeFSpis(parametry),
+			return Utworz(new KSeFSpis(true, parametry),
+				new PrzeladujAkcja<Faktura>()
+			);
+		}
+
+		public static SpisZAkcjami<Faktura, KSeFSpis> KSeFZakup(params string[] parametry)
+		{
+			return Utworz(new KSeFSpis(false, parametry),
+				new DodajJakoZakupAkcja(),
 				new PrzeladujAkcja<Faktura>()
 			);
 		}

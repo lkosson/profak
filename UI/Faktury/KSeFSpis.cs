@@ -13,6 +13,7 @@ namespace ProFak.UI
 {
 	class KSeFSpis : Spis<Faktura>
 	{
+		private bool pierwszeZaladowanie = true;
 		private readonly bool sprzedaz;
 		private readonly bool przyrostowo;
 		private readonly DateTime odDaty;
@@ -50,16 +51,15 @@ namespace ProFak.UI
 			DodajKolumne(nameof(Faktura.NumerKSeF), "Id", szerokosc: 230);
 		}
 
-		public KSeFSpis(string[] parametry)
+		public KSeFSpis(bool sprzedaz, string[] parametry)
 			: this()
 		{
+			this.sprzedaz = sprzedaz;
 			if (parametry == null) return;
 			odDaty = new DateTime(2022, 1, 1);
 			foreach (var parametr in parametry)
 			{
-				if (parametr == "Sprzedaz") sprzedaz = true;
-				else if (parametr == "Zakup") sprzedaz = false;
-				else if (parametr == "Przyrostowo") przyrostowo = true;
+				if (parametr == "Przyrostowo") przyrostowo = true;
 				else if (parametr == "Dzis") odDaty = DateTime.Now.Date;
 				else if (parametr == "Wczoraj") odDaty = DateTime.Now.Date.AddDays(-1);
 				else if (parametr == "Miesiac") odDaty = DateTime.Now.Date.AddDays(1 - DateTime.Now.Day);
@@ -75,7 +75,14 @@ namespace ProFak.UI
 			kolumnaNazwaSprzedawcy.Visible = !sprzedaz;
 			kolumnaNIPSprzedawcy.Visible = !sprzedaz;
 
-			Rekordy = new[] { new Faktura { NazwaNabywcy = "Pobieranie danych z KSEF", NazwaSprzedawcy = "Pobieranie danych z KSEF" } };
+			if (pierwszeZaladowanie)
+			{
+				Rekordy = new[] { new Faktura { NazwaNabywcy = "Przeładuj spis aby pobrać dane z KSeF", NazwaSprzedawcy = "Przeładuj spis aby pobrać dane z KSeF", Id = -1 } };
+				pierwszeZaladowanie = false;
+				return;
+			}
+
+			Rekordy = new[] { new Faktura { NazwaNabywcy = "Pobieranie danych z KSEF", NazwaSprzedawcy = "Pobieranie danych z KSEF", Id = -1 } };
 
 			Task.Run(async delegate
 			{
