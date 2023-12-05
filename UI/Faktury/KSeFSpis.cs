@@ -78,7 +78,7 @@ namespace ProFak.UI
 			if (pierwszeZaladowanie)
 			{
 				Rekordy = new[] { new Faktura { NazwaNabywcy = "Przeładuj spis aby pobrać dane z KSeF", NazwaSprzedawcy = "Przeładuj spis aby pobrać dane z KSeF", Id = -1 } };
-				pierwszeZaladowanie = false;
+				//pierwszeZaladowanie = false;
 				return;
 			}
 

@@ -31,10 +31,9 @@ namespace ProFak.UI
 				await api.Terminate();
 			});
 			*/
-			var faktura = IO.KSEF.Generator.ZbudujDB(xml);
+			var faktura = IO.KSEF.Generator.ZbudujDB(kontekst.Baza, xml);
 			faktura.NumerKSeF = naglowek.NumerKSeF;
 			kontekst.Baza.Zapisz(faktura);
-			faktura.Nabywca = kontrahent;
 			return faktura;
 		}
 	}
