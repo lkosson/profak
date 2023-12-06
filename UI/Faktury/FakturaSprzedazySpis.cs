@@ -53,7 +53,7 @@ namespace ProFak.UI
 			DodajKolumneKwota(nameof(Faktura.RazemBrutto), "Brutto");
 			DodajKolumne(nameof(Faktura.WalutaFmt), "Waluta", szerokosc: 70);
 			DodajKolumneBool(nameof(Faktura.CzyZaplacona), "Zapł.", szerokosc: 50);
-			DodajKolumneBool(nameof(Faktura.CzyKSeF), "KSeF", szerokosc: 50);
+			DodajKolumneBool(nameof(Faktura.CzyKSeF), "KSeF", szerokosc: 50, tooltip: faktura => faktura.NumerKSeF);
 			DodajKolumneId();
 		}
 

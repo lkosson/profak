@@ -35,6 +35,7 @@ namespace ProFak.UI
 		private IEnumerable<T> oryginalneRekordy;
 		private Func<T, bool> filtr;
 		private List<(string kolumna, bool malejaco, Func<T, IComparable> metoda)> kolumnyKolejnosci;
+		private Dictionary<int, Func<T, string>> tooltipyDlaKolumn;
 		private bool rekordyPodczasZmiany;
 
 		public Kontekst Kontekst { get; set; }
@@ -158,7 +159,7 @@ namespace ProFak.UI
 			base.Dispose(disposing);
 		}
 
-		public DataGridViewTextBoxColumn DodajKolumne(string wlasciwosc, string naglowek, bool wyrownajDoPrawej = false, bool rozciagnij = false, string format = null, int? szerokosc = null)
+		public DataGridViewTextBoxColumn DodajKolumne(string wlasciwosc, string naglowek, bool wyrownajDoPrawej = false, bool rozciagnij = false, string format = null, int? szerokosc = null, Func<T, string> tooltip = null)
 		{
 			var kolumna = new DataGridViewTextBoxColumn();
 			kolumna.HeaderText = naglowek;
@@ -170,10 +171,15 @@ namespace ProFak.UI
 			if (szerokosc.HasValue) kolumna.Width = szerokosc.Value;
 			if (rozciagnij) kolumna.MinimumWidth = 50;
 			Columns.Add(kolumna);
+			if (tooltip != null)
+			{
+				if (tooltipyDlaKolumn == null) tooltipyDlaKolumn = new Dictionary<int, Func<T, string>>();
+				tooltipyDlaKolumn[kolumna.Index] = tooltip;
+			}
 			return kolumna;
 		}
 
-		public DataGridViewCheckBoxColumn DodajKolumneBool(string wlasciwosc, string naglowek, int? szerokosc = null)
+		public DataGridViewCheckBoxColumn DodajKolumneBool(string wlasciwosc, string naglowek, int? szerokosc = null, Func<T, string> tooltip = null)
 		{
 			var kolumna = new DataGridViewCheckBoxColumn();
 			kolumna.HeaderText = naglowek;
@@ -182,13 +188,24 @@ namespace ProFak.UI
 			if (szerokosc.HasValue) kolumna.Width = szerokosc.Value;
 			kolumna.SortMode = DataGridViewColumnSortMode.Programmatic;
 			Columns.Add(kolumna);
+			if (tooltip != null)
+			{
+				if (tooltipyDlaKolumn == null) tooltipyDlaKolumn = new Dictionary<int, Func<T, string>>();
+				tooltipyDlaKolumn[kolumna.Index] = tooltip;
+			}
 			return kolumna;
 		}
 
-		public DataGridViewTextBoxColumn DodajKolumneKwota(string wlasciwosc, string naglowek, int? szerokosc = 80) => DodajKolumne(wlasciwosc, naglowek, wyrownajDoPrawej: true, format: "#,##0.00", szerokosc: szerokosc);
+		public DataGridViewTextBoxColumn DodajKolumneKwota(string wlasciwosc, string naglowek, int? szerokosc = 80, Func<T, string> tooltip = null) => DodajKolumne(wlasciwosc, naglowek, wyrownajDoPrawej: true, format: "#,##0.00", szerokosc: szerokosc, tooltip: tooltip);
 		public DataGridViewTextBoxColumn DodajKolumneId() => DodajKolumne("Id", "Id", wyrownajDoPrawej: true, szerokosc: 60);
 
 		protected abstract void Przeladuj();
+
+		protected override void OnCellToolTipTextNeeded(DataGridViewCellToolTipTextNeededEventArgs e)
+		{
+			if (tooltipyDlaKolumn != null && e.RowIndex != -1 && tooltipyDlaKolumn.TryGetValue(e.ColumnIndex, out var tooltip)) e.ToolTipText = tooltip((T)Rows[e.RowIndex].DataBoundItem);
+			else base.OnCellToolTipTextNeeded(e);
+		}
 
 		protected override void OnCellPainting(DataGridViewCellPaintingEventArgs e)
 		{
