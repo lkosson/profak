@@ -26,6 +26,7 @@ class Generator
 			.Include(e => e.Sprzedawca)
 			.Include(e => e.Nabywca)
 			.Include(e => e.Waluta)
+			.Include(e => e.FakturaKorygowana)
 			.Where(e => e.Id == dbFakturaRef.Id)
 			.FirstOrDefault();
 		var ksefFaktura = Zbuduj(dbFaktura);
@@ -115,7 +116,7 @@ class Generator
 		ksefFaktura.Fa.Adnotacje.PMarzy = new FakturaFAAdnotacjePMarzy();
 		ksefFaktura.Fa.Adnotacje.PMarzy.Items = new[] { (sbyte)1 };
 		ksefFaktura.Fa.Adnotacje.PMarzy.ItemsElementName = new[] { ItemsChoiceType5.P_PMarzyN };
-		ksefFaktura.Fa.RodzajFaktury = dbFaktura.Rodzaj == DB.RodzajFaktury.Sprzedaż ? TRodzajFaktury.VAT : throw new ApplicationException("Nieobsługiwany rodzaj faktury: " + dbFaktura.RodzajFmt);
+		ksefFaktura.Fa.RodzajFaktury = dbFaktura.Rodzaj == DB.RodzajFaktury.Sprzedaż ? TRodzajFaktury.VAT : dbFaktura.Rodzaj == DB.RodzajFaktury.KorektaSprzedaży ? TRodzajFaktury.KOR : throw new ApplicationException("Nieobsługiwany rodzaj faktury: " + dbFaktura.RodzajFmt);
 		if (dbFaktura.CzyTP) { ksefFaktura.Fa.TP = 1; ksefFaktura.Fa.TPSpecified = true; }
 		if (!String.IsNullOrEmpty(dbFaktura.UwagiPubliczne)) ksefFaktura.Fa.DodatkowyOpis = new[] { new TKluczWartosc() { Klucz = "Uwagi", Wartosc = dbFaktura.UwagiPubliczne } };
 		ksefFaktura.Fa.Platnosc = new FakturaFAPlatnosc();
@@ -138,6 +139,50 @@ class Generator
 			ksefFaktura.Fa.Platnosc.RachunekBankowy = new[] { new TRachunekBankowy() };
 			ksefFaktura.Fa.Platnosc.RachunekBankowy[0].NrRB = dbFaktura.RachunekBankowy.Replace(" ", "");
 		}
+		if (dbFaktura.FakturaKorygowana != null)
+		{
+			ksefFaktura.Fa.PrzyczynaKorekty = dbFaktura.UwagiPubliczne;
+			ksefFaktura.Fa.TypKorekty = TTypKorekty.Item2;
+			ksefFaktura.Fa.TypKorektySpecified = true;
+			ksefFaktura.Fa.DaneFaKorygowanej = new[] { new FakturaFADaneFaKorygowanej() };
+			ksefFaktura.Fa.DaneFaKorygowanej[0].DataWystFaKorygowanej = dbFaktura.FakturaKorygowana.DataWystawienia;
+			ksefFaktura.Fa.DaneFaKorygowanej[0].NrFaKorygowanej = dbFaktura.Numer;
+			if (String.IsNullOrEmpty(dbFaktura.FakturaKorygowana.NumerKSeF))
+			{
+				ksefFaktura.Fa.DaneFaKorygowanej[0].Items = new[] { (object)(sbyte)1 };
+				ksefFaktura.Fa.DaneFaKorygowanej[0].ItemsElementName = new[] { ItemsChoiceType6.NrKSeFN };
+			}
+			else
+			{
+				ksefFaktura.Fa.DaneFaKorygowanej[0].Items = new[] { (object)(sbyte)1, dbFaktura.FakturaKorygowana.NumerKSeF };
+				ksefFaktura.Fa.DaneFaKorygowanej[0].ItemsElementName = new[] { ItemsChoiceType6.NrKSeF, ItemsChoiceType6.NrKSeFFaKorygowanej };
+			}
+
+			if (dbFaktura.FakturaKorygowana.NazwaSprzedawcy != dbFaktura.NazwaSprzedawcy || dbFaktura.FakturaKorygowana.DaneSprzedawcy != dbFaktura.DaneSprzedawcy)
+			{
+				ksefFaktura.Fa.Podmiot1K = new FakturaFAPodmiot1K();
+				ksefFaktura.Fa.Podmiot1K.DaneIdentyfikacyjne = new TPodmiot1();
+				ksefFaktura.Fa.Podmiot1K.DaneIdentyfikacyjne.Nazwa = dbFaktura.FakturaKorygowana.NazwaSprzedawcy;
+				ksefFaktura.Fa.Podmiot1K.DaneIdentyfikacyjne.NIP = dbFaktura.FakturaKorygowana.NIPSprzedawcy;
+				ksefFaktura.Fa.Podmiot1K.Adres = new TAdres();
+				ksefFaktura.Fa.Podmiot1K.Adres.KodKraju = TKodKraju.PL;
+				ksefFaktura.Fa.Podmiot1K.Adres.AdresL1 = dbFaktura.FakturaKorygowana.DaneSprzedawcy.JakoDwieLinie().linia1;
+				ksefFaktura.Fa.Podmiot1K.Adres.AdresL2 = dbFaktura.FakturaKorygowana.DaneSprzedawcy.JakoDwieLinie().linia2;
+			}
+
+			if (dbFaktura.FakturaKorygowana.NazwaNabywcy != dbFaktura.NazwaNabywcy || dbFaktura.FakturaKorygowana.DaneNabywcy != dbFaktura.DaneNabywcy)
+			{
+				ksefFaktura.Fa.Podmiot2K = new[] { new FakturaFAPodmiot2K() };
+				ksefFaktura.Fa.Podmiot2K[0].DaneIdentyfikacyjne = new TPodmiot2();
+				ksefFaktura.Fa.Podmiot2K[0].DaneIdentyfikacyjne.Nazwa = dbFaktura.FakturaKorygowana.NazwaNabywcy;
+				ksefFaktura.Fa.Podmiot2K[0].DaneIdentyfikacyjne.Items = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.Items;
+				ksefFaktura.Fa.Podmiot2K[0].DaneIdentyfikacyjne.ItemsElementName = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.ItemsElementName;
+				ksefFaktura.Fa.Podmiot2K[0].Adres = new TAdres();
+				ksefFaktura.Fa.Podmiot2K[0].Adres.KodKraju = TKodKraju.PL;
+				ksefFaktura.Fa.Podmiot2K[0].Adres.AdresL1 = dbFaktura.FakturaKorygowana.DaneNabywcy.JakoDwieLinie().linia1;
+				ksefFaktura.Fa.Podmiot2K[0].Adres.AdresL2 = dbFaktura.FakturaKorygowana.DaneNabywcy.JakoDwieLinie().linia2;
+			}
+		}
 
 		var wiersze = new List<FakturaFAFaWiersz>();
 		foreach (var dbPozycja in dbFaktura.Pozycje)
@@ -148,15 +193,15 @@ class Generator
 			ksefWiersz.P_7 = dbPozycja.Opis;
 			ksefWiersz.Indeks = dbPozycja.Towar.Nazwa;
 			ksefWiersz.P_8A = dbPozycja.Towar.JednostkaMiary.Nazwa;
-			ksefWiersz.P_8B = dbPozycja.Ilosc;
+			ksefWiersz.P_8B = Math.Abs(dbPozycja.Ilosc);
 			ksefWiersz.P_8BSpecified = true;
 			ksefWiersz.P_9A = dbPozycja.CenaNetto;
 			ksefWiersz.P_9ASpecified = true;
 			ksefWiersz.P_9B = dbPozycja.CenaBrutto;
 			ksefWiersz.P_9BSpecified = true;
-			ksefWiersz.P_11 = dbPozycja.WartoscNetto;
+			ksefWiersz.P_11 = Math.Abs(dbPozycja.WartoscNetto);
 			ksefWiersz.P_11Specified = true;
-			ksefWiersz.P_11A = dbPozycja.WartoscBrutto;
+			ksefWiersz.P_11A = Math.Abs(dbPozycja.WartoscBrutto);
 			ksefWiersz.P_11ASpecified = true;
 			if (dbPozycja.GTU > 0) { ksefWiersz.GTU = Enum.Parse<TGTU>("GTU_" + dbPozycja.GTU.ToString("00")); ksefWiersz.GTUSpecified = true; }
 
@@ -168,6 +213,7 @@ class Generator
 			else { ksefFaktura.Fa.P_13_1 += dbPozycja.WartoscNetto; ksefFaktura.Fa.P_14_1 += dbPozycja.WartoscVat; ksefWiersz.P_12 = TStawkaPodatku.Item23; }
 
 			ksefWiersz.P_12Specified = true;
+			if (dbPozycja.CzyPrzedKorekta) { ksefWiersz.StanPrzed = 1; ksefWiersz.StanPrzedSpecified = true; }
 
 			wiersze.Add(ksefWiersz);
 		}
