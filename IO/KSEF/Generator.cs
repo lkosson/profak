@@ -372,8 +372,9 @@ class Generator
 		dbFaktura.RazemVat = invoiceHeader.Vat;
 		dbFaktura.RazemBrutto = invoiceHeader.Gross;
 		dbFaktura.Rodzaj = invoiceHeader.Type == "VAT" ? DB.RodzajFaktury.Zakup : DB.RodzajFaktury.KorektaZakupu;
-		dbFaktura.DataWystawienia = invoiceHeader.InvoicingDate;
-		dbFaktura.DataWprowadzenia = invoiceHeader.AcquisitionTimestamp;
+		dbFaktura.DataSprzedazy = invoiceHeader.InvoicingDate;
+		dbFaktura.DataWystawienia = invoiceHeader.AcquisitionTimestamp;
+		dbFaktura.DataKSeF = invoiceHeader.AcquisitionTimestamp;
 		dbFaktura.Waluta = new Waluta { Skrot = invoiceHeader.Currency };
 		return dbFaktura;
 	}

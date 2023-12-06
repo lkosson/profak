@@ -47,6 +47,7 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.OpisZdarzenia).HasDefaultValue("").IsRequired();
 			builder.Property(e => e.NumerKSeF).HasDefaultValue("").IsRequired();
 			builder.Property(e => e.XMLKSeF).HasDefaultValue("").IsRequired();
+			builder.Property(e => e.DataKSeF);
 
 			builder.Property(e => e.SprzedawcaId);
 			builder.Property(e => e.NabywcaId);

@@ -19,8 +19,7 @@ namespace ProFak.UI
 		{
 			var kontrahent = kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
 			var naglowek = zaznaczoneRekordy.Single();
-			var xml = System.IO.File.ReadAllText("e:\\1.xml");
-			/*
+			var xml = "";
 			OknoPostepu.Uruchom(async delegate
 			{
 				using var api = new IO.KSEF.API(false);
@@ -30,9 +29,9 @@ namespace ProFak.UI
 				xml = await api.GetInvoiceAsync(naglowek.NumerKSeF);
 				await api.Terminate();
 			});
-			*/
 			var faktura = IO.KSEF.Generator.ZbudujDB(kontekst.Baza, xml);
 			faktura.NumerKSeF = naglowek.NumerKSeF;
+			faktura.DataKSeF = naglowek.DataKSeF;
 			kontekst.Baza.Zapisz(faktura);
 			return faktura;
 		}

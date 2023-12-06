@@ -175,7 +175,7 @@ class API : IDisposable
 		return elementReferenceNumber ?? throw new ApplicationException("Missin session token.");
 	}
 
-	private async Task<(int status, string ksefReferenceNumber)> GetInvoiceStatusAsync(string elementReferenceNumber)
+	private async Task<(int status, string ksefReferenceNumber, DateTime acquisitionTimestamp)> GetInvoiceStatusAsync(string elementReferenceNumber)
 	{
 		var invoiceStatusResponse = await client.GetAsync(urlBase + "/api/online/Invoice/Status/" + elementReferenceNumber);
 		var invoiceStatusResponseBody = await invoiceStatusResponse.Content.ReadAsStringAsync();
@@ -186,23 +186,24 @@ class API : IDisposable
 		if (processingCode >= 200 && processingCode <= 299)
 		{
 			var ksefReferenceNumber = PropertyOrNull(invoiceStatusResponseJson, "invoiceStatus", "ksefReferenceNumber")?.GetString();
-			return (processingCode, ksefReferenceNumber);
+			var acquisitionTimestamp = PropertyOrNull(invoiceStatusResponseJson, "invoiceStatus", "acquisitionTimestamp")?.GetDateTime();
+			return (processingCode, ksefReferenceNumber, acquisitionTimestamp.Value);
 		}
-		else if (processingCode >= 300 && processingCode <= 399) return (processingCode, null);
+		else if (processingCode >= 300 && processingCode <= 399) return (processingCode, null, default);
 		else throw new ApplicationException(processingDescription);
 	}
 
-	public async Task<string> SendInvoiceAsync(string invoiceXml, CancellationToken cancellationToken)
+	public async Task<(string ksefReferenceNumber, DateTime acquisitionTimestamp)> SendInvoiceAsync(string invoiceXml, CancellationToken cancellationToken)
 	{
 		var elementReferenceNumber = await SendInvoiceAsync(invoiceXml);
 		while (!cancellationToken.IsCancellationRequested)
 		{
-			(var status, var ksefReferenceNumber) = await GetInvoiceStatusAsync(elementReferenceNumber);
-			if (status == 200) return ksefReferenceNumber!;
+			(var status, var ksefReferenceNumber, var acquisitionTimestamp) = await GetInvoiceStatusAsync(elementReferenceNumber);
+			if (status == 200) return (ksefReferenceNumber!, acquisitionTimestamp!);
 			await Task.Delay(1000, cancellationToken);
 		}
 
-		return null!;
+		return (null, default);
 	}
 
 	public async Task Terminate()

@@ -39,7 +39,8 @@ namespace ProFak.UI
 		{
 			DodajKolumne(nameof(Faktura.Numer), "Numer");
 			DodajKolumne(nameof(Faktura.RodzajFmt), "Rodzaj");
-			DodajKolumne(nameof(Faktura.DataWystawienia), "Data wystawienia", format: "yyyy-MM-dd", szerokosc: 120);
+			DodajKolumne(nameof(Faktura.DataSprzedazy), "Data sprzedaży", format: "yyyy-MM-dd", szerokosc: 120);
+			DodajKolumne(nameof(Faktura.DataKSeF), "Data wystawienia", format: "yyyy-MM-dd HH:mm:ss", szerokosc: 170);
 			kolumnaNazwaNabywcy = DodajKolumne(nameof(Faktura.NazwaNabywcy), "Nabywca", rozciagnij: true);
 			kolumnaNIPNabywcy = DodajKolumne(nameof(Faktura.NIPNabywcy), "NIP nabywcy", szerokosc: 120);
 			kolumnaNazwaSprzedawcy = DodajKolumne(nameof(Faktura.NazwaSprzedawcy), "Sprzedawca", rozciagnij: true);
@@ -78,7 +79,7 @@ namespace ProFak.UI
 			if (pierwszeZaladowanie)
 			{
 				Rekordy = new[] { new Faktura { NazwaNabywcy = "Przeładuj spis aby pobrać dane z KSeF", NazwaSprzedawcy = "Przeładuj spis aby pobrać dane z KSeF", Id = -1 } };
-				//pierwszeZaladowanie = false;
+				pierwszeZaladowanie = false;
 				return;
 			}
 
@@ -96,9 +97,9 @@ namespace ProFak.UI
 						var ostatnia = Kontekst.Baza.Faktury
 							.Where(e => e.Rodzaj == RodzajFaktury.Zakup || e.Rodzaj == RodzajFaktury.KorektaZakupu)
 							.Where(e => !String.IsNullOrEmpty(e.NumerKSeF))
-							.OrderByDescending(e => e.DataWprowadzenia)
+							.OrderByDescending(e => e.DataKSeF)
 							.FirstOrDefault();
-						if (ostatnia != null) odDaty = ostatnia.DataWprowadzenia;
+						if (ostatnia != null && ostatnia.DataKSeF.HasValue) odDaty = ostatnia.DataKSeF.Value;
 					}
 					var istniejace = Kontekst.Baza.Faktury.Where(e => !String.IsNullOrEmpty(e.NumerKSeF)).Select(e => e.NumerKSeF).ToHashSet();
 					using var api = new IO.KSEF.API(false);
