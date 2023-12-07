@@ -146,7 +146,7 @@ class Generator
 			ksefFaktura.Fa.TypKorektySpecified = true;
 			ksefFaktura.Fa.DaneFaKorygowanej = new[] { new FakturaFADaneFaKorygowanej() };
 			ksefFaktura.Fa.DaneFaKorygowanej[0].DataWystFaKorygowanej = dbFaktura.FakturaKorygowana.DataWystawienia;
-			ksefFaktura.Fa.DaneFaKorygowanej[0].NrFaKorygowanej = dbFaktura.Numer;
+			ksefFaktura.Fa.DaneFaKorygowanej[0].NrFaKorygowanej = dbFaktura.FakturaKorygowana.Numer;
 			if (String.IsNullOrEmpty(dbFaktura.FakturaKorygowana.NumerKSeF))
 			{
 				ksefFaktura.Fa.DaneFaKorygowanej[0].Items = new[] { (object)(sbyte)1 };
@@ -195,14 +195,22 @@ class Generator
 			ksefWiersz.P_8A = dbPozycja.Towar.JednostkaMiary.Nazwa;
 			ksefWiersz.P_8B = Math.Abs(dbPozycja.Ilosc);
 			ksefWiersz.P_8BSpecified = true;
-			ksefWiersz.P_9A = dbPozycja.CenaNetto;
-			ksefWiersz.P_9ASpecified = true;
-			ksefWiersz.P_9B = dbPozycja.CenaBrutto;
-			ksefWiersz.P_9BSpecified = true;
-			ksefWiersz.P_11 = Math.Abs(dbPozycja.WartoscNetto);
-			ksefWiersz.P_11Specified = true;
-			ksefWiersz.P_11A = Math.Abs(dbPozycja.WartoscBrutto);
-			ksefWiersz.P_11ASpecified = true;
+			if (dbPozycja.CzyWedlugCenBrutto)
+			{
+				ksefWiersz.P_9B = dbPozycja.CenaBrutto;
+				ksefWiersz.P_9BSpecified = true;
+				ksefWiersz.P_11A = Math.Abs(dbPozycja.WartoscBrutto);
+				ksefWiersz.P_11ASpecified = true;
+			}
+			else
+			{
+				ksefWiersz.P_9A = dbPozycja.CenaNetto;
+				ksefWiersz.P_9ASpecified = true;
+				ksefWiersz.P_11 = Math.Abs(dbPozycja.WartoscNetto);
+				ksefWiersz.P_11Specified = true;
+			}
+			ksefWiersz.P_11Vat = Math.Abs(dbPozycja.WartoscVat);
+			ksefWiersz.P_11VatSpecified = true;
 			if (dbPozycja.GTU > 0) { ksefWiersz.GTU = Enum.Parse<TGTU>("GTU_" + dbPozycja.GTU.ToString("00")); ksefWiersz.GTUSpecified = true; }
 
 			if (dbFaktura.CzyWDT) { ksefFaktura.Fa.P_13_6_2 += dbPozycja.WartoscNetto; ksefFaktura.Fa.P_13_6_2Specified = true; ksefWiersz.P_12 = TStawkaPodatku.np; }
