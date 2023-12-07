@@ -17,15 +17,15 @@ namespace ProFak.UI
 
 		protected override Faktura UtworzRekord(Kontekst kontekst, IEnumerable<Faktura> zaznaczoneRekordy)
 		{
-			var kontrahent = kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
+			var podmiot = kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
 			var naglowek = zaznaczoneRekordy.Single();
 			var xml = "";
 			OknoPostepu.Uruchom(async delegate
 			{
-				using var api = new IO.KSEF.API(false);
+				using var api = new IO.KSEF.API(podmiot.SrodowiskoKSeF);
 				var cts = new CancellationTokenSource();
 				cts.CancelAfter(TimeSpan.FromSeconds(10));
-				await api.AuthenticateAsync(kontrahent.NIP, kontrahent.TokenKSeF);
+				await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF);
 				xml = await api.GetInvoiceAsync(naglowek.NumerKSeF);
 				await api.Terminate();
 			});

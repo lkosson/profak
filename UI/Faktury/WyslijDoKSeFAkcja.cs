@@ -22,8 +22,8 @@ namespace ProFak.UI
 			var rekordy = zaznaczoneRekordy;
 			OknoPostepu.Uruchom(async delegate
 			{
-				var kontrahent = kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
-				if (String.IsNullOrEmpty(kontrahent.TokenKSeF)) throw new ApplicationException("Brak tokena dostępowego do KSeF w danych firmy.");
+				var podmiot = kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
+				if (String.IsNullOrEmpty(podmiot.TokenKSeF)) throw new ApplicationException("Brak tokena dostępowego do KSeF w danych firmy.");
 
 				var doWyslania = new List<Faktura>();
 				foreach (var faktura in rekordy)
@@ -39,9 +39,9 @@ namespace ProFak.UI
 
 				if (!doWyslania.Any()) return;
 
-				using var api = new IO.KSEF.API(false);
+				using var api = new IO.KSEF.API(podmiot.SrodowiskoKSeF);
 				var cts = new CancellationTokenSource();
-				await api.AuthenticateAsync(kontrahent.NIP, kontrahent.TokenKSeF);
+				await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF);
 				foreach (var faktura in doWyslania)
 				{
 					faktura.XMLKSeF = IO.KSEF.Generator.ZbudujXML(kontekst.Baza, faktura);

@@ -27,6 +27,7 @@ namespace ProFak.DB
 		public DateTime? OsobaFizycznaDataUrodzenia { get; set; }
 		public FormaOpodatkowania? FormaOpodatkowania { get; set; }
 		public string TokenKSeF { get; set; }
+		public SrodowiskoKSeF SrodowiskoKSeF { get; set; }
 
 		public string AdresRejestrowyFmt => AdresRejestrowy.JakoJednaLinia();
 
@@ -50,5 +51,12 @@ namespace ProFak.DB
 		Liniowy,
 		Skala,
 		Ryczałt
+	}
+
+	enum SrodowiskoKSeF
+	{
+		Test,
+		Demo,
+		Prod
 	}
 }

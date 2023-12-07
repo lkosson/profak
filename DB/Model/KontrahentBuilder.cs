@@ -35,6 +35,7 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.OsobaFizycznaDataUrodzenia);
 			builder.Property(e => e.FormaOpodatkowania);
 			builder.Property(e => e.TokenKSeF).HasDefaultValue("");
+			builder.Property(e => e.SrodowiskoKSeF).HasDefaultValue(SrodowiskoKSeF.Test).IsRequired();
 		}
 	}
 }

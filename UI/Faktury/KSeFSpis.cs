@@ -90,8 +90,8 @@ namespace ProFak.UI
 				try
 				{
 					var odDaty = this.odDaty;
-					var kontrahent = Kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
-					if (String.IsNullOrEmpty(kontrahent.TokenKSeF)) throw new ApplicationException("Brak tokena dostępowego do KSeF w danych firmy.");
+					var podmiot = Kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
+					if (String.IsNullOrEmpty(podmiot.TokenKSeF)) throw new ApplicationException("Brak tokena dostępowego do KSeF w danych firmy.");
 					if (przyrostowo)
 					{
 						var ostatnia = Kontekst.Baza.Faktury
@@ -102,10 +102,10 @@ namespace ProFak.UI
 						if (ostatnia != null && ostatnia.DataKSeF.HasValue) odDaty = ostatnia.DataKSeF.Value;
 					}
 					var istniejace = Kontekst.Baza.Faktury.Where(e => !String.IsNullOrEmpty(e.NumerKSeF)).Select(e => e.NumerKSeF).ToHashSet();
-					using var api = new IO.KSEF.API(false);
+					using var api = new IO.KSEF.API(podmiot.SrodowiskoKSeF);
 					var cts = new CancellationTokenSource();
 					cts.CancelAfter(TimeSpan.FromSeconds(10));
-					await api.AuthenticateAsync(kontrahent.NIP, kontrahent.TokenKSeF);
+					await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF);
 					var naglowki = await api.GetInvoicesAsync(przyrostowo ? "incremental" : "range", sprzedaz ? "subject1" : "subject2", odDaty, DateTime.Now);
 					await api.Terminate();
 					var rekordy = naglowki.Select(IO.KSEF.Generator.Zbuduj).ToList();
