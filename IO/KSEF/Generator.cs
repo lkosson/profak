@@ -188,7 +188,7 @@ class Generator
 		foreach (var dbPozycja in dbFaktura.Pozycje)
 		{
 			var ksefWiersz = new FakturaFAFaWiersz();
-			ksefWiersz.NrWierszaFa = (wiersze.Count + 1).ToString();
+			ksefWiersz.NrWierszaFa = dbPozycja.LP.ToString();
 			ksefWiersz.UU_ID = dbPozycja.Id.ToString();
 			ksefWiersz.P_7 = dbPozycja.Opis;
 			ksefWiersz.Indeks = dbPozycja.Towar.Nazwa;
