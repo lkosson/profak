@@ -12,8 +12,9 @@ namespace ProFak.UI
 {
 	class DodajJakoZakupAkcja : DodajRekordAkcja<Faktura, FakturaEdytor>
 	{
-		public override string Nazwa => "➕ Dodaj jako zakup";
+		public override string Nazwa => "➕ Dodaj jako zakup [INS]";
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) => zaznaczoneRekordy.Count() == 1;// && zaznaczoneRekordy.Single().Id == 0;
+		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.None && klawisz == Keys.Insert;
 
 		protected override Faktura UtworzRekord(Kontekst kontekst, IEnumerable<Faktura> zaznaczoneRekordy)
 		{

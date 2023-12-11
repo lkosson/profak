@@ -236,7 +236,8 @@ class Generator
 		dbFaktura.Numer = ksefFaktura.Fa.P_2;
 		dbFaktura.Rodzaj = ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.VAT ? DB.RodzajFaktury.Zakup : ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR ? DB.RodzajFaktury.KorektaZakupu : throw new ApplicationException($"Nieobsługiwany rodzaj faktury: {ksefFaktura.Fa.RodzajFaktury}.");
 		dbFaktura.DataWystawienia = ksefFaktura.Fa.P_1;
-		dbFaktura.DataSprzedazy = (DateTime)ksefFaktura.Fa.Item;
+		if (ksefFaktura.Fa.Item is DateTime dataSprzedazy) dbFaktura.DataSprzedazy = dataSprzedazy;
+		else dbFaktura.DataSprzedazy = dbFaktura.DataWystawienia;
 		dbFaktura.Waluta = new Waluta { Skrot = ksefFaktura.Fa.KodWaluty.ToString(), Nazwa = ksefFaktura.Fa.KodWaluty.ToString() };
 		dbFaktura.CzyTP = ksefFaktura.Fa.TP > 0;
 		dbFaktura.Sprzedawca = new Kontrahent();
@@ -265,7 +266,7 @@ class Generator
 				{
 					if (ksefFaktura.Podmiot2.DaneIdentyfikacyjne.ItemsElementName[i] == ItemsChoiceType.NIP) dbFaktura.Nabywca.NIP = (string)ksefFaktura.Podmiot2.DaneIdentyfikacyjne.Items[i];
 				}
-				dbFaktura.Sprzedawca.Nazwa = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.Nazwa;
+				dbFaktura.Nabywca.Nazwa = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.Nazwa;
 			}
 
 			if (ksefFaktura.Podmiot2.Adres != null) dbFaktura.Nabywca.AdresRejestrowy = ksefFaktura.Podmiot2.Adres.AdresL1 + "\r\n" + ksefFaktura.Podmiot2.Adres.AdresL2;
@@ -289,12 +290,12 @@ class Generator
 				dbFaktura.RachunekBankowy = ksefFaktura.Fa.Platnosc.RachunekBankowy[0].NrRB;
 			}
 
-			foreach (var platnosc in ksefFaktura.Fa.Platnosc.Items1)
+			foreach (var platnosc in ksefFaktura.Fa.Platnosc.Items1 ?? Enumerable.Empty<object>())
 			{
 				if (platnosc is string opis) dbFaktura.SposobPlatnosci = new SposobPlatnosci { Nazwa = opis };
 			}
 
-			foreach (var platnosc in ksefFaktura.Fa.Platnosc.Items)
+			foreach (var platnosc in ksefFaktura.Fa.Platnosc.Items ?? Enumerable.Empty<object>())
 			{
 				if (platnosc is DateTime dataZaplaty)
 				{
@@ -310,10 +311,17 @@ class Generator
 			dbPozycja.LP = Int32.Parse(pozycja.NrWierszaFa);
 			dbPozycja.Opis = pozycja.P_7;
 			dbPozycja.Ilosc = pozycja.P_8B;
-			dbPozycja.CenaNetto = pozycja.P_9A;
-			dbPozycja.CenaBrutto = pozycja.P_9B;
-			dbPozycja.WartoscNetto = pozycja.P_11;
-			dbPozycja.WartoscBrutto = pozycja.P_11A;
+			if (pozycja.P_9BSpecified && pozycja.P_11ASpecified)
+			{
+				dbPozycja.CzyWedlugCenBrutto = true;
+				dbPozycja.CenaBrutto = pozycja.P_9B;
+				dbPozycja.WartoscBrutto = pozycja.P_11A;
+			}
+			else
+			{
+				dbPozycja.CenaNetto = pozycja.P_9A;
+				dbPozycja.WartoscNetto = pozycja.P_11;
+			}
 			dbPozycja.Towar = new Towar();
 			dbPozycja.Towar.Nazwa = pozycja.P_7;
 			dbPozycja.Towar.JednostkaMiary = new JednostkaMiary { Nazwa = pozycja.P_8A, Skrot = pozycja.P_8A };
@@ -327,8 +335,24 @@ class Generator
 			else if (pozycja.P_12 == TStawkaPodatku.Item3) dbPozycja.StawkaVat = new StawkaVat { Wartosc = 3, Skrot = "3" };
 			else if (pozycja.P_12 == TStawkaPodatku.Item0) dbPozycja.StawkaVat = new StawkaVat { Wartosc = 2, Skrot = "2" };
 			else dbPozycja.StawkaVat = new StawkaVat { Wartosc = 23, Skrot = "23" };
-			dbPozycja.CenaVat = dbPozycja.CenaBrutto - dbPozycja.CenaNetto;
-			dbPozycja.WartoscVat = dbPozycja.WartoscBrutto - dbPozycja.WartoscNetto;
+			if (dbPozycja.CzyWedlugCenBrutto)
+			{
+				dbPozycja.CenaNetto = (dbPozycja.CenaBrutto * 100m / (100 + dbPozycja.StawkaVat.Wartosc)).Zaokragl();
+				dbPozycja.CenaVat = (dbPozycja.CenaBrutto - dbPozycja.CenaNetto).Zaokragl();
+				dbPozycja.WartoscNetto = (dbPozycja.WartoscBrutto * 100m / (100 + dbPozycja.StawkaVat.Wartosc)).Zaokragl();
+				dbPozycja.WartoscVat = (dbPozycja.WartoscBrutto - dbPozycja.WartoscNetto).Zaokragl();
+				var wartoscBrutto = (dbPozycja.Ilosc * dbPozycja.CenaBrutto).Zaokragl();
+				if (wartoscBrutto != dbPozycja.WartoscBrutto) dbPozycja.CzyWartosciReczne = true;
+			}
+			else
+			{
+				dbPozycja.CenaVat = (dbPozycja.CenaNetto * dbPozycja.StawkaVat.Wartosc / 100).Zaokragl();
+				dbPozycja.CenaBrutto = (dbPozycja.CenaNetto + dbPozycja.CenaVat).Zaokragl();
+				dbPozycja.WartoscVat = (dbPozycja.WartoscNetto * dbPozycja.StawkaVat.Wartosc / 100).Zaokragl();
+				dbPozycja.WartoscBrutto = (dbPozycja.WartoscNetto + dbPozycja.WartoscVat).Zaokragl();
+				var wartoscNetto = (dbPozycja.Ilosc * dbPozycja.CenaNetto).Zaokragl();
+				if (wartoscNetto != dbPozycja.WartoscNetto) dbPozycja.CzyWartosciReczne = true;
+			}
 			dbFaktura.Pozycje.Add(dbPozycja);
 		}
 		return dbFaktura;

@@ -59,6 +59,7 @@ namespace ProFak.UI
 			return Utworz(new FakturaZakupuSpis(parametry),
 				new FakturaZakupuAkcja(),
 				new KorektaZakupuAkcja(),
+				new WczytajKSeFAkcja(),
 				new EdytujRekordAkcja<Faktura, FakturaZakupuEdytor>(),
 				new UsunFaktureAkcja(),
 				new DodajWplateAkcja(),
