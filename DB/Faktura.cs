@@ -79,9 +79,9 @@ namespace ProFak.DB
 		public bool CzyZaplacona => PozostaloDoZaplaty == 0;
 		public bool CzyKSeF => !String.IsNullOrEmpty(NumerKSeF);
 
-		public decimal VatNaliczony => Zaokragl(RazemVat * ProcentVatNaliczonego / 100m);
-		public decimal VatJakoKoszty => Zaokragl((RazemVat - VatNaliczony) * ProcentKosztow / 100m);
-		public decimal NettoJakoKoszty => Zaokragl(RazemNetto * ProcentKosztow / 100m);
+		public decimal VatNaliczony => (RazemVat * ProcentVatNaliczonego / 100m).Zaokragl();
+		public decimal VatJakoKoszty => ((RazemVat - VatNaliczony) * ProcentKosztow / 100m).Zaokragl();
+		public decimal NettoJakoKoszty => (RazemNetto * ProcentKosztow / 100m).Zaokragl();
 		public decimal Koszty => VatJakoKoszty + NettoJakoKoszty;
 
 		public string RodzajFmt => Format(Rodzaj);

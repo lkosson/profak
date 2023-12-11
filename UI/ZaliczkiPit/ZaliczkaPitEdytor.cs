@@ -163,13 +163,13 @@ namespace ProFak.UI
 					{
 						if (!pozycja.StawkaRyczaltu.HasValue) continue;
 						Rekord.Przychody += pozycja.WartoscNetto;
-						Rekord.Podatek += Decimal.Round(pozycja.WartoscNetto * pozycja.StawkaRyczaltu.Value / 100m, 0, MidpointRounding.AwayFromZero);
+						Rekord.Podatek += (pozycja.WartoscNetto * pozycja.StawkaRyczaltu.Value / 100m).Zaokragl(0);
 					}
 				}
 				if (Rekord.Podatek > 0)
 				{
 					var sredniaStawkaRyczaltu = Rekord.Podatek / Rekord.Przychody;
-					var odliczenieSkladekZus = Decimal.Round(Rekord.SkladkiZus * sredniaStawkaRyczaltu, 0, MidpointRounding.AwayFromZero);
+					var odliczenieSkladekZus = (Rekord.SkladkiZus * sredniaStawkaRyczaltu).Zaokragl(0);
 					Rekord.Podatek -= odliczenieSkladekZus;
 				}
 			}
@@ -184,19 +184,19 @@ namespace ProFak.UI
 				if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Liniowy)
 				{
 					var podstawa = Rekord.Przychody - Rekord.Koszty - Rekord.SkladkiZus;
-					Rekord.Podatek = Decimal.Round(podstawa * 0.19m, 0, MidpointRounding.AwayFromZero);
+					Rekord.Podatek = (podstawa * 0.19m).Zaokragl(0);
 				}
 				else if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Skala)
 				{
 					var podstawa = Rekord.Przychody - Rekord.Koszty - Rekord.SkladkiZus;
 
 					if (podstawa <= 30000) Rekord.Podatek = 0;
-					else if (podstawa <= 120000) Rekord.Podatek = Decimal.Round(podstawa * 0.12m - 3600.00m, 0, MidpointRounding.AwayFromZero);
-					else if (podstawa <= 1000000) Rekord.Podatek = 10800.00m + Decimal.Round((podstawa - 120000) * 0.32m, 0, MidpointRounding.AwayFromZero);
-					else Rekord.Podatek = 10800.00m + Decimal.Round((podstawa - 120000) * 0.32m + (podstawa - 1000000) * 0.04m, 0, MidpointRounding.AwayFromZero);
+					else if (podstawa <= 120000) Rekord.Podatek = (podstawa * 0.12m - 3600.00m).Zaokragl(0);
+					else if (podstawa <= 1000000) Rekord.Podatek = 10800.00m + ((podstawa - 120000) * 0.32m).Zaokragl(0);
+					else Rekord.Podatek = 10800.00m + ((podstawa - 120000) * 0.32m + (podstawa - 1000000) * 0.04m).Zaokragl(0);
 				}
 
-				if (Rekord.Miesiac.Year < 2022) Rekord.Podatek -= Decimal.Round(podstawaZdrowotna * 0.0775m, 0, MidpointRounding.AwayFromZero);
+				if (Rekord.Miesiac.Year < 2022) Rekord.Podatek -= (podstawaZdrowotna * 0.0775m).Zaokragl(0);
 			}
 
 			foreach (var poprzedniaZaliczka in poprzednieZaliczki)

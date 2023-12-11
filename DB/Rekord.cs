@@ -22,8 +22,6 @@ namespace ProFak.DB
 		protected static bool CzyPasuje(DateTime pole, string fraza) => CzyPasuje(pole.ToString("yyyy-MM-dd"), fraza);
 		protected static bool CzyPasuje(object pole, string fraza) => pole != null && CzyPasuje(pole.ToString(), fraza);
 
-		protected decimal Zaokragl(decimal wartosc) => Decimal.Round(wartosc, 2, MidpointRounding.AwayFromZero);
-
 		public static string Format<TEnum>(TEnum value) where TEnum : Enum
 		{
 			var raw = value.ToString();

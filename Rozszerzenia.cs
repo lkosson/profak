@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProFak.DB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +18,7 @@ namespace ProFak
 			if (sep < 0) return (wejscie, "");
 			return (wejscie[..sep], wejscie[sep..].Replace("\r", " ").Replace("\n", " ").Replace("  ", " ").Trim());
 		}
+
+		public static decimal Zaokragl(this decimal wartosc, int miejsca = 2) => Decimal.Round(wartosc, miejsca, MidpointRounding.AwayFromZero);
 	}
 }

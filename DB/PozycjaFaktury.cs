@@ -58,19 +58,19 @@ namespace ProFak.DB
 
 			if (CzyWedlugCenBrutto)
 			{
-				CenaNetto = Zaokragl(CenaBrutto * 100m / (100 + procentVat));
-				CenaVat = Zaokragl(CenaBrutto - CenaNetto);
-				WartoscBrutto = Zaokragl(Ilosc * CenaBrutto);
-				WartoscNetto = Zaokragl(WartoscBrutto * 100m / (100 + procentVat));
-				WartoscVat = Zaokragl(WartoscBrutto - WartoscNetto);
+				CenaNetto = (CenaBrutto * 100m / (100 + procentVat)).Zaokragl();
+				CenaVat = (CenaBrutto - CenaNetto).Zaokragl();
+				WartoscBrutto = (Ilosc * CenaBrutto).Zaokragl();
+				WartoscNetto = (WartoscBrutto * 100m / (100 + procentVat)).Zaokragl();
+				WartoscVat = (WartoscBrutto - WartoscNetto).Zaokragl();
 			}
 			else
 			{
-				CenaVat = Zaokragl(CenaNetto * procentVat / 100);
-				CenaBrutto = Zaokragl(CenaNetto + CenaVat);
-				WartoscNetto = Zaokragl(Ilosc * CenaNetto);
-				WartoscVat = Zaokragl(WartoscNetto * procentVat / 100);
-				WartoscBrutto = Zaokragl(WartoscNetto + WartoscVat);
+				CenaVat = (CenaNetto * procentVat / 100).Zaokragl();
+				CenaBrutto = (CenaNetto + CenaVat).Zaokragl();
+				WartoscNetto = (Ilosc * CenaNetto).Zaokragl();
+				WartoscVat = (WartoscNetto * procentVat / 100).Zaokragl();
+				WartoscBrutto = (WartoscNetto + WartoscVat).Zaokragl();
 			}
 		}
 	}

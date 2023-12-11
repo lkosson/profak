@@ -186,25 +186,25 @@ namespace ProFak.UI
 				}
 			}
 
-			Rekord.NettoZW = Decimal.Round(Rekord.NettoZW, MidpointRounding.AwayFromZero);
-			Rekord.Netto0 = Decimal.Round(Rekord.Netto0, MidpointRounding.AwayFromZero);
-			Rekord.Netto5 = Decimal.Round(Rekord.Netto5, MidpointRounding.AwayFromZero);
-			Rekord.Netto8 = Decimal.Round(Rekord.Netto8, MidpointRounding.AwayFromZero);
-			Rekord.Netto23 = Decimal.Round(Rekord.Netto23, MidpointRounding.AwayFromZero);
-			Rekord.NettoWDT = Decimal.Round(Rekord.NettoWDT, MidpointRounding.AwayFromZero);
-			Rekord.NettoWNT = Decimal.Round(Rekord.NettoWNT, MidpointRounding.AwayFromZero);
+			Rekord.NettoZW = Rekord.NettoZW.Zaokragl();
+			Rekord.Netto0 = Rekord.Netto0.Zaokragl();
+			Rekord.Netto5 = Rekord.Netto5.Zaokragl();
+			Rekord.Netto8 = Rekord.Netto8.Zaokragl();
+			Rekord.Netto23 = Rekord.Netto23.Zaokragl();
+			Rekord.NettoWDT = Rekord.NettoWDT.Zaokragl();
+			Rekord.NettoWNT = Rekord.NettoWNT.Zaokragl();
 
-			Rekord.Nalezny5 = Decimal.Round(Rekord.Nalezny5, MidpointRounding.AwayFromZero);
-			Rekord.Nalezny8 = Decimal.Round(Rekord.Nalezny8, MidpointRounding.AwayFromZero);
-			Rekord.Nalezny23 = Decimal.Round(Rekord.Nalezny23, MidpointRounding.AwayFromZero);
-			Rekord.NaleznyWNT = Decimal.Round(Rekord.NaleznyWNT, MidpointRounding.AwayFromZero);
+			Rekord.Nalezny5 = Rekord.Nalezny5.Zaokragl();
+			Rekord.Nalezny8 = Rekord.Nalezny8.Zaokragl();
+			Rekord.Nalezny23 = Rekord.Nalezny23.Zaokragl();
+			Rekord.NaleznyWNT = Rekord.NaleznyWNT.Zaokragl();
 
-			Rekord.NettoSrodkiTrwale = Decimal.Round(Rekord.NettoSrodkiTrwale, MidpointRounding.AwayFromZero);
-			Rekord.NettoPozostale = Decimal.Round(Rekord.NettoPozostale, MidpointRounding.AwayFromZero);
+			Rekord.NettoSrodkiTrwale = Rekord.NettoSrodkiTrwale.Zaokragl();
+			Rekord.NettoPozostale = Rekord.NettoPozostale.Zaokragl();
 
-			Rekord.NaliczonyPrzeniesiony = Decimal.Round(Rekord.NaliczonyPrzeniesiony, MidpointRounding.AwayFromZero);
-			Rekord.NaliczonySrodkiTrwale = Decimal.Round(Rekord.NaliczonySrodkiTrwale, MidpointRounding.AwayFromZero);
-			Rekord.NaliczonyPozostale = Decimal.Round(Rekord.NaliczonyPozostale, MidpointRounding.AwayFromZero);
+			Rekord.NaliczonyPrzeniesiony = Rekord.NaliczonyPrzeniesiony.Zaokragl();
+			Rekord.NaliczonySrodkiTrwale = Rekord.NaliczonySrodkiTrwale.Zaokragl();
+			Rekord.NaliczonyPozostale = Rekord.NaliczonyPozostale.Zaokragl();
 
 			kontroler.AktualizujKontrolki();
 		}

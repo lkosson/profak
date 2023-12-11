@@ -96,8 +96,8 @@ namespace ProFak.UI
 		private void PrzeliczCeny()
 		{
 			if (Rekord == null) return;
-			if (Rekord.CzyWedlugCenBrutto) numericUpDownCenaNetto.Value = Decimal.Round(Rekord.CenaBrutto * 100m / (100 + Rekord.StawkaVat.Wartosc), 2, MidpointRounding.AwayFromZero);
-			else numericUpDownCenaBrutto.Value = Decimal.Round(Rekord.CenaNetto * (100 + Rekord.StawkaVat.Wartosc) / 100m, 2, MidpointRounding.AwayFromZero);
+			if (Rekord.CzyWedlugCenBrutto) numericUpDownCenaNetto.Value = (Rekord.CenaBrutto * 100m / (100 + Rekord.StawkaVat.Wartosc)).Zaokragl();
+			else numericUpDownCenaBrutto.Value = (Rekord.CenaNetto * (100 + Rekord.StawkaVat.Wartosc) / 100m).Zaokragl();
 		}
 
 		private void comboBoxSposobLiczenia_SelectedIndexChanged(object sender, EventArgs e)
@@ -113,13 +113,13 @@ namespace ProFak.UI
 		private void numericUpDownCenaNetto_ValueChanged(object sender, EventArgs e)
 		{
 			if (Rekord.CzyWedlugCenBrutto) return;
-			numericUpDownCenaBrutto.Value = Decimal.Round(numericUpDownCenaNetto.Value * (100 + Rekord.StawkaVat.Wartosc) / 100m, 2, MidpointRounding.AwayFromZero);
+			numericUpDownCenaBrutto.Value = (numericUpDownCenaNetto.Value * (100 + Rekord.StawkaVat.Wartosc) / 100m).Zaokragl();
 		}
 
 		private void numericUpDownCenaBrutto_ValueChanged(object sender, EventArgs e)
 		{
 			if (!Rekord.CzyWedlugCenBrutto) return;
-			numericUpDownCenaNetto.Value = Decimal.Round(numericUpDownCenaBrutto.Value * 100m / (100 + Rekord.StawkaVat.Wartosc), 2, MidpointRounding.AwayFromZero);
+			numericUpDownCenaNetto.Value = (numericUpDownCenaBrutto.Value * 100m / (100 + Rekord.StawkaVat.Wartosc)).Zaokragl();
 		}
 	}
 
