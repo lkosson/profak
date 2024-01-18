@@ -95,7 +95,7 @@ class API : IDisposable
 		var initTokenResponseJson = JsonSerializer.Deserialize<JsonElement>(initTokenResponseBody);
 		ProcessException(initTokenResponseJson);
 		var sessionToken = PropertyOrNull(initTokenResponseJson, "sessionToken", "token")?.GetString();
-		return sessionToken ?? throw new ApplicationException("Missin session token.");
+		return sessionToken ?? throw new ApplicationException("Missing session token.");
 	}
 
 	public async Task AuthenticateAsync(string nip, string authorisationToken)
@@ -177,7 +177,7 @@ class API : IDisposable
 		var invoiceSendResponseJson = JsonSerializer.Deserialize<JsonElement>(invoiceSendResponseBody);
 		ProcessException(invoiceSendResponseJson);
 		var elementReferenceNumber = PropertyOrNull(invoiceSendResponseJson, "elementReferenceNumber")?.GetString();
-		return elementReferenceNumber ?? throw new ApplicationException("Missin session token.");
+		return elementReferenceNumber ?? throw new ApplicationException("Missing reference number.");
 	}
 
 	private async Task<(int status, string ksefReferenceNumber, DateTime acquisitionTimestamp)> GetInvoiceStatusAsync(string elementReferenceNumber)
