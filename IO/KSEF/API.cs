@@ -162,7 +162,7 @@ class API : IDisposable
 		return fullInvoiceGetResponseBody;
 	}
 
-	private async Task<string> SendInvoiceAsync(string invoiceXml)
+	private async Task<(string elementReferenceNumber, string invoiceHash)> SendInvoiceAsync(string invoiceXml)
 	{
 		var invoiceUTF8 = Encoding.UTF8.GetBytes(invoiceXml);
 		var invoiceUTF8B64 = Convert.ToBase64String(invoiceUTF8);
@@ -177,7 +177,7 @@ class API : IDisposable
 		var invoiceSendResponseJson = JsonSerializer.Deserialize<JsonElement>(invoiceSendResponseBody);
 		ProcessException(invoiceSendResponseJson);
 		var elementReferenceNumber = PropertyOrNull(invoiceSendResponseJson, "elementReferenceNumber")?.GetString();
-		return elementReferenceNumber ?? throw new ApplicationException("Missing reference number.");
+		return (elementReferenceNumber ?? throw new ApplicationException("Missing reference number."), invoiceUTF8HashB64);
 	}
 
 	private async Task<(int status, string ksefReferenceNumber, DateTime acquisitionTimestamp)> GetInvoiceStatusAsync(string elementReferenceNumber)
@@ -198,17 +198,17 @@ class API : IDisposable
 		else throw new ApplicationException(processingDescription);
 	}
 
-	public async Task<(string ksefReferenceNumber, DateTime acquisitionTimestamp)> SendInvoiceAsync(string invoiceXml, CancellationToken cancellationToken)
+	public async Task<(string ksefReferenceNumber, DateTime acquisitionTimestamp, string urlKSeF)> SendInvoiceAsync(string invoiceXml, CancellationToken cancellationToken)
 	{
-		var elementReferenceNumber = await SendInvoiceAsync(invoiceXml);
+		(var elementReferenceNumber, var invoiceHash) = await SendInvoiceAsync(invoiceXml);
 		while (!cancellationToken.IsCancellationRequested)
 		{
 			(var status, var ksefReferenceNumber, var acquisitionTimestamp) = await GetInvoiceStatusAsync(elementReferenceNumber);
-			if (status == 200) return (ksefReferenceNumber!, acquisitionTimestamp!);
+			if (status == 200) return (ksefReferenceNumber!, acquisitionTimestamp!, $"{urlBase}/web/verify/{ksefReferenceNumber}/{invoiceHash.Replace("=", "%3D").Replace("/", "%2F").Replace("+", "%2B")}");
 			await Task.Delay(1000, cancellationToken);
 		}
 
-		return (null, default);
+		return (default, default, default);
 	}
 
 	public async Task Terminate()
