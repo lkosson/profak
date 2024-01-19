@@ -41,6 +41,7 @@ namespace ProFak.DB
 
 		public string NumerKSeF { get; set; } = "";
 		public string XMLKSeF { get; set; } = "";
+		public string URLKSeF { get; set; } = "";
 		public DateTime? DataKSeF { get; set; }
 
 		public int? SprzedawcaId { get; set; }
