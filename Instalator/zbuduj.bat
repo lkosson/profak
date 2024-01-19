@@ -2,7 +2,7 @@
 
 cd ..
 
-dotnet publish -r win-x86 -c release -o bin\Publish
+dotnet publish -r win-x86 -c release --self-contained
 if errorlevel 1 goto :blad
 
 cd bin\Publish
