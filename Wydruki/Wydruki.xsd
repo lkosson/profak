@@ -18,6 +18,8 @@
       <xs:element minOccurs="0" maxOccurs="1" name="StawkaVAT" type="xs:string" />
       <xs:element minOccurs="1" maxOccurs="1" name="WartoscVat" type="xs:decimal" />
       <xs:element minOccurs="1" maxOccurs="1" name="WartoscBrutto" type="xs:decimal" />
+      <xs:element minOccurs="0" maxOccurs="1" name="NumerKSeF" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="KodKSeF" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PKPiRDTO" nillable="true" type="PKPiRDTO" />

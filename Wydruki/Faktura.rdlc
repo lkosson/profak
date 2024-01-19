@@ -11,7 +11,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>8.49217cm</Height>
+              <Height>12.21885cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2184,9 +2184,62 @@
                           <rd:DefaultName>DaneSprzedawcy</rd:DefaultName>
                           <Top>7.57467cm</Top>
                           <Left>0.00001cm</Left>
-                          <Height>0.9175cm</Height>
-                          <Width>17cm</Width>
+                          <Height>4.64418cm</Height>
+                          <Width>12.64852cm</Width>
                           <ZIndex>3</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <Image Name="Image1">
+                          <Source>Database</Source>
+                          <Value>=Fields!KodKSeF.Value</Value>
+                          <MIMEType>image/png</MIMEType>
+                          <Sizing>FitProportional</Sizing>
+                          <Top>7.76676cm</Top>
+                          <Left>13.11124cm</Left>
+                          <Height>3.88cm</Height>
+                          <Width>3.88876cm</Width>
+                          <ZIndex>4</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Image>
+                        <Textbox Name="DaneSprzedawcy4">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=First(Fields!NumerKSeF.Value)</Value>
+                                  <MarkupType>HTML</MarkupType>
+                                  <Style>
+                                    <FontFamily>Calibri</FontFamily>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Normal</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>DaneSprzedawcy</rd:DefaultName>
+                          <Top>11.64676cm</Top>
+                          <Left>13.11124cm</Left>
+                          <Height>0.57209cm</Height>
+                          <Width>3.88876cm</Width>
+                          <ZIndex>5</ZIndex>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -2205,6 +2258,7 @@
                         </Border>
                       </Style>
                     </Rectangle>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -2232,7 +2286,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DSFaktury</DataSetName>
-        <Height>8.49217cm</Height>
+        <Height>12.21885cm</Height>
         <Width>17cm</Width>
         <Style>
           <Border>
@@ -2241,10 +2295,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>3.34337in</Height>
+    <Height>4.81057in</Height>
     <Style />
   </Body>
-  <Width>17cm</Width>
+  <Width>17.00686cm</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
@@ -2331,6 +2385,14 @@
         <Field Name="WartoscBrutto">
           <DataField>WartoscBrutto</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="NumerKSeF">
+          <DataField>NumerKSeF</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KodKSeF">
+          <DataField>KodKSeF</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
