@@ -31,6 +31,7 @@ namespace ProFak.UI
 				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Deklaracje Vat", Wartosc = GeneratorDanych(Kontekst.Baza.DeklaracjeVat) },
 				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Faktury", Wartosc = GeneratorDanych(Kontekst.Baza.Faktury) },
 				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Jednostki miar", Wartosc = GeneratorDanych(Kontekst.Baza.JednostkiMiar) },
+				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Konfiguracja", Wartosc = GeneratorDanych(Kontekst.Baza.Konfiguracja) },
 				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Kontrahenci", Wartosc = GeneratorDanych(Kontekst.Baza.Kontrahenci) },
 				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Numeratory", Wartosc = GeneratorDanych(Kontekst.Baza.Numeratory) },
 				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Pliki", Wartosc = GeneratorDanych(Kontekst.Baza.Pliki) },
