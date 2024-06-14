@@ -232,6 +232,29 @@ namespace ProFak.DB
 			return korekta;
 		}
 
+		public string PodstawPolaWysylki(string szablon)
+		{
+			return szablon
+				.Replace("[NUMER]", Numer)
+				.Replace("[DATA-SPRZEDAZY]", DataSprzedazy.ToString("yyyy-MM-dd"))
+				.Replace("[DATA-WYSTAWIENIA]", DataWystawienia.ToString("yyyy-MM-dd"))
+				.Replace("[TERMIN-PLATNOSCI]", TerminPlatnosci.ToString("yyyy-MM-dd"))
+				.Replace("[SPRZEDAWCA-NAZWA]", NazwaSprzedawcy)
+				.Replace("[SPRZEDAWCA-ADRES]", DaneSprzedawcy)
+				.Replace("[SPRZEDAWCA-NIP]", NIPSprzedawcy)
+				.Replace("[SPRZEDAWCA-EMAIL]", Sprzedawca?.EMail)
+				.Replace("[NABYWCA-NAZWA]", NazwaNabywcy)
+				.Replace("[NABYWCA-ADRES]", DaneNabywcy)
+				.Replace("[NABYWCA-NIP]", NIPNabywcy)
+				.Replace("[NABYWCA-EMAIL]", Nabywca?.EMail)
+				.Replace("[KWOTA-NETTO]", RazemNetto.ToString("n2"))
+				.Replace("[KWOTA-BRUTTO]", RazemBrutto.ToString("n2"))
+				.Replace("[KWOTA-VAT]", RazemVat.ToString("n2"))
+				.Replace("[WALUTA]", WalutaFmt)
+				.Replace("[UWAGI]", UwagiPubliczne)
+				.Replace("[RACHUNEK]", RachunekBankowy)
+				;
+		}
 	}
 
 	enum RodzajFaktury
