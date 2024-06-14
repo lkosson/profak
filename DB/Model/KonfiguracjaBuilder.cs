@@ -25,17 +25,7 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.EMailTemat);
 			builder.Property(e => e.EMailTresc);
 
-			builder.HasData(new Konfiguracja 
-			{
-				Id = 1,
-				SMTPSerwer = "smtp.example.com",
-				SMTPPort = 465,
-				SMTPLogin = "biuro",
-				SMTPHaslo = "tajnehaslo",
-				EMailNadawca = "[SPRZEDAWCA-NAZWA] <[SPRZEDAWCA-EMAIL]>",
-				EMailTemat = "Faktura - [NUMER]",
-				EMailTresc = "Dzień dobry,\r\n\r\nw załączniku znajduje się faktura numer [NUMER] z dnia [DATA] na kwotę [KWOTA-BRUTTO].\r\n\r\nWiadomość wygenerowana automatycznie.\r\n\r\n-- \r\n[SPRZEDAWCA-NAZWA]\r\n[SPRZEDAWCA-ADRES]"
-			});
+			builder.HasData(Konfiguracja.Domyslna);
 		}
 	}
 }

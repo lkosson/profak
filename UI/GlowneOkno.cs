@@ -90,6 +90,7 @@ namespace ProFak.UI
 			else if (pozycja.Name == "KSeFZakup") Wyswietl(Spisy.KSeFZakup(parametry), pozycja.Name);
 			else if (pozycja.Name == "KSeFSprzedaz") Wyswietl(Spisy.KSeFSprzedaz(parametry), pozycja.Name);
 			else if (pozycja.Name == "FakturySprzedazy") Wyswietl(Spisy.FakturySprzedazy(parametry), pozycja.Name);
+			else if (pozycja.Name == "Konfiguracja") KonfiguracjaEdytor.Wyswietl();
 			else if (pozycja.Name == "Numeratory") Wyswietl(Spisy.Numeratory(), pozycja.Name);
 			else if (pozycja.Name == "StanyNumeratorow") Wyswietl(Spisy.StanyNumeratorow(), pozycja.Name);
 			else if (pozycja.Name == "SQL") Wyswietl(new EkranSQL(), pozycja.Name);

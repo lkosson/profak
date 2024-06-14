@@ -48,6 +48,7 @@
     <Compile Update="UI\Faktury\PlikSpis.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="UI\Konfiguracja\KonfiguracjaEdytor.cs" />
     <Compile Update="UI\Numeratory\NumeratorSpis.cs">
       <SubType>Component</SubType>
     </Compile>
