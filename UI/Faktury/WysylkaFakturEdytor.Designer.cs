@@ -82,6 +82,7 @@ partial class WysylkaFakturEdytor
 		textBoxTresc.Name = "textBoxTresc";
 		textBoxTresc.Size = new System.Drawing.Size(554, 345);
 		textBoxTresc.TabIndex = 6;
+		textBoxTresc.TextChanged += textBoxTresc_TextChanged;
 		// 
 		// textBoxTemat
 		// 
@@ -91,6 +92,7 @@ partial class WysylkaFakturEdytor
 		textBoxTemat.Name = "textBoxTemat";
 		textBoxTemat.Size = new System.Drawing.Size(501, 23);
 		textBoxTemat.TabIndex = 5;
+		textBoxTemat.TextChanged += textBoxTemat_TextChanged;
 		// 
 		// textBoxAdresat
 		// 
@@ -100,6 +102,7 @@ partial class WysylkaFakturEdytor
 		textBoxAdresat.Name = "textBoxAdresat";
 		textBoxAdresat.Size = new System.Drawing.Size(501, 23);
 		textBoxAdresat.TabIndex = 4;
+		textBoxAdresat.TextChanged += textBoxAdresat_TextChanged;
 		// 
 		// comboBoxFaktura
 		// 

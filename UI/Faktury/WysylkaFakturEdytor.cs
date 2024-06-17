@@ -1,10 +1,14 @@
-﻿using ProFak.DB;
+﻿using Microsoft.Reporting.WinForms;
+using ProFak.DB;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -78,9 +82,13 @@ partial class WysylkaFakturEdytor : UserControl
 	{
 		var idx = comboBoxFaktura.SelectedIndex;
 		var faktura = (Faktura)comboBoxFaktura.SelectedItem;
+		var temat = textBoxTemat.Text;
+		var tresc = textBoxTresc.Text;
+		var adresat = textBoxAdresat.Text;
 		OknoPostepu.Uruchom(async delegate
 		{
-			await Wyslij(faktura);
+			var pdf = PrzygotujPDF(faktura);
+			await Wyslij(temat, tresc, adresat, pdf, faktura.Numer);
 		});
 		var faktury = (List<Faktura>)comboBoxFaktura.DataSource;
 		faktury.Remove(faktura);
@@ -106,15 +114,58 @@ partial class WysylkaFakturEdytor : UserControl
 			foreach (var faktura in faktury)
 			{
 				if (faktura.Id == 0) continue;
-				await Wyslij(faktura);
+				var pdf = PrzygotujPDF(faktura);
+				var adresat = faktura.PodstawPolaWysylki(szablonAdresat);
+				var temat = faktura.PodstawPolaWysylki(szablonTemat);
+				var tresc = faktura.PodstawPolaWysylki(szablonTresc);
+				await Wyslij(temat, tresc, adresat, pdf, faktura.Numer);
 			}
 		});
 		ParentForm.DialogResult = DialogResult.OK;
 		ParentForm.Close();
 	}
 
-	private async Task Wyslij(Faktura faktura)
+	private byte[] PrzygotujPDF(Ref<Faktura> fakturaRef)
 	{
-		await Task.Delay(1000);
+		using var localReport = new LocalReport();
+		var wydruk = new Wydruki.Faktura(Kontekst.Baza, new[] { fakturaRef });
+		wydruk.Przygotuj(localReport);
+		var pdf = localReport.Render("PDF");
+		return pdf;
+	}
+
+	private async Task Wyslij(string temat, string tresc, string adresat, byte[] pdf, string nazwa)
+	{
+		var konfiguracja = Kontekst.Baza.Konfiguracja.First();
+		var smtp = new SmtpClient(konfiguracja.SMTPSerwer, konfiguracja.SMTPPort);
+		smtp.EnableSsl = konfiguracja.SMTPPort != 25;
+		smtp.UseDefaultCredentials = false;
+		smtp.Credentials = new NetworkCredential(konfiguracja.SMTPLogin, konfiguracja.SMTPHaslo);
+		var wiadomosc = new MailMessage();
+		wiadomosc.From = new MailAddress(konfiguracja.EMailNadawca);
+		wiadomosc.Subject = temat;
+		wiadomosc.Body = tresc;
+		wiadomosc.IsBodyHtml = false;
+		wiadomosc.To.Add(adresat);
+		wiadomosc.Attachments.Add(new Attachment(new MemoryStream(pdf), nazwa.Replace('/', '-').Replace(':', '-'), "application/pdf"));
+		await smtp.SendMailAsync(wiadomosc);
+	}
+
+	private void textBoxAdresat_TextChanged(object sender, EventArgs e)
+	{
+		if (comboBoxFaktura.SelectedIndex != 0) return;
+		szablonAdresat = textBoxAdresat.Text;
+	}
+
+	private void textBoxTemat_TextChanged(object sender, EventArgs e)
+	{
+		if (comboBoxFaktura.SelectedIndex != 0) return;
+		szablonTemat = textBoxTemat.Text;
+	}
+
+	private void textBoxTresc_TextChanged(object sender, EventArgs e)
+	{
+		if (comboBoxFaktura.SelectedIndex != 0) return;
+		szablonTresc = textBoxTresc.Text;
 	}
 }
