@@ -38,6 +38,30 @@ namespace ProFak.UI
 			nowyKontekst.Baza.Zapisz(rekord);
 			transakcja.Zatwierdz();
 		}
+
+		private void linkLabelTrescPomoc_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			MessageBox.Show(@"Lista dostępnych pól:
+
+[NUMER] - pełny numer faktury
+[DATA-SPRZEDAZY] - data sprzedaży w formacie rrrr-mm-dd
+[DATA-WYSTAWIENIA] - data wystawienia w formacie rrrr-mm-dd
+[TERMIN-PLATNOSCI] - termin płatności w formacie rrrr-mm-dd
+[SPRZEDAWCA-NAZWA] - pełna nazwa sprzedawcy
+[SPRZEDAWCA-ADRES] - adres korespondencyjny sprzedawcy
+[SPRZEDAWCA-NIP] - NIP sprzedawcy
+[SPRZEDAWCA-EMAIL] - adres e-mail sprzedawcy
+[NABYWCA-NAZWA] - pełna nazwa nabywcy
+[NABYWCA-ADRES] - adres korespondencyjny nabywcy
+[NABYWCA-NIP] - NIP nabywcy
+[NABYWCA-EMAIL] - adres e-mail nabywcy
+[KWOTA-NETTO] - łączna kwota netto z faktury
+[KWOTA-BRUTTO] - łączna kwota brutto z faktury
+[KWOTA-VAT] - łączna kwota VAT z faktury
+[WALUTA] - kod waluty faktury
+[UWAGI] - uwagi do faktury (publiczne)
+[RACHUNEK] - numer rachunku wskazany na fakturze", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		}
 	}
 
 	class KonfiguracjaEdytorBase : Edytor<Konfiguracja>

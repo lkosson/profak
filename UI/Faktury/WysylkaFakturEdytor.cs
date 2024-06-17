@@ -23,6 +23,7 @@ partial class WysylkaFakturEdytor : UserControl
 	private string szablonAdresat;
 	private string szablonTemat;
 	private string szablonTresc;
+	private string szablonNadawca;
 
 	public WysylkaFakturEdytor()
 	{
@@ -32,9 +33,11 @@ partial class WysylkaFakturEdytor : UserControl
 	protected override void OnLoad(EventArgs e)
 	{
 		var konfiguracja = Kontekst.Baza.Konfiguracja.First();
+		if (konfiguracja.CzyDomyslna) MessageBox.Show("Przed wysłaniem wiadomości należy uzupełnić parametry połączenia z serwerem pocztowym dostępne w menu \"Serwisowe\" » \"Konfiguracja\".", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 		szablonAdresat = "[NABYWCA-NAZWA] <[NABYWCA-EMAIL]>";
 		szablonTemat = konfiguracja.EMailTemat;
 		szablonTresc = konfiguracja.EMailTresc;
+		szablonNadawca = konfiguracja.EMailNadawca;
 		var pozycje = new List<Faktura>();
 		pozycje.Add(new Faktura { Numer = "(wszystkie)", Id = 0 });
 		pozycje.AddRange(Faktury.OrderBy(e => e.DataWystawienia).ThenBy(e => e.Id));
@@ -85,10 +88,11 @@ partial class WysylkaFakturEdytor : UserControl
 		var temat = textBoxTemat.Text;
 		var tresc = textBoxTresc.Text;
 		var adresat = textBoxAdresat.Text;
+		var nadawca = faktura.PodstawPolaWysylki(szablonNadawca);
 		OknoPostepu.Uruchom(async delegate
 		{
 			var pdf = PrzygotujPDF(faktura);
-			await Wyslij(temat, tresc, adresat, pdf, faktura.Numer);
+			await Wyslij(temat, tresc, adresat, nadawca, pdf, faktura.Numer);
 		});
 		var faktury = (List<Faktura>)comboBoxFaktura.DataSource;
 		faktury.Remove(faktura);
@@ -118,7 +122,8 @@ partial class WysylkaFakturEdytor : UserControl
 				var adresat = faktura.PodstawPolaWysylki(szablonAdresat);
 				var temat = faktura.PodstawPolaWysylki(szablonTemat);
 				var tresc = faktura.PodstawPolaWysylki(szablonTresc);
-				await Wyslij(temat, tresc, adresat, pdf, faktura.Numer);
+				var nadawca = faktura.PodstawPolaWysylki(szablonNadawca);
+				await Wyslij(temat, tresc, adresat, nadawca, pdf, faktura.Numer);
 			}
 		});
 		ParentForm.DialogResult = DialogResult.OK;
@@ -134,7 +139,7 @@ partial class WysylkaFakturEdytor : UserControl
 		return pdf;
 	}
 
-	private async Task Wyslij(string temat, string tresc, string adresat, byte[] pdf, string nazwa)
+	private async Task Wyslij(string temat, string tresc, string adresat, string nadawca, byte[] pdf, string nazwa)
 	{
 		var konfiguracja = Kontekst.Baza.Konfiguracja.First();
 		var smtp = new SmtpClient(konfiguracja.SMTPSerwer, konfiguracja.SMTPPort);
@@ -142,7 +147,7 @@ partial class WysylkaFakturEdytor : UserControl
 		smtp.UseDefaultCredentials = false;
 		smtp.Credentials = new NetworkCredential(konfiguracja.SMTPLogin, konfiguracja.SMTPHaslo);
 		var wiadomosc = new MailMessage();
-		wiadomosc.From = new MailAddress(konfiguracja.EMailNadawca);
+		wiadomosc.From = new MailAddress(nadawca);
 		wiadomosc.Subject = temat;
 		wiadomosc.Body = tresc;
 		wiadomosc.IsBodyHtml = false;

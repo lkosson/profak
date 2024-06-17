@@ -1,4 +1,5 @@
-﻿using ProFak.DB;
+﻿using Microsoft.EntityFrameworkCore;
+using ProFak.DB;
 using ProFak.UI.Faktury;
 using System;
 using System.Collections.Generic;
@@ -23,9 +24,21 @@ namespace ProFak.UI
 			using var nowyKontekst = new Kontekst(kontekst);
 			using var edytor = new WysylkaFakturEdytor();
 			using var okno = new Dialog("Wysyłka faktur", edytor, nowyKontekst);
+			var faktury = new List<Faktura>();
+			foreach (var rekord in zaznaczoneRekordy)
+			{
+				var faktura = nowyKontekst.Baza.Faktury
+					.Include(e => e.Sprzedawca)
+					.Include(e => e.Nabywca)
+					.Include(e => e.Waluta)
+					.Include(e => e.SposobPlatnosci)
+					.Where(e => e.Id == rekord.Id)
+					.First();
+				faktury.Add(faktura);
+			}
 			okno.CzyPrzyciskiWidoczne = false;
 			edytor.Kontekst = nowyKontekst;
-			edytor.Faktury = zaznaczoneRekordy;
+			edytor.Faktury = faktury;
 			okno.ShowDialog();
 		}
 	}

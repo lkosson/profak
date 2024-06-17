@@ -17,6 +17,8 @@ namespace ProFak.DB
 		public string EMailTemat { get; set; }
 		public string EMailTresc { get; set; }
 
+		public bool CzyDomyslna => SMTPSerwer == Domyslna.SMTPSerwer || String.IsNullOrEmpty(SMTPSerwer);
+
 		public override bool CzyPasuje(string fraza) => false;
 
 		public static Konfiguracja Domyslna => new()

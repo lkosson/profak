@@ -39,13 +39,15 @@ namespace ProFak.UI
 			label5 = new System.Windows.Forms.Label();
 			label7 = new System.Windows.Forms.Label();
 			label8 = new System.Windows.Forms.Label();
-			label9 = new System.Windows.Forms.Label();
 			textBoxEMailTresc = new System.Windows.Forms.TextBox();
 			textBoxSMTPLogin = new System.Windows.Forms.TextBox();
 			numericUpDownSMTPort = new System.Windows.Forms.NumericUpDown();
 			textBoxEMailNadawca = new System.Windows.Forms.TextBox();
 			textBoxSMTPHaslo = new System.Windows.Forms.TextBox();
 			textBoxEMailTemat = new System.Windows.Forms.TextBox();
+			flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+			label9 = new System.Windows.Forms.Label();
+			linkLabelTrescPomoc = new System.Windows.Forms.LinkLabel();
 			tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			backgroundWorkerSprawdzMF = new System.ComponentModel.BackgroundWorker();
 			backgroundWorkerPobierzGUS = new System.ComponentModel.BackgroundWorker();
@@ -53,6 +55,7 @@ namespace ProFak.UI
 			tabPageEMail.SuspendLayout();
 			tableLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)numericUpDownSMTPort).BeginInit();
+			flowLayoutPanel1.SuspendLayout();
 			tableLayoutPanel2.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -90,13 +93,13 @@ namespace ProFak.UI
 			tableLayoutPanel1.Controls.Add(label5, 0, 3);
 			tableLayoutPanel1.Controls.Add(label7, 0, 4);
 			tableLayoutPanel1.Controls.Add(label8, 0, 5);
-			tableLayoutPanel1.Controls.Add(label9, 0, 6);
 			tableLayoutPanel1.Controls.Add(textBoxEMailTresc, 1, 6);
 			tableLayoutPanel1.Controls.Add(textBoxSMTPLogin, 1, 2);
 			tableLayoutPanel1.Controls.Add(numericUpDownSMTPort, 1, 1);
 			tableLayoutPanel1.Controls.Add(textBoxEMailNadawca, 1, 4);
 			tableLayoutPanel1.Controls.Add(textBoxSMTPHaslo, 1, 3);
 			tableLayoutPanel1.Controls.Add(textBoxEMailTemat, 1, 5);
+			tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 0, 6);
 			tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
 			tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -183,16 +186,6 @@ namespace ProFak.UI
 			label8.TabIndex = 2;
 			label8.Text = "Temat wiadomości";
 			// 
-			// label9
-			// 
-			label9.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			label9.AutoSize = true;
-			label9.Location = new System.Drawing.Point(9, 256);
-			label9.Name = "label9";
-			label9.Size = new System.Drawing.Size(100, 15);
-			label9.TabIndex = 2;
-			label9.Text = "Treść wiadomości";
-			// 
 			// textBoxEMailTresc
 			// 
 			textBoxEMailTresc.AcceptsReturn = true;
@@ -246,6 +239,41 @@ namespace ProFak.UI
 			textBoxEMailTemat.Size = new System.Drawing.Size(662, 23);
 			textBoxEMailTemat.TabIndex = 5;
 			// 
+			// flowLayoutPanel1
+			// 
+			flowLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			flowLayoutPanel1.AutoSize = true;
+			flowLayoutPanel1.Controls.Add(label9);
+			flowLayoutPanel1.Controls.Add(linkLabelTrescPomoc);
+			flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+			flowLayoutPanel1.Location = new System.Drawing.Point(6, 248);
+			flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
+			flowLayoutPanel1.Name = "flowLayoutPanel1";
+			flowLayoutPanel1.Size = new System.Drawing.Size(106, 30);
+			flowLayoutPanel1.TabIndex = 7;
+			flowLayoutPanel1.WrapContents = false;
+			// 
+			// label9
+			// 
+			label9.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			label9.AutoSize = true;
+			label9.Location = new System.Drawing.Point(3, 0);
+			label9.Name = "label9";
+			label9.Size = new System.Drawing.Size(100, 15);
+			label9.TabIndex = 2;
+			label9.Text = "Treść wiadomości";
+			// 
+			// linkLabelTrescPomoc
+			// 
+			linkLabelTrescPomoc.AutoSize = true;
+			linkLabelTrescPomoc.Location = new System.Drawing.Point(3, 15);
+			linkLabelTrescPomoc.Name = "linkLabelTrescPomoc";
+			linkLabelTrescPomoc.Size = new System.Drawing.Size(20, 15);
+			linkLabelTrescPomoc.TabIndex = 3;
+			linkLabelTrescPomoc.TabStop = true;
+			linkLabelTrescPomoc.Text = "[?]";
+			linkLabelTrescPomoc.LinkClicked += linkLabelTrescPomoc_LinkClicked;
+			// 
 			// tableLayoutPanel2
 			// 
 			tableLayoutPanel2.ColumnCount = 2;
@@ -274,6 +302,8 @@ namespace ProFak.UI
 			tableLayoutPanel1.ResumeLayout(false);
 			tableLayoutPanel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)numericUpDownSMTPort).EndInit();
+			flowLayoutPanel1.ResumeLayout(false);
+			flowLayoutPanel1.PerformLayout();
 			tableLayoutPanel2.ResumeLayout(false);
 			ResumeLayout(false);
 		}
@@ -300,5 +330,7 @@ namespace ProFak.UI
 		private System.Windows.Forms.TextBox textBoxEMailNadawca;
 		private System.Windows.Forms.TextBox textBoxSMTPHaslo;
 		private System.Windows.Forms.TextBox textBoxEMailTemat;
+		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+		private System.Windows.Forms.LinkLabel linkLabelTrescPomoc;
 	}
 }
