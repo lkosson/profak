@@ -17,6 +17,7 @@ ProFak to prosty, darmowy program do fakturowania; skierowany przede wszystkim d
  * Generowanie JPK_FA
  * Integracja z GUS
  * Integracja z KSeF
+ * Wysyłka faktur e-mailem
 
 ## Dalsze plany
 
