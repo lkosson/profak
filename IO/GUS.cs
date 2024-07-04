@@ -21,8 +21,7 @@ namespace ProFak.IO
 			var nip = kontrahent.NIP?.Trim()?.Replace("-", "");
 			if (String.IsNullOrEmpty(nip)) throw new ApplicationException("Należy podać NIP.");
 			using var client = new HttpClient();
-			client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0");
-			client.DefaultRequestHeaders.AcceptLanguage.ParseAdd("pl,en-US;q=0.7,en;q=0.3");
+			client.DefaultRequestHeaders.UserAgent.ParseAdd("ProFak (https://github.com/lkosson/profak)");
 
 			var html = await client.GetStringAsync("https://wyszukiwarkaregon.stat.gov.pl/appBIR/index.aspx");
 			var liczbyKlucza = Regex.Match(html, @"'String\.fromCharCode\(((?<znak>\d+)[,\)])+");
@@ -30,7 +29,6 @@ namespace ProFak.IO
 			var klucz = wyrazenieKlucza.Substring(wyrazenieKlucza.IndexOf('\'') + 1, wyrazenieKlucza.LastIndexOf('\'') - wyrazenieKlucza.IndexOf('\'') - 1);
 			var zalogujContent = JsonContent.Create(new { pKluczUzytkownika = klucz });
 			var zalogujRequest = new HttpRequestMessage(HttpMethod.Post, "https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc/ajaxEndpoint/Zaloguj");
-			zalogujRequest.Headers.Referrer = new Uri("https://wyszukiwarkaregon.stat.gov.pl/appBIR/index.aspx");
 			zalogujRequest.Content = zalogujContent;
 			var zalogujResponse = await client.SendAsync(zalogujRequest);
 			var zalogujOdpowiedz = await zalogujResponse.Content.ReadAsStringAsync();
@@ -40,7 +38,6 @@ namespace ProFak.IO
 			var szukajContent = JsonContent.Create(new { pParametryWyszukiwania = new { Nip = nip }, jestWojPowGmnMiej = true }, options: new JsonSerializerOptions { PropertyNamingPolicy = null });
 			var s = await szukajContent.ReadAsStringAsync();
 			var szukajRequest = new HttpRequestMessage(HttpMethod.Post, "https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc/ajaxEndpoint/daneSzukaj");
-			szukajRequest.Headers.Referrer = new Uri("https://wyszukiwarkaregon.stat.gov.pl/appBIR/index.aspx");
 			szukajRequest.Headers.Add("sid", zalogujSid);
 			szukajRequest.Content = szukajContent;
 			var szukajResponse = await client.SendAsync(szukajRequest);
