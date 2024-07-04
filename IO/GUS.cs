@@ -13,6 +13,9 @@ namespace ProFak.IO
 {
 	class GUS
 	{
+		private static readonly string[] FragmentyKodu = ["y1y", "yy2", "yy3", "yy4", "yy5", "yy6", "yy7", "yy8", "yy9", "y20", "y2y", "y22", "y23", "y24", "y25", "y26", "y27", "y28", "y29", "y30", "!3!", "!32", "!33", "!34", "!35", "!36", "!37", "!38", "!39", "!40", "!4!", "!42", "!43", "!44", "!45", "!46", "!47", "!48", "!49", "!50", "!5!", "!52", "!53", "1b4", "1bb", "1ba", "1b7", "1b8", "1b9", "1a0", "1a1", "1a2", "1a3", "1a4", "1ab", "1aa", "1a7", "1a8", "1a9", "170", "171", "172", "173", "174", "17b", "71a"];
+		private static readonly string ZnakiB64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+
 		public static async Task PobierzGUS(Kontrahent kontrahent)
 		{
 			var nip = kontrahent.NIP?.Trim()?.Replace("-", "");
@@ -45,6 +48,7 @@ namespace ProFak.IO
 			var szukajOdpowiedzJson = JsonSerializer.Deserialize<JsonElement>(szukajOdpowiedz);
 			var podmioty = szukajOdpowiedzJson.GetProperty("d").GetString();
 			if (String.IsNullOrEmpty(podmioty)) throw new ApplicationException("Nie znaleziono firmy w bazie GUS.");
+			if (podmioty.StartsWith("enc")) podmioty = DekodujGUS(podmioty);
 			var podmiotyJson = JsonSerializer.Deserialize<JsonElement>(podmioty);
 			if (podmiotyJson.GetArrayLength() == 0) throw new ApplicationException("Nie znaleziono firmy w bazie GUS.");
 			var podmiot = podmiotyJson[0];
@@ -63,6 +67,18 @@ namespace ProFak.IO
 			kontrahent.PelnaNazwa = nazwa;
 			kontrahent.AdresRejestrowy = ulica + "\r\n" + kodpocztowy + " " + miejscowosc;
 			kontrahent.AdresKorespondencyjny = kontrahent.AdresRejestrowy;
+		}
+
+		private static string DekodujGUS(string wejscie)
+		{
+			var output = "";
+			for (var i = 3; i < wejscie.Length; i += 3)
+			{
+				var c = wejscie.Substring(i, 3);
+				output += ZnakiB64[Array.IndexOf(FragmentyKodu, c)];
+			};
+
+			return Encoding.UTF8.GetString(Convert.FromBase64String(output));
 		}
 	}
 }
