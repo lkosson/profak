@@ -71,6 +71,7 @@ namespace ProFak.UI
 				gotowy = true;
 				return;
 			}
+			Baza.ZamknijPolaczenia();
 			var katalog = Path.GetDirectoryName(nowyPlik);
 			Directory.CreateDirectory(katalog);
 			File.Move(staryPlik, nowyPlik);

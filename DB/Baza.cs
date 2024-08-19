@@ -249,5 +249,10 @@ namespace ProFak.DB
 			}
 			return wynik;
 		}
+
+		public static void ZamknijPolaczenia()
+		{
+			SqliteConnection.ClearAllPools();
+		}
 	}
 }
