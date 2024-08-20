@@ -62,10 +62,10 @@ namespace ProFak.DB
 		{
 			DB.Baza.UstalSciezkeBazy();
 			if (String.IsNullOrEmpty(Sciezka)) return false;
+			WykonajAutomatycznaKopieBazy();
 			using var baza = new DB.Baza();
 			baza.Database.Migrate();
 			DaneStartowe.Zaladuj(baza);
-			WykonajAutomatycznaKopieBazy();
 			return true;
 		}
 
@@ -76,11 +76,22 @@ namespace ProFak.DB
 				if (String.IsNullOrEmpty(Sciezka) || !File.Exists(Sciezka)) return;
 				var sciezkaKopiiDziennej = Sciezka + "~";
 				var sciezkaKopiiMiesiecznej = Sciezka + "~~";
+				var dzis = DateTime.Now.Date;
+				var miesiac = dzis.AddDays(1 - dzis.Day);
 				var dataBazy = File.GetLastWriteTime(Sciezka);
 				var dataKopiiDziennej = File.Exists(sciezkaKopiiDziennej) ? File.GetLastWriteTime(sciezkaKopiiDziennej) : DateTime.MinValue;
 				var dataKopiiMiesiecznej = File.Exists(sciezkaKopiiMiesiecznej) ? File.GetLastWriteTime(sciezkaKopiiMiesiecznej) : DateTime.MinValue;
-				if (dataBazy.Date > dataKopiiDziennej.Date) WykonajKopie(sciezkaKopiiDziennej);
-				else if (dataKopiiDziennej.Date != dataBazy.Date && (dataBazy.Month != dataKopiiMiesiecznej.Month || dataBazy.Year != dataKopiiMiesiecznej.Year)) WykonajKopie(sciezkaKopiiMiesiecznej);
+
+				if (dataBazy <= dataKopiiDziennej) return;
+				if (dzis == dataKopiiDziennej.Date) return;
+
+				if (dataKopiiMiesiecznej < miesiac && dataKopiiDziennej > miesiac)
+				{
+					File.Delete(sciezkaKopiiMiesiecznej);
+					File.Move(sciezkaKopiiDziennej, sciezkaKopiiMiesiecznej);
+				}
+
+				WykonajKopie(sciezkaKopiiDziennej);
 			}
 			catch
 			{
