@@ -20,7 +20,7 @@ namespace ProFak
 			try
 			{
 				Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-				Application.SetHighDpiMode(HighDpiMode.SystemAware);
+				Application.SetHighDpiMode(HighDpiMode.DpiUnaware);
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
 				CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("pl-PL");
