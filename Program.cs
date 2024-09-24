@@ -3,6 +3,7 @@ using ProFak.DB;
 using ProFak.UI;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,7 @@ namespace ProFak
 				Application.SetHighDpiMode(HighDpiMode.SystemAware);
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
+				CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("pl-PL");
 				if (!DB.Baza.Przygotuj())
 				{
 					using var pierwszyStart = new UI.PierwszyStartBaza();
