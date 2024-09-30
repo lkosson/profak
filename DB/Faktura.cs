@@ -140,6 +140,8 @@ namespace ProFak.DB
 			|| CzyPasuje(DaneNabywcy, fraza)
 			|| CzyPasuje(UwagiPubliczne, fraza)
 			|| CzyPasuje(UwagiWewnetrzne, fraza)
+			|| CzyPasuje(PozycjeFmt, fraza)
+			|| CzyPasuje(NumerKSeF, fraza)
 			|| CzyPasuje(RazemNetto, fraza)
 			|| CzyPasuje(RazemVat, fraza)
 			|| CzyPasuje(RazemBrutto, fraza)
