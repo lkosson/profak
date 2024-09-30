@@ -317,7 +317,6 @@ namespace ProFak.UI
 		private System.Windows.Forms.TextBox textBoxSMTPSerwer;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.TextBox textBoxSMTPLogin;
-		private System.Windows.Forms.TextBox textBoxAdresRejestrowy;
 		private System.Windows.Forms.TextBox textBoxEMailTresc;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label5;
