@@ -19,5 +19,7 @@ namespace ProFak.DB
 			=> base.CzyPasuje(fraza)
 			|| CzyPasuje(Spis, fraza)
 			|| CzyPasuje(Kolumna, fraza);
+
+		public override string ToString() => Kolejnosc + ". " + Kolumna + " (" + Szerokosc + ")";
 	}
 }

@@ -49,6 +49,7 @@ namespace ProFak.UI
 		private List<(string kolumna, bool malejaco, Func<T, IComparable> metoda)> kolumnyKolejnosci;
 		private Dictionary<int, Func<T, string>> tooltipyDlaKolumn;
 		private bool rekordyPodczasZmiany;
+		private bool kolumnyZmienione;
 
 		public Kontekst Kontekst { get; set; }
 		public IEnumerable<T> WybraneRekordy
@@ -151,6 +152,7 @@ namespace ProFak.UI
 			base.OnCreateControl();
 			if (Kontekst != null) PrzeladujBezpiecznie();
 			bindingSource.ResetBindings(true);
+			WczytajKonfiguracje();
 		}
 
 		public void PrzeladujBezpiecznie()
@@ -353,6 +355,58 @@ namespace ProFak.UI
 				else posortowane = posortowane.ThenBy(kolumna.metoda);
 			}
 			return posortowane;
+		}
+
+		protected override void OnColumnDisplayIndexChanged(DataGridViewColumnEventArgs e)
+		{
+			base.OnColumnDisplayIndexChanged(e);
+			kolumnyZmienione = true;
+		}
+
+		protected override void OnColumnWidthChanged(DataGridViewColumnEventArgs e)
+		{
+			base.OnColumnWidthChanged(e);
+			kolumnyZmienione = true;
+		}
+
+		protected override void OnMouseUp(MouseEventArgs e)
+		{
+			base.OnMouseUp(e);
+			if (kolumnyZmienione)
+			{
+				kolumnyZmienione = false;
+				ZapiszKonfiguracje();
+			}
+		}
+
+		private void WczytajKonfiguracje()
+		{
+			var spis = GetType().Name;
+			var kolumny = Kontekst.Baza.KolumnySpisow.Where(e => e.Spis == spis).ToDictionary(e => e.Kolumna);
+			foreach (DataGridViewColumn kolumna in Columns)
+			{
+				if (!kolumny.TryGetValue(kolumna.Name, out var konfiguracjaKolumny)) continue;
+				kolumna.DisplayIndex = konfiguracjaKolumny.Kolejnosc;
+				kolumna.Width = konfiguracjaKolumny.Szerokosc;
+			}
+			kolumnyZmienione = false;
+		}
+
+		private void ZapiszKonfiguracje()
+		{
+			var spis = GetType().Name;
+			var stareKolumny = Kontekst.Baza.KolumnySpisow.Where(e => e.Spis == spis).ToList();
+			Kontekst.Baza.Usun(stareKolumny);
+
+			var doZapisu = new List<KolumnaSpisu>();
+			foreach (DataGridViewColumn kolumna in Columns)
+			{
+				var konfiguracjaKolumny = new KolumnaSpisu { Spis = spis, Kolumna = kolumna.Name };
+				konfiguracjaKolumny.Kolejnosc = kolumna.DisplayIndex;
+				konfiguracjaKolumny.Szerokosc = kolumna.Width;
+				doZapisu.Add(konfiguracjaKolumny);
+			}
+			Kontekst.Baza.Zapisz(doZapisu);
 		}
 	}
 }
