@@ -25,6 +25,18 @@ namespace ProFak.UI
 			ShowCellToolTips = true;
 			EnableHeadersVisualStyles = false;
 		}
+
+		protected override void OnMouseDown(MouseEventArgs e)
+		{
+			base.OnMouseDown(e);
+			if (HitTest(e.X, e.Y).Type == DataGridViewHitTestType.ColumnHeader) DoubleBuffered = false;
+		}
+
+		protected override void OnMouseUp(MouseEventArgs e)
+		{
+			base.OnMouseUp(e);
+			if (!DoubleBuffered) DoubleBuffered = true;
+		}
 	}
 
 	abstract class Spis<T> : Spis
