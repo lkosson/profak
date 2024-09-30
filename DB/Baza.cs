@@ -35,6 +35,7 @@ namespace ProFak.DB
 		public IQueryable<DeklaracjaVat> DeklaracjeVat => Set<DeklaracjaVat>();
 		public IQueryable<Faktura> Faktury => Set<Faktura>();
 		public IQueryable<JednostkaMiary> JednostkiMiar => Set<JednostkaMiary>();
+		public IQueryable<KolumnaSpisu> KolumnySpisow => Set<KolumnaSpisu>();
 		public IQueryable<Konfiguracja> Konfiguracja => Set<Konfiguracja>();
 		public IQueryable<Kontrahent> Kontrahenci => Set<Kontrahent>();
 		public IQueryable<Numerator> Numeratory => Set<Numerator>();
