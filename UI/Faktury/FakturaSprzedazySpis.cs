@@ -38,22 +38,30 @@ namespace ProFak.UI
 			}
 		}
 
-
 		public FakturaSprzedazySpis()
 		{
 			DodajKolumne(nameof(Faktura.Numer), "Numer");
 			DodajKolumne(nameof(Faktura.RodzajFmt), "Rodzaj");
-			DodajKolumne(nameof(Faktura.NumerPowiazanej), "Powiązana");
 			DodajKolumne(nameof(Faktura.DataWystawienia), "Data wystawienia", format: "yyyy-MM-dd", szerokosc: 120);
 			DodajKolumne(nameof(Faktura.DataSprzedazy), "Data sprzedaży", format: "yyyy-MM-dd", szerokosc: 120);
-			kolumnaNazwaNabywcy = DodajKolumne(nameof(Faktura.NazwaNabywcy), "Nabywca", rozciagnij: true);
-			kolumnaNIPNabywcy = DodajKolumne(nameof(Faktura.NIPNabywcy), "NIP nabywcy", szerokosc: 120);
+			kolumnaNazwaNabywcy = DodajKolumne(nameof(Faktura.NazwaNabywcy), "Nabywca", szerokosc: 250);
+			kolumnaNIPNabywcy = DodajKolumne(nameof(Faktura.NIPNabywcy), "NIP nabywcy", szerokosc: 100);
 			DodajKolumneKwota(nameof(Faktura.RazemNetto), "Netto");
 			DodajKolumneKwota(nameof(Faktura.RazemVat), "VAT");
 			DodajKolumneKwota(nameof(Faktura.RazemBrutto), "Brutto");
 			DodajKolumne(nameof(Faktura.WalutaFmt), "Waluta", szerokosc: 70);
-			DodajKolumneBool(nameof(Faktura.CzyZaplacona), "Zapł.", szerokosc: 50);
+			DodajKolumneBool(nameof(Faktura.CzyZaplacona), "Zapł.", szerokosc: 50, tooltip: faktura => faktura.SumaWplat.ToString("#,##0.00"));
 			DodajKolumneBool(nameof(Faktura.CzyKSeF), "KSeF", szerokosc: 50, tooltip: faktura => faktura.NumerKSeF);
+			DodajKolumne(nameof(Faktura.PozycjeFmt), "Pozycje", szerokosc: 150);
+			DodajKolumne(nameof(Faktura.UwagiPubliczne), "Uwagi (publiczne)", szerokosc: 150);
+			DodajKolumne(nameof(Faktura.UwagiWewnetrzne), "Uwagi (wewnętrzne)", szerokosc: 150);
+			DodajKolumne(nameof(Faktura.OpisZdarzenia), "Opis KPiR", szerokosc: 150);
+			DodajKolumneKwota(nameof(Faktura.SumaWplat), "Zapłacono");
+			DodajKolumneKwota(nameof(Faktura.PozostaloDoZaplaty), "Do zapłaty");
+			DodajKolumne(nameof(Faktura.NumerPowiazanej), "Powiązana");
+			DodajKolumne(nameof(Faktura.NumerKSeF), "Numer KSeF", szerokosc: 230);
+			DodajKolumneBool(nameof(Faktura.CzyTP), "TP", szerokosc: 50);
+			DodajKolumneBool(nameof(Faktura.CzyWDT), "WDT", szerokosc: 50);
 			DodajKolumneId();
 		}
 
@@ -94,6 +102,7 @@ namespace ProFak.UI
 				.Include(faktura => faktura.Wplaty)
 				.Include(faktura => faktura.FakturaKorygowana)
 				.Include(faktura => faktura.FakturaKorygujaca)
+				.Include(faktura => faktura.Pozycje)
 				.Where(faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży || faktura.Rodzaj == RodzajFaktury.Proforma);
 			if (NabywcaRef.IsNotNull) q = q.Where(faktura => faktura.NabywcaId == NabywcaRef.Id);
 			if (odDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy >= odDaty.Value);
