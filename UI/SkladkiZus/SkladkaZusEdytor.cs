@@ -35,7 +35,14 @@ namespace ProFak.UI
 
 		private void buttonPrzelicz_Click(object sender, EventArgs e)
 		{
-			Przelicz();
+			try
+			{
+				Przelicz();
+			}
+			catch (Exception exc)
+			{
+				OknoBledu.Pokaz(exc);
+			}
 		}
 
 		private void Przelicz()

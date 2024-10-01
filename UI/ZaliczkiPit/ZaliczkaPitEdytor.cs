@@ -80,8 +80,15 @@ namespace ProFak.UI
 
 		private void buttonPrzelicz_Click(object sender, EventArgs e)
 		{
-			WybierzFaktury();
-			Przelicz();
+			try
+			{
+				WybierzFaktury();
+				Przelicz();
+			}
+			catch (Exception exc)
+			{
+				OknoBledu.Pokaz(exc);
+			}
 		}
 
 		private void WybierzFaktury()
