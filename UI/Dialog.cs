@@ -31,10 +31,15 @@ namespace ProFak.UI
 
 		private void UstawZawartosc(Control zawartosc)
 		{
-			var rozmiarPreferowany = zawartosc.GetPreferredSize(zawartosc.Size);
-			ClientSize = new Size(rozmiarPreferowany.Width + panelZawartosc.Margin.Left + panelZawartosc.Margin.Right + Padding.Left + Padding.Right, rozmiarPreferowany.Height + buttonZapisz.Height + panelZawartosc.Margin.Top + panelZawartosc.Margin.Bottom + buttonZapisz.Margin.Top + buttonZapisz.Margin.Bottom * 2);
 			panelZawartosc.Controls.Add(zawartosc);
-			zawartosc.Dock = DockStyle.Fill;
+			panelZawartosc.Size = Zawartosc.Size;
+			ClientSize = tableLayoutPanelZawartosc.Size;
+			MinimumSize = Size;
+			Zawartosc.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
+			var finalnyRozmiar = tableLayoutPanelZawartosc.Size;
+			tableLayoutPanelZawartosc.AutoSize = false;
+			tableLayoutPanelZawartosc.Size = finalnyRozmiar;
+			tableLayoutPanelZawartosc.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
 		}
 
 		protected override void OnKeyDown(KeyEventArgs e)

@@ -29,93 +29,92 @@ namespace ProFak.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.buttonZapisz = new System.Windows.Forms.Button();
-			this.buttonAnuluj = new System.Windows.Forms.Button();
-			this.tableLayoutPanelZawartosc = new System.Windows.Forms.TableLayoutPanel();
-			this.flowLayoutPanelPrzyciski = new System.Windows.Forms.FlowLayoutPanel();
-			this.panelZawartosc = new System.Windows.Forms.Panel();
-			this.tableLayoutPanelZawartosc.SuspendLayout();
-			this.flowLayoutPanelPrzyciski.SuspendLayout();
-			this.SuspendLayout();
+			buttonZapisz = new System.Windows.Forms.Button();
+			buttonAnuluj = new System.Windows.Forms.Button();
+			tableLayoutPanelZawartosc = new System.Windows.Forms.TableLayoutPanel();
+			flowLayoutPanelPrzyciski = new System.Windows.Forms.FlowLayoutPanel();
+			panelZawartosc = new System.Windows.Forms.Panel();
+			tableLayoutPanelZawartosc.SuspendLayout();
+			flowLayoutPanelPrzyciski.SuspendLayout();
+			SuspendLayout();
 			// 
 			// buttonZapisz
 			// 
-			this.buttonZapisz.AutoSize = true;
-			this.buttonZapisz.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.buttonZapisz.Location = new System.Drawing.Point(3, 3);
-			this.buttonZapisz.Name = "buttonZapisz";
-			this.buttonZapisz.Size = new System.Drawing.Size(79, 25);
-			this.buttonZapisz.TabIndex = 1000;
-			this.buttonZapisz.Text = "Zapisz [F10]";
-			this.buttonZapisz.UseVisualStyleBackColor = true;
+			buttonZapisz.AutoSize = true;
+			buttonZapisz.DialogResult = System.Windows.Forms.DialogResult.OK;
+			buttonZapisz.Location = new System.Drawing.Point(3, 3);
+			buttonZapisz.Name = "buttonZapisz";
+			buttonZapisz.Size = new System.Drawing.Size(79, 25);
+			buttonZapisz.TabIndex = 1000;
+			buttonZapisz.Text = "Zapisz [F10]";
+			buttonZapisz.UseVisualStyleBackColor = true;
 			// 
 			// buttonAnuluj
 			// 
-			this.buttonAnuluj.AutoSize = true;
-			this.buttonAnuluj.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.buttonAnuluj.Location = new System.Drawing.Point(88, 3);
-			this.buttonAnuluj.Name = "buttonAnuluj";
-			this.buttonAnuluj.Size = new System.Drawing.Size(83, 25);
-			this.buttonAnuluj.TabIndex = 1001;
-			this.buttonAnuluj.Text = "Anuluj [ESC]";
-			this.buttonAnuluj.UseVisualStyleBackColor = true;
+			buttonAnuluj.AutoSize = true;
+			buttonAnuluj.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			buttonAnuluj.Location = new System.Drawing.Point(88, 3);
+			buttonAnuluj.Name = "buttonAnuluj";
+			buttonAnuluj.Size = new System.Drawing.Size(83, 25);
+			buttonAnuluj.TabIndex = 1001;
+			buttonAnuluj.Text = "Anuluj [ESC]";
+			buttonAnuluj.UseVisualStyleBackColor = true;
 			// 
 			// tableLayoutPanelZawartosc
 			// 
-			this.tableLayoutPanelZawartosc.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanelZawartosc.ColumnCount = 1;
-			this.tableLayoutPanelZawartosc.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanelZawartosc.Controls.Add(this.flowLayoutPanelPrzyciski, 0, 1);
-			this.tableLayoutPanelZawartosc.Controls.Add(this.panelZawartosc, 0, 0);
-			this.tableLayoutPanelZawartosc.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanelZawartosc.Location = new System.Drawing.Point(0, 0);
-			this.tableLayoutPanelZawartosc.Name = "tableLayoutPanelZawartosc";
-			this.tableLayoutPanelZawartosc.RowCount = 2;
-			this.tableLayoutPanelZawartosc.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanelZawartosc.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelZawartosc.Size = new System.Drawing.Size(227, 163);
-			this.tableLayoutPanelZawartosc.TabIndex = 3;
+			tableLayoutPanelZawartosc.AutoSize = true;
+			tableLayoutPanelZawartosc.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			tableLayoutPanelZawartosc.ColumnCount = 1;
+			tableLayoutPanelZawartosc.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanelZawartosc.Controls.Add(flowLayoutPanelPrzyciski, 0, 1);
+			tableLayoutPanelZawartosc.Controls.Add(panelZawartosc, 0, 0);
+			tableLayoutPanelZawartosc.Location = new System.Drawing.Point(0, 0);
+			tableLayoutPanelZawartosc.Name = "tableLayoutPanelZawartosc";
+			tableLayoutPanelZawartosc.RowCount = 2;
+			tableLayoutPanelZawartosc.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanelZawartosc.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanelZawartosc.Size = new System.Drawing.Size(196, 63);
+			tableLayoutPanelZawartosc.TabIndex = 3;
 			// 
 			// flowLayoutPanelPrzyciski
 			// 
-			this.flowLayoutPanelPrzyciski.AutoSize = true;
-			this.flowLayoutPanelPrzyciski.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.flowLayoutPanelPrzyciski.Controls.Add(this.buttonZapisz);
-			this.flowLayoutPanelPrzyciski.Controls.Add(this.buttonAnuluj);
-			this.flowLayoutPanelPrzyciski.Location = new System.Drawing.Point(3, 129);
-			this.flowLayoutPanelPrzyciski.Name = "flowLayoutPanelPrzyciski";
-			this.flowLayoutPanelPrzyciski.Size = new System.Drawing.Size(174, 31);
-			this.flowLayoutPanelPrzyciski.TabIndex = 999;
+			flowLayoutPanelPrzyciski.AutoSize = true;
+			flowLayoutPanelPrzyciski.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			flowLayoutPanelPrzyciski.Controls.Add(buttonZapisz);
+			flowLayoutPanelPrzyciski.Controls.Add(buttonAnuluj);
+			flowLayoutPanelPrzyciski.Location = new System.Drawing.Point(3, 29);
+			flowLayoutPanelPrzyciski.Name = "flowLayoutPanelPrzyciski";
+			flowLayoutPanelPrzyciski.Size = new System.Drawing.Size(174, 31);
+			flowLayoutPanelPrzyciski.TabIndex = 999;
 			// 
 			// panelZawartosc
 			// 
-			this.panelZawartosc.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelZawartosc.Location = new System.Drawing.Point(3, 3);
-			this.panelZawartosc.MinimumSize = new System.Drawing.Size(200, 100);
-			this.panelZawartosc.Name = "panelZawartosc";
-			this.panelZawartosc.Size = new System.Drawing.Size(221, 120);
-			this.panelZawartosc.TabIndex = 1;
+			panelZawartosc.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			panelZawartosc.Location = new System.Drawing.Point(3, 3);
+			panelZawartosc.MinimumSize = new System.Drawing.Size(190, 20);
+			panelZawartosc.Name = "panelZawartosc";
+			panelZawartosc.Size = new System.Drawing.Size(190, 20);
+			panelZawartosc.TabIndex = 1;
 			// 
 			// Dialog
 			// 
-			this.AcceptButton = this.buttonZapisz;
-			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.AutoSize = true;
-			this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
-			this.CancelButton = this.buttonAnuluj;
-			this.ClientSize = new System.Drawing.Size(227, 163);
-			this.Controls.Add(this.tableLayoutPanelZawartosc);
-			this.KeyPreview = true;
-			this.Name = "Dialog";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "OknoEdycji";
-			this.tableLayoutPanelZawartosc.ResumeLayout(false);
-			this.tableLayoutPanelZawartosc.PerformLayout();
-			this.flowLayoutPanelPrzyciski.ResumeLayout(false);
-			this.flowLayoutPanelPrzyciski.PerformLayout();
-			this.ResumeLayout(false);
-
+			AcceptButton = buttonZapisz;
+			AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+			AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
+			CancelButton = buttonAnuluj;
+			ClientSize = new System.Drawing.Size(198, 65);
+			Controls.Add(tableLayoutPanelZawartosc);
+			KeyPreview = true;
+			Name = "Dialog";
+			StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+			Text = "OknoEdycji";
+			tableLayoutPanelZawartosc.ResumeLayout(false);
+			tableLayoutPanelZawartosc.PerformLayout();
+			flowLayoutPanelPrzyciski.ResumeLayout(false);
+			flowLayoutPanelPrzyciski.PerformLayout();
+			ResumeLayout(false);
+			PerformLayout();
 		}
 
 		#endregion

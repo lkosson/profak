@@ -16,7 +16,7 @@ namespace ProFak.UI
 			DodajTextBox(jednostkaMiary => jednostkaMiary.Nazwa, "Nazwa", wymagane: true);
 			DodajCheckBox(jednostkaMiary => jednostkaMiary.CzyDomyslna, "Domyślna");
 			DodajNumericUpDown(jednostkaMiary => jednostkaMiary.LiczbaMiescPoPrzecinku, "Liczba miejsc po przecinku");
-			MinimumSize = new Size(250, 120);
+			UstawRozmiar();
 		}
 	}
 }

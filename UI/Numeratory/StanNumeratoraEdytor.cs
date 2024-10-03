@@ -14,7 +14,7 @@ namespace ProFak.UI
 		{
 			DodajTextBox(stanNumeratora => stanNumeratora.Parametry, "Parametry");
 			DodajNumericUpDown(stanNumeratora => stanNumeratora.OstatniaWartosc, "Ostatnia wartość");
-			MinimumSize = new Size(250, 100);
+			UstawRozmiar();
 		}
 	}
 }

@@ -18,8 +18,13 @@ namespace ProFak.UI
 		public EdytorDwieKolumny()
 		{
 			dwieKolumny = new DwieKolumny();
-			dwieKolumny.Dock = DockStyle.Fill;
 			Controls.Add(dwieKolumny);
+		}
+
+		public void UstawRozmiar()
+		{
+			Size = dwieKolumny.Size;
+			dwieKolumny.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
 		}
 
 		public void DodajWiersz(Control kontrolka, string etykieta)

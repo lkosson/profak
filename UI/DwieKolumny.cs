@@ -17,6 +17,7 @@ namespace ProFak.UI
 		{
 			ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
 			ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
+			Height = 0;
 		}
 
 		protected override void OnCreateControl()
@@ -28,7 +29,8 @@ namespace ProFak.UI
 
 		public void DodajWiersz(Control kontrolka, string etykieta)
 		{
-			szerokoscKontrolek = Math.Max(szerokoscKontrolek, kontrolka.GetPreferredSize(default).Width);
+			szerokoscKontrolek = Math.Max(szerokoscKontrolek, kontrolka.Width);
+			Height += kontrolka.Height + kontrolka.Margin.Top + kontrolka.Margin.Bottom;
 
 			RowCount++;
 			RowStyles.Add(new RowStyle());
@@ -53,6 +55,7 @@ namespace ProFak.UI
 		{
 			var textBox = new TextBox();
 			textBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+			textBox.Width = 200 * textBox.DeviceDpi / 96;
 			DodajWiersz(textBox, etykieta);
 			return textBox;
 		}
@@ -60,9 +63,9 @@ namespace ProFak.UI
 		public CheckBox DodajCheckBox(string etykieta)
 		{
 			var checkBox = new CheckBox();
-			checkBox.AutoSize = true;
 			checkBox.Anchor = AnchorStyles.Left;
 			checkBox.Text = etykieta;
+			checkBox.Size = checkBox.GetPreferredSize(default);
 			DodajWiersz(checkBox, null);
 			return checkBox;
 		}
@@ -82,6 +85,7 @@ namespace ProFak.UI
 		{
 			var dateTimePicker = new DateTimePicker();
 			dateTimePicker.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+			dateTimePicker.Width = 200 * dateTimePicker.DeviceDpi / 96;
 			DodajWiersz(dateTimePicker, etykieta);
 			return dateTimePicker;
 		}

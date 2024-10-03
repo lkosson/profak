@@ -15,7 +15,7 @@ namespace ProFak.UI
 		{
 			DodajDatePicker(wplata => wplata.Data, "Data wpływu");
 			DodajNumericUpDown(wplata => wplata.Kwota, "Kwota");
-			MinimumSize = new Size(250, 60);
+			UstawRozmiar();
 		}
 
 		protected override void PrzygotujRekord(Wplata rekord)

@@ -15,7 +15,7 @@ namespace ProFak.UI
 			DodajTextBox(sposobPlatnosci => sposobPlatnosci.Nazwa, "Nazwa", wymagane: true);
 			DodajNumericUpDown(sposobPlatnosci => sposobPlatnosci.LiczbaDni, "Liczba dni");
 			DodajCheckBox(sposobPlatnosci => sposobPlatnosci.CzyDomyslny, "Domyślny");
-			MinimumSize = new Size(250, 80);
+			UstawRozmiar();
 		}
 	}
 }

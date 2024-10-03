@@ -18,7 +18,7 @@ namespace ProFak.UI
 			DodajTextBox(stawkaVat => stawkaVat.Skrot, "Skrót", wymagane: true);
 			DodajNumericUpDown(stawkaVat => stawkaVat.Wartosc, "Wartość");
 			DodajCheckBox(stawkaVat => stawkaVat.CzyDomyslna, "Domyślna");
-			MinimumSize = new Size(250, 80);
+			UstawRozmiar();
 		}
 	}
 }

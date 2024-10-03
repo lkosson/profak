@@ -14,7 +14,7 @@ namespace ProFak.UI
 		{
 			DodajTextBox(urzad => urzad.Kod, "Kod", wymagane: true);
 			DodajTextBox(urzad => urzad.Nazwa, "Nazwa", wymagane: true);
-			MinimumSize = new Size(250, 80);
+			UstawRozmiar();
 		}
 	}
 }

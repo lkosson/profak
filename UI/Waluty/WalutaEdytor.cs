@@ -15,7 +15,7 @@ namespace ProFak.UI
 			DodajTextBox(waluta => waluta.Skrot, "Skrót", wymagane: true);
 			DodajTextBox(waluta => waluta.Nazwa, "Nazwa", wymagane: true);
 			DodajCheckBox(waluta => waluta.CzyDomyslna, "Domyślna");
-			MinimumSize = new Size(250, 80);
+			UstawRozmiar();
 		}
 	}
 }
