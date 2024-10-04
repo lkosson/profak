@@ -36,9 +36,9 @@ namespace ProFak.UI
 			label3 = new System.Windows.Forms.Label();
 			label4 = new System.Windows.Forms.Label();
 			label5 = new System.Windows.Forms.Label();
+			numericUpDownPrzychody = new NumericUpDownDPI();
 			label6 = new System.Windows.Forms.Label();
 			label7 = new System.Windows.Forms.Label();
-			numericUpDownPrzychody = new NumericUpDownDPI();
 			numericUpDownKoszty = new NumericUpDownDPI();
 			numericUpDownPodatek = new NumericUpDownDPI();
 			numericUpDownPrzeniesiony = new NumericUpDownDPI();
@@ -163,6 +163,17 @@ namespace ProFak.UI
 			label5.TabIndex = 2;
 			label5.Text = "Przeniesiony";
 			// 
+			// numericUpDownPrzychody
+			// 
+			numericUpDownPrzychody.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			numericUpDownPrzychody.DecimalPlaces = 2;
+			numericUpDownPrzychody.Location = new System.Drawing.Point(102, 3);
+			numericUpDownPrzychody.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
+			numericUpDownPrzychody.Name = "numericUpDownPrzychody";
+			numericUpDownPrzychody.Size = new System.Drawing.Size(675, 23);
+			numericUpDownPrzychody.TabIndex = 3;
+			numericUpDownPrzychody.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
 			// label6
 			// 
 			label6.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -182,17 +193,6 @@ namespace ProFak.UI
 			label7.Size = new System.Drawing.Size(60, 15);
 			label7.TabIndex = 2;
 			label7.Text = "Do wpłaty";
-			// 
-			// numericUpDownPrzychody
-			// 
-			numericUpDownPrzychody.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			numericUpDownPrzychody.DecimalPlaces = 2;
-			numericUpDownPrzychody.Location = new System.Drawing.Point(102, 3);
-			numericUpDownPrzychody.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
-			numericUpDownPrzychody.Name = "numericUpDownPrzychody";
-			numericUpDownPrzychody.Size = new System.Drawing.Size(675, 23);
-			numericUpDownPrzychody.TabIndex = 3;
-			numericUpDownPrzychody.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// numericUpDownKoszty
 			// 
@@ -322,9 +322,10 @@ namespace ProFak.UI
 			// 
 			// dateTimePickerMiesiac
 			// 
+			dateTimePickerMiesiac.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			dateTimePickerMiesiac.CustomFormat = "MMMM yyyy";
 			dateTimePickerMiesiac.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-			dateTimePickerMiesiac.Location = new System.Drawing.Point(56, 3);
+			dateTimePickerMiesiac.Location = new System.Drawing.Point(56, 4);
 			dateTimePickerMiesiac.Name = "dateTimePickerMiesiac";
 			dateTimePickerMiesiac.Size = new System.Drawing.Size(200, 23);
 			dateTimePickerMiesiac.TabIndex = 3;

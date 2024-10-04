@@ -143,9 +143,10 @@ namespace ProFak.UI
 			// 
 			// dateTimePickerMiesiac
 			// 
+			dateTimePickerMiesiac.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			dateTimePickerMiesiac.CustomFormat = "MMMM yyyy";
 			dateTimePickerMiesiac.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-			dateTimePickerMiesiac.Location = new System.Drawing.Point(56, 3);
+			dateTimePickerMiesiac.Location = new System.Drawing.Point(56, 4);
 			dateTimePickerMiesiac.Name = "dateTimePickerMiesiac";
 			dateTimePickerMiesiac.Size = new System.Drawing.Size(200, 23);
 			dateTimePickerMiesiac.TabIndex = 3;
