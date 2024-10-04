@@ -74,6 +74,7 @@ namespace ProFak.UI
 			dataGridViewWynik.Size = new System.Drawing.Size(771, 191);
 			dataGridViewWynik.TabIndex = 0;
 			dataGridViewWynik.CellEndEdit += dataGridViewWynik_CellEndEdit;
+			dataGridViewWynik.KeyUp += dataGridViewWynik_KeyUp;
 			// 
 			// groupBox1
 			// 

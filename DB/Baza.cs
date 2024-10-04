@@ -213,6 +213,12 @@ namespace ProFak.DB
 			ZapiszZmiany();
 		}
 
+		public void Usun(object rekord)
+		{
+			Entry(rekord).State = EntityState.Deleted;
+			ZapiszZmiany();
+		}
+
 		private void ZapiszZmiany()
 		{
 			try

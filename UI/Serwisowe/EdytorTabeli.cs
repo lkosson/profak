@@ -24,6 +24,8 @@ namespace ProFak.UI
 		protected override void OnCreateControl()
 		{
 			base.OnCreateControl();
+			dataGridViewWynik.AllowUserToDeleteRows = true;
+			dataGridViewWynik.RowHeadersVisible = true;
 			comboBoxTabela.DisplayMember = nameof(PozycjaListy<IQueryable>.Opis);
 			comboBoxTabela.ValueMember = nameof(PozycjaListy<IQueryable>.Wartosc);
 			comboBoxTabela.DataSource = new[]
@@ -90,6 +92,32 @@ namespace ProFak.UI
 			catch (Exception exc)
 			{
 				textBoxStatus.Text = exc.GetType() + ": " + exc.Message;
+			}
+		}
+
+		private void dataGridViewWynik_KeyUp(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Delete && e.Modifiers == Keys.None)
+			{
+				try
+				{
+					if (dataGridViewWynik.SelectedRows.Count == 0) return;
+					textBoxStatus.Text = "Kasowanie ...";
+					using var nowyKontekst = new Kontekst(Kontekst);
+					using var tx = nowyKontekst.Transakcja();
+					foreach (DataGridViewRow wiersz in dataGridViewWynik.SelectedRows)
+					{
+						var rekord = wiersz.DataBoundItem;
+						Kontekst.Baza.Usun(rekord);
+					}
+					tx.Zatwierdz();
+					if (dataGridViewWynik.SelectedRows.Count == 1) textBoxStatus.Text = "Usunięto rekord.";
+					else textBoxStatus.Text = "Usunięto rekordy : " + dataGridViewWynik.SelectedRows.Count;
+				}
+				catch (Exception exc)
+				{
+					textBoxStatus.Text = exc.GetType() + ": " + exc.Message;
+				}
 			}
 		}
 	}
