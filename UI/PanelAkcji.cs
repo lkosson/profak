@@ -16,7 +16,7 @@ namespace ProFak.UI
 		public PanelAkcji()
 		{
 			przyciski = new List<(Button przycisk, AdapterAkcji adapter)>();
-			MinimumSize = new Size(100, 50);
+			MinimumSize = new Size(200 * DeviceDpi / 96, 50);
 			TabIndex = 100;
 		}
 
@@ -41,7 +41,6 @@ namespace ProFak.UI
 			{
 				kontrolka.Location = new Point(Math.Max(Padding.Left, kontrolka.Margin.Left), y);
 				kontrolka.Width = ClientSize.Width - Math.Max(Padding.Left, kontrolka.Margin.Left) - Math.Max(Padding.Right, kontrolka.Margin.Right);
-				kontrolka.Height = kontrolka.GetPreferredSize(new Size(kontrolka.Width, 10)).Height;
 				y += kontrolka.Height;
 				y += kontrolka.Margin.Bottom;
 			}
@@ -57,6 +56,7 @@ namespace ProFak.UI
 		public void DodajAkcje(AdapterAkcji adapter)
 		{
 			var przycisk = new Button();
+			przycisk.AutoSize = true;
 			przycisk.TabIndex = TabIndex + Controls.Count;
 			przycisk.Click += delegate { adapter.Uruchom(); };
 			AktualizujPrzycisk(przycisk, adapter);
