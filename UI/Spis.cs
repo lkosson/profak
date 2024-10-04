@@ -182,7 +182,7 @@ namespace ProFak.UI
 			kolumna.DefaultCellStyle.Alignment = wyrownajDoPrawej ? DataGridViewContentAlignment.MiddleRight : DataGridViewContentAlignment.MiddleLeft;
 			kolumna.AutoSizeMode = rozciagnij ? DataGridViewAutoSizeColumnMode.Fill : DataGridViewAutoSizeColumnMode.NotSet;
 			if (!String.IsNullOrEmpty(format)) kolumna.DefaultCellStyle.Format = format;
-			if (szerokosc.HasValue) kolumna.Width = szerokosc.Value;
+			if (szerokosc.HasValue) kolumna.Width = szerokosc.Value * DeviceDpi / 96;
 			if (rozciagnij) kolumna.MinimumWidth = 50;
 			Columns.Add(kolumna);
 			if (tooltip != null)
@@ -199,7 +199,7 @@ namespace ProFak.UI
 			kolumna.HeaderText = naglowek;
 			kolumna.DataPropertyName = wlasciwosc;
 			kolumna.Name = wlasciwosc;
-			if (szerokosc.HasValue) kolumna.Width = szerokosc.Value;
+			if (szerokosc.HasValue) kolumna.Width = szerokosc.Value * DeviceDpi / 96;
 			kolumna.SortMode = DataGridViewColumnSortMode.Programmatic;
 			Columns.Add(kolumna);
 			if (tooltip != null)
