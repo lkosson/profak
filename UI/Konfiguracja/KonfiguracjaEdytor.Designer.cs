@@ -41,7 +41,7 @@ namespace ProFak.UI
 			label8 = new System.Windows.Forms.Label();
 			textBoxEMailTresc = new System.Windows.Forms.TextBox();
 			textBoxSMTPLogin = new System.Windows.Forms.TextBox();
-			numericUpDownSMTPort = new System.Windows.Forms.NumericUpDown();
+			numericUpDownSMTPort = new NumericUpDownDPI();
 			textBoxEMailNadawca = new System.Windows.Forms.TextBox();
 			textBoxSMTPHaslo = new System.Windows.Forms.TextBox();
 			textBoxEMailTemat = new System.Windows.Forms.TextBox();
@@ -325,7 +325,7 @@ namespace ProFak.UI
 		private System.ComponentModel.BackgroundWorker backgroundWorkerSprawdzMF;
 		private System.ComponentModel.BackgroundWorker backgroundWorkerPobierzGUS;
 		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.NumericUpDown numericUpDownSMTPort;
+		private NumericUpDownDPI numericUpDownSMTPort;
 		private System.Windows.Forms.TextBox textBoxEMailNadawca;
 		private System.Windows.Forms.TextBox textBoxSMTPHaslo;
 		private System.Windows.Forms.TextBox textBoxEMailTemat;

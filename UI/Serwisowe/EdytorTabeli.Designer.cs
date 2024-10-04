@@ -35,8 +35,8 @@ namespace ProFak.UI
 			this.comboBoxTabela = new System.Windows.Forms.ComboBox();
 			this.textBoxStatus = new System.Windows.Forms.TextBox();
 			this.buttonPokaz = new System.Windows.Forms.Button();
-			this.numericUpDownIDOd = new System.Windows.Forms.NumericUpDown();
-			this.numericUpDownIDDo = new System.Windows.Forms.NumericUpDown();
+			this.numericUpDownIDOd = new NumericUpDownDPI();
+			this.numericUpDownIDDo = new NumericUpDownDPI();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.groupBoxWynik.SuspendLayout();
@@ -198,7 +198,7 @@ namespace ProFak.UI
 		private System.Windows.Forms.ComboBox comboBoxTabela;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.NumericUpDown numericUpDownIDDo;
-		private System.Windows.Forms.NumericUpDown numericUpDownIDOd;
+		private NumericUpDownDPI numericUpDownIDDo;
+		private NumericUpDownDPI numericUpDownIDOd;
 	}
 }

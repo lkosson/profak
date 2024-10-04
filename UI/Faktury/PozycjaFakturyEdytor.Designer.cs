@@ -35,27 +35,27 @@ namespace ProFak.UI
 			label3 = new System.Windows.Forms.Label();
 			label4 = new System.Windows.Forms.Label();
 			label5 = new System.Windows.Forms.Label();
-			numericUpDownCenaNetto = new System.Windows.Forms.NumericUpDown();
-			numericUpDownCenaVat = new System.Windows.Forms.NumericUpDown();
-			numericUpDownCenaBrutto = new System.Windows.Forms.NumericUpDown();
+			numericUpDownCenaNetto = new NumericUpDownDPI();
+			numericUpDownCenaVat = new NumericUpDownDPI();
+			numericUpDownCenaBrutto = new NumericUpDownDPI();
 			checkBoxWedlugBrutto = new System.Windows.Forms.CheckBox();
 			groupBox2 = new System.Windows.Forms.GroupBox();
 			tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			label6 = new System.Windows.Forms.Label();
 			label7 = new System.Windows.Forms.Label();
 			label8 = new System.Windows.Forms.Label();
-			numericUpDownWartoscNetto = new System.Windows.Forms.NumericUpDown();
-			numericUpDownWartoscVat = new System.Windows.Forms.NumericUpDown();
+			numericUpDownWartoscNetto = new NumericUpDownDPI();
+			numericUpDownWartoscVat = new NumericUpDownDPI();
 			checkBoxRecznie = new System.Windows.Forms.CheckBox();
-			numericUpDownWartoscBrutto = new System.Windows.Forms.NumericUpDown();
+			numericUpDownWartoscBrutto = new NumericUpDownDPI();
 			tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			label1 = new System.Windows.Forms.Label();
 			comboBoxTowar = new System.Windows.Forms.ComboBox();
 			buttonTowar = new System.Windows.Forms.Button();
-			numericUpDownIlosc = new System.Windows.Forms.NumericUpDown();
+			numericUpDownIlosc = new NumericUpDownDPI();
 			labelJednostka = new System.Windows.Forms.Label();
 			label9 = new System.Windows.Forms.Label();
-			numericUpDownLP = new System.Windows.Forms.NumericUpDown();
+			numericUpDownLP = new NumericUpDownDPI();
 			buttonNowyTowar = new System.Windows.Forms.Button();
 			groupBox3 = new System.Windows.Forms.GroupBox();
 			tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
@@ -86,6 +86,7 @@ namespace ProFak.UI
 			// 
 			// tableLayoutPanel1
 			// 
+			tableLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
 			tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			tableLayoutPanel1.ColumnCount = 3;
 			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.3333321F));
@@ -95,29 +96,30 @@ namespace ProFak.UI
 			tableLayoutPanel1.Controls.Add(groupBox2, 1, 1);
 			tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 0);
 			tableLayoutPanel1.Controls.Add(groupBox3, 2, 1);
-			tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
 			tableLayoutPanel1.Name = "tableLayoutPanel1";
 			tableLayoutPanel1.RowCount = 3;
 			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			tableLayoutPanel1.Size = new System.Drawing.Size(664, 180);
+			tableLayoutPanel1.Size = new System.Drawing.Size(666, 177);
 			tableLayoutPanel1.TabIndex = 0;
 			// 
 			// groupBox1
 			// 
 			groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			groupBox1.AutoSize = true;
 			groupBox1.Controls.Add(tableLayoutPanel3);
 			groupBox1.Location = new System.Drawing.Point(3, 40);
 			groupBox1.Name = "groupBox1";
-			groupBox1.Size = new System.Drawing.Size(215, 137);
+			groupBox1.Size = new System.Drawing.Size(216, 134);
 			groupBox1.TabIndex = 4;
 			groupBox1.TabStop = false;
 			groupBox1.Text = "Cena jednostkowa";
 			// 
 			// tableLayoutPanel3
 			// 
+			tableLayoutPanel3.AutoSize = true;
 			tableLayoutPanel3.ColumnCount = 2;
 			tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -138,7 +140,7 @@ namespace ProFak.UI
 			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			tableLayoutPanel3.Size = new System.Drawing.Size(209, 115);
+			tableLayoutPanel3.Size = new System.Drawing.Size(210, 112);
 			tableLayoutPanel3.TabIndex = 0;
 			// 
 			// label3
@@ -178,7 +180,7 @@ namespace ProFak.UI
 			numericUpDownCenaNetto.Location = new System.Drawing.Point(49, 3);
 			numericUpDownCenaNetto.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
 			numericUpDownCenaNetto.Name = "numericUpDownCenaNetto";
-			numericUpDownCenaNetto.Size = new System.Drawing.Size(157, 23);
+			numericUpDownCenaNetto.Size = new System.Drawing.Size(158, 23);
 			numericUpDownCenaNetto.TabIndex = 1;
 			numericUpDownCenaNetto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
@@ -189,7 +191,7 @@ namespace ProFak.UI
 			numericUpDownCenaVat.Location = new System.Drawing.Point(49, 32);
 			numericUpDownCenaVat.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
 			numericUpDownCenaVat.Name = "numericUpDownCenaVat";
-			numericUpDownCenaVat.Size = new System.Drawing.Size(157, 23);
+			numericUpDownCenaVat.Size = new System.Drawing.Size(158, 23);
 			numericUpDownCenaVat.TabIndex = 2;
 			numericUpDownCenaVat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
@@ -200,7 +202,7 @@ namespace ProFak.UI
 			numericUpDownCenaBrutto.Location = new System.Drawing.Point(49, 61);
 			numericUpDownCenaBrutto.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
 			numericUpDownCenaBrutto.Name = "numericUpDownCenaBrutto";
-			numericUpDownCenaBrutto.Size = new System.Drawing.Size(157, 23);
+			numericUpDownCenaBrutto.Size = new System.Drawing.Size(158, 23);
 			numericUpDownCenaBrutto.TabIndex = 3;
 			numericUpDownCenaBrutto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
@@ -218,16 +220,18 @@ namespace ProFak.UI
 			// groupBox2
 			// 
 			groupBox2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			groupBox2.AutoSize = true;
 			groupBox2.Controls.Add(tableLayoutPanel4);
-			groupBox2.Location = new System.Drawing.Point(224, 40);
+			groupBox2.Location = new System.Drawing.Point(225, 40);
 			groupBox2.Name = "groupBox2";
-			groupBox2.Size = new System.Drawing.Size(215, 137);
+			groupBox2.Size = new System.Drawing.Size(216, 134);
 			groupBox2.TabIndex = 5;
 			groupBox2.TabStop = false;
 			groupBox2.Text = "Łączna wartość";
 			// 
 			// tableLayoutPanel4
 			// 
+			tableLayoutPanel4.AutoSize = true;
 			tableLayoutPanel4.ColumnCount = 2;
 			tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -247,7 +251,7 @@ namespace ProFak.UI
 			tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			tableLayoutPanel4.Size = new System.Drawing.Size(209, 115);
+			tableLayoutPanel4.Size = new System.Drawing.Size(210, 112);
 			tableLayoutPanel4.TabIndex = 0;
 			// 
 			// label6
@@ -287,7 +291,7 @@ namespace ProFak.UI
 			numericUpDownWartoscNetto.Location = new System.Drawing.Point(49, 3);
 			numericUpDownWartoscNetto.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
 			numericUpDownWartoscNetto.Name = "numericUpDownWartoscNetto";
-			numericUpDownWartoscNetto.Size = new System.Drawing.Size(157, 23);
+			numericUpDownWartoscNetto.Size = new System.Drawing.Size(158, 23);
 			numericUpDownWartoscNetto.TabIndex = 1;
 			numericUpDownWartoscNetto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
@@ -298,7 +302,7 @@ namespace ProFak.UI
 			numericUpDownWartoscVat.Location = new System.Drawing.Point(49, 32);
 			numericUpDownWartoscVat.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
 			numericUpDownWartoscVat.Name = "numericUpDownWartoscVat";
-			numericUpDownWartoscVat.Size = new System.Drawing.Size(157, 23);
+			numericUpDownWartoscVat.Size = new System.Drawing.Size(158, 23);
 			numericUpDownWartoscVat.TabIndex = 2;
 			numericUpDownWartoscVat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
@@ -320,7 +324,7 @@ namespace ProFak.UI
 			numericUpDownWartoscBrutto.Location = new System.Drawing.Point(49, 61);
 			numericUpDownWartoscBrutto.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
 			numericUpDownWartoscBrutto.Name = "numericUpDownWartoscBrutto";
-			numericUpDownWartoscBrutto.Size = new System.Drawing.Size(157, 23);
+			numericUpDownWartoscBrutto.Size = new System.Drawing.Size(158, 23);
 			numericUpDownWartoscBrutto.TabIndex = 3;
 			numericUpDownWartoscBrutto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
@@ -352,7 +356,7 @@ namespace ProFak.UI
 			tableLayoutPanel2.Name = "tableLayoutPanel2";
 			tableLayoutPanel2.RowCount = 1;
 			tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			tableLayoutPanel2.Size = new System.Drawing.Size(658, 31);
+			tableLayoutPanel2.Size = new System.Drawing.Size(660, 31);
 			tableLayoutPanel2.TabIndex = 1;
 			// 
 			// label1
@@ -371,14 +375,14 @@ namespace ProFak.UI
 			comboBoxTowar.FormattingEnabled = true;
 			comboBoxTowar.Location = new System.Drawing.Point(166, 4);
 			comboBoxTowar.Name = "comboBoxTowar";
-			comboBoxTowar.Size = new System.Drawing.Size(287, 23);
+			comboBoxTowar.Size = new System.Drawing.Size(289, 23);
 			comboBoxTowar.TabIndex = 1;
 			// 
 			// buttonTowar
 			// 
 			buttonTowar.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			buttonTowar.AutoSize = true;
-			buttonTowar.Location = new System.Drawing.Point(459, 3);
+			buttonTowar.Location = new System.Drawing.Point(461, 3);
 			buttonTowar.Name = "buttonTowar";
 			buttonTowar.Size = new System.Drawing.Size(26, 25);
 			buttonTowar.TabIndex = 2;
@@ -389,7 +393,7 @@ namespace ProFak.UI
 			// 
 			numericUpDownIlosc.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			numericUpDownIlosc.DecimalPlaces = 3;
-			numericUpDownIlosc.Location = new System.Drawing.Point(546, 4);
+			numericUpDownIlosc.Location = new System.Drawing.Point(548, 4);
 			numericUpDownIlosc.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
 			numericUpDownIlosc.Name = "numericUpDownIlosc";
 			numericUpDownIlosc.Size = new System.Drawing.Size(73, 23);
@@ -400,7 +404,7 @@ namespace ProFak.UI
 			// 
 			labelJednostka.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			labelJednostka.AutoSize = true;
-			labelJednostka.Location = new System.Drawing.Point(625, 8);
+			labelJednostka.Location = new System.Drawing.Point(627, 8);
 			labelJednostka.Name = "labelJednostka";
 			labelJednostka.Size = new System.Drawing.Size(30, 15);
 			labelJednostka.TabIndex = 4;
@@ -430,7 +434,7 @@ namespace ProFak.UI
 			// 
 			buttonNowyTowar.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			buttonNowyTowar.AutoSize = true;
-			buttonNowyTowar.Location = new System.Drawing.Point(491, 3);
+			buttonNowyTowar.Location = new System.Drawing.Point(493, 3);
 			buttonNowyTowar.Name = "buttonNowyTowar";
 			buttonNowyTowar.Size = new System.Drawing.Size(29, 25);
 			buttonNowyTowar.TabIndex = 3;
@@ -441,16 +445,18 @@ namespace ProFak.UI
 			// groupBox3
 			// 
 			groupBox3.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			groupBox3.AutoSize = true;
 			groupBox3.Controls.Add(tableLayoutPanel5);
-			groupBox3.Location = new System.Drawing.Point(445, 40);
+			groupBox3.Location = new System.Drawing.Point(447, 40);
 			groupBox3.Name = "groupBox3";
-			groupBox3.Size = new System.Drawing.Size(216, 137);
+			groupBox3.Size = new System.Drawing.Size(216, 111);
 			groupBox3.TabIndex = 6;
 			groupBox3.TabStop = false;
 			groupBox3.Text = "Podatki";
 			// 
 			// tableLayoutPanel5
 			// 
+			tableLayoutPanel5.AutoSize = true;
 			tableLayoutPanel5.ColumnCount = 3;
 			tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -471,7 +477,7 @@ namespace ProFak.UI
 			tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			tableLayoutPanel5.Size = new System.Drawing.Size(210, 115);
+			tableLayoutPanel5.Size = new System.Drawing.Size(210, 89);
 			tableLayoutPanel5.TabIndex = 0;
 			// 
 			// label10
@@ -556,16 +562,18 @@ namespace ProFak.UI
 			Controls.Add(tableLayoutPanel1);
 			MinimumSize = new System.Drawing.Size(600, 180);
 			Name = "PozycjaFakturyEdytor";
-			Size = new System.Drawing.Size(664, 180);
+			Size = new System.Drawing.Size(669, 183);
 			tableLayoutPanel1.ResumeLayout(false);
 			tableLayoutPanel1.PerformLayout();
 			groupBox1.ResumeLayout(false);
+			groupBox1.PerformLayout();
 			tableLayoutPanel3.ResumeLayout(false);
 			tableLayoutPanel3.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)numericUpDownCenaNetto).EndInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownCenaVat).EndInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownCenaBrutto).EndInit();
 			groupBox2.ResumeLayout(false);
+			groupBox2.PerformLayout();
 			tableLayoutPanel4.ResumeLayout(false);
 			tableLayoutPanel4.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)numericUpDownWartoscNetto).EndInit();
@@ -576,6 +584,7 @@ namespace ProFak.UI
 			((System.ComponentModel.ISupportInitialize)numericUpDownIlosc).EndInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownLP).EndInit();
 			groupBox3.ResumeLayout(false);
+			groupBox3.PerformLayout();
 			tableLayoutPanel5.ResumeLayout(false);
 			tableLayoutPanel5.PerformLayout();
 			ResumeLayout(false);
@@ -592,18 +601,18 @@ namespace ProFak.UI
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.NumericUpDown numericUpDownCenaNetto;
-		private System.Windows.Forms.NumericUpDown numericUpDownCenaVat;
-		private System.Windows.Forms.NumericUpDown numericUpDownCenaBrutto;
+		private NumericUpDownDPI numericUpDownCenaNetto;
+		private NumericUpDownDPI numericUpDownCenaVat;
+		private NumericUpDownDPI numericUpDownCenaBrutto;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.NumericUpDown numericUpDownWartoscNetto;
-		private System.Windows.Forms.NumericUpDown numericUpDownWartoscVat;
-		private System.Windows.Forms.NumericUpDown numericUpDownWartoscBrutto;
+		private NumericUpDownDPI numericUpDownWartoscNetto;
+		private NumericUpDownDPI numericUpDownWartoscVat;
+		private NumericUpDownDPI numericUpDownWartoscBrutto;
 		private System.Windows.Forms.ComboBox comboBoxTowar;
 		private System.Windows.Forms.Button buttonTowar;
-		private System.Windows.Forms.NumericUpDown numericUpDownIlosc;
+		private NumericUpDownDPI numericUpDownIlosc;
 		private System.Windows.Forms.Label labelJednostka;
 		private System.Windows.Forms.CheckBox checkBoxWedlugBrutto;
 		private System.Windows.Forms.CheckBox checkBoxRecznie;
@@ -611,7 +620,7 @@ namespace ProFak.UI
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.ComboBox comboBoxStawkaVat;
 		private System.Windows.Forms.Label label9;
-		private System.Windows.Forms.NumericUpDown numericUpDownLP;
+		private NumericUpDownDPI numericUpDownLP;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
 		private System.Windows.Forms.Label label10;

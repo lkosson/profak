@@ -109,9 +109,9 @@ namespace ProFak.UI
 			label16 = new System.Windows.Forms.Label();
 			label17 = new System.Windows.Forms.Label();
 			label18 = new System.Windows.Forms.Label();
-			numericUpDownNetto = new System.Windows.Forms.NumericUpDown();
-			numericUpDownVat = new System.Windows.Forms.NumericUpDown();
-			numericUpDownBrutto = new System.Windows.Forms.NumericUpDown();
+			numericUpDownNetto = new NumericUpDownDPI();
+			numericUpDownVat = new NumericUpDownDPI();
+			numericUpDownBrutto = new NumericUpDownDPI();
 			tableLayoutPanel.SuspendLayout();
 			tableLayoutPanelKontrahenci.SuspendLayout();
 			groupBox2.SuspendLayout();
@@ -1331,9 +1331,9 @@ namespace ProFak.UI
 		private System.Windows.Forms.Label label16;
 		private System.Windows.Forms.Label label17;
 		private System.Windows.Forms.Label label18;
-		private System.Windows.Forms.NumericUpDown numericUpDownNetto;
-		private System.Windows.Forms.NumericUpDown numericUpDownVat;
-		private System.Windows.Forms.NumericUpDown numericUpDownBrutto;
+		private NumericUpDownDPI numericUpDownNetto;
+		private NumericUpDownDPI numericUpDownVat;
+		private NumericUpDownDPI numericUpDownBrutto;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelDatyKwoty;
 		private System.Windows.Forms.TabPage tabPagePliki;
 		private System.Windows.Forms.TabPage tabPagePodatki;
