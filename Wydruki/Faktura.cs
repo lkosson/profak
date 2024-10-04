@@ -48,11 +48,11 @@ namespace ProFak.Wydruki
 				{
 					var fakturaBazowa = baza.Znajdz(faktura.FakturaKorygowanaRef);
 					if (fakturaBazowa.Rodzaj == RodzajFaktury.Proforma) fakturaDTO.Podtytul = "do faktury pro forma <b>" + fakturaBazowa.Numer + "</b>";
-					else fakturaDTO.Podtytul = "do faktury VAT <b>" + fakturaBazowa.Numer + "</b><br/>z dnia " + fakturaBazowa.DataWystawienia.ToLongDateString() + "<br/>";
+					else fakturaDTO.Podtytul = "do faktury VAT <b>" + fakturaBazowa.Numer + "</b><br/>z dnia " + fakturaBazowa.DataWystawienia.ToString(UI.Format.Data) + "<br/>";
 				}
 
-				fakturaDTO.Naglowek = "<b>Data wystawienia:</b> " + faktura.DataWystawienia.ToLongDateString()
-					+ "<br/><b>Data sprzedaży:</b> " + faktura.DataSprzedazy.ToLongDateString();
+				fakturaDTO.Naglowek = "<b>Data wystawienia:</b> " + faktura.DataWystawienia.ToString(UI.Format.Data)
+					+ "<br/><b>Data sprzedaży:</b> " + faktura.DataSprzedazy.ToString(UI.Format.Data);
 
 				fakturaDTO.DaneNabywcy = faktura.NazwaNabywcy + "<br/>" + faktura.DaneNabywcy.ToString().Replace("\n", "<br/>");
 				if (!String.IsNullOrEmpty(faktura.NIPNabywcy)) fakturaDTO.DaneNabywcy += "<br/><b>NIP:</b> " + faktura.NIPNabywcy;
@@ -62,13 +62,13 @@ namespace ProFak.Wydruki
 
 				if (dozaplaty < 0)
 				{
-					fakturaDTO.Stopka = "<b>Do zwrotu:</b> " + (-dozaplaty).ToString("n2") + " " + waluta.Skrot + "<br/><b>Słownie:</b> " + SlowniePL.Slownie(-dozaplaty, waluta.Skrot);
+					fakturaDTO.Stopka = "<b>Do zwrotu:</b> " + (-dozaplaty).ToString(UI.Format.Kwota) + " " + waluta.Skrot + "<br/><b>Słownie:</b> " + SlowniePL.Slownie(-dozaplaty, waluta.Skrot);
 				}
 				else
 				{
-					fakturaDTO.Stopka = "<b>Do zapłaty:</b> " + dozaplaty.ToString("n2") + " " + waluta.Skrot
+					fakturaDTO.Stopka = "<b>Do zapłaty:</b> " + dozaplaty.ToString(UI.Format.Kwota) + " " + waluta.Skrot
 						+ "<br/><b>Słownie:</b> " + SlowniePL.Slownie(dozaplaty, waluta.Skrot)
-						+ "<br/><b>Termin płatności:</b> " + faktura.TerminPlatnosci.ToLongDateString()
+						+ "<br/><b>Termin płatności:</b> " + faktura.TerminPlatnosci.ToString(UI.Format.Data)
 						+ "<br/><b>Forma płatności:</b> " + faktura.OpisSposobuPlatnosci;
 
 					if (!String.IsNullOrEmpty(faktura.RachunekBankowy)) fakturaDTO.Stopka += "<br/><b>Numer rachunku:</b> " + faktura.RachunekBankowy;

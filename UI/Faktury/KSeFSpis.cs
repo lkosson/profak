@@ -28,8 +28,8 @@ namespace ProFak.UI
 				var podsumowanie = base.Podsumowanie;
 				if (WybraneRekordy.Count() > 1)
 				{
-					podsumowanie += $"\nRazem netto: {WybraneRekordy.Sum(faktura => faktura.RazemNetto).ToString("n2")}";
-					podsumowanie += $"\nRazem brutto: {WybraneRekordy.Sum(faktura => faktura.RazemBrutto).ToString("n2")}";
+					podsumowanie += $"\nRazem netto: {WybraneRekordy.Sum(faktura => faktura.RazemNetto).ToString(Format.Kwota)}";
+					podsumowanie += $"\nRazem brutto: {WybraneRekordy.Sum(faktura => faktura.RazemBrutto).ToString(Format.Kwota)}";
 				}
 				return podsumowanie;
 			}
@@ -39,8 +39,8 @@ namespace ProFak.UI
 		{
 			DodajKolumne(nameof(Faktura.Numer), "Numer");
 			DodajKolumne(nameof(Faktura.RodzajFmt), "Rodzaj");
-			DodajKolumne(nameof(Faktura.DataSprzedazy), "Data sprzedaży", format: "yyyy-MM-dd", szerokosc: 120);
-			DodajKolumne(nameof(Faktura.DataKSeF), "Data wystawienia", format: "yyyy-MM-dd HH:mm:ss", szerokosc: 170);
+			DodajKolumneData(nameof(Faktura.DataSprzedazy), "Data sprzedaży");
+			DodajKolumneData(nameof(Faktura.DataKSeF), "Data wystawienia", tooltip: faktura => faktura.DataKSeF?.ToString("yyyy-MM-dd HH:mm:ss"));
 			kolumnaNazwaNabywcy = DodajKolumne(nameof(Faktura.NazwaNabywcy), "Nabywca", rozciagnij: true);
 			kolumnaNIPNabywcy = DodajKolumne(nameof(Faktura.NIPNabywcy), "NIP nabywcy", szerokosc: 120);
 			kolumnaNazwaSprzedawcy = DodajKolumne(nameof(Faktura.NazwaSprzedawcy), "Sprzedawca", rozciagnij: true);

@@ -77,6 +77,16 @@ namespace ProFak.UI
 			tabPagePozycje.Controls.Add(pozycjeFaktury = Spisy.PozycjeFaktur());
 			tabPagePliki.Controls.Add(pliki = Spisy.Pliki());
 			pozycjeFaktury.Spis.RekordyZmienione += pozycjeFakturySpis_RekordyZmienione;
+
+			dateTimePickerDataSprzedazy.CustomFormat = Format.Data;
+			dateTimePickerDataWprowadzenia.CustomFormat = Format.Data;
+			dateTimePickerDataWystawienia.CustomFormat = Format.Data;
+			dateTimePickerTerminPlatnosci.CustomFormat = Format.Data;
+
+			dateTimePickerDataSprzedazy.Format = DateTimePickerFormat.Custom;
+			dateTimePickerDataWprowadzenia.Format = DateTimePickerFormat.Custom;
+			dateTimePickerDataWystawienia.Format = DateTimePickerFormat.Custom;
+			dateTimePickerTerminPlatnosci.Format = DateTimePickerFormat.Custom;
 		}
 
 		private void pozycjeFakturySpis_RekordyZmienione()

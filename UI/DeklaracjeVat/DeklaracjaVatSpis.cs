@@ -21,7 +21,9 @@ namespace ProFak.UI
 				var podsumowanie = base.Podsumowanie;
 				if (WybraneRekordy.Count() > 1)
 				{
-					podsumowanie += $"\nRazem do wpłaty: {WybraneRekordy.Sum(deklaracjaVat => deklaracjaVat.DoWplaty).ToString("n2")}\nRazem należny: {WybraneRekordy.Sum(deklaracjaVat => deklaracjaVat.NaleznyRazem).ToString("n2")}\nRazem naliczony: {WybraneRekordy.Sum(deklaracjaVat => deklaracjaVat.NaliczonyRazem).ToString("n2")}";
+					podsumowanie += $"\nRazem do wpłaty: {WybraneRekordy.Sum(deklaracjaVat => deklaracjaVat.DoWplaty).ToString(Format.Kwota)}";
+					podsumowanie += $"\nRazem należny: {WybraneRekordy.Sum(deklaracjaVat => deklaracjaVat.NaleznyRazem).ToString(Format.Kwota)}";
+					podsumowanie += $"\nRazem naliczony: {WybraneRekordy.Sum(deklaracjaVat => deklaracjaVat.NaliczonyRazem).ToString(Format.Kwota)}";
 				}
 				return podsumowanie;
 			}
@@ -30,10 +32,10 @@ namespace ProFak.UI
 		public DeklaracjaVatSpis()
 		{
 			DodajKolumne(nameof(DeklaracjaVat.MiesiacFmt), "Miesiąc");
-			DodajKolumne(nameof(DeklaracjaVat.NettoRazem), "Podstawa", wyrownajDoPrawej: true, format: "#,##0", szerokosc: 80);
-			DodajKolumne(nameof(DeklaracjaVat.NaleznyRazem), "Należny", wyrownajDoPrawej: true, format: "#,##0", szerokosc: 80);
-			DodajKolumne(nameof(DeklaracjaVat.NaliczonyRazem), "Naliczony", wyrownajDoPrawej: true, format: "#,##0", szerokosc: 80);
-			DodajKolumne(nameof(DeklaracjaVat.DoWplaty), "Do wpłaty", wyrownajDoPrawej: true, format: "#,##0", szerokosc: 80);
+			DodajKolumneKwota(nameof(DeklaracjaVat.NettoRazem), "Podstawa", format: Format.KwotaBezGroszy);
+			DodajKolumneKwota(nameof(DeklaracjaVat.NaleznyRazem), "Należny", format: Format.KwotaBezGroszy);
+			DodajKolumneKwota(nameof(DeklaracjaVat.NaliczonyRazem), "Naliczony", format: Format.KwotaBezGroszy);
+			DodajKolumneKwota(nameof(DeklaracjaVat.DoWplaty), "Do wpłaty", format: Format.KwotaBezGroszy);
 			DodajKolumneId();
 		}
 

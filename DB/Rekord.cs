@@ -19,7 +19,7 @@ namespace ProFak.DB
 		protected static bool CzyPasuje(string pole, string fraza) => pole != null && pole.Contains(fraza, StringComparison.CurrentCultureIgnoreCase);
 		protected static bool CzyPasuje(int pole, string fraza) => Int32.TryParse(fraza, out var wartosc) && pole == wartosc;
 		protected static bool CzyPasuje(decimal pole, string fraza) => Decimal.TryParse(fraza, out var wartosc) && pole == wartosc;
-		protected static bool CzyPasuje(DateTime pole, string fraza) => CzyPasuje(pole.ToString("yyyy-MM-dd"), fraza);
+		protected static bool CzyPasuje(DateTime pole, string fraza) => CzyPasuje(pole.ToString(UI.Format.Data), fraza);
 		protected static bool CzyPasuje(object pole, string fraza) => pole != null && CzyPasuje(pole.ToString(), fraza);
 
 		public static string Format<TEnum>(TEnum value) where TEnum : Enum

@@ -49,6 +49,9 @@ namespace ProFak.UI
 
 			tabPageFakturySprzedazy.Controls.Add(fakturySprzedazy);
 			tabPageFakturyZakupu.Controls.Add(fakturyZakupu);
+
+			dateTimePickerOsobaFizycznaDataUrodzenia.CustomFormat = Format.Data;
+			dateTimePickerOsobaFizycznaDataUrodzenia.Format = DateTimePickerFormat.Custom;
 		}
 
 		private void textBoxNazwa_TextChanged(object sender, EventArgs e)

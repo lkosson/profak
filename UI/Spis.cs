@@ -210,7 +210,8 @@ namespace ProFak.UI
 			return kolumna;
 		}
 
-		public DataGridViewTextBoxColumn DodajKolumneKwota(string wlasciwosc, string naglowek, int? szerokosc = 80, Func<T, string> tooltip = null) => DodajKolumne(wlasciwosc, naglowek, wyrownajDoPrawej: true, format: "#,##0.00", szerokosc: szerokosc, tooltip: tooltip);
+		public DataGridViewTextBoxColumn DodajKolumneData(string wlasciwosc, string naglowek, string format = Format.Data, int? szerokosc = 120, Func<T, string> tooltip = null) => DodajKolumne(wlasciwosc, naglowek, wyrownajDoPrawej: true, format: format, szerokosc: szerokosc, tooltip: tooltip);
+		public DataGridViewTextBoxColumn DodajKolumneKwota(string wlasciwosc, string naglowek, string format = Format.Kwota, int? szerokosc = 80, Func<T, string> tooltip = null) => DodajKolumne(wlasciwosc, naglowek, wyrownajDoPrawej: true, format: format, szerokosc: szerokosc, tooltip: tooltip);
 		public DataGridViewTextBoxColumn DodajKolumneId() => DodajKolumne("Id", "Id", wyrownajDoPrawej: true, szerokosc: 60);
 
 		protected abstract void Przeladuj();

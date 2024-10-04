@@ -21,7 +21,9 @@ namespace ProFak.UI
 				var podsumowanie = base.Podsumowanie;
 				if (WybraneRekordy.Count() > 1)
 				{
-					podsumowanie += $"\nRazem: {WybraneRekordy.Sum(skladka => skladka.SumaSkladek).ToString("n2")}\nRazem społeczne: {WybraneRekordy.Sum(skladka => skladka.SkladkaSpoleczna).ToString("n2")}\nRazem zdrowotne: {WybraneRekordy.Sum(skladka => skladka.SkladkaZdrowotna).ToString("n2")}";
+					podsumowanie += $"\nRazem: {WybraneRekordy.Sum(skladka => skladka.SumaSkladek).ToString(Format.Kwota)}";
+					podsumowanie += $"\nRazem społeczne: {WybraneRekordy.Sum(skladka => skladka.SkladkaSpoleczna).ToString(Format.Kwota)}";
+					podsumowanie += $"\nRazem zdrowotne: {WybraneRekordy.Sum(skladka => skladka.SkladkaZdrowotna).ToString(Format.Kwota)}";
 				}
 				return podsumowanie;
 			}
@@ -30,9 +32,9 @@ namespace ProFak.UI
 		public SkladkaZusSpis()
 		{
 			DodajKolumne(nameof(SkladkaZus.MiesiacFmt), "Miesiąc");
-			DodajKolumne(nameof(SkladkaZus.SkladkaSpoleczna), "Składka społeczna", wyrownajDoPrawej: true, format: "#,##0.00", szerokosc: 150);
-			DodajKolumne(nameof(SkladkaZus.SkladkaZdrowotna), "Składka zdrowotna", wyrownajDoPrawej: true, format: "#,##0.00", szerokosc: 150);
-			DodajKolumne(nameof(SkladkaZus.SumaSkladek), "Razem", wyrownajDoPrawej: true, format: "#,##0.00", szerokosc: 150);
+			DodajKolumneKwota(nameof(SkladkaZus.SkladkaSpoleczna), "Składka społeczna", szerokosc: 150);
+			DodajKolumneKwota(nameof(SkladkaZus.SkladkaZdrowotna), "Składka zdrowotna", szerokosc: 150);
+			DodajKolumneKwota(nameof(SkladkaZus.SumaSkladek), "Razem", szerokosc: 150);
 			DodajKolumneId();
 		}
 

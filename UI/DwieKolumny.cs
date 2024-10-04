@@ -86,6 +86,8 @@ namespace ProFak.UI
 			var dateTimePicker = new DateTimePicker();
 			dateTimePicker.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 			dateTimePicker.Width = 200 * dateTimePicker.DeviceDpi / 96;
+			dateTimePicker.CustomFormat = Format.Data;
+			dateTimePicker.Format = DateTimePickerFormat.Custom;
 			DodajWiersz(dateTimePicker, etykieta);
 			return dateTimePicker;
 		}
