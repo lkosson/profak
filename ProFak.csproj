@@ -74,6 +74,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Update="UI\Faktury\FakturaEdytor.cs" />
+    <Compile Update="UI\ButtonDPI.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="UI\OknoPostepu.cs">
       <SubType>Form</SubType>
     </Compile>

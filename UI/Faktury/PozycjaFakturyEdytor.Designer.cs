@@ -51,17 +51,17 @@ namespace ProFak.UI
 			tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			label1 = new System.Windows.Forms.Label();
 			comboBoxTowar = new System.Windows.Forms.ComboBox();
-			buttonTowar = new System.Windows.Forms.Button();
+			buttonTowar = new ButtonDPI();
 			numericUpDownIlosc = new NumericUpDownDPI();
 			labelJednostka = new System.Windows.Forms.Label();
 			label9 = new System.Windows.Forms.Label();
 			numericUpDownLP = new NumericUpDownDPI();
-			buttonNowyTowar = new System.Windows.Forms.Button();
+			buttonNowyTowar = new ButtonDPI();
 			groupBox3 = new System.Windows.Forms.GroupBox();
 			tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
 			label10 = new System.Windows.Forms.Label();
 			comboBoxGTU = new System.Windows.Forms.ComboBox();
-			buttonStawkaVat = new System.Windows.Forms.Button();
+			buttonStawkaVat = new ButtonDPI();
 			label2 = new System.Windows.Forms.Label();
 			comboBoxStawkaVat = new System.Windows.Forms.ComboBox();
 			label11 = new System.Windows.Forms.Label();
@@ -611,12 +611,12 @@ namespace ProFak.UI
 		private NumericUpDownDPI numericUpDownWartoscVat;
 		private NumericUpDownDPI numericUpDownWartoscBrutto;
 		private System.Windows.Forms.ComboBox comboBoxTowar;
-		private System.Windows.Forms.Button buttonTowar;
+		private ButtonDPI buttonTowar;
 		private NumericUpDownDPI numericUpDownIlosc;
 		private System.Windows.Forms.Label labelJednostka;
 		private System.Windows.Forms.CheckBox checkBoxWedlugBrutto;
 		private System.Windows.Forms.CheckBox checkBoxRecznie;
-		private System.Windows.Forms.Button buttonStawkaVat;
+		private ButtonDPI buttonStawkaVat;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.ComboBox comboBoxStawkaVat;
 		private System.Windows.Forms.Label label9;
@@ -625,7 +625,7 @@ namespace ProFak.UI
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.ComboBox comboBoxGTU;
-		private System.Windows.Forms.Button buttonNowyTowar;
+		private ButtonDPI buttonNowyTowar;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.ComboBox comboBoxStawkaRyczaltu;
 	}

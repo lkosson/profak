@@ -34,7 +34,7 @@ namespace ProFak.UI
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.comboBoxTabela = new System.Windows.Forms.ComboBox();
 			this.textBoxStatus = new System.Windows.Forms.TextBox();
-			this.buttonPokaz = new System.Windows.Forms.Button();
+			this.buttonPokaz = new ButtonDPI();
 			this.numericUpDownIDOd = new NumericUpDownDPI();
 			this.numericUpDownIDDo = new NumericUpDownDPI();
 			this.label1 = new System.Windows.Forms.Label();
@@ -192,7 +192,7 @@ namespace ProFak.UI
 		#endregion
 		private System.Windows.Forms.GroupBox groupBoxWynik;
 		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.Button buttonPokaz;
+		private ButtonDPI buttonPokaz;
 		private System.Windows.Forms.TextBox textBoxStatus;
 		private Spis dataGridViewWynik;
 		private System.Windows.Forms.ComboBox comboBoxTabela;

@@ -31,7 +31,7 @@ namespace ProFak.UI
 		{
 			tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
 			comboBoxStawkaVat = new System.Windows.Forms.ComboBox();
-			buttonStawkaVat = new System.Windows.Forms.Button();
+			buttonStawkaVat = new ButtonDPI();
 			comboBoxWidocznosc = new System.Windows.Forms.ComboBox();
 			numericUpDownCenaBrutto = new NumericUpDownDPI();
 			comboBoxJednostkaMiary = new System.Windows.Forms.ComboBox();
@@ -47,7 +47,7 @@ namespace ProFak.UI
 			textBoxNazwa = new System.Windows.Forms.TextBox();
 			label1 = new System.Windows.Forms.Label();
 			numericUpDownCenaNetto = new NumericUpDownDPI();
-			buttonJednostkaMiary = new System.Windows.Forms.Button();
+			buttonJednostkaMiary = new ButtonDPI();
 			label9 = new System.Windows.Forms.Label();
 			comboBoxGTU = new System.Windows.Forms.ComboBox();
 			label10 = new System.Windows.Forms.Label();
@@ -371,8 +371,8 @@ namespace ProFak.UI
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.ComboBox comboBoxStawkaVat;
-		private System.Windows.Forms.Button buttonStawkaVat;
-		private System.Windows.Forms.Button buttonJednostkaMiary;
+		private ButtonDPI buttonStawkaVat;
+		private ButtonDPI buttonJednostkaMiary;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.ComboBox comboBoxGTU;
 		private System.Windows.Forms.Label label10;

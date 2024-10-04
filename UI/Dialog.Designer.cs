@@ -29,8 +29,8 @@ namespace ProFak.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			buttonZapisz = new System.Windows.Forms.Button();
-			buttonAnuluj = new System.Windows.Forms.Button();
+			buttonZapisz = new ButtonDPI();
+			buttonAnuluj = new ButtonDPI();
 			tableLayoutPanelZawartosc = new System.Windows.Forms.TableLayoutPanel();
 			flowLayoutPanelPrzyciski = new System.Windows.Forms.FlowLayoutPanel();
 			panelZawartosc = new System.Windows.Forms.Panel();
@@ -118,8 +118,8 @@ namespace ProFak.UI
 		}
 
 		#endregion
-		private System.Windows.Forms.Button buttonZapisz;
-		private System.Windows.Forms.Button buttonAnuluj;
+		private ButtonDPI buttonZapisz;
+		private ButtonDPI buttonAnuluj;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelZawartosc;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelPrzyciski;
 		private System.Windows.Forms.Panel panelZawartosc;

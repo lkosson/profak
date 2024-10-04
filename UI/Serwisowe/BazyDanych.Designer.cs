@@ -31,8 +31,8 @@ namespace ProFak.UI
 		{
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-			this.buttonUtworzKopie = new System.Windows.Forms.Button();
-			this.buttonPrzywrocKopie = new System.Windows.Forms.Button();
+			this.buttonUtworzKopie = new ButtonDPI();
+			this.buttonPrzywrocKopie = new ButtonDPI();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.textBoxRozmiar = new System.Windows.Forms.TextBox();
@@ -42,7 +42,7 @@ namespace ProFak.UI
 			this.textBoxDataModyfikacji = new System.Windows.Forms.TextBox();
 			this.saveFileDialogBackup = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialogBackup = new System.Windows.Forms.OpenFileDialog();
-			this.buttonPrzenies = new System.Windows.Forms.Button();
+			this.buttonPrzenies = new ButtonDPI();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
@@ -216,14 +216,14 @@ namespace ProFak.UI
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.TextBox textBoxRozmiar;
 		private System.Windows.Forms.ComboBox comboBoxPlik;
-		private System.Windows.Forms.Button buttonUtworzKopie;
+		private ButtonDPI buttonUtworzKopie;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-		private System.Windows.Forms.Button buttonPrzywrocKopie;
+		private ButtonDPI buttonPrzywrocKopie;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.TextBox textBoxDataModyfikacji;
 		private System.Windows.Forms.SaveFileDialog saveFileDialogBackup;
 		private System.Windows.Forms.OpenFileDialog openFileDialogBackup;
-		private System.Windows.Forms.Button buttonPrzenies;
+		private ButtonDPI buttonPrzenies;
 	}
 }

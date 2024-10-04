@@ -76,7 +76,7 @@ namespace ProFak.UI
 			this.label1 = new System.Windows.Forms.Label();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.dateTimePickerMiesiac = new System.Windows.Forms.DateTimePicker();
-			this.buttonPrzelicz = new System.Windows.Forms.Button();
+			this.buttonPrzelicz = new ButtonDPI();
 			this.tabControl.SuspendLayout();
 			this.tabPageObliczenia.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
@@ -786,7 +786,7 @@ namespace ProFak.UI
 		private System.Windows.Forms.TabPage tabPageFakturySprzedazy;
 		private System.Windows.Forms.TabPage tabPageFakturyZakupu;
 		private System.Windows.Forms.DateTimePicker dateTimePickerMiesiac;
-		private System.Windows.Forms.Button buttonPrzelicz;
+		private ButtonDPI buttonPrzelicz;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label3;

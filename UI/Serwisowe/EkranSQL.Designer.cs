@@ -34,7 +34,7 @@ namespace ProFak.UI
 			this.dataGridViewWynik = new System.Windows.Forms.DataGridView();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.textBoxStatus = new System.Windows.Forms.TextBox();
-			this.buttonUruchom = new System.Windows.Forms.Button();
+			this.buttonUruchom = new ButtonDPI();
 			this.groupBoxWynik.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridViewWynik)).BeginInit();
 			this.groupBox1.SuspendLayout();
@@ -130,7 +130,7 @@ namespace ProFak.UI
 		private System.Windows.Forms.TextBox textBoxSQL;
 		private System.Windows.Forms.GroupBox groupBoxWynik;
 		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.Button buttonUruchom;
+		private ButtonDPI buttonUruchom;
 		private System.Windows.Forms.TextBox textBoxStatus;
 		private System.Windows.Forms.DataGridView dataGridViewWynik;
 	}

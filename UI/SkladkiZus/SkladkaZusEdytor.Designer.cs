@@ -33,7 +33,7 @@ namespace ProFak.UI
 			tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			dateTimePickerMiesiac = new System.Windows.Forms.DateTimePicker();
-			buttonPrzelicz = new System.Windows.Forms.Button();
+			buttonPrzelicz = new ButtonDPI();
 			numericUpDownPodstawaSpoleczne = new NumericUpDownDPI();
 			label2 = new System.Windows.Forms.Label();
 			label3 = new System.Windows.Forms.Label();
@@ -423,7 +423,7 @@ namespace ProFak.UI
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
 		private System.Windows.Forms.DateTimePicker dateTimePickerMiesiac;
-		private System.Windows.Forms.Button buttonPrzelicz;
+		private ButtonDPI buttonPrzelicz;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
 		private NumericUpDownDPI numericUpDownPodstawaSpoleczne;
 		private System.Windows.Forms.Label label2;

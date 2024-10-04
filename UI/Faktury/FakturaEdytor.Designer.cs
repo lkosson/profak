@@ -37,20 +37,20 @@ namespace ProFak.UI
 			label7 = new System.Windows.Forms.Label();
 			label8 = new System.Windows.Forms.Label();
 			textBoxDaneSprzedawcy = new System.Windows.Forms.TextBox();
-			buttonSprzedawca = new System.Windows.Forms.Button();
+			buttonSprzedawca = new ButtonDPI();
 			comboBoxNIPSprzedawcy = new System.Windows.Forms.ComboBoxFix();
 			comboBoxNazwaSprzedawcy = new System.Windows.Forms.ComboBoxFix();
-			buttonNowySprzedawca = new System.Windows.Forms.Button();
+			buttonNowySprzedawca = new ButtonDPI();
 			groupBox3 = new System.Windows.Forms.GroupBox();
 			tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
 			label9 = new System.Windows.Forms.Label();
 			label10 = new System.Windows.Forms.Label();
 			label11 = new System.Windows.Forms.Label();
 			textBoxDaneNabywcy = new System.Windows.Forms.TextBox();
-			buttonNabywca = new System.Windows.Forms.Button();
+			buttonNabywca = new ButtonDPI();
 			comboBoxNIPNabywcy = new System.Windows.Forms.ComboBoxFix();
 			comboBoxNazwaNabywcy = new System.Windows.Forms.ComboBoxFix();
-			buttonNowyNabywca = new System.Windows.Forms.Button();
+			buttonNowyNabywca = new ButtonDPI();
 			tabControl1 = new System.Windows.Forms.TabControl();
 			tabPagePozycje = new System.Windows.Forms.TabPage();
 			tabPageWplaty = new System.Windows.Forms.TabPage();
@@ -75,7 +75,7 @@ namespace ProFak.UI
 			textBoxOpisZdarzenia = new System.Windows.Forms.TextBox();
 			tabPageKSeF = new System.Windows.Forms.TabPage();
 			tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
-			buttonKSeFGeneruj = new System.Windows.Forms.Button();
+			buttonKSeFGeneruj = new ButtonDPI();
 			textBoxKSeFXML = new System.Windows.Forms.TextBox();
 			label21 = new System.Windows.Forms.Label();
 			textBoxNumerKSeF = new System.Windows.Forms.TextBox();
@@ -83,7 +83,7 @@ namespace ProFak.UI
 			textBoxNumer = new System.Windows.Forms.TextBox();
 			labelRodzaj = new System.Windows.Forms.Label();
 			label2 = new System.Windows.Forms.Label();
-			buttonWaluta = new System.Windows.Forms.Button();
+			buttonWaluta = new ButtonDPI();
 			label15 = new System.Windows.Forms.Label();
 			comboBoxWaluta = new System.Windows.Forms.ComboBoxFix();
 			tableLayoutPanelDatyKwoty = new System.Windows.Forms.TableLayoutPanel();
@@ -95,7 +95,7 @@ namespace ProFak.UI
 			textBoxRachunekBankowy = new System.Windows.Forms.TextBox();
 			dateTimePickerTerminPlatnosci = new System.Windows.Forms.DateTimePicker();
 			comboBoxSposobPlatnosci = new System.Windows.Forms.ComboBoxFix();
-			buttonSposobPlatnosci = new System.Windows.Forms.Button();
+			buttonSposobPlatnosci = new ButtonDPI();
 			groupBox1 = new System.Windows.Forms.GroupBox();
 			tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			label3 = new System.Windows.Forms.Label();
@@ -1309,9 +1309,9 @@ namespace ProFak.UI
 		private System.Windows.Forms.TextBox textBoxRachunekBankowy;
 		private System.Windows.Forms.DateTimePicker dateTimePickerTerminPlatnosci;
 		private System.Windows.Forms.ComboBoxFix comboBoxSposobPlatnosci;
-		private System.Windows.Forms.Button buttonSprzedawca;
-		private System.Windows.Forms.Button buttonNabywca;
-		private System.Windows.Forms.Button buttonSposobPlatnosci;
+		private ButtonDPI buttonSprzedawca;
+		private ButtonDPI buttonNabywca;
+		private ButtonDPI buttonSposobPlatnosci;
 		private System.Windows.Forms.ComboBoxFix comboBoxNIPSprzedawcy;
 		private System.Windows.Forms.ComboBoxFix comboBoxNIPNabywcy;
 		private System.Windows.Forms.ComboBoxFix comboBoxNazwaSprzedawcy;
@@ -1319,7 +1319,7 @@ namespace ProFak.UI
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.ComboBoxFix comboBoxWaluta;
 		private System.Windows.Forms.ComboBoxFix comboBoxNazwaNabywcy;
-		private System.Windows.Forms.Button buttonWaluta;
+		private ButtonDPI buttonWaluta;
 		private System.Windows.Forms.TabPage tabPageUwagi;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
 		private System.Windows.Forms.GroupBox groupBox5;
@@ -1343,8 +1343,8 @@ namespace ProFak.UI
 		private System.Windows.Forms.CheckBox checkBoxTP;
 		private System.Windows.Forms.ComboBox comboBoxProcentKosztow;
 		private System.Windows.Forms.ComboBox comboBoxProcentVat;
-		private System.Windows.Forms.Button buttonNowySprzedawca;
-		private System.Windows.Forms.Button buttonNowyNabywca;
+		private ButtonDPI buttonNowySprzedawca;
+		private ButtonDPI buttonNowyNabywca;
 		private System.Windows.Forms.CheckBox checkBoxZakupSrodkowTrwalych;
 		private System.Windows.Forms.CheckBox checkBoxWDT;
 		private System.Windows.Forms.CheckBox checkBoxWNT;
@@ -1355,6 +1355,6 @@ namespace ProFak.UI
 		private System.Windows.Forms.Label label21;
 		private System.Windows.Forms.TextBox textBoxNumerKSeF;
 		private System.Windows.Forms.TextBox textBoxKSeFXML;
-		private System.Windows.Forms.Button buttonKSeFGeneruj;
+		private ButtonDPI buttonKSeFGeneruj;
 	}
 }

@@ -35,10 +35,10 @@ partial class WysylkaFakturEdytor
 		comboBoxFaktura = new System.Windows.Forms.ComboBox();
 		label1 = new System.Windows.Forms.Label();
 		label2 = new System.Windows.Forms.Label();
-		buttonPoprzednia = new System.Windows.Forms.Button();
-		buttonNastepna = new System.Windows.Forms.Button();
+		buttonPoprzednia = new ButtonDPI();
+		buttonNastepna = new ButtonDPI();
 		label3 = new System.Windows.Forms.Label();
-		buttonWyslij = new System.Windows.Forms.Button();
+		buttonWyslij = new ButtonDPI();
 		tableLayoutPanel1.SuspendLayout();
 		SuspendLayout();
 		// 
@@ -204,8 +204,8 @@ partial class WysylkaFakturEdytor
 	private System.Windows.Forms.ComboBox comboBoxFaktura;
 	private System.Windows.Forms.Label label1;
 	private System.Windows.Forms.Label label2;
-	private System.Windows.Forms.Button buttonPoprzednia;
-	private System.Windows.Forms.Button buttonNastepna;
+	private ButtonDPI buttonPoprzednia;
+	private ButtonDPI buttonNastepna;
 	private System.Windows.Forms.Label label3;
-	private System.Windows.Forms.Button buttonWyslij;
+	private ButtonDPI buttonWyslij;
 }

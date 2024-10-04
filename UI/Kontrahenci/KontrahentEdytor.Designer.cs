@@ -49,8 +49,8 @@ namespace ProFak.UI
 			comboBoxStan = new System.Windows.Forms.ComboBox();
 			label9 = new System.Windows.Forms.Label();
 			checkBoxTP = new System.Windows.Forms.CheckBox();
-			buttonSprawdzMF = new System.Windows.Forms.Button();
-			buttonPobierzGUS = new System.Windows.Forms.Button();
+			buttonSprawdzMF = new ButtonDPI();
+			buttonPobierzGUS = new ButtonDPI();
 			tabPage2 = new System.Windows.Forms.TabPage();
 			textBoxUwagi = new System.Windows.Forms.TextBox();
 			tabPageFakturySprzedazy = new System.Windows.Forms.TabPage();
@@ -65,7 +65,7 @@ namespace ProFak.UI
 			textBoxOsobaFizycznaImie = new System.Windows.Forms.TextBox();
 			textBoxOsobaFizycznaNazwisko = new System.Windows.Forms.TextBox();
 			dateTimePickerOsobaFizycznaDataUrodzenia = new System.Windows.Forms.DateTimePicker();
-			buttonUrzadSkarbowy = new System.Windows.Forms.Button();
+			buttonUrzadSkarbowy = new ButtonDPI();
 			label14 = new System.Windows.Forms.Label();
 			comboBoxFormaOpodatkowania = new System.Windows.Forms.ComboBox();
 			label15 = new System.Windows.Forms.Label();
@@ -673,12 +673,12 @@ namespace ProFak.UI
 		private System.Windows.Forms.TextBox textBoxOsobaFizycznaImie;
 		private System.Windows.Forms.TextBox textBoxOsobaFizycznaNazwisko;
 		private System.Windows.Forms.DateTimePicker dateTimePickerOsobaFizycznaDataUrodzenia;
-		private System.Windows.Forms.Button buttonUrzadSkarbowy;
+		private ButtonDPI buttonUrzadSkarbowy;
 		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.ComboBox comboBoxFormaOpodatkowania;
-		private System.Windows.Forms.Button buttonSprawdzMF;
+		private ButtonDPI buttonSprawdzMF;
 		private System.ComponentModel.BackgroundWorker backgroundWorkerSprawdzMF;
-		private System.Windows.Forms.Button buttonPobierzGUS;
+		private ButtonDPI buttonPobierzGUS;
 		private System.ComponentModel.BackgroundWorker backgroundWorkerPobierzGUS;
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.TextBox textBoxTokenKSeF;
