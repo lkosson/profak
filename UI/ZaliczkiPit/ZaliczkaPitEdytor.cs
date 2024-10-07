@@ -143,10 +143,8 @@ namespace ProFak.UI
 				.ToList();
 
 			var skladkiZus = Kontekst.Baza.SkladkiZus
-				.Where(skladka => skladka.Miesiac >= poczatekRoku && skladka.Miesiac < dataKoncowa)
+				.Where(skladka => skladka.Miesiac >= poczatekRoku.AddMonths(-1) && skladka.Miesiac < dataKoncowa.AddMonths(-1))
 				.ToList();
-
-			if (!skladkiZus.Any() || skladkiZus.Last().Miesiac != Rekord.Miesiac) throw new ApplicationException($"Przed wyliczeniem podatku należy wyliczyć składku ZUS za miesiąc {Rekord.Miesiac:MMMM yyyy}.");
 
 			var faktury = Kontekst.Baza.Faktury
 				.Where(faktura => faktura.DataSprzedazy >= poczatekRoku && faktura.DataSprzedazy < dataKoncowa)
