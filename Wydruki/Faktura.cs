@@ -74,10 +74,12 @@ namespace ProFak.Wydruki
 					if (!String.IsNullOrEmpty(faktura.RachunekBankowy)) fakturaDTO.Stopka += "<br/><b>Numer rachunku:</b> " + faktura.RachunekBankowy;
 				}
 
+				if (!String.IsNullOrEmpty(faktura.NumerKSeF)) fakturaDTO.Stopka += "<br/><b>Numer KSeF:</b> " + faktura.NumerKSeF;
 				if (!String.IsNullOrEmpty(faktura.UwagiPubliczne)) fakturaDTO.Stopka += "<br/><br/>" + faktura.UwagiPubliczne.Replace("\r", "").Replace("\n", "<br/>");
 
+				/*
 				if (!String.IsNullOrEmpty(faktura.NumerKSeF))
-				{ 
+				{
 					var writer = new BarcodeWriter();
 					writer.Options.Margin = 0;
 					writer.Options.NoPadding = true;
@@ -88,6 +90,7 @@ namespace ProFak.Wydruki
 					fakturaDTO.KodKSeF = Convert.ToBase64String(ms.ToArray());
 					fakturaDTO.NumerKSeF = faktura.NumerKSeF;
 				}
+				*/
 
 				fakturaDTO.OpisPozycji = "";
 
