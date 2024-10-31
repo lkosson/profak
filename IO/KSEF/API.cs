@@ -203,9 +203,9 @@ class API : IDisposable
 		(var elementReferenceNumber, var invoiceHash) = await SendInvoiceAsync(invoiceXml);
 		while (!cancellationToken.IsCancellationRequested)
 		{
+			await Task.Delay(1000, cancellationToken);
 			(var status, var ksefReferenceNumber, var acquisitionTimestamp) = await GetInvoiceStatusAsync(elementReferenceNumber);
 			if (status == 200) return (ksefReferenceNumber!, acquisitionTimestamp!, $"{urlBase}/web/verify/{ksefReferenceNumber}/{invoiceHash.Replace("=", "%3D").Replace("/", "%2F").Replace("+", "%2B")}");
-			await Task.Delay(1000, cancellationToken);
 		}
 
 		return (default, default, default);
