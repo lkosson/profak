@@ -35,20 +35,22 @@ namespace ProFak.Wydruki
 				var zaplacono = wplaty.Sum(wplata => wplata.Kwota);
 				var dozaplaty = faktura.RazemBrutto - zaplacono;
 				var waluta = baza.Znajdz(faktura.WalutaRef);
+				var jestvat = pozycje.Any(e => e.StawkaVat != null && !String.Equals(e.StawkaVat.Skrot, "ZW", StringComparison.CurrentCultureIgnoreCase));
 
 				var fakturaDTO = new FakturaDTO();
-				if (faktura.Rodzaj == RodzajFaktury.Sprzedaż) fakturaDTO.Tytul = "<b>Faktura VAT</b><br/>";
+				if (faktura.Rodzaj == RodzajFaktury.Sprzedaż) fakturaDTO.Tytul = jestvat ? "<b>Faktura VAT</b><br/>" : "<b>Faktura</b><br/>";
 				else if (faktura.Rodzaj == RodzajFaktury.Proforma) fakturaDTO.Tytul = "<b>Faktura pro forma</b><br/>";
-				else if (faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży) fakturaDTO.Tytul = "<b>Korekta faktury VAT</b><br/>";
+				else if (faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży) fakturaDTO.Tytul = jestvat ? "<b>Korekta faktury VAT</b><br/>" : "<b>Korekta faktury</b><br/>";
 				else fakturaDTO.Tytul = "<b>" + faktura.Rodzaj + "</b><br/>";
 
 				fakturaDTO.Tytul += faktura.Numer;
+				fakturaDTO.JestVAT = jestvat;
 
 				if (faktura.FakturaKorygowanaRef.IsNotNull)
 				{
 					var fakturaBazowa = baza.Znajdz(faktura.FakturaKorygowanaRef);
 					if (fakturaBazowa.Rodzaj == RodzajFaktury.Proforma) fakturaDTO.Podtytul = "do faktury pro forma <b>" + fakturaBazowa.Numer + "</b>";
-					else fakturaDTO.Podtytul = "do faktury VAT <b>" + fakturaBazowa.Numer + "</b><br/>z dnia " + fakturaBazowa.DataWystawienia.ToString(UI.Format.Data) + "<br/>";
+					else fakturaDTO.Podtytul = (jestvat ? "do faktury VAT <b>" : "do faktury <b>") + fakturaBazowa.Numer + "</b><br/>z dnia " + fakturaBazowa.DataWystawienia.ToString(UI.Format.Data) + "<br/>";
 				}
 
 				fakturaDTO.Naglowek = "<b>Data wystawienia:</b> " + faktura.DataWystawienia.ToString(UI.Format.Data)
@@ -102,6 +104,7 @@ namespace ProFak.Wydruki
 					pozycjaDTO.LP = pozycja.LP.ToString();
 					pozycjaDTO.Tytul = fakturaDTO.Tytul;
 					pozycjaDTO.Podtytul = fakturaDTO.Podtytul;
+					pozycjaDTO.JestVAT = jestvat;
 
 					if (faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży)
 						pozycjaDTO.NaglowekPozycji = pozycja.CzyPrzedKorekta ? "Przed korektą" : "Po korekcie";

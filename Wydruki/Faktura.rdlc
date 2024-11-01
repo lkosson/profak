@@ -2121,9 +2121,15 @@
                                 </TablixMembers>
                               </TablixMember>
                               <TablixMember>
+                                <Visibility>
+                                  <Hidden>=Not Fields!JestVAT.Value</Hidden>
+                                </Visibility>
                                 <KeepWithGroup>After</KeepWithGroup>
                               </TablixMember>
                               <TablixMember>
+                                <Visibility>
+                                  <Hidden>=Not Fields!JestVAT.Value</Hidden>
+                                </Visibility>
                                 <KeepWithGroup>After</KeepWithGroup>
                               </TablixMember>
                               <TablixMember>
@@ -2146,6 +2152,9 @@
                                     <Value>=Fields!StawkaVAT.Value</Value>
                                   </SortExpression>
                                 </SortExpressions>
+                                <Visibility>
+                                  <Hidden>=Not Fields!JestVAT.Value</Hidden>
+                                </Visibility>
                               </TablixMember>
                               <TablixMember>
                                 <KeepWithGroup>Before</KeepWithGroup>
@@ -2332,6 +2341,10 @@
           <DataField>WartoscBrutto</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="JestVAT">
+          <DataField>JestVAT</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
         <Field Name="NumerKSeF">
           <DataField>NumerKSeF</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -2343,7 +2356,7 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>Wydruki</rd:DataSetName>
-        <rd:SchemaPath>e:\Praca\Źródła\Kosson\profak\Wydruki\Wydruki.xsd</rd:SchemaPath>
+        <rd:SchemaPath>E:\Praca\Zrodla\Kosson\profak\Wydruki\Wydruki.xsd</rd:SchemaPath>
         <rd:TableName>FakturaDTO</rd:TableName>
       </rd:DataSetInfo>
     </DataSet>
