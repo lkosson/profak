@@ -2185,61 +2185,8 @@
                           <Top>7.57467cm</Top>
                           <Left>0.00001cm</Left>
                           <Height>4.64418cm</Height>
-                          <Width>12.64852cm</Width>
+                          <Width>16.99999cm</Width>
                           <ZIndex>3</ZIndex>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                        <Image Name="Image1">
-                          <Source>Database</Source>
-                          <Value>=Fields!KodKSeF.Value</Value>
-                          <MIMEType>image/png</MIMEType>
-                          <Sizing>FitProportional</Sizing>
-                          <Top>7.76676cm</Top>
-                          <Left>13.11124cm</Left>
-                          <Height>3.88cm</Height>
-                          <Width>3.88876cm</Width>
-                          <ZIndex>4</ZIndex>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                          </Style>
-                        </Image>
-                        <Textbox Name="DaneSprzedawcy4">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=First(Fields!NumerKSeF.Value)</Value>
-                                  <MarkupType>HTML</MarkupType>
-                                  <Style>
-                                    <FontFamily>Calibri</FontFamily>
-                                    <FontSize>8pt</FontSize>
-                                    <FontWeight>Normal</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>DaneSprzedawcy</rd:DefaultName>
-                          <Top>11.64676cm</Top>
-                          <Left>13.11124cm</Left>
-                          <Height>0.57209cm</Height>
-                          <Width>3.88876cm</Width>
-                          <ZIndex>5</ZIndex>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -2258,7 +2205,6 @@
                         </Border>
                       </Style>
                     </Rectangle>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
