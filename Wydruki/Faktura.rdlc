@@ -2191,9 +2191,9 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>DaneSprzedawcy</rd:DefaultName>
-                          <Top>7.57467cm</Top>
+                          <Top>8.10384cm</Top>
                           <Left>0.00001cm</Left>
-                          <Height>4.64418cm</Height>
+                          <Height>4.11501cm</Height>
                           <Width>16.99999cm</Width>
                           <ZIndex>3</ZIndex>
                           <Style>
@@ -2214,6 +2214,7 @@
                         </Border>
                       </Style>
                     </Rectangle>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
