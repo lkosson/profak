@@ -52,6 +52,7 @@ namespace ProFak.UI
 			DodajKolumne(nameof(Faktura.WalutaFmt), "Waluta", szerokosc: 70);
 			DodajKolumneBool(nameof(Faktura.CzyZaplacona), "Zapł.", szerokosc: 50, tooltip: faktura => faktura.SumaWplat.ToString(Format.Kwota));
 			DodajKolumneBool(nameof(Faktura.CzyKSeF), "KSeF", szerokosc: 50, tooltip: faktura => faktura.NumerKSeF);
+			DodajKolumneBool(nameof(Faktura.CzyPliki), "Pliki", szerokosc: 50, tooltip: faktura => String.Join("\n", faktura.Pliki.Select(e => e.Nazwa)));
 			DodajKolumne(nameof(Faktura.PozycjeFmt), "Pozycje", szerokosc: 150);
 			DodajKolumne(nameof(Faktura.UwagiPubliczne), "Uwagi (publiczne)", szerokosc: 150);
 			DodajKolumne(nameof(Faktura.UwagiWewnetrzne), "Uwagi (wewnętrzne)", szerokosc: 150);
@@ -103,6 +104,7 @@ namespace ProFak.UI
 				.Include(faktura => faktura.FakturaKorygowana)
 				.Include(faktura => faktura.FakturaKorygujaca)
 				.Include(faktura => faktura.Pozycje)
+				.Include(faktura => faktura.Pliki)
 				.Where(faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży || faktura.Rodzaj == RodzajFaktury.Proforma);
 			if (NabywcaRef.IsNotNull) q = q.Where(faktura => faktura.NabywcaId == NabywcaRef.Id);
 			if (odDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy >= odDaty.Value);
