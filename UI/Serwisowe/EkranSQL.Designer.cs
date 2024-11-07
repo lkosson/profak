@@ -29,100 +29,94 @@ namespace ProFak.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.textBoxSQL = new System.Windows.Forms.TextBox();
-			this.groupBoxWynik = new System.Windows.Forms.GroupBox();
-			this.dataGridViewWynik = new System.Windows.Forms.DataGridView();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.textBoxStatus = new System.Windows.Forms.TextBox();
-			this.buttonUruchom = new ButtonDPI();
-			this.groupBoxWynik.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridViewWynik)).BeginInit();
-			this.groupBox1.SuspendLayout();
-			this.SuspendLayout();
+			textBoxSQL = new System.Windows.Forms.TextBox();
+			groupBoxWynik = new System.Windows.Forms.GroupBox();
+			dataGridViewWynik = new System.Windows.Forms.DataGridView();
+			groupBox1 = new System.Windows.Forms.GroupBox();
+			textBoxStatus = new System.Windows.Forms.TextBox();
+			buttonUruchom = new ButtonDPI();
+			groupBoxWynik.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)dataGridViewWynik).BeginInit();
+			groupBox1.SuspendLayout();
+			SuspendLayout();
 			// 
 			// textBoxSQL
 			// 
-			this.textBoxSQL.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxSQL.Location = new System.Drawing.Point(6, 22);
-			this.textBoxSQL.Multiline = true;
-			this.textBoxSQL.Name = "textBoxSQL";
-			this.textBoxSQL.Size = new System.Drawing.Size(379, 51);
-			this.textBoxSQL.TabIndex = 0;
-			this.textBoxSQL.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxSQL_KeyDown);
+			textBoxSQL.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			textBoxSQL.Location = new System.Drawing.Point(6, 22);
+			textBoxSQL.Multiline = true;
+			textBoxSQL.Name = "textBoxSQL";
+			textBoxSQL.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			textBoxSQL.Size = new System.Drawing.Size(379, 143);
+			textBoxSQL.TabIndex = 0;
+			textBoxSQL.KeyDown += textBoxSQL_KeyDown;
 			// 
 			// groupBoxWynik
 			// 
-			this.groupBoxWynik.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBoxWynik.Controls.Add(this.dataGridViewWynik);
-			this.groupBoxWynik.Location = new System.Drawing.Point(3, 94);
-			this.groupBoxWynik.Name = "groupBoxWynik";
-			this.groupBoxWynik.Size = new System.Drawing.Size(560, 185);
-			this.groupBoxWynik.TabIndex = 3;
-			this.groupBoxWynik.TabStop = false;
-			this.groupBoxWynik.Text = "Wynik";
+			groupBoxWynik.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			groupBoxWynik.Controls.Add(dataGridViewWynik);
+			groupBoxWynik.Location = new System.Drawing.Point(3, 186);
+			groupBoxWynik.Name = "groupBoxWynik";
+			groupBoxWynik.Size = new System.Drawing.Size(560, 93);
+			groupBoxWynik.TabIndex = 3;
+			groupBoxWynik.TabStop = false;
+			groupBoxWynik.Text = "Wynik";
 			// 
 			// dataGridViewWynik
 			// 
-			this.dataGridViewWynik.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridViewWynik.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dataGridViewWynik.Location = new System.Drawing.Point(3, 19);
-			this.dataGridViewWynik.Name = "dataGridViewWynik";
-			this.dataGridViewWynik.RowTemplate.Height = 25;
-			this.dataGridViewWynik.Size = new System.Drawing.Size(554, 163);
-			this.dataGridViewWynik.TabIndex = 0;
+			dataGridViewWynik.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			dataGridViewWynik.Dock = System.Windows.Forms.DockStyle.Fill;
+			dataGridViewWynik.Location = new System.Drawing.Point(3, 19);
+			dataGridViewWynik.Name = "dataGridViewWynik";
+			dataGridViewWynik.Size = new System.Drawing.Size(554, 71);
+			dataGridViewWynik.TabIndex = 0;
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.groupBox1.Controls.Add(this.textBoxStatus);
-			this.groupBox1.Controls.Add(this.buttonUruchom);
-			this.groupBox1.Controls.Add(this.textBoxSQL);
-			this.groupBox1.Location = new System.Drawing.Point(3, 3);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(560, 85);
-			this.groupBox1.TabIndex = 0;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Treść polecenia";
+			groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			groupBox1.Controls.Add(textBoxStatus);
+			groupBox1.Controls.Add(buttonUruchom);
+			groupBox1.Controls.Add(textBoxSQL);
+			groupBox1.Location = new System.Drawing.Point(3, 3);
+			groupBox1.Name = "groupBox1";
+			groupBox1.Size = new System.Drawing.Size(560, 177);
+			groupBox1.TabIndex = 0;
+			groupBox1.TabStop = false;
+			groupBox1.Text = "Treść polecenia";
 			// 
 			// textBoxStatus
 			// 
-			this.textBoxStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxStatus.Location = new System.Drawing.Point(391, 50);
-			this.textBoxStatus.Name = "textBoxStatus";
-			this.textBoxStatus.ReadOnly = true;
-			this.textBoxStatus.Size = new System.Drawing.Size(163, 23);
-			this.textBoxStatus.TabIndex = 2;
+			textBoxStatus.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+			textBoxStatus.Location = new System.Drawing.Point(391, 50);
+			textBoxStatus.Name = "textBoxStatus";
+			textBoxStatus.ReadOnly = true;
+			textBoxStatus.Size = new System.Drawing.Size(163, 23);
+			textBoxStatus.TabIndex = 2;
 			// 
 			// buttonUruchom
 			// 
-			this.buttonUruchom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonUruchom.Location = new System.Drawing.Point(391, 21);
-			this.buttonUruchom.Name = "buttonUruchom";
-			this.buttonUruchom.Size = new System.Drawing.Size(163, 23);
-			this.buttonUruchom.TabIndex = 1;
-			this.buttonUruchom.Text = "Uruchom";
-			this.buttonUruchom.UseVisualStyleBackColor = true;
-			this.buttonUruchom.Click += new System.EventHandler(this.buttonUruchom_Click);
+			buttonUruchom.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+			buttonUruchom.Location = new System.Drawing.Point(391, 21);
+			buttonUruchom.Name = "buttonUruchom";
+			buttonUruchom.Size = new System.Drawing.Size(163, 23);
+			buttonUruchom.TabIndex = 1;
+			buttonUruchom.Text = "Uruchom [F5]";
+			buttonUruchom.UseVisualStyleBackColor = true;
+			buttonUruchom.Click += buttonUruchom_Click;
 			// 
 			// EkranSQL
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.groupBoxWynik);
-			this.Controls.Add(this.groupBox1);
-			this.Name = "EkranSQL";
-			this.Size = new System.Drawing.Size(566, 282);
-			this.groupBoxWynik.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.dataGridViewWynik)).EndInit();
-			this.groupBox1.ResumeLayout(false);
-			this.groupBox1.PerformLayout();
-			this.ResumeLayout(false);
-
+			AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+			AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			Controls.Add(groupBoxWynik);
+			Controls.Add(groupBox1);
+			Name = "EkranSQL";
+			Size = new System.Drawing.Size(566, 282);
+			groupBoxWynik.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)dataGridViewWynik).EndInit();
+			groupBox1.ResumeLayout(false);
+			groupBox1.PerformLayout();
+			ResumeLayout(false);
 		}
 
 		#endregion
