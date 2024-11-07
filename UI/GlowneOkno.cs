@@ -60,6 +60,11 @@ namespace ProFak.UI
 				e.Handled = true;
 				Wyswietl(menu.SelectedNode);
 			}
+			else if (e.KeyChar == '/')
+			{
+				e.Handled = true;
+				menu.SelectedNode.Collapse(false);
+			}
 		}
 
 		private void Wyswietl(TreeNode pozycja, string[] parametry = null)
