@@ -22,6 +22,7 @@ namespace ProFak.DB.Model
 			modelBuilder.Entity<PozycjaFaktury>(PozycjaFakturyBuilder.Configure);
 			modelBuilder.Entity<SkladkaZus>(SkladkaZusBuilder.Configure);
 			modelBuilder.Entity<SposobPlatnosci>(SposobPlatnosciBuilder.Configure);
+			modelBuilder.Entity<StanMenu>(StanMenuBuilder.Configure);
 			modelBuilder.Entity<StanNumeratora>(StanNumeratoraBuilder.Configure);
 			modelBuilder.Entity<StawkaVat>(StawkaVatBuilder.Configure);
 			modelBuilder.Entity<Towar>(TowarBuilder.Configure);

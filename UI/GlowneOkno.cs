@@ -26,6 +26,52 @@ namespace ProFak.UI
 
 		protected override void OnLoad(EventArgs e)
 		{
+			RozwinMenu();
+
+			base.OnLoad(e);
+		}
+
+		private void RozwinMenu()
+		{
+			using var kontekst = new Kontekst();
+			var stany = kontekst.Baza.StanyMenu.ToList();
+			if (stany.Count == 0)
+			{
+				RozwinMenuDomyslne();
+				return;
+			}
+
+			var stanyWedlugNazwy = stany.ToDictionary(stan => stan.Pozycja);
+			TreeNode doWyswietlenia = null;
+			RozwinMenu(menu.Nodes.Cast<TreeNode>(), stanyWedlugNazwy, ref doWyswietlenia);
+
+			if (doWyswietlenia == null) WyswietlDomyslny();
+			else Wyswietl(doWyswietlenia);
+		}
+
+		private void RozwinMenu(IEnumerable<TreeNode> wezly, Dictionary<string, StanMenu> stany, ref TreeNode wybrany)
+		{
+			var doUsuniecia = new List<TreeNode>();
+			foreach (var wezel in wezly)
+			{
+				if (stany.TryGetValue(wezel.FullPath, out var stan))
+				{
+					if (!stan.CzyZwinieta) wezel.Expand();
+					if (stan.CzyAktywna) wybrany = wezel;
+					if (stan.CzyUkryta) doUsuniecia.Add(wezel);
+				}
+
+				RozwinMenu(wezel.Nodes.Cast<TreeNode>(), stany, ref wybrany);
+			}
+
+			foreach (var wezel in doUsuniecia)
+			{
+				wezel.Remove();
+			}
+		}
+
+		private void RozwinMenuDomyslne()
+		{
 			menu.Nodes["Faktury"].Expand();
 			menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Expand();
 			menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["WedlugDaty"].Expand();
@@ -37,10 +83,14 @@ namespace ProFak.UI
 			menu.Nodes["Faktury"].Nodes["FakturyZakupu"].Nodes["KSeFZakup"].Expand();
 			menu.Nodes["Slowniki"].Expand();
 			menu.Nodes["Podatki"].Expand();
+			WyswietlDomyslny();
+		}
+
+		private void WyswietlDomyslny()
+		{
 			var doWybrania = menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["WedlugDaty"].Nodes.Cast<TreeNode>().LastOrDefault()?.Nodes?.Cast<TreeNode>()?.LastOrDefault();
 			if (doWybrania == null) doWybrania = menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["Wszystkie"];
 			Wyswietl(doWybrania);
-			base.OnLoad(e);
 		}
 
 		private void menu_AfterSelect(object sender, TreeViewEventArgs e)
@@ -51,6 +101,8 @@ namespace ProFak.UI
 			if (ostatnioWybrany == null || ostatnioWybrany.TreeView == null || !ostatnioWybrany.FullPath.StartsWith(wybrany.FullPath)) while (wybrany.Nodes.Count > 0) wybrany = wybrany.Nodes[0];
 			if (menu.SelectedNode == wybrany) Wyswietl(wybrany);
 			else menu.SelectedNode = wybrany;
+
+			ZapiszStanPozycji(wybrany);
 		}
 
 		private void menu_KeyPress(object sender, KeyPressEventArgs e)
@@ -140,6 +192,39 @@ namespace ProFak.UI
 			else if (e.Node.Name == "DeklaracjeVat") WypelnijDeklaracjeVat(e.Node);
 			else if (e.Node.Name == "SkladkiZus") WypelnijSkladkiZus(e.Node);
 			else if (e.Node.Name == "ZaliczkiPit") WypelnijZaliczkiPit(e.Node);
+		}
+
+
+		private void menu_AfterExpand(object sender, TreeViewEventArgs e)
+		{
+			ZapiszStanPozycji(e.Node);
+		}
+
+		private void menu_AfterCollapse(object sender, TreeViewEventArgs e)
+		{
+			ZapiszStanPozycji(e.Node);
+		}
+
+		private void ZapiszStanPozycji(TreeNode treeNode)
+		{
+			if (String.IsNullOrEmpty(treeNode.Name)) return;
+			using var kontekst = new Kontekst();
+			using var transakcja = kontekst.Transakcja();
+			var stan = kontekst.Baza.StanyMenu.FirstOrDefault(e => e.Pozycja == treeNode.FullPath);
+			if (stan == null) stan = new StanMenu { Pozycja = treeNode.FullPath };
+			stan.CzyZwinieta = !treeNode.IsExpanded;
+			stan.CzyAktywna = treeNode.IsSelected;
+			if (stan.CzyAktywna)
+			{
+				var aktywne = kontekst.Baza.StanyMenu.Where(e => e.CzyAktywna);
+				foreach (var aktywna in aktywne)
+				{
+					aktywna.CzyAktywna = false;
+					kontekst.Baza.Zapisz(aktywna);
+				}
+			}
+			kontekst.Baza.Zapisz(stan);
+			transakcja.Zatwierdz();
 		}
 
 		private void WypelnijDatyFaktur(TreeNode treeNode, Expression<Func<Faktura, bool>> warunek)

@@ -224,7 +224,9 @@ namespace ProFak.UI
 			menu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] { treeNode35, treeNode42, treeNode43, treeNode44, treeNode50, treeNode57 });
 			menu.Size = new System.Drawing.Size(247, 593);
 			menu.TabIndex = 1;
+			menu.AfterCollapse += menu_AfterCollapse;
 			menu.BeforeExpand += menu_BeforeExpand;
+			menu.AfterExpand += menu_AfterExpand;
 			menu.AfterSelect += menu_AfterSelect;
 			menu.KeyPress += menu_KeyPress;
 			// 
