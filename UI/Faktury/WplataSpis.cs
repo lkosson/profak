@@ -15,6 +15,7 @@ namespace ProFak.UI
 		{
 			DodajKolumne(nameof(Wplata.Data), "Data");
 			DodajKolumneKwota(nameof(Wplata.Kwota), "Kwota");
+			DodajKolumne(nameof(Wplata.Uwagi), "Uwagi");
 			DodajKolumneId();
 		}
 

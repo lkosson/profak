@@ -15,6 +15,7 @@ namespace ProFak.UI
 		{
 			DodajDatePicker(wplata => wplata.Data, "Data wpływu");
 			DodajNumericUpDown(wplata => wplata.Kwota, "Kwota");
+			DodajTextBox(wplata => wplata.Uwagi, "Uwagi");
 			UstawRozmiar();
 		}
 

@@ -11,6 +11,7 @@ namespace ProFak.DB
 		public int FakturaId { get; set; }
 		public DateTime Data { get; set; } = DateTime.Now.Date;
 		public decimal Kwota { get; set; }
+		public string Uwagi { get; set; } = "";
 
 		public Ref<Faktura> FakturaRef { get => FakturaId; set => FakturaId = value; }
 
