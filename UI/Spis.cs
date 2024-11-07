@@ -265,7 +265,35 @@ namespace ProFak.UI
 			{
 				SelectionMode = DataGridViewSelectionMode.CellSelect;
 			}
+			if (e.Button == MouseButtons.Right && e.RowIndex == -1)
+			{
+				PokazKonfiguracjeSpisu();
+			}
 			base.OnCellMouseDown(e);
+		}
+
+		private void PokazKonfiguracjeSpisu()
+		{
+			using var nowyKontekst = new Kontekst(Kontekst);
+			using var transakcja = nowyKontekst.Transakcja();
+
+			var spis = GetType().Name;
+			var kolumny = Kontekst.Baza.KolumnySpisow.Where(e => e.Spis == spis).ToList();
+			foreach (DataGridViewColumn kolumna in Columns)
+			{
+				if (kolumny.Any(e => e.Kolumna == kolumna.Name)) continue;
+				var konfiguracjaKolumny = new KolumnaSpisu { Spis = spis, Kolumna = kolumna.Name };
+				konfiguracjaKolumny.Kolejnosc = kolumna.DisplayIndex;
+				konfiguracjaKolumny.Szerokosc = kolumna.Width;
+				kolumny.Add(konfiguracjaKolumny);
+			}
+
+			using var edytor = new KonfiguracjaSpisu(kolumny);
+			using var okno = new Dialog("Konfiguracja spisu", edytor, nowyKontekst);
+			if (okno.ShowDialog() != DialogResult.OK) return;
+			nowyKontekst.Baza.Zapisz(kolumny);
+			transakcja.Zatwierdz();
+			WczytajKonfiguracje();
 		}
 
 		public void UstawFiltr(string wyrazenieFiltra)
@@ -389,6 +417,7 @@ namespace ProFak.UI
 				if (!kolumny.TryGetValue(kolumna.Name, out var konfiguracjaKolumny)) continue;
 				kolumna.DisplayIndex = konfiguracjaKolumny.Kolejnosc;
 				kolumna.Width = konfiguracjaKolumny.Szerokosc;
+				kolumna.Visible = konfiguracjaKolumny.Szerokosc > 0;
 			}
 			kolumnyZmienione = false;
 		}
