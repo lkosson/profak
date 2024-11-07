@@ -48,7 +48,7 @@ namespace ProFak.UI
 			if ((e.Action & TreeViewAction.ByKeyboard) == TreeViewAction.ByKeyboard) return;
 			var wybrany = menu.SelectedNode;
 			if (wybrany == null) return;
-			if (ostatnioWybrany == null || !ostatnioWybrany.FullPath.StartsWith(wybrany.FullPath)) while (wybrany.Nodes.Count > 0) wybrany = wybrany.Nodes[0];
+			if (ostatnioWybrany == null || ostatnioWybrany.TreeView == null || !ostatnioWybrany.FullPath.StartsWith(wybrany.FullPath)) while (wybrany.Nodes.Count > 0) wybrany = wybrany.Nodes[0];
 			if (menu.SelectedNode == wybrany) Wyswietl(wybrany);
 			else menu.SelectedNode = wybrany;
 		}
