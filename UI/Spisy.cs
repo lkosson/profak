@@ -51,6 +51,7 @@ namespace ProFak.UI
 				new WydrukFakturyAkcja(),
 				new WyslijMailAkcja(),
 				new WyslijDoKSeFAkcja(),
+				new ZapiszPlikiAkcja(),
 				new PrzeladujAkcja<Faktura>()
 			);
 		}
@@ -64,6 +65,7 @@ namespace ProFak.UI
 				new EdytujRekordAkcja<Faktura, FakturaZakupuEdytor>(),
 				new UsunFaktureAkcja(),
 				new DodajWplateAkcja(),
+				new ZapiszPlikiAkcja(),
 				new PrzeladujAkcja<Faktura>()
 			);
 		}
