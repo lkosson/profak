@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="ProFak" Language="1045" Codepage="1250" Version="1.8.2.0" Manufacturer="Łukasz Kosson" UpgradeCode="a5ae434f-8f80-4ac6-ac2c-582d66836a84">
+	<Product Id="*" Name="ProFak" Language="1045" Codepage="1250" Version="1.9.0.0" Manufacturer="Łukasz Kosson" UpgradeCode="a5ae434f-8f80-4ac6-ac2c-582d66836a84">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MediaTemplate EmbedCab="yes" />
