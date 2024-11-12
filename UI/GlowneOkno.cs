@@ -46,7 +46,7 @@ namespace ProFak.UI
 			RozwinMenu(menu.Nodes.Cast<TreeNode>(), stanyWedlugNazwy, ref doWyswietlenia);
 
 			if (doWyswietlenia == null) WyswietlDomyslny();
-			else Wyswietl(doWyswietlenia);
+			else menu.SelectedNode = doWyswietlenia;
 		}
 
 		private void RozwinMenu(IEnumerable<TreeNode> wezly, Dictionary<string, StanMenu> stany, ref TreeNode wybrany)
