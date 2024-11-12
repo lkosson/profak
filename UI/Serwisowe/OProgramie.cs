@@ -20,8 +20,8 @@ namespace ProFak.UI
 		{
 			InitializeComponent();
 			labelWersja.Text = GetType().Assembly.GetName().Version.ToString();
-			labelSciezka.Text = GetType().Assembly.Location;
-			labelData.Text = File.GetLastWriteTime(GetType().Assembly.Location).ToString("d MMMM yyyy, H:mm:ss");
+			labelSciezka.Text = Environment.ProcessPath;
+			labelData.Text = File.GetLastWriteTime(Environment.ProcessPath).ToString("d MMMM yyyy, H:mm:ss");
 		}
 
 		private void linkLabelStrona_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
