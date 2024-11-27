@@ -31,6 +31,9 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.CzyPrzedKorekta).HasDefaultValue(false).IsRequired();
 			builder.Property(e => e.GTU).HasDefaultValue(0).IsRequired();
 			builder.Property(e => e.StawkaRyczaltu);
+			builder.Property(e => e.RabatProcent).HasDefaultValue(0).IsRequired();
+			builder.Property(e => e.RabatCena).HasDefaultValue(0).IsRequired();
+			builder.Property(e => e.RabatWartosc).HasDefaultValue(0).IsRequired();
 
 			builder.Property(e => e.FakturaId).IsRequired();
 			builder.Property(e => e.TowarId);

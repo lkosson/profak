@@ -26,6 +26,9 @@ namespace ProFak.DB
 		public bool CzyPrzedKorekta { get; set; }
 		public int GTU { get; set; }
 		public decimal? StawkaRyczaltu { get; set; }
+		public decimal RabatProcent { get; set; }
+		public decimal RabatCena { get; set; }
+		public decimal RabatWartosc { get; set; }
 
 		public Ref<Faktura> FakturaRef { get => FakturaId; set => FakturaId = value; }
 		public Ref<Towar> TowarRef { get => TowarId; set => TowarId = value; }
