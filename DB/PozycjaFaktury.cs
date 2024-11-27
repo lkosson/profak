@@ -29,6 +29,7 @@ namespace ProFak.DB
 		public decimal RabatProcent { get; set; }
 		public decimal RabatCena { get; set; }
 		public decimal RabatWartosc { get; set; }
+		public string RabatFmt => (RabatProcent > 0 ? "-" + (RabatProcent / 1.0000000m) + "%" : "") + (RabatCena > 0 || RabatWartosc > 0 ? (RabatProcent > 0 ? ", " : "") + "-" + (RabatCena * Ilosc + RabatWartosc) + " zł" : "");
 
 		public Ref<Faktura> FakturaRef { get => FakturaId; set => FakturaId = value; }
 		public Ref<Towar> TowarRef { get => TowarId; set => TowarId = value; }
@@ -63,7 +64,7 @@ namespace ProFak.DB
 			{
 				CenaNetto = (CenaBrutto * 100m / (100 + procentVat)).Zaokragl();
 				CenaVat = (CenaBrutto - CenaNetto).Zaokragl();
-				WartoscBrutto = (Ilosc * CenaBrutto).Zaokragl();
+				WartoscBrutto = (Ilosc * CenaBrutto * (100 - RabatProcent) / 100m - RabatCena * Ilosc - RabatWartosc).Zaokragl();
 				WartoscNetto = (WartoscBrutto * 100m / (100 + procentVat)).Zaokragl();
 				WartoscVat = (WartoscBrutto - WartoscNetto).Zaokragl();
 			}
@@ -71,7 +72,7 @@ namespace ProFak.DB
 			{
 				CenaVat = (CenaNetto * procentVat / 100).Zaokragl();
 				CenaBrutto = (CenaNetto + CenaVat).Zaokragl();
-				WartoscNetto = (Ilosc * CenaNetto).Zaokragl();
+				WartoscNetto = (Ilosc * CenaNetto * (100 - RabatProcent) / 100m - RabatCena * Ilosc - RabatWartosc).Zaokragl();
 				WartoscVat = (WartoscNetto * procentVat / 100).Zaokragl();
 				WartoscBrutto = (WartoscNetto + WartoscVat).Zaokragl();
 			}

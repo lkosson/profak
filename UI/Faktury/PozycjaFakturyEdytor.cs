@@ -36,6 +36,9 @@ namespace ProFak.UI
 			kontroler.Powiazanie(comboBoxStawkaVat, pozycja => pozycja.StawkaVatRef);
 			kontroler.Powiazanie(comboBoxGTU, pozycja => pozycja.GTU);
 			kontroler.Powiazanie(comboBoxStawkaRyczaltu, pozycja => pozycja.StawkaRyczaltu);
+			kontroler.Powiazanie(numericUpDownRabatProcent, pozycja => pozycja.RabatProcent, PrzeliczCeny);
+			kontroler.Powiazanie(numericUpDownRabatCena, pozycja => pozycja.RabatCena, PrzeliczCeny);
+			kontroler.Powiazanie(numericUpDownRabatWartosc, pozycja => pozycja.RabatWartosc, PrzeliczCeny);
 
 			Wymagane(comboBoxTowar);
 			Wymagane(comboBoxStawkaVat);

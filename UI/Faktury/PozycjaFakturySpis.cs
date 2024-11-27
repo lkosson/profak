@@ -23,6 +23,7 @@ namespace ProFak.UI
 			DodajKolumneKwota(nameof(PozycjaFaktury.WartoscNetto), "Netto", szerokosc: 70);
 			DodajKolumneKwota(nameof(PozycjaFaktury.WartoscVat), "VAT", szerokosc: 70);
 			DodajKolumneKwota(nameof(PozycjaFaktury.WartoscBrutto), "Brutto", szerokosc: 70);
+			DodajKolumneKwota(nameof(PozycjaFaktury.RabatFmt), "Rabat", szerokosc: 70);
 			DodajKolumneId();
 		}
 
