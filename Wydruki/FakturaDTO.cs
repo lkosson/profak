@@ -24,7 +24,9 @@ namespace ProFak.Wydruki
 		public string StawkaVAT { get; set; }
 		public decimal WartoscVat { get; set; }
 		public decimal WartoscBrutto { get; set; }
+		public string Rabat { get; set; }
 		public bool JestVAT { get; set; }
+		public bool JestRabat { get; set; }
 
 		public string NumerKSeF { get; set; }
 		public string KodKSeF { get; set; }

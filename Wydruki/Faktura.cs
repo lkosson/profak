@@ -36,6 +36,7 @@ namespace ProFak.Wydruki
 				var dozaplaty = faktura.RazemBrutto - zaplacono;
 				var waluta = baza.Znajdz(faktura.WalutaRef);
 				var jestvat = pozycje.Any(e => e.StawkaVat != null && !String.Equals(e.StawkaVat.Skrot, "ZW", StringComparison.CurrentCultureIgnoreCase));
+				var jestrabat = pozycje.Any(e => e.RabatProcent > 0 || e.RabatCena > 0 || e.RabatWartosc > 0);
 
 				var fakturaDTO = new FakturaDTO();
 				if (faktura.Rodzaj == RodzajFaktury.Sprzedaż) fakturaDTO.Tytul = jestvat ? "<b>Faktura VAT</b><br/>" : "<b>Faktura</b><br/>";
@@ -45,6 +46,7 @@ namespace ProFak.Wydruki
 
 				fakturaDTO.Tytul += faktura.Numer;
 				fakturaDTO.JestVAT = jestvat;
+				fakturaDTO.JestRabat = jestrabat;
 
 				if (faktura.FakturaKorygowanaRef.IsNotNull)
 				{
@@ -105,6 +107,7 @@ namespace ProFak.Wydruki
 					pozycjaDTO.Tytul = fakturaDTO.Tytul;
 					pozycjaDTO.Podtytul = fakturaDTO.Podtytul;
 					pozycjaDTO.JestVAT = jestvat;
+					pozycjaDTO.JestRabat = jestrabat;
 
 					if (faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży)
 						pozycjaDTO.NaglowekPozycji = pozycja.CzyPrzedKorekta ? "Przed korektą" : "Po korekcie";
@@ -118,6 +121,7 @@ namespace ProFak.Wydruki
 					pozycjaDTO.WartoscVat = pozycja.WartoscVat;
 					pozycjaDTO.WartoscBrutto = pozycja.WartoscBrutto;
 					pozycjaDTO.StawkaVAT = pozycja.StawkaVat?.Skrot ?? "-";
+					pozycjaDTO.Rabat = pozycja.RabatFmt.Replace(", ", "\n");
 
 					dane.Add(pozycjaDTO);
 				}
