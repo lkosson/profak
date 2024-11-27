@@ -30,6 +30,7 @@ namespace ProFak.DB
 		public decimal RabatCena { get; set; }
 		public decimal RabatWartosc { get; set; }
 		public string RabatFmt => (RabatProcent > 0 ? "-" + (RabatProcent / 1.0000000m) + "%" : "") + (RabatCena > 0 || RabatWartosc > 0 ? (RabatProcent > 0 ? ", " : "") + "-" + (RabatCena * Ilosc + RabatWartosc) + " zł" : "");
+		public decimal RabatRazem => -(Ilosc * CenaNetto * RabatProcent / 100m + RabatCena * Ilosc + RabatWartosc).Zaokragl();
 
 		public Ref<Faktura> FakturaRef { get => FakturaId; set => FakturaId = value; }
 		public Ref<Towar> TowarRef { get => TowarId; set => TowarId = value; }

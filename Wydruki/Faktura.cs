@@ -122,6 +122,7 @@ namespace ProFak.Wydruki
 					pozycjaDTO.WartoscBrutto = pozycja.WartoscBrutto;
 					pozycjaDTO.StawkaVAT = pozycja.StawkaVat?.Skrot ?? "-";
 					pozycjaDTO.Rabat = pozycja.RabatFmt.Replace(", ", "\n");
+					pozycjaDTO.RabatRazem = pozycja.RabatRazem;
 
 					dane.Add(pozycjaDTO);
 				}

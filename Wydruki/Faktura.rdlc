@@ -77,6 +77,10 @@
           <DataField>WartoscBrutto</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="RabatRazem">
+          <DataField>RabatRazem</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
         <Field Name="Rabat">
           <DataField>Rabat</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -694,7 +698,7 @@
                                             </ChartTitles>
                                             <Palette>Pacific</Palette>
                                             <DynamicHeight>="0.5cm"</DynamicHeight>
-                                            <DynamicWidth>=Str(IIF(Fields!JestVAT.Value, 6, 11) + IIF(Fields!JestRabat.Value, 0, 1.6)) + "cm"</DynamicWidth>
+                                            <DynamicWidth>=Str(IIF(Fields!JestVAT.Value, 6, 10.8) + IIF(Fields!JestRabat.Value, 0, 1.6)) + "cm"</DynamicWidth>
                                             <ChartBorderSkin>
                                               <Style>
                                                 <BackgroundColor>Gray</BackgroundColor>
@@ -721,6 +725,7 @@
                                               <BackgroundGradientType>None</BackgroundGradientType>
                                             </Style>
                                           </Chart>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -2701,7 +2706,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>Rabat</Value>
                                                     <Style>
                                                       <FontFamily>Calibri</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -3593,17 +3598,18 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox86">
+                                          <Textbox Name="RabatRazem">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Sum(Fields!RabatRazem.Value)</Value>
                                                     <Style>
                                                       <FontFamily>Calibri</FontFamily>
                                                       <FontSize>8pt</FontSize>
+                                                      <Format>n2</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -3612,7 +3618,7 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox86</rd:DefaultName>
+                                            <rd:DefaultName>RabatRazem</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
