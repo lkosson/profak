@@ -19,6 +19,7 @@ class Importer
 
 		var waluty = kontekst.Baza.Waluty.ToList();
 		var stawkiVat = kontekst.Baza.StawkiVat.ToList();
+		var sposobPlatnosci = kontekst.Baza.SposobyPlatnosci.FirstOrDefault(e => e.CzyDomyslny);
 
 		var faktury = new Dictionary<string, Faktura>();
 		foreach (var jpkFaktura in jpk.Faktura)
@@ -37,9 +38,11 @@ class Importer
 			faktura.NIPNabywcy = jpkFaktura.P_5B;
 			faktura.DataSprzedazy = jpkFaktura.P_6;
 			faktura.RazemBrutto = jpkFaktura.P_15;
+			faktura.TerminPlatnosci = faktura.DataSprzedazy;
 			faktura.Rodzaj = jpkFaktura.RodzajFaktury == JPKFakturaRodzajFaktury.KOREKTA ? RodzajFaktury.KorektaSprzedaży : RodzajFaktury.Sprzedaż;
 			faktura.WalutaRef = waluty.FirstOrDefault(e => e.Nazwa == jpkFaktura.KodWaluty.ToString()) ?? waluty.FirstOrDefault(e => e.CzyDomyslna);
 			faktura.UwagiPubliczne = jpkFaktura.PrzyczynaKorekty;
+			faktura.SposobPlatnosciRef = sposobPlatnosci;
 
 			var sprzedawca = kontekst.Baza.Kontrahenci.FirstOrDefault(e => e.NIP == jpkFaktura.P_4B);
 			if (sprzedawca == null)
@@ -56,7 +59,7 @@ class Importer
 			}
 
 			var nabywca = kontekst.Baza.Kontrahenci.FirstOrDefault(e => e.NIP == jpkFaktura.P_5B);
-			if (nabywca == null)
+			if (nabywca == null && !String.IsNullOrEmpty(jpkFaktura.P_5B))
 			{
 				nabywca = new Kontrahent();
 				nabywca.NIP = jpkFaktura.P_5B;
@@ -101,6 +104,12 @@ class Importer
 		{
 			faktura.PrzeliczRazem(kontekst.Baza);
 			kontekst.Baza.Zapisz(faktura);
+
+			var wplata = new Wplata();
+			wplata.FakturaRef = faktura;
+			wplata.Data = faktura.TerminPlatnosci;
+			wplata.Kwota = faktura.PozostaloDoZaplaty;
+			kontekst.Baza.Zapisz(wplata);
 		}
 
 		foreach (var jpkFaktura in jpk.Faktura)
