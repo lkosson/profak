@@ -113,7 +113,7 @@ namespace ProFak.IO.JPK_FA
 
 					jpkwiersz.P_2B = faktura.Numer;
 					jpkwiersz.P_7 = pozycja.Opis;
-					jpkwiersz.P_8A = pozycja.Towar.JednostkaMiary.Nazwa;
+					jpkwiersz.P_8A = pozycja.Towar?.JednostkaMiary?.Nazwa;
 					jpkwiersz.P_8B = pozycja.Ilosc;
 					jpkwiersz.P_8BSpecified = true;
 					jpkwiersz.P_9A = pozycja.CenaNetto;
