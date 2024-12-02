@@ -725,7 +725,6 @@
                                               <BackgroundGradientType>None</BackgroundGradientType>
                                             </Style>
                                           </Chart>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -3606,6 +3605,14 @@
                                                 <TextRuns>
                                                   <TextRun>
                                                     <Value>=Sum(Fields!RabatRazem.Value)</Value>
+                                                    <Style>
+                                                      <FontFamily>Calibri</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                      <Format>n2</Format>
+                                                    </Style>
+                                                  </TextRun>
+                                                  <TextRun>
+                                                    <Value> zł</Value>
                                                     <Style>
                                                       <FontFamily>Calibri</FontFamily>
                                                       <FontSize>8pt</FontSize>
