@@ -3,14 +3,7 @@ using Microsoft.Reporting.WinForms;
 using ProFak.DB;
 using System;
 using System.Collections.Generic;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using ZXing;
-using ZXing.Windows.Compatibility;
 
 namespace ProFak.Wydruki
 {
@@ -131,8 +124,7 @@ namespace ProFak.Wydruki
 
 		public override void Przygotuj(LocalReport report)
 		{
-			var asm = Assembly.GetCallingAssembly();
-			var rdlc = asm.GetManifestResourceStream("ProFak.Wydruki.Faktura.rdlc");
+			using var rdlc = WczytajSzablon("Faktura");
 			report.LoadReportDefinition(rdlc);
 			report.DataSources.Add(new ReportDataSource("DSFaktury", dane));
 		}
