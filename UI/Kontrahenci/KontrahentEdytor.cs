@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace ProFak.UI
@@ -52,6 +53,47 @@ namespace ProFak.UI
 
 			dateTimePickerOsobaFizycznaDataUrodzenia.CustomFormat = Format.Data;
 			dateTimePickerOsobaFizycznaDataUrodzenia.Format = DateTimePickerFormat.Custom;
+
+			textBoxNIP.Validating += textBoxNIP_Validating;
+		}
+
+		private void textBoxNIP_Validating(object sender, CancelEventArgs e)
+		{
+			var blad = WeryfikacjaNIP(textBoxNIP.Text.Replace("-", "").Trim());
+
+			if (blad == null)
+			{
+				errorProvider.SetError(textBoxNIP, "");
+			}
+			else
+			{
+				errorProvider.SetIconAlignment(textBoxNIP, ErrorIconAlignment.MiddleLeft);
+				errorProvider.SetError(textBoxNIP, blad);
+				// Tutaj bez e.Cancel - żeby dopuścić zapisanie mimo wszystko
+			}
+		}
+
+		private string WeryfikacjaNIP(string nip)
+		{
+			if (String.IsNullOrWhiteSpace(nip)) return null;
+
+			var innyKontrahent = Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.NIP == Rekord.NIP && kontrahent.Id != Rekord.Id);
+
+			if (innyKontrahent != null) return "Istnieje już kontrahent z takim samym NIPem.";
+
+			if (!Regex.IsMatch(nip, @"(\w\w)?\d{10}")) return "NIP ma nieprawidłowy format.";
+			if (nip.Length == 12)
+			{
+				if (nip.StartsWith("PL")) nip = nip.Substring(2);
+				else return null;
+			}
+
+			int[] wagi = [6, 5, 7, 2, 3, 4, 5, 6, 7, 0];
+			int suma = 0;
+			for (int i = 0; i < wagi.Length; i++) suma += (nip[i] - '0') * wagi[i];
+			if (suma % 11 != (nip[9] - '0')) return "NIP nie jest poprawny.";
+
+			return null;
 		}
 
 		private void textBoxNazwa_TextChanged(object sender, EventArgs e)

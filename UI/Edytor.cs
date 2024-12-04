@@ -15,7 +15,7 @@ namespace ProFak.UI
 	{
 		protected readonly Kontroler<TRekord> kontroler;
 		private readonly Container container;
-		private readonly ErrorProvider errorProvider;
+		protected readonly ErrorProvider errorProvider;
 
 		public TRekord Rekord { get => kontroler.Model; private set => kontroler.Model = value; }
 		public Kontekst Kontekst { get; private set; }
