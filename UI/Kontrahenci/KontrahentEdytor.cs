@@ -44,6 +44,9 @@ namespace ProFak.UI
 			kontroler.Powiazanie(comboBoxSrodowiskoKSeF, kontrahent => kontrahent.SrodowiskoKSeF);
 
 			Wymagane(textBoxNazwa);
+			Walidacja(textBoxNIP, WalidacjaNIP, true);
+			Walidacja(textBoxNazwa, WalidacjaNazwy, true);
+			Walidacja(textBoxPelnaNazwa, WalidacjaPelnejNazwy, true);
 
 			fakturySprzedazy = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazySpis(), new AkcjaNaSpisie<Faktura>[] { new EdytujRekordAkcja<Faktura, FakturaEdytor>(), new WydrukFakturyAkcja(), new PrzeladujAkcja<Faktura>() });
 			fakturyZakupu = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis(), new AkcjaNaSpisie<Faktura>[] { new EdytujRekordAkcja<Faktura, FakturaEdytor>(), new PrzeladujAkcja<Faktura>() });
@@ -53,27 +56,9 @@ namespace ProFak.UI
 
 			dateTimePickerOsobaFizycznaDataUrodzenia.CustomFormat = Format.Data;
 			dateTimePickerOsobaFizycznaDataUrodzenia.Format = DateTimePickerFormat.Custom;
-
-			textBoxNIP.Validating += textBoxNIP_Validating;
 		}
 
-		private void textBoxNIP_Validating(object sender, CancelEventArgs e)
-		{
-			var blad = WeryfikacjaNIP(textBoxNIP.Text.Replace("-", "").Trim());
-
-			if (blad == null)
-			{
-				errorProvider.SetError(textBoxNIP, "");
-			}
-			else
-			{
-				errorProvider.SetIconAlignment(textBoxNIP, ErrorIconAlignment.MiddleLeft);
-				errorProvider.SetError(textBoxNIP, blad);
-				// Tutaj bez e.Cancel - żeby dopuścić zapisanie mimo wszystko
-			}
-		}
-
-		private string WeryfikacjaNIP(string nip)
+		private string WalidacjaNIP(string nip)
 		{
 			if (String.IsNullOrWhiteSpace(nip)) return null;
 
@@ -93,6 +78,34 @@ namespace ProFak.UI
 			for (int i = 0; i < wagi.Length; i++) suma += (nip[i] - '0') * wagi[i];
 			if (suma % 11 != (nip[9] - '0')) return "NIP nie jest poprawny.";
 
+			return null;
+		}
+
+		private string WalidacjaNazwy(string nazwa)
+		{
+			if (String.IsNullOrWhiteSpace(nazwa)) return null;
+			static string TrzonNazwy(string nazwa) => String.Join("", nazwa.Where(Char.IsLetterOrDigit).Select(Char.ToLower));
+			var szukanaNazwa = TrzonNazwy(nazwa);
+			if (szukanaNazwa.Length < 3) return null;
+
+			var inneNazwy = Kontekst.Baza.Kontrahenci.Where(e => e.Id != Rekord.Id).Select(e => e.Nazwa).ToList();
+
+			foreach (var _innaNazwa in inneNazwy)
+			{
+				var innaNazwa = TrzonNazwy(_innaNazwa);
+				if (innaNazwa.Length < 3) continue;
+
+				if (innaNazwa.Contains(szukanaNazwa) || szukanaNazwa.Contains(innaNazwa)) return $"Istnieje już kontrahent o podobnej nazwie \"{_innaNazwa}\"";
+			}
+
+			return null;
+		}
+
+		private string WalidacjaPelnejNazwy(string pelnaNazwa)
+		{
+			if (String.IsNullOrWhiteSpace(pelnaNazwa)) return null;
+			var innyKontrahent = Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.PelnaNazwa == pelnaNazwa && kontrahent.Id != Rekord.Id);
+			if (innyKontrahent != null) return "Istnieje już kontrahent z taką samą nazwą.";
 			return null;
 		}
 

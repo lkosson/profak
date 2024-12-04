@@ -62,6 +62,25 @@ namespace ProFak.UI
 			comboBox.Validating += ComboBox_Wymagane_Validating;
 		}
 
+		public void Walidacja(TextBox textBox, Func<string, string> walidator, bool miekki)
+		{
+			textBox.Validating += (control, e) =>
+			{
+				var blad = walidator(textBox.Text);
+
+				if (blad == null)
+				{
+					errorProvider.SetError(textBox, "");
+				}
+				else
+				{
+					errorProvider.SetIconAlignment(textBox, ErrorIconAlignment.MiddleLeft);
+					errorProvider.SetError(textBox, blad);
+					if (!miekki) e.Cancel = true;
+				}
+			};
+		}
+
 		private void TextBox_Wymagane_Validating(object sender, CancelEventArgs e)
 		{
 			var textBox = (TextBox)sender;
