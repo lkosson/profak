@@ -8,12 +8,27 @@ namespace ProFak.Wydruki
 {
 	public class FakturaDTO
 	{
-		public string Tytul { get; set; }
-		public string Podtytul { get; set; }
-		public string Naglowek { get; set; }
-		public string DaneSprzedawcy { get; set; }
-		public string DaneNabywcy { get; set; }
-		public string Stopka { get; set; }
+		public string Numer { get; set; }
+		public string Rodzaj { get; set; }
+		public string Korekta { get; set; }
+		public string DataWystawienia { get; set; }
+		public string DataSprzedazy { get; set; }
+
+		public string NazwaSprzedawcy { get; set; }
+		public string AdresSprzedawcy { get; set; }
+		public string NIPSprzedawcy { get; set; }
+
+		public string NazwaNabywcy { get; set; }
+		public string AdresNabywcy { get; set; }
+		public string NIPNabywcy { get; set; }
+
+		public string Slownie { get; set; }
+		public string TerminPlatnosci { get; set; }
+		public string FormaPlatnosci { get; set; }
+		public string DoZaplaty { get; set; }
+		public string DoZwrotu { get; set; }
+		public string NumerRachunku { get; set; }
+		public string Uwagi { get; set; }
 
 		public string LP { get; set; }
 		public string NaglowekPozycji { get; set; }

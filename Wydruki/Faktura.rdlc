@@ -17,16 +17,24 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="Tytul">
-          <DataField>Tytul</DataField>
+        <Field Name="Numer">
+          <DataField>Numer</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Podtytul">
-          <DataField>Podtytul</DataField>
+        <Field Name="Rodzaj">
+          <DataField>Rodzaj</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Naglowek">
-          <DataField>Naglowek</DataField>
+        <Field Name="Korekta">
+          <DataField>Korekta</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DataWystawienia">
+          <DataField>DataWystawienia</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DataSprzedazy">
+          <DataField>DataSprzedazy</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="DaneSprzedawcy">
@@ -35,6 +43,62 @@
         </Field>
         <Field Name="DaneNabywcy">
           <DataField>DaneNabywcy</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NazwaSprzedawcy">
+          <DataField>NazwaSprzedawcy</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="AdresSprzedawcy">
+          <DataField>AdresSprzedawcy</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NIPSprzedawcy">
+          <DataField>NIPSprzedawcy</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NazwaNabywcy">
+          <DataField>NazwaNabywcy</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="AdresNabywcy">
+          <DataField>AdresNabywcy</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NIPNabywcy">
+          <DataField>NIPNabywcy</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Slownie">
+          <DataField>Slownie</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TerminPlatnosci">
+          <DataField>TerminPlatnosci</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FormaPlatnosci">
+          <DataField>FormaPlatnosci</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DoZaplaty">
+          <DataField>DoZaplaty</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DoZwrotu">
+          <DataField>DoZwrotu</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NumerRachunku">
+          <DataField>NumerRachunku</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Uwagi">
+          <DataField>Uwagi</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Naglowek">
+          <DataField>Naglowek</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Stopka">
@@ -122,7 +186,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>12.21885cm</Height>
+                  <Height>14.29657cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -149,8 +213,37 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=First(Fields!DaneSprzedawcy.Value)</Value>
+                                      <Value>=Fields!NazwaSprzedawcy.Value</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!AdresSprzedawcy.Value</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>NIP: </Value>
                                       <MarkupType>HTML</MarkupType>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                    <TextRun>
+                                      <Value>=Fields!NIPSprzedawcy.Value</Value>
                                       <Style>
                                         <FontFamily>Calibri</FontFamily>
                                       </Style>
@@ -185,8 +278,44 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=First(Fields!DaneNabywcy.Value)</Value>
+                                      <Value>=Fields!NazwaNabywcy.Value</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!AdresNabywcy.Value</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIf(Fields!NIPNabywcy.Value="", "", "NIP: ")</Value>
                                       <MarkupType>HTML</MarkupType>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                    <TextRun>
+                                      <Value xml:space="preserve"> </Value>
+                                      <MarkupType>HTML</MarkupType>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                      </Style>
+                                    </TextRun>
+                                    <TextRun>
+                                      <Value>=Fields!NIPNabywcy.Value</Value>
                                       <Style>
                                         <FontFamily>Calibri</FontFamily>
                                       </Style>
@@ -196,7 +325,7 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>DaneSprzedawcy</rd:DefaultName>
-                              <Height>2.55792cm</Height>
+                              <Height>4.11896cm</Height>
                               <Width>9.08813cm</Width>
                               <Style>
                                 <Border>
@@ -215,8 +344,24 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=First(Fields!Tytul.Value)</Value>
-                                      <MarkupType>HTML</MarkupType>
+                                      <Value>=Fields!Rodzaj.Value</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontSize>14pt</FontSize>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                    <TextRun>
+                                      <Value xml:space="preserve">
+</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontSize>14pt</FontSize>
+                                        <FontWeight>Normal</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                    <TextRun>
+                                      <Value>=Fields!Numer.Value</Value>
                                       <Style>
                                         <FontFamily>Calibri</FontFamily>
                                         <FontSize>14pt</FontSize>
@@ -231,7 +376,7 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=First(Fields!Podtytul.Value)</Value>
+                                      <Value>=Fields!Korekta.Value</Value>
                                       <MarkupType>HTML</MarkupType>
                                       <Style>
                                         <FontFamily>Calibri</FontFamily>
@@ -261,8 +406,37 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=First(Fields!Naglowek.Value)</Value>
+                                      <Value>Data wystawienia: </Value>
                                       <MarkupType>HTML</MarkupType>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                    <TextRun>
+                                      <Value>=Fields!DataWystawienia.Value</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Normal</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Right</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Data sprzedaży: </Value>
+                                      <MarkupType>HTML</MarkupType>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                    <TextRun>
+                                      <Value>=Fields!DataSprzedazy.Value</Value>
                                       <Style>
                                         <FontFamily>Calibri</FontFamily>
                                         <FontWeight>Normal</FontWeight>
@@ -276,7 +450,7 @@
                               </Paragraphs>
                               <rd:DefaultName>DaneSprzedawcy</rd:DefaultName>
                               <Left>9.87417cm</Left>
-                              <Height>2.55792cm</Height>
+                              <Height>4.11896cm</Height>
                               <Width>7.91187cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
@@ -4346,7 +4520,8 @@
                                 </TablixMembers>
                               </TablixRowHierarchy>
                               <DataSetName>DSFaktury</DataSetName>
-                              <Top>2.73431cm</Top>
+                              <Top>4.15096cm</Top>
+                              <Left>0.00001cm</Left>
                               <Height>5.09941cm</Height>
                               <Width>17.88604cm</Width>
                               <ZIndex>2</ZIndex>
@@ -4363,8 +4538,126 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=First(Fields!Stopka.Value)</Value>
+                                      <Value>Do zapłaty: </Value>
                                       <MarkupType>HTML</MarkupType>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                    <TextRun>
+                                      <Value>=Fields!DoZaplaty.Value</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Normal</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Słownie: </Value>
+                                      <MarkupType>HTML</MarkupType>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                    <TextRun>
+                                      <Value>=Fields!Slownie.Value</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Normal</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Termin płatności: </Value>
+                                      <MarkupType>HTML</MarkupType>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                    <TextRun>
+                                      <Value>=Fields!TerminPlatnosci.Value</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Normal</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Forma płatności: </Value>
+                                      <MarkupType>HTML</MarkupType>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                    <TextRun>
+                                      <Value>=Fields!FormaPlatnosci.Value</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Normal</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIf(Fields!NumerRachunku.Value="","","Numer rachunku: ")</Value>
+                                      <MarkupType>HTML</MarkupType>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                    <TextRun>
+                                      <Value>=Fields!NumerRachunku.Value</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Normal</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIf(Fields!NumerKSeF.Value = "", "", "Numer KSeF: ")</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                    <TextRun>
+                                      <Value>=Fields!NumerKSeF.Value</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Normal</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!Uwagi.Value</Value>
                                       <Style>
                                         <FontFamily>Calibri</FontFamily>
                                         <FontWeight>Normal</FontWeight>
@@ -4375,11 +4668,109 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>DaneSprzedawcy</rd:DefaultName>
-                              <Top>8.10384cm</Top>
+                              <Top>9.61196cm</Top>
                               <Left>0.00001cm</Left>
-                              <Height>4.11501cm</Height>
+                              <Height>2.89793cm</Height>
                               <Width>17.78603cm</Width>
                               <ZIndex>3</ZIndex>
+                              <Visibility>
+                                <Hidden>=Fields!DoZaplaty.Value = ""</Hidden>
+                              </Visibility>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="DaneSprzedawcy4">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Do zwrotu: </Value>
+                                      <MarkupType>HTML</MarkupType>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                    <TextRun>
+                                      <Value>=Fields!DoZwrotu.Value</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Normal</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Słownie: </Value>
+                                      <MarkupType>HTML</MarkupType>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                    <TextRun>
+                                      <Value>=Fields!Slownie.Value</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Normal</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIf(Fields!NumerKSeF.Value = "", "", "Numer KSeF: ")</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                    <TextRun>
+                                      <Value>=Fields!NumerKSeF.Value</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Normal</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!Uwagi.Value</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Normal</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>DaneSprzedawcy</rd:DefaultName>
+                              <Top>12.50989cm</Top>
+                              <Left>0.00002cm</Left>
+                              <Height>1.78668cm</Height>
+                              <Width>17.78603cm</Width>
+                              <ZIndex>4</ZIndex>
+                              <Visibility>
+                                <Hidden>=Fields!DoZwrotu.Value = ""</Hidden>
+                              </Visibility>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -4398,6 +4789,7 @@
                             </Border>
                           </Style>
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -4414,8 +4806,7 @@
                 <TablixMember>
                   <Group Name="Faktura">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!Tytul.Value</GroupExpression>
-                      <GroupExpression>=Fields!Podtytul.Value</GroupExpression>
+                      <GroupExpression>=Fields!Numer.Value</GroupExpression>
                     </GroupExpressions>
                     <PageBreak>
                       <BreakLocation>Between</BreakLocation>
@@ -4425,7 +4816,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DSFaktury</DataSetName>
-            <Height>12.21885cm</Height>
+            <Height>14.29657cm</Height>
             <Width>17.9cm</Width>
             <Style>
               <Border>
@@ -4434,7 +4825,7 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>4.81057in</Height>
+        <Height>5.62857in</Height>
         <Style />
       </Body>
       <Width>17.9cm</Width>

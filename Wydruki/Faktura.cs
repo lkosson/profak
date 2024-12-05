@@ -32,47 +32,55 @@ namespace ProFak.Wydruki
 				var jestrabat = pozycje.Any(e => e.RabatProcent > 0 || e.RabatCena > 0 || e.RabatWartosc > 0);
 
 				var fakturaDTO = new FakturaDTO();
-				if (faktura.Rodzaj == RodzajFaktury.Sprzedaż) fakturaDTO.Tytul = jestvat ? "<b>Faktura VAT</b><br/>" : "<b>Faktura</b><br/>";
-				else if (faktura.Rodzaj == RodzajFaktury.Proforma) fakturaDTO.Tytul = "<b>Faktura pro forma</b><br/>";
-				else if (faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży) fakturaDTO.Tytul = jestvat ? "<b>Korekta faktury VAT</b><br/>" : "<b>Korekta faktury</b><br/>";
-				else fakturaDTO.Tytul = "<b>" + faktura.Rodzaj + "</b><br/>";
+				if (faktura.Rodzaj == RodzajFaktury.Sprzedaż) fakturaDTO.Rodzaj = jestvat ? "Faktura VAT" : "Faktura";
+				else if (faktura.Rodzaj == RodzajFaktury.Proforma) fakturaDTO.Rodzaj = "Faktura pro forma";
+				else if (faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży) fakturaDTO.Rodzaj = jestvat ? "Korekta faktury VAT" : "Korekta faktury";
+				else fakturaDTO.Rodzaj = faktura.Rodzaj.ToString();
 
-				fakturaDTO.Tytul += faktura.Numer;
+				fakturaDTO.Numer = faktura.Numer;
 				fakturaDTO.JestVAT = jestvat;
 				fakturaDTO.JestRabat = jestrabat;
 
 				if (faktura.FakturaKorygowanaRef.IsNotNull)
 				{
 					var fakturaBazowa = baza.Znajdz(faktura.FakturaKorygowanaRef);
-					if (fakturaBazowa.Rodzaj == RodzajFaktury.Proforma) fakturaDTO.Podtytul = "do faktury pro forma <b>" + fakturaBazowa.Numer + "</b>";
-					else fakturaDTO.Podtytul = (jestvat ? "do faktury VAT <b>" : "do faktury <b>") + fakturaBazowa.Numer + "</b><br/>z dnia " + fakturaBazowa.DataWystawienia.ToString(UI.Format.Data) + "<br/>";
+					if (fakturaBazowa.Rodzaj == RodzajFaktury.Proforma) fakturaDTO.Korekta = "do faktury pro forma <b>" + fakturaBazowa.Numer + "</b>";
+					else fakturaDTO.Korekta = (jestvat ? "do faktury VAT <b>" : "do faktury <b>") + fakturaBazowa.Numer + "</b><br/>z dnia " + fakturaBazowa.DataWystawienia.ToString(UI.Format.Data) + "<br/>";
 				}
 
-				fakturaDTO.Naglowek = "<b>Data wystawienia:</b> " + faktura.DataWystawienia.ToString(UI.Format.Data)
-					+ "<br/><b>Data sprzedaży:</b> " + faktura.DataSprzedazy.ToString(UI.Format.Data);
+				fakturaDTO.DataWystawienia = faktura.DataWystawienia.ToString(UI.Format.Data);
+				fakturaDTO.DataSprzedazy = faktura.DataSprzedazy.ToString(UI.Format.Data);
 
-				fakturaDTO.DaneNabywcy = faktura.NazwaNabywcy + "<br/>" + faktura.DaneNabywcy.ToString().Replace("\n", "<br/>");
-				if (!String.IsNullOrEmpty(faktura.NIPNabywcy)) fakturaDTO.DaneNabywcy += "<br/><b>NIP:</b> " + faktura.NIPNabywcy;
+				fakturaDTO.NazwaNabywcy = faktura.NazwaNabywcy;
+				fakturaDTO.AdresNabywcy = faktura.DaneNabywcy;
+				fakturaDTO.NIPNabywcy = faktura.NIPNabywcy;
 
-				fakturaDTO.DaneSprzedawcy = faktura.NazwaSprzedawcy + "<br/>" + faktura.DaneSprzedawcy.ToString().Replace("\n", "<br/>");
-				if (!String.IsNullOrEmpty(faktura.NIPSprzedawcy)) fakturaDTO.DaneSprzedawcy += "<br/><b>NIP:</b> " + faktura.NIPSprzedawcy;
+				fakturaDTO.NazwaSprzedawcy = faktura.NazwaSprzedawcy;
+				fakturaDTO.AdresSprzedawcy = faktura.DaneSprzedawcy;
+				fakturaDTO.NIPSprzedawcy = faktura.NIPSprzedawcy;
 
 				if (dozaplaty < 0)
 				{
-					fakturaDTO.Stopka = "<b>Do zwrotu:</b> " + (-dozaplaty).ToString(UI.Format.Kwota) + " " + waluta.Skrot + "<br/><b>Słownie:</b> " + SlowniePL.Slownie(-dozaplaty, waluta.Skrot);
+					fakturaDTO.Slownie = SlowniePL.Slownie(-dozaplaty, waluta.Skrot);
+					fakturaDTO.TerminPlatnosci = "";
+					fakturaDTO.FormaPlatnosci = "";
+					fakturaDTO.DoZwrotu = (-dozaplaty).ToString(UI.Format.Kwota) + " " + waluta.Skrot;
+					fakturaDTO.DoZaplaty = "";
+					fakturaDTO.NumerRachunku = "";
 				}
 				else
 				{
-					fakturaDTO.Stopka = "<b>Do zapłaty:</b> " + dozaplaty.ToString(UI.Format.Kwota) + " " + waluta.Skrot
-						+ "<br/><b>Słownie:</b> " + SlowniePL.Slownie(dozaplaty, waluta.Skrot)
-						+ "<br/><b>Termin płatności:</b> " + faktura.TerminPlatnosci.ToString(UI.Format.Data)
-						+ "<br/><b>Forma płatności:</b> " + faktura.OpisSposobuPlatnosci;
-
-					if (!String.IsNullOrEmpty(faktura.RachunekBankowy)) fakturaDTO.Stopka += "<br/><b>Numer rachunku:</b> " + faktura.RachunekBankowy;
+					fakturaDTO.TerminPlatnosci = faktura.TerminPlatnosci.ToString(UI.Format.Data);
+					fakturaDTO.FormaPlatnosci = faktura.OpisSposobuPlatnosci;
+					fakturaDTO.Slownie = SlowniePL.Slownie(dozaplaty, waluta.Skrot);
+					fakturaDTO.DoZwrotu = "";
+					fakturaDTO.DoZaplaty = dozaplaty.ToString(UI.Format.Kwota) + " " + waluta.Skrot;
+					fakturaDTO.NumerRachunku = faktura.RachunekBankowy;
 				}
 
-				if (!String.IsNullOrEmpty(faktura.NumerKSeF)) fakturaDTO.Stopka += "<br/><b>Numer KSeF:</b> " + faktura.NumerKSeF;
-				if (!String.IsNullOrEmpty(faktura.UwagiPubliczne)) fakturaDTO.Stopka += "<br/><br/>" + faktura.UwagiPubliczne.Replace("\r", "").Replace("\n", "<br/>");
+				fakturaDTO.NumerKSeF = faktura.NumerKSeF;
+				fakturaDTO.Uwagi = faktura.UwagiPubliczne;
+				fakturaDTO.KodKSeF = "";
 
 				/*
 				if (!String.IsNullOrEmpty(faktura.NumerKSeF))
@@ -85,7 +93,6 @@ namespace ProFak.Wydruki
 					var ms = new MemoryStream();
 					qrKSeF.Save(ms, ImageFormat.Png);
 					fakturaDTO.KodKSeF = Convert.ToBase64String(ms.ToArray());
-					fakturaDTO.NumerKSeF = faktura.NumerKSeF;
 				}
 				*/
 
@@ -97,8 +104,7 @@ namespace ProFak.Wydruki
 				{
 					var pozycjaDTO = new FakturaDTO();
 					pozycjaDTO.LP = pozycja.LP.ToString();
-					pozycjaDTO.Tytul = fakturaDTO.Tytul;
-					pozycjaDTO.Podtytul = fakturaDTO.Podtytul;
+					pozycjaDTO.Numer = faktura.Numer; // musi tu być - po tym jest grupowanie stron
 					pozycjaDTO.JestVAT = jestvat;
 					pozycjaDTO.JestRabat = jestrabat;
 

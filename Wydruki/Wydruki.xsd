@@ -3,11 +3,27 @@
   <xs:element name="FakturaDTO" nillable="true" type="FakturaDTO" />
   <xs:complexType name="FakturaDTO">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="1" name="Tytul" type="xs:string" />
-      <xs:element minOccurs="0" maxOccurs="1" name="Podtytul" type="xs:string" />
-      <xs:element minOccurs="0" maxOccurs="1" name="Naglowek" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Numer" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Rodzaj" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Korekta" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="DataWystawienia" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="DataSprzedazy" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="DaneSprzedawcy" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="DaneNabywcy" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="NazwaSprzedawcy" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="AdresSprzedawcy" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="NIPSprzedawcy" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="NazwaNabywcy" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="AdresNabywcy" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="NIPNabywcy" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Slownie" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="TerminPlatnosci" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="FormaPlatnosci" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="DoZaplaty" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="DoZwrotu" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="NumerRachunku" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Uwagi" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Naglowek" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="Stopka" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="LP" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="NaglowekPozycji" type="xs:string" />
@@ -19,7 +35,7 @@
       <xs:element minOccurs="1" maxOccurs="1" name="WartoscVat" type="xs:decimal" />
       <xs:element minOccurs="1" maxOccurs="1" name="WartoscBrutto" type="xs:decimal" />
       <xs:element minOccurs="1" maxOccurs="1" name="RabatRazem" type="xs:decimal" />
-      <xs:element minOccurs="1" maxOccurs="1" name="Rabat" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Rabat" type="xs:string" />
       <xs:element minOccurs="1" maxOccurs="1" name="JestVAT" type="xs:boolean" />
       <xs:element minOccurs="1" maxOccurs="1" name="JestRabat" type="xs:boolean" />
       <xs:element minOccurs="0" maxOccurs="1" name="NumerKSeF" type="xs:string" />
