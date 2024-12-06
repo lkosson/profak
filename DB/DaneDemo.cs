@@ -146,6 +146,7 @@ namespace ProFak.DB
 			var platnosci = baza.SposobyPlatnosci.ToList();
 			var kontrahenci = baza.Kontrahenci.ToList();
 			var firma = kontrahenci.Single(kontrahent => kontrahent.CzyPodmiot);
+			var bezVat = baza.StawkiVat.Single(stawka => stawka.Skrot == "ZW");
 			kontrahenci = kontrahenci.Where(kontrahent => !kontrahent.CzyPodmiot).ToList();
 			var dataStartowa = DateTime.Now.Date.AddYears(-5);
 			var dataKoncowa = DateTime.Now;
@@ -251,7 +252,7 @@ namespace ProFak.DB
 							faktura.NIPNabywcy = kontrahent.NIP;
 							faktura.DaneNabywcy = kontrahent.AdresRejestrowy;
 							faktura.NazwaNabywcy = kontrahent.PelnaNazwa;
-							faktura.RachunekBankowy = firma.RachunekBankowy;
+							faktura.RachunekBankowy = platnosc.LiczbaDni == 0 ? "" : firma.RachunekBankowy;
 						}
 						else
 						{
@@ -263,7 +264,7 @@ namespace ProFak.DB
 							faktura.NIPNabywcy = firma.NIP;
 							faktura.DaneNabywcy = firma.AdresRejestrowy;
 							faktura.NazwaNabywcy = firma.PelnaNazwa;
-							faktura.RachunekBankowy = kontrahent.RachunekBankowy;
+							faktura.RachunekBankowy = platnosc.LiczbaDni == 0 ? "" : kontrahent.RachunekBankowy;
 						}
 
 						if (faktura.Rodzaj == RodzajFaktury.Zakup && rnd.Next(100) < 10) faktura.DataWprowadzenia = faktura.DataWprowadzenia.AddDays(rnd.Next(10));
@@ -271,6 +272,7 @@ namespace ProFak.DB
 
 						faktura.Pozycje = new List<PozycjaFaktury>();
 						var lp = rnd.Next(1, 10);
+						var fvBezVat = rnd.Next(0, 20) == 0;
 						for (int j = 0; j < lp; j++)
 						{
 							var towar = towary[rnd.Next(towary.Count)];
@@ -279,7 +281,7 @@ namespace ProFak.DB
 								TowarRef = towar,
 								CenaBrutto = towar.CenaBrutto,
 								CenaNetto = towar.CenaNetto,
-								StawkaVatRef = towar.StawkaVatRef,
+								StawkaVatRef = fvBezVat ? bezVat : towar.StawkaVatRef,
 								CzyWedlugCenBrutto = towar.CzyWedlugCenBrutto,
 								LP = j + 1,
 								Opis = towar.Nazwa,
