@@ -284,7 +284,10 @@ namespace ProFak.DB
 								LP = j + 1,
 								Opis = towar.Nazwa,
 								FakturaRef = faktura,
-								Ilosc = faktura.CzyZakup ? rnd.Next(10, 100) : rnd.Next(1, 20)
+								Ilosc = faktura.CzyZakup ? rnd.Next(10, 100) : rnd.Next(1, 20),
+								RabatProcent = faktura.CzyZakup ? 0 : rnd.Next(0, 10) == 0 ? rnd.Next(0, 90) : 0,
+								RabatCena = faktura.CzyZakup ? 0 : rnd.Next(0, 20) == 0 ? rnd.Next(0, (int)towar.CenaNetto) : 0,
+								RabatWartosc = faktura.CzyZakup ? 0 : rnd.Next(0, 30) == 0 ? rnd.Next(0, (int)towar.CenaNetto) : 0,
 							};
 							pozycja.PrzeliczCeny(baza);
 
