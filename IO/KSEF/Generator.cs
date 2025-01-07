@@ -191,7 +191,7 @@ class Generator
 			ksefWiersz.NrWierszaFa = dbPozycja.LP.ToString();
 			ksefWiersz.UU_ID = dbPozycja.Id.ToString();
 			ksefWiersz.P_7 = dbPozycja.Opis;
-			ksefWiersz.Indeks = dbPozycja.Towar.Nazwa;
+			ksefWiersz.Indeks = dbPozycja.Towar.Id.ToString();
 			ksefWiersz.P_8A = dbPozycja.Towar.JednostkaMiary.Nazwa;
 			ksefWiersz.P_8B = Math.Abs(dbPozycja.Ilosc);
 			ksefWiersz.P_8BSpecified = true;
