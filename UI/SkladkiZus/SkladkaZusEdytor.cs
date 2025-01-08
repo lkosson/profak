@@ -94,7 +94,7 @@ namespace ProFak.UI
 				Rekord.SkladkaZdrowotna = (Rekord.PodstawaZdrowotne * 0.049m).Zaokragl();
 				Rekord.SkladkaZdrowotna += Rekord.RozliczenieRoczneSkladkiZdrowotnej;
 				Rekord.OdliczenieOdDochodu += Rekord.SkladkaZdrowotna;
-				var sumaOdliczen = Kontekst.Baza.SkladkiZus.Where(skladka => skladka.Miesiac >= new DateTime(Rekord.Miesiac.Year, 1, 1) && skladka.Miesiac < skladka.Miesiac).Sum(skladka => skladka.OdliczenieOdDochodu);
+				var sumaOdliczen = Kontekst.Baza.SkladkiZus.Where(skladka => skladka.Miesiac >= new DateTime(Rekord.Miesiac.Year, 1, 1) && skladka.Miesiac < skladka.Miesiac).AsEnumerable().Sum(skladka => skladka.OdliczenieOdDochodu);
 				Rekord.OdliczenieOdDochodu = Math.Min(Rekord.OdliczenieOdDochodu, 8700m - sumaOdliczen);
 			}
 			else if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Ryczałt)
