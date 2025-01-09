@@ -237,6 +237,59 @@ namespace ProFak.DB
 			return korekta;
 		}
 
+		public Faktura PrzygotujPodobna(Baza baza)
+		{
+			var nowaFaktura = new Faktura();
+			baza.Zapisz(nowaFaktura);
+
+			var sposobPlatnosci = baza.Znajdz(SposobPlatnosciRef);
+			if (Rodzaj == RodzajFaktury.Zakup || Rodzaj == RodzajFaktury.KorektaZakupu) nowaFaktura.Numer = Numer;
+			nowaFaktura.Rodzaj = Rodzaj;
+			nowaFaktura.NIPSprzedawcy = NIPSprzedawcy;
+			nowaFaktura.NazwaSprzedawcy = NazwaSprzedawcy;
+			nowaFaktura.DaneSprzedawcy = DaneSprzedawcy;
+			nowaFaktura.NIPNabywcy = NIPNabywcy;
+			nowaFaktura.NazwaNabywcy = NazwaNabywcy;
+			nowaFaktura.DaneNabywcy = DaneNabywcy;
+			nowaFaktura.RachunekBankowy = RachunekBankowy;
+			nowaFaktura.UwagiPubliczne = UwagiPubliczne;
+			nowaFaktura.KursWaluty = KursWaluty;
+			nowaFaktura.OpisSposobuPlatnosci = OpisSposobuPlatnosci;
+			nowaFaktura.SprzedawcaRef = SprzedawcaRef;
+			nowaFaktura.NabywcaRef = NabywcaRef;
+			nowaFaktura.WalutaRef = WalutaRef;
+			nowaFaktura.SposobPlatnosciRef = SposobPlatnosciRef;
+			if (sposobPlatnosci != null) nowaFaktura.TerminPlatnosci = nowaFaktura.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
+
+			var starePozycje = baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == Id).ToList();
+			var nowePozycje = new List<PozycjaFaktury>();
+			foreach (var staraPozycja in starePozycje)
+			{
+				if (staraPozycja.CzyPrzedKorekta) continue;
+
+				var nowaPozycja = new PozycjaFaktury();
+				nowaPozycja.FakturaId = nowaFaktura.Id;
+				nowaPozycja.TowarId = staraPozycja.TowarId;
+				nowaPozycja.Opis = staraPozycja.Opis;
+				nowaPozycja.CenaNetto = staraPozycja.CenaNetto;
+				nowaPozycja.CenaVat = staraPozycja.CenaVat;
+				nowaPozycja.CenaBrutto = staraPozycja.CenaBrutto;
+				nowaPozycja.Ilosc = staraPozycja.Ilosc;
+				nowaPozycja.WartoscNetto = staraPozycja.WartoscNetto;
+				nowaPozycja.WartoscVat = staraPozycja.WartoscVat;
+				nowaPozycja.WartoscBrutto = staraPozycja.WartoscBrutto;
+				nowaPozycja.CzyWedlugCenBrutto = staraPozycja.CzyWedlugCenBrutto;
+				nowaPozycja.CzyWartosciReczne = staraPozycja.CzyWartosciReczne;
+				nowaPozycja.StawkaVatRef = staraPozycja.StawkaVatRef;
+				nowaPozycja.LP = staraPozycja.LP;
+				nowePozycje.Add(nowaPozycja);
+			}
+
+			baza.Zapisz(nowePozycje);
+
+			return nowaFaktura;
+		}
+
 		public string PodstawPolaWysylki(string szablon)
 		{
 			return szablon

@@ -43,6 +43,7 @@ namespace ProFak.UI
 		{
 			return Utworz(new FakturaSprzedazySpis(parametry),
 				new FakturaSprzedazyAkcja(),
+				new FakturaPodobnaSprzedazAkcja(),
 				new FakturaProformaAkcja(),
 				new KorektaSprzedazyAkcja(),
 				new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
@@ -61,6 +62,7 @@ namespace ProFak.UI
 		{
 			return Utworz(new FakturaZakupuSpis(parametry),
 				new FakturaZakupuAkcja(),
+				new FakturaPodobnaZakupAkcja(),
 				new KorektaZakupuAkcja(),
 				new WczytajKSeFAkcja(),
 				new EdytujRekordAkcja<Faktura, FakturaZakupuEdytor>(),
