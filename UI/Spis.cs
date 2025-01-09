@@ -439,19 +439,21 @@ namespace ProFak.UI
 		private void WczytajKonfiguracje()
 		{
 			var spis = GetType().Name;
-			var kolumny = Kontekst.Baza.KolumnySpisow.Where(e => e.Spis == spis).ToDictionary(e => e.Kolumna);
-			foreach (DataGridViewColumn kolumna in Columns)
+			var kolumny = Kontekst.Baza.KolumnySpisow.Where(e => e.Spis == spis).OrderBy(e => e.Kolejnosc);
+			foreach (var kolumna in kolumny)
 			{
-				if (!kolumny.TryGetValue(kolumna.Name, out var konfiguracjaKolumny)) continue;
-				kolumna.DisplayIndex = konfiguracjaKolumny.Kolejnosc;
-				kolumna.Width = konfiguracjaKolumny.Szerokosc;
-				kolumna.Visible = konfiguracjaKolumny.Szerokosc > 0;
-			}
-			if (kolumny.TryGetValue(WYSOKOSC_WIERSZA, out var wysokosc))
-			{
-				foreach (DataGridViewRow row in Rows) row.Height = wysokosc.Szerokosc;
-				RowTemplate.Height = wysokosc.Szerokosc;
-				ColumnHeadersHeight = wysokosc.Szerokosc;
+				if (kolumna.Kolumna == WYSOKOSC_WIERSZA)
+				{
+					foreach (DataGridViewRow row in Rows) row.Height = kolumna.Szerokosc;
+					RowTemplate.Height = kolumna.Szerokosc;
+					ColumnHeadersHeight = kolumna.Szerokosc;
+					continue;
+				}
+				var kolumnaSpisu = Columns[kolumna.Kolumna];
+				if (kolumnaSpisu == null) continue;
+				if (kolumna.Szerokosc > 0) kolumnaSpisu.Width = kolumna.Szerokosc;
+				kolumnaSpisu.Visible = kolumna.Szerokosc > 0;
+				kolumnaSpisu.DisplayIndex = kolumna.Kolejnosc;
 			}
 			kolumnyZmienione = false;
 		}
