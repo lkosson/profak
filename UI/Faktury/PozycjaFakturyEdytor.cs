@@ -65,6 +65,20 @@ namespace ProFak.UI
 				.Zainstaluj();
 		}
 
+		protected override void PrzygotujRekord(PozycjaFaktury rekord)
+		{
+			base.PrzygotujRekord(rekord);
+			if (rekord.StawkaVatRef.IsNull)
+			{
+				var domyslna = Kontekst.Baza.StawkiVat.OrderByDescending(stawka => stawka.CzyDomyslna).ThenBy(stawka => stawka.Id).FirstOrDefault();
+				if (domyslna != null)
+				{
+					rekord.StawkaVat = domyslna;
+					rekord.StawkaVatRef = domyslna;
+				}
+			}
+		}
+
 		protected override void RekordGotowy()
 		{
 			base.RekordGotowy();
