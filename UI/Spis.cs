@@ -468,7 +468,7 @@ namespace ProFak.UI
 			{
 				var konfiguracjaKolumny = new KolumnaSpisu { Spis = spis, Kolumna = kolumna.Name };
 				konfiguracjaKolumny.Kolejnosc = kolumna.DisplayIndex;
-				konfiguracjaKolumny.Szerokosc = kolumna.Width;
+				konfiguracjaKolumny.Szerokosc = kolumna.Visible ? kolumna.Width : 0;
 				doZapisu.Add(konfiguracjaKolumny);
 			}
 			Kontekst.Baza.Zapisz(doZapisu);
