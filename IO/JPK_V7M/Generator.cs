@@ -151,8 +151,9 @@ namespace ProFak.IO.JPK_V7M
 						jpkzakup.NrDostawcy = nipnumer;
 						jpkzakup.NazwaDostawcy = faktura.NazwaSprzedawcy;
 						jpkzakup.DowodZakupu = faktura.Numer;
-						jpkzakup.DataZakupu = faktura.DataSprzedazy;
+						jpkzakup.DataZakupu = faktura.DataWystawienia;
 						jpkzakup.DataWplywu = faktura.DataWprowadzenia;
+						jpkzakup.DataWplywuSpecified = faktura.DataWystawienia.Date != faktura.DataWprowadzenia.Date;
 
 						if (faktura.CzyZakupSrodkowTrwalych)
 						{
