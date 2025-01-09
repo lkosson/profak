@@ -19,9 +19,10 @@ namespace ProFak.UI
 			DoubleBuffered = true;
 			AllowUserToAddRows = false;
 			AllowUserToDeleteRows = false;
-			AllowUserToResizeRows = false;
+			AllowUserToResizeRows = true;
 			AllowUserToOrderColumns = true;
-			RowHeadersVisible = false;
+			RowHeadersVisible = true;
+			RowHeadersWidth = 16;
 			ShowCellToolTips = true;
 			EnableHeadersVisualStyles = false;
 		}
@@ -29,7 +30,8 @@ namespace ProFak.UI
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			base.OnMouseDown(e);
-			if (HitTest(e.X, e.Y).Type == DataGridViewHitTestType.ColumnHeader) DoubleBuffered = false;
+			var hit = HitTest(e.X, e.Y);
+			if (hit.Type == DataGridViewHitTestType.ColumnHeader || hit.Type == DataGridViewHitTestType.RowHeader) DoubleBuffered = false;
 		}
 
 		protected override void OnMouseUp(MouseEventArgs e)
@@ -42,6 +44,7 @@ namespace ProFak.UI
 	abstract class Spis<T> : Spis
 		where T : Rekord<T>
 	{
+		private const string WYSOKOSC_WIERSZA = "(wysokość)";
 		private readonly Container container;
 		private readonly BindingSource bindingSource;
 		private IEnumerable<T> oryginalneRekordy;
@@ -229,7 +232,7 @@ namespace ProFak.UI
 			{
 				e.CellStyle.SelectionBackColor = System.Drawing.SystemColors.Control;
 			}
-			else
+			else if (e.ColumnIndex != -1)
 			{
 				if (Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection == SortOrder.Ascending) e.CellStyle.BackColor = Color.FromArgb(210, 242, 167);
 				else if (Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection == SortOrder.Descending) e.CellStyle.BackColor = Color.FromArgb(242, 219, 167);
@@ -245,7 +248,12 @@ namespace ProFak.UI
 		protected override void OnCellClick(DataGridViewCellEventArgs e)
 		{
 			base.OnCellClick(e);
-			if (e.RowIndex == -1)
+			if (e.ColumnIndex == -1)
+			{
+				SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+				if (e.RowIndex != -1) Rows[e.RowIndex].Selected = true;
+			}
+			else if (e.RowIndex == -1)
 			{
 				UstawKolejnosc(Columns[e.ColumnIndex].DataPropertyName, ModifierKeys != Keys.Control && ModifierKeys != Keys.Shift);
 				foreach (DataGridViewColumn kolumna in Columns)
@@ -398,6 +406,26 @@ namespace ProFak.UI
 			kolumnyZmienione = true;
 		}
 
+		protected override void OnColumnHeadersHeightChanged(EventArgs e)
+		{
+			base.OnColumnHeadersHeightChanged(e);
+			if (kolumnyZmienione) return;
+			kolumnyZmienione = true;
+			var wysokosc = ColumnHeadersHeight;
+			foreach (DataGridViewRow row in Rows) row.Height = wysokosc;
+		}
+
+		protected override void OnRowHeightChanged(DataGridViewRowEventArgs e)
+		{
+			base.OnRowHeightChanged(e);
+			if (e.Row.Index == -1) return;
+			if (kolumnyZmienione) return;
+			kolumnyZmienione = true;
+			var wysokosc = e.Row.Height;
+			foreach (DataGridViewRow row in Rows) row.Height = wysokosc;
+			ColumnHeadersHeight = wysokosc;
+		}
+
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
 			base.OnMouseUp(e);
@@ -419,6 +447,12 @@ namespace ProFak.UI
 				kolumna.Width = konfiguracjaKolumny.Szerokosc;
 				kolumna.Visible = konfiguracjaKolumny.Szerokosc > 0;
 			}
+			if (kolumny.TryGetValue(WYSOKOSC_WIERSZA, out var wysokosc))
+			{
+				foreach (DataGridViewRow row in Rows) row.Height = wysokosc.Szerokosc;
+				RowTemplate.Height = wysokosc.Szerokosc;
+				ColumnHeadersHeight = wysokosc.Szerokosc;
+			}
 			kolumnyZmienione = false;
 		}
 
@@ -429,6 +463,7 @@ namespace ProFak.UI
 			Kontekst.Baza.Usun(stareKolumny);
 
 			var doZapisu = new List<KolumnaSpisu>();
+			doZapisu.Add(new KolumnaSpisu { Spis = spis, Kolumna = WYSOKOSC_WIERSZA, Kolejnosc = -1, Szerokosc = ColumnHeadersHeight });
 			foreach (DataGridViewColumn kolumna in Columns)
 			{
 				var konfiguracjaKolumny = new KolumnaSpisu { Spis = spis, Kolumna = kolumna.Name };

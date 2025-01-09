@@ -81,7 +81,7 @@ namespace ProFak.UI
 
 		private void spis_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (e.RowIndex != -1 && domyslnaAkcja != null) domyslnaAkcja.Uruchom();
+			if (e.RowIndex != -1 && e.ColumnIndex != -1 && domyslnaAkcja != null) domyslnaAkcja.Uruchom();
 		}
 
 		private void spis_ZaznaczenieZmienione()

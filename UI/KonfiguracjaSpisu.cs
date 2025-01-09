@@ -21,7 +21,7 @@ partial class KonfiguracjaSpisu : UserControl
 	public KonfiguracjaSpisu(IEnumerable<KolumnaSpisu> konfiguracjaKolumn)
 		: this()
 	{
-		listBoxKolumny.DataSource = konfiguracjaKolumn.OrderBy(e => e.Kolejnosc).ToList();
+		listBoxKolumny.DataSource = konfiguracjaKolumn.Where(e => e.Kolejnosc >= 0).OrderBy(e => e.Kolejnosc).ToList();
 	}
 
 	private void listBoxKolumny_SelectedIndexChanged(object sender, EventArgs e)
