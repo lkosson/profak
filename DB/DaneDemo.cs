@@ -234,7 +234,7 @@ namespace ProFak.DB
 							}
 						}
 						korekta.PrzeliczRazem(pozycje);
-						if (korekta.CzySprzedaz) korekta.Numer = Numerator.NadajNumer(baza, korekta.Numerator, korekta.Podstawienie);
+						if (korekta.Numerator.HasValue) korekta.Numer = Numerator.NadajNumer(baza, korekta.Numerator.Value, korekta.Podstawienie);
 						baza.Zapisz(korekta);
 						baza.Zapisz(pozycje);
 
@@ -268,7 +268,7 @@ namespace ProFak.DB
 						}
 
 						if (faktura.Rodzaj == RodzajFaktury.Zakup && rnd.Next(100) < 10) faktura.DataWprowadzenia = faktura.DataWprowadzenia.AddDays(rnd.Next(10));
-						if (faktura.CzySprzedaz) faktura.Numer = Numerator.NadajNumer(baza, faktura.Numerator, faktura.Podstawienie);
+						if (faktura.Numerator.HasValue) faktura.Numer = Numerator.NadajNumer(baza, faktura.Numerator.Value, faktura.Podstawienie);
 
 						faktura.Pozycje = new List<PozycjaFaktury>();
 						var lp = rnd.Next(1, 10);

@@ -21,7 +21,9 @@ namespace ProFak.UI
 
 			foreach (var faktura in zaznaczoneRekordy)
 			{
-				var numerator = kontekst.Baza.Numeratory.FirstOrDefault(numerator => numerator.Przeznaczenie == faktura.Numerator);
+				var przeznaczenie = faktura.Numerator;
+				if (przeznaczenie == null) continue;
+				var numerator = kontekst.Baza.Numeratory.FirstOrDefault(numerator => numerator.Przeznaczenie == przeznaczenie.Value);
 				if (numerator == null) continue;
 				var szablon = Numerator.PrzygotujWzorzec(numerator.Format, faktura.Podstawienie);
 				var parametry = String.Format(szablon, "");

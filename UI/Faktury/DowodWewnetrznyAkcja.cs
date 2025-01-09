@@ -9,12 +9,12 @@ using System.Windows.Forms;
 
 namespace ProFak.UI
 {
-	class FakturaSprzedazyAkcja : DodajRekordAkcja<Faktura, FakturaEdytor>
+	class DowodWewnetrznyAkcja : DodajRekordAkcja<Faktura, FakturaZakupuEdytor>
 	{
-		public override string Nazwa => "➕ Wystaw fakturę [INS]";
+		public override string Nazwa => "➕ Dowód wewnętrzny";
 
-		public FakturaSprzedazyAkcja()
-			: base(faktura => faktura.Rodzaj = RodzajFaktury.Sprzedaż)
+		public DowodWewnetrznyAkcja()
+			: base(faktura => faktura.Rodzaj = RodzajFaktury.DowódWewnętrzny)
 		{
 		}
 

@@ -64,10 +64,12 @@ namespace ProFak.UI
 				new FakturaZakupuAkcja(),
 				new FakturaPodobnaZakupAkcja(),
 				new KorektaZakupuAkcja(),
+				new DowodWewnetrznyAkcja(),
 				new WczytajKSeFAkcja(),
 				new EdytujRekordAkcja<Faktura, FakturaZakupuEdytor>(),
 				new UsunFaktureAkcja(),
 				new DodajWplateAkcja(),
+				new WydrukFakturyAkcja(),
 				new ZapiszPlikiAkcja(),
 				new WczytajJPK_FAAkcja(),
 				new PrzeladujAkcja<Faktura>()

@@ -29,6 +29,7 @@ namespace ProFak.DB
 				baza.Zapisz(new Numerator { Przeznaczenie = PrzeznaczenieNumeratora.Faktura, Format = "FV/[Numer]/[Rok]" });
 				baza.Zapisz(new Numerator { Przeznaczenie = PrzeznaczenieNumeratora.Korekta, Format = "FK/[Numer]/[Rok]" });
 				baza.Zapisz(new Numerator { Przeznaczenie = PrzeznaczenieNumeratora.Proforma, Format = "FP/[Numer]/[Rok]" });
+				baza.Zapisz(new Numerator { Przeznaczenie = PrzeznaczenieNumeratora.DowódWewnętrzny, Format = "DW/[Numer]/[Rok]" });
 			}
 
 			if (!baza.SposobyPlatnosci.Any())

@@ -12,11 +12,5 @@ namespace ProFak.UI
 	class FakturaPodobnaSprzedazAkcja : FakturaPodobnaAkcja
 	{
 		public override string Nazwa => "➕ Wystaw podobną [SHIFT-INS]";
-
-		protected override void ZapiszRekord(Kontekst kontekst, Faktura rekord)
-		{
-			rekord.Numer = Numerator.NadajNumer(kontekst.Baza, rekord.Numerator, rekord.Podstawienie);
-			base.ZapiszRekord(kontekst, rekord);
-		}
 	}
 }

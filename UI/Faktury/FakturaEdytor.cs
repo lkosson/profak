@@ -215,11 +215,12 @@ namespace ProFak.UI
 			else if (Rekord.Rodzaj == RodzajFaktury.KorektaSprzedaży) labelRodzaj.Text = "Korekta sprzedaży " + fakturaKorygowana?.Numer;
 			else if (Rekord.Rodzaj == RodzajFaktury.KorektaZakupu) labelRodzaj.Text = "Korekta zakupu " + fakturaKorygowana?.Numer;
 			else if (Rekord.Rodzaj == RodzajFaktury.Proforma) labelRodzaj.Text = "Proforma";
+			else if (Rekord.Rodzaj == RodzajFaktury.DowódWewnętrzny) labelRodzaj.Text = "Dowód wewnętrzny";
 			else labelRodzaj.Text = Rekord.Rodzaj.ToString();
 
-			if (String.IsNullOrWhiteSpace(Rekord.Numer) && Rekord.CzySprzedaz)
+			if (String.IsNullOrWhiteSpace(Rekord.Numer) && Rekord.Numerator.HasValue)
 			{
-				var numer = Numerator.NadajNumer(Kontekst.Baza, Rekord.Numerator, Rekord.Podstawienie, zwiekszLicznik: false);
+				var numer = Numerator.NadajNumer(Kontekst.Baza, Rekord.Numerator.Value, Rekord.Podstawienie, zwiekszLicznik: false);
 				textBoxNumer.PlaceholderText = numer;
 				comboBoxNazwaNabywcy.Focus();
 				ActiveControl = comboBoxNazwaNabywcy;

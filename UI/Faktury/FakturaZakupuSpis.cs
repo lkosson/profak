@@ -107,7 +107,7 @@ namespace ProFak.UI
 				.Include(faktura => faktura.FakturaKorygujaca)
 				.Include(faktura => faktura.Pozycje)
 				.Include(faktura => faktura.Pliki)
-				.Where(faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu);
+				.Where(faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny);
 			if (SprzedawcaRef.IsNotNull) q = q.Where(faktura => faktura.SprzedawcaId == SprzedawcaRef.Id);
 			if (odDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy >= odDaty.Value);
 			if (doDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy < doDaty.Value);
@@ -128,6 +128,7 @@ namespace ProFak.UI
 			if (!rekord.CzyZaplacona) styl.ForeColor = Color.FromArgb(240, 80, 40);
 			else if (rekord.FakturaKorygujacaRef.IsNotNull) styl.ForeColor = Color.FromArgb(120, 120, 120);
 			else if (rekord.Rodzaj == RodzajFaktury.KorektaZakupu) styl.ForeColor = Color.FromArgb(50, 60, 220);
+			else if (rekord.Rodzaj == RodzajFaktury.DowódWewnętrzny) styl.ForeColor = Color.FromArgb(220, 60, 220);
 		}
 	}
 }

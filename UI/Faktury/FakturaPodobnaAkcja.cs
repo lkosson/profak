@@ -20,5 +20,11 @@ namespace ProFak.UI
 			var korekta = zaznaczona.PrzygotujPodobna(kontekst.Baza);
 			return korekta;
 		}
+
+		protected override void ZapiszRekord(Kontekst kontekst, Faktura rekord)
+		{
+			if (rekord.Numerator.HasValue) rekord.Numer = Numerator.NadajNumer(kontekst.Baza, rekord.Numerator.Value, rekord.Podstawienie);
+			base.ZapiszRekord(kontekst, rekord);
+		}
 	}
 }

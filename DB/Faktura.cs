@@ -90,12 +90,13 @@ namespace ProFak.DB
 		public string NumerPowiazanej => FakturaKorygowana?.Numer ?? FakturaKorygujaca?.Numer ?? "";
 
 		public string WalutaFmt => Waluta?.Skrot;
-		public PrzeznaczenieNumeratora Numerator => Rodzaj switch
+		public PrzeznaczenieNumeratora? Numerator => Rodzaj switch
 		{
 			RodzajFaktury.Sprzedaż => PrzeznaczenieNumeratora.Faktura,
 			RodzajFaktury.Proforma => PrzeznaczenieNumeratora.Proforma,
 			RodzajFaktury.KorektaSprzedaży => PrzeznaczenieNumeratora.Korekta,
-			_ => PrzeznaczenieNumeratora.Faktura
+			RodzajFaktury.DowódWewnętrzny => PrzeznaczenieNumeratora.DowódWewnętrzny,
+			_ => null
 		};
 
 		public bool CzySprzedaz => Rodzaj == RodzajFaktury.Sprzedaż || Rodzaj == RodzajFaktury.KorektaSprzedaży || Rodzaj == RodzajFaktury.Proforma;
@@ -243,7 +244,7 @@ namespace ProFak.DB
 			baza.Zapisz(nowaFaktura);
 
 			var sposobPlatnosci = baza.Znajdz(SposobPlatnosciRef);
-			if (Rodzaj == RodzajFaktury.Zakup || Rodzaj == RodzajFaktury.KorektaZakupu) nowaFaktura.Numer = Numer;
+			if (!Numerator.HasValue) nowaFaktura.Numer = Numer;
 			nowaFaktura.Rodzaj = Rodzaj;
 			nowaFaktura.NIPSprzedawcy = NIPSprzedawcy;
 			nowaFaktura.NazwaSprzedawcy = NazwaSprzedawcy;
@@ -321,6 +322,7 @@ namespace ProFak.DB
 		Zakup,
 		KorektaSprzedaży,
 		KorektaZakupu,
-		Proforma
+		Proforma,
+		DowódWewnętrzny
 	}
 }
