@@ -186,6 +186,13 @@ namespace ProFak.DB
 			korekta.NabywcaRef = bazowa.NabywcaRef;
 			korekta.WalutaRef = bazowa.WalutaRef;
 			korekta.SposobPlatnosciRef = bazowa.SposobPlatnosciRef;
+			korekta.ProcentVatNaliczonego = bazowa.ProcentVatNaliczonego;
+			korekta.ProcentKosztow = bazowa.ProcentKosztow;
+			korekta.CzyWartosciReczne = bazowa.CzyWartosciReczne;
+			korekta.CzyTP = bazowa.CzyTP;
+			korekta.CzyZakupSrodkowTrwalych = bazowa.CzyZakupSrodkowTrwalych;
+			korekta.CzyWDT = bazowa.CzyWDT;
+			korekta.CzyWNT = bazowa.CzyWNT;
 
 			bazowa.FakturaKorygujacaRef = korekta;
 
@@ -209,6 +216,11 @@ namespace ProFak.DB
 				pozycjaPrzed.CzyWedlugCenBrutto = staraPozycja.CzyWedlugCenBrutto;
 				pozycjaPrzed.CzyWartosciReczne = staraPozycja.CzyWartosciReczne;
 				pozycjaPrzed.StawkaVatRef = staraPozycja.StawkaVatRef;
+				pozycjaPrzed.GTU = staraPozycja.GTU;
+				pozycjaPrzed.StawkaRyczaltu = staraPozycja.StawkaRyczaltu;
+				pozycjaPrzed.RabatProcent = staraPozycja.RabatProcent;
+				pozycjaPrzed.RabatCena = staraPozycja.RabatCena;
+				pozycjaPrzed.RabatWartosc = staraPozycja.RabatWartosc;
 				pozycjaPrzed.CzyPrzedKorekta = true;
 				pozycjaPrzed.LP = staraPozycja.LP;
 				nowePozycje.Add(pozycjaPrzed);
@@ -227,6 +239,11 @@ namespace ProFak.DB
 				pozycjaPo.CzyWedlugCenBrutto = staraPozycja.CzyWedlugCenBrutto;
 				pozycjaPo.CzyWartosciReczne = staraPozycja.CzyWartosciReczne;
 				pozycjaPo.StawkaVatRef = staraPozycja.StawkaVatRef;
+				pozycjaPo.GTU = staraPozycja.GTU;
+				pozycjaPo.StawkaRyczaltu = staraPozycja.StawkaRyczaltu;
+				pozycjaPo.RabatProcent = staraPozycja.RabatProcent;
+				pozycjaPo.RabatCena = staraPozycja.RabatCena;
+				pozycjaPo.RabatWartosc = staraPozycja.RabatWartosc;
 				pozycjaPo.CzyPrzedKorekta = false;
 				pozycjaPo.LP = staraPozycja.LP;
 				nowePozycje.Add(pozycjaPo);
@@ -254,12 +271,22 @@ namespace ProFak.DB
 			nowaFaktura.DaneNabywcy = DaneNabywcy;
 			nowaFaktura.RachunekBankowy = RachunekBankowy;
 			nowaFaktura.UwagiPubliczne = UwagiPubliczne;
+			nowaFaktura.UwagiWewnetrzne = UwagiWewnetrzne;
 			nowaFaktura.KursWaluty = KursWaluty;
 			nowaFaktura.OpisSposobuPlatnosci = OpisSposobuPlatnosci;
 			nowaFaktura.SprzedawcaRef = SprzedawcaRef;
 			nowaFaktura.NabywcaRef = NabywcaRef;
 			nowaFaktura.WalutaRef = WalutaRef;
 			nowaFaktura.SposobPlatnosciRef = SposobPlatnosciRef;
+			nowaFaktura.ProcentVatNaliczonego = ProcentVatNaliczonego;
+			nowaFaktura.ProcentKosztow = ProcentKosztow;
+			nowaFaktura.CzyWartosciReczne = CzyWartosciReczne;
+			nowaFaktura.CzyTP = CzyTP;
+			nowaFaktura.CzyZakupSrodkowTrwalych = CzyZakupSrodkowTrwalych;
+			nowaFaktura.CzyWDT = CzyWDT;
+			nowaFaktura.CzyWNT = CzyWNT;
+			nowaFaktura.OpisZdarzenia = OpisZdarzenia;
+
 			if (sposobPlatnosci != null) nowaFaktura.TerminPlatnosci = nowaFaktura.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
 
 			var starePozycje = baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == Id).ToList();
@@ -282,8 +309,11 @@ namespace ProFak.DB
 				nowaPozycja.CzyWedlugCenBrutto = staraPozycja.CzyWedlugCenBrutto;
 				nowaPozycja.CzyWartosciReczne = staraPozycja.CzyWartosciReczne;
 				nowaPozycja.StawkaVatRef = staraPozycja.StawkaVatRef;
-				nowaPozycja.LP = staraPozycja.LP;
-				nowePozycje.Add(nowaPozycja);
+				nowaPozycja.GTU = staraPozycja.GTU;
+				nowaPozycja.StawkaRyczaltu = staraPozycja.StawkaRyczaltu;
+				nowaPozycja.RabatProcent = staraPozycja.RabatProcent;
+				nowaPozycja.RabatCena = staraPozycja.RabatCena;
+				nowaPozycja.RabatWartosc = staraPozycja.RabatWartosc;
 			}
 
 			baza.Zapisz(nowePozycje);
