@@ -298,8 +298,20 @@ namespace ProFak.UI
 
 			using var edytor = new KonfiguracjaSpisu(kolumny);
 			using var okno = new Dialog("Konfiguracja spisu", edytor, nowyKontekst);
-			if (okno.ShowDialog() != DialogResult.OK) return;
-			nowyKontekst.Baza.Zapisz(kolumny);
+			okno.Przyciski.Controls.Add(new Button()
+			{
+				AutoSize = true,
+				Text = "Przywróć domyślne ustawienia",
+				DialogResult = DialogResult.Ignore
+			});
+			var wynik = okno.ShowDialog();
+			if (wynik == DialogResult.Cancel) return;
+			if (wynik == DialogResult.OK) nowyKontekst.Baza.Zapisz(kolumny);
+			if (wynik == DialogResult.Ignore)
+			{
+				nowyKontekst.Baza.Usun(kolumny);
+				MessageBox.Show("Domyślne ustawienia zostaną załadowane po ponownym wyświetleniu spisu." , "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
 			transakcja.Zatwierdz();
 			WczytajKonfiguracje();
 		}

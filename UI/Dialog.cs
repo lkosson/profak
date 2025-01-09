@@ -14,6 +14,7 @@ namespace ProFak.UI
 	{
 		public Control Zawartosc { get { return panelZawartosc.Controls.Cast<Control>().FirstOrDefault(); } set { panelZawartosc.Controls.Clear(); if (value != null) UstawZawartosc(value); } }
 		public bool CzyPrzyciskiWidoczne { get => flowLayoutPanelPrzyciski.Visible; set { flowLayoutPanelPrzyciski.Visible = value; CancelButton = value ? buttonAnuluj : null; } }
+		public FlowLayoutPanel Przyciski => flowLayoutPanelPrzyciski;
 
 		private Dialog()
 		{
