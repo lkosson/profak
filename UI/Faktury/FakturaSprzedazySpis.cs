@@ -45,6 +45,7 @@ namespace ProFak.UI
 			DodajKolumne(nameof(Faktura.RodzajFmt), "Rodzaj");
 			DodajKolumneData(nameof(Faktura.DataWystawienia), "Data wystawienia");
 			DodajKolumneData(nameof(Faktura.DataSprzedazy), "Data sprzedaży");
+			DodajKolumneData(nameof(Faktura.DataWprowadzenia), "Data wprowadzenia");
 			kolumnaNazwaNabywcy = DodajKolumne(nameof(Faktura.NazwaNabywcy), "Nabywca", szerokosc: 250);
 			kolumnaNIPNabywcy = DodajKolumne(nameof(Faktura.NIPNabywcy), "NIP nabywcy", szerokosc: 100);
 			DodajKolumneKwota(nameof(Faktura.RazemNetto), "Netto");
@@ -60,6 +61,8 @@ namespace ProFak.UI
 			DodajKolumne(nameof(Faktura.OpisZdarzenia), "Opis KPiR", szerokosc: 150);
 			DodajKolumneKwota(nameof(Faktura.SumaWplat), "Zapłacono");
 			DodajKolumneKwota(nameof(Faktura.PozostaloDoZaplaty), "Do zapłaty");
+			DodajKolumneData(nameof(Faktura.TerminPlatnosci), "Termin płatności");
+			DodajKolumne(nameof(Faktura.DniPoTerminie), "Dni po terminie");
 			DodajKolumne(nameof(Faktura.NumerPowiazanej), "Powiązana");
 			DodajKolumne(nameof(Faktura.NumerKSeF), "Numer KSeF", szerokosc: 230);
 			DodajKolumneBool(nameof(Faktura.CzyTP), "TP", szerokosc: 50);

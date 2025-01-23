@@ -80,6 +80,7 @@ namespace ProFak.DB
 		public bool CzyZaplacona => PozostaloDoZaplaty == 0;
 		public bool CzyKSeF => !String.IsNullOrEmpty(NumerKSeF);
 		public bool CzyPliki => Pliki?.Count() > 0;
+		public int? DniPoTerminie => CzyZaplacona || DateTime.Now.Date < TerminPlatnosci.Date ? null : (int)((DateTime.Now.Date - TerminPlatnosci.Date).TotalDays);
 
 		public decimal VatNaliczony => (RazemVat * ProcentVatNaliczonego / 100m).Zaokragl();
 		public decimal VatJakoKoszty => ((RazemVat - VatNaliczony) * ProcentKosztow / 100m).Zaokragl();
