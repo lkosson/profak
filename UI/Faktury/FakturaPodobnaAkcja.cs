@@ -17,8 +17,8 @@ namespace ProFak.UI
 		protected override Faktura UtworzRekord(Kontekst kontekst, IEnumerable<Faktura> zaznaczoneRekordy)
 		{
 			var zaznaczona = zaznaczoneRekordy.Single();
-			var korekta = zaznaczona.PrzygotujPodobna(kontekst.Baza);
-			return korekta;
+			var podobna = zaznaczona.PrzygotujPodobna(kontekst.Baza);
+			return podobna;
 		}
 
 		protected override void ZapiszRekord(Kontekst kontekst, Faktura rekord)
