@@ -16,8 +16,8 @@ namespace ProFak.UI
 		private readonly DateTime? doDaty;
 		private readonly bool doZaplaty;
 		private readonly bool zaplacone;
-		private readonly DataGridViewTextBoxColumn kolumnaNazwaNabywcy;
-		private readonly DataGridViewTextBoxColumn kolumnaNIPNabywcy;
+		protected readonly DataGridViewTextBoxColumn kolumnaNazwaNabywcy;
+		protected readonly DataGridViewTextBoxColumn kolumnaNIPNabywcy;
 		public Ref<Kontrahent> NabywcaRef { get; set; }
 		public Ref<Towar> TowarRef { get; set; }
 		public Ref<DeklaracjaVat> DeklaracjaVatRef { get; set; }
@@ -97,9 +97,6 @@ namespace ProFak.UI
 
 		protected override void Przeladuj()
 		{
-			kolumnaNazwaNabywcy.Visible = NabywcaRef.IsNull;
-			kolumnaNIPNabywcy.Visible = NabywcaRef.IsNull;
-
 			var q = Kontekst.Baza.Faktury
 				.Include(faktura => faktura.Waluta)
 				.Include(faktura => faktura.Wplaty)
@@ -129,6 +126,15 @@ namespace ProFak.UI
 			else if (rekord.Rodzaj == RodzajFaktury.Proforma) styl.ForeColor = Color.FromArgb(30, 150, 20);
 			else if (rekord.FakturaKorygujacaRef.IsNotNull) styl.ForeColor = Color.FromArgb(120, 120, 120);
 			else if (rekord.Rodzaj == RodzajFaktury.KorektaSprzedaży) styl.ForeColor = Color.FromArgb(50, 60, 220);
+		}
+	}
+
+	class FakturaSprzedazyBezNabywcySpis : FakturaSprzedazySpis
+	{
+		public FakturaSprzedazyBezNabywcySpis()
+		{
+			Columns.Remove(kolumnaNazwaNabywcy);
+			Columns.Remove(kolumnaNIPNabywcy);
 		}
 	}
 }
