@@ -309,7 +309,7 @@ namespace ProFak.UI
 			if (wynik == DialogResult.OK) nowyKontekst.Baza.Zapisz(kolumny);
 			if (wynik == DialogResult.Ignore)
 			{
-				nowyKontekst.Baza.Usun(kolumny);
+				nowyKontekst.Baza.Usun(kolumny.Where(e => e.Id > 0));
 				MessageBox.Show("Domyślne ustawienia zostaną załadowane po ponownym wyświetleniu spisu." , "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 			transakcja.Zatwierdz();
