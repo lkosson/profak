@@ -20,6 +20,6 @@ namespace ProFak.DB
 			|| CzyPasuje(Spis, fraza)
 			|| CzyPasuje(Kolumna, fraza);
 
-		public override string ToString() => Kolejnosc + ". " + Kolumna + " (" + (Szerokosc == 0 ? "ukryta" : Szerokosc + "px") + ")";
+		public override string ToString() => Kolejnosc + ". " + Kolumna + " (" + (Szerokosc == 0 ? "ukryta" : Szerokosc == -1 ? "rozciągnięta" : Szerokosc + "px") + ")";
 	}
 }

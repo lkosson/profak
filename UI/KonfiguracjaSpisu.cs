@@ -31,6 +31,7 @@ partial class KonfiguracjaSpisu : UserControl
 		numericUpDownKolejnosc.Value = kolumna.Kolejnosc;
 		numericUpDownSzerokosc.Value = kolumna.Szerokosc;
 		checkBoxUkryta.Checked = kolumna.Szerokosc == 0;
+		checkBoxRozciagnij.Checked = kolumna.Szerokosc == -1;
 	}
 
 	private void numericUpDownSzerokosc_ValueChanged(object sender, EventArgs e)
@@ -53,12 +54,34 @@ partial class KonfiguracjaSpisu : UserControl
 		if (kolumna == null) return;
 		if (checkBoxUkryta.Checked)
 		{
+			checkBoxRozciagnij.Enabled = false;
+			checkBoxRozciagnij.Checked = false;
 			numericUpDownSzerokosc.Enabled = false;
 			kolumna.Szerokosc = 0;
 		}
 		else
 		{
 			numericUpDownSzerokosc.Enabled = true;
+			numericUpDownSzerokosc.Value = 100;
+			kolumna.Szerokosc = 100;
+		}
+	}
+
+	private void checkBoxRozciagnij_CheckedChanged(object sender, EventArgs e)
+	{
+		var kolumna = (KolumnaSpisu)listBoxKolumny.SelectedItem;
+		if (kolumna == null) return;
+		if (checkBoxRozciagnij.Checked)
+		{
+			checkBoxUkryta.Enabled = false;
+			checkBoxUkryta.Checked = false;
+			numericUpDownSzerokosc.Enabled = false;
+			kolumna.Szerokosc = -1;
+		}
+		else
+		{
+			numericUpDownSzerokosc.Enabled = true;
+			numericUpDownSzerokosc.Value = 100;
 			kolumna.Szerokosc = 100;
 		}
 	}

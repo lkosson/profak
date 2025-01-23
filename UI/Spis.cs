@@ -292,7 +292,7 @@ namespace ProFak.UI
 				if (kolumny.Any(e => e.Kolumna == kolumna.Name)) continue;
 				var konfiguracjaKolumny = new KolumnaSpisu { Spis = spis, Kolumna = kolumna.Name };
 				konfiguracjaKolumny.Kolejnosc = kolumna.DisplayIndex;
-				konfiguracjaKolumny.Szerokosc = kolumna.Width;
+				konfiguracjaKolumny.Szerokosc = kolumna.AutoSizeMode == DataGridViewAutoSizeColumnMode.Fill ? -1 : kolumna.Width;
 				kolumny.Add(konfiguracjaKolumny);
 			}
 
@@ -463,8 +463,13 @@ namespace ProFak.UI
 				}
 				var kolumnaSpisu = Columns[kolumna.Kolumna];
 				if (kolumnaSpisu == null) continue;
-				if (kolumna.Szerokosc > 0) kolumnaSpisu.Width = kolumna.Szerokosc;
-				kolumnaSpisu.Visible = kolumna.Szerokosc > 0;
+				if (kolumna.Szerokosc > 0)
+				{
+					kolumnaSpisu.AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+					kolumnaSpisu.Width = kolumna.Szerokosc;
+				}
+				if (kolumna.Szerokosc == -1) kolumnaSpisu.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+				kolumnaSpisu.Visible = kolumna.Szerokosc != 0;
 				kolumnaSpisu.DisplayIndex = kolumna.Kolejnosc;
 			}
 			kolumnyZmienione = false;
@@ -482,7 +487,7 @@ namespace ProFak.UI
 			{
 				var konfiguracjaKolumny = new KolumnaSpisu { Spis = spis, Kolumna = kolumna.Name };
 				konfiguracjaKolumny.Kolejnosc = kolumna.DisplayIndex;
-				konfiguracjaKolumny.Szerokosc = kolumna.Visible ? kolumna.Width : 0;
+				konfiguracjaKolumny.Szerokosc = kolumna.Visible ? kolumna.AutoSizeMode == DataGridViewAutoSizeColumnMode.Fill ? -1 : kolumna.Width : 0;
 				doZapisu.Add(konfiguracjaKolumny);
 			}
 			Kontekst.Baza.Zapisz(doZapisu);

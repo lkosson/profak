@@ -38,6 +38,7 @@ partial class KonfiguracjaSpisu
 		numericUpDownSzerokosc = new System.Windows.Forms.NumericUpDown();
 		numericUpDownKolejnosc = new System.Windows.Forms.NumericUpDown();
 		checkBoxUkryta = new System.Windows.Forms.CheckBox();
+		checkBoxRozciagnij = new System.Windows.Forms.CheckBox();
 		((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
 		splitContainer1.Panel1.SuspendLayout();
 		splitContainer1.Panel2.SuspendLayout();
@@ -60,8 +61,8 @@ partial class KonfiguracjaSpisu
 		// splitContainer1.Panel2
 		// 
 		splitContainer1.Panel2.Controls.Add(tableLayoutPanel1);
-		splitContainer1.Size = new System.Drawing.Size(483, 140);
-		splitContainer1.SplitterDistance = 243;
+		splitContainer1.Size = new System.Drawing.Size(562, 140);
+		splitContainer1.SplitterDistance = 282;
 		splitContainer1.TabIndex = 0;
 		// 
 		// listBoxKolumny
@@ -71,7 +72,7 @@ partial class KonfiguracjaSpisu
 		listBoxKolumny.ItemHeight = 15;
 		listBoxKolumny.Location = new System.Drawing.Point(0, 0);
 		listBoxKolumny.Name = "listBoxKolumny";
-		listBoxKolumny.Size = new System.Drawing.Size(243, 140);
+		listBoxKolumny.Size = new System.Drawing.Size(282, 140);
 		listBoxKolumny.TabIndex = 0;
 		listBoxKolumny.SelectedIndexChanged += listBoxKolumny_SelectedIndexChanged;
 		// 
@@ -87,16 +88,18 @@ partial class KonfiguracjaSpisu
 		tableLayoutPanel1.Controls.Add(numericUpDownSzerokosc, 1, 1);
 		tableLayoutPanel1.Controls.Add(numericUpDownKolejnosc, 1, 2);
 		tableLayoutPanel1.Controls.Add(checkBoxUkryta, 1, 3);
+		tableLayoutPanel1.Controls.Add(checkBoxRozciagnij, 1, 4);
 		tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 		tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
 		tableLayoutPanel1.Name = "tableLayoutPanel1";
-		tableLayoutPanel1.RowCount = 5;
+		tableLayoutPanel1.RowCount = 6;
+		tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-		tableLayoutPanel1.Size = new System.Drawing.Size(236, 140);
+		tableLayoutPanel1.Size = new System.Drawing.Size(276, 140);
 		tableLayoutPanel1.TabIndex = 0;
 		// 
 		// label1
@@ -135,13 +138,14 @@ partial class KonfiguracjaSpisu
 		textBoxKolumna.Location = new System.Drawing.Point(68, 3);
 		textBoxKolumna.Name = "textBoxKolumna";
 		textBoxKolumna.ReadOnly = true;
-		textBoxKolumna.Size = new System.Drawing.Size(165, 23);
+		textBoxKolumna.Size = new System.Drawing.Size(205, 23);
 		textBoxKolumna.TabIndex = 1;
 		// 
 		// numericUpDownSzerokosc
 		// 
 		numericUpDownSzerokosc.Location = new System.Drawing.Point(68, 32);
 		numericUpDownSzerokosc.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+		numericUpDownSzerokosc.Minimum = new decimal(new int[] { 1, 0, 0, System.Int32.MinValue });
 		numericUpDownSzerokosc.Name = "numericUpDownSzerokosc";
 		numericUpDownSzerokosc.Size = new System.Drawing.Size(100, 23);
 		numericUpDownSzerokosc.TabIndex = 2;
@@ -169,13 +173,24 @@ partial class KonfiguracjaSpisu
 		checkBoxUkryta.UseVisualStyleBackColor = true;
 		checkBoxUkryta.CheckedChanged += checkBoxUkryta_CheckedChanged;
 		// 
+		// checkBoxRozciagnij
+		// 
+		checkBoxRozciagnij.AutoSize = true;
+		checkBoxRozciagnij.Location = new System.Drawing.Point(68, 115);
+		checkBoxRozciagnij.Name = "checkBoxRozciagnij";
+		checkBoxRozciagnij.Size = new System.Drawing.Size(189, 19);
+		checkBoxRozciagnij.TabIndex = 3;
+		checkBoxRozciagnij.Text = "Rozciągnij do pełnej szerokości";
+		checkBoxRozciagnij.UseVisualStyleBackColor = true;
+		checkBoxRozciagnij.CheckedChanged += checkBoxRozciagnij_CheckedChanged;
+		// 
 		// KonfiguracjaSpisu
 		// 
 		AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 		AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 		Controls.Add(splitContainer1);
 		Name = "KonfiguracjaSpisu";
-		Size = new System.Drawing.Size(483, 140);
+		Size = new System.Drawing.Size(562, 140);
 		splitContainer1.Panel1.ResumeLayout(false);
 		splitContainer1.Panel2.ResumeLayout(false);
 		((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
@@ -199,4 +214,5 @@ partial class KonfiguracjaSpisu
 	private System.Windows.Forms.NumericUpDown numericUpDownSzerokosc;
 	private System.Windows.Forms.NumericUpDown numericUpDownKolejnosc;
 	private System.Windows.Forms.CheckBox checkBoxUkryta;
+	private System.Windows.Forms.CheckBox checkBoxRozciagnij;
 }
