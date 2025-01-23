@@ -16,6 +16,7 @@ namespace ProFak.UI
 		public OknoBledu()
 		{
 			InitializeComponent();
+			ShowInTaskbar = false;
 		}
 
 		public OknoBledu(Exception exc)

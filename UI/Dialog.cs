@@ -19,6 +19,7 @@ namespace ProFak.UI
 		private Dialog()
 		{
 			InitializeComponent();
+			ShowInTaskbar = false;
 			Icon = GlowneOkno.Ikona;
 		}
 
