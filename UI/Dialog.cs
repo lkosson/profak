@@ -54,6 +54,7 @@ namespace ProFak.UI
 			}
 			else if (e.KeyCode == Keys.F10 && CzyPrzyciskiWidoczne)
 			{
+				e.SuppressKeyPress = true;
 				DialogResult = DialogResult.OK;
 				Close();
 			}
