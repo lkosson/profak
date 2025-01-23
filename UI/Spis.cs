@@ -69,7 +69,7 @@ namespace ProFak.UI
 					row.Selected = wybrany;
 					if (pierwszy && wybrany)
 					{
-						CurrentCell = row.Cells[0];
+						CurrentCell = row.Cells.Cast<DataGridViewCell>().FirstOrDefault(e => e.Visible);
 						pierwszy = false;
 					}
 				}
