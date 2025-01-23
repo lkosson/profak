@@ -25,6 +25,7 @@ namespace ProFak.UI
 				.OrderByDescending(pozycja => pozycja.LP)
 				.FirstOrDefault();
 			if (ostatniaIstniejacaPozycja != null) rekord.LP = ostatniaIstniejacaPozycja.LP + 1;
+			rekord.Ilosc = 1;
 
 			return rekord;
 		}
