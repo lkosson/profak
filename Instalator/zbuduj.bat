@@ -19,7 +19,7 @@ cd ..\..\Instalator
 heat dir ..\bin\Publish -sreg -srd -sfrag -gg -template fragment -cg Pliki -var var.Zrodlo -dr KATALOGPROGRAMU -out ProFak-pliki.wxs
 if errorlevel 1 goto :blad
 
-candle.exe ProFak.wxs ProFak-pliki.wxs -dZrodlo=..\bin\Publish\
+candle.exe ProFak.wxs ProFak-pliki.wxs -arch x64 -dZrodlo=..\bin\Publish\
 if errorlevel 1 goto :blad
 
 light.exe ProFak.wixobj ProFak-pliki.wixobj -ext WixUIExtension -cultures:pl-PL -out ..\bin\Install\ProFak.msi
