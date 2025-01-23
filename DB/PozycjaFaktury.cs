@@ -22,6 +22,7 @@ namespace ProFak.DB
 		public bool CzyWedlugCenBrutto { get; set; }
 		public bool CzyWartosciReczne { get; set; }
 		public int? StawkaVatId { get; set; }
+		public int? JednostkaMiaryId { get; set; }
 		public int LP { get; set; }
 		public bool CzyPrzedKorekta { get; set; }
 		public int GTU { get; set; }
@@ -35,10 +36,12 @@ namespace ProFak.DB
 		public Ref<Faktura> FakturaRef { get => FakturaId; set => FakturaId = value; }
 		public Ref<Towar> TowarRef { get => TowarId; set => TowarId = value; }
 		public Ref<StawkaVat> StawkaVatRef { get => StawkaVatId; set => StawkaVatId = value; }
+		public Ref<JednostkaMiary> JednostkaMiaryRef { get => JednostkaMiaryId; set => JednostkaMiaryId = value; }
 
 		public Faktura Faktura { get; set; }
 		public Towar Towar { get; set; }
 		public StawkaVat StawkaVat { get; set; }
+		public JednostkaMiary JednostkaMiary { get; set; }
 
 		public decimal Cena => CzyWedlugCenBrutto ? CenaBrutto : CenaNetto;
 

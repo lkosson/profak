@@ -22,6 +22,7 @@ namespace ProFak.Wydruki
 				var pozycje = baza.PozycjeFaktur
 					.Where(pozycja => pozycja.FakturaId == faktura.Id)
 					.Include(pozycja => pozycja.StawkaVat)
+					.Include(pozycja => pozycja.JednostkaMiary)
 					.Include(pozycja => pozycja.Towar).ThenInclude(towar => towar.JednostkaMiary)
 					.OrderBy(pozycja => pozycja.LP)
 					.ThenBy(pozycja => pozycja.CzyPrzedKorekta)
@@ -112,9 +113,11 @@ namespace ProFak.Wydruki
 					else
 						pozycjaDTO.NaglowekPozycji = "";
 
+					var jm = pozycja.JednostkaMiary ?? pozycja.Towar?.JednostkaMiary;
+
 					pozycjaDTO.OpisPozycji = pozycja.Opis;
 					pozycjaDTO.CenaNetto = pozycja.Cena;
-					pozycjaDTO.Ilosc = Math.Abs(pozycja.Ilosc / 1.000000000000m) + " " + pozycja.Towar?.JednostkaMiary?.Skrot;
+					pozycjaDTO.Ilosc = Math.Abs(pozycja.Ilosc / 1.000000000000m) + " " + jm?.Skrot;
 					pozycjaDTO.WartoscNetto = pozycja.WartoscNetto;
 					pozycjaDTO.WartoscVat = pozycja.WartoscVat;
 					pozycjaDTO.WartoscBrutto = pozycja.WartoscBrutto;

@@ -53,7 +53,6 @@ namespace ProFak.UI
 			comboBoxTowar = new System.Windows.Forms.ComboBox();
 			buttonTowar = new ButtonDPI();
 			numericUpDownIlosc = new NumericUpDownDPI();
-			labelJednostka = new System.Windows.Forms.Label();
 			label9 = new System.Windows.Forms.Label();
 			numericUpDownLP = new NumericUpDownDPI();
 			buttonNowyTowar = new ButtonDPI();
@@ -74,6 +73,8 @@ namespace ProFak.UI
 			numericUpDownRabatProcent = new NumericUpDownDPI();
 			numericUpDownRabatCena = new NumericUpDownDPI();
 			numericUpDownRabatWartosc = new NumericUpDownDPI();
+			comboBoxJM = new System.Windows.Forms.ComboBox();
+			((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
 			tableLayoutPanel1.SuspendLayout();
 			groupBox1.SuspendLayout();
 			tableLayoutPanel3.SuspendLayout();
@@ -362,7 +363,7 @@ namespace ProFak.UI
 			tableLayoutPanel2.Controls.Add(comboBoxTowar, 4, 0);
 			tableLayoutPanel2.Controls.Add(buttonTowar, 5, 0);
 			tableLayoutPanel2.Controls.Add(numericUpDownIlosc, 8, 0);
-			tableLayoutPanel2.Controls.Add(labelJednostka, 9, 0);
+			tableLayoutPanel2.Controls.Add(comboBoxJM, 9, 0);
 			tableLayoutPanel2.Controls.Add(label9, 0, 0);
 			tableLayoutPanel2.Controls.Add(numericUpDownLP, 1, 0);
 			tableLayoutPanel2.Controls.Add(buttonNowyTowar, 6, 0);
@@ -390,14 +391,14 @@ namespace ProFak.UI
 			comboBoxTowar.FormattingEnabled = true;
 			comboBoxTowar.Location = new System.Drawing.Point(166, 4);
 			comboBoxTowar.Name = "comboBoxTowar";
-			comboBoxTowar.Size = new System.Drawing.Size(395, 23);
+			comboBoxTowar.Size = new System.Drawing.Size(376, 23);
 			comboBoxTowar.TabIndex = 1;
 			// 
 			// buttonTowar
 			// 
 			buttonTowar.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			buttonTowar.AutoSize = true;
-			buttonTowar.Location = new System.Drawing.Point(567, 3);
+			buttonTowar.Location = new System.Drawing.Point(548, 3);
 			buttonTowar.Name = "buttonTowar";
 			buttonTowar.Size = new System.Drawing.Size(26, 25);
 			buttonTowar.TabIndex = 2;
@@ -408,22 +409,12 @@ namespace ProFak.UI
 			// 
 			numericUpDownIlosc.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			numericUpDownIlosc.DecimalPlaces = 3;
-			numericUpDownIlosc.Location = new System.Drawing.Point(654, 4);
+			numericUpDownIlosc.Location = new System.Drawing.Point(635, 4);
 			numericUpDownIlosc.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
 			numericUpDownIlosc.Name = "numericUpDownIlosc";
 			numericUpDownIlosc.Size = new System.Drawing.Size(73, 23);
 			numericUpDownIlosc.TabIndex = 10;
 			numericUpDownIlosc.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
-			// labelJednostka
-			// 
-			labelJednostka.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			labelJednostka.AutoSize = true;
-			labelJednostka.Location = new System.Drawing.Point(733, 8);
-			labelJednostka.Name = "labelJednostka";
-			labelJednostka.Size = new System.Drawing.Size(30, 15);
-			labelJednostka.TabIndex = 4;
-			labelJednostka.Text = "[JM]";
 			// 
 			// label9
 			// 
@@ -449,7 +440,7 @@ namespace ProFak.UI
 			// 
 			buttonNowyTowar.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			buttonNowyTowar.AutoSize = true;
-			buttonNowyTowar.Location = new System.Drawing.Point(599, 3);
+			buttonNowyTowar.Location = new System.Drawing.Point(580, 3);
 			buttonNowyTowar.Name = "buttonNowyTowar";
 			buttonNowyTowar.Size = new System.Drawing.Size(29, 25);
 			buttonNowyTowar.TabIndex = 3;
@@ -668,6 +659,16 @@ namespace ProFak.UI
 			numericUpDownRabatWartosc.TabIndex = 3;
 			numericUpDownRabatWartosc.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
+			// comboBoxJM
+			// 
+			comboBoxJM.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			comboBoxJM.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			comboBoxJM.FormattingEnabled = true;
+			comboBoxJM.Location = new System.Drawing.Point(714, 4);
+			comboBoxJM.Name = "comboBoxJM";
+			comboBoxJM.Size = new System.Drawing.Size(49, 23);
+			comboBoxJM.TabIndex = 4;
+			// 
 			// PozycjaFakturyEdytor
 			// 
 			AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -676,6 +677,7 @@ namespace ProFak.UI
 			MinimumSize = new System.Drawing.Size(600, 180);
 			Name = "PozycjaFakturyEdytor";
 			Size = new System.Drawing.Size(775, 183);
+			((System.ComponentModel.ISupportInitialize)errorProvider).EndInit();
 			tableLayoutPanel1.ResumeLayout(false);
 			tableLayoutPanel1.PerformLayout();
 			groupBox1.ResumeLayout(false);
@@ -733,7 +735,6 @@ namespace ProFak.UI
 		private System.Windows.Forms.ComboBox comboBoxTowar;
 		private ButtonDPI buttonTowar;
 		private NumericUpDownDPI numericUpDownIlosc;
-		private System.Windows.Forms.Label labelJednostka;
 		private System.Windows.Forms.CheckBox checkBoxWedlugBrutto;
 		private System.Windows.Forms.CheckBox checkBoxRecznie;
 		private ButtonDPI buttonStawkaVat;
@@ -756,5 +757,6 @@ namespace ProFak.UI
 		private NumericUpDownDPI numericUpDownRabatProcent;
 		private NumericUpDownDPI numericUpDownRabatCena;
 		private NumericUpDownDPI numericUpDownRabatWartosc;
+		private System.Windows.Forms.ComboBox comboBoxJM;
 	}
 }

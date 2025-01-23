@@ -34,6 +34,7 @@ namespace ProFak.UI
 			kontroler.Powiazanie(checkBoxWedlugBrutto, pozycja => pozycja.CzyWedlugCenBrutto, KonfigurujCeny);
 			kontroler.Powiazanie(checkBoxRecznie, pozycja => pozycja.CzyWartosciReczne, KonfigurujCeny);
 			kontroler.Powiazanie(comboBoxStawkaVat, pozycja => pozycja.StawkaVatRef);
+			kontroler.Powiazanie(comboBoxJM, pozycja => pozycja.JednostkaMiaryRef);
 			kontroler.Powiazanie(comboBoxGTU, pozycja => pozycja.GTU);
 			kontroler.Powiazanie(comboBoxStawkaRyczaltu, pozycja => pozycja.StawkaRyczaltu);
 			kontroler.Powiazanie(numericUpDownRabatProcent, pozycja => pozycja.RabatProcent, PrzeliczCeny);
@@ -63,6 +64,14 @@ namespace ProFak.UI
 				stawka => { PrzeliczCeny(); },
 				Spisy.StawkiVat)
 				.Zainstaluj();
+
+			new Slownik<JednostkaMiary>(
+				Kontekst, comboBoxJM, null,
+				Kontekst.Baza.JednostkiMiar.OrderBy(jm => jm.CzyDomyslna ? 0 : 1).ThenBy(jm => jm.Nazwa).ToList,
+				jm => jm.Skrot,
+				jm => { KonfigurujPoleIlosci(); },
+				Spisy.JednostkiMiar)
+				.Zainstaluj();
 		}
 
 		protected override void PrzygotujRekord(PozycjaFaktury rekord)
@@ -88,16 +97,15 @@ namespace ProFak.UI
 
 		private void KonfigurujPoleIlosci()
 		{
-			var towar = Kontekst.Baza.Towary.Include(towar => towar.JednostkaMiary).FirstOrDefault(towar => towar.Id == Rekord.TowarId);
-			if (towar == null)
+			var jm = Kontekst.Baza.Znajdz(Rekord.JednostkaMiaryRef);
+			if (jm == null)
 			{
-				labelJednostka.Text = "";
 				numericUpDownIlosc.DecimalPlaces = 0;
 			}
 			else
 			{
-				labelJednostka.Text = towar.JednostkaMiary.Nazwa;
-				numericUpDownIlosc.DecimalPlaces = towar.JednostkaMiary.LiczbaMiescPoPrzecinku;
+				
+				numericUpDownIlosc.DecimalPlaces = jm.LiczbaMiescPoPrzecinku;
 			}
 		}
 
@@ -121,6 +129,7 @@ namespace ProFak.UI
 		{
 			if (towar == null || Rekord.TowarRef == towar.Ref) return;
 			Rekord.TowarRef = towar;
+			Rekord.JednostkaMiaryRef = towar.JednostkaMiaryRef;
 			Rekord.Opis = towar.Nazwa;
 			Rekord.CzyWedlugCenBrutto = towar.CzyWedlugCenBrutto;
 			Rekord.CenaBrutto = towar.CenaBrutto;
