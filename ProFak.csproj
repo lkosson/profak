@@ -17,6 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Wydruki\FakturaPozycje.rdlc" />
+    <EmbeddedResource Include="Wydruki\FakturaPozycjeVat.rdlc" />
+    <EmbeddedResource Include="Wydruki\FakturaPozycjeRabat.rdlc" />
+    <EmbeddedResource Include="Wydruki\FakturaPozycjeVatRabat.rdlc" />
     <EmbeddedResource Include="Wydruki\Faktura.rdlc" />
     <EmbeddedResource Include="Wydruki\EwidencjaPrzychodow.rdlc" />
     <EmbeddedResource Include="Wydruki\PKPiR.rdlc" />

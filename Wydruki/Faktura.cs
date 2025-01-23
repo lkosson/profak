@@ -10,6 +10,8 @@ namespace ProFak.Wydruki
 	class Faktura : Wydruk
 	{
 		private readonly List<FakturaDTO> dane;
+		private bool jestvat;
+		private bool jestrabat;
 
 		public Faktura(Baza baza, IEnumerable<Ref<DB.Faktura>> fakturyRefs)
 		{
@@ -28,8 +30,8 @@ namespace ProFak.Wydruki
 				var zaplacono = wplaty.Sum(wplata => wplata.Kwota);
 				var dozaplaty = faktura.RazemBrutto - zaplacono;
 				var waluta = baza.Znajdz(faktura.WalutaRef);
-				var jestvat = pozycje.Any(e => e.StawkaVat != null && !String.Equals(e.StawkaVat.Skrot, "ZW", StringComparison.CurrentCultureIgnoreCase));
-				var jestrabat = pozycje.Any(e => e.RabatProcent > 0 || e.RabatCena > 0 || e.RabatWartosc > 0);
+				jestvat = pozycje.Any(e => e.StawkaVat != null && !String.Equals(e.StawkaVat.Skrot, "ZW", StringComparison.CurrentCultureIgnoreCase));
+				jestrabat = pozycje.Any(e => e.RabatProcent > 0 || e.RabatCena > 0 || e.RabatWartosc > 0);
 
 				var fakturaDTO = new FakturaDTO();
 				if (faktura.Rodzaj == RodzajFaktury.Sprzedaż) fakturaDTO.Rodzaj = jestvat ? "Faktura VAT" : "Faktura";
@@ -39,8 +41,6 @@ namespace ProFak.Wydruki
 				else fakturaDTO.Rodzaj = faktura.Rodzaj.ToString();
 
 				fakturaDTO.Numer = faktura.Numer;
-				fakturaDTO.JestVAT = jestvat;
-				fakturaDTO.JestRabat = jestrabat;
 
 				if (faktura.FakturaKorygowanaRef.IsNotNull)
 				{
@@ -106,8 +106,6 @@ namespace ProFak.Wydruki
 					var pozycjaDTO = new FakturaDTO();
 					pozycjaDTO.LP = pozycja.LP.ToString();
 					pozycjaDTO.Numer = faktura.Numer; // musi tu być - po tym jest grupowanie stron
-					pozycjaDTO.JestVAT = jestvat;
-					pozycjaDTO.JestRabat = jestrabat;
 
 					if (faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży)
 						pozycjaDTO.NaglowekPozycji = pozycja.CzyPrzedKorekta ? "Przed korektą" : "Po korekcie";
@@ -133,7 +131,14 @@ namespace ProFak.Wydruki
 		{
 			using var rdlc = WczytajSzablon("Faktura");
 			report.LoadReportDefinition(rdlc);
+			report.LoadSubreportDefinition("Pozycje", WczytajSzablon("FakturaPozycje" + (jestvat ? "Vat" : "") + (jestrabat ? "Rabat" : "")));
+			report.SubreportProcessing += SubreportProcessing;
 			report.DataSources.Add(new ReportDataSource("DSFaktury", dane));
+
+			void SubreportProcessing(object sender, SubreportProcessingEventArgs e)
+			{
+				e.DataSources.Add(report.DataSources[0]);
+			}
 		}
-	}
+}
 }

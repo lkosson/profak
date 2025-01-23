@@ -8,8 +8,6 @@
       <xs:element minOccurs="0" maxOccurs="1" name="Korekta" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="DataWystawienia" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="DataSprzedazy" type="xs:string" />
-      <xs:element minOccurs="0" maxOccurs="1" name="DaneSprzedawcy" type="xs:string" />
-      <xs:element minOccurs="0" maxOccurs="1" name="DaneNabywcy" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="NazwaSprzedawcy" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="AdresSprzedawcy" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="NIPSprzedawcy" type="xs:string" />
@@ -23,8 +21,6 @@
       <xs:element minOccurs="0" maxOccurs="1" name="DoZwrotu" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="NumerRachunku" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="Uwagi" type="xs:string" />
-      <xs:element minOccurs="0" maxOccurs="1" name="Naglowek" type="xs:string" />
-      <xs:element minOccurs="0" maxOccurs="1" name="Stopka" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="LP" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="NaglowekPozycji" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="OpisPozycji" type="xs:string" />
