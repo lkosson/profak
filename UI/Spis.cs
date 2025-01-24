@@ -30,6 +30,7 @@ namespace ProFak.UI
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			base.OnMouseDown(e);
+			if (e.Button != MouseButtons.Left) return;
 			var hit = HitTest(e.X, e.Y);
 			if (hit.Type == DataGridViewHitTestType.ColumnHeader || hit.Type == DataGridViewHitTestType.RowHeader) DoubleBuffered = false;
 		}
