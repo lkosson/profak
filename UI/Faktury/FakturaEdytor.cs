@@ -95,6 +95,47 @@ namespace ProFak.UI
 			kontroler.AktualizujKontrolki();
 		}
 
+
+		protected override void OnHandleCreated(EventArgs e)
+		{
+			base.OnHandleCreated(e);
+			ParentForm.KeyDown += Form_OnKeyDown;
+		}
+
+		private void Form_OnKeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.F1 && e.Modifiers == Keys.Control)
+			{
+				tabControl1.SelectedTab = tabPagePozycje;
+				pozycjeFaktury.Focus();
+			}
+			else if (e.KeyCode == Keys.F2 && e.Modifiers == Keys.Control)
+			{
+				tabControl1.SelectedTab = tabPageWplaty;
+				wplaty.Focus();
+			}
+			else if (e.KeyCode == Keys.F3 && e.Modifiers == Keys.Control)
+			{
+				tabControl1.SelectedTab = tabPagePliki;
+				pliki.Focus();
+			}
+			else if (e.KeyCode == Keys.F4 && e.Modifiers == Keys.Control)
+			{
+				tabControl1.SelectedTab = tabPageUwagi;
+				textBoxUwagiPubliczne.Focus();
+			}
+			else if (e.KeyCode == Keys.F5 && e.Modifiers == Keys.Control)
+			{
+				tabControl1.SelectedTab = tabPagePodatki;
+				wplaty.Focus();
+			}
+			else if (e.KeyCode == Keys.F6 && e.Modifiers == Keys.Control)
+			{
+				tabControl1.SelectedTab = tabPageKSeF;
+				textBoxNumerKSeF.Focus();
+			}
+		}
+
 		protected override void KontekstGotowy()
 		{
 			base.KontekstGotowy();
