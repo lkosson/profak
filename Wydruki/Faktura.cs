@@ -42,6 +42,8 @@ namespace ProFak.Wydruki
 				else fakturaDTO.Rodzaj = faktura.Rodzaj.ToString();
 
 				fakturaDTO.Numer = faktura.Numer;
+				fakturaDTO.JestVAT = jestvat;
+				fakturaDTO.JestRabat = jestrabat;
 
 				if (faktura.FakturaKorygowanaRef.IsNotNull)
 				{
@@ -107,6 +109,8 @@ namespace ProFak.Wydruki
 					var pozycjaDTO = new FakturaDTO();
 					pozycjaDTO.LP = pozycja.LP.ToString();
 					pozycjaDTO.Numer = faktura.Numer; // musi tu być - po tym jest grupowanie stron
+					pozycjaDTO.JestVAT = jestvat;
+					pozycjaDTO.JestRabat = jestrabat;
 
 					if (faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży)
 						pozycjaDTO.NaglowekPozycji = pozycja.CzyPrzedKorekta ? "Przed korektą" : "Po korekcie";
