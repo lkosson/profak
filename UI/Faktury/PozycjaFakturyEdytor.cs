@@ -86,6 +86,14 @@ namespace ProFak.UI
 					rekord.StawkaVatRef = domyslna;
 				}
 			}
+			if (rekord.JednostkaMiaryRef.IsNull)
+			{
+				var towar = Kontekst.Baza.Znajdz(rekord.TowarRef);
+				if (towar != null && towar.JednostkaMiaryRef.IsNotNull)
+				{
+					rekord.JednostkaMiaryRef = towar.JednostkaMiaryRef;
+				}
+			}
 		}
 
 		protected override void RekordGotowy()
