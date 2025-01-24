@@ -94,6 +94,10 @@ namespace ProFak.UI
 				{
 					rekord.JednostkaMiaryRef = towar.JednostkaMiaryRef;
 				}
+				else
+				{
+					rekord.JednostkaMiaryRef = Kontekst.Baza.JednostkiMiar.OrderByDescending(jm => jm.CzyDomyslna).ThenBy(jm => jm.Id).FirstOrDefault();
+				}
 			}
 		}
 
