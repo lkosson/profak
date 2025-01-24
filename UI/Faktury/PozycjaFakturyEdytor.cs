@@ -43,6 +43,7 @@ namespace ProFak.UI
 
 			Wymagane(comboBoxTowar);
 			Wymagane(comboBoxStawkaVat);
+			Wymagane(comboBoxJM);
 		}
 
 		protected override void KontekstGotowy()
