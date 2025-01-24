@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProFak.DB.Migrations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -217,6 +218,7 @@ namespace ProFak.DB
 				pozycjaPrzed.CzyWedlugCenBrutto = staraPozycja.CzyWedlugCenBrutto;
 				pozycjaPrzed.CzyWartosciReczne = staraPozycja.CzyWartosciReczne;
 				pozycjaPrzed.StawkaVatRef = staraPozycja.StawkaVatRef;
+				pozycjaPrzed.JednostkaMiaryRef = staraPozycja.JednostkaMiaryRef;
 				pozycjaPrzed.GTU = staraPozycja.GTU;
 				pozycjaPrzed.StawkaRyczaltu = staraPozycja.StawkaRyczaltu;
 				pozycjaPrzed.RabatProcent = staraPozycja.RabatProcent;
@@ -240,6 +242,7 @@ namespace ProFak.DB
 				pozycjaPo.CzyWedlugCenBrutto = staraPozycja.CzyWedlugCenBrutto;
 				pozycjaPo.CzyWartosciReczne = staraPozycja.CzyWartosciReczne;
 				pozycjaPo.StawkaVatRef = staraPozycja.StawkaVatRef;
+				pozycjaPo.JednostkaMiaryRef = staraPozycja.JednostkaMiaryRef;
 				pozycjaPo.GTU = staraPozycja.GTU;
 				pozycjaPo.StawkaRyczaltu = staraPozycja.StawkaRyczaltu;
 				pozycjaPo.RabatProcent = staraPozycja.RabatProcent;
@@ -310,11 +313,13 @@ namespace ProFak.DB
 				nowaPozycja.CzyWedlugCenBrutto = staraPozycja.CzyWedlugCenBrutto;
 				nowaPozycja.CzyWartosciReczne = staraPozycja.CzyWartosciReczne;
 				nowaPozycja.StawkaVatRef = staraPozycja.StawkaVatRef;
+				nowaPozycja.JednostkaMiaryRef = staraPozycja.JednostkaMiaryRef;
 				nowaPozycja.GTU = staraPozycja.GTU;
 				nowaPozycja.StawkaRyczaltu = staraPozycja.StawkaRyczaltu;
 				nowaPozycja.RabatProcent = staraPozycja.RabatProcent;
 				nowaPozycja.RabatCena = staraPozycja.RabatCena;
 				nowaPozycja.RabatWartosc = staraPozycja.RabatWartosc;
+				nowePozycje.Add(nowaPozycja);
 			}
 
 			baza.Zapisz(nowePozycje);
