@@ -16,6 +16,7 @@ namespace ProFak.UI
 		protected readonly Kontroler<TRekord> kontroler;
 		private readonly Container container;
 		protected readonly ErrorProvider errorProvider;
+		protected readonly ToolTip toolTip;
 
 		public TRekord Rekord { get => kontroler.Model; private set => kontroler.Model = value; }
 		public Kontekst Kontekst { get; private set; }
@@ -25,6 +26,7 @@ namespace ProFak.UI
 			container = new Container();
 			kontroler = new Kontroler<TRekord>();
 			errorProvider = new ErrorProvider(container);
+			toolTip = new ToolTip(container);
 		}
 
 		public void Przygotuj(Kontekst kontekst, TRekord rekord)

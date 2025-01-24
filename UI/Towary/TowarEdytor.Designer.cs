@@ -52,6 +52,7 @@ namespace ProFak.UI
 			comboBoxGTU = new System.Windows.Forms.ComboBox();
 			label10 = new System.Windows.Forms.Label();
 			comboBoxStawkaRyczaltu = new System.Windows.Forms.ComboBox();
+			((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
 			tableLayoutPanel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)numericUpDownCenaBrutto).BeginInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownCenaNetto).BeginInit();
@@ -122,6 +123,7 @@ namespace ProFak.UI
 			buttonStawkaVat.Size = new System.Drawing.Size(26, 25);
 			buttonStawkaVat.TabIndex = 5;
 			buttonStawkaVat.Text = "...";
+			toolTip.SetToolTip(buttonStawkaVat, "Wyświetl pełną listę");
 			buttonStawkaVat.UseVisualStyleBackColor = true;
 			// 
 			// comboBoxWidocznosc
@@ -292,6 +294,7 @@ namespace ProFak.UI
 			buttonJednostkaMiary.Size = new System.Drawing.Size(26, 25);
 			buttonJednostkaMiary.TabIndex = 9;
 			buttonJednostkaMiary.Text = "...";
+			toolTip.SetToolTip(buttonJednostkaMiary, "Wyświetl pełną listę");
 			buttonJednostkaMiary.UseVisualStyleBackColor = true;
 			// 
 			// label9
@@ -346,6 +349,7 @@ namespace ProFak.UI
 			MinimumSize = new System.Drawing.Size(300, 300);
 			Name = "TowarEdytor";
 			Size = new System.Drawing.Size(443, 300);
+			((System.ComponentModel.ISupportInitialize)errorProvider).EndInit();
 			tableLayoutPanel.ResumeLayout(false);
 			tableLayoutPanel.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)numericUpDownCenaBrutto).EndInit();

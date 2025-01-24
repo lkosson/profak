@@ -270,6 +270,7 @@ namespace ProFak.UI
 			buttonSprzedawca.Size = new System.Drawing.Size(26, 25);
 			buttonSprzedawca.TabIndex = 11;
 			buttonSprzedawca.Text = "...";
+			toolTip.SetToolTip(buttonSprzedawca, "Wyświetl pełną listę");
 			buttonSprzedawca.UseVisualStyleBackColor = true;
 			// 
 			// comboBoxNIPSprzedawcy
@@ -300,6 +301,7 @@ namespace ProFak.UI
 			buttonNowySprzedawca.Size = new System.Drawing.Size(29, 25);
 			buttonNowySprzedawca.TabIndex = 12;
 			buttonNowySprzedawca.Text = "➕";
+			toolTip.SetToolTip(buttonNowySprzedawca, "Dodaj sprzedawcę do słownika kontrahentów");
 			buttonNowySprzedawca.UseVisualStyleBackColor = true;
 			buttonNowySprzedawca.Click += buttonNowySprzedawca_Click;
 			// 
@@ -392,6 +394,7 @@ namespace ProFak.UI
 			buttonNabywca.Size = new System.Drawing.Size(26, 25);
 			buttonNabywca.TabIndex = 11;
 			buttonNabywca.Text = "...";
+			toolTip.SetToolTip(buttonNabywca, "Wyświetl pełną listę");
 			buttonNabywca.UseVisualStyleBackColor = true;
 			// 
 			// comboBoxNIPNabywcy
@@ -422,6 +425,7 @@ namespace ProFak.UI
 			buttonNowyNabywca.Size = new System.Drawing.Size(29, 25);
 			buttonNowyNabywca.TabIndex = 12;
 			buttonNowyNabywca.Text = "➕";
+			toolTip.SetToolTip(buttonNowyNabywca, "Dodaj nabywcę do słownika kontrahentów");
 			buttonNowyNabywca.UseVisualStyleBackColor = true;
 			buttonNowyNabywca.Click += buttonNowyNabywca_Click;
 			// 
@@ -539,7 +543,7 @@ namespace ProFak.UI
 			tabPagePodatki.Controls.Add(tableLayoutPanel7);
 			tabPagePodatki.Location = new System.Drawing.Point(4, 24);
 			tabPagePodatki.Name = "tabPagePodatki";
-			tabPagePodatki.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+			tabPagePodatki.Padding = new System.Windows.Forms.Padding(3);
 			tabPagePodatki.Size = new System.Drawing.Size(886, 193);
 			tabPagePodatki.TabIndex = 4;
 			tabPagePodatki.Text = "Podatki [CTRL-F5]";
@@ -810,6 +814,7 @@ namespace ProFak.UI
 			buttonWaluta.Size = new System.Drawing.Size(26, 25);
 			buttonWaluta.TabIndex = 4;
 			buttonWaluta.Text = "...";
+			toolTip.SetToolTip(buttonWaluta, "Wyświetl pełną listę");
 			buttonWaluta.UseVisualStyleBackColor = true;
 			// 
 			// label15
@@ -955,6 +960,7 @@ namespace ProFak.UI
 			buttonSposobPlatnosci.Size = new System.Drawing.Size(26, 25);
 			buttonSposobPlatnosci.TabIndex = 41;
 			buttonSposobPlatnosci.Text = "...";
+			toolTip.SetToolTip(buttonSposobPlatnosci, "Wyświetl pełną listę");
 			buttonSposobPlatnosci.UseVisualStyleBackColor = true;
 			// 
 			// groupBox1

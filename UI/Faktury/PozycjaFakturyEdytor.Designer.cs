@@ -53,6 +53,7 @@ namespace ProFak.UI
 			comboBoxTowar = new System.Windows.Forms.ComboBox();
 			buttonTowar = new ButtonDPI();
 			numericUpDownIlosc = new NumericUpDownDPI();
+			comboBoxJM = new System.Windows.Forms.ComboBox();
 			label9 = new System.Windows.Forms.Label();
 			numericUpDownLP = new NumericUpDownDPI();
 			buttonNowyTowar = new ButtonDPI();
@@ -73,7 +74,6 @@ namespace ProFak.UI
 			numericUpDownRabatProcent = new NumericUpDownDPI();
 			numericUpDownRabatCena = new NumericUpDownDPI();
 			numericUpDownRabatWartosc = new NumericUpDownDPI();
-			comboBoxJM = new System.Windows.Forms.ComboBox();
 			((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
 			tableLayoutPanel1.SuspendLayout();
 			groupBox1.SuspendLayout();
@@ -403,6 +403,7 @@ namespace ProFak.UI
 			buttonTowar.Size = new System.Drawing.Size(26, 25);
 			buttonTowar.TabIndex = 2;
 			buttonTowar.Text = "...";
+			toolTip.SetToolTip(buttonTowar, "Wyświetl pełną listę");
 			buttonTowar.UseVisualStyleBackColor = true;
 			// 
 			// numericUpDownIlosc
@@ -415,6 +416,16 @@ namespace ProFak.UI
 			numericUpDownIlosc.Size = new System.Drawing.Size(73, 23);
 			numericUpDownIlosc.TabIndex = 10;
 			numericUpDownIlosc.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// comboBoxJM
+			// 
+			comboBoxJM.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			comboBoxJM.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			comboBoxJM.FormattingEnabled = true;
+			comboBoxJM.Location = new System.Drawing.Point(714, 4);
+			comboBoxJM.Name = "comboBoxJM";
+			comboBoxJM.Size = new System.Drawing.Size(49, 23);
+			comboBoxJM.TabIndex = 4;
 			// 
 			// label9
 			// 
@@ -445,6 +456,7 @@ namespace ProFak.UI
 			buttonNowyTowar.Size = new System.Drawing.Size(29, 25);
 			buttonNowyTowar.TabIndex = 3;
 			buttonNowyTowar.Text = "➕";
+			toolTip.SetToolTip(buttonNowyTowar, "Dodaj do słownika towarów");
 			buttonNowyTowar.UseVisualStyleBackColor = true;
 			buttonNowyTowar.Click += buttonNowyTowar_Click;
 			// 
@@ -517,6 +529,7 @@ namespace ProFak.UI
 			buttonStawkaVat.Size = new System.Drawing.Size(26, 25);
 			buttonStawkaVat.TabIndex = 2;
 			buttonStawkaVat.Text = "...";
+			toolTip.SetToolTip(buttonStawkaVat, "Wyświetl pełną listę");
 			buttonStawkaVat.UseVisualStyleBackColor = true;
 			// 
 			// label2
@@ -658,16 +671,6 @@ namespace ProFak.UI
 			numericUpDownRabatWartosc.Size = new System.Drawing.Size(89, 23);
 			numericUpDownRabatWartosc.TabIndex = 3;
 			numericUpDownRabatWartosc.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
-			// comboBoxJM
-			// 
-			comboBoxJM.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			comboBoxJM.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			comboBoxJM.FormattingEnabled = true;
-			comboBoxJM.Location = new System.Drawing.Point(714, 4);
-			comboBoxJM.Name = "comboBoxJM";
-			comboBoxJM.Size = new System.Drawing.Size(49, 23);
-			comboBoxJM.TabIndex = 4;
 			// 
 			// PozycjaFakturyEdytor
 			// 
