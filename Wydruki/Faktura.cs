@@ -49,7 +49,7 @@ namespace ProFak.Wydruki
 				{
 					var fakturaBazowa = baza.Znajdz(faktura.FakturaKorygowanaRef);
 					if (fakturaBazowa.Rodzaj == RodzajFaktury.Proforma) fakturaDTO.Korekta = "do faktury pro forma <b>" + fakturaBazowa.Numer + "</b>";
-					else fakturaDTO.Korekta = (jestvat ? "do faktury VAT <b>" : "do faktury <b>") + fakturaBazowa.Numer + "</b><br/>z dnia " + fakturaBazowa.DataWystawienia.ToString(UI.Format.Data) + "<br/>";
+					else fakturaDTO.Korekta = (jestvat ? "<b>do faktury VAT</b> " : "<b>do faktury</b> ") + fakturaBazowa.Numer + "<br/><b>z dnia</b> " + fakturaBazowa.DataWystawienia.ToString(UI.Format.Data) + "<br/>";
 				}
 
 				fakturaDTO.DataWystawienia = faktura.DataWystawienia.ToString(UI.Format.Data);
