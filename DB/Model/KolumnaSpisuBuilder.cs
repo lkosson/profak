@@ -21,6 +21,7 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.Kolumna).IsRequired();
 			builder.Property(e => e.Kolejnosc).IsRequired();
 			builder.Property(e => e.Szerokosc).IsRequired();
+			builder.Property(e => e.PoziomSortowania).IsRequired();
 		}
 	}
 }

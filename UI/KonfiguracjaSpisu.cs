@@ -30,6 +30,7 @@ partial class KonfiguracjaSpisu : UserControl
 		textBoxKolumna.Text = kolumna.Kolumna;
 		numericUpDownKolejnosc.Value = kolumna.Kolejnosc;
 		numericUpDownSzerokosc.Value = kolumna.Szerokosc;
+		numericUpDownPoziomSortowania.Value = kolumna.PoziomSortowania;
 		checkBoxUkryta.Checked = kolumna.Szerokosc == 0;
 		checkBoxRozciagnij.Checked = kolumna.Szerokosc == -1;
 	}
@@ -46,6 +47,13 @@ partial class KonfiguracjaSpisu : UserControl
 		var kolumna = (KolumnaSpisu)listBoxKolumny.SelectedItem;
 		if (kolumna == null) return;
 		kolumna.Kolejnosc = (int)numericUpDownKolejnosc.Value;
+	}
+
+	private void numericUpDownPoziomSortowania_ValueChanged(object sender, EventArgs e)
+	{
+		var kolumna = (KolumnaSpisu)listBoxKolumny.SelectedItem;
+		if (kolumna == null) return;
+		kolumna.PoziomSortowania = (int)numericUpDownPoziomSortowania.Value;
 	}
 
 	private void checkBoxUkryta_CheckedChanged(object sender, EventArgs e)

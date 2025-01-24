@@ -82,13 +82,14 @@ namespace ProFak.UI
 			set
 			{
 				var zaznaczoneRekordy = WybraneRekordy.ToList();
-				oryginalneRekordy = value; 
-				var rekordy = Sortuj(value.Where(filtr)).ToList(); 
-				rekordyPodczasZmiany = true; 
-				bindingSource.DataSource = rekordy; 
-				rekordyPodczasZmiany = false; 
+				oryginalneRekordy = value;
+				var rekordy = Sortuj(value.Where(filtr)).ToList();
+				rekordyPodczasZmiany = true;
+				bindingSource.DataSource = rekordy;
+				rekordyPodczasZmiany = false;
 				RekordyZmienione?.Invoke();
 				WybraneRekordy = zaznaczoneRekordy;
+				ZaznaczPosortowaneKolumny();
 			}
 		}
 
@@ -140,6 +141,17 @@ namespace ProFak.UI
 				bindingSource.Position = row.Index;
 				break;
 			}
+		}
+
+		private void OdswiezWiersze()
+		{
+			Rekordy = oryginalneRekordy;
+		}
+
+		protected override void OnBindingContextChanged(EventArgs e)
+		{
+			base.OnBindingContextChanged(e);
+			ZaznaczPosortowaneKolumny();
 		}
 
 		protected override void OnSelectionChanged(EventArgs e)
@@ -256,14 +268,9 @@ namespace ProFak.UI
 			else if (e.RowIndex == -1)
 			{
 				UstawKolejnosc(Columns[e.ColumnIndex].DataPropertyName, ModifierKeys != Keys.Control && ModifierKeys != Keys.Shift);
-				foreach (DataGridViewColumn kolumna in Columns)
-				{
-					kolumna.HeaderCell.SortGlyphDirection = SortOrder.None;
-				}
-				foreach (var kolumna in kolumnyKolejnosci)
-				{
-					Columns[kolumna.kolumna].HeaderCell.SortGlyphDirection = kolumna.malejaco ? SortOrder.Descending : SortOrder.Ascending;
-				}
+				OdswiezWiersze();
+				ZaznaczPosortowaneKolumny();
+				kolumnyZmienione = true;
 			}
 		}
 
@@ -391,19 +398,33 @@ namespace ProFak.UI
 				var metoda = lambdaExpr.Compile();
 				kolumnyKolejnosci.Add((kolumna, false, metoda));
 			}
-
-			Rekordy = oryginalneRekordy;
 		}
 
 		private IEnumerable<T> Sortuj(IEnumerable<T> rekordy)
 		{
+			if (kolumnyKolejnosci.Count == 0) return rekordy;
+
 			var posortowane = rekordy.OrderBy(r => 0);
 			foreach (var kolumna in kolumnyKolejnosci)
 			{
 				if (kolumna.malejaco) posortowane = posortowane.ThenByDescending(kolumna.metoda);
 				else posortowane = posortowane.ThenBy(kolumna.metoda);
 			}
+
 			return posortowane;
+		}
+
+		private void ZaznaczPosortowaneKolumny()
+		{
+			foreach (DataGridViewColumn kolumna in Columns)
+			{
+				kolumna.HeaderCell.SortGlyphDirection = SortOrder.None;
+			}
+
+			foreach (var kolumna in kolumnyKolejnosci)
+			{
+				Columns[kolumna.kolumna].HeaderCell.SortGlyphDirection = kolumna.malejaco ? SortOrder.Descending : SortOrder.Ascending;
+			}
 		}
 
 		protected override void OnColumnDisplayIndexChanged(DataGridViewColumnEventArgs e)
@@ -452,6 +473,16 @@ namespace ProFak.UI
 		{
 			var spis = GetType().Name;
 			var kolumny = Kontekst.Baza.KolumnySpisow.Where(e => e.Spis == spis).OrderBy(e => e.Kolejnosc);
+			kolumnyKolejnosci.Clear();
+
+			foreach (var kolumna in kolumny.Where(e => e.PoziomSortowania != 0).OrderBy(e => Math.Abs(e.PoziomSortowania)))
+			{
+				UstawKolejnosc(kolumna.Kolumna, false);
+				if (kolumna.PoziomSortowania < 0) UstawKolejnosc(kolumna.Kolumna, false);
+			}
+
+			if (kolumnyKolejnosci.Any() && oryginalneRekordy != null) OdswiezWiersze();
+
 			foreach (var kolumna in kolumny)
 			{
 				if (kolumna.Kolumna == WYSOKOSC_WIERSZA)
@@ -471,6 +502,7 @@ namespace ProFak.UI
 				if (kolumna.Szerokosc == -1) kolumnaSpisu.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 				kolumnaSpisu.Visible = kolumna.Szerokosc != 0;
 				kolumnaSpisu.DisplayIndex = kolumna.Kolejnosc;
+				kolumnaSpisu.HeaderCell.SortGlyphDirection = kolumna.PoziomSortowania < 0 ? SortOrder.Descending : kolumna.PoziomSortowania > 0 ? SortOrder.Ascending : SortOrder.None;
 			}
 			kolumnyZmienione = false;
 		}
@@ -481,6 +513,12 @@ namespace ProFak.UI
 			var stareKolumny = Kontekst.Baza.KolumnySpisow.Where(e => e.Spis == spis).ToList();
 			Kontekst.Baza.Usun(stareKolumny);
 
+			var sortowanie = new Dictionary<string, int>();
+			for (var i = 0; i < kolumnyKolejnosci.Count; i++)
+			{
+				sortowanie[kolumnyKolejnosci[i].kolumna] = (i + 1) * (kolumnyKolejnosci[i].malejaco ? -1 : 1);
+			}
+
 			var doZapisu = new List<KolumnaSpisu>();
 			doZapisu.Add(new KolumnaSpisu { Spis = spis, Kolumna = WYSOKOSC_WIERSZA, Kolejnosc = -1, Szerokosc = ColumnHeadersHeight });
 			foreach (DataGridViewColumn kolumna in Columns)
@@ -488,6 +526,7 @@ namespace ProFak.UI
 				var konfiguracjaKolumny = new KolumnaSpisu { Spis = spis, Kolumna = kolumna.Name };
 				konfiguracjaKolumny.Kolejnosc = kolumna.DisplayIndex;
 				konfiguracjaKolumny.Szerokosc = kolumna.Visible ? kolumna.AutoSizeMode == DataGridViewAutoSizeColumnMode.Fill ? -1 : kolumna.Width : 0;
+				konfiguracjaKolumny.PoziomSortowania = sortowanie.GetValueOrDefault(kolumna.Name);
 				doZapisu.Add(konfiguracjaKolumny);
 			}
 			Kontekst.Baza.Zapisz(doZapisu);

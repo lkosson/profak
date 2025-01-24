@@ -14,6 +14,7 @@ namespace ProFak.DB
 		public string Kolumna { get; set; }
 		public int Kolejnosc { get; set; }
 		public int Szerokosc { get; set; }
+		public int PoziomSortowania { get; set; }
 
 		public override bool CzyPasuje(string fraza)
 			=> base.CzyPasuje(fraza)

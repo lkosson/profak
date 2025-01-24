@@ -39,6 +39,8 @@ partial class KonfiguracjaSpisu
 		numericUpDownKolejnosc = new System.Windows.Forms.NumericUpDown();
 		checkBoxUkryta = new System.Windows.Forms.CheckBox();
 		checkBoxRozciagnij = new System.Windows.Forms.CheckBox();
+		label4 = new System.Windows.Forms.Label();
+		numericUpDownPoziomSortowania = new System.Windows.Forms.NumericUpDown();
 		((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
 		splitContainer1.Panel1.SuspendLayout();
 		splitContainer1.Panel2.SuspendLayout();
@@ -46,6 +48,7 @@ partial class KonfiguracjaSpisu
 		tableLayoutPanel1.SuspendLayout();
 		((System.ComponentModel.ISupportInitialize)numericUpDownSzerokosc).BeginInit();
 		((System.ComponentModel.ISupportInitialize)numericUpDownKolejnosc).BeginInit();
+		((System.ComponentModel.ISupportInitialize)numericUpDownPoziomSortowania).BeginInit();
 		SuspendLayout();
 		// 
 		// splitContainer1
@@ -61,7 +64,7 @@ partial class KonfiguracjaSpisu
 		// splitContainer1.Panel2
 		// 
 		splitContainer1.Panel2.Controls.Add(tableLayoutPanel1);
-		splitContainer1.Size = new System.Drawing.Size(562, 140);
+		splitContainer1.Size = new System.Drawing.Size(562, 183);
 		splitContainer1.SplitterDistance = 282;
 		splitContainer1.TabIndex = 0;
 		// 
@@ -72,7 +75,7 @@ partial class KonfiguracjaSpisu
 		listBoxKolumny.ItemHeight = 15;
 		listBoxKolumny.Location = new System.Drawing.Point(0, 0);
 		listBoxKolumny.Name = "listBoxKolumny";
-		listBoxKolumny.Size = new System.Drawing.Size(282, 140);
+		listBoxKolumny.Size = new System.Drawing.Size(282, 183);
 		listBoxKolumny.TabIndex = 0;
 		listBoxKolumny.SelectedIndexChanged += listBoxKolumny_SelectedIndexChanged;
 		// 
@@ -87,26 +90,29 @@ partial class KonfiguracjaSpisu
 		tableLayoutPanel1.Controls.Add(textBoxKolumna, 1, 0);
 		tableLayoutPanel1.Controls.Add(numericUpDownSzerokosc, 1, 1);
 		tableLayoutPanel1.Controls.Add(numericUpDownKolejnosc, 1, 2);
-		tableLayoutPanel1.Controls.Add(checkBoxUkryta, 1, 3);
-		tableLayoutPanel1.Controls.Add(checkBoxRozciagnij, 1, 4);
+		tableLayoutPanel1.Controls.Add(checkBoxUkryta, 1, 4);
+		tableLayoutPanel1.Controls.Add(checkBoxRozciagnij, 1, 5);
+		tableLayoutPanel1.Controls.Add(label4, 0, 3);
+		tableLayoutPanel1.Controls.Add(numericUpDownPoziomSortowania, 1, 3);
 		tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 		tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
 		tableLayoutPanel1.Name = "tableLayoutPanel1";
-		tableLayoutPanel1.RowCount = 6;
+		tableLayoutPanel1.RowCount = 7;
+		tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-		tableLayoutPanel1.Size = new System.Drawing.Size(276, 140);
+		tableLayoutPanel1.Size = new System.Drawing.Size(276, 183);
 		tableLayoutPanel1.TabIndex = 0;
 		// 
 		// label1
 		// 
 		label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
 		label1.AutoSize = true;
-		label1.Location = new System.Drawing.Point(7, 7);
+		label1.Location = new System.Drawing.Point(14, 7);
 		label1.Name = "label1";
 		label1.Size = new System.Drawing.Size(55, 15);
 		label1.TabIndex = 0;
@@ -116,7 +122,7 @@ partial class KonfiguracjaSpisu
 		// 
 		label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
 		label2.AutoSize = true;
-		label2.Location = new System.Drawing.Point(3, 36);
+		label2.Location = new System.Drawing.Point(10, 36);
 		label2.Name = "label2";
 		label2.Size = new System.Drawing.Size(59, 15);
 		label2.TabIndex = 0;
@@ -126,7 +132,7 @@ partial class KonfiguracjaSpisu
 		// 
 		label3.Anchor = System.Windows.Forms.AnchorStyles.Right;
 		label3.AutoSize = true;
-		label3.Location = new System.Drawing.Point(4, 65);
+		label3.Location = new System.Drawing.Point(11, 65);
 		label3.Name = "label3";
 		label3.Size = new System.Drawing.Size(58, 15);
 		label3.TabIndex = 0;
@@ -135,15 +141,15 @@ partial class KonfiguracjaSpisu
 		// textBoxKolumna
 		// 
 		textBoxKolumna.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-		textBoxKolumna.Location = new System.Drawing.Point(68, 3);
+		textBoxKolumna.Location = new System.Drawing.Point(75, 3);
 		textBoxKolumna.Name = "textBoxKolumna";
 		textBoxKolumna.ReadOnly = true;
-		textBoxKolumna.Size = new System.Drawing.Size(205, 23);
+		textBoxKolumna.Size = new System.Drawing.Size(198, 23);
 		textBoxKolumna.TabIndex = 1;
 		// 
 		// numericUpDownSzerokosc
 		// 
-		numericUpDownSzerokosc.Location = new System.Drawing.Point(68, 32);
+		numericUpDownSzerokosc.Location = new System.Drawing.Point(75, 32);
 		numericUpDownSzerokosc.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
 		numericUpDownSzerokosc.Minimum = new decimal(new int[] { 1, 0, 0, System.Int32.MinValue });
 		numericUpDownSzerokosc.Name = "numericUpDownSzerokosc";
@@ -154,7 +160,7 @@ partial class KonfiguracjaSpisu
 		// 
 		// numericUpDownKolejnosc
 		// 
-		numericUpDownKolejnosc.Location = new System.Drawing.Point(68, 61);
+		numericUpDownKolejnosc.Location = new System.Drawing.Point(75, 61);
 		numericUpDownKolejnosc.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
 		numericUpDownKolejnosc.Name = "numericUpDownKolejnosc";
 		numericUpDownKolejnosc.Size = new System.Drawing.Size(100, 23);
@@ -165,7 +171,7 @@ partial class KonfiguracjaSpisu
 		// checkBoxUkryta
 		// 
 		checkBoxUkryta.AutoSize = true;
-		checkBoxUkryta.Location = new System.Drawing.Point(68, 90);
+		checkBoxUkryta.Location = new System.Drawing.Point(75, 119);
 		checkBoxUkryta.Name = "checkBoxUkryta";
 		checkBoxUkryta.Size = new System.Drawing.Size(60, 19);
 		checkBoxUkryta.TabIndex = 3;
@@ -176,7 +182,7 @@ partial class KonfiguracjaSpisu
 		// checkBoxRozciagnij
 		// 
 		checkBoxRozciagnij.AutoSize = true;
-		checkBoxRozciagnij.Location = new System.Drawing.Point(68, 115);
+		checkBoxRozciagnij.Location = new System.Drawing.Point(75, 144);
 		checkBoxRozciagnij.Name = "checkBoxRozciagnij";
 		checkBoxRozciagnij.Size = new System.Drawing.Size(189, 19);
 		checkBoxRozciagnij.TabIndex = 3;
@@ -184,13 +190,34 @@ partial class KonfiguracjaSpisu
 		checkBoxRozciagnij.UseVisualStyleBackColor = true;
 		checkBoxRozciagnij.CheckedChanged += checkBoxRozciagnij_CheckedChanged;
 		// 
+		// label4
+		// 
+		label4.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label4.AutoSize = true;
+		label4.Location = new System.Drawing.Point(3, 94);
+		label4.Name = "label4";
+		label4.Size = new System.Drawing.Size(66, 15);
+		label4.TabIndex = 0;
+		label4.Text = "Sortowanie";
+		// 
+		// numericUpDownPoziomSortowania
+		// 
+		numericUpDownPoziomSortowania.Location = new System.Drawing.Point(75, 90);
+		numericUpDownPoziomSortowania.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+		numericUpDownPoziomSortowania.Minimum = new decimal(new int[] { 10000, 0, 0, System.Int32.MinValue });
+		numericUpDownPoziomSortowania.Name = "numericUpDownPoziomSortowania";
+		numericUpDownPoziomSortowania.Size = new System.Drawing.Size(100, 23);
+		numericUpDownPoziomSortowania.TabIndex = 2;
+		numericUpDownPoziomSortowania.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+		numericUpDownPoziomSortowania.ValueChanged += numericUpDownPoziomSortowania_ValueChanged;
+		// 
 		// KonfiguracjaSpisu
 		// 
 		AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 		AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 		Controls.Add(splitContainer1);
 		Name = "KonfiguracjaSpisu";
-		Size = new System.Drawing.Size(562, 140);
+		Size = new System.Drawing.Size(562, 183);
 		splitContainer1.Panel1.ResumeLayout(false);
 		splitContainer1.Panel2.ResumeLayout(false);
 		((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
@@ -199,6 +226,7 @@ partial class KonfiguracjaSpisu
 		tableLayoutPanel1.PerformLayout();
 		((System.ComponentModel.ISupportInitialize)numericUpDownSzerokosc).EndInit();
 		((System.ComponentModel.ISupportInitialize)numericUpDownKolejnosc).EndInit();
+		((System.ComponentModel.ISupportInitialize)numericUpDownPoziomSortowania).EndInit();
 		ResumeLayout(false);
 	}
 
@@ -215,4 +243,6 @@ partial class KonfiguracjaSpisu
 	private System.Windows.Forms.NumericUpDown numericUpDownKolejnosc;
 	private System.Windows.Forms.CheckBox checkBoxUkryta;
 	private System.Windows.Forms.CheckBox checkBoxRozciagnij;
+	private System.Windows.Forms.Label label4;
+	private System.Windows.Forms.NumericUpDown numericUpDownPoziomSortowania;
 }
