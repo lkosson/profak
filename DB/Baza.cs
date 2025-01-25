@@ -111,7 +111,7 @@ namespace ProFak.DB
 			using (var zrodlo = new SqliteConnection(PrzygotujParametryPolaczenia()))
 			{
 				zrodlo.Open();
-				using var cel = new SqliteConnection($"Data Source={plikDocelowy}");
+				using var cel = new SqliteConnection($"Data Source={plikDocelowy};Pooling=false");
 				zrodlo.BackupDatabase(cel);
 			}
 			if (plikNieaktualny != null) File.Delete(plikNieaktualny);
