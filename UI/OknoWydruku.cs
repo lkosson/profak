@@ -17,6 +17,7 @@ namespace ProFak.UI
 			Icon = GlowneOkno.Ikona;
 			WindowState = FormWindowState.Maximized;
 			ShowInTaskbar = false;
+			Text = "ProFak - Wydruk";
 			reportViewer = new Microsoft.Reporting.WinForms.ReportViewer();
 			reportViewer.Dock = DockStyle.Fill;
 			reportViewer.SetDisplayMode(Microsoft.Reporting.WinForms.DisplayMode.PrintLayout);
