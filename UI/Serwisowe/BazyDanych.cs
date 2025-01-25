@@ -59,6 +59,11 @@ namespace ProFak.UI
 			if (!gotowy) return;
 			var staryPlik = Baza.Sciezka;
 			var nowyPlik = comboBoxPlik.Text;
+			if (staryPlik == nowyPlik)
+			{
+				MessageBox.Show("Wprowadź ręcznie lub wybierz z listy obok ścieżkę, do której ma zostać przeniesiona baza danych.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				return;
+			}
 			if (File.Exists(nowyPlik))
 			{
 				MessageBox.Show($"Plik {nowyPlik} już istnieje. Przed przeniesieniem bazy przenieś go w inne miejsce.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
