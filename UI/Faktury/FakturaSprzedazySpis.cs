@@ -61,6 +61,7 @@ namespace ProFak.UI
 			DodajKolumne(nameof(Faktura.OpisZdarzenia), "Opis KPiR", szerokosc: 150);
 			DodajKolumneKwota(nameof(Faktura.SumaWplat), "Zapłacono");
 			DodajKolumneKwota(nameof(Faktura.PozostaloDoZaplaty), "Do zapłaty");
+			DodajKolumneKwota(nameof(Faktura.RazemRabat), "Rabat");
 			DodajKolumneData(nameof(Faktura.TerminPlatnosci), "Termin płatności");
 			DodajKolumne(nameof(Faktura.DniPoTerminie), "Dni po terminie");
 			DodajKolumne(nameof(Faktura.NumerPowiazanej), "Powiązana");

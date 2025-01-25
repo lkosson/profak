@@ -1,5 +1,4 @@
-﻿using ProFak.DB.Migrations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -104,6 +103,7 @@ namespace ProFak.DB
 		public bool CzySprzedaz => Rodzaj == RodzajFaktury.Sprzedaż || Rodzaj == RodzajFaktury.KorektaSprzedaży || Rodzaj == RodzajFaktury.Proforma;
 		public bool CzyZakup => !CzySprzedaz;
 
+		public decimal? RazemRabat => Pozycje == null || !Pozycje.Any(p => p.RabatRazem != 0) ? null : -Pozycje.Sum(p => p.RabatRazem);
 		public string PozycjeFmt => Pozycje == null ? "" : String.Join("  \n", Pozycje.Select(p => p.Opis));
 
 		public void PrzeliczRazem(Baza baza)
