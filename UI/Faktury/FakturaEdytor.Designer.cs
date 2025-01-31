@@ -450,7 +450,7 @@ namespace ProFak.UI
 			tabPagePozycje.Name = "tabPagePozycje";
 			tabPagePozycje.Size = new System.Drawing.Size(886, 193);
 			tabPagePozycje.TabIndex = 0;
-			tabPagePozycje.Text = "Pozycje [CTRL-F1]";
+			tabPagePozycje.Text = "Pozycje   [ᴄᴛʀʟ-ғ₁]";
 			tabPagePozycje.UseVisualStyleBackColor = true;
 			// 
 			// tabPageWplaty
@@ -459,7 +459,7 @@ namespace ProFak.UI
 			tabPageWplaty.Name = "tabPageWplaty";
 			tabPageWplaty.Size = new System.Drawing.Size(886, 193);
 			tabPageWplaty.TabIndex = 1;
-			tabPageWplaty.Text = "Wpłaty [CTRL-F2]";
+			tabPageWplaty.Text = "Wpłaty   [ᴄᴛʀʟ-ғ₂]";
 			tabPageWplaty.UseVisualStyleBackColor = true;
 			// 
 			// tabPagePliki
@@ -468,7 +468,7 @@ namespace ProFak.UI
 			tabPagePliki.Name = "tabPagePliki";
 			tabPagePliki.Size = new System.Drawing.Size(886, 193);
 			tabPagePliki.TabIndex = 3;
-			tabPagePliki.Text = "Pliki [CTRL-F3]";
+			tabPagePliki.Text = "Pliki   [ᴄᴛʀʟ-ғ₃]";
 			tabPagePliki.UseVisualStyleBackColor = true;
 			// 
 			// tabPageUwagi
@@ -478,7 +478,7 @@ namespace ProFak.UI
 			tabPageUwagi.Name = "tabPageUwagi";
 			tabPageUwagi.Size = new System.Drawing.Size(886, 193);
 			tabPageUwagi.TabIndex = 2;
-			tabPageUwagi.Text = "Uwagi [CTRL-F4]";
+			tabPageUwagi.Text = "Uwagi   [ᴄᴛʀʟ-ғ₄]";
 			tabPageUwagi.UseVisualStyleBackColor = true;
 			// 
 			// tableLayoutPanel2
@@ -546,7 +546,7 @@ namespace ProFak.UI
 			tabPagePodatki.Padding = new System.Windows.Forms.Padding(3);
 			tabPagePodatki.Size = new System.Drawing.Size(886, 193);
 			tabPagePodatki.TabIndex = 4;
-			tabPagePodatki.Text = "Podatki [CTRL-F5]";
+			tabPagePodatki.Text = "Podatki   [ᴄᴛʀʟ-ғ₅]";
 			tabPagePodatki.UseVisualStyleBackColor = true;
 			// 
 			// tableLayoutPanel7
@@ -687,7 +687,7 @@ namespace ProFak.UI
 			tabPageKSeF.Name = "tabPageKSeF";
 			tabPageKSeF.Size = new System.Drawing.Size(886, 193);
 			tabPageKSeF.TabIndex = 5;
-			tabPageKSeF.Text = "KSeF [CTRL-F6]";
+			tabPageKSeF.Text = "KSeF   [ᴄᴛʀʟ-ғ₆]";
 			tabPageKSeF.UseVisualStyleBackColor = true;
 			// 
 			// tableLayoutPanel8
@@ -1126,7 +1126,7 @@ namespace ProFak.UI
 			numericUpDownNetto.Location = new System.Drawing.Point(49, 4);
 			numericUpDownNetto.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			numericUpDownNetto.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
-			numericUpDownNetto.Minimum = new decimal(new int[] { 999999999, 0, 0, System.Int32.MinValue });
+			numericUpDownNetto.Minimum = new decimal(new int[] { 999999999, 0, 0, int.MinValue });
 			numericUpDownNetto.Name = "numericUpDownNetto";
 			numericUpDownNetto.Size = new System.Drawing.Size(116, 23);
 			numericUpDownNetto.TabIndex = 50;
@@ -1140,7 +1140,7 @@ namespace ProFak.UI
 			numericUpDownVat.Location = new System.Drawing.Point(49, 35);
 			numericUpDownVat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			numericUpDownVat.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
-			numericUpDownVat.Minimum = new decimal(new int[] { 999999999, 0, 0, System.Int32.MinValue });
+			numericUpDownVat.Minimum = new decimal(new int[] { 999999999, 0, 0, int.MinValue });
 			numericUpDownVat.Name = "numericUpDownVat";
 			numericUpDownVat.Size = new System.Drawing.Size(116, 23);
 			numericUpDownVat.TabIndex = 51;
@@ -1154,7 +1154,7 @@ namespace ProFak.UI
 			numericUpDownBrutto.Location = new System.Drawing.Point(49, 66);
 			numericUpDownBrutto.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			numericUpDownBrutto.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
-			numericUpDownBrutto.Minimum = new decimal(new int[] { 999999999, 0, 0, System.Int32.MinValue });
+			numericUpDownBrutto.Minimum = new decimal(new int[] { 999999999, 0, 0, int.MinValue });
 			numericUpDownBrutto.Name = "numericUpDownBrutto";
 			numericUpDownBrutto.Size = new System.Drawing.Size(116, 23);
 			numericUpDownBrutto.TabIndex = 52;
