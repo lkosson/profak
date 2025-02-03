@@ -8,7 +8,7 @@ namespace ProFak.DB
 {
 	class DeklaracjaVat : Rekord<DeklaracjaVat>
 	{
-		public DateTime Miesiac { get; set; } = DateTime.Now.Date.AddDays(1 - DateTime.Now.Day);
+		public DateTime Miesiac { get; set; } = DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-1);
 
 		public decimal NettoZW { get; set; }
 		public decimal Netto0 { get; set; }

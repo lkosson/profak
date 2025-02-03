@@ -8,7 +8,7 @@ namespace ProFak.DB
 {
 	class ZaliczkaPit : Rekord<ZaliczkaPit>
 	{
-		public DateTime Miesiac { get; set; } = DateTime.Now.Date.AddDays(1 - DateTime.Now.Day);
+		public DateTime Miesiac { get; set; } = DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-1);
 
 		public decimal Przychody { get; set; }
 		public decimal Koszty { get; set; }

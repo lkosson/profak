@@ -8,7 +8,7 @@ namespace ProFak.DB
 {
 	class SkladkaZus : Rekord<SkladkaZus>
 	{
-		public DateTime Miesiac { get; set; } = DateTime.Now.Date.AddDays(1 - DateTime.Now.Day);
+		public DateTime Miesiac { get; set; } = DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-1);
 
 		public decimal PodstawaSpoleczne { get; set; }
 		public decimal PodstawaZdrowotne { get; set; }
