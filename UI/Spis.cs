@@ -288,6 +288,29 @@ namespace ProFak.UI
 			base.OnCellMouseDown(e);
 		}
 
+		public override DataObject GetClipboardContent()
+		{
+			var dataObject = base.GetClipboardContent();
+			if (dataObject == null) return null;
+
+			var poprawiony = new DataObject();
+			void PoprawFormatowanie(TextDataFormat format)
+			{
+				if (!dataObject.ContainsText(format)) return;
+				var tekst = dataObject.GetText(format);
+				if (tekst == null) return;
+				tekst = tekst.Replace("\u00A0", "");
+				poprawiony.SetText(tekst, format);
+			}
+
+			PoprawFormatowanie(TextDataFormat.Text);
+			PoprawFormatowanie(TextDataFormat.UnicodeText);
+			PoprawFormatowanie(TextDataFormat.CommaSeparatedValue);
+			// Bez HTML
+
+			return poprawiony;
+		}
+
 		private void PokazKonfiguracjeSpisu()
 		{
 			using var nowyKontekst = new Kontekst(Kontekst);
