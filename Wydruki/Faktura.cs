@@ -137,6 +137,7 @@ namespace ProFak.Wydruki
 		public override void Przygotuj(LocalReport report)
 		{
 			using var rdlc = WczytajSzablon("Faktura");
+			report.DisplayName = String.Join(", ", dane.Select(e => e.Numer).Distinct().Order());
 			report.LoadReportDefinition(rdlc);
 			report.LoadSubreportDefinition("Pozycje", WczytajSzablon("FakturaPozycje" + (jestvat ? "Vat" : "") + (jestrabat ? "Rabat" : "")));
 			report.SubreportProcessing += SubreportProcessing;
@@ -147,5 +148,5 @@ namespace ProFak.Wydruki
 				e.DataSources.Add(report.DataSources[0]);
 			}
 		}
-}
+	}
 }
