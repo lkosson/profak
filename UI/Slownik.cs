@@ -19,6 +19,7 @@ namespace ProFak.UI
 		private readonly Action<T> ustawWartosc;
 		private readonly Func<SpisZAkcjami<T>> generatorSpisu;
 		private bool gotowy;
+		private bool ustawionaNowaWartosc;
 
 		public Slownik(Kontekst kontekst, ComboBox comboBox, Button button, Func<IEnumerable<T>> pobierzWartosci, Func<T, string> wyswietlanaWartosc, Action<T> ustawWartosc, Func<SpisZAkcjami<T>> generatorSpisu)
 		{
@@ -74,9 +75,11 @@ namespace ProFak.UI
 			WypelnijListe();
 			comboBox.SelectedIndex = -1;
 			gotowy = true;
+			ustawionaNowaWartosc = false;
 			if (wartosc == null) wartosc = dotychczasowaPozycja?.Wartosc;
 			var nowaPozycja = comboBox.Items.Cast<PozycjaListyRekordu<T>>().FirstOrDefault(p => p.Wartosc == wartosc);
 			if (nowaPozycja != null) comboBox.SelectedItem = nowaPozycja;
+			if (!ustawionaNowaWartosc) ustawWartosc(wartosc);
 		}
 
 		private void button_Click(object sender, EventArgs e)
@@ -90,6 +93,7 @@ namespace ProFak.UI
 			var pozycja = (PozycjaListyRekordu<T>)comboBox.SelectedItem;
 			ustawWartosc(pozycja?.Wartosc);
 			if (comboBox.Focused && comboBox.DropDownStyle == ComboBoxStyle.DropDown) comboBox.Focus();
+			ustawionaNowaWartosc = true;
 		}
 
 		private void WypelnijListe()
