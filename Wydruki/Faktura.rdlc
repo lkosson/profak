@@ -698,6 +698,11 @@
                             </Textbox>
                             <Subreport Name="Pozycje">
                               <ReportName>Pozycje</ReportName>
+                              <Parameters>
+                                <Parameter Name="Numer">
+                                  <Value>=Fields!Numer.Value</Value>
+                                </Parameter>
+                              </Parameters>
                               <Top>4.46828cm</Top>
                               <Left>0.00002cm</Left>
                               <Height>0.56208cm</Height>
