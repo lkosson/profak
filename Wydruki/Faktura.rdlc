@@ -170,7 +170,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>10.06775cm</Height>
+                  <Height>11.36421cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -584,8 +584,9 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>DaneSprzedawcy</rd:DefaultName>
-                              <Top>5.20676cm</Top>
-                              <Height>2.89793cm</Height>
+                              <Top>6.72006cm</Top>
+                              <Left>0.00002cm</Left>
+                              <Height>2.68108cm</Height>
                               <Width>17.78603cm</Width>
                               <ZIndex>2</ZIndex>
                               <Visibility>
@@ -678,7 +679,7 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>DaneSprzedawcy</rd:DefaultName>
-                              <Top>8.28107cm</Top>
+                              <Top>9.57753cm</Top>
                               <Left>0.00002cm</Left>
                               <Height>1.78668cm</Height>
                               <Width>17.78603cm</Width>
@@ -696,6 +697,69 @@
                                 <PaddingBottom>2pt</PaddingBottom>
                               </Style>
                             </Textbox>
+                            <Subreport Name="PozycjeVatRabat">
+                              <ReportName>PozycjeVatRabat</ReportName>
+                              <Parameters>
+                                <Parameter Name="Numer">
+                                  <Value>=Fields!Numer.Value</Value>
+                                </Parameter>
+                              </Parameters>
+                              <Top>4.29535cm</Top>
+                              <Left>0.00003cm</Left>
+                              <Height>0.56208cm</Height>
+                              <Width>17.78602cm</Width>
+                              <ZIndex>4</ZIndex>
+                              <Visibility>
+                                <Hidden>=Not(Fields!JestVAT.Value And Fields!JestRabat.Value)</Hidden>
+                              </Visibility>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                              </Style>
+                            </Subreport>
+                            <Subreport Name="PozycjeVat">
+                              <ReportName>PozycjeVat</ReportName>
+                              <Parameters>
+                                <Parameter Name="Numer">
+                                  <Value>=Fields!Numer.Value</Value>
+                                </Parameter>
+                              </Parameters>
+                              <Top>4.85743cm</Top>
+                              <Left>0.00003cm</Left>
+                              <Height>0.56208cm</Height>
+                              <Width>17.78602cm</Width>
+                              <ZIndex>5</ZIndex>
+                              <Visibility>
+                                <Hidden>=Not(Fields!JestVAT.Value And Not Fields!JestRabat.Value)</Hidden>
+                              </Visibility>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                              </Style>
+                            </Subreport>
+                            <Subreport Name="PozycjeRabat">
+                              <ReportName>PozycjeRabat</ReportName>
+                              <Parameters>
+                                <Parameter Name="Numer">
+                                  <Value>=Fields!Numer.Value</Value>
+                                </Parameter>
+                              </Parameters>
+                              <Top>5.41951cm</Top>
+                              <Left>0.00003cm</Left>
+                              <Height>0.56208cm</Height>
+                              <Width>17.78602cm</Width>
+                              <ZIndex>6</ZIndex>
+                              <Visibility>
+                                <Hidden>=Not(Not Fields!JestVAT.Value And Fields!JestRabat.Value)</Hidden>
+                              </Visibility>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                              </Style>
+                            </Subreport>
                             <Subreport Name="Pozycje">
                               <ReportName>Pozycje</ReportName>
                               <Parameters>
@@ -703,11 +767,13 @@
                                   <Value>=Fields!Numer.Value</Value>
                                 </Parameter>
                               </Parameters>
-                              <Top>4.46828cm</Top>
-                              <Left>0.00002cm</Left>
+                              <Top>5.98159cm</Top>
                               <Height>0.56208cm</Height>
                               <Width>17.78602cm</Width>
-                              <ZIndex>4</ZIndex>
+                              <ZIndex>7</ZIndex>
+                              <Visibility>
+                                <Hidden>=Not(Not Fields!JestVAT.Value And Not Fields!JestRabat.Value)</Hidden>
+                              </Visibility>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -748,7 +814,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DSFaktury</DataSetName>
-            <Height>10.06775cm</Height>
+            <Height>11.36421cm</Height>
             <Width>17.9cm</Width>
             <Style>
               <Border>
@@ -757,7 +823,7 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>3.96368in</Height>
+        <Height>4.4741in</Height>
         <Style />
       </Body>
       <Width>17.9cm</Width>

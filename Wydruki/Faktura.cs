@@ -10,8 +10,6 @@ namespace ProFak.Wydruki
 	class Faktura : Wydruk
 	{
 		private readonly List<FakturaDTO> dane;
-		private bool jestvat;
-		private bool jestrabat;
 
 		public Faktura(Baza baza, IEnumerable<Ref<DB.Faktura>> fakturyRefs)
 		{
@@ -31,8 +29,8 @@ namespace ProFak.Wydruki
 				var zaplacono = wplaty.Sum(wplata => wplata.Kwota);
 				var dozaplaty = faktura.RazemBrutto - zaplacono;
 				var waluta = baza.Znajdz(faktura.WalutaRef);
-				jestvat = pozycje.Any(e => e.StawkaVat != null && !String.Equals(e.StawkaVat.Skrot, "ZW", StringComparison.CurrentCultureIgnoreCase));
-				jestrabat = pozycje.Any(e => e.RabatProcent > 0 || e.RabatCena > 0 || e.RabatWartosc > 0);
+				var jestvat = pozycje.Any(e => e.StawkaVat != null && !String.Equals(e.StawkaVat.Skrot, "ZW", StringComparison.CurrentCultureIgnoreCase));
+				var jestrabat = pozycje.Any(e => e.RabatProcent > 0 || e.RabatCena > 0 || e.RabatWartosc > 0);
 
 				var fakturaDTO = new FakturaDTO();
 				if (faktura.Rodzaj == RodzajFaktury.Sprzedaż) fakturaDTO.Rodzaj = jestvat ? "Faktura VAT" : "Faktura";
@@ -139,7 +137,10 @@ namespace ProFak.Wydruki
 			using var rdlc = WczytajSzablon("Faktura");
 			report.DisplayName = String.Join(", ", dane.Select(e => e.Numer).Distinct().Order());
 			report.LoadReportDefinition(rdlc);
-			report.LoadSubreportDefinition("Pozycje", WczytajSzablon("FakturaPozycje" + (jestvat ? "Vat" : "") + (jestrabat ? "Rabat" : "")));
+			report.LoadSubreportDefinition("PozycjeVatRabat", WczytajSzablon("FakturaPozycjeVatRabat"));
+			report.LoadSubreportDefinition("PozycjeVat", WczytajSzablon("FakturaPozycjeVat"));
+			report.LoadSubreportDefinition("PozycjeRabat", WczytajSzablon("FakturaPozycjeRabat"));
+			report.LoadSubreportDefinition("Pozycje", WczytajSzablon("FakturaPozycje"));
 			report.SubreportProcessing += SubreportProcessing;
 			report.DataSources.Add(new ReportDataSource("DSFaktury", dane));
 
