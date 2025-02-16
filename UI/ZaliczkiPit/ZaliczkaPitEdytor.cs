@@ -168,9 +168,10 @@ namespace ProFak.UI
 					{
 						if (!pozycja.StawkaRyczaltu.HasValue) continue;
 						Rekord.Przychody += pozycja.WartoscNetto;
-						Rekord.Podatek += (pozycja.WartoscNetto * pozycja.StawkaRyczaltu.Value / 100m).Zaokragl(0);
+						Rekord.Podatek += (pozycja.WartoscNetto * pozycja.StawkaRyczaltu.Value / 100m).Zaokragl(2);
 					}
 				}
+				Rekord.Podatek = Rekord.Podatek.Zaokragl(0);
 				if (Rekord.Podatek > 0)
 				{
 					var sredniaStawkaRyczaltu = Rekord.Podatek / Rekord.Przychody;
