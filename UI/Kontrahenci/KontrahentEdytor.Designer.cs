@@ -64,7 +64,7 @@ namespace ProFak.UI
 			comboBoxKodUrzedu = new System.Windows.Forms.ComboBox();
 			textBoxOsobaFizycznaImie = new System.Windows.Forms.TextBox();
 			textBoxOsobaFizycznaNazwisko = new System.Windows.Forms.TextBox();
-			dateTimePickerOsobaFizycznaDataUrodzenia = new System.Windows.Forms.DateTimePicker();
+			dateTimePickerOsobaFizycznaDataUrodzenia = new System.Windows.Forms.DateTimePickerFix();
 			buttonUrzadSkarbowy = new ButtonDPI();
 			label14 = new System.Windows.Forms.Label();
 			comboBoxFormaOpodatkowania = new System.Windows.Forms.ComboBox();

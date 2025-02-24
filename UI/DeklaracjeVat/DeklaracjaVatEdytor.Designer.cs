@@ -75,7 +75,7 @@ namespace ProFak.UI
 			tabPageFakturyZakupu = new System.Windows.Forms.TabPage();
 			label1 = new System.Windows.Forms.Label();
 			tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			dateTimePickerMiesiac = new System.Windows.Forms.DateTimePicker();
+			dateTimePickerMiesiac = new System.Windows.Forms.DateTimePickerFix();
 			buttonPrzelicz = new ButtonDPI();
 			tabControl.SuspendLayout();
 			tabPageObliczenia.SuspendLayout();

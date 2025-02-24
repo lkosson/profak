@@ -93,7 +93,7 @@ namespace ProFak.UI
 			label13 = new System.Windows.Forms.Label();
 			label14 = new System.Windows.Forms.Label();
 			textBoxRachunekBankowy = new System.Windows.Forms.TextBox();
-			dateTimePickerTerminPlatnosci = new System.Windows.Forms.DateTimePicker();
+			dateTimePickerTerminPlatnosci = new System.Windows.Forms.DateTimePickerFix();
 			comboBoxSposobPlatnosci = new System.Windows.Forms.ComboBoxFix();
 			buttonSposobPlatnosci = new ButtonDPI();
 			groupBox1 = new System.Windows.Forms.GroupBox();
@@ -101,9 +101,9 @@ namespace ProFak.UI
 			label3 = new System.Windows.Forms.Label();
 			label4 = new System.Windows.Forms.Label();
 			label5 = new System.Windows.Forms.Label();
-			dateTimePickerDataWystawienia = new System.Windows.Forms.DateTimePicker();
-			dateTimePickerDataSprzedazy = new System.Windows.Forms.DateTimePicker();
-			dateTimePickerDataWprowadzenia = new System.Windows.Forms.DateTimePicker();
+			dateTimePickerDataWystawienia = new System.Windows.Forms.DateTimePickerFix();
+			dateTimePickerDataSprzedazy = new System.Windows.Forms.DateTimePickerFix();
+			dateTimePickerDataWprowadzenia = new System.Windows.Forms.DateTimePickerFix();
 			groupBox7 = new System.Windows.Forms.GroupBox();
 			tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
 			label16 = new System.Windows.Forms.Label();
