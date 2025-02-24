@@ -21,9 +21,9 @@ namespace ProFak.UI
 				var podsumowanie = base.Podsumowanie;
 				if (WybraneRekordy.Count() > 1)
 				{
-					podsumowanie += $"\nRazem: {WybraneRekordy.Sum(skladka => skladka.SumaSkladek).ToString(Format.Kwota)}";
-					podsumowanie += $"\nRazem społeczne: {WybraneRekordy.Sum(skladka => skladka.SkladkaSpoleczna).ToString(Format.Kwota)}";
-					podsumowanie += $"\nRazem zdrowotne: {WybraneRekordy.Sum(skladka => skladka.SkladkaZdrowotna).ToString(Format.Kwota)}";
+					podsumowanie += $"\nRazem: <{WybraneRekordy.Sum(skladka => skladka.SumaSkladek).ToString(Format.Kwota)}>";
+					podsumowanie += $"\nRazem społeczne: <{WybraneRekordy.Sum(skladka => skladka.SkladkaSpoleczna).ToString(Format.Kwota)}>";
+					podsumowanie += $"\nRazem zdrowotne: <{WybraneRekordy.Sum(skladka => skladka.SkladkaZdrowotna).ToString(Format.Kwota)}>";
 				}
 				return podsumowanie;
 			}

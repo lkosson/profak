@@ -28,8 +28,9 @@ namespace ProFak.UI
 				var podsumowanie = base.Podsumowanie;
 				if (WybraneRekordy.Count() > 1)
 				{
-					podsumowanie += $"\nRazem netto: {WybraneRekordy.Sum(faktura => faktura.RazemNetto).ToString(Format.Kwota)}";
-					podsumowanie += $"\nRazem brutto: {WybraneRekordy.Sum(faktura => faktura.RazemBrutto).ToString(Format.Kwota)}";
+					podsumowanie += $"\nRazem netto: <{WybraneRekordy.Sum(faktura => faktura.RazemNetto).ToString(Format.Kwota)}>";
+					podsumowanie += $"\nRazem VAT: <{WybraneRekordy.Sum(faktura => faktura.RazemVat).ToString(Format.Kwota)}>";
+					podsumowanie += $"\nRazem brutto: <{WybraneRekordy.Sum(faktura => faktura.RazemBrutto).ToString(Format.Kwota)}>";
 				}
 				return podsumowanie;
 			}

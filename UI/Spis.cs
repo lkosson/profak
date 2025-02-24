@@ -102,8 +102,8 @@ namespace ProFak.UI
 				var liczbaWybranych = WybraneRekordy.Count();
 				string tekst;
 				if (liczbaWszystkich == 0) tekst = "Spis nie zawiera danych";
-				else tekst = $"Liczba pozycji: {liczbaWszystkich}";
-				if (liczbaWybranych > 1) tekst += $"\nLiczba zaznaczonych: {liczbaWybranych}";
+				else tekst = $"Liczba pozycji: <{liczbaWszystkich}>";
+				if (liczbaWybranych > 1) tekst += $"\nLiczba zaznaczonych: <{liczbaWybranych}>";
 				return tekst;
 			}
 		}
