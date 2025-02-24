@@ -62,7 +62,7 @@ namespace ProFak.IO
 
 			kontrahent.Nazwa = nazwa;
 			kontrahent.PelnaNazwa = nazwa;
-			kontrahent.AdresRejestrowy = ulica + "\r\n" + kodpocztowy + " " + miejscowosc;
+			kontrahent.AdresRejestrowy = ulica.Replace("&#8209;", "") + "\r\n" + kodpocztowy + " " + miejscowosc;
 			kontrahent.AdresKorespondencyjny = kontrahent.AdresRejestrowy;
 		}
 
