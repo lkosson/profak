@@ -300,6 +300,7 @@ namespace ProFak.DB
 				if (staraPozycja.CzyPrzedKorekta) continue;
 
 				var nowaPozycja = new PozycjaFaktury();
+				nowaPozycja.LP = nowePozycje.Count + 1;
 				nowaPozycja.FakturaId = nowaFaktura.Id;
 				nowaPozycja.TowarId = staraPozycja.TowarId;
 				nowaPozycja.Opis = staraPozycja.Opis;
