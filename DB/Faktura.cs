@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ProFak.DB
@@ -109,6 +110,8 @@ namespace ProFak.DB
 
 		public string NazwaSkroconaSprzedawcy => Sprzedawca == null ? "" : Sprzedawca.Nazwa;
 		public string NazwaSkroconaNabywcy => Nabywca == null ? "" : Nabywca.Nazwa;
+
+		public IComparable NumerSegmenty => String.Join('/', Numer.Split('/', '-').Where(fragment => !String.IsNullOrWhiteSpace(fragment)).Select(fragment => Regex.IsMatch(fragment, @"\d+") ? fragment.PadLeft(20, '0') : fragment.PadRight(20, ' ')));
 
 		public void PrzeliczRazem(Baza baza)
 		{

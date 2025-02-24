@@ -137,6 +137,12 @@ namespace ProFak.UI
 			else if (rekord.FakturaKorygujacaRef.IsNotNull) styl.ForeColor = Color.FromArgb(120, 120, 120);
 			else if (rekord.Rodzaj == RodzajFaktury.KorektaSprzedaży) styl.ForeColor = Color.FromArgb(50, 60, 220);
 		}
+
+		protected override Func<Faktura, IComparable> KolumnaDlaSortowania(string kolumna)
+		{
+			if (kolumna == nameof(Faktura.Numer)) kolumna = nameof(Faktura.NumerSegmenty);
+			return base.KolumnaDlaSortowania(kolumna);
+		}
 	}
 
 	class FakturaSprzedazyBezNabywcySpis : FakturaSprzedazySpis

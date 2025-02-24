@@ -372,11 +372,23 @@ namespace ProFak.UI
 			Rekordy = oryginalneRekordy;
 		}
 
-		public void UstawKolejnosc(string kolumna, bool zastap)
+		protected virtual Func<T, IComparable> KolumnaDlaSortowania(string kolumna)
 		{
 			var getter = typeof(T).GetProperty(kolumna)?.GetGetMethod();
+			if (getter == null) return null;
+			if (!getter.ReturnType.IsAssignableTo(typeof(IComparable))) return null;
+			var parametr = Expression.Parameter(typeof(T), "rekord");
+			var wartoscExpr = Expression.Call(parametr, getter);
+			var wartoscCompExpr = Expression.Convert(wartoscExpr, typeof(IComparable));
+			var lambdaExpr = Expression.Lambda<Func<T, IComparable>>(wartoscCompExpr, parametr);
+			var metoda = lambdaExpr.Compile();
+			return metoda;
+		}
+
+		public void UstawKolejnosc(string kolumna, bool zastap)
+		{
+			var getter = KolumnaDlaSortowania(kolumna);
 			if (getter == null) return;
-			if (!getter.ReturnType.IsAssignableTo(typeof(IComparable))) return;
 
 			bool dodaj;
 			if (zastap)
@@ -417,12 +429,7 @@ namespace ProFak.UI
 
 			if (dodaj)
 			{
-				var parametr = Expression.Parameter(typeof(T), "rekord");
-				var wartoscExpr = Expression.Call(parametr, getter);
-				var wartoscCompExpr = Expression.Convert(wartoscExpr, typeof(IComparable));
-				var lambdaExpr = Expression.Lambda<Func<T, IComparable>>(wartoscCompExpr, parametr);
-				var metoda = lambdaExpr.Compile();
-				kolumnyKolejnosci.Add((kolumna, false, metoda));
+				kolumnyKolejnosci.Add((kolumna, false, getter));
 			}
 		}
 
