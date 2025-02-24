@@ -49,6 +49,7 @@ namespace ProFak.UI
 			DodajKolumneData(nameof(Faktura.DataWprowadzenia), "Data wprowadzenia");
 			kolumnaNazwaSprzedawcy = DodajKolumne(nameof(Faktura.NazwaSprzedawcy), "Sprzedawca", szerokosc: 250);
 			kolumnaNIPSprzedawcy = DodajKolumne(nameof(Faktura.NIPSprzedawcy), "NIP sprzedawcy", szerokosc: 100);
+			DodajKolumne(nameof(Faktura.NazwaSkroconaSprzedawcy), "Kontahent", szerokosc: 0);
 			DodajKolumneKwota(nameof(Faktura.RazemNetto), "Netto");
 			DodajKolumneKwota(nameof(Faktura.RazemVat), "VAT");
 			DodajKolumneKwota(nameof(Faktura.RazemBrutto), "Brutto");
@@ -109,6 +110,7 @@ namespace ProFak.UI
 				.Include(faktura => faktura.FakturaKorygujaca)
 				.Include(faktura => faktura.Pozycje)
 				.Include(faktura => faktura.Pliki)
+				.Include(faktura => faktura.Sprzedawca)
 				.Where(faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny);
 			if (SprzedawcaRef.IsNotNull) q = q.Where(faktura => faktura.SprzedawcaId == SprzedawcaRef.Id);
 			if (odDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy >= odDaty.Value);

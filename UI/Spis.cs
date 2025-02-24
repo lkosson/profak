@@ -197,6 +197,7 @@ namespace ProFak.UI
 			kolumna.Name = wlasciwosc;
 			kolumna.DefaultCellStyle.Alignment = wyrownajDoPrawej ? DataGridViewContentAlignment.MiddleRight : DataGridViewContentAlignment.MiddleLeft;
 			kolumna.AutoSizeMode = rozciagnij ? DataGridViewAutoSizeColumnMode.Fill : DataGridViewAutoSizeColumnMode.NotSet;
+			kolumna.Visible = szerokosc != 0;
 			if (!String.IsNullOrEmpty(format)) kolumna.DefaultCellStyle.Format = format;
 			if (szerokosc.HasValue) kolumna.Width = szerokosc.Value * DeviceDpi / 96;
 			if (rozciagnij) kolumna.MinimumWidth = 50;
@@ -323,7 +324,7 @@ namespace ProFak.UI
 				if (kolumny.Any(e => e.Kolumna == kolumna.Name)) continue;
 				var konfiguracjaKolumny = new KolumnaSpisu { Spis = spis, Kolumna = kolumna.Name };
 				konfiguracjaKolumny.Kolejnosc = kolumna.DisplayIndex;
-				konfiguracjaKolumny.Szerokosc = kolumna.AutoSizeMode == DataGridViewAutoSizeColumnMode.Fill ? -1 : kolumna.Width;
+				konfiguracjaKolumny.Szerokosc = kolumna.Visible ? kolumna.AutoSizeMode == DataGridViewAutoSizeColumnMode.Fill ? -1 : kolumna.Width : 0;
 				kolumny.Add(konfiguracjaKolumny);
 			}
 

@@ -106,6 +106,9 @@ namespace ProFak.DB
 		public decimal? RazemRabat => Pozycje == null || !Pozycje.Any(p => p.RabatRazem != 0) ? null : -Pozycje.Sum(p => p.RabatRazem);
 		public string PozycjeFmt => Pozycje == null ? "" : String.Join("  \n", Pozycje.Select(p => p.Opis));
 
+		public string NazwaSkroconaSprzedawcy => Sprzedawca == null ? "" : Sprzedawca.Nazwa;
+		public string NazwaSkroconaNabywcy => Nabywca == null ? "" : Nabywca.Nazwa;
+
 		public void PrzeliczRazem(Baza baza)
 		{
 			var pozycje = baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == Id).ToList();
