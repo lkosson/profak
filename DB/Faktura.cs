@@ -77,6 +77,7 @@ namespace ProFak.DB
 
 		public decimal SumaWplat => Wplaty?.Sum(wplata => wplata.Kwota) ?? 0;
 		public decimal PozostaloDoZaplaty => Math.Max(RazemBrutto - SumaWplat, 0);
+		public DateTime? DataWplywu => Wplaty == null || Wplaty.Count == 0 ? null : Wplaty.Max(wplata => wplata.Data);
 		public bool CzyZaplacona => PozostaloDoZaplaty == 0;
 		public bool CzyKSeF => !String.IsNullOrEmpty(NumerKSeF);
 		public bool CzyPliki => Pliki?.Count() > 0;

@@ -18,6 +18,7 @@ namespace ProFak.UI
 		private readonly bool zaplacone;
 		protected readonly DataGridViewTextBoxColumn kolumnaNazwaSprzedawcy;
 		protected readonly DataGridViewTextBoxColumn kolumnaNIPSprzedawcy;
+		protected readonly DataGridViewTextBoxColumn kolumnaNazwaSkroconaSprzedawcy;
 		public Ref<Kontrahent> SprzedawcaRef { get; set; }
 		public Ref<Towar> TowarRef { get; set; }
 		public Ref<DeklaracjaVat> DeklaracjaVatRef { get; set; }
@@ -49,7 +50,7 @@ namespace ProFak.UI
 			DodajKolumneData(nameof(Faktura.DataWprowadzenia), "Data wprowadzenia");
 			kolumnaNazwaSprzedawcy = DodajKolumne(nameof(Faktura.NazwaSprzedawcy), "Sprzedawca", szerokosc: 250);
 			kolumnaNIPSprzedawcy = DodajKolumne(nameof(Faktura.NIPSprzedawcy), "NIP sprzedawcy", szerokosc: 100);
-			DodajKolumne(nameof(Faktura.NazwaSkroconaSprzedawcy), "Kontahent", szerokosc: 0);
+			kolumnaNazwaSkroconaSprzedawcy = DodajKolumne(nameof(Faktura.NazwaSkroconaSprzedawcy), "Kontahent", szerokosc: 0);
 			DodajKolumneKwota(nameof(Faktura.RazemNetto), "Netto");
 			DodajKolumneKwota(nameof(Faktura.RazemVat), "VAT");
 			DodajKolumneKwota(nameof(Faktura.RazemBrutto), "Brutto");
@@ -66,6 +67,7 @@ namespace ProFak.UI
 			DodajKolumneKwota(nameof(Faktura.RazemRabat), "Rabat");
 			DodajKolumneData(nameof(Faktura.TerminPlatnosci), "Termin płatności");
 			DodajKolumne(nameof(Faktura.DniPoTerminie), "Dni po terminie");
+			DodajKolumneData(nameof(Faktura.DataWplywu), "Data zapłaty");
 			DodajKolumne(nameof(Faktura.NumerPowiazanej), "Powiązana");
 			DodajKolumne(nameof(Faktura.NumerKSeF), "Numer KSeF", szerokosc: 230);
 			DodajKolumneBool(nameof(Faktura.CzyTP), "TP", szerokosc: 50);
@@ -143,6 +145,7 @@ namespace ProFak.UI
 		{
 			Columns.Remove(kolumnaNazwaSprzedawcy);
 			Columns.Remove(kolumnaNIPSprzedawcy);
+			Columns.Remove(kolumnaNazwaSkroconaSprzedawcy);
 		}
 	}
 }
