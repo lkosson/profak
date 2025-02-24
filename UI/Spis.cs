@@ -218,6 +218,7 @@ namespace ProFak.UI
 			kolumna.Name = wlasciwosc;
 			if (szerokosc.HasValue) kolumna.Width = szerokosc.Value * DeviceDpi / 96;
 			kolumna.SortMode = DataGridViewColumnSortMode.Programmatic;
+			kolumna.Visible = szerokosc != 0;
 			Columns.Add(kolumna);
 			if (tooltip != null)
 			{

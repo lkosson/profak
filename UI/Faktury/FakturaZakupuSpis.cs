@@ -44,7 +44,7 @@ namespace ProFak.UI
 		public FakturaZakupuSpis()
 		{
 			DodajKolumne(nameof(Faktura.Numer), "Numer");
-			DodajKolumne(nameof(Faktura.RodzajFmt), "Rodzaj");
+			DodajKolumne(nameof(Faktura.RodzajFmt), "Rodzaj", szerokosc: 0);
 			DodajKolumneData(nameof(Faktura.DataWystawienia), "Data wystawienia");
 			DodajKolumneData(nameof(Faktura.DataSprzedazy), "Data sprzedaży");
 			DodajKolumneData(nameof(Faktura.DataWprowadzenia), "Data wprowadzenia");
@@ -61,17 +61,17 @@ namespace ProFak.UI
 			DodajKolumne(nameof(Faktura.PozycjeFmt), "Pozycje", szerokosc: 150);
 			DodajKolumne(nameof(Faktura.UwagiPubliczne), "Uwagi (publiczne)", szerokosc: 150);
 			DodajKolumne(nameof(Faktura.UwagiWewnetrzne), "Uwagi (wewnętrzne)", szerokosc: 150);
-			DodajKolumne(nameof(Faktura.OpisZdarzenia), "Opis KPiR", szerokosc: 150);
-			DodajKolumneKwota(nameof(Faktura.SumaWplat), "Zapłacono");
-			DodajKolumneKwota(nameof(Faktura.PozostaloDoZaplaty), "Do zapłaty");
-			DodajKolumneKwota(nameof(Faktura.RazemRabat), "Rabat");
+			DodajKolumne(nameof(Faktura.OpisZdarzenia), "Opis KPiR", szerokosc: 0);
+			DodajKolumneKwota(nameof(Faktura.SumaWplat), "Zapłacono", szerokosc: 0);
+			DodajKolumneKwota(nameof(Faktura.PozostaloDoZaplaty), "Do zapłaty", szerokosc: 0);
+			DodajKolumneKwota(nameof(Faktura.RazemRabat), "Rabat", szerokosc: 0);
 			DodajKolumneData(nameof(Faktura.TerminPlatnosci), "Termin płatności");
-			DodajKolumne(nameof(Faktura.DniPoTerminie), "Dni po terminie");
+			DodajKolumne(nameof(Faktura.DniPoTerminie), "Dni po terminie", szerokosc: 0);
 			DodajKolumneData(nameof(Faktura.DataWplywu), "Data zapłaty");
 			DodajKolumne(nameof(Faktura.NumerPowiazanej), "Powiązana");
 			DodajKolumne(nameof(Faktura.NumerKSeF), "Numer KSeF", szerokosc: 230);
-			DodajKolumneBool(nameof(Faktura.CzyTP), "TP", szerokosc: 50);
-			DodajKolumneBool(nameof(Faktura.CzyWNT), "WNT", szerokosc: 50);
+			DodajKolumneBool(nameof(Faktura.CzyTP), "TP", szerokosc: 0);
+			DodajKolumneBool(nameof(Faktura.CzyWNT), "WNT", szerokosc: 0);
 			DodajKolumneId();
 		}
 
