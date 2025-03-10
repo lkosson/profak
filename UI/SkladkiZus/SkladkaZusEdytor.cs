@@ -50,7 +50,7 @@ namespace ProFak.UI
 			var podmiot = Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot);
 			if (podmiot == null || !podmiot.FormaOpodatkowania.HasValue) throw new ApplicationException("Przed wyliczeniem składek ZUS należy uzupełnić formę opodatkowania firmy.");
 
-			var minimalneWynagrodzenie = 3000.00m;
+			var minimalneWynagrodzenie = Rekord.Miesiac.Year == 2025 ? 3499.50m : 3000.00m;
 
 			var przychod = 0m;
 			var koszty = 0m;
