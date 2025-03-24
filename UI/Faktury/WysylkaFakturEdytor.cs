@@ -76,9 +76,16 @@ partial class WysylkaFakturEdytor : UserControl
 
 	private void buttonWyslij_Click(object sender, EventArgs e)
 	{
-		var idx = comboBoxFaktura.SelectedIndex;
-		if (idx == 0) WyslijWszystkie();
-		else WyslijBiezaca();
+		try
+		{
+			var idx = comboBoxFaktura.SelectedIndex;
+			if (idx == 0) WyslijWszystkie();
+			else WyslijBiezaca();
+		}
+		catch (Exception exc)
+		{
+			OknoBledu.Pokaz(exc);
+		}
 	}
 
 	private void WyslijBiezaca()
