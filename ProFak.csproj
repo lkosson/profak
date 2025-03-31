@@ -38,6 +38,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="UI\ButtonDropDown.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="UI\DateTimePickerFix.cs">
       <SubType>Component</SubType>
     </Compile>

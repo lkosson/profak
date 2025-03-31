@@ -55,10 +55,25 @@ namespace ProFak.UI
 
 		public void DodajAkcje(AdapterAkcji adapter)
 		{
-			var przycisk = new Button();
+			var przycisk = new ButtonDropDown();
 			przycisk.AutoSize = true;
 			przycisk.TabIndex = TabIndex + Controls.Count;
 			przycisk.Click += delegate { adapter.Uruchom(); };
+			if (adapter.Podrzedne.Count > 0)
+			{
+				var menu = new ContextMenuStrip();
+				menu.ShowImageMargin = false;
+				foreach (var podrzedna in adapter.Podrzedne)
+				{
+					var pozycja = new ToolStripButton();
+					pozycja.Text = podrzedna.Nazwa;
+					pozycja.Dock = DockStyle.Fill;
+					pozycja.TextAlign = ContentAlignment.MiddleLeft;
+					pozycja.Click += delegate { podrzedna.Uruchom(); };
+					menu.Items.Add(pozycja);
+				}
+				przycisk.Menu = menu;
+			}
 			AktualizujPrzycisk(przycisk, adapter);
 			Controls.Add(przycisk);
 			przyciski.Add((przycisk, adapter));

@@ -13,6 +13,7 @@ namespace ProFak.UI
 		public abstract string Nazwa { get; }
 		public abstract bool CzyDostepna { get; }
 		public abstract bool CzyDomyslna { get; }
+		public abstract IReadOnlyCollection<AdapterAkcji> Podrzedne { get; }
 
 		public abstract void Uruchom();
 		public abstract bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory);
@@ -23,16 +24,19 @@ namespace ProFak.UI
 	{
 		private readonly AkcjaNaSpisie<TRekord> akcja;
 		private readonly Spis<TRekord> spis;
+		private readonly List<AdapterAkcji<TRekord>> podrzedne;
 
 		public override string Nazwa => akcja.Nazwa;
 		public override bool CzyDostepna => akcja.CzyDostepnaDlaRekordow(spis.WybraneRekordy);
 		public override bool CzyDomyslna => akcja.CzyKlawiszSkrotu(Keys.Enter, Keys.None);
+		public override IReadOnlyCollection<AdapterAkcji> Podrzedne => podrzedne;
 		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => akcja.CzyKlawiszSkrotu(klawisz, modyfikatory);
 
 		public AdapterAkcji(AkcjaNaSpisie<TRekord> akcja, Spis<TRekord> spis)
 		{
 			this.akcja = akcja;
 			this.spis = spis;
+			this.podrzedne = akcja.Podrzedne.Select(podrzedna => (AdapterAkcji<TRekord>)podrzedna.UtworzAdapter(spis)).ToList();
 		}
 
 		public override void Uruchom()
