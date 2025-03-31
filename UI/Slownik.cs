@@ -71,12 +71,12 @@ namespace ProFak.UI
 			var dotychczasowaPozycja = (PozycjaListyRekordu<T>)comboBox.SelectedItem;
 			using var spis = generatorSpisu();
 			var wartosc = Spisy.Wybierz(kontekst, spis, "Wybierz pozycję", dotychczasowaPozycja?.Wartosc);
+			if (wartosc == null) return;
 			gotowy = false;
 			WypelnijListe();
 			comboBox.SelectedIndex = -1;
 			gotowy = true;
 			ustawionaNowaWartosc = false;
-			if (wartosc == null) wartosc = dotychczasowaPozycja?.Wartosc;
 			var nowaPozycja = comboBox.Items.Cast<PozycjaListyRekordu<T>>().FirstOrDefault(p => p.Wartosc == wartosc);
 			if (nowaPozycja != null) comboBox.SelectedItem = nowaPozycja;
 			if (!ustawionaNowaWartosc) ustawWartosc(wartosc);
