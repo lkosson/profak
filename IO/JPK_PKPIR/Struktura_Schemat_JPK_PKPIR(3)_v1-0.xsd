@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2017 sp2 (x64) (http://www.altova.com) by Ministerstwo Finansów (Ministerstwo Finansów) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:etd="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/" xmlns:kus="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/KodyUrzedowSkarbowych/" xmlns:tns="http://jpk.mf.gov.pl/wzor/2024/10/30/10302/" targetNamespace="http://jpk.mf.gov.pl/wzor/2024/10/30/10302/" elementFormDefault="qualified" attributeFormDefault="unqualified" xml:lang="pl">
+	<xsd:import namespace="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/" schemaLocation="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/StrukturyDanych_v10-0E.xsd"/>
+	<xsd:import namespace="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/KodyUrzedowSkarbowych/" schemaLocation="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/KodyUrzedowSkarbowych/KodyUrzedowSkarbowych_v8-0E.xsd"/>
+	<xsd:simpleType name="TAdresEmail">
+		<xsd:annotation>
+			<xsd:documentation>Adres poczty elektronicznej</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:minLength value="3"/>
+			<xsd:maxLength value="255"/>
+			<xsd:pattern value="(.)+@(.)+"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="TNaglowek">
+		<xsd:annotation>
+			<xsd:documentation>Nagłówek JPK_PKPIR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="KodFormularza">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="tns:TKodFormularza">
+							<xsd:attribute name="kodSystemowy" type="xsd:string" use="required" fixed="JPK_PKPIR (3)"/>
+							<xsd:attribute name="wersjaSchemy" type="xsd:string" use="required" fixed="1-0"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="WariantFormularza">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:byte">
+						<xsd:enumeration value="3"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="CelZlozenia" type="tns:TCelZlozenia"/>
+			<xsd:element name="DataWytworzeniaJPK" type="etd:TDataCzas">
+				<xsd:annotation>
+					<xsd:documentation>Data i czas wytworzenia JPK_PKPIR</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataOd" type="etd:TData">
+				<xsd:annotation>
+					<xsd:documentation>Data początkowa okresu, którego dotyczy JPK_PKPIR</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DataDo" type="etd:TData">
+				<xsd:annotation>
+					<xsd:documentation>Data końcowa okresu, którego dotyczy JPK_PKPIR</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="KodUrzedu" type="kus:TKodUS"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="TKodFormularza">
+		<xsd:annotation>
+			<xsd:documentation>Symbol wzoru formularza</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="JPK_PKPIR"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TCelZlozenia">
+		<xsd:annotation>
+			<xsd:documentation>Określenie celu złożenia JPK</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:byte">
+			<xsd:enumeration value="0">
+				<xsd:annotation>
+					<xsd:documentation>złożenie JPK na żądanie</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="1">
+				<xsd:annotation>
+					<xsd:documentation>złożenie JPK po raz pierwszy</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="2">
+				<xsd:annotation>
+					<xsd:documentation>złożenie korekty JPK</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TNumerKSeF">
+		<xsd:annotation>
+			<xsd:documentation>Numer identyfikujący fakturę w Krajowym Systemie e-Faktur (KSeF)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:pattern value="([1-9]((\d[1-9])|([1-9]\d))\d{7}|M\d{9}|[A-Z]{3}\d{7})-(20[2-9][0-9]|2[1-9][0-9]{2}|[3-9][0-9]{3})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])-([0-9A-F]{6})-?([0-9A-F]{6})-([0-9A-F]{2})"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TNaturalnyJPK">
+		<xsd:annotation>
+			<xsd:documentation>Liczby naturalne większe od zera</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="etd:TNaturalny">
+			<xsd:minExclusive value="0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TKwotowy">
+		<xsd:annotation>
+			<xsd:documentation>Wartość numeryczna 18 znaków max, w tym 2 znaki po przecinku</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="18"/>
+			<xsd:fractionDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TZnakowyJPK">
+		<xsd:annotation>
+			<xsd:documentation>Typ znakowy ograniczony do 256 znaków</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="256"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="TIdentyfikatorOsobyNiefizycznej">
+		<xsd:annotation>
+			<xsd:documentation>Podstawowy zestaw danych identyfikacyjnych o osobie niefizycznej</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="NIP" type="etd:TNrNIP">
+				<xsd:annotation>
+					<xsd:documentation>Identyfikator podatkowy NIP</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PelnaNazwa">
+				<xsd:annotation>
+					<xsd:documentation>Pełna nazwa</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:token">
+						<xsd:minLength value="1"/>
+						<xsd:maxLength value="240"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TPodmiotDowolnyBezAdresu">
+		<xsd:annotation>
+			<xsd:documentation>Skrócony zestaw danych o osobie fizycznej lub niefizycznej z identyfikatorem NIP</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element name="OsobaFizyczna">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="etd:TIdentyfikatorOsobyFizycznej2">
+							<xsd:sequence minOccurs="0">
+								<xsd:element name="Email" type="tns:TAdresEmail" minOccurs="0"/>
+								<xsd:element name="Telefon" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>Numer telefonu kontaktowego</xsd:documentation>
+									</xsd:annotation>
+									<xsd:simpleType>
+										<xsd:restriction base="etd:TZnakowy">
+											<xsd:maxLength value="16"/>
+										</xsd:restriction>
+									</xsd:simpleType>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="OsobaNiefizyczna">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="tns:TIdentyfikatorOsobyNiefizycznej">
+							<xsd:sequence minOccurs="0">
+								<xsd:element name="Email" type="tns:TAdresEmail" minOccurs="0"/>
+								<xsd:element name="Telefon" minOccurs="0">
+									<xsd:annotation>
+										<xsd:documentation>Numer telefonu kontaktowego</xsd:documentation>
+									</xsd:annotation>
+									<xsd:simpleType>
+										<xsd:restriction base="etd:TZnakowy">
+											<xsd:maxLength value="16"/>
+										</xsd:restriction>
+									</xsd:simpleType>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:element name="JPK">
+		<xsd:annotation>
+			<xsd:documentation>Jednolity plik kontrolny dla podatkowej księgi przychodów i rozchodów</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Naglowek" type="tns:TNaglowek">
+					<xsd:annotation>
+						<xsd:documentation>Nagłówek JPK_PKPIR</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="Podmiot1">
+					<xsd:complexType>
+						<xsd:complexContent>
+							<xsd:extension base="tns:TPodmiotDowolnyBezAdresu">
+								<xsd:sequence minOccurs="0">
+									<xsd:element name="Kasowy_PIT" type="etd:TWybor1" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>Znacznik dla podatnika rozliczającego podatek metodą kasową</xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+									<xsd:element name="Rolnik_PIT" type="etd:TWybor1" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>Znacznik dla podatnika, o którym mowa w § 2 ust. 2 rozporządzenia Ministra Finansów w sprawie prowadzenia podatkowej księgi przychodów i rozchodów (rolnik prowadzący działalność gospodarczą)</xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+								</xsd:sequence>
+								<xsd:attribute name="rola" type="xsd:string" use="required" fixed="Podatnik"/>
+							</xsd:extension>
+						</xsd:complexContent>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="PKPIRInfo">
+					<xsd:annotation>
+						<xsd:documentation>Dane dotyczące ustalenia dochodu w roku podatkowym</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="P_1" type="tns:TKwotowy">
+								<xsd:annotation>
+									<xsd:documentation>Wartość spisu z natury na początek roku podatkowego w PLN</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_2" type="tns:TKwotowy">
+								<xsd:annotation>
+									<xsd:documentation>Wartość spisu z natury na koniec roku podatkowego w PLN</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_3" type="tns:TKwotowy">
+								<xsd:annotation>
+									<xsd:documentation>Razem koszty uzyskania przychodu, wg objaśnień do podatkowej księgi przychodów i rozchodów w PLN</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_4" type="tns:TKwotowy">
+								<xsd:annotation>
+									<xsd:documentation>Dochód osiągnięty w roku podatkowym, wg objaśnień do podatkowej księgi przychodów i rozchodów w PLN</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="PKPIRSpis" minOccurs="0" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation>Spisy z natury sporządzone w ciągu roku podatkowego</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence minOccurs="0">
+							<xsd:element name="P_5A" type="etd:TData">
+								<xsd:annotation>
+									<xsd:documentation>Data spisu z natury sporządzonego w ciągu roku podatkowego</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="P_5B" type="tns:TKwotowy">
+								<xsd:annotation>
+									<xsd:documentation>Wartość spisu z natury sporządzonego w ciągu roku podatkowego w PLN</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="PKPIRWiersz" minOccurs="0" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="K_1" type="tns:TNaturalnyJPK">
+								<xsd:annotation>
+									<xsd:documentation>Lp.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="K_2" type="etd:TData">
+								<xsd:annotation>
+									<xsd:documentation>Data zdarzenia gospodarczego</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="K_3A" type="tns:TZnakowyJPK">
+								<xsd:annotation>
+									<xsd:documentation>Nr dowodu księgowego</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="K_3B" type="tns:TNumerKSeF" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Numer identyfikujący fakturę wystawioną przy użyciu Krajowego Systemu e-Faktur (numer KSeF)</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="K_4A" type="etd:TKodKraju" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Kod kraju nadania identyfikatora podatkowego</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="K_4B" type="etd:TNrIdentyfikacjiPodatkowej" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Numer identyfikacji podatkowej kontrahenta</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="K_5A" type="tns:TZnakowyJPK">
+								<xsd:annotation>
+									<xsd:documentation>Kontrahent - imię i nazwisko (firma)</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="K_5B" type="tns:TZnakowyJPK">
+								<xsd:annotation>
+									<xsd:documentation>Kontrahent - adres</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="K_6" type="tns:TZnakowyJPK">
+								<xsd:annotation>
+									<xsd:documentation>Opis zdarzenia gospodarczego</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="K_7" type="tns:TKwotowy" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Przychód - wartość sprzedanych towarów i usług w PLN</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="K_8" type="tns:TKwotowy" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Przychód - pozostałe przychody w PLN</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="K_9" type="tns:TKwotowy" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Przychód - razem przychód w PLN (K_7 + K_8)</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="K_9A" type="tns:TKwotowy" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Przychód dla rolników prowadzących działalność gospodarczą w PLN (§ 2 ust. 2 rozporządzenia)</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="K_10" type="tns:TKwotowy" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Zakup towarów handlowych i materiałów wg cen zakupu w PLN</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="K_11" type="tns:TKwotowy" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Koszty uboczne zakupu w PLN</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="K_12" type="tns:TKwotowy" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Wydatki (koszty) - wynagrodzenia w gotówce i w naturze w PLN</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="K_13" type="tns:TKwotowy" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Wydatki (koszty) - pozostałe wydatki w PLN</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="K_14" type="tns:TKwotowy" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Wydatki (koszty) - razem wydatki (12+13) w PLN</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="K_14A" type="tns:TKwotowy" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Wydatki (koszty) dla rolników prowadzących działalność gospodarczą w PLN (§ 2 ust. 2 rozporządzenia)</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="K_15" type="tns:TKwotowy" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Wydatki (koszty) - pole wolne w PLN</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:sequence minOccurs="0">
+								<xsd:element name="K_16A" type="tns:TZnakowyJPK">
+									<xsd:annotation>
+										<xsd:documentation>Koszty działalności badawczo-rozwojowej, o których mowa w art. 26e ustawy o podatku dochodowym - opis kosztu</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+								<xsd:element name="K_16B" type="tns:TKwotowy">
+									<xsd:annotation>
+										<xsd:documentation>Koszty działalności badawczo-rozwojowej, o których mowa w art. 26e ustawy o podatku dochodowym - wartość w PLN</xsd:documentation>
+									</xsd:annotation>
+								</xsd:element>
+							</xsd:sequence>
+							<xsd:element name="K_17" type="tns:TZnakowyJPK" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Uwagi</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="PKPIRCtrl">
+					<xsd:annotation>
+						<xsd:documentation>Sumy kontrolne dla tabeli PKPIRWiersz</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="LiczbaWierszy" type="tns:TNaturalnyJPK">
+								<xsd:annotation>
+									<xsd:documentation>Liczba wierszy (zapisów) PKPIR, w okresie którego dotyczy JPK_PKPIR</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="SumaPrzychodow" type="tns:TKwotowy">
+								<xsd:annotation>
+									<xsd:documentation>Łączna wartość przychodów razem (kol. K_9) w PKPIR, w okresie którego dotyczy JPK_PKPIR</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="SumaPrzychodow2" type="tns:TKwotowy" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Łączna wartość przychodów razem (kol. K_9A) w PKPIR, w okresie którego dotyczy JPK_PKPIR</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
