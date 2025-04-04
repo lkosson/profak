@@ -27,8 +27,7 @@ namespace ProFak.IO.JPK_EWP
 		{
 			var podmiot = baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot);
 			var faktury = baza.Faktury.Where(faktura => zaliczki.Contains(faktura.ZaliczkaPit))
-				//.Include(faktura => faktura.Pozycje).ThenInclude(pozycja => pozycja.StawkaVat)
-				//.Include(faktura => faktura.Pozycje).ThenInclude(pozycja => pozycja.Towar).ThenInclude(towar => towar.JednostkaMiary)
+				.Include(faktura => faktura.Pozycje)
 				.Include(faktura => faktura.FakturaKorygowana)
 				.ToList();
 
@@ -43,7 +42,6 @@ namespace ProFak.IO.JPK_EWP
 			jpk.Naglowek.DataOd = zaliczki.Min(e => e.Miesiac);
 			jpk.Naglowek.DataDo = zaliczki.Max(e => e.Miesiac).AddMonths(1).AddDays(-1);
 			jpk.Naglowek.KodUrzedu = Enum.Parse<TKodUS>("Item" + Wymagane(podmiot.KodUrzedu, "Nie uzupełniono kodu urzędu w karcie podmiotu."));
-
 
 			jpk.Podmiot1 = new JPKPodmiot1();
 			var podmiotOF = new TPodmiotDowolnyBezAdresuOsobaFizyczna();
@@ -78,7 +76,15 @@ namespace ProFak.IO.JPK_EWP
 					jpkwiersz.K_6 = Enum.Parse<TKodKraju>(nipkraj);
 					jpkwiersz.K_7 = nipnumer;
 					jpkwiersz.K_8 = pozycje.Sum(e => e.WartoscNetto);
-					jpkwiersz.K_9 = Enum.Parse<TStawkaPodatku>(pozycje.Key.ToString(CultureInfo.InvariantCulture).Replace(".", ""));
+					if (pozycje.Key == 17) jpkwiersz.K_9 = TStawkaPodatku.Item17;
+					else if (pozycje.Key == 15) jpkwiersz.K_9 = TStawkaPodatku.Item15;
+					else if (pozycje.Key == 14) jpkwiersz.K_9 = TStawkaPodatku.Item14;
+					else if (pozycje.Key == 12.5m) jpkwiersz.K_9 = TStawkaPodatku.Item125;
+					else if (pozycje.Key == 12) jpkwiersz.K_9 = TStawkaPodatku.Item12;
+					else if (pozycje.Key == 10) jpkwiersz.K_9 = TStawkaPodatku.Item10;
+					else if (pozycje.Key == 8.5m) jpkwiersz.K_9 = TStawkaPodatku.Item85;
+					else if (pozycje.Key == 5.5m) jpkwiersz.K_9 = TStawkaPodatku.Item55;
+					else if (pozycje.Key == 3) jpkwiersz.K_9 = TStawkaPodatku.Item3;
 					jpkwiersze.Add(jpkwiersz);
 				}
 			}

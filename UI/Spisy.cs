@@ -234,6 +234,7 @@ namespace ProFak.UI
 				new EdytujRekordAkcja<ZaliczkaPit, ZaliczkaPitEdytor>(),
 				new UsunRekordAkcja<ZaliczkaPit>(),
 				new WydrukZaliczekAkcja(),
+				new GenerujJPK_EWPAkcja(),
 				new PrzeladujAkcja<ZaliczkaPit>()
 			);
 		}
