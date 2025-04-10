@@ -76,6 +76,15 @@ namespace ProFak.UI
 			);
 		}
 
+		public static SpisZAkcjami<Faktura, FakturaUsunietaSpis> FakturyUsuniete()
+		{
+			return Utworz(new FakturaUsunietaSpis(),
+				new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
+				new UsunRekordAkcja<Faktura>(),
+				new PrzeladujAkcja<Faktura>()
+			);
+		}
+
 		public static SpisZAkcjami<Faktura, KSeFSpis> KSeFSprzedaz(params string[] parametry)
 		{
 			return Utworz(new KSeFSpis(true, parametry),

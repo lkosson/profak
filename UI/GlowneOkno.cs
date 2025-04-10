@@ -154,6 +154,7 @@ namespace ProFak.UI
 			else if (pozycja.Name == "Tabele") Wyswietl(new EdytorTabeli(), pozycja.Name);
 			else if (pozycja.Name == "Baza") Wyswietl(new BazyDanych(), pozycja.Name);
 			else if (pozycja.Name == "OProgramie") Wyswietl(new OProgramie(), pozycja.Name);
+			else if (pozycja.Name == "FakturyUsuniete") Wyswietl(Spisy.FakturyUsuniete(), pozycja.Name);
 			else if (pozycja.Parent != null) Wyswietl(pozycja.Parent, (parametry ?? Enumerable.Empty<string>()).Append(pozycja.Name).ToArray());
 		}
 

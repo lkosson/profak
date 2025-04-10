@@ -15,6 +15,7 @@ namespace ProFak.DB
 		public DateTime DataWprowadzenia { get; set; } = DateTime.Now.Date;
 		public DateTime TerminPlatnosci { get; set; } = DateTime.Now.Date;
 		public DateTime? DataWyslania { get; set; }
+		public DateTime? DataUsuniecia { get; set; }
 		public string NIPSprzedawcy { get; set; } = "";
 		public string NazwaSprzedawcy { get; set; } = "";
 		public string DaneSprzedawcy { get; set; } = "";
@@ -368,6 +369,7 @@ namespace ProFak.DB
 		KorektaSprzedaży,
 		KorektaZakupu,
 		Proforma,
-		DowódWewnętrzny
+		DowódWewnętrzny,
+		Usunięta
 	}
 }

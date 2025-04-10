@@ -15,9 +15,8 @@ namespace ProFak.UI
 
 		protected override void Usun(Kontekst kontekst, IEnumerable<Faktura> zaznaczoneRekordy)
 		{
-			base.Usun(kontekst, zaznaczoneRekordy);
-
 			var numeryFaktur = kontekst.Baza.Faktury.Select(e => e.Numer).ToHashSet();
+			var usuwaneFaktury = zaznaczoneRekordy.Select(e => e.Numer).ToHashSet();
 
 			foreach (var faktura in zaznaczoneRekordy)
 			{
@@ -33,11 +32,18 @@ namespace ProFak.UI
 				while (stanNumeratora.OstatniaWartosc > 0)
 				{
 					var testowanyNumer = String.Format(szablon, stanNumeratora.OstatniaWartosc);
-					if (numeryFaktur.Contains(testowanyNumer)) break;
+					if (numeryFaktur.Contains(testowanyNumer) && !usuwaneFaktury.Contains(testowanyNumer)) break;
 					stanNumeratora.OstatniaWartosc--;
 					cofniety = true;
 				}
 				if (cofniety) kontekst.Baza.Zapisz(stanNumeratora);
+
+				faktura.DeklaracjaVatRef = default;
+				faktura.ZaliczkaPitRef = default;
+				faktura.Rodzaj = RodzajFaktury.Usunięta;
+				faktura.DataUsuniecia = DateTime.Now;
+				faktura.Numer += " (USUNIĘTA)";
+				kontekst.Baza.Zapisz(faktura);
 			}
 		}
 	}
