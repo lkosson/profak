@@ -14,6 +14,7 @@ namespace ProFak.DB
 		public DateTime DataSprzedazy { get; set; } = DateTime.Now.Date;
 		public DateTime DataWprowadzenia { get; set; } = DateTime.Now.Date;
 		public DateTime TerminPlatnosci { get; set; } = DateTime.Now.Date;
+		public DateTime? DataWyslania { get; set; }
 		public string NIPSprzedawcy { get; set; } = "";
 		public string NazwaSprzedawcy { get; set; } = "";
 		public string DaneSprzedawcy { get; set; } = "";

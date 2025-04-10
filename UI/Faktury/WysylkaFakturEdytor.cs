@@ -99,6 +99,7 @@ partial class WysylkaFakturEdytor : UserControl
 			var sposobPlatnosci = Kontekst.Baza.Znajdz(faktura.SposobPlatnosciRef);
 			if (sposobPlatnosci != null) faktura.TerminPlatnosci = faktura.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
 		}
+		faktura.DataWyslania = DateTime.Now;
 		Kontekst.Baza.Zapisz(faktura);
 
 		var idx = comboBoxFaktura.SelectedIndex;
@@ -146,6 +147,7 @@ partial class WysylkaFakturEdytor : UserControl
 					var sposobPlatnosci = Kontekst.Baza.Znajdz(faktura.SposobPlatnosciRef);
 					if (sposobPlatnosci != null) faktura.TerminPlatnosci = faktura.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
 				}
+				faktura.DataWyslania = DateTime.Now;
 				Kontekst.Baza.Zapisz(faktura);
 				var pdf = PrzygotujPDF(faktura);
 				var adresat = faktura.PodstawPolaWysylki(szablonAdresat);

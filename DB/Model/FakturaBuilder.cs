@@ -22,6 +22,7 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.DataSprzedazy).IsRequired();
 			builder.Property(e => e.DataWprowadzenia).IsRequired();
 			builder.Property(e => e.TerminPlatnosci).IsRequired();
+			builder.Property(e => e.DataWyslania);
 			builder.Property(e => e.NIPSprzedawcy).HasDefaultValue("").IsRequired();
 			builder.Property(e => e.NazwaSprzedawcy).HasDefaultValue("").IsRequired();
 			builder.Property(e => e.DaneSprzedawcy).HasDefaultValue("").IsRequired();
