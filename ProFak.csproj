@@ -51,6 +51,9 @@
     <Compile Update="UI\EdytorDwieKolumny.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="UI\Faktury\FakturaProformaSpis.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="UI\Faktury\FakturaUsunietaSpis.cs">
       <SubType>Component</SubType>
     </Compile>

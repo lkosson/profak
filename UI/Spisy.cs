@@ -44,7 +44,6 @@ namespace ProFak.UI
 			return Utworz(new FakturaSprzedazySpis(parametry),
 				new FakturaSprzedazyAkcja(),
 				new FakturaPodobnaSprzedazAkcja(),
-				new FakturaProformaAkcja(),
 				new KorektaSprzedazyAkcja(),
 				new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
 				new UsunFaktureAkcja(),
@@ -54,6 +53,21 @@ namespace ProFak.UI
 				new WyslijDoKSeFAkcja(),
 				new ZapiszPlikiAkcja(),
 				new WczytajJPK_FAAkcja(),
+				new PrzeladujAkcja<Faktura>()
+			);
+		}
+
+		public static SpisZAkcjami<Faktura, FakturaProformaSpis> FakturyProforma(string[] parametry = null)
+		{
+			return Utworz(new FakturaProformaSpis(parametry),
+				new FakturaProformaAkcja(),
+				new FakturaPodobnaSprzedazAkcja(),
+				new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
+				new UsunFaktureAkcja(),
+				new DodajWplateAkcja(),
+				new WydrukFakturyAkcja(),
+				new WyslijMailAkcja(),
+				new ZapiszPlikiAkcja(),
 				new PrzeladujAkcja<Faktura>()
 			);
 		}

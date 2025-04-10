@@ -77,6 +77,7 @@ namespace ProFak.UI
 			menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["WedlugDaty"].Expand();
 			menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["WedlugDaty"].Nodes.Cast<TreeNode>().LastOrDefault()?.Expand();
 			menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["KSeFSprzedaz"].Expand();
+			menu.Nodes["Faktury"].Nodes["FakturyProforma"].Expand();
 			menu.Nodes["Faktury"].Nodes["FakturyZakupu"].Expand();
 			menu.Nodes["Faktury"].Nodes["FakturyZakupu"].Nodes["WedlugDaty"].Expand();
 			menu.Nodes["Faktury"].Nodes["FakturyZakupu"].Nodes["WedlugDaty"].Nodes.Cast<TreeNode>().LastOrDefault()?.Expand();
@@ -147,6 +148,7 @@ namespace ProFak.UI
 			else if (pozycja.Name == "KSeFZakup") Wyswietl(Spisy.KSeFZakup(parametry), pozycja.Name);
 			else if (pozycja.Name == "KSeFSprzedaz") Wyswietl(Spisy.KSeFSprzedaz(parametry), pozycja.Name);
 			else if (pozycja.Name == "FakturySprzedazy") Wyswietl(Spisy.FakturySprzedazy(parametry), pozycja.Name);
+			else if (pozycja.Name == "FakturyProforma") Wyswietl(Spisy.FakturyProforma(parametry), pozycja.Name);
 			else if (pozycja.Name == "Konfiguracja") KonfiguracjaEdytor.Wyswietl();
 			else if (pozycja.Name == "Numeratory") Wyswietl(Spisy.Numeratory(), pozycja.Name);
 			else if (pozycja.Name == "StanyNumeratorow") Wyswietl(Spisy.StanyNumeratorow(), pozycja.Name);
@@ -184,17 +186,19 @@ namespace ProFak.UI
 
 		private void menu_BeforeExpand(object sender, TreeViewCancelEventArgs e)
 		{
-			if (e.Node.Name == "WedlugDaty" && e.Node.Parent.Name == "FakturySprzedazy") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży || faktura.Rodzaj == RodzajFaktury.Proforma);
+			if (e.Node.Name == "WedlugDaty" && e.Node.Parent.Name == "FakturySprzedazy") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży);
+			else if (e.Node.Name == "WedlugDaty" && e.Node.Parent.Name == "FakturyProforma") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Proforma);
 			else if (e.Node.Name == "WedlugDaty" && e.Node.Parent.Name == "FakturyZakupu") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny);
-			else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent.Name == "FakturySprzedazy") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży || faktura.Rodzaj == RodzajFaktury.Proforma, faktura => faktura.Nabywca);
+			else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent.Name == "FakturySprzedazy") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży, faktura => faktura.Nabywca);
+			else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent.Name == "FakturyProforma") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Proforma, faktura => faktura.Nabywca);
 			else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent.Name == "FakturyZakupu") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny, faktura => faktura.Sprzedawca);
-			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent.Name == "FakturySprzedazy") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura.Rodzaj == RodzajFaktury.Sprzedaż || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży || pozycja.Faktura.Rodzaj == RodzajFaktury.Proforma);
+			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent.Name == "FakturySprzedazy") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura.Rodzaj == RodzajFaktury.Sprzedaż || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży);
+			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent.Name == "FakturyProforma") WypelnijTowaryFaktur(e.Node, pozycja =>  pozycja.Faktura.Rodzaj == RodzajFaktury.Proforma);
 			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent.Name == "FakturyZakupu") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura.Rodzaj == RodzajFaktury.Zakup || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaZakupu || pozycja.Faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny);
 			else if (e.Node.Name == "DeklaracjeVat") WypelnijDeklaracjeVat(e.Node);
 			else if (e.Node.Name == "SkladkiZus") WypelnijSkladkiZus(e.Node);
 			else if (e.Node.Name == "ZaliczkiPit") WypelnijZaliczkiPit(e.Node);
 		}
-
 
 		private void menu_AfterExpand(object sender, TreeViewEventArgs e)
 		{
