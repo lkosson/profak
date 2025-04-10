@@ -90,8 +90,18 @@ partial class WysylkaFakturEdytor : UserControl
 
 	private void WyslijBiezaca()
 	{
+		var _faktura = (Faktura)comboBoxFaktura.SelectedItem;
+		using var transakcja = Kontekst.Transakcja();
+		var faktura = Kontekst.Baza.Znajdz(_faktura.Ref);
+		if (checkBoxUstawDate.Checked) faktura.DataWystawienia = DateTime.Now;
+		if (checkBoxPrzeliczTermin.Checked)
+		{
+			var sposobPlatnosci = Kontekst.Baza.Znajdz(faktura.SposobPlatnosciRef);
+			if (sposobPlatnosci != null) faktura.TerminPlatnosci = faktura.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
+		}
+		Kontekst.Baza.Zapisz(faktura);
+
 		var idx = comboBoxFaktura.SelectedIndex;
-		var faktura = (Faktura)comboBoxFaktura.SelectedItem;
 		var temat = textBoxTemat.Text;
 		var tresc = textBoxTresc.Text;
 		var adresat = textBoxAdresat.Text;
@@ -101,6 +111,7 @@ partial class WysylkaFakturEdytor : UserControl
 			var pdf = PrzygotujPDF(faktura);
 			await Wyslij(temat, tresc, adresat, nadawca, pdf, faktura.Numer);
 		});
+		transakcja.Zatwierdz();
 		var faktury = (List<Faktura>)comboBoxFaktura.DataSource;
 		faktury.Remove(faktura);
 		comboBoxFaktura.BeginUpdate();
@@ -119,18 +130,30 @@ partial class WysylkaFakturEdytor : UserControl
 
 	private void WyslijWszystkie()
 	{
+		var ustawDate = checkBoxUstawDate.Checked;
+		var przeliczTermin = checkBoxPrzeliczTermin.Checked;
 		OknoPostepu.Uruchom(async delegate
 		{
 			var faktury = (List<Faktura>)comboBoxFaktura.DataSource;
-			foreach (var faktura in faktury)
+			foreach (var _faktura in faktury)
 			{
-				if (faktura.Id == 0) continue;
+				if (_faktura.Id == 0) continue;
+				using var transakcja = Kontekst.Transakcja();
+				var faktura = Kontekst.Baza.Znajdz(_faktura.Ref);
+				if (ustawDate) faktura.DataWystawienia = DateTime.Now;
+				if (przeliczTermin)
+				{
+					var sposobPlatnosci = Kontekst.Baza.Znajdz(faktura.SposobPlatnosciRef);
+					if (sposobPlatnosci != null) faktura.TerminPlatnosci = faktura.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
+				}
+				Kontekst.Baza.Zapisz(faktura);
 				var pdf = PrzygotujPDF(faktura);
 				var adresat = faktura.PodstawPolaWysylki(szablonAdresat);
 				var temat = faktura.PodstawPolaWysylki(szablonTemat);
 				var tresc = faktura.PodstawPolaWysylki(szablonTresc);
 				var nadawca = faktura.PodstawPolaWysylki(szablonNadawca);
 				await Wyslij(temat, tresc, adresat, nadawca, pdf, faktura.Numer);
+				transakcja.Zatwierdz();
 			}
 		});
 		ParentForm.DialogResult = DialogResult.OK;
@@ -179,5 +202,11 @@ partial class WysylkaFakturEdytor : UserControl
 	{
 		if (comboBoxFaktura.SelectedIndex != 0) return;
 		szablonTresc = textBoxTresc.Text;
+	}
+
+	private void checkBoxUstawDate_CheckedChanged(object sender, EventArgs e)
+	{
+		checkBoxPrzeliczTermin.Enabled = checkBoxUstawDate.Checked;
+		if (!checkBoxUstawDate.Checked) checkBoxPrzeliczTermin.Checked = false;
 	}
 }

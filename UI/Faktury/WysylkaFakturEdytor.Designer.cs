@@ -39,7 +39,11 @@ partial class WysylkaFakturEdytor
 		buttonNastepna = new ButtonDPI();
 		label3 = new System.Windows.Forms.Label();
 		buttonWyslij = new ButtonDPI();
+		flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+		checkBoxUstawDate = new System.Windows.Forms.CheckBox();
+		checkBoxPrzeliczTermin = new System.Windows.Forms.CheckBox();
 		tableLayoutPanel1.SuspendLayout();
+		flowLayoutPanel1.SuspendLayout();
 		SuspendLayout();
 		// 
 		// tableLayoutPanel1
@@ -50,7 +54,7 @@ partial class WysylkaFakturEdytor
 		tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 		tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 		tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-		tableLayoutPanel1.Controls.Add(textBoxTresc, 0, 3);
+		tableLayoutPanel1.Controls.Add(textBoxTresc, 0, 4);
 		tableLayoutPanel1.Controls.Add(textBoxTemat, 1, 2);
 		tableLayoutPanel1.Controls.Add(textBoxAdresat, 1, 1);
 		tableLayoutPanel1.Controls.Add(comboBoxFaktura, 1, 0);
@@ -60,10 +64,12 @@ partial class WysylkaFakturEdytor
 		tableLayoutPanel1.Controls.Add(buttonNastepna, 3, 0);
 		tableLayoutPanel1.Controls.Add(label3, 0, 0);
 		tableLayoutPanel1.Controls.Add(buttonWyslij, 4, 0);
+		tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 0, 3);
 		tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 		tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
 		tableLayoutPanel1.Name = "tableLayoutPanel1";
-		tableLayoutPanel1.RowCount = 4;
+		tableLayoutPanel1.RowCount = 5;
+		tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -77,11 +83,11 @@ partial class WysylkaFakturEdytor
 		tableLayoutPanel1.SetColumnSpan(textBoxTresc, 5);
 		textBoxTresc.Dock = System.Windows.Forms.DockStyle.Fill;
 		textBoxTresc.Font = new System.Drawing.Font("Consolas", 9F);
-		textBoxTresc.Location = new System.Drawing.Point(3, 92);
+		textBoxTresc.Location = new System.Drawing.Point(3, 123);
 		textBoxTresc.Multiline = true;
 		textBoxTresc.Name = "textBoxTresc";
-		textBoxTresc.Size = new System.Drawing.Size(554, 345);
-		textBoxTresc.TabIndex = 6;
+		textBoxTresc.Size = new System.Drawing.Size(554, 314);
+		textBoxTresc.TabIndex = 4;
 		textBoxTresc.TextChanged += textBoxTresc_TextChanged;
 		// 
 		// textBoxTemat
@@ -91,7 +97,7 @@ partial class WysylkaFakturEdytor
 		textBoxTemat.Location = new System.Drawing.Point(56, 63);
 		textBoxTemat.Name = "textBoxTemat";
 		textBoxTemat.Size = new System.Drawing.Size(501, 23);
-		textBoxTemat.TabIndex = 5;
+		textBoxTemat.TabIndex = 2;
 		textBoxTemat.TextChanged += textBoxTemat_TextChanged;
 		// 
 		// textBoxAdresat
@@ -101,7 +107,7 @@ partial class WysylkaFakturEdytor
 		textBoxAdresat.Location = new System.Drawing.Point(56, 34);
 		textBoxAdresat.Name = "textBoxAdresat";
 		textBoxAdresat.Size = new System.Drawing.Size(501, 23);
-		textBoxAdresat.TabIndex = 4;
+		textBoxAdresat.TabIndex = 1;
 		textBoxAdresat.TextChanged += textBoxAdresat_TextChanged;
 		// 
 		// comboBoxFaktura
@@ -143,7 +149,7 @@ partial class WysylkaFakturEdytor
 		buttonPoprzednia.Location = new System.Drawing.Point(321, 3);
 		buttonPoprzednia.Name = "buttonPoprzednia";
 		buttonPoprzednia.Size = new System.Drawing.Size(85, 25);
-		buttonPoprzednia.TabIndex = 1;
+		buttonPoprzednia.TabIndex = 6;
 		buttonPoprzednia.Text = "« Poprzednia";
 		buttonPoprzednia.UseVisualStyleBackColor = true;
 		buttonPoprzednia.Click += buttonPoprzednia_Click;
@@ -155,7 +161,7 @@ partial class WysylkaFakturEdytor
 		buttonNastepna.Location = new System.Drawing.Point(412, 3);
 		buttonNastepna.Name = "buttonNastepna";
 		buttonNastepna.Size = new System.Drawing.Size(76, 25);
-		buttonNastepna.TabIndex = 2;
+		buttonNastepna.TabIndex = 7;
 		buttonNastepna.Text = "» Następna";
 		buttonNastepna.UseVisualStyleBackColor = true;
 		buttonNastepna.Click += buttonNastepna_Click;
@@ -177,10 +183,43 @@ partial class WysylkaFakturEdytor
 		buttonWyslij.Location = new System.Drawing.Point(494, 3);
 		buttonWyslij.Name = "buttonWyslij";
 		buttonWyslij.Size = new System.Drawing.Size(63, 25);
-		buttonWyslij.TabIndex = 7;
+		buttonWyslij.TabIndex = 5;
 		buttonWyslij.Text = "✉ Wyślij";
 		buttonWyslij.UseVisualStyleBackColor = true;
 		buttonWyslij.Click += buttonWyslij_Click;
+		// 
+		// flowLayoutPanel1
+		// 
+		flowLayoutPanel1.AutoSize = true;
+		tableLayoutPanel1.SetColumnSpan(flowLayoutPanel1, 5);
+		flowLayoutPanel1.Controls.Add(checkBoxUstawDate);
+		flowLayoutPanel1.Controls.Add(checkBoxPrzeliczTermin);
+		flowLayoutPanel1.Location = new System.Drawing.Point(3, 92);
+		flowLayoutPanel1.Name = "flowLayoutPanel1";
+		flowLayoutPanel1.Size = new System.Drawing.Size(412, 25);
+		flowLayoutPanel1.TabIndex = 3;
+		// 
+		// checkBoxUstawDate
+		// 
+		checkBoxUstawDate.AutoSize = true;
+		checkBoxUstawDate.Location = new System.Drawing.Point(3, 3);
+		checkBoxUstawDate.Name = "checkBoxUstawDate";
+		checkBoxUstawDate.Size = new System.Drawing.Size(240, 19);
+		checkBoxUstawDate.TabIndex = 0;
+		checkBoxUstawDate.Text = "Ustaw datę wystawienia na bieżący dzień";
+		checkBoxUstawDate.UseVisualStyleBackColor = true;
+		checkBoxUstawDate.CheckedChanged += checkBoxUstawDate_CheckedChanged;
+		// 
+		// checkBoxPrzeliczTermin
+		// 
+		checkBoxPrzeliczTermin.AutoSize = true;
+		checkBoxPrzeliczTermin.Enabled = false;
+		checkBoxPrzeliczTermin.Location = new System.Drawing.Point(249, 3);
+		checkBoxPrzeliczTermin.Name = "checkBoxPrzeliczTermin";
+		checkBoxPrzeliczTermin.Size = new System.Drawing.Size(160, 19);
+		checkBoxPrzeliczTermin.TabIndex = 1;
+		checkBoxPrzeliczTermin.Text = "i przelicz termin płatności";
+		checkBoxPrzeliczTermin.UseVisualStyleBackColor = true;
 		// 
 		// WysylkaFakturEdytor
 		// 
@@ -192,6 +231,8 @@ partial class WysylkaFakturEdytor
 		Size = new System.Drawing.Size(560, 440);
 		tableLayoutPanel1.ResumeLayout(false);
 		tableLayoutPanel1.PerformLayout();
+		flowLayoutPanel1.ResumeLayout(false);
+		flowLayoutPanel1.PerformLayout();
 		ResumeLayout(false);
 	}
 
@@ -208,4 +249,7 @@ partial class WysylkaFakturEdytor
 	private ButtonDPI buttonNastepna;
 	private System.Windows.Forms.Label label3;
 	private ButtonDPI buttonWyslij;
+	private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+	private System.Windows.Forms.CheckBox checkBoxUstawDate;
+	private System.Windows.Forms.CheckBox checkBoxPrzeliczTermin;
 }
