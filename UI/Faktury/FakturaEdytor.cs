@@ -31,6 +31,7 @@ namespace ProFak.UI
 
 			kontroler.Powiazanie(textBoxNumer, faktura => faktura.Numer);
 			kontroler.Powiazanie(comboBoxWaluta, faktura => faktura.WalutaRef);
+			kontroler.Powiazanie(numericUpDownKurs, faktura => faktura.KursWaluty);
 
 			kontroler.Powiazanie(comboBoxNIPSprzedawcy, faktura => faktura.NIPSprzedawcy);
 			kontroler.Powiazanie(comboBoxNazwaSprzedawcy, faktura => faktura.NazwaSprzedawcy);
@@ -144,7 +145,7 @@ namespace ProFak.UI
 				Kontekst, comboBoxWaluta, buttonWaluta,
 				Kontekst.Baza.Waluty.OrderBy(waluta => waluta.Nazwa).ToList,
 				waluta => waluta.Skrot,
-				waluta => { },
+				waluta => { if (waluta == null) return; numericUpDownKurs.Enabled = !waluta.CzyDomyslna; if (waluta.CzyDomyslna) numericUpDownKurs.Value = 1; },
 				Spisy.Waluty)
 				.Zainstaluj();
 

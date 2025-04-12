@@ -83,9 +83,11 @@ namespace ProFak.UI
 			textBoxNumer = new System.Windows.Forms.TextBox();
 			labelRodzaj = new System.Windows.Forms.Label();
 			label2 = new System.Windows.Forms.Label();
+			numericUpDownKurs = new NumericUpDownDPI();
 			buttonWaluta = new ButtonDPI();
 			label15 = new System.Windows.Forms.Label();
 			comboBoxWaluta = new System.Windows.Forms.ComboBoxFix();
+			label22 = new System.Windows.Forms.Label();
 			tableLayoutPanelDatyKwoty = new System.Windows.Forms.TableLayoutPanel();
 			groupBox6 = new System.Windows.Forms.GroupBox();
 			tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
@@ -129,6 +131,7 @@ namespace ProFak.UI
 			tabPageKSeF.SuspendLayout();
 			tableLayoutPanel8.SuspendLayout();
 			tableLayoutPanel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)numericUpDownKurs).BeginInit();
 			tableLayoutPanelDatyKwoty.SuspendLayout();
 			groupBox6.SuspendLayout();
 			tableLayoutPanel9.SuspendLayout();
@@ -754,7 +757,7 @@ namespace ProFak.UI
 			// 
 			tableLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
 			tableLayoutPanel1.AutoSize = true;
-			tableLayoutPanel1.ColumnCount = 8;
+			tableLayoutPanel1.ColumnCount = 11;
 			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -764,12 +767,16 @@ namespace ProFak.UI
 			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
 			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
 			tableLayoutPanel1.Controls.Add(textBoxNumer, 3, 0);
 			tableLayoutPanel1.Controls.Add(labelRodzaj, 0, 0);
 			tableLayoutPanel1.Controls.Add(label2, 2, 0);
+			tableLayoutPanel1.Controls.Add(numericUpDownKurs, 10, 0);
 			tableLayoutPanel1.Controls.Add(buttonWaluta, 7, 0);
 			tableLayoutPanel1.Controls.Add(label15, 5, 0);
 			tableLayoutPanel1.Controls.Add(comboBoxWaluta, 6, 0);
+			tableLayoutPanel1.Controls.Add(label22, 9, 0);
 			tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
 			tableLayoutPanel1.Name = "tableLayoutPanel1";
 			tableLayoutPanel1.RowCount = 1;
@@ -782,8 +789,8 @@ namespace ProFak.UI
 			textBoxNumer.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
 			textBoxNumer.Location = new System.Drawing.Point(129, 4);
 			textBoxNumer.Name = "textBoxNumer";
-			textBoxNumer.Size = new System.Drawing.Size(540, 23);
-			textBoxNumer.TabIndex = 2;
+			textBoxNumer.Size = new System.Drawing.Size(404, 23);
+			textBoxNumer.TabIndex = 0;
 			// 
 			// labelRodzaj
 			// 
@@ -805,14 +812,26 @@ namespace ProFak.UI
 			label2.TabIndex = 2;
 			label2.Text = "Numer";
 			// 
+			// numericUpDownKurs
+			// 
+			numericUpDownKurs.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			numericUpDownKurs.DecimalPlaces = 4;
+			numericUpDownKurs.Location = new System.Drawing.Point(817, 4);
+			numericUpDownKurs.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			numericUpDownKurs.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
+			numericUpDownKurs.Name = "numericUpDownKurs";
+			numericUpDownKurs.Size = new System.Drawing.Size(74, 23);
+			numericUpDownKurs.TabIndex = 3;
+			numericUpDownKurs.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
 			// buttonWaluta
 			// 
 			buttonWaluta.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			buttonWaluta.AutoSize = true;
-			buttonWaluta.Location = new System.Drawing.Point(865, 3);
+			buttonWaluta.Location = new System.Drawing.Point(729, 3);
 			buttonWaluta.Name = "buttonWaluta";
 			buttonWaluta.Size = new System.Drawing.Size(26, 25);
-			buttonWaluta.TabIndex = 4;
+			buttonWaluta.TabIndex = 2;
 			buttonWaluta.Text = "...";
 			toolTip.SetToolTip(buttonWaluta, "Wyświetl pełną listę");
 			buttonWaluta.UseVisualStyleBackColor = true;
@@ -821,7 +840,7 @@ namespace ProFak.UI
 			// 
 			label15.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			label15.AutoSize = true;
-			label15.Location = new System.Drawing.Point(695, 8);
+			label15.Location = new System.Drawing.Point(559, 8);
 			label15.Name = "label15";
 			label15.Size = new System.Drawing.Size(44, 15);
 			label15.TabIndex = 0;
@@ -832,10 +851,20 @@ namespace ProFak.UI
 			comboBoxWaluta.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
 			comboBoxWaluta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			comboBoxWaluta.FormattingEnabled = true;
-			comboBoxWaluta.Location = new System.Drawing.Point(745, 4);
+			comboBoxWaluta.Location = new System.Drawing.Point(609, 4);
 			comboBoxWaluta.Name = "comboBoxWaluta";
 			comboBoxWaluta.Size = new System.Drawing.Size(114, 23);
-			comboBoxWaluta.TabIndex = 3;
+			comboBoxWaluta.TabIndex = 1;
+			// 
+			// label22
+			// 
+			label22.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			label22.AutoSize = true;
+			label22.Location = new System.Drawing.Point(781, 8);
+			label22.Name = "label22";
+			label22.Size = new System.Drawing.Size(30, 15);
+			label22.TabIndex = 0;
+			label22.Text = "Kurs";
 			// 
 			// tableLayoutPanelDatyKwoty
 			// 
@@ -1126,7 +1155,7 @@ namespace ProFak.UI
 			numericUpDownNetto.Location = new System.Drawing.Point(49, 4);
 			numericUpDownNetto.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			numericUpDownNetto.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
-			numericUpDownNetto.Minimum = new decimal(new int[] { 999999999, 0, 0, int.MinValue });
+			numericUpDownNetto.Minimum = new decimal(new int[] { 999999999, 0, 0, System.Int32.MinValue });
 			numericUpDownNetto.Name = "numericUpDownNetto";
 			numericUpDownNetto.Size = new System.Drawing.Size(116, 23);
 			numericUpDownNetto.TabIndex = 50;
@@ -1140,7 +1169,7 @@ namespace ProFak.UI
 			numericUpDownVat.Location = new System.Drawing.Point(49, 35);
 			numericUpDownVat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			numericUpDownVat.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
-			numericUpDownVat.Minimum = new decimal(new int[] { 999999999, 0, 0, int.MinValue });
+			numericUpDownVat.Minimum = new decimal(new int[] { 999999999, 0, 0, System.Int32.MinValue });
 			numericUpDownVat.Name = "numericUpDownVat";
 			numericUpDownVat.Size = new System.Drawing.Size(116, 23);
 			numericUpDownVat.TabIndex = 51;
@@ -1154,7 +1183,7 @@ namespace ProFak.UI
 			numericUpDownBrutto.Location = new System.Drawing.Point(49, 66);
 			numericUpDownBrutto.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			numericUpDownBrutto.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
-			numericUpDownBrutto.Minimum = new decimal(new int[] { 999999999, 0, 0, int.MinValue });
+			numericUpDownBrutto.Minimum = new decimal(new int[] { 999999999, 0, 0, System.Int32.MinValue });
 			numericUpDownBrutto.Name = "numericUpDownBrutto";
 			numericUpDownBrutto.Size = new System.Drawing.Size(116, 23);
 			numericUpDownBrutto.TabIndex = 52;
@@ -1194,6 +1223,7 @@ namespace ProFak.UI
 			tableLayoutPanel8.PerformLayout();
 			tableLayoutPanel1.ResumeLayout(false);
 			tableLayoutPanel1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)numericUpDownKurs).EndInit();
 			tableLayoutPanelDatyKwoty.ResumeLayout(false);
 			tableLayoutPanelDatyKwoty.PerformLayout();
 			groupBox6.ResumeLayout(false);
@@ -1238,9 +1268,6 @@ namespace ProFak.UI
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.Label label11;
-		private System.Windows.Forms.DateTimePicker dateTimePickerDataWystawienia;
-		private System.Windows.Forms.DateTimePicker dateTimePickerDataSprzedazy;
-		private System.Windows.Forms.DateTimePicker dateTimePickerDataWprowadzenia;
 		private System.Windows.Forms.GroupBox groupBox6;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
 		private System.Windows.Forms.Label label12;
@@ -1249,7 +1276,6 @@ namespace ProFak.UI
 		private System.Windows.Forms.TextBox textBoxDaneSprzedawcy;
 		private System.Windows.Forms.TextBox textBoxDaneNabywcy;
 		private System.Windows.Forms.TextBox textBoxRachunekBankowy;
-		private System.Windows.Forms.DateTimePicker dateTimePickerTerminPlatnosci;
 		private System.Windows.Forms.ComboBoxFix comboBoxSposobPlatnosci;
 		private ButtonDPI buttonSprzedawca;
 		private ButtonDPI buttonNabywca;
@@ -1298,5 +1324,11 @@ namespace ProFak.UI
 		private System.Windows.Forms.TextBox textBoxNumerKSeF;
 		private System.Windows.Forms.TextBox textBoxKSeFXML;
 		private ButtonDPI buttonKSeFGeneruj;
+		private System.Windows.Forms.Label label22;
+		private System.Windows.Forms.DateTimePickerFix dateTimePickerDataWystawienia;
+		private System.Windows.Forms.DateTimePickerFix dateTimePickerDataSprzedazy;
+		private System.Windows.Forms.DateTimePickerFix dateTimePickerDataWprowadzenia;
+		private System.Windows.Forms.DateTimePickerFix dateTimePickerTerminPlatnosci;
+		private NumericUpDownDPI numericUpDownKurs;
 	}
 }
