@@ -29,7 +29,9 @@ namespace ProFak.Wydruki
 				var zaplacono = wplaty.Sum(wplata => wplata.Kwota);
 				var dozaplaty = faktura.RazemBrutto - zaplacono;
 				var waluta = baza.Znajdz(faktura.WalutaRef);
-				var walutaSkrot = waluta.Skrot == "PLN" ? "zł" : waluta.Skrot;
+				var walutaVAT = baza.Waluty.FirstOrDefault(waluta => waluta.CzyDomyslna);
+				var walutaSkrot = waluta?.Skrot ?? "zł";
+				var walutaVATSkrot = walutaVAT?.Skrot ?? walutaSkrot;
 				var jestvat = pozycje.Any(e => e.StawkaVat != null && !String.Equals(e.StawkaVat.Skrot, "ZW", StringComparison.CurrentCultureIgnoreCase));
 				var jestrabat = pozycje.Any(e => e.RabatProcent > 0 || e.RabatCena > 0 || e.RabatWartosc > 0);
 
@@ -44,6 +46,8 @@ namespace ProFak.Wydruki
 				fakturaDTO.JestVAT = jestvat;
 				fakturaDTO.JestRabat = jestrabat;
 				fakturaDTO.Waluta = walutaSkrot;
+				fakturaDTO.WalutaVAT = walutaVATSkrot;
+				fakturaDTO.KursWaluty = faktura.KursWaluty;
 
 				if (faktura.FakturaKorygowanaRef.IsNotNull)
 				{
@@ -123,12 +127,13 @@ namespace ProFak.Wydruki
 					pozycjaDTO.CenaNetto = pozycja.Cena;
 					pozycjaDTO.Ilosc = Math.Abs(pozycja.Ilosc / 1.000000000000m) + " " + jm?.Skrot;
 					pozycjaDTO.WartoscNetto = pozycja.WartoscNetto;
-					pozycjaDTO.WartoscVat = pozycja.WartoscVat;
+					pozycjaDTO.WartoscVat = (pozycja.WartoscVat * faktura.KursWaluty).Zaokragl();
 					pozycjaDTO.WartoscBrutto = pozycja.WartoscBrutto;
 					pozycjaDTO.StawkaVAT = pozycja.StawkaVat?.Skrot ?? "-";
 					pozycjaDTO.Rabat = pozycja.RabatFmt.Replace(", ", "\n");
 					pozycjaDTO.RabatRazem = pozycja.RabatRazem;
 					pozycjaDTO.Waluta = walutaSkrot;
+					pozycjaDTO.WalutaVAT = walutaVATSkrot;
 
 					dane.Add(pozycjaDTO);
 				}

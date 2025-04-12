@@ -33,6 +33,8 @@
       <xs:element minOccurs="1" maxOccurs="1" name="RabatRazem" type="xs:decimal" />
       <xs:element minOccurs="0" maxOccurs="1" name="Rabat" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="Waluta" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="WalutaVAT" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="KursWaluty" type="xs:decimal" />
       <xs:element minOccurs="1" maxOccurs="1" name="JestVAT" type="xs:boolean" />
       <xs:element minOccurs="1" maxOccurs="1" name="JestRabat" type="xs:boolean" />
       <xs:element minOccurs="0" maxOccurs="1" name="NumerKSeF" type="xs:string" />

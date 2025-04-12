@@ -133,6 +133,18 @@
           <DataField>Rabat</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Waluta">
+          <DataField>Waluta</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="WalutaVAT">
+          <DataField>WalutaVAT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KursWaluty">
+          <DataField>KursWaluty</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
         <Field Name="JestVAT">
           <DataField>JestVAT</DataField>
           <rd:TypeName>System.Boolean</rd:TypeName>
@@ -463,6 +475,21 @@
                                     </TextRun>
                                     <TextRun>
                                       <Value>=Fields!DoZaplaty.Value</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Normal</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                    <TextRun>
+                                      <Value xml:space="preserve"> </Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontWeight>Normal</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                    <TextRun>
+                                      <Value>=IIf(Fields!KursWaluty.Value=1,""," (1 " &amp; Fields!Waluta.Value &amp; " = " &amp; Fields!KursWaluty.Value &amp; " " &amp; Fields!WalutaVAT.Value &amp; ")")</Value>
+                                      <MarkupType>HTML</MarkupType>
                                       <Style>
                                         <FontFamily>Calibri</FontFamily>
                                         <FontWeight>Normal</FontWeight>
