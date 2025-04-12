@@ -54,7 +54,7 @@ namespace ProFak.Wydruki
 
 			if (wynik.Length > 0) wynik.Append(" ");
 
-			if (wartosc > 1 || rzadWielkosci > 0) wynik.Append(SlownieDo1000((int)wartosc));
+			wynik.Append(SlownieDo1000((int)wartosc));
 
 			int odmiana;
 
@@ -102,7 +102,9 @@ namespace ProFak.Wydruki
 		{
 			var zlote = (long)Math.Floor(kwota);
 			var grosze = (long)((kwota - zlote) * 100);
-			return Slownie(zlote) + " " + waluta + " i " + Slownie(grosze) + " " + waluta + "/100";
+			var wynik = Slownie(zlote) + " " + waluta;
+			if (grosze > 0) wynik += " i " + Slownie(grosze) + " " + waluta + "/100";
+			return wynik;
 		}
 	}
 }
