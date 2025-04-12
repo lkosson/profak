@@ -29,6 +29,7 @@ namespace ProFak.Wydruki
 				var zaplacono = wplaty.Sum(wplata => wplata.Kwota);
 				var dozaplaty = faktura.RazemBrutto - zaplacono;
 				var waluta = baza.Znajdz(faktura.WalutaRef);
+				var walutaSkrot = waluta.Skrot == "PLN" ? "zł" : waluta.Skrot;
 				var jestvat = pozycje.Any(e => e.StawkaVat != null && !String.Equals(e.StawkaVat.Skrot, "ZW", StringComparison.CurrentCultureIgnoreCase));
 				var jestrabat = pozycje.Any(e => e.RabatProcent > 0 || e.RabatCena > 0 || e.RabatWartosc > 0);
 
@@ -42,6 +43,7 @@ namespace ProFak.Wydruki
 				fakturaDTO.Numer = faktura.Numer;
 				fakturaDTO.JestVAT = jestvat;
 				fakturaDTO.JestRabat = jestrabat;
+				fakturaDTO.Waluta = walutaSkrot;
 
 				if (faktura.FakturaKorygowanaRef.IsNotNull)
 				{
@@ -63,10 +65,10 @@ namespace ProFak.Wydruki
 
 				if (dozaplaty < 0)
 				{
-					fakturaDTO.Slownie = SlowniePL.Slownie(-dozaplaty, waluta.Skrot);
+					fakturaDTO.Slownie = SlowniePL.Slownie(-dozaplaty, walutaSkrot);
 					fakturaDTO.TerminPlatnosci = "";
 					fakturaDTO.FormaPlatnosci = "";
-					fakturaDTO.DoZwrotu = (-dozaplaty).ToString(UI.Format.Kwota) + " " + waluta.Skrot;
+					fakturaDTO.DoZwrotu = (-dozaplaty).ToString(UI.Format.Kwota) + " " + walutaSkrot;
 					fakturaDTO.DoZaplaty = "";
 					fakturaDTO.NumerRachunku = "";
 				}
@@ -74,9 +76,9 @@ namespace ProFak.Wydruki
 				{
 					fakturaDTO.TerminPlatnosci = faktura.TerminPlatnosci.ToString(UI.Format.Data);
 					fakturaDTO.FormaPlatnosci = faktura.OpisSposobuPlatnosci;
-					fakturaDTO.Slownie = SlowniePL.Slownie(dozaplaty, waluta.Skrot);
+					fakturaDTO.Slownie = SlowniePL.Slownie(dozaplaty, walutaSkrot);
 					fakturaDTO.DoZwrotu = "";
-					fakturaDTO.DoZaplaty = dozaplaty.ToString(UI.Format.Kwota) + " " + waluta.Skrot;
+					fakturaDTO.DoZaplaty = dozaplaty.ToString(UI.Format.Kwota) + " " + walutaSkrot;
 					fakturaDTO.NumerRachunku = faktura.RachunekBankowy;
 				}
 
@@ -126,6 +128,7 @@ namespace ProFak.Wydruki
 					pozycjaDTO.StawkaVAT = pozycja.StawkaVat?.Skrot ?? "-";
 					pozycjaDTO.Rabat = pozycja.RabatFmt.Replace(", ", "\n");
 					pozycjaDTO.RabatRazem = pozycja.RabatRazem;
+					pozycjaDTO.Waluta = walutaSkrot;
 
 					dane.Add(pozycjaDTO);
 				}

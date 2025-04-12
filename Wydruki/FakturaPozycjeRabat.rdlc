@@ -133,6 +133,10 @@
           <DataField>Rabat</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Waluta">
+          <DataField>Waluta</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="JestVAT">
           <DataField>JestVAT</DataField>
           <rd:TypeName>System.Boolean</rd:TypeName>
@@ -1088,7 +1092,15 @@
                                   </Style>
                                 </TextRun>
                                 <TextRun>
-                                  <Value> zł</Value>
+                                  <Value xml:space="preserve"> </Value>
+                                  <Style>
+                                    <FontFamily>Calibri</FontFamily>
+                                    <FontSize>8pt</FontSize>
+                                    <Format>n2</Format>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value>=Fields!Waluta.Value</Value>
                                   <Style>
                                     <FontFamily>Calibri</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -1179,7 +1191,15 @@
                                   </Style>
                                 </TextRun>
                                 <TextRun>
-                                  <Value> zł</Value>
+                                  <Value xml:space="preserve"> </Value>
+                                  <Style>
+                                    <FontFamily>Calibri</FontFamily>
+                                    <FontSize>8pt</FontSize>
+                                    <Format>n</Format>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value>=Fields!Waluta.Value</Value>
                                   <Style>
                                     <FontFamily>Calibri</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -1493,7 +1513,15 @@
                                   </Style>
                                 </TextRun>
                                 <TextRun>
-                                  <Value> zł</Value>
+                                  <Value xml:space="preserve"> </Value>
+                                  <Style>
+                                    <FontFamily>Calibri</FontFamily>
+                                    <FontSize>8pt</FontSize>
+                                    <Format>n2</Format>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value>=Fields!Waluta.Value</Value>
                                   <Style>
                                     <FontFamily>Calibri</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -1543,7 +1571,15 @@
                                   </Style>
                                 </TextRun>
                                 <TextRun>
-                                  <Value> zł</Value>
+                                  <Value xml:space="preserve"> </Value>
+                                  <Style>
+                                    <FontFamily>Calibri</FontFamily>
+                                    <FontSize>8pt</FontSize>
+                                    <Format>n2</Format>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value>=Fields!Waluta.Value</Value>
                                   <Style>
                                     <FontFamily>Calibri</FontFamily>
                                     <FontSize>8pt</FontSize>

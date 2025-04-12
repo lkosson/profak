@@ -41,6 +41,7 @@ namespace ProFak.Wydruki
 		public decimal WartoscBrutto { get; set; }
 		public decimal RabatRazem { get; set; }
 		public string Rabat { get; set; }
+		public string Waluta { get; set; }
 		public bool JestVAT { get; set; }
 		public bool JestRabat { get; set; }
 
