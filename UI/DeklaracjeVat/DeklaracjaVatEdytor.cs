@@ -179,17 +179,17 @@ namespace ProFak.UI
 						if (faktura.CzyWDT) { Rekord.NettoWDT += pozycja.WartoscNetto; }
 						else if (pozycja.StawkaVat.Skrot.ToLower().Contains("zw")) { Rekord.NettoZW += pozycja.WartoscNetto; }
 						else if (pozycja.StawkaVat.Wartosc == 0) { Rekord.Netto0 += pozycja.WartoscNetto; }
-						else if (pozycja.StawkaVat.Wartosc <= 5) { Rekord.Netto5 += pozycja.WartoscNetto; Rekord.Nalezny5 += pozycja.WartoscVat; }
-						else if (pozycja.StawkaVat.Wartosc <= 8) { Rekord.Netto8 += pozycja.WartoscNetto; Rekord.Nalezny8 += pozycja.WartoscVat; }
-						else { Rekord.Netto23 += pozycja.WartoscNetto; Rekord.Nalezny23 += pozycja.WartoscVat; }
+						else if (pozycja.StawkaVat.Wartosc <= 5) { Rekord.Netto5 += pozycja.WartoscNetto; Rekord.Nalezny5 += pozycja.WartoscVat * faktura.KursWaluty; }
+						else if (pozycja.StawkaVat.Wartosc <= 8) { Rekord.Netto8 += pozycja.WartoscNetto; Rekord.Nalezny8 += pozycja.WartoscVat * faktura.KursWaluty; }
+						else { Rekord.Netto23 += pozycja.WartoscNetto; Rekord.Nalezny23 += pozycja.WartoscVat * faktura.KursWaluty; }
 					}
 				}
 				else if (faktura.CzyZakup)
 				{
-					if (faktura.CzyWNT) { Rekord.NettoWNT += faktura.RazemNetto; Rekord.NaleznyWNT += faktura.VatNaliczony; }
+					if (faktura.CzyWNT) { Rekord.NettoWNT += faktura.RazemNetto; Rekord.NaleznyWNT += faktura.VatNaliczony * faktura.KursWaluty; }
 					/* bez else */
-					if (faktura.CzyZakupSrodkowTrwalych) { Rekord.NettoSrodkiTrwale += faktura.RazemNetto; Rekord.NaliczonySrodkiTrwale += faktura.VatNaliczony; }
-					else { Rekord.NettoPozostale += faktura.RazemNetto; Rekord.NaliczonyPozostale += faktura.VatNaliczony; }
+					if (faktura.CzyZakupSrodkowTrwalych) { Rekord.NettoSrodkiTrwale += faktura.RazemNetto; Rekord.NaliczonySrodkiTrwale += faktura.VatNaliczony * faktura.KursWaluty; }
+					else { Rekord.NettoPozostale += faktura.RazemNetto; Rekord.NaliczonyPozostale += faktura.VatNaliczony * faktura.KursWaluty; }
 				}
 			}
 
