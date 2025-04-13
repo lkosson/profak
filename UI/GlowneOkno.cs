@@ -243,7 +243,7 @@ namespace ProFak.UI
 
 			while (treeNode.Nodes.Count > 0) treeNode.Nodes.RemoveAt(0);
 
-			var lata = daty.OrderBy(data => data).GroupBy(data => data.Year).Select(rok => (rok.Key, miesiace: rok.Select(data => data.Month).Distinct().ToList())).ToList();
+			var lata = daty.Append(DateTime.Now.Date).OrderBy(data => data).GroupBy(data => data.Year).Select(rok => (rok.Key, miesiace: rok.Select(data => data.Month).Distinct().ToList())).ToList();
 			foreach (var (rok, miesiace) in lata)
 			{
 				var treeNodeRok = new TreeNode { Name = "R:" + rok, Text = rok.ToString() };
@@ -305,17 +305,7 @@ namespace ProFak.UI
 				.Select(faktura => faktura.Miesiac)
 				.Distinct()
 				.ToList();
-
-			while (treeNode.Nodes.Count > 0) treeNode.Nodes.RemoveAt(0);
-
-			var lata = daty.Select(data => data.Year).Distinct().OrderBy(rok => rok).ToList();
-			var treeNodeWszystko = new TreeNode { Name = "", Text = "(wszystkie)" };
-			treeNode.Nodes.Add(treeNodeWszystko);
-			foreach (var rok in lata)
-			{
-				var treeNodeRok = new TreeNode { Name = "R:" + rok, Text = rok.ToString() };
-				treeNode.Nodes.Add(treeNodeRok);
-			}
+			WypelnijWedlugLat(treeNode, daty);
 		}
 
 		private void WypelnijSkladkiZus(TreeNode treeNode)
@@ -325,17 +315,7 @@ namespace ProFak.UI
 				.Select(faktura => faktura.Miesiac)
 				.Distinct()
 				.ToList();
-
-			while (treeNode.Nodes.Count > 0) treeNode.Nodes.RemoveAt(0);
-
-			var lata = daty.Select(data => data.Year).Distinct().OrderBy(rok => rok).ToList();
-			var treeNodeWszystko = new TreeNode { Name = "", Text = "(wszystkie)" };
-			treeNode.Nodes.Add(treeNodeWszystko);
-			foreach (var rok in lata)
-			{
-				var treeNodeRok = new TreeNode { Name = "R:" + rok, Text = rok.ToString() };
-				treeNode.Nodes.Add(treeNodeRok);
-			}
+			WypelnijWedlugLat(treeNode, daty);
 		}
 
 		private void WypelnijZaliczkiPit(TreeNode treeNode)
@@ -345,10 +325,14 @@ namespace ProFak.UI
 				.Select(faktura => faktura.Miesiac)
 				.Distinct()
 				.ToList();
+			WypelnijWedlugLat(treeNode, daty);
+		}
 
+		private void WypelnijWedlugLat(TreeNode treeNode, IEnumerable<DateTime> daty)
+		{
 			while (treeNode.Nodes.Count > 0) treeNode.Nodes.RemoveAt(0);
 
-			var lata = daty.Select(data => data.Year).Distinct().OrderBy(rok => rok).ToList();
+			var lata = daty.Append(DateTime.Now.Date).Select(data => data.Year).Distinct().OrderBy(rok => rok).ToList();
 			var treeNodeWszystko = new TreeNode { Name = "", Text = "(wszystkie)" };
 			treeNode.Nodes.Add(treeNodeWszystko);
 			foreach (var rok in lata)
