@@ -58,7 +58,7 @@ namespace ProFak.UI
 		public Kontekst Kontekst { get; set; }
 		public IEnumerable<T> WybraneRekordy
 		{
-			get => SelectedRows.Cast<DataGridViewRow>().Select(row => row.DataBoundItem).Cast<T>();
+			get => Sortuj(SelectedRows.Cast<DataGridViewRow>().Select(row => row.DataBoundItem).Cast<T>());
 
 			set
 			{
