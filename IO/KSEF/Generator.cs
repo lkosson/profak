@@ -96,7 +96,7 @@ class Generator
 		ksefFaktura.Podmiot2.Adres.AdresL2 = dbFaktura.DaneNabywcy.JakoDwieLinie().linia2;
 		ksefFaktura.Podmiot2.IDNabywcy = dbFaktura.NabywcaRef.Id.ToString();
 		ksefFaktura.Fa = new FakturaFA();
-		ksefFaktura.Fa.KodWaluty = Enum.Parse<TKodWaluty>(dbFaktura.Waluta.Skrot);
+		ksefFaktura.Fa.KodWaluty = dbFaktura.Waluta.Skrot == "zł" ? TKodWaluty.PLN : Enum.Parse<TKodWaluty>(dbFaktura.Waluta.Skrot);
 		ksefFaktura.Fa.P_1 = dbFaktura.DataWystawienia;
 		ksefFaktura.Fa.P_2 = dbFaktura.Numer;
 		ksefFaktura.Fa.Item = dbFaktura.DataSprzedazy; // P_6
