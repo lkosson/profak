@@ -11,7 +11,7 @@ namespace ProFak.Wydruki
 	{
 		private readonly List<FakturaDTO> dane;
 
-		public Faktura(Baza baza, IEnumerable<Ref<DB.Faktura>> fakturyRefs)
+		public Faktura(Baza baza, IEnumerable<Ref<DB.Faktura>> fakturyRefs, bool duplikat = false)
 		{
 			dane = new List<FakturaDTO>();
 			foreach (var fakturaRef in fakturyRefs)
@@ -54,6 +54,12 @@ namespace ProFak.Wydruki
 					var fakturaBazowa = baza.Znajdz(faktura.FakturaKorygowanaRef);
 					if (fakturaBazowa.Rodzaj == RodzajFaktury.Proforma) fakturaDTO.Korekta = "do faktury pro forma <b>" + fakturaBazowa.Numer + "</b>";
 					else fakturaDTO.Korekta = (jestvat ? "<b>do faktury VAT</b> " : "<b>do faktury</b> ") + fakturaBazowa.Numer + "<br/><b>z dnia</b> " + fakturaBazowa.DataWystawienia.ToString(UI.Format.Data) + "<br/>";
+				}
+
+				if (duplikat)
+				{
+					if (!String.IsNullOrEmpty(fakturaDTO.Korekta)) fakturaDTO.Korekta += "<br/>";
+					fakturaDTO.Korekta += "Duplikat z dnia " + DateTime.Now.ToString(UI.Format.Data);
 				}
 
 				fakturaDTO.DataWystawienia = faktura.DataWystawienia.ToString(UI.Format.Data);
