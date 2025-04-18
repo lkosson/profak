@@ -59,7 +59,7 @@ namespace ProFak.Wydruki
 				if (duplikat)
 				{
 					if (!String.IsNullOrEmpty(fakturaDTO.Korekta)) fakturaDTO.Korekta += "<br/>";
-					fakturaDTO.Korekta += "Duplikat z dnia " + DateTime.Now.ToString(UI.Format.Data);
+					fakturaDTO.Korekta += "<b>Duplikat z dnia</b> " + DateTime.Now.ToString(UI.Format.Data);
 				}
 
 				fakturaDTO.DataWystawienia = faktura.DataWystawienia.ToString(UI.Format.Data);

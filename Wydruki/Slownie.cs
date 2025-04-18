@@ -103,7 +103,7 @@ namespace ProFak.Wydruki
 			var zlote = (long)Math.Floor(kwota);
 			var grosze = (long)((kwota - zlote) * 100);
 			var wynik = Slownie(zlote) + " " + waluta;
-			if (grosze > 0) wynik += " i " + Slownie(grosze) + " " + waluta + "/100";
+			if (grosze > 0) wynik += " i " + Slownie(grosze) + " " + (waluta == "zł" ? "gr" : waluta + "/100");
 			return wynik;
 		}
 	}
