@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ProFak.DB;
+﻿using ProFak.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +10,7 @@ namespace ProFak.UI
 {
 	class UsunFaktureAkcja : UsunRekordAkcja<Faktura>
 	{
+		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => base.CzyKlawiszSkrotu(klawisz, modyfikatory) || (klawisz == Keys.Delete && modyfikatory == Keys.Shift);
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) => base.CzyDostepnaDlaRekordow(zaznaczoneRekordy) && !zaznaczoneRekordy.Any(faktura => faktura.FakturaKorygujacaRef.IsNotNull);
 
 		protected override void Usun(Kontekst kontekst, IEnumerable<Faktura> zaznaczoneRekordy)
@@ -45,12 +45,19 @@ namespace ProFak.UI
 					kontekst.Baza.Zapisz(fakturaKorygowana);
 				}
 
-				faktura.DeklaracjaVatRef = default;
-				faktura.ZaliczkaPitRef = default;
-				faktura.Rodzaj = RodzajFaktury.Usunięta;
-				faktura.DataUsuniecia = DateTime.Now;
-				faktura.Numer += " (USUNIĘTA)";
-				kontekst.Baza.Zapisz(faktura);
+				if (GlowneOkno.ModifierKeys == Keys.Shift)
+				{
+					kontekst.Baza.Usun(faktura);
+				}
+				else
+				{
+					faktura.DeklaracjaVatRef = default;
+					faktura.ZaliczkaPitRef = default;
+					faktura.Rodzaj = RodzajFaktury.Usunięta;
+					faktura.DataUsuniecia = DateTime.Now;
+					faktura.Numer += " (USUNIĘTA)";
+					kontekst.Baza.Zapisz(faktura);
+				}
 			}
 		}
 	}
