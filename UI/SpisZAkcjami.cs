@@ -48,6 +48,7 @@ namespace ProFak.UI
 
 			spis.Dock = DockStyle.Fill;
 			spis.ZaznaczenieZmienione += spis_ZaznaczenieZmienione;
+			spis.RekordyZmienione += spis_RekordyZmienione;
 			spis.CellDoubleClick += spis_CellDoubleClick;
 			spis.KeyDown += spis_KeyDown;
 			Controls.Add(spis, 0, 0);
@@ -88,6 +89,11 @@ namespace ProFak.UI
 		{
 			podsumowanie.Text = Spis.Podsumowanie;
 			panelAkcji.Aktualizuj();
+		}
+
+		private void spis_RekordyZmienione()
+		{
+			podsumowanie.Text = Spis.Podsumowanie;
 		}
 
 		protected virtual bool ObsluzKlawisz(Keys klawisz, Keys modyfikatory)
