@@ -354,6 +354,12 @@ namespace ProFak.UI
 			Rekord.XMLKSeF = xml;
 			kontroler.AktualizujKontrolki();
 		}
+
+		public override void KoniecEdycji()
+		{
+			Rekord.PoprawNumeracjePozycji(Kontekst.Baza);
+			base.KoniecEdycji();
+		}
 	}
 
 	class FakturaEdytorBase : Edytor<Faktura>

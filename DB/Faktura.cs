@@ -128,6 +128,22 @@ namespace ProFak.DB
 			RazemBrutto = pozycje.Sum(pozycja => pozycja.WartoscBrutto);
 		}
 
+		public void PoprawNumeracjePozycji(Baza baza)
+		{
+			if (Rodzaj == RodzajFaktury.KorektaZakupu || Rodzaj == RodzajFaktury.KorektaSprzedaży) return;
+			var pozycje = baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == Id && !pozycja.CzyPrzedKorekta).OrderBy(pozycja => pozycja.LP).ToList();
+			var lp = 1;
+			foreach (var pozycja in pozycje)
+			{
+				if (pozycja.LP != lp)
+				{
+					pozycja.LP = lp;
+					baza.Zapisz(pozycja);
+				}
+				lp++;
+			}
+		}
+
 		internal IFormattable Podstawienie(string pole)
 		{
 			if (String.Equals(pole, "dzien", StringComparison.CurrentCultureIgnoreCase)) return DataWystawienia.Day;
