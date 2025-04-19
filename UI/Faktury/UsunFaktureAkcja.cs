@@ -38,6 +38,13 @@ namespace ProFak.UI
 				}
 				if (cofniety) kontekst.Baza.Zapisz(stanNumeratora);
 
+				if (faktura.FakturaKorygowanaRef.IsNotNull)
+				{
+					var fakturaKorygowana = kontekst.Baza.Znajdz(faktura.FakturaKorygowanaRef);
+					fakturaKorygowana.FakturaKorygujacaRef = default;
+					kontekst.Baza.Zapisz(fakturaKorygowana);
+				}
+
 				faktura.DeklaracjaVatRef = default;
 				faktura.ZaliczkaPitRef = default;
 				faktura.Rodzaj = RodzajFaktury.Usunięta;
