@@ -65,7 +65,7 @@ namespace ProFak.UI
 			}
 			else if (e.KeyCode == Keys.Enter)
 			{
-				Spis.Focus();
+				if (Spis.Rekordy.Any()) Spis.Focus();
 				e.Handled = true;
 			}
 		}
