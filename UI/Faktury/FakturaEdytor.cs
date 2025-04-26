@@ -349,6 +349,11 @@ namespace ProFak.UI
 
 		private void buttonKSeFGeneruj_Click(object sender, EventArgs e)
 		{
+			if (String.IsNullOrEmpty(Rekord.Numer))
+			{
+				MessageBox.Show("Przed wygenerowaniem postaci ustrukturyzowanej należy zapisać fakturę w celu nadania jej numeru.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
 			if (!String.IsNullOrWhiteSpace(Rekord.XMLKSeF) && MessageBox.Show("Faktura ma już wygenerowaną postać ustrukturyzowaną. Czy na pewno chcesz ją wygenerować ponownie?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
 			var xml = IO.KSEF.Generator.ZbudujXML(Kontekst.Baza, Rekord);
 			Rekord.XMLKSeF = xml;
