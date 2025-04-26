@@ -14,7 +14,7 @@ namespace ProFak.UI
 	{
 		public FakturaUsunietaSpis()
 		{
-			DodajKolumne(nameof(Faktura.Numer), "Numer");
+			DodajKolumne(nameof(Faktura.NumerPrzedUsunieciem), "Numer");
 			DodajKolumne(nameof(Faktura.RodzajFmt), "Rodzaj", szerokosc: 0);
 			DodajKolumneData(nameof(Faktura.DataWystawienia), "Data wystawienia");
 			DodajKolumneData(nameof(Faktura.DataSprzedazy), "Data sprzedaży");

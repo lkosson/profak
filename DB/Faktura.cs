@@ -93,6 +93,7 @@ namespace ProFak.DB
 
 		public string RodzajFmt => Format(Rodzaj);
 		public string NumerPowiazanej => FakturaKorygowana?.Numer ?? FakturaKorygujaca?.Numer ?? "";
+		public string NumerPrzedUsunieciem => Numer?.Replace(" (USUNIĘTA)", "");
 
 		public string WalutaFmt => Waluta?.Skrot;
 		public PrzeznaczenieNumeratora? Numerator => Rodzaj switch
