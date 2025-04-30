@@ -45,6 +45,7 @@ namespace ProFak.Wydruki
 					if (pozycja.StawkaRyczaltu == 8.5m) dto.Przychod85 += pozycja.WartoscNetto;
 					if (pozycja.StawkaRyczaltu == 5.5m) dto.Przychod55 += pozycja.WartoscNetto;
 					if (pozycja.StawkaRyczaltu == 3) dto.Przychod3 += pozycja.WartoscNetto;
+					dto.PrzychodRazem += pozycja.WartoscNetto;
 				}
 
 				dane.Add(dto);
