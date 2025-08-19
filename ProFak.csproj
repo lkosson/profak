@@ -10,6 +10,10 @@
     <PublishDir>bin\Publish</PublishDir>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);KSEF_1</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="Wydruki\EwidencjaPrzychodow.rdlc" />
     <None Remove="Wydruki\Faktura.rdlc" />
@@ -27,15 +31,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="KSeF2.0" Version="1.0.0" />
+    <PackageReference Include="KSeF2.0" Version="1.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.1" />
     <PackageReference Include="ReportViewerCore.WinForms" Version="15.1.25" />
-    <PackageReference Include="ZXing.Net" Version="0.16.9" />
-    <PackageReference Include="ZXing.Net.Bindings.Windows.Compatibility" Version="0.16.12" />
   </ItemGroup>
 
   <ItemGroup>

@@ -14,6 +14,7 @@ using KSeF.Client.Core.Models.Invoices;
 using KSeF.Client.Core.Models.Sessions;
 using KSeFClient;
 using KSeFClient.Core.Interfaces;
+using KSeFClient.DI;
 using KSeFClient.Http;
 using ProFak.DB;
 using ProFak.IO.KSEF;
@@ -26,19 +27,22 @@ class API : IDisposable
 	private readonly IRestClient restClient;
 	private readonly IKSeFClient ksefClient;
 	private readonly ICryptographyService cryptographyService;
+	private readonly IVerificationLinkService verificationLinkService;
 	private string? referenceNumber;
 	private string accessToken;
 	private static EncryptionData? encryptionData;
 
 	public API(SrodowiskoKSeF srodowisko)
 	{
-		httpClient = new HttpClient();
-		httpClient.BaseAddress = new Uri(srodowisko == SrodowiskoKSeF.Prod ? "https://ksef.mf.gov.pl"
+		var baseUrl = srodowisko == SrodowiskoKSeF.Prod ? "https://ksef.mf.gov.pl"
 			: srodowisko == SrodowiskoKSeF.Demo ? "https://ksef-demo.mf.gov.pl"
-			: "https://ksef-test.mf.gov.pl");
+			: "https://ksef-test.mf.gov.pl";
+		httpClient = new HttpClient();
+		httpClient.BaseAddress = new Uri(baseUrl);
 		restClient = new RestClient(httpClient);
 		ksefClient = new KSeFClient.Http.KSeFClient(restClient);
-		cryptographyService = new CryptographyService(ksefClient, restClient);
+		cryptographyService = new CryptographyService(ksefClient);
+		verificationLinkService = new VerificationLinkService(new KSeFClientOptions { BaseUrl = baseUrl });
 	}
 
 	public async Task AuthenticateAsync(string nip, string accessToken)
@@ -65,20 +69,20 @@ class API : IDisposable
 		var invoices = new List<InvoiceHeader>();
 		while (true)
 		{
-			var body = new QueryInvoiceRequest
+			var body = new InvoiceMetadataQueryRequest
 			{
-				DateRange = new DateRange { DateType = przyrostowo ? DateType.Delivery : DateType.Issue, From = dateFrom, To = dateTo },
+				DateRange = new DateRange { DateType = przyrostowo ? DateType.Acquisition : DateType.Issue, From = dateFrom, To = dateTo },
 				SubjectType = sprzedaz ? SubjectType.Subject1 : SubjectType.Subject2
 			};
 
-			var pagedInvoiceResponse = await ksefClient.QueryInvoicesAsync(body, accessToken, pageOffset, pageSize, CancellationToken.None);
+			var pagedInvoiceResponse = await ksefClient.QueryInvoiceMetadataAsync(body, accessToken, pageOffset, pageSize, CancellationToken.None);
 			foreach (var invoice in pagedInvoiceResponse.Invoices)
 			{
 				var invoiceHeader = new InvoiceHeader();
 				invoiceHeader.KsefReferenceNumber = invoice.KsefNumber;
 				invoiceHeader.ReferenceNumber = invoice.InvoiceNumber;
-				invoiceHeader.InvoicingDate = invoice.InvoiceDate;
-				invoiceHeader.AcquisitionTimestamp = invoice.AcquisitionDate;
+				invoiceHeader.InvoicingDate = invoice.InvoicingDate.LocalDateTime;
+				invoiceHeader.AcquisitionTimestamp = invoice.AcquisitionDate.LocalDateTime;
 				invoiceHeader.IssuedByNIP = invoice.Seller.Identifier;
 				invoiceHeader.IssuedByName = invoice.Seller.Name;
 				invoiceHeader.IssuedToNIP = invoice.Buyer.Identifier;
@@ -101,7 +105,7 @@ class API : IDisposable
 		return await ksefClient.GetInvoiceAsync(ksefReferenceNumber, accessToken, CancellationToken.None);
 	}
 
-	public async Task<(string ksefReferenceNumber, DateTime acquisitionTimestamp, string urlKSeF)> SendInvoiceAsync(string invoiceXml, CancellationToken cancellationToken)
+	public async Task<(string ksefReferenceNumber, DateTime acquisitionTimestamp, string urlKSeF)> SendInvoiceAsync(string invoiceXml, string nip, DateTime issueDate, CancellationToken cancellationToken)
 	{
 		var invoice = Encoding.UTF8.GetBytes(invoiceXml);
 		var encryptedInvoice = cryptographyService.EncryptBytesWithAES256(invoice, encryptionData!.CipherKey, encryptionData!.CipherIv);
@@ -111,16 +115,17 @@ class API : IDisposable
 
 		var sendOnlineInvoiceRequest = SendInvoiceOnlineSessionRequestBuilder
 			.Create()
-			.WithDocumentHash(invoiceMetadata.HashSHA, invoiceMetadata.FileSize)
-			.WithEncryptedDocumentHash(
-			   encryptedInvoiceMetadata.HashSHA, encryptedInvoiceMetadata.FileSize)
+			.WithInvoiceHash(invoiceMetadata.HashSHA, invoiceMetadata.FileSize)
+			.WithEncryptedDocumentHash(encryptedInvoiceMetadata.HashSHA, encryptedInvoiceMetadata.FileSize)
 			.WithEncryptedDocumentContent(Convert.ToBase64String(encryptedInvoice))
 			.Build();
 
 		var sendInvoiceResponse = await ksefClient.SendOnlineSessionInvoiceAsync(sendOnlineInvoiceRequest, referenceNumber, accessToken, cancellationToken)
 			.ConfigureAwait(false);
 
-		return (sendInvoiceResponse.ReferenceNumber, DateTime.Now, default);
+		var url = verificationLinkService.BuildInvoiceVerificationUrl(nip, issueDate, invoiceXml);
+
+		return (sendInvoiceResponse.ReferenceNumber, DateTime.Now, url);
 	}
 
 	public async Task Terminate()

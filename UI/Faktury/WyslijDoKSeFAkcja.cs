@@ -39,14 +39,18 @@ namespace ProFak.UI
 
 				if (!doWyslania.Any()) return;
 
+#if KSEF_1
 				using var api = new IO.KSEF.API(podmiot.SrodowiskoKSeF);
+#else
+				using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
+#endif
 				var cts = new CancellationTokenSource();
 				await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF);
 				foreach (var faktura in doWyslania)
 				{
 					faktura.XMLKSeF = IO.KSEF.Generator.ZbudujXML(kontekst.Baza, faktura);
 					kontekst.Baza.Zapisz(faktura);
-					(faktura.NumerKSeF, faktura.DataKSeF, faktura.URLKSeF) = await api.SendInvoiceAsync(faktura.XMLKSeF, cts.Token);
+					(faktura.NumerKSeF, faktura.DataKSeF, faktura.URLKSeF) = await api.SendInvoiceAsync(faktura.XMLKSeF, faktura.NIPNabywcy, faktura.DataWystawienia, cts.Token);
 					kontekst.Baza.Zapisz(faktura);
 				}
 				await api.Terminate();

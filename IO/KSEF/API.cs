@@ -107,8 +107,10 @@ class API : IDisposable
 		await Task.Delay(1000); // Inaczej kolejne wywołanie wywala się z błędem
 	}
 
-	private async Task<IReadOnlyCollection<InvoiceHeader>> GetInvoicesAsync(string type, string subject, DateTime dateFrom, DateTime dateTo, int pageSize, int pageOffset)
+	private async Task<IReadOnlyCollection<InvoiceHeader>> GetInvoicesAsync(bool przyrostowo, bool sprzedaz, DateTime dateFrom, DateTime dateTo, int pageSize, int pageOffset)
 	{
+		var type = przyrostowo ? "incremental" : "range";
+		var subject = sprzedaz ? "subject1" : "subject2";
 		var invoices = new List<InvoiceHeader>();
 		JsonContent invoiceSyncContent;
 		if (type == "range") invoiceSyncContent = JsonContent.Create(new { queryCriteria = new { type, subjectType = subject, invoicingDateFrom = dateFrom.ToString("s"), invoicingDateTo = dateTo.ToString("s") } });
@@ -140,14 +142,14 @@ class API : IDisposable
 		return invoices;
 	}
 
-	public async Task<IReadOnlyCollection<InvoiceHeader>> GetInvoicesAsync(string type, string subject, DateTime dateFrom, DateTime dateTo)
+	public async Task<IReadOnlyCollection<InvoiceHeader>> GetInvoicesAsync(bool przyrostowo, bool sprzedaz, DateTime dateFrom, DateTime dateTo)
 	{
 		var pageSize = 100;
 		var pageOffset = 0;
 		var invoices = new List<InvoiceHeader>();
 		while (true)
 		{
-			var page = await GetInvoicesAsync(type, subject, dateFrom, dateTo, pageSize, pageOffset);
+			var page = await GetInvoicesAsync(przyrostowo, sprzedaz, dateFrom, dateTo, pageSize, pageOffset);
 			invoices.AddRange(page);
 			pageOffset += page.Count;
 			if (page.Count < pageSize) break;
@@ -198,7 +200,7 @@ class API : IDisposable
 		else throw new ApplicationException(processingDescription);
 	}
 
-	public async Task<(string ksefReferenceNumber, DateTime acquisitionTimestamp, string urlKSeF)> SendInvoiceAsync(string invoiceXml, CancellationToken cancellationToken)
+	public async Task<(string ksefReferenceNumber, DateTime acquisitionTimestamp, string urlKSeF)> SendInvoiceAsync(string invoiceXml, string nip, DateTime issueDate, CancellationToken cancellationToken)
 	{
 		(var elementReferenceNumber, var invoiceHash) = await SendInvoiceAsync(invoiceXml);
 		while (!cancellationToken.IsCancellationRequested)
