@@ -28,7 +28,6 @@ class Generator
 			.FirstOrDefault();
 		var ksefFaktura = Zbuduj(dbFaktura);
 		var xo = new XmlAttributeOverrides();
-		xo.Add(typeof(FakturaFa), "P_15ZK", new XmlAttributes() { XmlIgnore = true });
 		var xs = new XmlSerializer(typeof(KSEFFaktura), xo);
 		var xml = new StringBuilder();
 		using var xw = XmlWriter.Create(xml, new XmlWriterSettings() { OmitXmlDeclaration = true, Indent = true });
@@ -39,6 +38,7 @@ class Generator
 
 	public static DBFaktura ZbudujDB(Baza baza, string xml)
 	{
+		if (xml.Contains("kodSystemowy=\"FA (2)\"") && xml.Contains("<WariantFormularza>2</WariantFormularza>")) return FA_2.Generator.ZbudujDB(baza, xml);
 		var xo = new XmlAttributeOverrides();
 		var xs = new XmlSerializer(typeof(KSEFFaktura), xo);
 		using var xr = XmlReader.Create(new StringReader(xml), new XmlReaderSettings() { });

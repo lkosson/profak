@@ -26,11 +26,7 @@ namespace ProFak.UI
 
 			var podmiot = kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
 			var xml = File.ReadAllText(dialog.FileName);
-#if KSEF_1
-			var faktura = IO.FA_2.Generator.ZbudujDB(kontekst.Baza, xml);
-#else
 			var faktura = IO.FA_3.Generator.ZbudujDB(kontekst.Baza, xml);
-#endif
 			faktura.DataKSeF = DateTime.Now;
 			kontekst.Baza.Zapisz(faktura);
 			return faktura;

@@ -28,7 +28,6 @@ class Generator
 			.FirstOrDefault();
 		var ksefFaktura = Zbuduj(dbFaktura);
 		var xo = new XmlAttributeOverrides();
-		xo.Add(typeof(FakturaFa), "P_15ZK", new XmlAttributes() { XmlIgnore = true });
 		var xs = new XmlSerializer(typeof(KSEFFaktura), xo);
 		var xml = new StringBuilder();
 		using var xw = XmlWriter.Create(xml, new XmlWriterSettings() { OmitXmlDeclaration = true, Indent = true });

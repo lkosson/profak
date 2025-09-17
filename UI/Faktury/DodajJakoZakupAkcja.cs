@@ -34,11 +34,7 @@ namespace ProFak.UI
 				xml = await api.GetInvoiceAsync(naglowek.NumerKSeF);
 				await api.Terminate();
 			});
-#if KSEF_1
-			var faktura = IO.FA_2.Generator.ZbudujDB(kontekst.Baza, xml);
-#else
 			var faktura = IO.FA_3.Generator.ZbudujDB(kontekst.Baza, xml);
-#endif
 			faktura.NumerKSeF = naglowek.NumerKSeF;
 			faktura.DataKSeF = naglowek.DataKSeF;
 			kontekst.Baza.Zapisz(faktura);
