@@ -113,7 +113,11 @@ namespace ProFak.UI
 					await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF);
 					var naglowki = await api.GetInvoicesAsync(przyrostowo, sprzedaz, odDaty, DateTime.Now);
 					await api.Terminate();
+#if KSEF_1
 					var rekordy = naglowki.Select(IO.KSEF.Generator.Zbuduj).ToList();
+#else
+					var rekordy = naglowki.Select(IO.KSEF2.Generator.Zbuduj).ToList();
+#endif
 					await ThreadSwitcher.ResumeForegroundAsync(this);
 					foreach (var rekord in rekordy) if (istniejace.Contains(rekord.NumerKSeF)) rekord.Id = 1;
 					Rekordy = rekordy;

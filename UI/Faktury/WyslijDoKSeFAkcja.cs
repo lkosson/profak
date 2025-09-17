@@ -48,7 +48,11 @@ namespace ProFak.UI
 				await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF);
 				foreach (var faktura in doWyslania)
 				{
-					faktura.XMLKSeF = IO.KSEF.Generator.ZbudujXML(kontekst.Baza, faktura);
+#if KSEF_1
+					faktura.XMLKSeF = IO.FA_2.Generator.ZbudujXML(kontekst.Baza, faktura);
+#else
+					faktura.XMLKSeF = IO.FA_3.Generator.ZbudujXML(kontekst.Baza, faktura);
+#endif
 					kontekst.Baza.Zapisz(faktura);
 					(faktura.NumerKSeF, faktura.DataKSeF, faktura.URLKSeF) = await api.SendInvoiceAsync(faktura.XMLKSeF, faktura.NIPNabywcy, faktura.DataWystawienia, cts.Token);
 					kontekst.Baza.Zapisz(faktura);
