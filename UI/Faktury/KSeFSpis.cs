@@ -105,7 +105,7 @@ namespace ProFak.UI
 					var istniejace = Kontekst.Baza.Faktury.Where(e => !String.IsNullOrEmpty(e.NumerKSeF)).Select(e => e.NumerKSeF).ToHashSet();
 #if KSEF_1
 					using var api = new IO.KSEF.API(podmiot.SrodowiskoKSeF);
-#else
+#elif KSEF_2
 					using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
 #endif
 					var cts = new CancellationTokenSource();
@@ -113,11 +113,7 @@ namespace ProFak.UI
 					await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF);
 					var naglowki = await api.GetInvoicesAsync(przyrostowo, sprzedaz, odDaty, DateTime.Now);
 					await api.Terminate();
-#if KSEF_1
-					var rekordy = naglowki.Select(IO.KSEF.Generator.Zbuduj).ToList();
-#else
-					var rekordy = naglowki.Select(IO.KSEF2.Generator.Zbuduj).ToList();
-#endif
+					var rekordy = naglowki.Select(api.WczytajNaglowek).ToList();
 					await ThreadSwitcher.ResumeForegroundAsync(this);
 					foreach (var rekord in rekordy) if (istniejace.Contains(rekord.NumerKSeF)) rekord.Id = 1;
 					Rekordy = rekordy;
