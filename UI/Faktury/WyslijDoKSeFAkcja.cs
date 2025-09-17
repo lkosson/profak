@@ -41,16 +41,16 @@ namespace ProFak.UI
 
 #if KSEF_1
 				using var api = new IO.KSEF.API(podmiot.SrodowiskoKSeF);
-#else
+#elif KSEF_2
 				using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
 #endif
 				var cts = new CancellationTokenSource();
 				await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF);
 				foreach (var faktura in doWyslania)
 				{
-#if KSEF_1
+#if FA_2
 					faktura.XMLKSeF = IO.FA_2.Generator.ZbudujXML(kontekst.Baza, faktura);
-#else
+#elif FA_3
 					faktura.XMLKSeF = IO.FA_3.Generator.ZbudujXML(kontekst.Baza, faktura);
 #endif
 					kontekst.Baza.Zapisz(faktura);
