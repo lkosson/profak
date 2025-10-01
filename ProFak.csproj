@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <DefineConstants>$(DefineConstants);KSEF_1;FA_2</DefineConstants>
+    <DefineConstants>$(DefineConstants);KSEF_2;FA_2</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="KSeF2.0" Version="1.0.1" />
+    <PackageReference Include="KSeF2.0" Version="1.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

@@ -58,7 +58,7 @@ namespace ProFak.UI
 		{
 			this.sprzedaz = sprzedaz;
 			if (parametry == null) return;
-			odDaty = new DateTime(2022, 1, 1);
+			odDaty = DateTime.Now.Date.AddMonths(-12);
 			foreach (var parametr in parametry)
 			{
 				if (parametr == "Przyrostowo") przyrostowo = true;
