@@ -70,12 +70,14 @@ namespace ProFak.UI
 			comboBoxFormaOpodatkowania = new System.Windows.Forms.ComboBox();
 			label15 = new System.Windows.Forms.Label();
 			textBoxTokenKSeF = new System.Windows.Forms.TextBox();
+			comboBoxSrodowiskoKSeF = new System.Windows.Forms.ComboBox();
 			textBoxNazwa = new System.Windows.Forms.TextBox();
 			label1 = new System.Windows.Forms.Label();
 			tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			backgroundWorkerSprawdzMF = new System.ComponentModel.BackgroundWorker();
 			backgroundWorkerPobierzGUS = new System.ComponentModel.BackgroundWorker();
-			comboBoxSrodowiskoKSeF = new System.Windows.Forms.ComboBox();
+			buttonKSeFAuth = new ButtonDPI();
+			((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
 			tabControl.SuspendLayout();
 			tabPage1.SuspendLayout();
 			tableLayoutPanel1.SuspendLayout();
@@ -396,10 +398,11 @@ namespace ProFak.UI
 			// 
 			// tableLayoutPanel3
 			// 
-			tableLayoutPanel3.ColumnCount = 4;
+			tableLayoutPanel3.ColumnCount = 5;
 			tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			tableLayoutPanel3.Controls.Add(label10, 0, 0);
 			tableLayoutPanel3.Controls.Add(label11, 0, 1);
@@ -409,12 +412,13 @@ namespace ProFak.UI
 			tableLayoutPanel3.Controls.Add(textBoxOsobaFizycznaImie, 1, 1);
 			tableLayoutPanel3.Controls.Add(textBoxOsobaFizycznaNazwisko, 1, 2);
 			tableLayoutPanel3.Controls.Add(dateTimePickerOsobaFizycznaDataUrodzenia, 1, 3);
-			tableLayoutPanel3.Controls.Add(buttonUrzadSkarbowy, 3, 0);
+			tableLayoutPanel3.Controls.Add(buttonUrzadSkarbowy, 4, 0);
 			tableLayoutPanel3.Controls.Add(label14, 0, 4);
 			tableLayoutPanel3.Controls.Add(comboBoxFormaOpodatkowania, 1, 4);
 			tableLayoutPanel3.Controls.Add(label15, 0, 5);
 			tableLayoutPanel3.Controls.Add(textBoxTokenKSeF, 2, 5);
 			tableLayoutPanel3.Controls.Add(comboBoxSrodowiskoKSeF, 1, 5);
+			tableLayoutPanel3.Controls.Add(buttonKSeFAuth, 3, 5);
 			tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
 			tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
 			tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -472,17 +476,17 @@ namespace ProFak.UI
 			// comboBoxKodUrzedu
 			// 
 			comboBoxKodUrzedu.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			tableLayoutPanel3.SetColumnSpan(comboBoxKodUrzedu, 2);
+			tableLayoutPanel3.SetColumnSpan(comboBoxKodUrzedu, 3);
 			comboBoxKodUrzedu.FormattingEnabled = true;
 			comboBoxKodUrzedu.Location = new System.Drawing.Point(143, 4);
 			comboBoxKodUrzedu.Name = "comboBoxKodUrzedu";
 			comboBoxKodUrzedu.Size = new System.Drawing.Size(602, 23);
-			comboBoxKodUrzedu.TabIndex = 1;
+			comboBoxKodUrzedu.TabIndex = 0;
 			// 
 			// textBoxOsobaFizycznaImie
 			// 
 			textBoxOsobaFizycznaImie.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			tableLayoutPanel3.SetColumnSpan(textBoxOsobaFizycznaImie, 3);
+			tableLayoutPanel3.SetColumnSpan(textBoxOsobaFizycznaImie, 4);
 			textBoxOsobaFizycznaImie.Location = new System.Drawing.Point(143, 34);
 			textBoxOsobaFizycznaImie.Name = "textBoxOsobaFizycznaImie";
 			textBoxOsobaFizycznaImie.Size = new System.Drawing.Size(634, 23);
@@ -491,11 +495,11 @@ namespace ProFak.UI
 			// textBoxOsobaFizycznaNazwisko
 			// 
 			textBoxOsobaFizycznaNazwisko.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			tableLayoutPanel3.SetColumnSpan(textBoxOsobaFizycznaNazwisko, 3);
+			tableLayoutPanel3.SetColumnSpan(textBoxOsobaFizycznaNazwisko, 4);
 			textBoxOsobaFizycznaNazwisko.Location = new System.Drawing.Point(143, 63);
 			textBoxOsobaFizycznaNazwisko.Name = "textBoxOsobaFizycznaNazwisko";
 			textBoxOsobaFizycznaNazwisko.Size = new System.Drawing.Size(634, 23);
-			textBoxOsobaFizycznaNazwisko.TabIndex = 2;
+			textBoxOsobaFizycznaNazwisko.TabIndex = 3;
 			// 
 			// dateTimePickerOsobaFizycznaDataUrodzenia
 			// 
@@ -504,7 +508,7 @@ namespace ProFak.UI
 			dateTimePickerOsobaFizycznaDataUrodzenia.Name = "dateTimePickerOsobaFizycznaDataUrodzenia";
 			dateTimePickerOsobaFizycznaDataUrodzenia.ShowCheckBox = true;
 			dateTimePickerOsobaFizycznaDataUrodzenia.Size = new System.Drawing.Size(200, 23);
-			dateTimePickerOsobaFizycznaDataUrodzenia.TabIndex = 3;
+			dateTimePickerOsobaFizycznaDataUrodzenia.TabIndex = 4;
 			// 
 			// buttonUrzadSkarbowy
 			// 
@@ -513,7 +517,7 @@ namespace ProFak.UI
 			buttonUrzadSkarbowy.Location = new System.Drawing.Point(751, 3);
 			buttonUrzadSkarbowy.Name = "buttonUrzadSkarbowy";
 			buttonUrzadSkarbowy.Size = new System.Drawing.Size(26, 25);
-			buttonUrzadSkarbowy.TabIndex = 12;
+			buttonUrzadSkarbowy.TabIndex = 1;
 			buttonUrzadSkarbowy.Text = "...";
 			buttonUrzadSkarbowy.UseVisualStyleBackColor = true;
 			// 
@@ -530,7 +534,7 @@ namespace ProFak.UI
 			// comboBoxFormaOpodatkowania
 			// 
 			comboBoxFormaOpodatkowania.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			tableLayoutPanel3.SetColumnSpan(comboBoxFormaOpodatkowania, 3);
+			tableLayoutPanel3.SetColumnSpan(comboBoxFormaOpodatkowania, 4);
 			comboBoxFormaOpodatkowania.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			comboBoxFormaOpodatkowania.FormattingEnabled = true;
 			comboBoxFormaOpodatkowania.Location = new System.Drawing.Point(143, 121);
@@ -542,7 +546,7 @@ namespace ProFak.UI
 			// 
 			label15.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			label15.AutoSize = true;
-			label15.Location = new System.Drawing.Point(71, 154);
+			label15.Location = new System.Drawing.Point(71, 155);
 			label15.Name = "label15";
 			label15.Size = new System.Drawing.Size(66, 15);
 			label15.TabIndex = 0;
@@ -551,11 +555,19 @@ namespace ProFak.UI
 			// textBoxTokenKSeF
 			// 
 			textBoxTokenKSeF.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			tableLayoutPanel3.SetColumnSpan(textBoxTokenKSeF, 2);
-			textBoxTokenKSeF.Location = new System.Drawing.Point(220, 150);
+			textBoxTokenKSeF.Location = new System.Drawing.Point(220, 151);
 			textBoxTokenKSeF.Name = "textBoxTokenKSeF";
-			textBoxTokenKSeF.Size = new System.Drawing.Size(557, 23);
-			textBoxTokenKSeF.TabIndex = 2;
+			textBoxTokenKSeF.Size = new System.Drawing.Size(456, 23);
+			textBoxTokenKSeF.TabIndex = 7;
+			// 
+			// comboBoxSrodowiskoKSeF
+			// 
+			comboBoxSrodowiskoKSeF.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			comboBoxSrodowiskoKSeF.FormattingEnabled = true;
+			comboBoxSrodowiskoKSeF.Location = new System.Drawing.Point(143, 150);
+			comboBoxSrodowiskoKSeF.Name = "comboBoxSrodowiskoKSeF";
+			comboBoxSrodowiskoKSeF.Size = new System.Drawing.Size(71, 23);
+			comboBoxSrodowiskoKSeF.TabIndex = 6;
 			// 
 			// textBoxNazwa
 			// 
@@ -604,14 +616,18 @@ namespace ProFak.UI
 			backgroundWorkerPobierzGUS.DoWork += backgroundWorkerPobierzGUS_DoWork;
 			backgroundWorkerPobierzGUS.RunWorkerCompleted += backgroundWorkerPobierzGUS_RunWorkerCompleted;
 			// 
-			// comboBoxSrodowiskoKSeF
+			// buttonKSeFAuth
 			// 
-			comboBoxSrodowiskoKSeF.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			comboBoxSrodowiskoKSeF.FormattingEnabled = true;
-			comboBoxSrodowiskoKSeF.Location = new System.Drawing.Point(143, 150);
-			comboBoxSrodowiskoKSeF.Name = "comboBoxSrodowiskoKSeF";
-			comboBoxSrodowiskoKSeF.Size = new System.Drawing.Size(71, 23);
-			comboBoxSrodowiskoKSeF.TabIndex = 13;
+			buttonKSeFAuth.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			buttonKSeFAuth.AutoSize = true;
+			tableLayoutPanel3.SetColumnSpan(buttonKSeFAuth, 2);
+			buttonKSeFAuth.Location = new System.Drawing.Point(682, 150);
+			buttonKSeFAuth.Name = "buttonKSeFAuth";
+			buttonKSeFAuth.Size = new System.Drawing.Size(95, 25);
+			buttonKSeFAuth.TabIndex = 8;
+			buttonKSeFAuth.Text = "Uzyskaj dostęp";
+			buttonKSeFAuth.UseVisualStyleBackColor = true;
+			buttonKSeFAuth.Click += buttonKSeFAuth_Click;
 			// 
 			// KontrahentEdytor
 			// 
@@ -621,6 +637,7 @@ namespace ProFak.UI
 			MinimumSize = new System.Drawing.Size(800, 425);
 			Name = "KontrahentEdytor";
 			Size = new System.Drawing.Size(800, 425);
+			((System.ComponentModel.ISupportInitialize)errorProvider).EndInit();
 			tabControl.ResumeLayout(false);
 			tabPage1.ResumeLayout(false);
 			tableLayoutPanel1.ResumeLayout(false);
@@ -672,7 +689,6 @@ namespace ProFak.UI
 		private System.Windows.Forms.ComboBox comboBoxKodUrzedu;
 		private System.Windows.Forms.TextBox textBoxOsobaFizycznaImie;
 		private System.Windows.Forms.TextBox textBoxOsobaFizycznaNazwisko;
-		private System.Windows.Forms.DateTimePicker dateTimePickerOsobaFizycznaDataUrodzenia;
 		private ButtonDPI buttonUrzadSkarbowy;
 		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.ComboBox comboBoxFormaOpodatkowania;
@@ -683,5 +699,7 @@ namespace ProFak.UI
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.TextBox textBoxTokenKSeF;
 		private System.Windows.Forms.ComboBox comboBoxSrodowiskoKSeF;
+		private ButtonDPI buttonKSeFAuth;
+		private System.Windows.Forms.DateTimePickerFix dateTimePickerOsobaFizycznaDataUrodzenia;
 	}
 }

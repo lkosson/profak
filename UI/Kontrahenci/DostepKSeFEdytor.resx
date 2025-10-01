@@ -117,16 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="errorProvider.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>140, 17</value>
-  </metadata>
-  <metadata name="backgroundWorkerSprawdzMF.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>231, 17</value>
-  </metadata>
-  <metadata name="backgroundWorkerPobierzGUS.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>448, 17</value>
-  </metadata>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Aby ProFak mógł korzystać w Twoim imieniu z KSeF, musisz nadać mu odpowiednie uprawnienia. Jeśli masz już token dostępowy, zamknij to okno i wprowadź go na poprzednim ekranie, w polu tekstowym obok przycisku, który właśnie kliknąłeś.</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Jeśli NIP się zgadza, kliknij poniższy przycisk, aby pobrać elektroniczny dokument umożliwiający ProFakowi jednorazowy dostęp w Twoim imieniu do KSeF. Zapisz ten plik w wygodnym miejscu, np. na pulpicie. Będzie on potrzebny tylko na czas nadawania dostępu. Potem można go skaskować.</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Gdy już masz podpisany plik, kliknij na poniższy przycisk, aby go wskazać. ProFak użyje go do zalogowania się do KSeF w Twoim imieniu i wygenerowania tokena dostępowego umożliwiającego wystawianie i odbieranie faktur.</value>
+  </data>
 </root>

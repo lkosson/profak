@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ProFak.UI
@@ -127,7 +128,7 @@ namespace ProFak.UI
 				Kontekst, comboBoxKodUrzedu, buttonUrzadSkarbowy,
 				Kontekst.Baza.UrzedySkarbowe.OrderBy(urzad => urzad.Kod).ToList,
 				urzad => urzad.Kod,
-				urzad => { if (Rekord.KodUrzedu == urzad.Kod) return; Rekord.KodUrzedu = urzad.Kod; kontroler.AktualizujKontrolki(); },
+				urzad => { if (urzad == null || Rekord.KodUrzedu == urzad.Kod) return; Rekord.KodUrzedu = urzad.Kod; kontroler.AktualizujKontrolki(); },
 				Spisy.UrzedySkarbowe)
 				.Zainstaluj();
 		}
@@ -199,6 +200,27 @@ namespace ProFak.UI
 			buttonPobierzGUS.Enabled = true;
 			if (e.Error != null) OknoBledu.Pokaz(e.Error);
 			else kontroler.AktualizujKontrolki();
+		}
+
+		private void buttonKSeFAuth_Click(object sender, EventArgs e)
+		{
+			var nip = Rekord.NIP;
+			string token = null;
+			if (Rekord.SrodowiskoKSeF == SrodowiskoKSeF.Test)
+			{
+				OknoPostepu.Uruchom(async delegate
+				{
+					var api = new IO.KSEF2.API(Rekord.SrodowiskoKSeF);
+					var unsignedXml = await api.AuthenticateSignatureBeginAsync(nip);
+					var signedXml = await api.AuthenticateSignatureTestAsync(unsignedXml, nip);
+					await api.AuthenticateSignatureEndAsync(signedXml);
+					token = await api.GenerateToken();
+				});
+			}
+
+			if (token == null) return;
+			Rekord.TokenKSeF = token;
+			kontroler.AktualizujKontrolki();
 		}
 	}
 

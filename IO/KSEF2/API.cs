@@ -1,11 +1,12 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using KSeF.Client;
+using KSeF.Client.Api.Builders.Auth;
+using KSeF.Client.Api.Builders.X509Certificates;
 using KSeF.Client.Core.Interfaces;
 using KSeF.Client.Core.Models.Authorization;
 using KSeF.Client.Core.Models.Invoices;
@@ -24,6 +25,7 @@ class API : IDisposable
 	private readonly IKSeFClient ksefClient;
 	private readonly ICryptographyService cryptographyService;
 	private readonly IVerificationLinkService verificationLinkService;
+	private readonly ISignatureService signatureService;
 	private string? sessionReferenceNumber;
 	private TokenInfo accessToken;
 
@@ -46,11 +48,13 @@ class API : IDisposable
 				opts.CustomHeaders = [];
 			});
 			serviceProvider = sc.BuildServiceProvider();
+			API.srodowisko = srodowisko;
 		}
 
 		ksefClient = serviceProvider.GetRequiredService<IKSeFClient>();
 		cryptographyService = serviceProvider.GetRequiredService<ICryptographyService>();
 		verificationLinkService = serviceProvider.GetRequiredService<IVerificationLinkService>();
+		signatureService = serviceProvider.GetRequiredService<ISignatureService>();
 		accessToken = default!;
 	}
 
@@ -89,12 +93,58 @@ class API : IDisposable
 			AuthorizationPolicy = null
 		};
 
-		var signature = await ksefClient.SubmitKsefTokenAuthRequestAsync(request, CancellationToken.None);
-		await CzekajNaWynikAsync(() => ksefClient.GetAuthStatusAsync(signature.ReferenceNumber, signature.AuthenticationToken.Token),
+		var authOperationInfo = await ksefClient.SubmitKsefTokenAuthRequestAsync(request, CancellationToken.None);
+		await CzekajNaWynikAsync(() => ksefClient.GetAuthStatusAsync(authOperationInfo.ReferenceNumber, authOperationInfo.AuthenticationToken.Token),
 			status => status.Status.Code == 200,
 			TimeSpan.FromSeconds(5));
-		var tokens = await ksefClient.GetAccessTokenAsync(signature.AuthenticationToken.Token);
+		var tokens = await ksefClient.GetAccessTokenAsync(authOperationInfo.AuthenticationToken.Token);
 		accessToken = tokens.AccessToken;
+	}
+
+	public async Task<string> AuthenticateSignatureBeginAsync(string nip)
+	{
+		var challenge = await ksefClient.GetAuthChallengeAsync();
+		var authTokenRequest = AuthTokenRequestBuilder
+			.Create()
+			.WithChallenge(challenge.Challenge)
+			.WithContext(ContextIdentifierType.Nip, nip)
+			.WithIdentifierType(SubjectIdentifierTypeEnum.CertificateSubject)
+			.Build();
+		var xml = AuthTokenRequestSerializer.SerializeToXmlString(authTokenRequest);
+		return xml;
+	}
+
+	public async Task<string> AuthenticateSignatureTestAsync(string unsignedXml, string nip)
+	{
+		var certificate = SelfSignedCertificateForSignatureBuilder
+					.Create()
+					.WithGivenName("ProFak")
+					.WithSurname("Test")
+					.WithSerialNumber("TINPL-" + nip)
+					.WithCommonName("ProFak")
+					.Build();
+		var signedXml = await signatureService.SignAsync(unsignedXml, certificate);
+		return signedXml;
+	}
+
+	public async Task AuthenticateSignatureEndAsync(string signedXml)
+	{
+		var authOperationInfo = await ksefClient.SubmitXadesAuthRequestAsync(signedXml, verifyCertificateChain: false);
+		await CzekajNaWynikAsync(() => ksefClient.GetAuthStatusAsync(authOperationInfo.ReferenceNumber, authOperationInfo.AuthenticationToken.Token),
+			status => status.Status.Code == 200,
+			TimeSpan.FromSeconds(5));
+		var tokens = await ksefClient.GetAccessTokenAsync(authOperationInfo.AuthenticationToken.Token);
+		accessToken = tokens.AccessToken;
+	}
+
+	public async Task<string> GenerateToken()
+	{
+		var request = new KsefTokenRequest { Permissions = [KsefTokenPermissionType.InvoiceRead, KsefTokenPermissionType.InvoiceWrite], Description = "ProFak" };
+		var token = await ksefClient.GenerateKsefTokenAsync(request, accessToken.Token);
+		await CzekajNaWynikAsync(() => ksefClient.GetKsefTokenAsync(token.ReferenceNumber, accessToken.Token),
+			status => status.Status == AuthenticationKsefTokenStatus.Active,
+			TimeSpan.FromSeconds(10));
+		return token.Token;
 	}
 
 	private async Task OpenSessionAsync()
@@ -189,7 +239,7 @@ class API : IDisposable
 		var sendInvoiceResponse = await ksefClient.SendOnlineSessionInvoiceAsync(sendOnlineInvoiceRequest, sessionReferenceNumber, accessToken.Token, cancellationToken)
 			.ConfigureAwait(false);
 
-		var url = verificationLinkService.BuildInvoiceVerificationUrl(nip, issueDate, invoiceXml);
+		var url = verificationLinkService.BuildInvoiceVerificationUrl(nip, issueDate, encryptedInvoiceMetadata.HashSHA);
 
 		return (sendInvoiceResponse.ReferenceNumber, DateTime.Now, url);
 	}
