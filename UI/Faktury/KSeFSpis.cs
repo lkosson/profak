@@ -115,7 +115,13 @@ namespace ProFak.UI
 					await api.Terminate();
 					var rekordy = naglowki.Select(api.WczytajNaglowek).ToList();
 					await ThreadSwitcher.ResumeForegroundAsync(this);
-					foreach (var rekord in rekordy) if (istniejace.Contains(rekord.NumerKSeF)) rekord.Id = 1;
+					var i = 1;
+					foreach (var rekord in rekordy)
+					{
+						if (sprzedaz) rekord.Rodzaj = rekord.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaSprzedaży : RodzajFaktury.Sprzedaż;
+						rekord.Id = istniejace.Contains(rekord.NumerKSeF) ? i : -i;
+						i++;
+					}
 					Rekordy = rekordy;
 				}
 				catch (Exception exc)
@@ -128,7 +134,7 @@ namespace ProFak.UI
 		protected override void UstawStylWiersza(Faktura rekord, string kolumna, DataGridViewCellStyle styl)
 		{
 			base.UstawStylWiersza(rekord, kolumna, styl);
-			if (rekord.Id != 0) styl.ForeColor = Color.FromArgb(20, 170, 30);
+			if (rekord.Id > 0) styl.ForeColor = Color.FromArgb(20, 170, 30);
 		}
 	}
 }

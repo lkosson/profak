@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using KSeF.Client.Api.Builders.X509Certificates;
 using KSeF.Client.Core.Interfaces;
 using KSeF.Client.Core.Models.Authorization;
 using KSeF.Client.Core.Models.Invoices;
+using KSeF.Client.Core.Models.Sessions;
 using KSeF.Client.DI;
 using Microsoft.Extensions.DependencyInjection;
 using ProFak.DB;
@@ -26,7 +28,7 @@ class API : IDisposable
 	private readonly ICryptographyService cryptographyService;
 	private readonly IVerificationLinkService verificationLinkService;
 	private readonly ISignatureService signatureService;
-	private string? sessionReferenceNumber;
+
 	private TokenInfo accessToken;
 
 	public API(SrodowiskoKSeF srodowisko)
@@ -147,10 +149,8 @@ class API : IDisposable
 		return token.Token;
 	}
 
-	private async Task OpenSessionAsync()
+	public async Task<(string sessionReferenceNumber, EncryptionData encryptionData)> OpenSessionAsync()
 	{
-		if (sessionReferenceNumber != null) return;
-
 		var encryptionData = cryptographyService.GetEncryptionData();
 		var openOnlineSessionRequest = OpenOnlineSessionRequestBuilder
 			.Create()
@@ -165,14 +165,12 @@ class API : IDisposable
 		 .Build();
 
 		var openSessionResponse = await ksefClient.OpenOnlineSessionAsync(openOnlineSessionRequest, accessToken.Token, CancellationToken.None);
-		sessionReferenceNumber = openSessionResponse.ReferenceNumber;
+		return (openSessionResponse.ReferenceNumber, encryptionData);
 	}
 
-	private async Task CloseSessionAsync()
+	public async Task CloseSessionAsync(string sessionReferenceNumber)
 	{
-		if (sessionReferenceNumber == null) return;
 		await ksefClient.CloseOnlineSessionAsync(sessionReferenceNumber, accessToken.Token);
-		sessionReferenceNumber = null;
 	}
 
 	public async Task<IReadOnlyCollection<InvoiceHeader>> GetInvoicesAsync(bool przyrostowo, bool sprzedaz, DateTime dateFrom, DateTime dateTo)
@@ -218,12 +216,11 @@ class API : IDisposable
 		return await ksefClient.GetInvoiceAsync(ksefReferenceNumber, accessToken.Token, CancellationToken.None);
 	}
 
-	public async Task<(string ksefReferenceNumber, DateTime acquisitionTimestamp, string urlKSeF)> SendInvoiceAsync(string invoiceXml, string nip, DateTime issueDate, CancellationToken cancellationToken)
+	public async Task<(string ksefReferenceNumber, string verificationLink)> SendInvoiceAsync(string sessionReferenceNumber, EncryptionData encryptionData, string invoiceXml, string nip, DateTime issueDate, CancellationToken cancellationToken)
 	{
 		await OpenSessionAsync();
 
 		var invoice = Encoding.UTF8.GetBytes(invoiceXml);
-		var encryptionData = cryptographyService.GetEncryptionData();
 		var encryptedInvoice = cryptographyService.EncryptBytesWithAES256(invoice, encryptionData.CipherKey, encryptionData.CipherIv);
 
 		var invoiceMetadata = cryptographyService.GetMetaData(invoice);
@@ -241,12 +238,19 @@ class API : IDisposable
 
 		var url = verificationLinkService.BuildInvoiceVerificationUrl(nip, issueDate, encryptedInvoiceMetadata.HashSHA);
 
-		return (sendInvoiceResponse.ReferenceNumber, DateTime.Now, url);
+		return (sendInvoiceResponse.ReferenceNumber, url);
 	}
 
-	public async Task Terminate()
+	public async Task FillSessionInvoiceMetadata(string sessionReferenceNumber, IEnumerable<(Faktura faktura, string invoiceReferenceNumber)> faktury)
 	{
-		await CloseSessionAsync();
+		var sessionInvoices = await ksefClient.GetSessionInvoicesAsync(sessionReferenceNumber, accessToken.Token);
+		foreach (var sessionInvoice in sessionInvoices.Invoices)
+		{
+			var faktura = faktury.Where(e => e.invoiceReferenceNumber == sessionInvoice.ReferenceNumber).Select(e => e.faktura).FirstOrDefault();
+			if (faktura == null) continue;
+			faktura.NumerKSeF = sessionInvoice.KsefNumber;
+			faktura.DataKSeF = sessionInvoice.AcquisitionDate!.Value.ToLocalTime().DateTime;
+		}
 	}
 
 	public Faktura WczytajNaglowek(InvoiceHeader invoiceHeader)
@@ -269,9 +273,13 @@ class API : IDisposable
 		return dbFaktura;
 	}
 
+	public Task Terminate()
+	{
+		return Task.CompletedTask;
+	}
+
 	protected virtual void Dispose(bool disposing)
 	{
-		Terminate().ConfigureAwait(false).GetAwaiter().GetResult();
 	}
 
 	~API()

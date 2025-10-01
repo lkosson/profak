@@ -34,6 +34,12 @@ namespace ProFak.UI
 						if (res == DialogResult.Cancel) return;
 						if (res == DialogResult.No) continue;
 					}
+#if FA_2
+					faktura.XMLKSeF = IO.FA_2.Generator.ZbudujXML(kontekst.Baza, faktura);
+#elif FA_3
+					faktura.XMLKSeF = IO.FA_3.Generator.ZbudujXML(kontekst.Baza, faktura);
+#endif
+					kontekst.Baza.Zapisz(faktura);
 					doWyslania.Add(faktura);
 				}
 
@@ -41,23 +47,34 @@ namespace ProFak.UI
 
 #if KSEF_1
 				using var api = new IO.KSEF.API(podmiot.SrodowiskoKSeF);
-#elif KSEF_2
-				using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
-#endif
 				var cts = new CancellationTokenSource();
 				await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF);
 				foreach (var faktura in doWyslania)
 				{
-#if FA_2
-					faktura.XMLKSeF = IO.FA_2.Generator.ZbudujXML(kontekst.Baza, faktura);
-#elif FA_3
-					faktura.XMLKSeF = IO.FA_3.Generator.ZbudujXML(kontekst.Baza, faktura);
-#endif
-					kontekst.Baza.Zapisz(faktura);
 					(faktura.NumerKSeF, faktura.DataKSeF, faktura.URLKSeF) = await api.SendInvoiceAsync(faktura.XMLKSeF, faktura.NIPNabywcy, faktura.DataWystawienia, cts.Token);
 					kontekst.Baza.Zapisz(faktura);
 				}
 				await api.Terminate();
+#elif KSEF_2
+				using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
+				var cts = new CancellationTokenSource();
+				await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF);
+				var (sessionReferenceNumber, encryptionData) = await api.OpenSessionAsync();
+				var wyslane = new List<(Faktura faktura, string invoiceReferenceNumber)>();
+				foreach (var faktura in doWyslania)
+				{
+					var (invoiceReferenceNumber, verificationLink) = await api.SendInvoiceAsync(sessionReferenceNumber, encryptionData, faktura.XMLKSeF, faktura.NIPNabywcy, faktura.DataWystawienia, cts.Token);
+					wyslane.Add((faktura, invoiceReferenceNumber));
+					faktura.URLKSeF = verificationLink;
+					kontekst.Baza.Zapisz(faktura);
+				}
+				await api.CloseSessionAsync(sessionReferenceNumber);
+				await api.FillSessionInvoiceMetadata(sessionReferenceNumber, wyslane);
+				foreach (var (faktura, _) in wyslane)
+				{
+					kontekst.Baza.Zapisz(faktura);
+				}
+#endif
 			});
 		}
 	}
