@@ -179,8 +179,8 @@ class Generator
 			ksefWiersz.NrWierszaFa = (ulong)dbPozycja.LP;
 			ksefWiersz.UU_ID = dbPozycja.Id.ToString();
 			ksefWiersz.P_7 = dbPozycja.Opis;
-			ksefWiersz.Indeks = dbPozycja.Towar.Id.ToString();
-			ksefWiersz.P_8A = dbPozycja.Towar.JednostkaMiary.Nazwa;
+			ksefWiersz.Indeks = dbPozycja.Towar == null ? ksefWiersz.UU_ID : dbPozycja.Towar.Id.ToString();
+			ksefWiersz.P_8A = dbPozycja.JednostkaMiary?.Nazwa ?? "szt";
 			ksefWiersz.P_8B = Math.Abs(dbPozycja.Ilosc);
 			if (dbPozycja.CzyWedlugCenBrutto)
 			{
