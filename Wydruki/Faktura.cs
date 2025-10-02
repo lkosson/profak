@@ -3,7 +3,11 @@ using Microsoft.Reporting.WinForms;
 using ProFak.DB;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using ZXing;
+using ZXing.Windows.Compatibility;
 
 namespace ProFak.Wydruki
 {
@@ -96,19 +100,19 @@ namespace ProFak.Wydruki
 				fakturaDTO.Uwagi = faktura.UwagiPubliczne;
 				fakturaDTO.KodKSeF = "";
 
-				/*
-				if (!String.IsNullOrEmpty(faktura.NumerKSeF))
+				if (!String.IsNullOrEmpty(faktura.URLKSeF))
 				{
 					var writer = new BarcodeWriter();
 					writer.Options.Margin = 0;
 					writer.Options.NoPadding = true;
+					writer.Options.Width = 500;
+					writer.Options.Height = 500;
 					writer.Format = BarcodeFormat.QR_CODE;
 					var qrKSeF = writer.WriteAsBitmap(faktura.URLKSeF);
 					var ms = new MemoryStream();
 					qrKSeF.Save(ms, ImageFormat.Png);
 					fakturaDTO.KodKSeF = Convert.ToBase64String(ms.ToArray());
 				}
-				*/
 
 				fakturaDTO.OpisPozycji = "";
 

@@ -177,12 +177,12 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>17.9cm</Width>
+                  <Width>17.94357cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>11.36421cm</Height>
+                  <Height>15.57673cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -546,7 +546,7 @@
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>17.78599cm</Width>
+                                    <Width>17.94354cm</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
@@ -881,52 +881,6 @@
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox9">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value>Numer KSeF:</Value>
-                                                    <Style>
-                                                      <FontFamily>Calibri</FontFamily>
-                                                      <FontWeight>Bold</FontWeight>
-                                                    </Style>
-                                                  </TextRun>
-                                                  <TextRun>
-                                                    <Value xml:space="preserve"> </Value>
-                                                    <Style>
-                                                      <FontFamily>Calibri</FontFamily>
-                                                    </Style>
-                                                  </TextRun>
-                                                  <TextRun>
-                                                    <Value>=Fields!NumerKSeF.Value</Value>
-                                                    <Style>
-                                                      <FontFamily>Calibri</FontFamily>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style />
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox9</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Color>LightGrey</Color>
-                                                <Style>None</Style>
-                                              </Border>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                    </TablixCells>
-                                  </TablixRow>
-                                  <TablixRow>
-                                    <Height>0.45cm</Height>
-                                    <TablixCells>
-                                      <TablixCell>
-                                        <CellContents>
                                           <Textbox Name="Textbox8">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
@@ -951,6 +905,72 @@
                                               </Border>
                                             </Style>
                                           </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                    </TablixCells>
+                                  </TablixRow>
+                                  <TablixRow>
+                                    <Height>5.25667cm</Height>
+                                    <TablixCells>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Rectangle Name="Rectangle2">
+                                            <ReportItems>
+                                              <Image Name="Image1">
+                                                <Source>Database</Source>
+                                                <Value>=Fields!KodKSeF.Value</Value>
+                                                <MIMEType>image/png</MIMEType>
+                                                <Sizing>FitProportional</Sizing>
+                                                <Top>0.52917cm</Top>
+                                                <Left>13.49375cm</Left>
+                                                <Height>4cm</Height>
+                                                <Width>4cm</Width>
+                                                <Style>
+                                                  <Border>
+                                                    <Style>None</Style>
+                                                  </Border>
+                                                </Style>
+                                              </Image>
+                                              <Textbox Name="Textbox16">
+                                                <CanGrow>true</CanGrow>
+                                                <KeepTogether>true</KeepTogether>
+                                                <Paragraphs>
+                                                  <Paragraph>
+                                                    <TextRuns>
+                                                      <TextRun>
+                                                        <Value>=Fields!NumerKSeF.Value</Value>
+                                                        <Style>
+                                                          <FontFamily>Calibri</FontFamily>
+                                                        </Style>
+                                                      </TextRun>
+                                                    </TextRuns>
+                                                    <Style>
+                                                      <TextAlign>Center</TextAlign>
+                                                    </Style>
+                                                  </Paragraph>
+                                                </Paragraphs>
+                                                <rd:DefaultName>Textbox9</rd:DefaultName>
+                                                <Top>4.52917cm</Top>
+                                                <Left>13.49375cm</Left>
+                                                <Height>0.45cm</Height>
+                                                <Width>4cm</Width>
+                                                <ZIndex>1</ZIndex>
+                                                <Style>
+                                                  <Border>
+                                                    <Color>LightGrey</Color>
+                                                    <Style>None</Style>
+                                                  </Border>
+                                                </Style>
+                                              </Textbox>
+                                            </ReportItems>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
+                                            </Style>
+                                          </Rectangle>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                     </TablixCells>
@@ -997,20 +1017,20 @@
                                   </TablixMember>
                                   <TablixMember>
                                     <Visibility>
-                                      <Hidden>=Fields!NumerKSeF.Value = ""</Hidden>
+                                      <Hidden>=Fields!Uwagi.Value = ""</Hidden>
                                     </Visibility>
                                   </TablixMember>
                                   <TablixMember>
                                     <Visibility>
-                                      <Hidden>=Fields!Uwagi.Value = ""</Hidden>
+                                      <Hidden>=Fields!KodKSeF.Value = ""</Hidden>
                                     </Visibility>
                                   </TablixMember>
                                 </TablixMembers>
                               </TablixRowHierarchy>
                               <Top>6.72006cm</Top>
                               <Left>0.00003cm</Left>
-                              <Height>4.05cm</Height>
-                              <Width>17.78599cm</Width>
+                              <Height>8.85667cm</Height>
+                              <Width>17.94354cm</Width>
                               <ZIndex>6</ZIndex>
                               <Style>
                                 <Border>
@@ -1052,8 +1072,8 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DSFaktury</DataSetName>
-            <Height>11.36421cm</Height>
-            <Width>17.9cm</Width>
+            <Height>15.57673cm</Height>
+            <Width>17.94357cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1061,10 +1081,10 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>4.4741in</Height>
+        <Height>6.13257in</Height>
         <Style />
       </Body>
-      <Width>17.9cm</Width>
+      <Width>17.94357cm</Width>
       <Page>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>
