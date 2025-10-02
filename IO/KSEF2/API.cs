@@ -246,6 +246,7 @@ class API : IDisposable
 		var sessionInvoices = await ksefClient.GetSessionInvoicesAsync(sessionReferenceNumber, accessToken.Token);
 		foreach (var sessionInvoice in sessionInvoices.Invoices)
 		{
+			if (sessionInvoice.Status.Code >= 400) throw new ApplicationException($"Wystąpił błąd podczas wysyłki: {sessionInvoice.Status.Description} - {String.Join(", ", sessionInvoice.Status.Details)}");
 			var faktura = faktury.Where(e => e.invoiceReferenceNumber == sessionInvoice.ReferenceNumber).Select(e => e.faktura).FirstOrDefault();
 			if (faktura == null) continue;
 			faktura.NumerKSeF = sessionInvoice.KsefNumber;
