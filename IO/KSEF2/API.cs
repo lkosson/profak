@@ -97,7 +97,7 @@ class API : IDisposable
 
 		var authOperationInfo = await ksefClient.SubmitKsefTokenAuthRequestAsync(request, CancellationToken.None);
 		await CzekajNaWynikAsync(() => ksefClient.GetAuthStatusAsync(authOperationInfo.ReferenceNumber, authOperationInfo.AuthenticationToken.Token),
-			status => status.Status.Code == 200,
+			status => status.Status.Code >= 400 ? throw new ApplicationException($"Wystąpił błąd podczas próby uwierzytelnienia: {status.Status.Description} - {String.Join(", ", status.Status.Details)}") : status.Status.Code == 200,
 			TimeSpan.FromSeconds(5));
 		var tokens = await ksefClient.GetAccessTokenAsync(authOperationInfo.AuthenticationToken.Token);
 		accessToken = tokens.AccessToken;
@@ -133,8 +133,8 @@ class API : IDisposable
 	{
 		var authOperationInfo = await ksefClient.SubmitXadesAuthRequestAsync(signedXml, verifyCertificateChain: false);
 		await CzekajNaWynikAsync(() => ksefClient.GetAuthStatusAsync(authOperationInfo.ReferenceNumber, authOperationInfo.AuthenticationToken.Token),
-			status => status.Status.Code == 200,
-			TimeSpan.FromSeconds(5));
+			status => status.Status.Code >= 400 ? throw new ApplicationException($"Wystąpił błąd podczas próby uwierzytelnienia: {status.Status.Description} - {String.Join(", ", status.Status.Details)}") : status.Status.Code == 200,
+			TimeSpan.FromSeconds(10));
 		var tokens = await ksefClient.GetAccessTokenAsync(authOperationInfo.AuthenticationToken.Token);
 		accessToken = tokens.AccessToken;
 	}
@@ -144,7 +144,7 @@ class API : IDisposable
 		var request = new KsefTokenRequest { Permissions = [KsefTokenPermissionType.InvoiceRead, KsefTokenPermissionType.InvoiceWrite], Description = "ProFak" };
 		var token = await ksefClient.GenerateKsefTokenAsync(request, accessToken.Token);
 		await CzekajNaWynikAsync(() => ksefClient.GetKsefTokenAsync(token.ReferenceNumber, accessToken.Token),
-			status => status.Status == AuthenticationKsefTokenStatus.Active,
+			status => status.Status == AuthenticationKsefTokenStatus.Failed ? throw new ApplicationException($"Wystąpił błąd podczas generowania tokena: {String.Join(", ", status.StatusDetails)}") : status.Status == AuthenticationKsefTokenStatus.Active,
 			TimeSpan.FromSeconds(10));
 		return token.Token;
 	}

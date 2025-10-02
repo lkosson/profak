@@ -1,12 +1,10 @@
 ﻿using ProFak.DB;
+using ProFak.UI.Kontrahenci;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ProFak.UI
@@ -216,6 +214,17 @@ namespace ProFak.UI
 					await api.AuthenticateSignatureEndAsync(signedXml);
 					token = await api.GenerateToken();
 				});
+			}
+			else
+			{
+				using var nowyKontekst = new Kontekst(Kontekst);
+				using var edytor = new DostepKSeFEdytor();
+				edytor.SrodowiskoKSeF = Rekord.SrodowiskoKSeF;
+				edytor.NIP = nip;
+				using var okno = new Dialog("Dostęp do KSeF v2", edytor, nowyKontekst);
+				okno.CzyPrzyciskiWidoczne = false;
+				okno.ShowDialog();
+				token = edytor.Token;
 			}
 
 			if (token == null) return;

@@ -120,10 +120,10 @@
   <data name="label1.Text" xml:space="preserve">
     <value>Aby ProFak mógł korzystać w Twoim imieniu z KSeF, musisz nadać mu odpowiednie uprawnienia. Jeśli masz już token dostępowy, zamknij to okno i wprowadź go na poprzednim ekranie, w polu tekstowym obok przycisku, który właśnie kliknąłeś.</value>
   </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>Jeśli NIP się zgadza, kliknij poniższy przycisk, aby pobrać elektroniczny dokument umożliwiający ProFakowi jednorazowy dostęp w Twoim imieniu do KSeF. Zapisz ten plik w wygodnym miejscu, np. na pulpicie. Będzie on potrzebny tylko na czas nadawania dostępu. Potem można go skaskować.</value>
-  </data>
   <data name="label3.Text" xml:space="preserve">
     <value>Gdy już masz podpisany plik, kliknij na poniższy przycisk, aby go wskazać. ProFak użyje go do zalogowania się do KSeF w Twoim imieniu i wygenerowania tokena dostępowego umożliwiającego wystawianie i odbieranie faktur.</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Jeśli NIP się zgadza, kliknij poniższy przycisk, aby pobrać elektroniczny dokument umożliwiający ProFakowi jednorazowy dostęp w Twoim imieniu do KSeF. Zapisz ten plik w wygodnym miejscu, np. na pulpicie. Będzie on potrzebny tylko na czas nadawania dostępu. Potem można go skaskować.</value>
   </data>
 </root>
