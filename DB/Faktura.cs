@@ -293,19 +293,25 @@ namespace ProFak.DB
 			var sposobPlatnosci = baza.Znajdz(SposobPlatnosciRef);
 			if (!Numerator.HasValue) nowaFaktura.Numer = Numer;
 			nowaFaktura.Rodzaj = Rodzaj;
-			nowaFaktura.NIPSprzedawcy = NIPSprzedawcy;
-			nowaFaktura.NazwaSprzedawcy = NazwaSprzedawcy;
-			nowaFaktura.DaneSprzedawcy = DaneSprzedawcy;
-			nowaFaktura.NIPNabywcy = NIPNabywcy;
-			nowaFaktura.NazwaNabywcy = NazwaNabywcy;
-			nowaFaktura.DaneNabywcy = DaneNabywcy;
+			if (nowaFaktura.Rodzaj != RodzajFaktury.Sprzedaż && nowaFaktura.Rodzaj != RodzajFaktury.KorektaSprzedaży && nowaFaktura.Rodzaj != RodzajFaktury.Proforma)
+			{
+				nowaFaktura.NIPSprzedawcy = NIPSprzedawcy;
+				nowaFaktura.NazwaSprzedawcy = NazwaSprzedawcy;
+				nowaFaktura.DaneSprzedawcy = DaneSprzedawcy;
+				nowaFaktura.SprzedawcaRef = SprzedawcaRef;
+			}
+			if (nowaFaktura.Rodzaj != RodzajFaktury.Zakup && nowaFaktura.Rodzaj != RodzajFaktury.KorektaZakupu)
+			{
+				nowaFaktura.NIPNabywcy = NIPNabywcy;
+				nowaFaktura.NazwaNabywcy = NazwaNabywcy;
+				nowaFaktura.DaneNabywcy = DaneNabywcy;
+				nowaFaktura.NabywcaRef = NabywcaRef;
+			}
 			nowaFaktura.RachunekBankowy = RachunekBankowy;
 			nowaFaktura.UwagiPubliczne = UwagiPubliczne;
 			nowaFaktura.UwagiWewnetrzne = UwagiWewnetrzne;
 			nowaFaktura.KursWaluty = KursWaluty;
 			nowaFaktura.OpisSposobuPlatnosci = OpisSposobuPlatnosci;
-			nowaFaktura.SprzedawcaRef = SprzedawcaRef;
-			nowaFaktura.NabywcaRef = NabywcaRef;
 			nowaFaktura.WalutaRef = WalutaRef;
 			nowaFaktura.SposobPlatnosciRef = SposobPlatnosciRef;
 			nowaFaktura.ProcentVatNaliczonego = ProcentVatNaliczonego;
