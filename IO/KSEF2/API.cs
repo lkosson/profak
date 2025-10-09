@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using KSeF.Client;
 using KSeF.Client.Api.Builders.Auth;
 using KSeF.Client.Api.Builders.X509Certificates;
-using KSeF.Client.Core.Interfaces;
+using KSeF.Client.Core.Interfaces.Clients;
+using KSeF.Client.Core.Interfaces.Services;
 using KSeF.Client.Core.Models.Authorization;
 using KSeF.Client.Core.Models.Invoices;
 using KSeF.Client.Core.Models.Sessions;
@@ -49,6 +49,7 @@ class API : IDisposable
 					: "https://ksef-test.mf.gov.pl";
 				opts.CustomHeaders = [];
 			});
+			sc.AddCryptographyClient(options => { options.WarmupOnStart = WarmupMode.Blocking; });
 			serviceProvider = sc.BuildServiceProvider();
 			API.srodowisko = srodowisko;
 		}
@@ -88,7 +89,7 @@ class API : IDisposable
 			Challenge = challenge.Challenge,
 			ContextIdentifier = new AuthContextIdentifier
 			{
-				Type = ContextIdentifierType.Nip,
+				Type = KSeF.Client.Core.Models.Authorization.ContextIdentifierType.Nip,
 				Value = nip
 			},
 			EncryptedToken = encryptedRequest,
@@ -109,14 +110,14 @@ class API : IDisposable
 		var authTokenRequest = AuthTokenRequestBuilder
 			.Create()
 			.WithChallenge(challenge.Challenge)
-			.WithContext(ContextIdentifierType.Nip, nip)
+			.WithContext(KSeF.Client.Core.Models.Authorization.ContextIdentifierType.Nip, nip)
 			.WithIdentifierType(SubjectIdentifierTypeEnum.CertificateSubject)
 			.Build();
 		var xml = AuthTokenRequestSerializer.SerializeToXmlString(authTokenRequest);
 		return xml;
 	}
 
-	public async Task<string> AuthenticateSignatureTestAsync(string unsignedXml, string nip)
+	public string AuthenticateSignatureTest(string unsignedXml, string nip)
 	{
 		var certificate = SelfSignedCertificateForSignatureBuilder
 					.Create()
@@ -125,7 +126,7 @@ class API : IDisposable
 					.WithSerialNumber("TINPL-" + nip)
 					.WithCommonName("ProFak")
 					.Build();
-		var signedXml = await signatureService.SignAsync(unsignedXml, certificate);
+		var signedXml = signatureService.Sign(unsignedXml, certificate);
 		return signedXml;
 	}
 

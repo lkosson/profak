@@ -210,7 +210,7 @@ namespace ProFak.UI
 				{
 					var api = new IO.KSEF2.API(Rekord.SrodowiskoKSeF);
 					var unsignedXml = await api.AuthenticateSignatureBeginAsync(nip);
-					var signedXml = await api.AuthenticateSignatureTestAsync(unsignedXml, nip);
+					var signedXml = api.AuthenticateSignatureTest(unsignedXml, nip);
 					await api.AuthenticateSignatureEndAsync(signedXml);
 					token = await api.GenerateToken();
 				});
