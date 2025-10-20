@@ -363,6 +363,7 @@ class Generator
 		if (sprzedawca == null) baza.Zapisz(sprzedawca = faktura.Sprzedawca);
 		faktura.SprzedawcaRef = sprzedawca;
 		faktura.Sprzedawca = null;
+		if (sprzedawca.CzyPodmiot) faktura.Rodzaj = faktura.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaSprzedaży : RodzajFaktury.Sprzedaż;
 
 		var nabywca = baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.NIP == faktura.Nabywca.NIP);
 		if (nabywca == null) baza.Zapisz(nabywca = faktura.Nabywca);
