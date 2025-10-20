@@ -293,7 +293,7 @@ class Generator
 			if (ksefFaktura.Fa.Platnosc.TerminPlatnosci != null && ksefFaktura.Fa.Platnosc.TerminPlatnosci.Count > 0 && ksefFaktura.Fa.Platnosc.TerminPlatnosci[0].Termin.HasValue) dbFaktura.TerminPlatnosci = ksefFaktura.Fa.Platnosc.TerminPlatnosci[0].Termin.Value;
 			if (ksefFaktura.Fa.Platnosc.RachunekBankowy != null && ksefFaktura.Fa.Platnosc.RachunekBankowy.Count > 0) dbFaktura.RachunekBankowy = ksefFaktura.Fa.Platnosc.RachunekBankowy[0].NrRB;
 
-			dbFaktura.SposobPlatnosci = new SposobPlatnosci { Nazwa = ksefFaktura.Fa.Platnosc.FormaPlatnosci switch
+			dbFaktura.OpisSposobuPlatnosci = ksefFaktura.Fa.Platnosc.FormaPlatnosci switch
 			{
 				TFormaPlatnosci.Item1 => "Gotówka",
 				TFormaPlatnosci.Item2 => "Karta",
@@ -303,7 +303,7 @@ class Generator
 				TFormaPlatnosci.Item6 => "Przelew",
 				TFormaPlatnosci.Item7 => "Mobilna",
 				_ => "",
-			} };
+			};
 
 			if (ksefFaktura.Fa.Platnosc.DataZaplaty.HasValue) dbFaktura.Wplaty = [new Wplata { Data = ksefFaktura.Fa.Platnosc.DataZaplaty.Value, Kwota = ksefFaktura.Fa.P_15 }];
 		}
@@ -374,6 +374,13 @@ class Generator
 		faktura.NIPNabywcy = nabywca.NIP;
 		faktura.NazwaNabywcy = nabywca.Nazwa;
 		faktura.DaneNabywcy = nabywca.AdresRejestrowy;
+
+		var sposobyPlatnosci = baza.SposobyPlatnosci.ToList();
+		faktura.SposobPlatnosciRef = sposobyPlatnosci
+			.OrderBy(sposob => sposob.Nazwa.Contains(faktura.OpisSposobuPlatnosci, StringComparison.CurrentCultureIgnoreCase))
+			.ThenBy(sposob => Math.Abs(sposob.LiczbaDni - (faktura.TerminPlatnosci - faktura.DataWystawienia).TotalDays))
+			.ThenBy(sposob => sposob.CzyDomyslny ? 0 : 1)
+			.FirstOrDefault();
 
 		var waluta = baza.Waluty.FirstOrDefault(waluta => waluta.Skrot == faktura.Waluta.Skrot);
 		if (waluta == null) baza.Zapisz(waluta = faktura.Waluta);
