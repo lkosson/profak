@@ -70,7 +70,7 @@ class Generator
 		ksefFaktura.Podmiot1.AdresKoresp.KodKraju = TKodKraju.PL;
 		ksefFaktura.Podmiot1.AdresKoresp.AdresL1 = dbFaktura.Sprzedawca.AdresKorespondencyjny.JakoDwieLinie().linia1;
 		ksefFaktura.Podmiot1.AdresKoresp.AdresL2 = dbFaktura.Sprzedawca.AdresKorespondencyjny.JakoDwieLinie().linia2;
-		ksefFaktura.Podmiot1.DaneKontaktowe.Add(new FakturaPodmiot1DaneKontaktowe { Email = dbFaktura.Sprzedawca.EMail, Telefon = dbFaktura.Sprzedawca.Telefon });
+		ksefFaktura.Podmiot1.DaneKontaktowe.Add(new FakturaPodmiot1DaneKontaktowe { Email = String.IsNullOrWhiteSpace(dbFaktura.Sprzedawca.EMail) ? null : dbFaktura.Sprzedawca.EMail, Telefon = String.IsNullOrWhiteSpace(dbFaktura.Sprzedawca.Telefon) ? null : dbFaktura.Sprzedawca.Telefon });
 		ksefFaktura.Podmiot2 = new FakturaPodmiot2();
 		ksefFaktura.Podmiot2.DaneIdentyfikacyjne = new TPodmiot2();
 		if (String.IsNullOrEmpty(dbFaktura.NIPNabywcy))
