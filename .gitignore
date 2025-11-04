@@ -4,3 +4,4 @@
 *.user
 /Instalator/*.wixobj
 /Instalator/ProFak-pliki.wxs
+XmlSchemaClassGenerator
