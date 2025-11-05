@@ -18,7 +18,7 @@ class Generator
 	{
 		var dbFaktura = baza.Faktury
 			.Include(e => e.Wplaty)
-			.Include(e => e.Pozycje).ThenInclude(e => e.Towar).ThenInclude(e => e.JednostkaMiary)
+			.Include(e => e.Pozycje).ThenInclude(e => e.JednostkaMiary)
 			.Include(e => e.Pozycje).ThenInclude(e => e.StawkaVat)
 			.Include(e => e.Sprzedawca)
 			.Include(e => e.Nabywca)
