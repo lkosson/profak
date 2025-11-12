@@ -219,8 +219,6 @@ class API : IDisposable
 
 	public async Task<(string ksefReferenceNumber, string verificationLink)> SendInvoiceAsync(string sessionReferenceNumber, EncryptionData encryptionData, string invoiceXml, string nip, DateTime issueDate, CancellationToken cancellationToken)
 	{
-		await OpenSessionAsync();
-
 		var invoice = Encoding.UTF8.GetBytes(invoiceXml);
 		var encryptedInvoice = cryptographyService.EncryptBytesWithAES256(invoice, encryptionData.CipherKey, encryptionData.CipherIv);
 
