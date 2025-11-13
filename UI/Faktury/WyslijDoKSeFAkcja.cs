@@ -58,17 +58,18 @@ namespace ProFak.UI
 #elif KSEF_2
 				using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
 				var cts = new CancellationTokenSource();
-				await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF);
-				var (sessionReferenceNumber, encryptionData) = await api.OpenSessionAsync();
+				await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF, cts.Token);
+				var (sessionReferenceNumber, encryptionData) = await api.OpenSessionAsync(cts.Token);
 				var wyslane = new List<(Faktura faktura, string invoiceReferenceNumber)>();
 				foreach (var faktura in doWyslania)
 				{
+					cts.Token.ThrowIfCancellationRequested();
 					var (invoiceReferenceNumber, verificationLink) = await api.SendInvoiceAsync(sessionReferenceNumber, encryptionData, faktura.XMLKSeF, faktura.NIPNabywcy, faktura.DataWystawienia, cts.Token);
 					wyslane.Add((faktura, invoiceReferenceNumber));
 					faktura.URLKSeF = verificationLink;
 					kontekst.Baza.Zapisz(faktura);
 				}
-				await api.CloseSessionAsync(sessionReferenceNumber);
+				await api.CloseSessionAsync(sessionReferenceNumber, cts.Token);
 				await api.FillSessionInvoiceMetadata(sessionReferenceNumber, wyslane, cts.Token);
 				foreach (var (faktura, _) in wyslane)
 				{

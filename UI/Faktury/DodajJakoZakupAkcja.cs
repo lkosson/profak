@@ -30,8 +30,8 @@ namespace ProFak.UI
 #endif
 				var cts = new CancellationTokenSource();
 				cts.CancelAfter(TimeSpan.FromSeconds(10));
-				await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF);
-				xml = await api.GetInvoiceAsync(naglowek.NumerKSeF);
+				await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF, cts.Token);
+				xml = await api.GetInvoiceAsync(naglowek.NumerKSeF, cts.Token);
 				await api.Terminate();
 			});
 			var faktura = IO.FA_3.Generator.ZbudujDB(kontekst.Baza, xml);

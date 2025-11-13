@@ -110,7 +110,7 @@ namespace ProFak.UI
 #endif
 					var cts = new CancellationTokenSource();
 					cts.CancelAfter(TimeSpan.FromSeconds(10));
-					await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF);
+					await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF, cts.Token);
 					var naglowki = await api.GetInvoicesAsync(przyrostowo, sprzedaz, odDaty, DateTime.Now);
 					await api.Terminate();
 					var rekordy = naglowki.Select(api.WczytajNaglowek).ToList();

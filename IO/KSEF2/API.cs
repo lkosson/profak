@@ -75,10 +75,10 @@ class API : IDisposable
 		throw new ApplicationException($"Nieoczekiwany rezultat: {wynik}");
 	}
 
-	public async Task AuthenticateAsync(string nip, string ksefToken)
+	public async Task AuthenticateAsync(string nip, string ksefToken, CancellationToken cancellationToken)
 	{
-		await cryptographyService.WarmupAsync();
-		var challenge = await ksefClient.GetAuthChallengeAsync();
+		await cryptographyService.WarmupAsync(cancellationToken);
+		var challenge = await ksefClient.GetAuthChallengeAsync(cancellationToken);
 		var timestamp = challenge.Timestamp.ToUnixTimeMilliseconds();
 		var plaintextRequest = ksefToken + "|" + timestamp;
 		var plaintextRequestBytes = Encoding.UTF8.GetBytes(plaintextRequest);
@@ -96,11 +96,11 @@ class API : IDisposable
 			AuthorizationPolicy = null
 		};
 
-		var authOperationInfo = await ksefClient.SubmitKsefTokenAuthRequestAsync(request, CancellationToken.None);
-		await CzekajNaWynikAsync(() => ksefClient.GetAuthStatusAsync(authOperationInfo.ReferenceNumber, authOperationInfo.AuthenticationToken.Token),
+		var authOperationInfo = await ksefClient.SubmitKsefTokenAuthRequestAsync(request, cancellationToken);
+		await CzekajNaWynikAsync(() => ksefClient.GetAuthStatusAsync(authOperationInfo.ReferenceNumber, authOperationInfo.AuthenticationToken.Token, cancellationToken),
 			status => status.Status.Code >= 400 ? throw new ApplicationException($"Wystąpił błąd podczas próby uwierzytelnienia: {status.Status.Description} - {String.Join(", ", status.Status.Details)}") : status.Status.Code == 200,
 			TimeSpan.FromSeconds(5));
-		var tokens = await ksefClient.GetAccessTokenAsync(authOperationInfo.AuthenticationToken.Token);
+		var tokens = await ksefClient.GetAccessTokenAsync(authOperationInfo.AuthenticationToken.Token, cancellationToken);
 		accessToken = tokens.AccessToken;
 	}
 
@@ -150,7 +150,7 @@ class API : IDisposable
 		return token.Token;
 	}
 
-	public async Task<(string sessionReferenceNumber, EncryptionData encryptionData)> OpenSessionAsync()
+	public async Task<(string sessionReferenceNumber, EncryptionData encryptionData)> OpenSessionAsync(CancellationToken cancellationToken)
 	{
 		var encryptionData = cryptographyService.GetEncryptionData();
 		var openOnlineSessionRequest = OpenOnlineSessionRequestBuilder
@@ -165,13 +165,13 @@ class API : IDisposable
 				initializationVector: encryptionData.EncryptionInfo.InitializationVector)
 		 .Build();
 
-		var openSessionResponse = await ksefClient.OpenOnlineSessionAsync(openOnlineSessionRequest, accessToken.Token, CancellationToken.None);
+		var openSessionResponse = await ksefClient.OpenOnlineSessionAsync(openOnlineSessionRequest, accessToken.Token, cancellationToken);
 		return (openSessionResponse.ReferenceNumber, encryptionData);
 	}
 
-	public async Task CloseSessionAsync(string sessionReferenceNumber)
+	public async Task CloseSessionAsync(string sessionReferenceNumber, CancellationToken cancellationToken)
 	{
-		await ksefClient.CloseOnlineSessionAsync(sessionReferenceNumber, accessToken.Token);
+		await ksefClient.CloseOnlineSessionAsync(sessionReferenceNumber, accessToken.Token, cancellationToken);
 	}
 
 	public async Task<IReadOnlyCollection<InvoiceHeader>> GetInvoicesAsync(bool przyrostowo, bool sprzedaz, DateTime dateFrom, DateTime dateTo)
@@ -212,9 +212,9 @@ class API : IDisposable
 		return invoices;
 	}
 
-	public async Task<string> GetInvoiceAsync(string ksefReferenceNumber)
+	public async Task<string> GetInvoiceAsync(string ksefReferenceNumber, CancellationToken cancellationToken)
 	{
-		return await ksefClient.GetInvoiceAsync(ksefReferenceNumber, accessToken.Token, CancellationToken.None);
+		return await ksefClient.GetInvoiceAsync(ksefReferenceNumber, accessToken.Token, cancellationToken);
 	}
 
 	public async Task<(string ksefReferenceNumber, string verificationLink)> SendInvoiceAsync(string sessionReferenceNumber, EncryptionData encryptionData, string invoiceXml, string nip, DateTime issueDate, CancellationToken cancellationToken)
