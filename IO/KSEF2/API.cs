@@ -235,7 +235,7 @@ class API : IDisposable
 		var sendInvoiceResponse = await ksefClient.SendOnlineSessionInvoiceAsync(sendOnlineInvoiceRequest, sessionReferenceNumber, accessToken.Token, cancellationToken)
 			.ConfigureAwait(false);
 
-		var url = verificationLinkService.BuildInvoiceVerificationUrl(nip, issueDate, encryptedInvoiceMetadata.HashSHA);
+		var url = verificationLinkService.BuildInvoiceVerificationUrl(nip, issueDate, invoiceMetadata.HashSHA);
 
 		return (sendInvoiceResponse.ReferenceNumber, url);
 	}
