@@ -69,7 +69,7 @@ namespace ProFak.UI
 					kontekst.Baza.Zapisz(faktura);
 				}
 				await api.CloseSessionAsync(sessionReferenceNumber);
-				await api.FillSessionInvoiceMetadata(sessionReferenceNumber, wyslane);
+				await api.FillSessionInvoiceMetadata(sessionReferenceNumber, wyslane, cts.Token);
 				foreach (var (faktura, _) in wyslane)
 				{
 					kontekst.Baza.Zapisz(faktura);

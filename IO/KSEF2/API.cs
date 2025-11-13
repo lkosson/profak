@@ -240,9 +240,12 @@ class API : IDisposable
 		return (sendInvoiceResponse.ReferenceNumber, url);
 	}
 
-	public async Task FillSessionInvoiceMetadata(string sessionReferenceNumber, IEnumerable<(Faktura faktura, string invoiceReferenceNumber)> faktury)
+	public async Task FillSessionInvoiceMetadata(string sessionReferenceNumber, IEnumerable<(Faktura faktura, string invoiceReferenceNumber)> faktury, CancellationToken cancellationToken)
 	{
-		var sessionInvoices = await ksefClient.GetSessionInvoicesAsync(sessionReferenceNumber, accessToken.Token);
+		var sessionInvoices = await CzekajNaWynikAsync(() => ksefClient.GetSessionInvoicesAsync(sessionReferenceNumber, accessToken.Token),
+			invoices => invoices.Invoices.All(invoice => invoice.Status.Code != 150),
+			TimeSpan.FromSeconds(10));
+
 		foreach (var sessionInvoice in sessionInvoices.Invoices)
 		{
 			if (sessionInvoice.Status.Code >= 400) throw new ApplicationException($"Wystąpił błąd podczas wysyłki: {sessionInvoice.Status.Description} - {String.Join(", ", sessionInvoice.Status.Details)}");
