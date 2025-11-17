@@ -183,7 +183,7 @@ class API : IDisposable
 		{
 			var query = new InvoiceQueryFilters
 			{
-				DateRange = new DateRange { DateType = przyrostowo ? DateType.PermanentStorage : DateType.Issue, From = dateFrom, To = dateTo },
+				DateRange = new DateRange { DateType = przyrostowo ? DateType.PermanentStorage : DateType.Issue, From = DateTime.SpecifyKind(dateFrom, DateTimeKind.Local), To = DateTime.SpecifyKind(dateTo, DateTimeKind.Local) },
 				SubjectType = sprzedaz ? SubjectType.Subject1 : SubjectType.Subject2
 			};
 
