@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <DefineConstants>$(DefineConstants);KSEF_2;FA_2</DefineConstants>
+    <DefineConstants>$(DefineConstants);KSEF_2;FA_3</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
