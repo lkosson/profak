@@ -131,7 +131,7 @@ namespace ProFak.UI
 				new DodajRekordAkcja<Kontrahent, KontrahentEdytor>(),
 				new MojaFirmaAkcja(),
 				new EdytujRekordAkcja<Kontrahent, KontrahentEdytor>(),
-				new UsunRekordAkcja<Kontrahent>(),
+				new UsunKontrahentaAkcja(),
 				new PrzeladujAkcja<Kontrahent>()
 			);
 		}
