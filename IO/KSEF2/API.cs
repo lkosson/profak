@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using KSeF.Client.Api.Builders.Auth;
+using KSeF.Client.Api.Builders.Online;
 using KSeF.Client.Api.Builders.X509Certificates;
 using KSeF.Client.Core.Interfaces.Clients;
 using KSeF.Client.Core.Interfaces.Services;
@@ -49,7 +50,7 @@ class API : IDisposable
 					: "https://ksef-test.mf.gov.pl";
 				opts.CustomHeaders = [];
 			});
-			sc.AddCryptographyClient(options => { options.WarmupOnStart = WarmupMode.Blocking; });
+			sc.AddCryptographyClient();
 			serviceProvider = sc.BuildServiceProvider();
 			API.srodowisko = srodowisko;
 		}
@@ -84,12 +85,12 @@ class API : IDisposable
 		var plaintextRequestBytes = Encoding.UTF8.GetBytes(plaintextRequest);
 		var encryptedRequestBytes = cryptographyService.EncryptKsefTokenWithRSAUsingPublicKey(plaintextRequestBytes);
 		var encryptedRequest = Convert.ToBase64String(encryptedRequestBytes);
-		var request = new AuthKsefTokenRequest
+		var request = new AuthenticationKsefTokenRequest
 		{
 			Challenge = challenge.Challenge,
-			ContextIdentifier = new AuthContextIdentifier
+			ContextIdentifier = new AuthenticationTokenContextIdentifier
 			{
-				Type = KSeF.Client.Core.Models.Authorization.ContextIdentifierType.Nip,
+				Type = AuthenticationTokenContextIdentifierType.Nip,
 				Value = nip
 			},
 			EncryptedToken = encryptedRequest,
@@ -110,10 +111,10 @@ class API : IDisposable
 		var authTokenRequest = AuthTokenRequestBuilder
 			.Create()
 			.WithChallenge(challenge.Challenge)
-			.WithContext(KSeF.Client.Core.Models.Authorization.ContextIdentifierType.Nip, nip)
-			.WithIdentifierType(SubjectIdentifierTypeEnum.CertificateSubject)
+			.WithContext(AuthenticationTokenContextIdentifierType.Nip, nip)
+			.WithIdentifierType(AuthenticationTokenSubjectIdentifierTypeEnum.CertificateSubject)
 			.Build();
-		var xml = AuthTokenRequestSerializer.SerializeToXmlString(authTokenRequest);
+		var xml = AuthenticationTokenRequestSerializer.SerializeToXmlString(authTokenRequest);
 		return xml;
 	}
 
@@ -184,10 +185,10 @@ class API : IDisposable
 			var query = new InvoiceQueryFilters
 			{
 				DateRange = new DateRange { DateType = przyrostowo ? DateType.PermanentStorage : DateType.Issue, From = DateTime.SpecifyKind(dateFrom, DateTimeKind.Local), To = DateTime.SpecifyKind(dateTo, DateTimeKind.Local) },
-				SubjectType = sprzedaz ? SubjectType.Subject1 : SubjectType.Subject2
+				SubjectType = sprzedaz ? InvoiceSubjectType.Subject1 : InvoiceSubjectType.Subject2
 			};
 
-			var pagedInvoiceResponse = await ksefClient.QueryInvoiceMetadataAsync(query, accessToken.Token, pageOffset, pageSize, CancellationToken.None);
+			var pagedInvoiceResponse = await ksefClient.QueryInvoiceMetadataAsync(query, accessToken.Token, pageOffset, pageSize);
 			foreach (var invoice in pagedInvoiceResponse.Invoices)
 			{
 				var invoiceHeader = new InvoiceHeader();
@@ -195,7 +196,7 @@ class API : IDisposable
 				invoiceHeader.ReferenceNumber = invoice.InvoiceNumber;
 				invoiceHeader.InvoicingDate = invoice.InvoicingDate.LocalDateTime;
 				invoiceHeader.AcquisitionTimestamp = invoice.AcquisitionDate.LocalDateTime;
-				invoiceHeader.IssuedByNIP = invoice.Seller.Identifier;
+				invoiceHeader.IssuedByNIP = invoice.Seller.Nip;
 				invoiceHeader.IssuedByName = invoice.Seller.Name;
 				invoiceHeader.IssuedToNIP = invoice.Buyer.Identifier.Value;
 				invoiceHeader.IssuedToName = invoice.Buyer.Name;
