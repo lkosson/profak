@@ -32,6 +32,8 @@ class API : IDisposable
 
 	private TokenInfo accessToken;
 
+	private static (TokenInfo accessToken, SrodowiskoKSeF srodowisko, string nip) cachedAuth;
+
 	public API(SrodowiskoKSeF srodowisko)
 	{
 		if (API.srodowisko != srodowisko || serviceProvider == null)
@@ -78,6 +80,11 @@ class API : IDisposable
 
 	public async Task AuthenticateAsync(string nip, string ksefToken, CancellationToken cancellationToken)
 	{
+		if (cachedAuth.nip == nip && cachedAuth.srodowisko == srodowisko && cachedAuth.accessToken.ValidUntil > DateTime.Now.AddMinutes(1))
+		{
+			accessToken = cachedAuth.accessToken;
+			return;
+		}
 		await cryptographyService.WarmupAsync(cancellationToken);
 		var challenge = await ksefClient.GetAuthChallengeAsync(cancellationToken);
 		var timestamp = challenge.Timestamp.ToUnixTimeMilliseconds();
@@ -103,6 +110,7 @@ class API : IDisposable
 			TimeSpan.FromSeconds(5));
 		var tokens = await ksefClient.GetAccessTokenAsync(authOperationInfo.AuthenticationToken.Token, cancellationToken);
 		accessToken = tokens.AccessToken;
+		cachedAuth = (accessToken, srodowisko!.Value, nip);
 	}
 
 	public async Task<string> AuthenticateSignatureBeginAsync(string nip)
