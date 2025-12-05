@@ -34,12 +34,15 @@ namespace ProFak.UI
 						if (res == DialogResult.Cancel) return;
 						if (res == DialogResult.No) continue;
 					}
+					else if (String.IsNullOrWhiteSpace(faktura.XMLKSeF))
+					{
 #if FA_2
-					faktura.XMLKSeF = IO.FA_2.Generator.ZbudujXML(kontekst.Baza, faktura);
+						faktura.XMLKSeF = IO.FA_2.Generator.ZbudujXML(kontekst.Baza, faktura);
 #elif FA_3
-					faktura.XMLKSeF = IO.FA_3.Generator.ZbudujXML(kontekst.Baza, faktura);
+						faktura.XMLKSeF = IO.FA_3.Generator.ZbudujXML(kontekst.Baza, faktura);
 #endif
-					kontekst.Baza.Zapisz(faktura);
+						kontekst.Baza.Zapisz(faktura);
+					}
 					doWyslania.Add(faktura);
 				}
 

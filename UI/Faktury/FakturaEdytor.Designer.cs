@@ -728,6 +728,7 @@ namespace ProFak.UI
 			// 
 			tableLayoutPanel8.SetColumnSpan(textBoxKSeFXML, 3);
 			textBoxKSeFXML.Dock = System.Windows.Forms.DockStyle.Fill;
+			textBoxKSeFXML.Font = new System.Drawing.Font("Consolas", 9F);
 			textBoxKSeFXML.Location = new System.Drawing.Point(3, 34);
 			textBoxKSeFXML.Multiline = true;
 			textBoxKSeFXML.Name = "textBoxKSeFXML";
