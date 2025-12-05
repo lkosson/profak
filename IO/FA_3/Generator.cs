@@ -357,6 +357,144 @@ class Generator
 			}
 			dbFaktura.Pozycje.Add(dbPozycja);
 		}
+
+		var uwagi = new StringBuilder();
+
+		foreach (var opis in ksefFaktura.Fa.DodatkowyOpis)
+		{
+			uwagi.AppendLine($"{opis.Klucz}: {opis.Wartosc}");
+		}
+
+		if (ksefFaktura.Fa.Adnotacje != null)
+		{
+			if (ksefFaktura.Fa.Adnotacje.Zwolnienie != null)
+			{
+				if (ksefFaktura.Fa.Adnotacje.Zwolnienie.P_19 == TWybor1.Item1) uwagi.AppendLine("Dostawa towarów lub świadczenie usług zwolnionych od podatku na podstawie art. 43 ust. 1, art. 113 ust. 1 i 9 albo przepisów wydanych na podstawie art. 82 ust. 3 lub na podstawie innych przepisów");
+				if (!String.IsNullOrEmpty(ksefFaktura.Fa.Adnotacje.Zwolnienie.P_19A)) uwagi.AppendLine($"Podstawa zwolnienia od podatku: {ksefFaktura.Fa.Adnotacje.Zwolnienie.P_19A}");
+				if (!String.IsNullOrEmpty(ksefFaktura.Fa.Adnotacje.Zwolnienie.P_19B)) uwagi.AppendLine($"Podstawa zwolnienia od podatku: {ksefFaktura.Fa.Adnotacje.Zwolnienie.P_19B}");
+				if (!String.IsNullOrEmpty(ksefFaktura.Fa.Adnotacje.Zwolnienie.P_19C)) uwagi.AppendLine($"Podstawa zwolnienia od podatku: {ksefFaktura.Fa.Adnotacje.Zwolnienie.P_19C}");
+			}
+
+			if (ksefFaktura.Fa.Adnotacje.PMarzy != null)
+			{
+				if (ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_1ValueSpecified) uwagi.AppendLine("Procedura marży: towary używane");
+				if (ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_2ValueSpecified) uwagi.AppendLine("Procedura marży: dzieła sztuki");
+				if (ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_2ValueSpecified) uwagi.AppendLine("Procedura marży: biura podróży");
+				if (ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_3ValueSpecified) uwagi.AppendLine("Procedura marży: przedmioty kolekcjonerskie i antyki");
+			}
+
+			if (ksefFaktura.Fa.Adnotacje.P_18A == TWybor1_2.Item1) uwagi.AppendLine("Mechanizm podzielonej płatności");
+			if (ksefFaktura.Fa.Adnotacje.P_16 == TWybor1_2.Item1) uwagi.AppendLine("Metoda kasowa");
+			if (ksefFaktura.Fa.Adnotacje.P_17 == TWybor1_2.Item1) uwagi.AppendLine("Samofakturowanie");
+			if (ksefFaktura.Fa.Adnotacje.P_18 == TWybor1_2.Item1) uwagi.AppendLine("Odwrotne obciążenie");
+			if (ksefFaktura.Fa.Adnotacje.P_23 == TWybor1_2.Item1) uwagi.AppendLine("Procedura trójstronna uproszczona");
+
+			// Pominięte: NoweSrodkiTransportu
+		}
+
+		if (ksefFaktura.Fa.Rozliczenie != null)
+		{
+			foreach (var obciazenie in ksefFaktura.Fa.Rozliczenie.Obciazenia)
+			{
+				if (obciazenie.Kwota != 0)
+					uwagi.AppendLine($"Obciążenie - {obciazenie.Powod}: {obciazenie.Kwota:0.00} {ksefFaktura.Fa.KodWaluty}");
+			}
+			foreach (var odliczenie in ksefFaktura.Fa.Rozliczenie.Odliczenia)
+			{
+				if (odliczenie.Kwota != 0)
+					uwagi.AppendLine($"Odliczenie - {odliczenie.Powod}: {odliczenie.Kwota:0.00} {ksefFaktura.Fa.KodWaluty}");
+			}
+
+			if (ksefFaktura.Fa.Rozliczenie.DoZaplatyValueSpecified) uwagi.AppendLine($"Do zapłaty: {ksefFaktura.Fa.Rozliczenie.DoZaplatyValue:0.00} {ksefFaktura.Fa.KodWaluty}");
+			if (ksefFaktura.Fa.Rozliczenie.DoRozliczeniaValueSpecified) uwagi.AppendLine($"Do rozliczenia: {ksefFaktura.Fa.Rozliczenie.DoRozliczeniaValue:0.00} {ksefFaktura.Fa.KodWaluty}");
+		}
+
+		if (ksefFaktura.Fa.WarunkiTransakcji != null)
+		{
+			foreach (var zamowienie in ksefFaktura.Fa.WarunkiTransakcji.Zamowienia)
+			{
+				if (zamowienie.DataZamowieniaValueSpecified) uwagi.AppendLine($"Data zamówienia: {zamowienie.DataZamowieniaValue:yyyy-MM-dd}");
+				uwagi.AppendLine($"Numer zamówienia: {zamowienie.NrZamowienia}");
+			}
+
+			foreach (var partia in ksefFaktura.Fa.WarunkiTransakcji.NrPartiiTowaru)
+			{
+				uwagi.AppendLine($"Numer partii: {partia}");
+			}
+
+			if (!String.IsNullOrEmpty(ksefFaktura.Fa.WarunkiTransakcji.WarunkiDostawy)) uwagi.AppendLine($"Warunki dostawy: {ksefFaktura.Fa.WarunkiTransakcji.WarunkiDostawy}");
+
+			foreach (var transport in ksefFaktura.Fa.WarunkiTransakcji.Transport)
+			{
+				uwagi.AppendLine(transport.RodzajTransportu switch
+				{
+					TRodzajTransportu.Item1 => "Rodzaj transportu: Transport morski",
+					TRodzajTransportu.Item2 => "Rodzaj transportu: Transport kolejowy",
+					TRodzajTransportu.Item3 => "Rodzaj transportu: Transport drogowy",
+					TRodzajTransportu.Item4 => "Rodzaj transportu: Transport lotniczy",
+					TRodzajTransportu.Item5 => "Rodzaj transportu: Przesyłka pocztowa",
+					TRodzajTransportu.Item7 => "Rodzaj transportu: Stałe instalacje przesyłowe",
+					TRodzajTransportu.Item8 => "Rodzaj transportu: Żegluga śródlądowa",
+					_ => "Rodzaj transportu: " + transport.RodzajTransportu
+				});
+				if (!String.IsNullOrEmpty(transport.OpisInnegoTransportu)) uwagi.AppendLine($"Rodzaj transportu: {transport.OpisInnegoTransportu}");
+
+				if (transport.Przewoznik != null)
+				{
+					if (transport.Przewoznik.DaneIdentyfikacyjne != null) uwagi.AppendLine($"Przewoźnik: {transport.Przewoznik.DaneIdentyfikacyjne.Nazwa}");
+					// Pominięte: DaneIdentyfikacyjne.NIP, AdresPrzewoznika
+				}
+
+				uwagi.AppendLine(transport.OpisLadunku switch
+				{
+					TLadunek.Item1 => "Opis ładunku: Bańka",
+					TLadunek.Item2 => "Opis ładunku: Beczka",
+					TLadunek.Item3 => "Opis ładunku: Butla",
+					TLadunek.Item4 => "Opis ładunku: Karton",
+					TLadunek.Item5 => "Opis ładunku: Kanister",
+					TLadunek.Item6 => "Opis ładunku: Klatka",
+					TLadunek.Item7 => "Opis ładunku: Kontener",
+					TLadunek.Item8 => "Opis ładunku: Kosz/koszyk",
+					TLadunek.Item9 => "Opis ładunku: Łubianka",
+					TLadunek.Item10 => "Opis ładunku: Opakowanie zbiorcze",
+					TLadunek.Item11 => "Opis ładunku: Paczka",
+					TLadunek.Item12 => "Opis ładunku: Pakiet",
+					TLadunek.Item13 => "Opis ładunku: Paleta",
+					TLadunek.Item14 => "Opis ładunku: Pojemnik",
+					TLadunek.Item15 => "Opis ładunku: Pojemnik do ładunków masowych stałych",
+					TLadunek.Item16 => "Opis ładunku: Pojemnik do ładunków masowych w postaci płynnej",
+					TLadunek.Item17 => "Opis ładunku: Pudełko",
+					TLadunek.Item18 => "Opis ładunku: Puszka",
+					TLadunek.Item19 => "Opis ładunku: Skrzynia",
+					TLadunek.Item20 => "Opis ładunku: Worek",
+					_ => "Opis ładunku: " + transport.OpisLadunku
+				});
+
+				if (!String.IsNullOrEmpty(transport.OpisInnegoLadunku)) uwagi.AppendLine($"Opis ładunku: {transport.OpisInnegoLadunku}");
+				if (!String.IsNullOrEmpty(transport.JednostkaOpakowania)) uwagi.AppendLine($"Jednostka opakowania: {transport.JednostkaOpakowania}");
+				if (transport.DataGodzRozpTransportuValueSpecified) uwagi.AppendLine($"Czas rozpoczęcia transportu: {transport.DataGodzRozpTransportuValue:yyyy-MM-dd HH:mm}");
+
+				// Pominięte: WysylkaZ, WysylkaDo
+			}
+		}
+
+		if (ksefFaktura.Stopka != null)
+		{
+			foreach (var informacja in ksefFaktura.Stopka.Informacje)
+			{
+				uwagi.AppendLine(informacja.StopkaFaktury);
+			}
+
+			foreach (var rejestr in ksefFaktura.Stopka.Rejestry)
+			{
+				if (!String.IsNullOrEmpty(rejestr.PelnaNazwa)) uwagi.AppendLine($"Pełna nazwa: {rejestr.PelnaNazwa}");
+				if (!String.IsNullOrEmpty(rejestr.KRS)) uwagi.AppendLine($"KRS: {rejestr.KRS}");
+				if (!String.IsNullOrEmpty(rejestr.REGON)) uwagi.AppendLine($"REGON: {rejestr.REGON}");
+				if (!String.IsNullOrEmpty(rejestr.BDO)) uwagi.AppendLine($"BDO: {rejestr.BDO}");
+			}
+		}
+
+		dbFaktura.UwagiPubliczne = uwagi.ToString();
 		return dbFaktura;
 	}
 
