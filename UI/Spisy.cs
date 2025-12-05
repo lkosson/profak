@@ -103,6 +103,7 @@ namespace ProFak.UI
 		public static SpisZAkcjami<Faktura, KSeFSpis> KSeFSprzedaz(params string[] parametry)
 		{
 			return Utworz(new KSeFSpis(true, parametry),
+				new ZapiszJakoXMLAkcja(),
 				new PrzeladujAkcja<Faktura>()
 			);
 		}
@@ -111,6 +112,7 @@ namespace ProFak.UI
 		{
 			return Utworz(new KSeFSpis(false, parametry),
 				new DodajJakoZakupAkcja(),
+				new ZapiszJakoXMLAkcja(),
 				new PrzeladujAkcja<Faktura>()
 			);
 		}
