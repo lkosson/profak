@@ -114,7 +114,7 @@ class Generator
 		if (dbFaktura.PozostaloDoZaplaty == 0)
 		{
 			ksefFaktura.Fa.Platnosc.Zaplacono = TWybor1.Item1;
-			ksefFaktura.Fa.Platnosc.DataZaplaty = dbFaktura.Wplaty.Last().Data;
+			if (dbFaktura.Wplaty.Count > 0) ksefFaktura.Fa.Platnosc.DataZaplaty = dbFaktura.Wplaty.Last().Data;
 		}
 		else if (dbFaktura.PozostaloDoZaplaty < dbFaktura.RazemBrutto)
 		{
