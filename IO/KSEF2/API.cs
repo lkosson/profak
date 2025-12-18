@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using KSeF.Client.Api.Builders.Auth;
 using KSeF.Client.Api.Builders.Online;
 using KSeF.Client.Api.Builders.X509Certificates;
+using KSeF.Client.Api.Services;
 using KSeF.Client.Core.Interfaces.Clients;
 using KSeF.Client.Core.Interfaces.Services;
 using KSeF.Client.Core.Models.Authorization;
@@ -28,7 +29,6 @@ class API : IDisposable
 	private readonly IKSeFClient ksefClient;
 	private readonly ICryptographyService cryptographyService;
 	private readonly IVerificationLinkService verificationLinkService;
-	private readonly ISignatureService signatureService;
 
 	private TokenInfo accessToken;
 
@@ -47,9 +47,9 @@ class API : IDisposable
 			var sc = new ServiceCollection();
 			sc.AddKSeFClient(opts =>
 			{
-				opts.BaseUrl = srodowisko == SrodowiskoKSeF.Prod ? "https://ksef.mf.gov.pl"
-					: srodowisko == SrodowiskoKSeF.Demo ? "https://ksef-demo.mf.gov.pl"
-					: "https://ksef-test.mf.gov.pl";
+				opts.BaseUrl = srodowisko == SrodowiskoKSeF.Prod ? "https://api.ksef.mf.gov.pl"
+					: srodowisko == SrodowiskoKSeF.Demo ? "https://api-demo.ksef.mf.gov.pl"
+					: "https://api-test.ksef.mf.gov.pl";
 				opts.CustomHeaders = [];
 			});
 			sc.AddCryptographyClient();
@@ -60,7 +60,6 @@ class API : IDisposable
 		ksefClient = serviceProvider.GetRequiredService<IKSeFClient>();
 		cryptographyService = serviceProvider.GetRequiredService<ICryptographyService>();
 		verificationLinkService = serviceProvider.GetRequiredService<IVerificationLinkService>();
-		signatureService = serviceProvider.GetRequiredService<ISignatureService>();
 		accessToken = default!;
 	}
 
@@ -135,7 +134,7 @@ class API : IDisposable
 					.WithSerialNumber("TINPL-" + nip)
 					.WithCommonName("ProFak")
 					.Build();
-		var signedXml = signatureService.Sign(unsignedXml, certificate);
+		var signedXml = SignatureService.Sign(unsignedXml, certificate);
 		return signedXml;
 	}
 
@@ -174,7 +173,7 @@ class API : IDisposable
 				initializationVector: encryptionData.EncryptionInfo.InitializationVector)
 		 .Build();
 
-		var openSessionResponse = await ksefClient.OpenOnlineSessionAsync(openOnlineSessionRequest, accessToken.Token, cancellationToken);
+		var openSessionResponse = await ksefClient.OpenOnlineSessionAsync(openOnlineSessionRequest, accessToken.Token, cancellationToken: cancellationToken);
 		return (openSessionResponse.ReferenceNumber, encryptionData);
 	}
 
