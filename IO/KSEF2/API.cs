@@ -203,6 +203,7 @@ class API : IDisposable
 				invoiceHeader.ReferenceNumber = invoice.InvoiceNumber;
 				invoiceHeader.InvoicingDate = invoice.InvoicingDate.LocalDateTime;
 				invoiceHeader.AcquisitionTimestamp = invoice.AcquisitionDate.LocalDateTime;
+				invoiceHeader.PermanentStorageTimestamp = invoice.PermanentStorageDate.LocalDateTime;
 				invoiceHeader.IssuedByNIP = invoice.Seller.Nip;
 				invoiceHeader.IssuedByName = invoice.Seller.Name;
 				invoiceHeader.IssuedToNIP = invoice.Buyer.Identifier.Value;
@@ -279,7 +280,7 @@ class API : IDisposable
 		dbFaktura.Rodzaj = invoiceHeader.Type == "Vat" ? DB.RodzajFaktury.Zakup : DB.RodzajFaktury.KorektaZakupu;
 		dbFaktura.DataSprzedazy = invoiceHeader.InvoicingDate;
 		dbFaktura.DataWystawienia = invoiceHeader.AcquisitionTimestamp;
-		dbFaktura.DataKSeF = invoiceHeader.AcquisitionTimestamp;
+		dbFaktura.DataKSeF = invoiceHeader.PermanentStorageTimestamp;
 		dbFaktura.Waluta = new Waluta { Skrot = invoiceHeader.Currency };
 		return dbFaktura;
 	}

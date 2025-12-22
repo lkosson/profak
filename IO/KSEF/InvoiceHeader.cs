@@ -12,6 +12,7 @@ class InvoiceHeader
 	public string KsefReferenceNumber { get; set; }
 	public DateTime InvoicingDate { get; set; }
 	public DateTime AcquisitionTimestamp { get; set; }
+	public DateTime PermanentStorageTimestamp { get; set; }
 	public string IssuedByName { get; set; }
 	public string IssuedByNIP { get; set; }
 	public string IssuedToName { get; set; }
