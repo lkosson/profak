@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProFak.DB;
-using ProFak.IO.KSEF;
+using ProFak.IO.KSEF2;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -105,11 +105,7 @@ namespace ProFak.UI
 						if (ostatnia != null && ostatnia.DataKSeF.HasValue) odDaty = ostatnia.DataKSeF.Value;
 					}
 					var istniejace = Kontekst.Baza.Faktury.Where(e => !String.IsNullOrEmpty(e.NumerKSeF)).Select(e => e.NumerKSeF).ToHashSet();
-#if KSEF_1
-					using var api = new IO.KSEF.API(podmiot.SrodowiskoKSeF);
-#elif KSEF_2
 					using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
-#endif
 					var cts = new CancellationTokenSource();
 					cts.CancelAfter(TimeSpan.FromSeconds(10));
 					await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF, cts.Token);

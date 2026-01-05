@@ -23,11 +23,7 @@ namespace ProFak.UI
 			var xml = "";
 			OknoPostepu.Uruchom(async cancellationToken =>
 			{
-#if KSEF_1
-				using var api = new IO.KSEF.API(podmiot.SrodowiskoKSeF);
-#elif KSEF_2
 				using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
-#endif
 				await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF, cancellationToken);
 				xml = await api.GetInvoiceAsync(naglowek.NumerKSeF, cancellationToken);
 				await api.Terminate();

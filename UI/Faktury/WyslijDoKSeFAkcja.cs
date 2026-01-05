@@ -37,11 +37,7 @@ namespace ProFak.UI
 					}
 					else if (String.IsNullOrWhiteSpace(faktura.XMLKSeF))
 					{
-#if FA_2
-						faktura.XMLKSeF = IO.FA_2.Generator.ZbudujXML(kontekst.Baza, faktura);
-#elif FA_3
 						faktura.XMLKSeF = IO.FA_3.Generator.ZbudujXML(kontekst.Baza, faktura);
-#endif
 						kontekst.Baza.Zapisz(faktura);
 					}
 					doWyslania.Add(faktura);
@@ -49,16 +45,6 @@ namespace ProFak.UI
 
 				if (!doWyslania.Any()) return;
 
-#if KSEF_1
-				using var api = new IO.KSEF.API(podmiot.SrodowiskoKSeF);
-				await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF);
-				foreach (var faktura in doWyslania)
-				{
-					(faktura.NumerKSeF, faktura.DataKSeF, faktura.URLKSeF) = await api.SendInvoiceAsync(faktura.XMLKSeF, faktura.NIPNabywcy, faktura.DataWystawienia, cancellationToken);
-					kontekst.Baza.Zapisz(faktura);
-				}
-				await api.Terminate();
-#elif KSEF_2
 				using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
 				await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF, cancellationToken);
 				var (sessionReferenceNumber, encryptionData) = await api.OpenSessionAsync(cancellationToken);
@@ -77,7 +63,6 @@ namespace ProFak.UI
 				{
 					kontekst.Baza.Zapisz(faktura);
 				}
-#endif
 			});
 		}
 	}

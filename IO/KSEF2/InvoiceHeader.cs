@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProFak.IO.KSEF;
+namespace ProFak.IO.KSEF2;
 
 class InvoiceHeader
 {

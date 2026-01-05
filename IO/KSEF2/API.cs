@@ -17,7 +17,6 @@ using KSeF.Client.Core.Models.Sessions;
 using KSeF.Client.DI;
 using Microsoft.Extensions.DependencyInjection;
 using ProFak.DB;
-using ProFak.IO.KSEF;
 
 namespace ProFak.IO.KSEF2;
 
@@ -163,11 +162,7 @@ class API : IDisposable
 		var encryptionData = cryptographyService.GetEncryptionData();
 		var openOnlineSessionRequest = OpenOnlineSessionRequestBuilder
 			.Create()
-#if FA_3
 			.WithFormCode(systemCode: "FA (3)", schemaVersion: "1-0E", value: "FA")
-#else
-			.WithFormCode(systemCode: "FA (2)", schemaVersion: "1-0E", value: "FA")
-#endif
 			.WithEncryption(
 				encryptedSymmetricKey: encryptionData.EncryptionInfo.EncryptedSymmetricKey,
 				initializationVector: encryptionData.EncryptionInfo.InitializationVector)
