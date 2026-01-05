@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -107,10 +108,10 @@ partial class WysylkaFakturEdytor : UserControl
 		var tresc = textBoxTresc.Text;
 		var adresat = textBoxAdresat.Text;
 		var nadawca = faktura.PodstawPolaWysylki(szablonNadawca);
-		OknoPostepu.Uruchom(async delegate
+		OknoPostepu.Uruchom(async cancellationToken =>
 		{
 			var pdf = PrzygotujPDF(faktura);
-			await Wyslij(temat, tresc, adresat, nadawca, pdf, faktura.Numer);
+			await Wyslij(temat, tresc, adresat, nadawca, pdf, faktura.Numer, cancellationToken);
 		});
 		transakcja.Zatwierdz();
 		var faktury = (List<Faktura>)comboBoxFaktura.DataSource;
@@ -133,11 +134,12 @@ partial class WysylkaFakturEdytor : UserControl
 	{
 		var ustawDate = checkBoxUstawDate.Checked;
 		var przeliczTermin = checkBoxPrzeliczTermin.Checked;
-		OknoPostepu.Uruchom(async delegate
+		OknoPostepu.Uruchom(async cancellationToken =>
 		{
 			var faktury = (List<Faktura>)comboBoxFaktura.DataSource;
 			foreach (var _faktura in faktury)
 			{
+				if (cancellationToken.IsCancellationRequested) return;
 				if (_faktura.Id == 0) continue;
 				using var transakcja = Kontekst.Transakcja();
 				var faktura = Kontekst.Baza.Znajdz(_faktura.Ref);
@@ -154,7 +156,7 @@ partial class WysylkaFakturEdytor : UserControl
 				var temat = faktura.PodstawPolaWysylki(szablonTemat);
 				var tresc = faktura.PodstawPolaWysylki(szablonTresc);
 				var nadawca = faktura.PodstawPolaWysylki(szablonNadawca);
-				await Wyslij(temat, tresc, adresat, nadawca, pdf, faktura.Numer);
+				await Wyslij(temat, tresc, adresat, nadawca, pdf, faktura.Numer, cancellationToken);
 				transakcja.Zatwierdz();
 			}
 		});
@@ -171,7 +173,7 @@ partial class WysylkaFakturEdytor : UserControl
 		return pdf;
 	}
 
-	private async Task Wyslij(string temat, string tresc, string adresat, string nadawca, byte[] pdf, string nazwa)
+	private async Task Wyslij(string temat, string tresc, string adresat, string nadawca, byte[] pdf, string nazwa, CancellationToken cancellationToken)
 	{
 		var konfiguracja = Kontekst.Baza.Konfiguracja.First();
 		var smtp = new SmtpClient(konfiguracja.SMTPSerwer, konfiguracja.SMTPPort);
@@ -185,7 +187,7 @@ partial class WysylkaFakturEdytor : UserControl
 		wiadomosc.IsBodyHtml = false;
 		wiadomosc.To.Add(adresat);
 		wiadomosc.Attachments.Add(new Attachment(new MemoryStream(pdf), nazwa.Replace('/', '-').Replace(':', '-'), "application/pdf"));
-		await smtp.SendMailAsync(wiadomosc);
+		await smtp.SendMailAsync(wiadomosc, cancellationToken);
 	}
 
 	private void textBoxAdresat_TextChanged(object sender, EventArgs e)

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace ProFak.UI
@@ -206,12 +207,14 @@ namespace ProFak.UI
 			string token = null;
 			if (Rekord.SrodowiskoKSeF == SrodowiskoKSeF.Test)
 			{
-				OknoPostepu.Uruchom(async delegate
+				OknoPostepu.Uruchom(async cancellationToken =>
 				{
 					var api = new IO.KSEF2.API(Rekord.SrodowiskoKSeF);
 					var unsignedXml = await api.AuthenticateSignatureBeginAsync(nip);
+					cancellationToken.ThrowIfCancellationRequested();
 					var signedXml = api.AuthenticateSignatureTest(unsignedXml, nip);
 					await api.AuthenticateSignatureEndAsync(signedXml);
+					cancellationToken.ThrowIfCancellationRequested();
 					token = await api.GenerateToken();
 				});
 			}

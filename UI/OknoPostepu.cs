@@ -15,18 +15,34 @@ namespace ProFak.UI;
 
 public partial class OknoPostepu : Form
 {
-	private readonly Func<Task> akcja;
+	private readonly Func<CancellationToken, Task> akcja;
 	private ExceptionDispatchInfo edi;
+	private CancellationTokenSource ctsAnuluj;
 
 	public OknoPostepu()
 	{
 		InitializeComponent();
+		ctsAnuluj = new CancellationTokenSource();
 	}
 
 	private OknoPostepu(Func<Task> akcja)
 		: this()
 	{
+		this.akcja = _ => akcja();
+	}
+
+	private OknoPostepu(Func<CancellationToken, Task> akcja)
+	: this()
+	{
 		this.akcja = akcja;
+		buttonAnuluj.Enabled = true;
+	}
+
+	private void buttonAnuluj_Click(object sender, EventArgs e)
+	{
+		buttonAnuluj.Enabled = false;
+		labelInfo.Text = "Przerywanie operacji ...";
+		ctsAnuluj.Cancel();
 	}
 
 	protected override void OnLoad(EventArgs e)
@@ -36,7 +52,7 @@ public partial class OknoPostepu : Form
 		{
 			try
 			{
-				await akcja();
+				await akcja(ctsAnuluj.Token);
 			}
 			catch (Exception exc)
 			{
@@ -51,6 +67,13 @@ public partial class OknoPostepu : Form
 	}
 
 	public static void Uruchom(Func<Task> akcja)
+	{
+		using var okno = new OknoPostepu(akcja);
+		okno.ShowDialog();
+		if (okno.edi != null) okno.edi.Throw();
+	}
+
+	public static void Uruchom(Func<CancellationToken, Task> akcja)
 	{
 		using var okno = new OknoPostepu(akcja);
 		okno.ShowDialog();

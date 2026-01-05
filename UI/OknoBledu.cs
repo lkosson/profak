@@ -36,6 +36,10 @@ namespace ProFak.UI
 			{
 				MessageBox.Show(exc.Message, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 			}
+			else if (exc.GetType() == typeof(TaskCanceledException))
+			{
+				return;
+			}
 			else
 			{
 				using var okno = new OknoBledu(exc);

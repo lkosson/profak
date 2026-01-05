@@ -21,18 +21,17 @@ namespace ProFak.UI
 			var podmiot = kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
 			var naglowek = zaznaczoneRekordy.Single();
 			var xml = "";
-			OknoPostepu.Uruchom(async delegate
+			OknoPostepu.Uruchom(async cancellationToken =>
 			{
 #if KSEF_1
 				using var api = new IO.KSEF.API(podmiot.SrodowiskoKSeF);
 #elif KSEF_2
 				using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
 #endif
-				var cts = new CancellationTokenSource();
-				cts.CancelAfter(TimeSpan.FromSeconds(10));
-				await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF, cts.Token);
-				xml = await api.GetInvoiceAsync(naglowek.NumerKSeF, cts.Token);
+				await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF, cancellationToken);
+				xml = await api.GetInvoiceAsync(naglowek.NumerKSeF, cancellationToken);
 				await api.Terminate();
+				cancellationToken.ThrowIfCancellationRequested();
 			});
 			var faktura = IO.FA_3.Generator.ZbudujDB(kontekst.Baza, xml);
 			faktura.NumerKSeF = naglowek.NumerKSeF;

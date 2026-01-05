@@ -20,7 +20,7 @@ namespace ProFak.UI
 		public override void Uruchom(Kontekst kontekst, ref IEnumerable<Faktura> zaznaczoneRekordy)
 		{
 			var rekordy = zaznaczoneRekordy;
-			OknoPostepu.Uruchom(async delegate
+			OknoPostepu.Uruchom(async cancellationToken =>
 			{
 				var podmiot = kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
 				if (String.IsNullOrEmpty(podmiot.TokenKSeF)) throw new ApplicationException("Brak tokena dostępowego do KSeF w danych firmy.");
@@ -28,6 +28,7 @@ namespace ProFak.UI
 				var doWyslania = new List<Faktura>();
 				foreach (var faktura in rekordy)
 				{
+					cancellationToken.ThrowIfCancellationRequested();
 					if (!String.IsNullOrWhiteSpace(faktura.NumerKSeF))
 					{
 						var res = MessageBox.Show($"Faktura {faktura.Numer} już była wysłana do KSeF. Czy chcesz ją wysłać ponownie?", "ProFak", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
@@ -50,30 +51,28 @@ namespace ProFak.UI
 
 #if KSEF_1
 				using var api = new IO.KSEF.API(podmiot.SrodowiskoKSeF);
-				var cts = new CancellationTokenSource();
 				await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF);
 				foreach (var faktura in doWyslania)
 				{
-					(faktura.NumerKSeF, faktura.DataKSeF, faktura.URLKSeF) = await api.SendInvoiceAsync(faktura.XMLKSeF, faktura.NIPNabywcy, faktura.DataWystawienia, cts.Token);
+					(faktura.NumerKSeF, faktura.DataKSeF, faktura.URLKSeF) = await api.SendInvoiceAsync(faktura.XMLKSeF, faktura.NIPNabywcy, faktura.DataWystawienia, cancellationToken);
 					kontekst.Baza.Zapisz(faktura);
 				}
 				await api.Terminate();
 #elif KSEF_2
 				using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
-				var cts = new CancellationTokenSource();
-				await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF, cts.Token);
-				var (sessionReferenceNumber, encryptionData) = await api.OpenSessionAsync(cts.Token);
+				await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF, cancellationToken);
+				var (sessionReferenceNumber, encryptionData) = await api.OpenSessionAsync(cancellationToken);
 				var wyslane = new List<(Faktura faktura, string invoiceReferenceNumber)>();
 				foreach (var faktura in doWyslania)
 				{
-					cts.Token.ThrowIfCancellationRequested();
-					var (invoiceReferenceNumber, verificationLink) = await api.SendInvoiceAsync(sessionReferenceNumber, encryptionData, faktura.XMLKSeF, faktura.NIPSprzedawcy, faktura.DataWystawienia, cts.Token);
+					cancellationToken.ThrowIfCancellationRequested();
+					var (invoiceReferenceNumber, verificationLink) = await api.SendInvoiceAsync(sessionReferenceNumber, encryptionData, faktura.XMLKSeF, faktura.NIPSprzedawcy, faktura.DataWystawienia, cancellationToken);
 					wyslane.Add((faktura, invoiceReferenceNumber));
 					faktura.URLKSeF = verificationLink;
 					kontekst.Baza.Zapisz(faktura);
 				}
-				await api.CloseSessionAsync(sessionReferenceNumber, cts.Token);
-				await api.FillSessionInvoiceMetadata(sessionReferenceNumber, wyslane, cts.Token);
+				await api.CloseSessionAsync(sessionReferenceNumber, cancellationToken);
+				await api.FillSessionInvoiceMetadata(sessionReferenceNumber, wyslane, cancellationToken);
 				foreach (var (faktura, _) in wyslane)
 				{
 					kontekst.Baza.Zapisz(faktura);

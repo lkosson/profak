@@ -22,7 +22,7 @@ partial class DostepKSeFEdytor : UserControl
 		{
 			var nip = NIP;
 			string xml = null;
-			OknoPostepu.Uruchom(async delegate
+			OknoPostepu.Uruchom(async () =>
 			{
 				using var api = new IO.KSEF2.API(SrodowiskoKSeF);
 				xml = await api.AuthenticateSignatureBeginAsync(nip);
@@ -57,7 +57,7 @@ partial class DostepKSeFEdytor : UserControl
 			var signedXml = File.ReadAllText(dialog.FileName);
 
 			string token = null;
-			OknoPostepu.Uruchom(async delegate
+			OknoPostepu.Uruchom(async () =>
 			{
 				using var api = new IO.KSEF2.API(SrodowiskoKSeF);
 				await api.AuthenticateSignatureEndAsync(signedXml);
