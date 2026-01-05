@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProFak.DB;
+using ProFak.IO.KSEF;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -91,6 +92,7 @@ namespace ProFak.UI
 				try
 				{
 					var odDaty = this.odDaty;
+					var doDaty = DateTime.Now;
 					var podmiot = Kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
 					if (String.IsNullOrEmpty(podmiot.TokenKSeF)) throw new ApplicationException("Brak tokena dostępowego do KSeF w danych firmy.");
 					if (przyrostowo)
@@ -111,7 +113,16 @@ namespace ProFak.UI
 					var cts = new CancellationTokenSource();
 					cts.CancelAfter(TimeSpan.FromSeconds(10));
 					await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF, cts.Token);
-					var naglowki = await api.GetInvoicesAsync(przyrostowo, sprzedaz, odDaty, DateTime.Now);
+					var naglowki = new List<InvoiceHeader>();
+					while (odDaty < doDaty)
+					{
+						var koniecFragmentu = odDaty.AddMonths(3);
+						if (koniecFragmentu > doDaty) koniecFragmentu = doDaty;
+						var fragment = await api.GetInvoicesAsync(przyrostowo, sprzedaz, odDaty, koniecFragmentu);
+						naglowki.AddRange(fragment);
+						odDaty = koniecFragmentu;
+					}
+					
 					await api.Terminate();
 					var rekordy = naglowki.Select(api.WczytajNaglowek).ToList();
 					await ThreadSwitcher.ResumeForegroundAsync(this);
