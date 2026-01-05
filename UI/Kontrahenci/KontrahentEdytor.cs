@@ -137,9 +137,9 @@ namespace ProFak.UI
 			base.RekordGotowy();
 			checkBoxTP.Visible = !Rekord.CzyPodmiot;
 
-			fakturySprzedazy.Spis.NabywcaRef = Rekord;
+			fakturySprzedazy.Spis.KontrahentRef = Rekord;
 			fakturySprzedazy.Spis.Kontekst = Kontekst;
-			fakturyZakupu.Spis.SprzedawcaRef = Rekord;
+			fakturyZakupu.Spis.KontrahentRef = Rekord;
 			fakturyZakupu.Spis.Kontekst = Kontekst;
 
 			if (Rekord.CzyPodmiot)
