@@ -36,9 +36,9 @@ namespace ProFak.UI
 			{
 				MessageBox.Show(exc.Message, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 			}
-			else if (exc.GetType() == typeof(TaskCanceledException))
+			else if (exc is OperationCanceledException)
 			{
-				return;
+				MessageBox.Show("Operacja została przerwana.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 			else
 			{
