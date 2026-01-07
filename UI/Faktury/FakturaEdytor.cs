@@ -29,6 +29,8 @@ namespace ProFak.UI
 		{
 			InitializeComponent();
 
+			kontroler.Slownik<ProceduraMarży>(comboBoxProceduraMarzy);
+
 			kontroler.Powiazanie(textBoxNumer, faktura => faktura.Numer);
 			kontroler.Powiazanie(comboBoxWaluta, faktura => faktura.WalutaRef);
 			kontroler.Powiazanie(numericUpDownKurs, faktura => faktura.KursWaluty);
@@ -63,6 +65,7 @@ namespace ProFak.UI
 			kontroler.Powiazanie(checkBoxWDT, faktura => faktura.CzyWDT);
 			kontroler.Powiazanie(checkBoxWNT, faktura => faktura.CzyWNT);
 			kontroler.Powiazanie(textBoxOpisZdarzenia, faktura => faktura.OpisZdarzenia);
+			kontroler.Powiazanie(comboBoxProceduraMarzy, faktura => faktura.ProceduraMarzy);
 
 			kontroler.Powiazanie(textBoxKSeFXML, faktura => faktura.XMLKSeF);
 			kontroler.Powiazanie(textBoxNumerKSeF, faktura => faktura.NumerKSeF);
@@ -284,6 +287,7 @@ namespace ProFak.UI
 				checkBoxZakupSrodkowTrwalych.Enabled = false;
 				checkBoxWDT.Enabled = true;
 				checkBoxWNT.Enabled = false;
+				comboBoxProceduraMarzy.Enabled = Rekord.Rodzaj == RodzajFaktury.VatMarża || Rekord.Rodzaj == RodzajFaktury.KorektaVatMarży;
 
 				comboBoxNIPSprzedawcy.Enabled = false;
 				comboBoxNazwaSprzedawcy.Enabled = false;
@@ -301,6 +305,7 @@ namespace ProFak.UI
 				checkBoxZakupSrodkowTrwalych.Enabled = true;
 				checkBoxWDT.Enabled = false;
 				checkBoxWNT.Enabled = true;
+				comboBoxProceduraMarzy.Enabled = false;
 
 				comboBoxNIPNabywcy.Enabled = false;
 				comboBoxNazwaNabywcy.Enabled = false;
