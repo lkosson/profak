@@ -40,6 +40,7 @@ namespace ProFak.DB
 		public bool CzyZakupSrodkowTrwalych { get; set; }
 		public bool CzyWDT { get; set; }
 		public bool CzyWNT { get; set; }
+		public ProceduraMarży ProceduraMarzy { get; set; }
 		public string OpisZdarzenia { get; set; }
 
 		public string NumerKSeF { get; set; } = "";
@@ -405,5 +406,14 @@ namespace ProFak.DB
 		Usunięta,
 		VatMarża,
 		KorektaVatMarży
+	}
+
+	enum ProceduraMarży
+	{
+		NieDotyczy,
+		TowaryUżywane,
+		DziełaSztuki,
+		BiuraPodróży,
+		PrzedmiotyKolekcjonerskie
 	}
 }
