@@ -62,7 +62,9 @@ namespace ProFak.DB
 	{
 		Faktura,
 		Proforma,
-		Korekta,
-		DowódWewnętrzny
+		KorektaSprzedaży,
+		DowódWewnętrzny,
+		VatMarża,
+		KorektaVatMarży
 	}
 }

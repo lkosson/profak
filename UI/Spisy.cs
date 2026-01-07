@@ -91,6 +91,21 @@ namespace ProFak.UI
 			);
 		}
 
+		public static SpisZAkcjami<Faktura, FakturaVatMarzaSpis> FakturyVatMarza(string[] parametry = null)
+		{
+			return Utworz(new FakturaVatMarzaSpis(parametry),
+				new FakturaVatMarzaAkcja(),
+				new FakturaPodobnaSprzedazAkcja(),
+				new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
+				new UsunFaktureAkcja(),
+				new DodajWplateAkcja(),
+				new WydrukFakturyAkcja(),
+				new WyslijMailAkcja(),
+				new ZapiszPlikiAkcja(),
+				new PrzeladujAkcja<Faktura>()
+			);
+		}
+
 		public static SpisZAkcjami<Faktura, FakturaUsunietaSpis> FakturyUsuniete()
 		{
 			return Utworz(new FakturaUsunietaSpis(),

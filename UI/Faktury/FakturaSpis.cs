@@ -25,7 +25,9 @@ class FakturaSpis : Spis<Faktura>
 	protected virtual bool CzySprzedaz
 		=> Rodzaje.Contains(RodzajFaktury.Sprzedaż)
 		|| Rodzaje.Contains(RodzajFaktury.KorektaSprzedaży)
-		|| Rodzaje.Contains(RodzajFaktury.Proforma);
+		|| Rodzaje.Contains(RodzajFaktury.Proforma)
+		|| Rodzaje.Contains(RodzajFaktury.VatMarża)
+		|| Rodzaje.Contains(RodzajFaktury.KorektaVatMarży);
 
 	public override string Podsumowanie
 	{
@@ -148,6 +150,7 @@ class FakturaSpis : Spis<Faktura>
 		else if (rekord.FakturaKorygujacaRef.IsNotNull) styl.ForeColor = Color.FromArgb(120, 120, 120);
 		else if (rekord.Rodzaj == RodzajFaktury.KorektaSprzedaży) styl.ForeColor = Color.FromArgb(50, 60, 220);
 		else if (rekord.Rodzaj == RodzajFaktury.KorektaZakupu) styl.ForeColor = Color.FromArgb(50, 60, 220);
+		else if (rekord.Rodzaj == RodzajFaktury.KorektaVatMarży) styl.ForeColor = Color.FromArgb(50, 60, 220);
 		else if (rekord.Rodzaj == RodzajFaktury.DowódWewnętrzny) styl.ForeColor = Color.FromArgb(220, 60, 220);
 	}
 

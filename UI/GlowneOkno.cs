@@ -189,12 +189,15 @@ namespace ProFak.UI
 			if (e.Node.Name == "WedlugDaty" && e.Node.Parent.Name == "FakturySprzedazy") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży);
 			else if (e.Node.Name == "WedlugDaty" && e.Node.Parent.Name == "FakturyProforma") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Proforma);
 			else if (e.Node.Name == "WedlugDaty" && e.Node.Parent.Name == "FakturyZakupu") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny);
+			else if (e.Node.Name == "WedlugDaty" && e.Node.Parent.Name == "FakturyVatMarza") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży);
 			else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent.Name == "FakturySprzedazy") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży, faktura => faktura.Nabywca);
 			else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent.Name == "FakturyProforma") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Proforma, faktura => faktura.Nabywca);
 			else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent.Name == "FakturyZakupu") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny, faktura => faktura.Sprzedawca);
+			else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent.Name == "FakturyVatMarza") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży, faktura => faktura.Nabywca);
 			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent.Name == "FakturySprzedazy") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura.Rodzaj == RodzajFaktury.Sprzedaż || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży);
 			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent.Name == "FakturyProforma") WypelnijTowaryFaktur(e.Node, pozycja =>  pozycja.Faktura.Rodzaj == RodzajFaktury.Proforma);
 			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent.Name == "FakturyZakupu") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura.Rodzaj == RodzajFaktury.Zakup || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaZakupu || pozycja.Faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny);
+			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent.Name == "FakturyVatMarza") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura.Rodzaj == RodzajFaktury.VatMarża || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaVatMarży);
 			else if (e.Node.Name == "DeklaracjeVat") WypelnijDeklaracjeVat(e.Node);
 			else if (e.Node.Name == "SkladkiZus") WypelnijSkladkiZus(e.Node);
 			else if (e.Node.Name == "ZaliczkiPit") WypelnijZaliczkiPit(e.Node);

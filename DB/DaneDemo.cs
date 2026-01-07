@@ -183,7 +183,7 @@ namespace ProFak.DB
 						SposobPlatnosciRef = platnosc,
 						TerminPlatnosci = data.AddDays(platnosc.LiczbaDni),
 						OpisSposobuPlatnosci = platnosc.Nazwa,
-						Rodzaj = rnd.Next(100) < 10 ? RodzajFaktury.Zakup : rnd.Next(100) < 10 ? RodzajFaktury.Proforma : RodzajFaktury.Sprzedaż
+						Rodzaj = rnd.Next(100) < 10 ? RodzajFaktury.Zakup : rnd.Next(100) < 10 ? RodzajFaktury.Proforma : rnd.Next(100) < 10 ? RodzajFaktury.VatMarża : RodzajFaktury.Sprzedaż
 					};
 
 					if (faktura.CzyZakup)
@@ -242,7 +242,7 @@ namespace ProFak.DB
 					}
 					else
 					{
-						if (faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.Proforma)
+						if (faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.Proforma || faktura.Rodzaj == RodzajFaktury.VatMarża)
 						{
 							faktura.SprzedawcaRef = firma;
 							faktura.NIPSprzedawcy = firma.NIP;

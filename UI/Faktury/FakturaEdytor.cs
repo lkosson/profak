@@ -258,6 +258,8 @@ namespace ProFak.UI
 			else if (Rekord.Rodzaj == RodzajFaktury.KorektaZakupu) labelRodzaj.Text = "Korekta zakupu " + fakturaKorygowana?.Numer;
 			else if (Rekord.Rodzaj == RodzajFaktury.Proforma) labelRodzaj.Text = "Proforma";
 			else if (Rekord.Rodzaj == RodzajFaktury.DowódWewnętrzny) labelRodzaj.Text = "Dowód wewnętrzny";
+			else if (Rekord.Rodzaj == RodzajFaktury.VatMarża) labelRodzaj.Text = "Vat marża";
+			else if (Rekord.Rodzaj == RodzajFaktury.KorektaVatMarży) labelRodzaj.Text = "Korekta vat marży";
 			else labelRodzaj.Text = Rekord.Rodzaj.ToString();
 
 			if (String.IsNullOrWhiteSpace(Rekord.Numer) && Rekord.Numerator.HasValue)

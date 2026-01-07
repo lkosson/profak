@@ -100,12 +100,20 @@ namespace ProFak.DB
 		{
 			RodzajFaktury.Sprzedaż => PrzeznaczenieNumeratora.Faktura,
 			RodzajFaktury.Proforma => PrzeznaczenieNumeratora.Proforma,
-			RodzajFaktury.KorektaSprzedaży => PrzeznaczenieNumeratora.Korekta,
+			RodzajFaktury.KorektaSprzedaży => PrzeznaczenieNumeratora.KorektaSprzedaży,
 			RodzajFaktury.DowódWewnętrzny => PrzeznaczenieNumeratora.DowódWewnętrzny,
+			RodzajFaktury.VatMarża => PrzeznaczenieNumeratora.VatMarża,
+			RodzajFaktury.KorektaVatMarży => PrzeznaczenieNumeratora.KorektaVatMarży,
 			_ => null
 		};
 
-		public bool CzySprzedaz => Rodzaj == RodzajFaktury.Sprzedaż || Rodzaj == RodzajFaktury.KorektaSprzedaży || Rodzaj == RodzajFaktury.Proforma;
+		public bool CzySprzedaz
+			=> Rodzaj == RodzajFaktury.Sprzedaż
+			|| Rodzaj == RodzajFaktury.KorektaSprzedaży
+			|| Rodzaj == RodzajFaktury.Proforma
+			|| Rodzaj == RodzajFaktury.VatMarża
+			|| Rodzaj == RodzajFaktury.KorektaVatMarży;
+
 		public bool CzyZakup => !CzySprzedaz;
 
 		public decimal? RazemRabat => Pozycje == null || !Pozycje.Any(p => p.RabatRazem != 0) ? null : -Pozycje.Sum(p => p.RabatRazem);
@@ -131,7 +139,7 @@ namespace ProFak.DB
 
 		public void PoprawNumeracjePozycji(Baza baza)
 		{
-			if (Rodzaj == RodzajFaktury.KorektaZakupu || Rodzaj == RodzajFaktury.KorektaSprzedaży) return;
+			if (Rodzaj == RodzajFaktury.KorektaZakupu || Rodzaj == RodzajFaktury.KorektaSprzedaży || Rodzaj == RodzajFaktury.KorektaVatMarży) return;
 			var pozycje = baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == Id && !pozycja.CzyPrzedKorekta).OrderBy(pozycja => pozycja.LP).ToList();
 			var lp = 1;
 			foreach (var pozycja in pozycje)
@@ -197,6 +205,7 @@ namespace ProFak.DB
 			baza.Zapisz(korekta);
 			if (bazowa.Rodzaj == RodzajFaktury.Sprzedaż || bazowa.Rodzaj == RodzajFaktury.KorektaSprzedaży) korekta.Rodzaj = RodzajFaktury.KorektaSprzedaży;
 			else if (bazowa.Rodzaj == RodzajFaktury.Zakup || bazowa.Rodzaj == RodzajFaktury.KorektaZakupu) korekta.Rodzaj = RodzajFaktury.KorektaZakupu;
+			else if (bazowa.Rodzaj == RodzajFaktury.VatMarża || bazowa.Rodzaj == RodzajFaktury.KorektaVatMarży) korekta.Rodzaj = RodzajFaktury.KorektaVatMarży;
 			else throw new ApplicationException($"Nie można korygować faktury {bazowa.Rodzaj}.");
 			korekta.DataSprzedazy = bazowa.DataSprzedazy;
 			korekta.FakturaKorygowanaRef = bazowa;
@@ -293,14 +302,14 @@ namespace ProFak.DB
 			var sposobPlatnosci = baza.Znajdz(SposobPlatnosciRef);
 			if (!Numerator.HasValue) nowaFaktura.Numer = Numer;
 			nowaFaktura.Rodzaj = Rodzaj;
-			if (nowaFaktura.Rodzaj != RodzajFaktury.Sprzedaż && nowaFaktura.Rodzaj != RodzajFaktury.KorektaSprzedaży && nowaFaktura.Rodzaj != RodzajFaktury.Proforma)
+			if (!nowaFaktura.CzySprzedaz)
 			{
 				nowaFaktura.NIPSprzedawcy = NIPSprzedawcy;
 				nowaFaktura.NazwaSprzedawcy = NazwaSprzedawcy;
 				nowaFaktura.DaneSprzedawcy = DaneSprzedawcy;
 				nowaFaktura.SprzedawcaRef = SprzedawcaRef;
 			}
-			if (nowaFaktura.Rodzaj != RodzajFaktury.Zakup && nowaFaktura.Rodzaj != RodzajFaktury.KorektaZakupu)
+			if (!nowaFaktura.CzyZakup)
 			{
 				nowaFaktura.NIPNabywcy = NIPNabywcy;
 				nowaFaktura.NazwaNabywcy = NazwaNabywcy;
@@ -393,6 +402,8 @@ namespace ProFak.DB
 		KorektaZakupu,
 		Proforma,
 		DowódWewnętrzny,
-		Usunięta
+		Usunięta,
+		VatMarża,
+		KorektaVatMarży
 	}
 }

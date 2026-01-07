@@ -36,7 +36,7 @@ namespace ProFak.Wydruki
 				var walutaVAT = baza.Waluty.FirstOrDefault(waluta => waluta.CzyDomyslna);
 				var walutaSkrot = waluta?.Skrot ?? "zł";
 				var walutaVATSkrot = walutaVAT?.Skrot ?? walutaSkrot;
-				var jestvat = pozycje.Any(e => e.StawkaVat != null && !String.Equals(e.StawkaVat.Skrot, "ZW", StringComparison.CurrentCultureIgnoreCase));
+				var jestvat = pozycje.Any(e => e.StawkaVat != null && !String.Equals(e.StawkaVat.Skrot, "ZW", StringComparison.CurrentCultureIgnoreCase)) && faktura.Rodzaj != RodzajFaktury.VatMarża;
 				var jestrabat = pozycje.Any(e => e.RabatProcent > 0 || e.RabatCena > 0 || e.RabatWartosc > 0);
 
 				var fakturaDTO = new FakturaDTO();
@@ -44,6 +44,8 @@ namespace ProFak.Wydruki
 				else if (faktura.Rodzaj == RodzajFaktury.Proforma) fakturaDTO.Rodzaj = "Faktura pro forma";
 				else if (faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży) fakturaDTO.Rodzaj = jestvat ? "Korekta faktury VAT" : "Korekta faktury";
 				else if (faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny) fakturaDTO.Rodzaj = "Dowód wewnętrzny";
+				else if (faktura.Rodzaj == RodzajFaktury.VatMarża) fakturaDTO.Rodzaj = "Faktura VAT marża";
+				else if (faktura.Rodzaj == RodzajFaktury.KorektaVatMarży) fakturaDTO.Rodzaj = "Korekta faktury VAT marża";
 				else fakturaDTO.Rodzaj = faktura.Rodzaj.ToString();
 
 				fakturaDTO.Numer = faktura.Numer;
@@ -57,6 +59,7 @@ namespace ProFak.Wydruki
 				{
 					var fakturaBazowa = baza.Znajdz(faktura.FakturaKorygowanaRef);
 					if (fakturaBazowa.Rodzaj == RodzajFaktury.Proforma) fakturaDTO.Korekta = "do faktury pro forma <b>" + fakturaBazowa.Numer + "</b>";
+					else if (fakturaBazowa.Rodzaj == RodzajFaktury.VatMarża) fakturaDTO.Korekta = "<b>do faktury VAT marża</b> " + fakturaBazowa.Numer + "<br/><b>z dnia</b> " + fakturaBazowa.DataWystawienia.ToString(UI.Format.Data) + "<br/>";
 					else fakturaDTO.Korekta = (jestvat ? "<b>do faktury VAT</b> " : "<b>do faktury</b> ") + fakturaBazowa.Numer + "<br/><b>z dnia</b> " + fakturaBazowa.DataWystawienia.ToString(UI.Format.Data) + "<br/>";
 				}
 
@@ -126,7 +129,7 @@ namespace ProFak.Wydruki
 					pozycjaDTO.JestVAT = jestvat;
 					pozycjaDTO.JestRabat = jestrabat;
 
-					if (faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży)
+					if (faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży)
 						pozycjaDTO.NaglowekPozycji = pozycja.CzyPrzedKorekta ? "Przed korektą" : "Po korekcie";
 					else
 						pozycjaDTO.NaglowekPozycji = "";
