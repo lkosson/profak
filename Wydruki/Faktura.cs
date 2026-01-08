@@ -54,6 +54,7 @@ namespace ProFak.Wydruki
 				fakturaDTO.Waluta = walutaSkrot;
 				fakturaDTO.WalutaVAT = walutaVATSkrot;
 				fakturaDTO.KursWaluty = faktura.KursWaluty;
+				if (faktura.ProceduraMarzy != ProceduraMarży.NieDotyczy) fakturaDTO.ProceduraMarzy = Rekord.Format(faktura.ProceduraMarzy);
 
 				if (faktura.FakturaKorygowanaRef.IsNotNull)
 				{

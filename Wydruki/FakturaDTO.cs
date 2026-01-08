@@ -27,6 +27,7 @@ namespace ProFak.Wydruki
 		public string FormaPlatnosci { get; set; }
 		public string DoZaplaty { get; set; }
 		public string DoZwrotu { get; set; }
+		public string ProceduraMarzy { get; set; }
 		public string NumerRachunku { get; set; }
 		public string Uwagi { get; set; }
 

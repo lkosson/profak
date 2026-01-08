@@ -81,6 +81,10 @@
           <DataField>DoZwrotu</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="ProceduraMarzy">
+          <DataField>ProceduraMarzy</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="NumerRachunku">
           <DataField>NumerRachunku</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -182,7 +186,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>15.57673cm</Height>
+                  <Height>16.17673cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -881,6 +885,52 @@
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
+                                          <Textbox Name="Textbox17">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>Procedura marży:</Value>
+                                                    <Style>
+                                                      <FontFamily>Calibri</FontFamily>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                  <TextRun>
+                                                    <Value xml:space="preserve"> </Value>
+                                                    <Style>
+                                                      <FontFamily>Calibri</FontFamily>
+                                                    </Style>
+                                                  </TextRun>
+                                                  <TextRun>
+                                                    <Value>=Fields!ProceduraMarzy.Value</Value>
+                                                    <Style>
+                                                      <FontFamily>Calibri</FontFamily>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox13</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Color>LightGrey</Color>
+                                                <Style>None</Style>
+                                              </Border>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                    </TablixCells>
+                                  </TablixRow>
+                                  <TablixRow>
+                                    <Height>0.45cm</Height>
+                                    <TablixCells>
+                                      <TablixCell>
+                                        <CellContents>
                                           <Textbox Name="Textbox8">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
@@ -905,6 +955,7 @@
                                               </Border>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                     </TablixCells>
@@ -970,7 +1021,6 @@
                                               </Border>
                                             </Style>
                                           </Rectangle>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                     </TablixCells>
@@ -1017,6 +1067,11 @@
                                   </TablixMember>
                                   <TablixMember>
                                     <Visibility>
+                                      <Hidden>=Fields!ProceduraMarzy.Value = ""</Hidden>
+                                    </Visibility>
+                                  </TablixMember>
+                                  <TablixMember>
+                                    <Visibility>
                                       <Hidden>=Fields!Uwagi.Value = ""</Hidden>
                                     </Visibility>
                                   </TablixMember>
@@ -1029,7 +1084,7 @@
                               </TablixRowHierarchy>
                               <Top>6.72006cm</Top>
                               <Left>0.00003cm</Left>
-                              <Height>8.85667cm</Height>
+                              <Height>9.30667cm</Height>
                               <Width>17.94354cm</Width>
                               <ZIndex>6</ZIndex>
                               <Style>
@@ -1072,7 +1127,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DSFaktury</DataSetName>
-            <Height>15.57673cm</Height>
+            <Height>16.17673cm</Height>
             <Width>17.94357cm</Width>
             <Style>
               <Border>
@@ -1081,7 +1136,7 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>6.13257in</Height>
+        <Height>6.36879in</Height>
         <Style />
       </Body>
       <Width>17.94357cm</Width>
