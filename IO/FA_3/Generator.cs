@@ -106,7 +106,11 @@ class Generator
 		ksefFaktura.Fa.Adnotacje.NoweSrodkiTransportu.P_22N = TWybor1.Item1;
 		ksefFaktura.Fa.Adnotacje.P_23 = TWybor1_2.Item2;
 		ksefFaktura.Fa.Adnotacje.PMarzy = new FakturaFaAdnotacjePMarzy();
-		ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzyN = TWybor1.Item1;
+		if (dbFaktura.Rodzaj != RodzajFaktury.VatMarża && dbFaktura.Rodzaj != RodzajFaktury.KorektaVatMarży) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzyN = TWybor1.Item1;
+		else if (dbFaktura.ProceduraMarzy == ProceduraMarży.TowaryUżywane) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_1 = TWybor1.Item1;
+		else if (dbFaktura.ProceduraMarzy == ProceduraMarży.DziełaSztuki) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_2 = TWybor1.Item1;
+		else if (dbFaktura.ProceduraMarzy == ProceduraMarży.BiuraPodróży) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_2 = TWybor1.Item1;
+		else if (dbFaktura.ProceduraMarzy == ProceduraMarży.PrzedmiotyKolekcjonerskie) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_3 = TWybor1.Item1;
 		ksefFaktura.Fa.RodzajFaktury = dbFaktura.Rodzaj == RodzajFaktury.Sprzedaż || dbFaktura.Rodzaj == RodzajFaktury.VatMarża ? TRodzajFaktury.VAT
 			: dbFaktura.Rodzaj == DB.RodzajFaktury.KorektaSprzedaży || dbFaktura.Rodzaj == RodzajFaktury.KorektaVatMarży ? TRodzajFaktury.KOR
 			: throw new ApplicationException("Nieobsługiwany rodzaj faktury: " + dbFaktura.RodzajFmt);
@@ -379,10 +383,10 @@ class Generator
 
 			if (ksefFaktura.Fa.Adnotacje.PMarzy != null)
 			{
-				if (ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_1ValueSpecified) uwagi.AppendLine("Procedura marży: towary używane");
-				if (ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_2ValueSpecified) uwagi.AppendLine("Procedura marży: dzieła sztuki");
-				if (ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_2ValueSpecified) uwagi.AppendLine("Procedura marży: biura podróży");
-				if (ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_3ValueSpecified) uwagi.AppendLine("Procedura marży: przedmioty kolekcjonerskie i antyki");
+				if (ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_1ValueSpecified) { dbFaktura.ProceduraMarzy = ProceduraMarży.TowaryUżywane; uwagi.AppendLine("Procedura marży: towary używane"); }
+				if (ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_2ValueSpecified) { dbFaktura.ProceduraMarzy = ProceduraMarży.DziełaSztuki; uwagi.AppendLine("Procedura marży: dzieła sztuki"); }
+				if (ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_2ValueSpecified) { dbFaktura.ProceduraMarzy = ProceduraMarży.BiuraPodróży; uwagi.AppendLine("Procedura marży: biura podróży"); }
+				if (ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_3ValueSpecified) { dbFaktura.ProceduraMarzy = ProceduraMarży.PrzedmiotyKolekcjonerskie; uwagi.AppendLine("Procedura marży: przedmioty kolekcjonerskie i antyki"); }
 			}
 
 			if (ksefFaktura.Fa.Adnotacje.P_18A == TWybor1_2.Item1) uwagi.AppendLine("Mechanizm podzielonej płatności");

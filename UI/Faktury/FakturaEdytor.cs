@@ -287,7 +287,7 @@ namespace ProFak.UI
 				checkBoxZakupSrodkowTrwalych.Enabled = false;
 				checkBoxWDT.Enabled = true;
 				checkBoxWNT.Enabled = false;
-				comboBoxProceduraMarzy.Enabled = Rekord.Rodzaj == RodzajFaktury.VatMarża || Rekord.Rodzaj == RodzajFaktury.KorektaVatMarży;
+				comboBoxProceduraMarzy.Enabled = Rekord.Rodzaj == RodzajFaktury.VatMarża || Rekord.Rodzaj == RodzajFaktury.KorektaVatMarży || Rekord.Rodzaj == RodzajFaktury.Zakup || Rekord.Rodzaj == RodzajFaktury.KorektaZakupu;
 
 				comboBoxNIPSprzedawcy.Enabled = false;
 				comboBoxNazwaSprzedawcy.Enabled = false;
