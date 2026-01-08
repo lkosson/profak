@@ -15,6 +15,7 @@ namespace ProFak.UI
 	partial class PozycjaFakturyEdytor : PozycjaFakturyEdytorBase
 	{
 		private Slownik<Towar> slownikTowarow;
+		private bool vatMarza;
 
 		public PozycjaFakturyEdytor()
 		{
@@ -31,6 +32,7 @@ namespace ProFak.UI
 			kontroler.Powiazanie(numericUpDownWartoscNetto, pozycja => pozycja.WartoscNetto, PrzeliczCeny);
 			kontroler.Powiazanie(numericUpDownWartoscVat, pozycja => pozycja.WartoscVat, PrzeliczCeny);
 			kontroler.Powiazanie(numericUpDownWartoscBrutto, pozycja => pozycja.WartoscBrutto, PrzeliczCeny);
+			kontroler.Powiazanie(numericUpDownCenaZakupu, pozycja => pozycja.CenaZakupuDlaMarzy, PrzeliczCeny);
 			kontroler.Powiazanie(checkBoxWedlugBrutto, pozycja => pozycja.CzyWedlugCenBrutto, KonfigurujCeny);
 			kontroler.Powiazanie(checkBoxRecznie, pozycja => pozycja.CzyWartosciReczne, KonfigurujCeny);
 			kontroler.Powiazanie(comboBoxStawkaVat, pozycja => pozycja.StawkaVatRef);
@@ -73,6 +75,16 @@ namespace ProFak.UI
 				jm => { KonfigurujPoleIlosci(); },
 				Spisy.JednostkiMiar)
 				.Zainstaluj();
+
+			vatMarza = Kontekst.Znajdz<Faktura>() is var faktura && (faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży);
+
+			numericUpDownCenaZakupu.Visible = vatMarza;
+			labelCenaZakupu.Visible = vatMarza;
+			checkBoxWedlugBrutto.Enabled = !vatMarza;
+			checkBoxRecznie.Enabled = !vatMarza;
+			numericUpDownRabatCena.Enabled = !vatMarza;
+			numericUpDownRabatProcent.Enabled = !vatMarza;
+			numericUpDownRabatWartosc.Enabled = !vatMarza;
 		}
 
 		protected override void PrzygotujRekord(PozycjaFaktury rekord)
@@ -144,7 +156,7 @@ namespace ProFak.UI
 			Rekord.TowarRef = towar;
 			Rekord.JednostkaMiaryRef = towar.JednostkaMiaryRef;
 			Rekord.Opis = towar.Nazwa;
-			Rekord.CzyWedlugCenBrutto = towar.CzyWedlugCenBrutto;
+			if (!vatMarza) Rekord.CzyWedlugCenBrutto = towar.CzyWedlugCenBrutto;
 			Rekord.CenaBrutto = towar.CenaBrutto;
 			Rekord.CenaNetto = towar.CenaNetto;
 			Rekord.StawkaVatRef = towar.StawkaVatRef;

@@ -43,6 +43,7 @@ namespace ProFak.UI
 		{
 			return Utworz(new FakturaSprzedazySpis(parametry),
 				new FakturaSprzedazyAkcja(),
+				new FakturaVatMarzaAkcja(),
 				new FakturaPodobnaSprzedazAkcja(),
 				new KorektaSprzedazyAkcja(),
 				new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
@@ -87,21 +88,6 @@ namespace ProFak.UI
 				new WydrukFakturyAkcja(),
 				new ZapiszPlikiAkcja(),
 				new WczytajJPK_FAAkcja(),
-				new PrzeladujAkcja<Faktura>()
-			);
-		}
-
-		public static SpisZAkcjami<Faktura, FakturaVatMarzaSpis> FakturyVatMarza(string[] parametry = null)
-		{
-			return Utworz(new FakturaVatMarzaSpis(parametry),
-				new FakturaVatMarzaAkcja(),
-				new FakturaPodobnaSprzedazAkcja(),
-				new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
-				new UsunFaktureAkcja(),
-				new DodajWplateAkcja(),
-				new WydrukFakturyAkcja(),
-				new WyslijMailAkcja(),
-				new ZapiszPlikiAkcja(),
 				new PrzeladujAkcja<Faktura>()
 			);
 		}

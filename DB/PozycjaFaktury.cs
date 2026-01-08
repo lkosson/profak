@@ -30,6 +30,7 @@ namespace ProFak.DB
 		public decimal RabatProcent { get; set; }
 		public decimal RabatCena { get; set; }
 		public decimal RabatWartosc { get; set; }
+		public decimal CenaZakupuDlaMarzy { get; set; }
 		public string RabatFmt => (RabatProcent > 0 ? "-" + (RabatProcent / 1.0000000m) + "%" : "") + (RabatCena > 0 || RabatWartosc > 0 ? (RabatProcent > 0 ? ", " : "") + "-" + (RabatCena * Ilosc + RabatWartosc) + " zł" : "");
 		public decimal RabatRazem => -(Ilosc * CenaNetto * RabatProcent / 100m + RabatCena * Ilosc + RabatWartosc).Zaokragl();
 
@@ -55,6 +56,7 @@ namespace ProFak.DB
 			|| CzyPasuje(WartoscNetto, fraza)
 			|| CzyPasuje(WartoscVat, fraza)
 			|| CzyPasuje(WartoscBrutto, fraza)
+			|| CzyPasuje(CenaZakupuDlaMarzy, fraza)
 			|| CzyPasuje(CzyWartosciReczne ? "Ręczne" : "", fraza)
 			|| CzyPasuje(CzyWedlugCenBrutto ? "Brutto" : "Netto", fraza);
 
@@ -64,7 +66,17 @@ namespace ProFak.DB
 			var stawkaVat = baza.Znajdz(StawkaVatRef);
 			var procentVat = stawkaVat?.Wartosc ?? 0;
 
-			if (CzyWedlugCenBrutto)
+			if (CenaZakupuDlaMarzy > 0)
+			{
+				var marzaBrutto = CenaBrutto - CenaZakupuDlaMarzy;
+				var marzaNetto = (marzaBrutto * 100m / (100 + procentVat)).Zaokragl();
+				CenaNetto = marzaNetto;
+				CenaVat = (marzaBrutto - marzaNetto).Zaokragl();
+				WartoscBrutto = (Ilosc * CenaBrutto).Zaokragl();
+				WartoscNetto = (Ilosc * CenaNetto).Zaokragl();
+				WartoscVat = (Ilosc * CenaVat).Zaokragl();
+			}
+			else if (CzyWedlugCenBrutto)
 			{
 				CenaNetto = (CenaBrutto * 100m / (100 + procentVat)).Zaokragl();
 				CenaVat = (CenaBrutto - CenaNetto).Zaokragl();

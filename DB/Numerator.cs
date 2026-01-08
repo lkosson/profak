@@ -25,7 +25,7 @@ namespace ProFak.DB
 		public static string NadajNumer(Baza baza, PrzeznaczenieNumeratora przeznaczenie, Func<string, IFormattable> podstawienie, bool zwiekszLicznik = true)
 		{
 			var numerator = baza.Numeratory.FirstOrDefault(numerator => numerator.Przeznaczenie == przeznaczenie);
-			if (numerator == null) throw new ApplicationException($"Brak definicji numeratora \"{przeznaczenie}\".");
+			if (numerator == null) throw new ApplicationException($"Brak definicji numeratora \"{przeznaczenie}\" - dodaj pozycję w spisie \"Serwisowe\" - \"Numeracja\".");
 			var szablon = PrzygotujWzorzec(numerator.Format, podstawienie);
 			var parametry = String.Format(szablon, "");
 

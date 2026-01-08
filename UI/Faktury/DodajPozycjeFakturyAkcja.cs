@@ -26,6 +26,7 @@ namespace ProFak.UI
 				.FirstOrDefault();
 			if (ostatniaIstniejacaPozycja != null) rekord.LP = ostatniaIstniejacaPozycja.LP + 1;
 			rekord.Ilosc = 1;
+			rekord.CzyWedlugCenBrutto = kontekst.Znajdz<Faktura>() is var faktura && (faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży);
 
 			return rekord;
 		}
