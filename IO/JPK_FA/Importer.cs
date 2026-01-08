@@ -43,6 +43,16 @@ class Importer
 			faktura.WalutaRef = waluty.FirstOrDefault(e => e.Nazwa == jpkFaktura.KodWaluty.ToString()) ?? waluty.FirstOrDefault(e => e.CzyDomyslna);
 			faktura.UwagiPubliczne = jpkFaktura.PrzyczynaKorekty;
 			faktura.SposobPlatnosciRef = sposobPlatnosci;
+			if (jpkFaktura.P_106E_2) faktura.ProceduraMarzy = ProceduraMarży.BiuraPodróży;
+			if (!String.IsNullOrEmpty(jpkFaktura.P_106E_3A) && jpkFaktura.P_106E_3A.Contains("używane")) faktura.ProceduraMarzy = ProceduraMarży.TowaryUżywane;
+			if (!String.IsNullOrEmpty(jpkFaktura.P_106E_3A) && jpkFaktura.P_106E_3A.Contains("dzieła")) faktura.ProceduraMarzy = ProceduraMarży.DziełaSztuki;
+			if (!String.IsNullOrEmpty(jpkFaktura.P_106E_3A) && jpkFaktura.P_106E_3A.Contains("kolekcjonerskie")) faktura.ProceduraMarzy = ProceduraMarży.PrzedmiotyKolekcjonerskie;
+
+			if (jpkFaktura.P_106E_2 || jpkFaktura.P_106E_3)
+			{
+				if (faktura.Rodzaj == RodzajFaktury.Sprzedaż) faktura.Rodzaj = RodzajFaktury.VatMarża;
+				if (faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży) faktura.Rodzaj = RodzajFaktury.KorektaVatMarży;
+			}
 
 			var sprzedawca = kontekst.Baza.Kontrahenci.FirstOrDefault(e => e.NIP == jpkFaktura.P_4B);
 			if (sprzedawca == null)

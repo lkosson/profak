@@ -112,6 +112,9 @@ namespace ProFak.IO.JPK_V7M
 					}
 
 					if (faktura.CzyTP) { jpksprzedaz.TP = 1; jpksprzedaz.TPSpecified = true; }
+					if (faktura.ProceduraMarzy == ProceduraMarży.BiuraPodróży) { jpksprzedaz.MR_T = 1; jpksprzedaz.MR_TSpecified = true; }
+					if (faktura.ProceduraMarzy == ProceduraMarży.TowaryUżywane || faktura.ProceduraMarzy == ProceduraMarży.DziełaSztuki || faktura.ProceduraMarzy == ProceduraMarży.PrzedmiotyKolekcjonerskie) { jpksprzedaz.MR_UZ = 1; jpksprzedaz.MR_UZSpecified = true; }
+					if (faktura.ProceduraMarzy != ProceduraMarży.NieDotyczy) { jpksprzedaz.SprzedazVAT_Marza += faktura.RazemBrutto; jpksprzedaz.SprzedazVAT_MarzaSpecified = true; }
 
 					jpk.Ewidencja.SprzedazCtrl.PodatekNalezny += faktura.RazemVat;
 				}
@@ -154,6 +157,7 @@ namespace ProFak.IO.JPK_V7M
 						jpkzakup.DataZakupu = faktura.DataWystawienia;
 						jpkzakup.DataWplywu = faktura.DataWprowadzenia;
 						jpkzakup.DataWplywuSpecified = faktura.DataWystawienia.Date != faktura.DataWprowadzenia.Date;
+						if (faktura.ProceduraMarzy != ProceduraMarży.NieDotyczy) { jpkzakup.ZakupVAT_Marza += faktura.RazemBrutto; jpkzakup.ZakupVAT_MarzaSpecified = true; }
 
 						if (faktura.CzyZakupSrodkowTrwalych)
 						{

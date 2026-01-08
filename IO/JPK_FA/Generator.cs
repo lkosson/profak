@@ -103,6 +103,10 @@ namespace ProFak.IO.JPK_FA
 					jpkfaktura.PrzyczynaKorekty = faktura.UwagiPubliczne;
 					jpkfaktura.NrFaKorygowanej = faktura.FakturaKorygowana.Numer;
 				}
+				if (faktura.ProceduraMarzy == ProceduraMarży.BiuraPodróży) jpkfaktura.P_106E_2 = true;
+				if (faktura.ProceduraMarzy == ProceduraMarży.TowaryUżywane) { jpkfaktura.P_106E_3 = true; jpkfaktura.P_106E_3A = "procedura marży - towary używane"; }
+				if (faktura.ProceduraMarzy == ProceduraMarży.DziełaSztuki) { jpkfaktura.P_106E_3 = true; jpkfaktura.P_106E_3A = "procedura marży - dzieła sztuki"; }
+				if (faktura.ProceduraMarzy == ProceduraMarży.PrzedmiotyKolekcjonerskie) { jpkfaktura.P_106E_3 = true; jpkfaktura.P_106E_3A = "procedura marży - przedmioty kolekcjonerskie i antyki"; }
 
 				foreach (var pozycja in faktura.Pozycje)
 				{
