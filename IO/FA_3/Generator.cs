@@ -198,10 +198,15 @@ class Generator
 				ksefWiersz.P_9A = dbPozycja.CenaNetto;
 				ksefWiersz.P_11 = Math.Abs(dbPozycja.WartoscNetto);
 			}
-			ksefWiersz.P_11Vat = Math.Abs(dbPozycja.WartoscVat);
+			if (dbFaktura.ProceduraMarzy == ProceduraMarży.NieDotyczy) ksefWiersz.P_11Vat = Math.Abs(dbPozycja.WartoscVat);
 			if (dbPozycja.GTU > 0) ksefWiersz.GTU = Enum.Parse<TGTU>("GTU_" + dbPozycja.GTU.ToString("00"));
 
-			if (dbFaktura.CzyWDT)
+			if (dbFaktura.ProceduraMarzy != ProceduraMarży.NieDotyczy)
+			{
+				ksefFaktura.Fa.P_13_11 ??= 0;
+				ksefFaktura.Fa.P_13_11 += dbPozycja.WartoscBrutto;
+			}
+			else if (dbFaktura.CzyWDT)
 			{
 				ksefFaktura.Fa.P_13_6_2 ??= 0;
 				ksefFaktura.Fa.P_13_6_2 += dbPozycja.WartoscNetto;
@@ -235,7 +240,8 @@ class Generator
 				ksefFaktura.Fa.P_14_2 += dbPozycja.WartoscVat;
 				ksefWiersz.P_12 = TStawkaPodatku.Item8;
 			}
-			else {
+			else
+			{
 				ksefFaktura.Fa.P_13_1 ??= 0;
 				ksefFaktura.Fa.P_14_1 ??= 0;
 				ksefFaktura.Fa.P_13_1 += dbPozycja.WartoscNetto;
@@ -510,7 +516,9 @@ class Generator
 		if (sprzedawca == null) baza.Zapisz(sprzedawca = faktura.Sprzedawca);
 		faktura.SprzedawcaRef = sprzedawca;
 		faktura.Sprzedawca = null;
-		if (sprzedawca.CzyPodmiot) faktura.Rodzaj = faktura.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaSprzedaży : RodzajFaktury.Sprzedaż;
+		if (sprzedawca.CzyPodmiot) faktura.Rodzaj = faktura.ProceduraMarzy == ProceduraMarży.NieDotyczy 
+			? faktura.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaSprzedaży : RodzajFaktury.Sprzedaż
+			: faktura.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaVatMarży: RodzajFaktury.VatMarża;
 
 		var nabywca = baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.NIP == faktura.Nabywca.NIP);
 		if (nabywca == null) baza.Zapisz(nabywca = faktura.Nabywca);
