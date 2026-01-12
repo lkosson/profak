@@ -25,7 +25,7 @@ partial class DostepKSeFEdytor : UserControl
 			OknoPostepu.Uruchom(async () =>
 			{
 				using var api = new IO.KSEF2.API(SrodowiskoKSeF);
-				xml = await api.AuthenticateSignatureBeginAsync(nip);
+				xml = await api.PobierzZadanieDostepuDoPodpisuAsync(nip);
 			});
 			if (xml == null) return;
 
@@ -57,11 +57,11 @@ partial class DostepKSeFEdytor : UserControl
 			var signedXml = File.ReadAllText(dialog.FileName);
 
 			string token = null;
-			OknoPostepu.Uruchom(async () =>
+			OknoPostepu.Uruchom(async cancellationToken =>
 			{
 				using var api = new IO.KSEF2.API(SrodowiskoKSeF);
-				await api.AuthenticateSignatureEndAsync(signedXml);
-				token = await api.GenerateToken();
+				await api.PrzeslijZadanieDostepuAsync(signedXml, cancellationToken);
+				token = await api.UtworzTokenAsync(cancellationToken);
 			});
 			if (token == null) return;
 

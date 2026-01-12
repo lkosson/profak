@@ -24,9 +24,8 @@ namespace ProFak.UI
 			OknoPostepu.Uruchom(async cancellationToken =>
 			{
 				using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
-				await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF, cancellationToken);
-				xml = await api.GetInvoiceAsync(naglowek.NumerKSeF, cancellationToken);
-				await api.Terminate();
+				await api.UwierzytelnijAsync(podmiot.NIP, podmiot.TokenKSeF, cancellationToken);
+				xml = await api.PobierzFaktureAsync(naglowek.NumerKSeF, cancellationToken);
 				cancellationToken.ThrowIfCancellationRequested();
 			});
 			var faktura = IO.FA_3.Generator.ZbudujDB(kontekst.Baza, xml);

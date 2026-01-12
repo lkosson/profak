@@ -46,19 +46,19 @@ namespace ProFak.UI
 				if (!doWyslania.Any()) return;
 
 				using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
-				await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF, cancellationToken);
-				var (sessionReferenceNumber, encryptionData) = await api.OpenSessionAsync(cancellationToken);
+				await api.UwierzytelnijAsync(podmiot.NIP, podmiot.TokenKSeF, cancellationToken);
+				var (sessionReferenceNumber, encryptionData) = await api.RozpocznijSesjeAsync(cancellationToken);
 				var wyslane = new List<(Faktura faktura, string invoiceReferenceNumber)>();
 				foreach (var faktura in doWyslania)
 				{
 					cancellationToken.ThrowIfCancellationRequested();
-					var (invoiceReferenceNumber, verificationLink) = await api.SendInvoiceAsync(sessionReferenceNumber, encryptionData, faktura.XMLKSeF, faktura.NIPSprzedawcy, faktura.DataWystawienia, cancellationToken);
+					var (invoiceReferenceNumber, verificationLink) = await api.WyslijFaktureAsync(sessionReferenceNumber, encryptionData, faktura.XMLKSeF, faktura.NIPSprzedawcy, faktura.DataWystawienia, cancellationToken);
 					wyslane.Add((faktura, invoiceReferenceNumber));
 					faktura.URLKSeF = verificationLink;
 					kontekst.Baza.Zapisz(faktura);
 				}
-				await api.CloseSessionAsync(sessionReferenceNumber, cancellationToken);
-				await api.FillSessionInvoiceMetadata(sessionReferenceNumber, wyslane, cancellationToken);
+				await api.ZakonczSesjeAsync(sessionReferenceNumber, cancellationToken);
+				await api.SprawdzStanWysylkiAsync(sessionReferenceNumber, wyslane, cancellationToken);
 				foreach (var (faktura, _) in wyslane)
 				{
 					kontekst.Baza.Zapisz(faktura);

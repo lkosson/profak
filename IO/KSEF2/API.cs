@@ -38,11 +38,8 @@ class API : IDisposable
 	{
 		if (API.srodowisko != srodowisko || serviceProvider == null)
 		{
-			if (serviceProvider != null)
-			{
-				serviceProvider.Dispose();
-				serviceProvider = null;
-			}
+			serviceProvider?.Dispose();
+			serviceProvider = null;
 
 			var sc = new ServiceCollection();
 			sc.AddKSeFClient(opts =>
@@ -63,21 +60,36 @@ class API : IDisposable
 		accessToken = default!;
 	}
 
-	private async Task<T> CzekajNaWynikAsync<T>(Func<Task<T>> test, Func<T, bool> wynikOk, TimeSpan czas)
+	private async Task<T> CzekajNaWynikAsync<T>(Func<Task<T>> test, Func<T, bool> wynikOk, CancellationToken cancellationToken)
 	{
-		var granica = DateTime.Now.Add(czas);
-		T wynik;
-		do
+	ponow:
+		var wynik = await test();
+		if (wynikOk(wynik)) return wynik;
+		if (!cancellationToken.IsCancellationRequested)
 		{
-			wynik = await test();
-			if (wynikOk(wynik)) return wynik;
-			await Task.Delay(TimeSpan.FromSeconds(1));
+			await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
+			goto ponow;
 		}
-		while (DateTime.Now < granica);
 		throw new ApplicationException($"Nieoczekiwany rezultat: {wynik}");
 	}
 
-	public async Task AuthenticateAsync(string nip, string ksefToken, CancellationToken cancellationToken)
+	private async Task<T> UruchomUwzgledniajacLimitAsync<T>(Func<Task<T>> akcja, CancellationToken cancellationToken)
+	{
+	powtorz:
+		try
+		{
+			return await akcja();
+		}
+		catch (KsefRateLimitException exc)
+		{
+			var retry = exc.RetryAfterSeconds ?? 10;
+			if (retry > 10) throw new ApplicationException($"Przekroczony limit wywołań API KSeF. Spróbuj ponownie za {(retry > 300 ? retry / 60 + " minut" : retry + " sekund")}.");
+			await Task.Delay(TimeSpan.FromSeconds(retry), cancellationToken);
+			goto powtorz;
+		}
+	}
+
+	public async Task UwierzytelnijAsync(string nip, string ksefToken, CancellationToken cancellationToken)
 	{
 		if (cachedAuth.nip == nip && cachedAuth.srodowisko == srodowisko && cachedAuth.accessToken.ValidUntil > DateTime.Now.AddMinutes(1))
 		{
@@ -106,13 +118,13 @@ class API : IDisposable
 		var authOperationInfo = await ksefClient.SubmitKsefTokenAuthRequestAsync(request, cancellationToken);
 		await CzekajNaWynikAsync(() => ksefClient.GetAuthStatusAsync(authOperationInfo.ReferenceNumber, authOperationInfo.AuthenticationToken.Token, cancellationToken),
 			status => status.Status.Code >= 400 ? throw new ApplicationException($"Wystąpił błąd podczas próby uwierzytelnienia: {status.Status.Description} - {String.Join(", ", status.Status.Details)}") : status.Status.Code == 200,
-			TimeSpan.FromSeconds(5));
+			cancellationToken);
 		var tokens = await ksefClient.GetAccessTokenAsync(authOperationInfo.AuthenticationToken.Token, cancellationToken);
 		accessToken = tokens.AccessToken;
 		cachedAuth = (accessToken, srodowisko!.Value, nip);
 	}
 
-	public async Task<string> AuthenticateSignatureBeginAsync(string nip)
+	public async Task<string> PobierzZadanieDostepuDoPodpisuAsync(string nip)
 	{
 		var challenge = await ksefClient.GetAuthChallengeAsync();
 		var authTokenRequest = AuthTokenRequestBuilder
@@ -125,40 +137,40 @@ class API : IDisposable
 		return xml;
 	}
 
-	public string AuthenticateSignatureTest(string unsignedXml, string nip)
+	public string PodpiszZadanieDlaSrodowiskaTestowego(string xml, string nip)
 	{
 		var certificate = SelfSignedCertificateForSignatureBuilder
-					.Create()
-					.WithGivenName("ProFak")
-					.WithSurname("Test")
-					.WithSerialNumber("TINPL-" + nip)
-					.WithCommonName("ProFak")
-					.Build();
-		var signedXml = SignatureService.Sign(unsignedXml, certificate);
+			.Create()
+			.WithGivenName("ProFak")
+			.WithSurname("Test")
+			.WithSerialNumber("TINPL-" + nip)
+			.WithCommonName("ProFak")
+			.Build();
+		var signedXml = SignatureService.Sign(xml, certificate);
 		return signedXml;
 	}
 
-	public async Task AuthenticateSignatureEndAsync(string signedXml)
+	public async Task PrzeslijZadanieDostepuAsync(string podpisanyXml, CancellationToken cancellationToken)
 	{
-		var authOperationInfo = await ksefClient.SubmitXadesAuthRequestAsync(signedXml, verifyCertificateChain: false);
-		await CzekajNaWynikAsync(() => ksefClient.GetAuthStatusAsync(authOperationInfo.ReferenceNumber, authOperationInfo.AuthenticationToken.Token),
+		var authOperationInfo = await ksefClient.SubmitXadesAuthRequestAsync(podpisanyXml, verifyCertificateChain: false, cancellationToken: cancellationToken);
+		await CzekajNaWynikAsync(() => ksefClient.GetAuthStatusAsync(authOperationInfo.ReferenceNumber, authOperationInfo.AuthenticationToken.Token, cancellationToken: cancellationToken),
 			status => status.Status.Code >= 400 ? throw new ApplicationException($"Wystąpił błąd podczas próby uwierzytelnienia: {status.Status.Description} - {String.Join(", ", status.Status.Details)}") : status.Status.Code == 200,
-			TimeSpan.FromSeconds(10));
+			cancellationToken);
 		var tokens = await ksefClient.GetAccessTokenAsync(authOperationInfo.AuthenticationToken.Token);
 		accessToken = tokens.AccessToken;
 	}
 
-	public async Task<string> GenerateToken()
+	public async Task<string> UtworzTokenAsync(CancellationToken cancellationToken)
 	{
 		var request = new KsefTokenRequest { Permissions = [KsefTokenPermissionType.InvoiceRead, KsefTokenPermissionType.InvoiceWrite], Description = "ProFak" };
 		var token = await ksefClient.GenerateKsefTokenAsync(request, accessToken.Token);
-		await CzekajNaWynikAsync(() => ksefClient.GetKsefTokenAsync(token.ReferenceNumber, accessToken.Token),
+		await CzekajNaWynikAsync(() => ksefClient.GetKsefTokenAsync(token.ReferenceNumber, accessToken.Token, cancellationToken: cancellationToken),
 			status => status.Status == AuthenticationKsefTokenStatus.Failed ? throw new ApplicationException($"Wystąpił błąd podczas generowania tokena: {String.Join(", ", status.StatusDetails)}") : status.Status == AuthenticationKsefTokenStatus.Active,
-			TimeSpan.FromSeconds(10));
+			cancellationToken);
 		return token.Token;
 	}
 
-	public async Task<(string sessionReferenceNumber, EncryptionData encryptionData)> OpenSessionAsync(CancellationToken cancellationToken)
+	public async Task<(string sessionReferenceNumber, EncryptionData encryptionData)> RozpocznijSesjeAsync(CancellationToken cancellationToken)
 	{
 		var encryptionData = cryptographyService.GetEncryptionData();
 		var openOnlineSessionRequest = OpenOnlineSessionRequestBuilder
@@ -169,32 +181,16 @@ class API : IDisposable
 				initializationVector: encryptionData.EncryptionInfo.InitializationVector)
 		 .Build();
 
-		var openSessionResponse = await ksefClient.OpenOnlineSessionAsync(openOnlineSessionRequest, accessToken.Token, cancellationToken: cancellationToken);
+		var openSessionResponse = await UruchomUwzgledniajacLimitAsync(() => ksefClient.OpenOnlineSessionAsync(openOnlineSessionRequest, accessToken.Token, cancellationToken: cancellationToken), cancellationToken);
 		return (openSessionResponse.ReferenceNumber, encryptionData);
 	}
 
-	public async Task CloseSessionAsync(string sessionReferenceNumber, CancellationToken cancellationToken)
+	public async Task ZakonczSesjeAsync(string sessionReferenceNumber, CancellationToken cancellationToken)
 	{
 		await ksefClient.CloseOnlineSessionAsync(sessionReferenceNumber, accessToken.Token, cancellationToken);
 	}
 
-	private async Task<T> UruchomUwzgledniajacLimit<T>(Func<Task<T>> akcja, CancellationToken cancellationToken)
-	{
-		powtorz:
-		try
-		{
-			return await akcja();
-		}
-		catch (KsefRateLimitException exc)
-		{
-			var retry = exc.RetryAfterSeconds ?? 10;
-			if (retry > 10) throw new ApplicationException($"Przekroczony limit wywołań API KSeF. Spróbuj ponownie za {(retry > 300 ? retry / 60 + " minut" : retry + " sekund")}.");
-			await Task.Delay(TimeSpan.FromSeconds(retry), cancellationToken);
-			goto powtorz;
-		}
-	}
-
-	public async Task<IReadOnlyCollection<InvoiceHeader>> GetInvoicesAsync(bool przyrostowo, bool sprzedaz, DateTime dateFrom, DateTime dateTo, CancellationToken cancellationToken)
+	public async Task<IReadOnlyCollection<InvoiceHeader>> PobierzFakturyAsync(bool przyrostowo, bool sprzedaz, DateTime dateFrom, DateTime dateTo, CancellationToken cancellationToken)
 	{
 		var pageSize = 100;
 		var pageOffset = 0;
@@ -208,7 +204,7 @@ class API : IDisposable
 				SubjectType = sprzedaz ? InvoiceSubjectType.Subject1 : InvoiceSubjectType.Subject2
 			};
 
-			var pagedInvoiceResponse = await UruchomUwzgledniajacLimit(() => ksefClient.QueryInvoiceMetadataAsync(query, accessToken.Token, pageOffset, pageSize, cancellationToken: cancellationToken), cancellationToken);
+			var pagedInvoiceResponse = await UruchomUwzgledniajacLimitAsync(() => ksefClient.QueryInvoiceMetadataAsync(query, accessToken.Token, pageOffset, pageSize, cancellationToken: cancellationToken), cancellationToken);
 
 			foreach (var invoice in pagedInvoiceResponse.Invoices)
 			{
@@ -235,12 +231,12 @@ class API : IDisposable
 		return invoices;
 	}
 
-	public async Task<string> GetInvoiceAsync(string ksefReferenceNumber, CancellationToken cancellationToken)
+	public async Task<string> PobierzFaktureAsync(string ksefReferenceNumber, CancellationToken cancellationToken)
 	{
 		return await ksefClient.GetInvoiceAsync(ksefReferenceNumber, accessToken.Token, cancellationToken);
 	}
 
-	public async Task<(string ksefReferenceNumber, string verificationLink)> SendInvoiceAsync(string sessionReferenceNumber, EncryptionData encryptionData, string invoiceXml, string nip, DateTime issueDate, CancellationToken cancellationToken)
+	public async Task<(string ksefReferenceNumber, string verificationLink)> WyslijFaktureAsync(string sessionReferenceNumber, EncryptionData encryptionData, string invoiceXml, string nip, DateTime issueDate, CancellationToken cancellationToken)
 	{
 		var invoice = Encoding.UTF8.GetBytes(invoiceXml);
 		var encryptedInvoice = cryptographyService.EncryptBytesWithAES256(invoice, encryptionData.CipherKey, encryptionData.CipherIv);
@@ -255,18 +251,18 @@ class API : IDisposable
 			.WithEncryptedDocumentContent(Convert.ToBase64String(encryptedInvoice))
 			.Build();
 
-		var sendInvoiceResponse = await UruchomUwzgledniajacLimit(() => ksefClient.SendOnlineSessionInvoiceAsync(sendOnlineInvoiceRequest, sessionReferenceNumber, accessToken.Token, cancellationToken), cancellationToken);
+		var sendInvoiceResponse = await UruchomUwzgledniajacLimitAsync(() => ksefClient.SendOnlineSessionInvoiceAsync(sendOnlineInvoiceRequest, sessionReferenceNumber, accessToken.Token, cancellationToken), cancellationToken);
 
 		var url = verificationLinkService.BuildInvoiceVerificationUrl(nip, issueDate, invoiceMetadata.HashSHA);
 
 		return (sendInvoiceResponse.ReferenceNumber, url);
 	}
 
-	public async Task FillSessionInvoiceMetadata(string sessionReferenceNumber, IEnumerable<(Faktura faktura, string invoiceReferenceNumber)> faktury, CancellationToken cancellationToken)
+	public async Task SprawdzStanWysylkiAsync(string sessionReferenceNumber, IEnumerable<(Faktura faktura, string invoiceReferenceNumber)> faktury, CancellationToken cancellationToken)
 	{
 		var sessionInvoices = await CzekajNaWynikAsync(() => ksefClient.GetSessionInvoicesAsync(sessionReferenceNumber, accessToken.Token),
 			invoices => invoices.Invoices.All(invoice => invoice.Status.Code != 150),
-			TimeSpan.FromSeconds(10));
+			cancellationToken);
 
 		foreach (var sessionInvoice in sessionInvoices.Invoices)
 		{
@@ -298,23 +294,7 @@ class API : IDisposable
 		return dbFaktura;
 	}
 
-	public Task Terminate()
-	{
-		return Task.CompletedTask;
-	}
-
-	protected virtual void Dispose(bool disposing)
-	{
-	}
-
-	~API()
-	{
-		Dispose(disposing: false);
-	}
-
 	public void Dispose()
 	{
-		Dispose(disposing: true);
-		GC.SuppressFinalize(this);
 	}
 }

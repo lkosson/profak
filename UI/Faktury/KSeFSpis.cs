@@ -108,19 +108,18 @@ namespace ProFak.UI
 					}
 					var istniejace = Kontekst.Baza.Faktury.Where(e => !String.IsNullOrEmpty(e.NumerKSeF)).Select(e => e.NumerKSeF).ToHashSet();
 					using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
-					await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF, cancellationToken);
+					await api.UwierzytelnijAsync(podmiot.NIP, podmiot.TokenKSeF, cancellationToken);
 					var naglowki = new List<InvoiceHeader>();
 					while (odDaty < doDaty)
 					{
 						if (cancellationToken.IsCancellationRequested) break;
 						var koniecFragmentu = odDaty.AddMonths(3);
 						if (koniecFragmentu > doDaty) koniecFragmentu = doDaty;
-						var fragment = await api.GetInvoicesAsync(przyrostowo, sprzedaz, odDaty, koniecFragmentu, cancellationToken);
+						var fragment = await api.PobierzFakturyAsync(przyrostowo, sprzedaz, odDaty, koniecFragmentu, cancellationToken);
 						naglowki.AddRange(fragment);
 						odDaty = koniecFragmentu;
 					}
 					
-					await api.Terminate();
 					rekordy = naglowki.Select(api.WczytajNaglowek).ToList();
 					var i = 1;
 					foreach (var rekord in rekordy)
