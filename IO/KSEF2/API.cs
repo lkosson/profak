@@ -1,14 +1,9 @@
 ﻿#nullable enable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using KSeF.Client.Api.Builders.Auth;
 using KSeF.Client.Api.Builders.Online;
 using KSeF.Client.Api.Builders.X509Certificates;
 using KSeF.Client.Api.Services;
+using KSeF.Client.Core.Exceptions;
 using KSeF.Client.Core.Interfaces.Clients;
 using KSeF.Client.Core.Interfaces.Services;
 using KSeF.Client.Core.Models.Authorization;
@@ -17,6 +12,12 @@ using KSeF.Client.Core.Models.Sessions;
 using KSeF.Client.DI;
 using Microsoft.Extensions.DependencyInjection;
 using ProFak.DB;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ProFak.IO.KSEF2;
 
@@ -177,6 +178,22 @@ class API : IDisposable
 		await ksefClient.CloseOnlineSessionAsync(sessionReferenceNumber, accessToken.Token, cancellationToken);
 	}
 
+	private async Task<T> UruchomUwzgledniajacLimit<T>(Func<Task<T>> akcja, CancellationToken cancellationToken)
+	{
+		powtorz:
+		try
+		{
+			return await akcja();
+		}
+		catch (KsefRateLimitException exc)
+		{
+			var retry = exc.RetryAfterSeconds ?? 10;
+			if (retry > 10) throw new ApplicationException($"Przekroczony limit wywołań API KSeF. Spróbuj ponownie za {(retry > 300 ? retry / 60 + " minut" : retry + " sekund")}.");
+			await Task.Delay(TimeSpan.FromSeconds(retry), cancellationToken);
+			goto powtorz;
+		}
+	}
+
 	public async Task<IReadOnlyCollection<InvoiceHeader>> GetInvoicesAsync(bool przyrostowo, bool sprzedaz, DateTime dateFrom, DateTime dateTo, CancellationToken cancellationToken)
 	{
 		var pageSize = 100;
@@ -191,7 +208,8 @@ class API : IDisposable
 				SubjectType = sprzedaz ? InvoiceSubjectType.Subject1 : InvoiceSubjectType.Subject2
 			};
 
-			var pagedInvoiceResponse = await ksefClient.QueryInvoiceMetadataAsync(query, accessToken.Token, pageOffset, pageSize, cancellationToken: cancellationToken);
+			var pagedInvoiceResponse = await UruchomUwzgledniajacLimit(() => ksefClient.QueryInvoiceMetadataAsync(query, accessToken.Token, pageOffset, pageSize, cancellationToken: cancellationToken), cancellationToken);
+
 			foreach (var invoice in pagedInvoiceResponse.Invoices)
 			{
 				var invoiceHeader = new InvoiceHeader();
@@ -237,8 +255,7 @@ class API : IDisposable
 			.WithEncryptedDocumentContent(Convert.ToBase64String(encryptedInvoice))
 			.Build();
 
-		var sendInvoiceResponse = await ksefClient.SendOnlineSessionInvoiceAsync(sendOnlineInvoiceRequest, sessionReferenceNumber, accessToken.Token, cancellationToken)
-			.ConfigureAwait(false);
+		var sendInvoiceResponse = await UruchomUwzgledniajacLimit(() => ksefClient.SendOnlineSessionInvoiceAsync(sendOnlineInvoiceRequest, sessionReferenceNumber, accessToken.Token, cancellationToken), cancellationToken);
 
 		var url = verificationLinkService.BuildInvoiceVerificationUrl(nip, issueDate, invoiceMetadata.HashSHA);
 

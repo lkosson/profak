@@ -115,7 +115,7 @@ namespace ProFak.UI
 						if (cancellationToken.IsCancellationRequested) break;
 						var koniecFragmentu = odDaty.AddMonths(3);
 						if (koniecFragmentu > doDaty) koniecFragmentu = doDaty;
-						var fragment = await api.GetInvoicesAsync(przyrostowo, sprzedaz, odDaty, koniecFragmentu);
+						var fragment = await api.GetInvoicesAsync(przyrostowo, sprzedaz, odDaty, koniecFragmentu, cancellationToken);
 						naglowki.AddRange(fragment);
 						odDaty = koniecFragmentu;
 					}
