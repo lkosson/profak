@@ -516,7 +516,7 @@ class Generator
 		if (sprzedawca == null) baza.Zapisz(sprzedawca = faktura.Sprzedawca);
 		faktura.SprzedawcaRef = sprzedawca;
 		faktura.Sprzedawca = null;
-		if (sprzedawca.CzyPodmiot) faktura.Rodzaj = faktura.ProceduraMarzy == ProceduraMarży.NieDotyczy 
+		if (sprzedawca.CzyPodmiot) faktura.Rodzaj = faktura.ProceduraMarzy == ProceduraMarży.NieDotyczy
 			? faktura.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaSprzedaży : RodzajFaktury.Sprzedaż
 			: faktura.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaVatMarży: RodzajFaktury.VatMarża;
 

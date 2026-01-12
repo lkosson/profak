@@ -231,6 +231,8 @@ namespace ProFak.DB
 			korekta.CzyZakupSrodkowTrwalych = bazowa.CzyZakupSrodkowTrwalych;
 			korekta.CzyWDT = bazowa.CzyWDT;
 			korekta.CzyWNT = bazowa.CzyWNT;
+			korekta.ProceduraMarzy = bazowa.ProceduraMarzy;
+			korekta.OpisZdarzenia = bazowa.OpisZdarzenia;
 
 			bazowa.FakturaKorygujacaRef = korekta;
 
@@ -260,6 +262,7 @@ namespace ProFak.DB
 				pozycjaPrzed.RabatProcent = staraPozycja.RabatProcent;
 				pozycjaPrzed.RabatCena = staraPozycja.RabatCena;
 				pozycjaPrzed.RabatWartosc = staraPozycja.RabatWartosc;
+				pozycjaPrzed.CenaZakupuDlaMarzy = staraPozycja.CenaZakupuDlaMarzy;
 				pozycjaPrzed.CzyPrzedKorekta = true;
 				pozycjaPrzed.LP = staraPozycja.LP;
 				nowePozycje.Add(pozycjaPrzed);
@@ -284,6 +287,7 @@ namespace ProFak.DB
 				pozycjaPo.RabatProcent = staraPozycja.RabatProcent;
 				pozycjaPo.RabatCena = staraPozycja.RabatCena;
 				pozycjaPo.RabatWartosc = staraPozycja.RabatWartosc;
+				pozycjaPo.CenaZakupuDlaMarzy = staraPozycja.CenaZakupuDlaMarzy;
 				pozycjaPo.CzyPrzedKorekta = false;
 				pozycjaPo.LP = staraPozycja.LP;
 				nowePozycje.Add(pozycjaPo);
