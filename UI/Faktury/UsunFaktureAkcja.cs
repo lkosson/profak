@@ -15,7 +15,7 @@ namespace ProFak.UI
 
 		protected override void Usun(Kontekst kontekst, IEnumerable<Faktura> zaznaczoneRekordy)
 		{
-			var numeryFaktur = kontekst.Baza.Faktury.Select(e => e.Numer).ToHashSet();
+			var numeryFaktur = kontekst.Baza.Faktury.Where(e => e.Rodzaj != RodzajFaktury.Zakup && e.Rodzaj != RodzajFaktury.KorektaZakupu).Select(e => e.Numer).ToHashSet();
 			var usuwaneFaktury = zaznaczoneRekordy.Select(e => e.Numer).ToHashSet();
 
 			foreach (var faktura in zaznaczoneRekordy)
