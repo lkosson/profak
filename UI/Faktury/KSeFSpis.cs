@@ -87,7 +87,9 @@ namespace ProFak.UI
 
 			Rekordy = new[] { new Faktura { NazwaNabywcy = "Pobieranie danych z KSEF", NazwaSprzedawcy = "Pobieranie danych z KSEF", Id = -1 } };
 
-			Task.Run(async delegate
+			List<Faktura> rekordy = [];
+
+			OknoPostepu.Uruchom(async cancellationToken =>
 			{
 				try
 				{
@@ -106,12 +108,11 @@ namespace ProFak.UI
 					}
 					var istniejace = Kontekst.Baza.Faktury.Where(e => !String.IsNullOrEmpty(e.NumerKSeF)).Select(e => e.NumerKSeF).ToHashSet();
 					using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
-					var cts = new CancellationTokenSource();
-					cts.CancelAfter(TimeSpan.FromSeconds(10));
-					await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF, cts.Token);
+					await api.AuthenticateAsync(podmiot.NIP, podmiot.TokenKSeF, cancellationToken);
 					var naglowki = new List<InvoiceHeader>();
 					while (odDaty < doDaty)
 					{
+						if (cancellationToken.IsCancellationRequested) break;
 						var koniecFragmentu = odDaty.AddMonths(3);
 						if (koniecFragmentu > doDaty) koniecFragmentu = doDaty;
 						var fragment = await api.GetInvoicesAsync(przyrostowo, sprzedaz, odDaty, koniecFragmentu);
@@ -120,8 +121,7 @@ namespace ProFak.UI
 					}
 					
 					await api.Terminate();
-					var rekordy = naglowki.Select(api.WczytajNaglowek).ToList();
-					await ThreadSwitcher.ResumeForegroundAsync(this);
+					rekordy = naglowki.Select(api.WczytajNaglowek).ToList();
 					var i = 1;
 					foreach (var rekord in rekordy)
 					{
@@ -129,13 +129,14 @@ namespace ProFak.UI
 						rekord.Id = istniejace.Contains(rekord.NumerKSeF) ? i : -i;
 						i++;
 					}
-					Rekordy = rekordy;
 				}
 				catch (Exception exc)
 				{
 					OknoBledu.Pokaz(exc);
 				}
 			});
+
+			Rekordy = rekordy;
 		}
 
 		protected override void UstawStylWiersza(Faktura rekord, string kolumna, DataGridViewCellStyle styl)

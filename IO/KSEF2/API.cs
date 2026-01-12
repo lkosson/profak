@@ -177,20 +177,21 @@ class API : IDisposable
 		await ksefClient.CloseOnlineSessionAsync(sessionReferenceNumber, accessToken.Token, cancellationToken);
 	}
 
-	public async Task<IReadOnlyCollection<InvoiceHeader>> GetInvoicesAsync(bool przyrostowo, bool sprzedaz, DateTime dateFrom, DateTime dateTo)
+	public async Task<IReadOnlyCollection<InvoiceHeader>> GetInvoicesAsync(bool przyrostowo, bool sprzedaz, DateTime dateFrom, DateTime dateTo, CancellationToken cancellationToken)
 	{
 		var pageSize = 100;
 		var pageOffset = 0;
 		var invoices = new List<InvoiceHeader>();
 		while (true)
 		{
+			if (cancellationToken.IsCancellationRequested) break;
 			var query = new InvoiceQueryFilters
 			{
 				DateRange = new DateRange { DateType = przyrostowo ? DateType.PermanentStorage : DateType.Issue, From = DateTime.SpecifyKind(dateFrom, DateTimeKind.Local), To = DateTime.SpecifyKind(dateTo, DateTimeKind.Local) },
 				SubjectType = sprzedaz ? InvoiceSubjectType.Subject1 : InvoiceSubjectType.Subject2
 			};
 
-			var pagedInvoiceResponse = await ksefClient.QueryInvoiceMetadataAsync(query, accessToken.Token, pageOffset, pageSize);
+			var pagedInvoiceResponse = await ksefClient.QueryInvoiceMetadataAsync(query, accessToken.Token, pageOffset, pageSize, cancellationToken: cancellationToken);
 			foreach (var invoice in pagedInvoiceResponse.Invoices)
 			{
 				var invoiceHeader = new InvoiceHeader();
