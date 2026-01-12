@@ -271,7 +271,7 @@ class Generator
 		{
 			if (ksefFaktura.Podmiot1.DaneIdentyfikacyjne != null)
 			{
-				dbFaktura.Sprzedawca.Nazwa = dbFaktura.NazwaSprzedawcy = ksefFaktura.Podmiot1.DaneIdentyfikacyjne.Nazwa;
+				dbFaktura.Sprzedawca.Nazwa = dbFaktura.Sprzedawca.PelnaNazwa = dbFaktura.NazwaSprzedawcy = ksefFaktura.Podmiot1.DaneIdentyfikacyjne.Nazwa;
 				dbFaktura.Sprzedawca.NIP = dbFaktura.NIPSprzedawcy = ksefFaktura.Podmiot1.DaneIdentyfikacyjne.NIP;
 			}
 
@@ -288,8 +288,8 @@ class Generator
 		{
 			if (ksefFaktura.Podmiot2.DaneIdentyfikacyjne != null)
 			{
-				dbFaktura.Nabywca.NIP = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP;
-				dbFaktura.Nabywca.Nazwa = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.Nazwa;
+				dbFaktura.Nabywca.Nazwa = dbFaktura.Nabywca.PelnaNazwa = dbFaktura.NazwaNabywcy = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.Nazwa;
+				dbFaktura.Nabywca.NIP = dbFaktura.NIPNabywcy = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP;
 			}
 
 			if (ksefFaktura.Podmiot2.Adres != null) dbFaktura.Nabywca.AdresRejestrowy = ksefFaktura.Podmiot2.Adres.AdresL1 + "\r\n" + ksefFaktura.Podmiot2.Adres.AdresL2;
@@ -525,7 +525,7 @@ class Generator
 		faktura.NabywcaRef = nabywca;
 		faktura.Nabywca = null;
 		faktura.NIPNabywcy = nabywca.NIP;
-		faktura.NazwaNabywcy = nabywca.Nazwa;
+		faktura.NazwaNabywcy = nabywca.PelnaNazwa;
 		faktura.DaneNabywcy = nabywca.AdresRejestrowy;
 
 		var sposobyPlatnosci = baza.SposobyPlatnosci.ToList();
