@@ -55,6 +55,7 @@ namespace ProFak.UI
 				new WyslijDoKSeFAkcja(),
 				new ZapiszPlikiAkcja(),
 				new WczytajJPK_FAAkcja(),
+				new WczytajKSeFAkcja(),
 				new PrzeladujAkcja<Faktura>()
 			);
 		}
