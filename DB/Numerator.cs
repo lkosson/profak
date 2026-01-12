@@ -13,7 +13,7 @@ namespace ProFak.DB
 		public PrzeznaczenieNumeratora Przeznaczenie { get; set; } = PrzeznaczenieNumeratora.Faktura;
 		public string Format { get; set; } = "[Numer]";
 
-		public string PrzeznaczenieFmt => Przeznaczenie.ToString();
+		public string PrzeznaczenieFmt => Format(Przeznaczenie);
 
 		public List<StanNumeratora> Stany { get; set; }
 

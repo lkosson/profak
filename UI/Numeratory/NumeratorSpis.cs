@@ -11,7 +11,7 @@ namespace ProFak.UI
 	{
 		public NumeratorSpis()
 		{
-			DodajKolumne(nameof(Numerator.Przeznaczenie), "Przeznaczenie", rozciagnij: true);
+			DodajKolumne(nameof(Numerator.PrzeznaczenieFmt), "Przeznaczenie", rozciagnij: true);
 			DodajKolumne(nameof(Numerator.Format), "Format");
 			DodajKolumneId();
 		}

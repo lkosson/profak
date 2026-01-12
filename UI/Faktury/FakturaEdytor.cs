@@ -76,6 +76,7 @@ namespace ProFak.UI
 			Wymagane(comboBoxNazwaSprzedawcy);
 			Wymagane(comboBoxSposobPlatnosci);
 			Wymagane(comboBoxWaluta);
+			Walidacja<ProceduraMarży>(comboBoxProceduraMarzy, WalidacjaProceduryMarzy, false);
 
 			tabPageWplaty.Controls.Add(wplaty = Spisy.Wplaty());
 			tabPagePozycje.Controls.Add(pozycjeFaktury = Spisy.PozycjeFaktur());
@@ -91,6 +92,17 @@ namespace ProFak.UI
 			dateTimePickerDataWprowadzenia.Format = DateTimePickerFormat.Custom;
 			dateTimePickerDataWystawienia.Format = DateTimePickerFormat.Custom;
 			dateTimePickerTerminPlatnosci.Format = DateTimePickerFormat.Custom;
+		}
+
+		private string WalidacjaProceduryMarzy(ProceduraMarży wartosc)
+		{
+			if (Rekord.Rodzaj != RodzajFaktury.VatMarża && Rekord.Rodzaj != RodzajFaktury.KorektaVatMarży) return null;
+			if (wartosc == ProceduraMarży.NieDotyczy)
+			{
+				tabControl1.SelectedTab = tabPagePodatki;
+				return "Należy wybrać procedurę marży dla faktury Vat marża.";
+			}
+			return null;
 		}
 
 		private void pozycjeFakturySpis_RekordyZmienione()

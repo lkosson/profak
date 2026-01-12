@@ -83,6 +83,26 @@ namespace ProFak.UI
 			};
 		}
 
+		public void Walidacja<T>(ComboBox comboBox, Func<T, string> walidator, bool miekki)
+		{
+			comboBox.Validating += (control, e) =>
+			{
+				var wartosc = comboBox.SelectedValue;
+				var blad = wartosc is T t ? walidator(t) : "Wybrana wartość jest nieprawidłowa.";
+
+				if (blad == null)
+				{
+					errorProvider.SetError(comboBox, "");
+				}
+				else
+				{
+					errorProvider.SetIconAlignment(comboBox, ErrorIconAlignment.MiddleLeft);
+					errorProvider.SetError(comboBox, blad);
+					if (!miekki) e.Cancel = true;
+				}
+			};
+		}
+
 		private void TextBox_Wymagane_Validating(object sender, CancelEventArgs e)
 		{
 			var textBox = (TextBox)sender;
