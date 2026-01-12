@@ -37,7 +37,10 @@ namespace ProFak.UI
 					cofniety = true;
 				}
 				if (cofniety) kontekst.Baza.Zapisz(stanNumeratora);
+			}
 
+			foreach (var faktura in zaznaczoneRekordy)
+			{
 				if (faktura.FakturaKorygowanaRef.IsNotNull)
 				{
 					var fakturaKorygowana = kontekst.Baza.Znajdz(faktura.FakturaKorygowanaRef);
