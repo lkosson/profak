@@ -34,6 +34,7 @@ namespace ProFak.UI
 			kontroler.Powiazanie(textBoxUwagi, kontrahent => kontrahent.Uwagi);
 			kontroler.Powiazanie(comboBoxStan, kontrahent => kontrahent.CzyArchiwalny);
 			kontroler.Powiazanie(checkBoxTP, kontrahent => kontrahent.CzyTP);
+			kontroler.Powiazanie(comboBoxSposobPlatnosci, kontrahent => kontrahent.SposobPlatnosciRef);
 
 			kontroler.Powiazanie(comboBoxKodUrzedu, kontrahent => kontrahent.KodUrzedu);
 			kontroler.Powiazanie(textBoxOsobaFizycznaImie, kontrahent => kontrahent.OsobaFizycznaImie);
@@ -122,6 +123,15 @@ namespace ProFak.UI
 		protected override void KontekstGotowy()
 		{
 			base.KontekstGotowy();
+
+			new Slownik<SposobPlatnosci>(
+				Kontekst, comboBoxSposobPlatnosci, buttonSposobPlatnosci,
+				Kontekst.Baza.SposobyPlatnosci.ToList,
+				sposobPlatnosci => sposobPlatnosci.Nazwa,
+				sposobPlatnosci => { },
+				Spisy.SposobyPlatnosci,
+				dopuscPustaWartosc: true)
+				.Zainstaluj();
 
 			new Slownik<UrzadSkarbowy>(
 				Kontekst, comboBoxKodUrzedu, buttonUrzadSkarbowy,

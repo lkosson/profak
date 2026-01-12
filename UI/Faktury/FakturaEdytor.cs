@@ -213,6 +213,7 @@ namespace ProFak.UI
 			rekord.NazwaNabywcy = kontrahent.PelnaNazwa;
 			rekord.DaneNabywcy = kontrahent.AdresRejestrowy;
 			rekord.CzyTP = kontrahent.CzyTP;
+			if (kontrahent.SposobPlatnosciRef.IsNotNull) comboBoxSposobPlatnosci.SelectedValue = kontrahent.SposobPlatnosciRef;
 			return true;
 		}
 
@@ -224,6 +225,7 @@ namespace ProFak.UI
 			rekord.NazwaSprzedawcy = kontrahent.PelnaNazwa;
 			rekord.DaneSprzedawcy = kontrahent.AdresRejestrowy;
 			rekord.RachunekBankowy = kontrahent.RachunekBankowy;
+			if (kontrahent.SposobPlatnosciRef.IsNotNull) comboBoxSposobPlatnosci.SelectedValue = kontrahent.SposobPlatnosciRef;
 			return true;
 		}
 

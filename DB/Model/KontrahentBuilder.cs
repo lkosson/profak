@@ -36,6 +36,12 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.FormaOpodatkowania);
 			builder.Property(e => e.TokenKSeF).HasDefaultValue("");
 			builder.Property(e => e.SrodowiskoKSeF).HasDefaultValue(SrodowiskoKSeF.Test).IsRequired();
+
+			builder.Property(e => e.SposobPlatnosciId);
+
+			builder.Ignore(e => e.SposobPlatnosciRef);
+
+			builder.HasOne(e => e.SposobPlatnosci).WithMany().HasForeignKey(e => e.SposobPlatnosciId).OnDelete(DeleteBehavior.SetNull);
 		}
 	}
 }

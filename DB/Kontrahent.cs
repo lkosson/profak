@@ -20,6 +20,7 @@ namespace ProFak.DB
 		public bool CzyArchiwalny { get; set; }
 		public bool CzyPodmiot { get; set; }
 		public bool CzyTP { get; set; }
+		public int? SposobPlatnosciId { get; set; }
 
 		public string KodUrzedu { get; set; }
 		public string OsobaFizycznaImie { get; set; }
@@ -28,6 +29,10 @@ namespace ProFak.DB
 		public FormaOpodatkowania? FormaOpodatkowania { get; set; }
 		public string TokenKSeF { get; set; }
 		public SrodowiskoKSeF SrodowiskoKSeF { get; set; }
+
+		public Ref<SposobPlatnosci> SposobPlatnosciRef { get => SposobPlatnosciId; set => SposobPlatnosciId = value; }
+
+		public SposobPlatnosci SposobPlatnosci { get; set; }
 
 		public string AdresRejestrowyFmt => AdresRejestrowy.JakoJednaLinia();
 

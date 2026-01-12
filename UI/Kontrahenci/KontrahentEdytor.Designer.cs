@@ -51,6 +51,8 @@ namespace ProFak.UI
 			checkBoxTP = new System.Windows.Forms.CheckBox();
 			buttonSprawdzMF = new ButtonDPI();
 			buttonPobierzGUS = new ButtonDPI();
+			label16 = new System.Windows.Forms.Label();
+			comboBoxSposobPlatnosci = new System.Windows.Forms.ComboBox();
 			tabPage2 = new System.Windows.Forms.TabPage();
 			textBoxUwagi = new System.Windows.Forms.TextBox();
 			tabPageFakturySprzedazy = new System.Windows.Forms.TabPage();
@@ -71,12 +73,13 @@ namespace ProFak.UI
 			label15 = new System.Windows.Forms.Label();
 			textBoxTokenKSeF = new System.Windows.Forms.TextBox();
 			comboBoxSrodowiskoKSeF = new System.Windows.Forms.ComboBox();
+			buttonKSeFAuth = new ButtonDPI();
 			textBoxNazwa = new System.Windows.Forms.TextBox();
 			label1 = new System.Windows.Forms.Label();
 			tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			backgroundWorkerSprawdzMF = new System.ComponentModel.BackgroundWorker();
 			backgroundWorkerPobierzGUS = new System.ComponentModel.BackgroundWorker();
-			buttonKSeFAuth = new ButtonDPI();
+			buttonSposobPlatnosci = new ButtonDPI();
 			((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
 			tabControl.SuspendLayout();
 			tabPage1.SuspendLayout();
@@ -99,7 +102,7 @@ namespace ProFak.UI
 			tabControl.Location = new System.Drawing.Point(3, 32);
 			tabControl.Name = "tabControl";
 			tabControl.SelectedIndex = 0;
-			tabControl.Size = new System.Drawing.Size(794, 390);
+			tabControl.Size = new System.Drawing.Size(794, 417);
 			tabControl.TabIndex = 2;
 			// 
 			// tabPage1
@@ -108,7 +111,7 @@ namespace ProFak.UI
 			tabPage1.Location = new System.Drawing.Point(4, 24);
 			tabPage1.Name = "tabPage1";
 			tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			tabPage1.Size = new System.Drawing.Size(786, 362);
+			tabPage1.Size = new System.Drawing.Size(786, 389);
 			tabPage1.TabIndex = 0;
 			tabPage1.Text = "Dane podstawowe";
 			tabPage1.UseVisualStyleBackColor = true;
@@ -135,13 +138,17 @@ namespace ProFak.UI
 			tableLayoutPanel1.Controls.Add(label8, 0, 6);
 			tableLayoutPanel1.Controls.Add(comboBoxStan, 1, 7);
 			tableLayoutPanel1.Controls.Add(label9, 0, 7);
-			tableLayoutPanel1.Controls.Add(checkBoxTP, 1, 9);
+			tableLayoutPanel1.Controls.Add(checkBoxTP, 1, 10);
 			tableLayoutPanel1.Controls.Add(buttonSprawdzMF, 2, 6);
 			tableLayoutPanel1.Controls.Add(buttonPobierzGUS, 2, 1);
+			tableLayoutPanel1.Controls.Add(label16, 0, 9);
+			tableLayoutPanel1.Controls.Add(comboBoxSposobPlatnosci, 1, 9);
+			tableLayoutPanel1.Controls.Add(buttonSposobPlatnosci, 2, 9);
 			tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
 			tableLayoutPanel1.Name = "tableLayoutPanel1";
-			tableLayoutPanel1.RowCount = 11;
+			tableLayoutPanel1.RowCount = 12;
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -153,7 +160,7 @@ namespace ProFak.UI
 			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			tableLayoutPanel1.Size = new System.Drawing.Size(780, 356);
+			tableLayoutPanel1.Size = new System.Drawing.Size(780, 383);
 			tableLayoutPanel1.TabIndex = 0;
 			// 
 			// label2
@@ -266,9 +273,9 @@ namespace ProFak.UI
 			// 
 			label6.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			label6.AutoSize = true;
-			label6.Location = new System.Drawing.Point(95, 209);
+			label6.Location = new System.Drawing.Point(94, 209);
 			label6.Name = "label6";
-			label6.Size = new System.Drawing.Size(45, 15);
+			label6.Size = new System.Drawing.Size(46, 15);
 			label6.TabIndex = 2;
 			label6.Text = "Telefon";
 			// 
@@ -316,10 +323,10 @@ namespace ProFak.UI
 			// checkBoxTP
 			// 
 			checkBoxTP.AutoSize = true;
-			checkBoxTP.Location = new System.Drawing.Point(146, 323);
+			checkBoxTP.Location = new System.Drawing.Point(146, 354);
 			checkBoxTP.Name = "checkBoxTP";
 			checkBoxTP.Size = new System.Drawing.Size(131, 19);
-			checkBoxTP.TabIndex = 9;
+			checkBoxTP.TabIndex = 11;
 			checkBoxTP.Text = "Podmiot powiązany";
 			checkBoxTP.UseVisualStyleBackColor = true;
 			// 
@@ -345,13 +352,33 @@ namespace ProFak.UI
 			buttonPobierzGUS.UseVisualStyleBackColor = true;
 			buttonPobierzGUS.Click += buttonPobierzGUS_Click;
 			// 
+			// label16
+			// 
+			label16.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			label16.AutoSize = true;
+			label16.Location = new System.Drawing.Point(43, 328);
+			label16.Name = "label16";
+			label16.Size = new System.Drawing.Size(97, 15);
+			label16.TabIndex = 2;
+			label16.Text = "Sposób płatności";
+			// 
+			// comboBoxSposobPlatnosci
+			// 
+			comboBoxSposobPlatnosci.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			comboBoxSposobPlatnosci.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			comboBoxSposobPlatnosci.FormattingEnabled = true;
+			comboBoxSposobPlatnosci.Location = new System.Drawing.Point(146, 324);
+			comboBoxSposobPlatnosci.Name = "comboBoxSposobPlatnosci";
+			comboBoxSposobPlatnosci.Size = new System.Drawing.Size(465, 23);
+			comboBoxSposobPlatnosci.TabIndex = 9;
+			// 
 			// tabPage2
 			// 
 			tabPage2.Controls.Add(textBoxUwagi);
 			tabPage2.Location = new System.Drawing.Point(4, 24);
 			tabPage2.Name = "tabPage2";
 			tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			tabPage2.Size = new System.Drawing.Size(786, 362);
+			tabPage2.Size = new System.Drawing.Size(786, 389);
 			tabPage2.TabIndex = 1;
 			tabPage2.Text = "Uwagi";
 			tabPage2.UseVisualStyleBackColor = true;
@@ -362,7 +389,7 @@ namespace ProFak.UI
 			textBoxUwagi.Location = new System.Drawing.Point(3, 3);
 			textBoxUwagi.Multiline = true;
 			textBoxUwagi.Name = "textBoxUwagi";
-			textBoxUwagi.Size = new System.Drawing.Size(780, 356);
+			textBoxUwagi.Size = new System.Drawing.Size(780, 383);
 			textBoxUwagi.TabIndex = 0;
 			// 
 			// tabPageFakturySprzedazy
@@ -370,7 +397,7 @@ namespace ProFak.UI
 			tabPageFakturySprzedazy.Location = new System.Drawing.Point(4, 24);
 			tabPageFakturySprzedazy.Name = "tabPageFakturySprzedazy";
 			tabPageFakturySprzedazy.Padding = new System.Windows.Forms.Padding(3);
-			tabPageFakturySprzedazy.Size = new System.Drawing.Size(786, 362);
+			tabPageFakturySprzedazy.Size = new System.Drawing.Size(786, 389);
 			tabPageFakturySprzedazy.TabIndex = 2;
 			tabPageFakturySprzedazy.Text = "Sprzedaż do";
 			tabPageFakturySprzedazy.UseVisualStyleBackColor = true;
@@ -380,7 +407,7 @@ namespace ProFak.UI
 			tabPageFakturyZakupu.Location = new System.Drawing.Point(4, 24);
 			tabPageFakturyZakupu.Name = "tabPageFakturyZakupu";
 			tabPageFakturyZakupu.Padding = new System.Windows.Forms.Padding(3);
-			tabPageFakturyZakupu.Size = new System.Drawing.Size(786, 362);
+			tabPageFakturyZakupu.Size = new System.Drawing.Size(786, 389);
 			tabPageFakturyZakupu.TabIndex = 3;
 			tabPageFakturyZakupu.Text = "Zakup od";
 			tabPageFakturyZakupu.UseVisualStyleBackColor = true;
@@ -391,7 +418,7 @@ namespace ProFak.UI
 			tabPagePodatki.Location = new System.Drawing.Point(4, 24);
 			tabPagePodatki.Name = "tabPagePodatki";
 			tabPagePodatki.Padding = new System.Windows.Forms.Padding(3);
-			tabPagePodatki.Size = new System.Drawing.Size(786, 362);
+			tabPagePodatki.Size = new System.Drawing.Size(786, 389);
 			tabPagePodatki.TabIndex = 4;
 			tabPagePodatki.Text = "Dane urzędowe";
 			tabPagePodatki.UseVisualStyleBackColor = true;
@@ -430,7 +457,7 @@ namespace ProFak.UI
 			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			tableLayoutPanel3.Size = new System.Drawing.Size(780, 356);
+			tableLayoutPanel3.Size = new System.Drawing.Size(780, 383);
 			tableLayoutPanel3.TabIndex = 0;
 			// 
 			// label10
@@ -546,9 +573,9 @@ namespace ProFak.UI
 			// 
 			label15.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			label15.AutoSize = true;
-			label15.Location = new System.Drawing.Point(71, 155);
+			label15.Location = new System.Drawing.Point(70, 155);
 			label15.Name = "label15";
-			label15.Size = new System.Drawing.Size(66, 15);
+			label15.Size = new System.Drawing.Size(67, 15);
 			label15.TabIndex = 0;
 			label15.Text = "Token KSeF";
 			// 
@@ -568,6 +595,19 @@ namespace ProFak.UI
 			comboBoxSrodowiskoKSeF.Name = "comboBoxSrodowiskoKSeF";
 			comboBoxSrodowiskoKSeF.Size = new System.Drawing.Size(71, 23);
 			comboBoxSrodowiskoKSeF.TabIndex = 6;
+			// 
+			// buttonKSeFAuth
+			// 
+			buttonKSeFAuth.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			buttonKSeFAuth.AutoSize = true;
+			tableLayoutPanel3.SetColumnSpan(buttonKSeFAuth, 2);
+			buttonKSeFAuth.Location = new System.Drawing.Point(682, 150);
+			buttonKSeFAuth.Name = "buttonKSeFAuth";
+			buttonKSeFAuth.Size = new System.Drawing.Size(95, 25);
+			buttonKSeFAuth.TabIndex = 8;
+			buttonKSeFAuth.Text = "Uzyskaj dostęp";
+			buttonKSeFAuth.UseVisualStyleBackColor = true;
+			buttonKSeFAuth.Click += buttonKSeFAuth_Click;
 			// 
 			// textBoxNazwa
 			// 
@@ -603,7 +643,7 @@ namespace ProFak.UI
 			tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			tableLayoutPanel2.Size = new System.Drawing.Size(800, 425);
+			tableLayoutPanel2.Size = new System.Drawing.Size(800, 452);
 			tableLayoutPanel2.TabIndex = 3;
 			// 
 			// backgroundWorkerSprawdzMF
@@ -616,18 +656,16 @@ namespace ProFak.UI
 			backgroundWorkerPobierzGUS.DoWork += backgroundWorkerPobierzGUS_DoWork;
 			backgroundWorkerPobierzGUS.RunWorkerCompleted += backgroundWorkerPobierzGUS_RunWorkerCompleted;
 			// 
-			// buttonKSeFAuth
+			// buttonSposobPlatnosci
 			// 
-			buttonKSeFAuth.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			buttonKSeFAuth.AutoSize = true;
-			tableLayoutPanel3.SetColumnSpan(buttonKSeFAuth, 2);
-			buttonKSeFAuth.Location = new System.Drawing.Point(682, 150);
-			buttonKSeFAuth.Name = "buttonKSeFAuth";
-			buttonKSeFAuth.Size = new System.Drawing.Size(95, 25);
-			buttonKSeFAuth.TabIndex = 8;
-			buttonKSeFAuth.Text = "Uzyskaj dostęp";
-			buttonKSeFAuth.UseVisualStyleBackColor = true;
-			buttonKSeFAuth.Click += buttonKSeFAuth_Click;
+			buttonSposobPlatnosci.AutoSize = true;
+			buttonSposobPlatnosci.Location = new System.Drawing.Point(617, 323);
+			buttonSposobPlatnosci.Name = "buttonSposobPlatnosci";
+			buttonSposobPlatnosci.Size = new System.Drawing.Size(26, 25);
+			buttonSposobPlatnosci.TabIndex = 10;
+			buttonSposobPlatnosci.Text = "...";
+			buttonSposobPlatnosci.UseVisualStyleBackColor = true;
+			buttonSposobPlatnosci.Click += buttonSprawdzMF_Click;
 			// 
 			// KontrahentEdytor
 			// 
@@ -636,7 +674,7 @@ namespace ProFak.UI
 			Controls.Add(tableLayoutPanel2);
 			MinimumSize = new System.Drawing.Size(800, 425);
 			Name = "KontrahentEdytor";
-			Size = new System.Drawing.Size(800, 425);
+			Size = new System.Drawing.Size(800, 452);
 			((System.ComponentModel.ISupportInitialize)errorProvider).EndInit();
 			tabControl.ResumeLayout(false);
 			tabPage1.ResumeLayout(false);
@@ -701,5 +739,8 @@ namespace ProFak.UI
 		private System.Windows.Forms.ComboBox comboBoxSrodowiskoKSeF;
 		private ButtonDPI buttonKSeFAuth;
 		private System.Windows.Forms.DateTimePickerFix dateTimePickerOsobaFizycznaDataUrodzenia;
+		private System.Windows.Forms.Label label16;
+		private System.Windows.Forms.ComboBox comboBoxSposobPlatnosci;
+		private ButtonDPI buttonSposobPlatnosci;
 	}
 }

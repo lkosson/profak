@@ -20,8 +20,9 @@ namespace ProFak.UI
 		private readonly Func<SpisZAkcjami<T>> generatorSpisu;
 		private bool gotowy;
 		private bool ustawionaNowaWartosc;
+		private bool dopuscPustaWartosc;
 
-		public Slownik(Kontekst kontekst, ComboBox comboBox, Button button, Func<IEnumerable<T>> pobierzWartosci, Func<T, string> wyswietlanaWartosc, Action<T> ustawWartosc, Func<SpisZAkcjami<T>> generatorSpisu)
+		public Slownik(Kontekst kontekst, ComboBox comboBox, Button button, Func<IEnumerable<T>> pobierzWartosci, Func<T, string> wyswietlanaWartosc, Action<T> ustawWartosc, Func<SpisZAkcjami<T>> generatorSpisu, bool dopuscPustaWartosc = false)
 		{
 			this.kontekst = kontekst;
 			this.comboBox = comboBox;
@@ -30,6 +31,7 @@ namespace ProFak.UI
 			this.wyswietlanaWartosc = wyswietlanaWartosc;
 			this.ustawWartosc = ustawWartosc;
 			this.generatorSpisu = generatorSpisu;
+			this.dopuscPustaWartosc = dopuscPustaWartosc;
 		}
 
 		public void Zainstaluj()
@@ -59,6 +61,7 @@ namespace ProFak.UI
 		private void ComboBox_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.F2) PokazSpis();
+			if (dopuscPustaWartosc && (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)) comboBox.SelectedIndex = -1;
 		}
 
 		private void ComboBox_HandleCreated(object sender, EventArgs e)
@@ -101,6 +104,7 @@ namespace ProFak.UI
 			var dostepneWartosci = pobierzWartosci();
 			comboBox.BeginUpdate();
 			var pozycje = new List<PozycjaListyRekordu<T>>();
+			if (dopuscPustaWartosc) pozycje.Add(new PozycjaListyRekordu<T> { Wartosc = null, Opis = "" });
 			foreach (var wartosc in dostepneWartosci)
 			{
 				var opis = wyswietlanaWartosc(wartosc);

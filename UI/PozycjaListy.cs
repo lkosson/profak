@@ -21,7 +21,7 @@ namespace ProFak.UI
 		where T : Rekord<T>
 	{
 		public T Wartosc { get; set; }
-		public Ref<T> Ref => Wartosc.Ref;
+		public Ref<T> Ref => Wartosc == null ? default : Wartosc.Ref;
 		public string Opis { get; set; }
 
 		public PozycjaListyRekordu()
