@@ -210,7 +210,7 @@ namespace ProFak.DB
 						}
 					}
 
-					if (rnd.Next(100) < 5)
+					if (rnd.Next(100) < 5 && faktury.Count > 0)
 					{
 						var korygowana = faktury[rnd.Next(faktury.Count)];
 
@@ -267,6 +267,11 @@ namespace ProFak.DB
 							faktura.RachunekBankowy = platnosc.LiczbaDni == 0 ? "" : kontrahent.RachunekBankowy;
 						}
 
+						if (faktura.DataWystawienia >= new DateTime(2026, 2, 1))
+						{
+							faktura.NumerKSeF = $"{faktura.NIPSprzedawcy.Replace("-", "")}-{faktura.DataWystawienia:yyyyMMdd}-{String.Join("", Enumerable.Range(0, 6).Select(_ => rnd.Next(256).ToString("X2")))}-XX";
+							faktura.URLKSeF = "https://github.com/lkosson/profak";
+						}
 						if (faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży) faktura.ProceduraMarzy = (ProceduraMarży)rnd.Next(1, 1 + (int)ProceduraMarży.PrzedmiotyKolekcjonerskie);
 						if (faktura.Rodzaj == RodzajFaktury.Zakup && rnd.Next(100) < 10) faktura.DataWprowadzenia = faktura.DataWprowadzenia.AddDays(rnd.Next(10));
 						if (faktura.Numerator.HasValue) faktura.Numer = Numerator.NadajNumer(baza, faktura.Numerator.Value, faktura.Podstawienie);
