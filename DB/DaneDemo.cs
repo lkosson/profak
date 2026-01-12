@@ -267,6 +267,7 @@ namespace ProFak.DB
 							faktura.RachunekBankowy = platnosc.LiczbaDni == 0 ? "" : kontrahent.RachunekBankowy;
 						}
 
+						if (faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży) faktura.ProceduraMarzy = (ProceduraMarży)rnd.Next(1, 1 + (int)ProceduraMarży.PrzedmiotyKolekcjonerskie);
 						if (faktura.Rodzaj == RodzajFaktury.Zakup && rnd.Next(100) < 10) faktura.DataWprowadzenia = faktura.DataWprowadzenia.AddDays(rnd.Next(10));
 						if (faktura.Numerator.HasValue) faktura.Numer = Numerator.NadajNumer(baza, faktura.Numerator.Value, faktura.Podstawienie);
 
