@@ -96,7 +96,7 @@ namespace ProFak.UI
 					var odDaty = this.odDaty;
 					var doDaty = DateTime.Now;
 					var podmiot = Kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
-					if (String.IsNullOrEmpty(podmiot.TokenKSeF)) throw new ApplicationException("Brak tokena dostępowego do KSeF w danych firmy.");
+					if (String.IsNullOrEmpty(podmiot.TokenKSeF)) throw new ApplicationException("Brak tokena dostępowego do KSeF w danych firmy.\nNadaj dostęp do KSeF w oknie \"Kontrahenci\" -> \"Moja firma\" -> \"Dane urzędowe\" -> \"Token KSeF\".");
 					if (przyrostowo)
 					{
 						var ostatnia = Kontekst.Baza.Faktury
