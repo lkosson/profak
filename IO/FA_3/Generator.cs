@@ -60,7 +60,7 @@ class Generator
 		ksefFaktura.Naglowek.SystemInfo = "ProFak (https://github.com/lkosson/profak)";
 		ksefFaktura.Podmiot1 = new FakturaPodmiot1();
 		ksefFaktura.Podmiot1.DaneIdentyfikacyjne = new TPodmiot1();
-		ksefFaktura.Podmiot1.DaneIdentyfikacyjne.NIP = dbFaktura.NIPSprzedawcy;
+		ksefFaktura.Podmiot1.DaneIdentyfikacyjne.NIP = dbFaktura.NIPSprzedawcy.Replace("-", "");
 		ksefFaktura.Podmiot1.DaneIdentyfikacyjne.Nazwa = dbFaktura.NazwaSprzedawcy;
 		ksefFaktura.Podmiot1.Adres = new TAdres();
 		ksefFaktura.Podmiot1.Adres.KodKraju = TKodKraju.PL;
@@ -79,7 +79,7 @@ class Generator
 		}
 		else
 		{
-			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP = dbFaktura.NIPNabywcy;
+			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP = dbFaktura.NIPNabywcy.Replace("-", "");
 		}
 		ksefFaktura.Podmiot2.DaneIdentyfikacyjne.Nazwa = dbFaktura.NazwaNabywcy;
 		ksefFaktura.Podmiot2.Adres = new TAdres();
@@ -157,7 +157,7 @@ class Generator
 				ksefFaktura.Fa.Podmiot1K = new FakturaFaPodmiot1K();
 				ksefFaktura.Fa.Podmiot1K.DaneIdentyfikacyjne = new TPodmiot1();
 				ksefFaktura.Fa.Podmiot1K.DaneIdentyfikacyjne.Nazwa = dbFaktura.FakturaKorygowana.NazwaSprzedawcy;
-				ksefFaktura.Fa.Podmiot1K.DaneIdentyfikacyjne.NIP = dbFaktura.FakturaKorygowana.NIPSprzedawcy;
+				ksefFaktura.Fa.Podmiot1K.DaneIdentyfikacyjne.NIP = dbFaktura.FakturaKorygowana.NIPSprzedawcy.Replace("-", "");
 				ksefFaktura.Fa.Podmiot1K.Adres = new TAdres();
 				ksefFaktura.Fa.Podmiot1K.Adres.KodKraju = TKodKraju.PL;
 				ksefFaktura.Fa.Podmiot1K.Adres.AdresL1 = dbFaktura.FakturaKorygowana.DaneSprzedawcy.JakoDwieLinie().linia1;
