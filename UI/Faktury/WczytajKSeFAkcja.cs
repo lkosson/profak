@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -28,6 +29,8 @@ namespace ProFak.UI
 			var xml = File.ReadAllText(dialog.FileName);
 			var faktura = IO.FA_3.Generator.ZbudujDB(kontekst.Baza, xml);
 			faktura.DataKSeF = DateTime.Now;
+			var plik = Path.GetFileNameWithoutExtension(dialog.FileName);
+			if (Regex.IsMatch(plik, @"\d{10}-\d{8}-[0-9A-Fa-f]{12}-[0-9A-Fa-f]{2}")) faktura.NumerKSeF = plik;
 			kontekst.Baza.Zapisz(faktura);
 			return faktura;
 		}
