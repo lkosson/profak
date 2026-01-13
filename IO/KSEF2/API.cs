@@ -233,7 +233,8 @@ class API : IDisposable
 
 	public async Task<string> PobierzFaktureAsync(string ksefReferenceNumber, CancellationToken cancellationToken)
 	{
-		return await ksefClient.GetInvoiceAsync(ksefReferenceNumber, accessToken.Token, cancellationToken);
+		var xml = await UruchomUwzgledniajacLimitAsync(() => ksefClient.GetInvoiceAsync(ksefReferenceNumber, accessToken.Token, cancellationToken), cancellationToken);
+		return xml;
 	}
 
 	public async Task<(string ksefReferenceNumber, string verificationLink)> WyslijFaktureAsync(string sessionReferenceNumber, EncryptionData encryptionData, string invoiceXml, string nip, DateTime issueDate, CancellationToken cancellationToken)
