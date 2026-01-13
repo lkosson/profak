@@ -83,7 +83,7 @@ namespace ProFak.DB
 		public decimal PozostaloDoZaplaty => Math.Max(RazemBrutto - SumaWplat, 0);
 		public DateTime? DataWplywu => Wplaty == null || Wplaty.Count == 0 ? null : Wplaty.Max(wplata => wplata.Data);
 		public bool CzyZaplacona => PozostaloDoZaplaty == 0;
-		public bool CzyKSeF => !String.IsNullOrEmpty(NumerKSeF);
+		public bool CzyKSeF => !String.IsNullOrEmpty(NumerKSeF) || DataKSeF.HasValue;
 		public bool CzyPliki => Pliki?.Count() > 0;
 		public int? DniPoTerminie => CzyZaplacona || DateTime.Now.Date < TerminPlatnosci.Date ? null : (int)((DateTime.Now.Date - TerminPlatnosci.Date).TotalDays);
 
