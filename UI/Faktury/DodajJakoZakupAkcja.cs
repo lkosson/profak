@@ -15,6 +15,7 @@ namespace ProFak.UI
 		public override string Nazwa => "➕ Dodaj jako zakup [INS]";
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) => zaznaczoneRekordy.Count() == 1;// && zaznaczoneRekordy.Single().Id == 0;
 		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.None && klawisz == Keys.Insert;
+		public override bool PrzeladujPoZakonczeniu => false;
 
 		protected override Faktura UtworzRekord(Kontekst kontekst, IEnumerable<Faktura> zaznaczoneRekordy)
 		{
@@ -32,6 +33,7 @@ namespace ProFak.UI
 			faktura.NumerKSeF = naglowek.NumerKSeF;
 			faktura.DataKSeF = naglowek.DataKSeF;
 			kontekst.Baza.Zapisz(faktura);
+			naglowek.Id = faktura.Id;
 			return faktura;
 		}
 	}

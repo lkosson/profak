@@ -13,6 +13,7 @@ namespace ProFak.UI
 		public override string Nazwa => "🖫 Zapisz jako XML [CTRL-S]";
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) => zaznaczoneRekordy.Count() >= 1;
 		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.Control && klawisz == Keys.S;
+		public override bool PrzeladujPoZakonczeniu => false;
 
 		public override void Uruchom(Kontekst kontekst, ref IEnumerable<Faktura> zaznaczoneRekordy)
 		{

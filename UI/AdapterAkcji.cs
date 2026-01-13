@@ -47,7 +47,7 @@ namespace ProFak.UI
 				IEnumerable<TRekord> wybraneRekordy = spis.WybraneRekordy.ToList();
 				akcja.Uruchom(spis.Kontekst, ref wybraneRekordy);
 				if (spis.Kontekst.Dialog != null && spis.Kontekst.Dialog.DialogResult != DialogResult.None) return;
-				spis.PrzeladujBezpiecznie();
+				if (akcja.PrzeladujPoZakonczeniu) spis.PrzeladujBezpiecznie();
 				spis.WybraneRekordy = wybraneRekordy;
 				spis.Focus();
 			}
