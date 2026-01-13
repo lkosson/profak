@@ -524,9 +524,9 @@ class Generator
 		if (nabywca == null) baza.Zapisz(nabywca = faktura.Nabywca);
 		faktura.NabywcaRef = nabywca;
 		faktura.Nabywca = null;
-		faktura.NIPNabywcy = nabywca.NIP;
-		faktura.NazwaNabywcy = nabywca.PelnaNazwa;
-		faktura.DaneNabywcy = nabywca.AdresRejestrowy;
+		if (String.IsNullOrEmpty(faktura.NIPNabywcy)) faktura.NIPNabywcy = nabywca.NIP;
+		if (String.IsNullOrEmpty(faktura.NazwaNabywcy)) faktura.NazwaNabywcy = nabywca.PelnaNazwa;
+		if (String.IsNullOrEmpty(faktura.DaneNabywcy)) faktura.DaneNabywcy = nabywca.AdresRejestrowy;
 
 		var sposobyPlatnosci = baza.SposobyPlatnosci.ToList();
 		faktura.SposobPlatnosciRef = sposobyPlatnosci
