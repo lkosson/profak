@@ -510,20 +510,34 @@ class Generator
 		return dbFaktura;
 	}
 
+	private static Kontrahent ZnajdzLubUtworzKontrahenta(Baza baza, Kontrahent kontrahent)
+	{
+		if (kontrahent == null) return null;
+		if (kontrahent.Id > 0) return kontrahent;
+		var nip = kontrahent.NIP;
+		if (String.IsNullOrEmpty(nip)) return kontrahent;
+		if (nip.StartsWith("PL")) nip = nip.Substring(2);
+		var nipPL = $"PL{nip}";
+		var kontrahentDb = baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.NIP.Replace("-", "") == nip || kontrahent.NIP.Replace("-", "") == nipPL);
+		if (kontrahentDb != null) return kontrahentDb;
+		baza.Zapisz(kontrahent);
+		return kontrahent;
+	}
+
 	private static void PoprawPowiazaniaPoImporcie(Baza baza, DBFaktura faktura)
 	{
-		var sprzedawca = baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.NIP == faktura.Sprzedawca.NIP);
-		if (sprzedawca == null) baza.Zapisz(sprzedawca = faktura.Sprzedawca);
+		var sprzedawca = ZnajdzLubUtworzKontrahenta(baza, faktura.Sprzedawca);
 		faktura.SprzedawcaRef = sprzedawca;
 		faktura.Sprzedawca = null;
+
+		var nabywca = ZnajdzLubUtworzKontrahenta(baza, faktura.Nabywca);
+		faktura.NabywcaRef = nabywca;
+		faktura.Nabywca = null;
+
 		if (sprzedawca.CzyPodmiot) faktura.Rodzaj = faktura.ProceduraMarzy == ProceduraMarży.NieDotyczy
 			? faktura.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaSprzedaży : RodzajFaktury.Sprzedaż
 			: faktura.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaVatMarży: RodzajFaktury.VatMarża;
 
-		var nabywca = baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.NIP == faktura.Nabywca.NIP);
-		if (nabywca == null) baza.Zapisz(nabywca = faktura.Nabywca);
-		faktura.NabywcaRef = nabywca;
-		faktura.Nabywca = null;
 		if (String.IsNullOrEmpty(faktura.NIPNabywcy)) faktura.NIPNabywcy = nabywca.NIP;
 		if (String.IsNullOrEmpty(faktura.NazwaNabywcy)) faktura.NazwaNabywcy = nabywca.PelnaNazwa;
 		if (String.IsNullOrEmpty(faktura.DaneNabywcy)) faktura.DaneNabywcy = nabywca.AdresRejestrowy;
