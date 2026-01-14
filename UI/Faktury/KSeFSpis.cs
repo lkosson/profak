@@ -128,6 +128,7 @@ namespace ProFak.UI
 						rekord.Id = istniejace.Contains(rekord.NumerKSeF) ? i : -i;
 						i++;
 					}
+					if (przyrostowo) rekordy.RemoveAll(e => e.Id > 0);
 				}
 				catch (Exception exc)
 				{
