@@ -526,6 +526,13 @@ class Generator
 		}
 
 		dbFaktura.UwagiPubliczne = uwagi.ToString();
+
+		if (dbFaktura.RazemBrutto != ksefFaktura.Fa.P_15)
+		{
+			dbFaktura.RazemBrutto = ksefFaktura.Fa.P_15;
+			dbFaktura.CzyWartosciReczne = true;
+		}
+
 		return dbFaktura;
 	}
 
