@@ -367,6 +367,14 @@ class Generator
 				var wartoscNetto = (dbPozycja.Ilosc * dbPozycja.CenaNetto).Zaokragl();
 				if (wartoscNetto != dbPozycja.WartoscNetto) dbPozycja.CzyWartosciReczne = true;
 			}
+			if (pozycja.StanPrzed == TWybor1.Item1)
+			{
+				dbPozycja.CzyPrzedKorekta = true;
+				dbPozycja.Ilosc = -dbPozycja.Ilosc;
+				dbPozycja.WartoscNetto = -dbPozycja.WartoscNetto;
+				dbPozycja.WartoscVat = -dbPozycja.WartoscVat;
+				dbPozycja.WartoscBrutto = -dbPozycja.WartoscBrutto;
+			}
 			dbFaktura.Pozycje.Add(dbPozycja);
 		}
 
