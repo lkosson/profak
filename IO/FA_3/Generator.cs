@@ -396,9 +396,9 @@ class Generator
 		else if (ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ROZ || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ROZ) uwagi.AppendLine("Faktura rozliczająca");
 
 		foreach (var opis in ksefFaktura.Fa.DodatkowyOpis)
-			{
-				uwagi.AppendLine($"{opis.Klucz}: {opis.Wartosc}");
-			}
+		{
+			uwagi.AppendLine($"{opis.Klucz}: {opis.Wartosc}");
+		}
 
 		foreach (var fakturaZaliczkowa in ksefFaktura.Fa.FakturaZaliczkowa)
 		{
