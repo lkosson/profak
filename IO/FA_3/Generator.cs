@@ -339,7 +339,7 @@ class Generator
 			}
 			dbPozycja.Towar = new Towar();
 			dbPozycja.Towar.Nazwa = pozycja.P_7;
-			dbPozycja.Towar.JednostkaMiary = new JednostkaMiary { Nazwa = pozycja.P_8A, Skrot = pozycja.P_8A };
+			dbPozycja.Towar.JednostkaMiary = dbPozycja.JednostkaMiary = new JednostkaMiary { Nazwa = pozycja.P_8A, Skrot = pozycja.P_8A };
 			dbPozycja.StawkaVat = new StawkaVat();
 			if (pozycja.P_12 == TStawkaPodatku.Item23) dbPozycja.StawkaVat = new StawkaVat { Wartosc = 23, Skrot = "23" };
 			else if (pozycja.P_12 == TStawkaPodatku.Item22) dbPozycja.StawkaVat = new StawkaVat { Wartosc = 22, Skrot = "22" };
@@ -587,9 +587,17 @@ class Generator
 			pozycja.StawkaVatRef = stawkaVat;
 			pozycja.StawkaVat = null;
 
+			var jednostka = String.IsNullOrEmpty(pozycja.JednostkaMiary.Nazwa)
+				? baza.JednostkiMiar.FirstOrDefault(jednostka => jednostka.CzyDomyslna)
+				: baza.JednostkiMiar.FirstOrDefault(jednostka => jednostka.Nazwa == pozycja.JednostkaMiary.Nazwa || jednostka.Skrot == pozycja.JednostkaMiary.Skrot || jednostka.Skrot == pozycja.JednostkaMiary.Skrot.TrimEnd('.');
+			if (jednostka == null) baza.Zapisz(jednostka = pozycja.JednostkaMiary);
+			pozycja.JednostkaMiaryRef = jednostka;
+			pozycja.JednostkaMiary = null;
+
 			var towar = baza.Towary.FirstOrDefault(towar => towar.Nazwa == pozycja.Opis);
 			pozycja.TowarRef = towar;
 			pozycja.Towar = null;
+			if (towar != null) pozycja.JednostkaMiaryRef = towar.JednostkaMiaryRef;
 		}
 	}
 }
