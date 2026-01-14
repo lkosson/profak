@@ -314,7 +314,7 @@ class Generator
 				TFormaPlatnosci.Item5 => "Kredyt",
 				TFormaPlatnosci.Item6 => "Przelew",
 				TFormaPlatnosci.Item7 => "Mobilna",
-				_ => "",
+				_ => ksefFaktura.Fa.Platnosc.OpisPlatnosci ?? "",
 			};
 
 			if (ksefFaktura.Fa.Platnosc.DataZaplaty.HasValue) dbFaktura.Wplaty = [new Wplata { Data = ksefFaktura.Fa.Platnosc.DataZaplaty.Value, Kwota = ksefFaktura.Fa.P_15 }];
