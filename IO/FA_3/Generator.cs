@@ -260,7 +260,10 @@ class Generator
 	{
 		var dbFaktura = new DBFaktura();
 		dbFaktura.Numer = ksefFaktura.Fa.P_2;
-		dbFaktura.Rodzaj = ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.VAT ? DB.RodzajFaktury.Zakup : ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR ? DB.RodzajFaktury.KorektaZakupu : throw new ApplicationException($"Nieobsługiwany rodzaj faktury: {ksefFaktura.Fa.RodzajFaktury}.");
+		dbFaktura.Rodzaj = ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.VAT || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ROZ ? DB.RodzajFaktury.Zakup 
+			: ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ROZ ? DB.RodzajFaktury.KorektaZakupu 
+			: ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ZAL || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ZAL ? throw new ApplicationException("Faktury zaliczkowe nie są obsługiwane")
+			: throw new ApplicationException($"Nieobsługiwany rodzaj faktury: {ksefFaktura.Fa.RodzajFaktury}.");
 		dbFaktura.DataWystawienia = ksefFaktura.Fa.P_1;
 		if (ksefFaktura.Fa.P_6.HasValue) dbFaktura.DataSprzedazy = ksefFaktura.Fa.P_6.Value;
 		else dbFaktura.DataSprzedazy = dbFaktura.DataWystawienia;
@@ -386,6 +389,12 @@ class Generator
 		foreach (var opis in ksefFaktura.Fa.DodatkowyOpis)
 		{
 			uwagi.AppendLine($"{opis.Klucz}: {opis.Wartosc}");
+		}
+
+		foreach (var fakturaZaliczkowa in ksefFaktura.Fa.FakturaZaliczkowa)
+		{
+			if (fakturaZaliczkowa.NrKSeFZN == TWybor1.Item1) uwagi.AppendLine($"Numer faktury zaliczkowej: {fakturaZaliczkowa.NrFaZaliczkowej}");
+			else uwagi.AppendLine($"Numer faktury zaliczkowej: {fakturaZaliczkowa.NrKSeFFaZaliczkowej}");
 		}
 
 		if (ksefFaktura.Fa.Adnotacje != null)
@@ -589,7 +598,7 @@ class Generator
 
 			var jednostka = String.IsNullOrEmpty(pozycja.JednostkaMiary.Nazwa)
 				? baza.JednostkiMiar.FirstOrDefault(jednostka => jednostka.CzyDomyslna)
-				: baza.JednostkiMiar.FirstOrDefault(jednostka => jednostka.Nazwa == pozycja.JednostkaMiary.Nazwa || jednostka.Skrot == pozycja.JednostkaMiary.Skrot || jednostka.Skrot == pozycja.JednostkaMiary.Skrot.TrimEnd('.');
+				: baza.JednostkiMiar.FirstOrDefault(jednostka => jednostka.Nazwa == pozycja.JednostkaMiary.Nazwa || jednostka.Skrot == pozycja.JednostkaMiary.Skrot || jednostka.Skrot == pozycja.JednostkaMiary.Skrot.TrimEnd('.'));
 			if (jednostka == null) baza.Zapisz(jednostka = pozycja.JednostkaMiary);
 			pozycja.JednostkaMiaryRef = jednostka;
 			pozycja.JednostkaMiary = null;
