@@ -260,7 +260,7 @@ class Generator
 	{
 		var dbFaktura = new DBFaktura();
 		dbFaktura.Numer = ksefFaktura.Fa.P_2;
-		dbFaktura.Rodzaj = ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.VAT || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ROZ ? DB.RodzajFaktury.Zakup 
+		dbFaktura.Rodzaj = ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.VAT || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ROZ || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.UPR ? DB.RodzajFaktury.Zakup 
 			: ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ROZ ? DB.RodzajFaktury.KorektaZakupu 
 			: ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ZAL || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ZAL ? throw new ApplicationException("Faktury zaliczkowe nie są obsługiwane")
 			: throw new ApplicationException($"Nieobsługiwany rodzaj faktury: {ksefFaktura.Fa.RodzajFaktury}.");
@@ -328,8 +328,14 @@ class Generator
 			var dbPozycja = new PozycjaFaktury();
 			dbPozycja.LP = (int)pozycja.NrWierszaFa;
 			dbPozycja.Opis = pozycja.P_7;
-			dbPozycja.Ilosc = pozycja.P_8B.GetValueOrDefault();
-			if (pozycja.P_9B.HasValue && pozycja.P_11A.HasValue)
+			dbPozycja.Ilosc = pozycja.P_8B ?? 1;
+			if (ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.UPR && dbPozycja.LP == 1)
+			{
+				dbPozycja.CzyWedlugCenBrutto = true;
+				dbPozycja.CenaBrutto = ksefFaktura.Fa.P_15;
+				dbPozycja.WartoscBrutto = ksefFaktura.Fa.P_15;
+			}
+			else if (pozycja.P_9B.HasValue && pozycja.P_11A.HasValue)
 			{
 				dbPozycja.CzyWedlugCenBrutto = true;
 				dbPozycja.CenaBrutto = pozycja.P_9B.Value;
@@ -386,10 +392,13 @@ class Generator
 
 		var uwagi = new StringBuilder();
 
+		if (ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.UPR) uwagi.AppendLine("Faktura uproszczona");
+		else if (ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ROZ || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ROZ) uwagi.AppendLine("Faktura rozliczająca");
+
 		foreach (var opis in ksefFaktura.Fa.DodatkowyOpis)
-		{
-			uwagi.AppendLine($"{opis.Klucz}: {opis.Wartosc}");
-		}
+			{
+				uwagi.AppendLine($"{opis.Klucz}: {opis.Wartosc}");
+			}
 
 		foreach (var fakturaZaliczkowa in ksefFaktura.Fa.FakturaZaliczkowa)
 		{
