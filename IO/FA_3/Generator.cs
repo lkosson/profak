@@ -406,6 +406,28 @@ class Generator
 			else uwagi.AppendLine($"Numer faktury zaliczkowej: {fakturaZaliczkowa.NrKSeFFaZaliczkowej}");
 		}
 
+		foreach (var podmiot3 in ksefFaktura.Podmiot3)
+		{
+			if (podmiot3.RolaInna == TWybor1.Item1) uwagi.Append(podmiot3.OpisRoli);
+			if (podmiot3.Rola == TRolaPodmiotu3.Item1) uwagi.Append("Faktor");
+			if (podmiot3.Rola == TRolaPodmiotu3.Item2) uwagi.Append("Odbiorca");
+			if (podmiot3.Rola == TRolaPodmiotu3.Item3) uwagi.Append("Podmiot pierwotny");
+			if (podmiot3.Rola == TRolaPodmiotu3.Item4) uwagi.Append("Dodatkowy nabywca");
+			if (podmiot3.Rola == TRolaPodmiotu3.Item5) uwagi.Append("Wystawca faktury");
+			if (podmiot3.Rola == TRolaPodmiotu3.Item6) uwagi.Append("Dokonujący płatności");
+			if (podmiot3.Rola == TRolaPodmiotu3.Item7) uwagi.Append("JST - wystawca");
+			if (podmiot3.Rola == TRolaPodmiotu3.Item8) uwagi.Append("JST - odbiorca");
+			if (podmiot3.Rola == TRolaPodmiotu3.Item9) uwagi.Append("Członek grupy VAT - wystawca");
+			if (podmiot3.Rola == TRolaPodmiotu3.Item10) uwagi.Append("Członek grupy VAT - odbiorca");
+			if (podmiot3.Rola == TRolaPodmiotu3.Item11) uwagi.Append("Pracownik");
+			if (!String.IsNullOrEmpty(podmiot3.DaneIdentyfikacyjne.Nazwa)) uwagi.Append($": {podmiot3.DaneIdentyfikacyjne.Nazwa}");
+			uwagi.AppendLine();
+			if (!String.IsNullOrEmpty(podmiot3.DaneIdentyfikacyjne.NIP)) uwagi.AppendLine($"NIP: {podmiot3.DaneIdentyfikacyjne.NIP}");
+			if (!String.IsNullOrEmpty(podmiot3.DaneIdentyfikacyjne.NrVatUE)) uwagi.AppendLine($"Nr VAT UE: {podmiot3.DaneIdentyfikacyjne.NrVatUE}");
+			if (!String.IsNullOrEmpty(podmiot3.Adres.AdresL1)) uwagi.AppendLine($"Adres: {podmiot3.Adres.AdresL1}, {podmiot3.Adres.AdresL2}");
+			if (podmiot3.Udzial > 0) uwagi.AppendLine($"Udział: {podmiot3.Udzial}%");
+		}
+
 		if (ksefFaktura.Fa.Adnotacje != null)
 		{
 			if (ksefFaktura.Fa.Adnotacje.Zwolnienie != null)
