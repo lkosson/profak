@@ -129,6 +129,7 @@ namespace ProFak.UI
 						i++;
 					}
 					if (przyrostowo) rekordy.RemoveAll(e => e.Id > 0);
+					rekordy.Sort((e, f) => e.DataKSeF.GetValueOrDefault().CompareTo(f.DataKSeF.GetValueOrDefault()));
 				}
 				catch (Exception exc)
 				{

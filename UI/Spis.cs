@@ -376,13 +376,28 @@ namespace ProFak.UI
 		{
 			var getter = typeof(T).GetProperty(kolumna)?.GetGetMethod();
 			if (getter == null) return null;
-			if (!getter.ReturnType.IsAssignableTo(typeof(IComparable))) return null;
-			var parametr = Expression.Parameter(typeof(T), "rekord");
-			var wartoscExpr = Expression.Call(parametr, getter);
-			var wartoscCompExpr = Expression.Convert(wartoscExpr, typeof(IComparable));
-			var lambdaExpr = Expression.Lambda<Func<T, IComparable>>(wartoscCompExpr, parametr);
-			var metoda = lambdaExpr.Compile();
-			return metoda;
+			if (getter.ReturnType.IsAssignableTo(typeof(IComparable)))
+			{
+				var parametr = Expression.Parameter(typeof(T), "rekord");
+				var wartoscExpr = Expression.Call(parametr, getter);
+				var wartoscCompExpr = Expression.Convert(wartoscExpr, typeof(IComparable));
+				var lambdaExpr = Expression.Lambda<Func<T, IComparable>>(wartoscCompExpr, parametr);
+				var metoda = lambdaExpr.Compile();
+				return metoda;
+			}
+			var nullableType = Nullable.GetUnderlyingType(getter.ReturnType);
+			if (nullableType != null && nullableType.IsAssignableTo(typeof(IComparable)))
+			{
+				var parametr = Expression.Parameter(typeof(T), "rekord");
+				var wartoscExpr = Expression.Call(parametr, getter);
+				var getValueOrDefaultMethod = getter.ReturnType.GetMethod(nameof(Nullable<int>.GetValueOrDefault), Type.EmptyTypes);
+				var wartoscOrDefaultExpr = Expression.Call(wartoscExpr, getValueOrDefaultMethod);
+				var wartoscCompExpr = Expression.Convert(wartoscOrDefaultExpr, typeof(IComparable));
+				var lambdaExpr = Expression.Lambda<Func<T, IComparable>>(wartoscCompExpr, parametr);
+				var metoda = lambdaExpr.Compile();
+				return metoda;
+			}
+			return null;
 		}
 
 		public void UstawKolejnosc(string kolumna, bool zastap)
