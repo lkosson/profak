@@ -376,6 +376,9 @@ class Generator
 				dbPozycja.WartoscBrutto = -dbPozycja.WartoscBrutto;
 			}
 			dbFaktura.Pozycje.Add(dbPozycja);
+			dbFaktura.RazemNetto += dbPozycja.WartoscNetto;
+			dbFaktura.RazemVat += dbPozycja.WartoscVat;
+			dbFaktura.RazemBrutto += dbPozycja.WartoscBrutto;
 		}
 
 		var uwagi = new StringBuilder();
@@ -417,12 +420,20 @@ class Generator
 			foreach (var obciazenie in ksefFaktura.Fa.Rozliczenie.Obciazenia)
 			{
 				if (obciazenie.Kwota != 0)
+				{
 					uwagi.AppendLine($"Obciążenie - {obciazenie.Powod}: {obciazenie.Kwota:0.00} {ksefFaktura.Fa.KodWaluty}");
+					dbFaktura.RazemBrutto += obciazenie.Kwota;
+					dbFaktura.CzyWartosciReczne = true;
+				}
 			}
 			foreach (var odliczenie in ksefFaktura.Fa.Rozliczenie.Odliczenia)
 			{
 				if (odliczenie.Kwota != 0)
+				{
 					uwagi.AppendLine($"Odliczenie - {odliczenie.Powod}: {odliczenie.Kwota:0.00} {ksefFaktura.Fa.KodWaluty}");
+					dbFaktura.RazemBrutto -= odliczenie.Kwota;
+					dbFaktura.CzyWartosciReczne = true;
+				}
 			}
 
 			if (ksefFaktura.Fa.Rozliczenie.DoZaplatyValueSpecified) uwagi.AppendLine($"Do zapłaty: {ksefFaktura.Fa.Rozliczenie.DoZaplatyValue:0.00} {ksefFaktura.Fa.KodWaluty}");

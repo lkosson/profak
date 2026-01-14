@@ -133,6 +133,7 @@ namespace ProFak.DB
 
 		public void PrzeliczRazem(IEnumerable<PozycjaFaktury> pozycje)
 		{
+			if (CzyWartosciReczne) return;
 			RazemNetto = pozycje.Sum(pozycja => pozycja.WartoscNetto);
 			RazemVat = pozycje.Sum(pozycja => pozycja.WartoscVat);
 			RazemBrutto = pozycje.Sum(pozycja => pozycja.WartoscBrutto);
