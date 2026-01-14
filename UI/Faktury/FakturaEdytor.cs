@@ -62,6 +62,7 @@ namespace ProFak.UI
 			kontroler.Powiazanie(comboBoxProcentKosztow, faktura => faktura.ProcentKosztow.ToString("0") + "%", (faktura, wartosc) => faktura.ProcentKosztow = Int32.TryParse(wartosc.TrimEnd(' ', '%'), out var liczba) ? liczba : 100);
 			kontroler.Powiazanie(comboBoxProcentVat, faktura => faktura.ProcentVatNaliczonego.ToString("0") + "%", (faktura, wartosc) => faktura.ProcentVatNaliczonego = Int32.TryParse(wartosc.TrimEnd(' ', '%'), out var liczba) ? liczba : 100);
 			kontroler.Powiazanie(checkBoxZakupSrodkowTrwalych, faktura => faktura.CzyZakupSrodkowTrwalych);
+			kontroler.Powiazanie(checkBoxReczneKwoty, faktura => faktura.CzyWartosciReczne, UstawRazem);
 			kontroler.Powiazanie(checkBoxWDT, faktura => faktura.CzyWDT);
 			kontroler.Powiazanie(checkBoxWNT, faktura => faktura.CzyWNT);
 			kontroler.Powiazanie(textBoxOpisZdarzenia, faktura => faktura.OpisZdarzenia);
@@ -248,6 +249,18 @@ namespace ProFak.UI
 			return true;
 		}
 
+		private void UstawRazem()
+		{
+			if (!Rekord.CzyWartosciReczne)
+			{
+				Rekord.PrzeliczRazem(Kontekst.Baza);
+				kontroler.AktualizujKontrolki();
+			}
+			numericUpDownNetto.Enabled = Rekord.CzyWartosciReczne;
+			numericUpDownVat.Enabled = Rekord.CzyWartosciReczne;
+			numericUpDownBrutto.Enabled = Rekord.CzyWartosciReczne;
+		}
+
 		protected override void PrzygotujRekord(Faktura rekord)
 		{
 			base.PrzygotujRekord(rekord);
@@ -260,6 +273,7 @@ namespace ProFak.UI
 		protected override void RekordGotowy()
 		{
 			base.RekordGotowy();
+			UstawRazem();
 			wplaty.Spis.FakturaRef = Rekord;
 			wplaty.Spis.Kontekst = Kontekst;
 			pozycjeFaktury.Spis.FakturaRef = Rekord;

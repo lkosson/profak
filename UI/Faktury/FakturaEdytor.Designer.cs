@@ -73,6 +73,8 @@ namespace ProFak.UI
             checkBoxZakupSrodkowTrwalych = new System.Windows.Forms.CheckBox();
             label20 = new System.Windows.Forms.Label();
             textBoxOpisZdarzenia = new System.Windows.Forms.TextBox();
+            label23 = new System.Windows.Forms.Label();
+            comboBoxProceduraMarzy = new System.Windows.Forms.ComboBox();
             tabPageKSeF = new System.Windows.Forms.TabPage();
             tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             buttonKSeFGeneruj = new ButtonDPI();
@@ -114,8 +116,7 @@ namespace ProFak.UI
             numericUpDownNetto = new NumericUpDownDPI();
             numericUpDownVat = new NumericUpDownDPI();
             numericUpDownBrutto = new NumericUpDownDPI();
-            label23 = new System.Windows.Forms.Label();
-            comboBoxProceduraMarzy = new System.Windows.Forms.ComboBox();
+            checkBoxReczneKwoty = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
             tableLayoutPanel.SuspendLayout();
             tableLayoutPanelKontrahenci.SuspendLayout();
@@ -561,7 +562,6 @@ namespace ProFak.UI
             tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             tableLayoutPanel7.Controls.Add(label1, 0, 0);
             tableLayoutPanel7.Controls.Add(label19, 0, 1);
             tableLayoutPanel7.Controls.Add(comboBoxProcentKosztow, 1, 0);
@@ -574,15 +574,17 @@ namespace ProFak.UI
             tableLayoutPanel7.Controls.Add(textBoxOpisZdarzenia, 1, 2);
             tableLayoutPanel7.Controls.Add(label23, 0, 3);
             tableLayoutPanel7.Controls.Add(comboBoxProceduraMarzy, 1, 3);
+            tableLayoutPanel7.Controls.Add(checkBoxReczneKwoty, 3, 4);
             tableLayoutPanel7.Location = new System.Drawing.Point(6, 6);
             tableLayoutPanel7.Name = "tableLayoutPanel7";
-            tableLayoutPanel7.RowCount = 5;
+            tableLayoutPanel7.RowCount = 6;
+            tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
             tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
             tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
             tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
             tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
             tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            tableLayoutPanel7.Size = new System.Drawing.Size(583, 135);
+            tableLayoutPanel7.Size = new System.Drawing.Size(583, 152);
             tableLayoutPanel7.TabIndex = 0;
             // 
             // label1
@@ -686,6 +688,26 @@ namespace ProFak.UI
             textBoxOpisZdarzenia.Name = "textBoxOpisZdarzenia";
             textBoxOpisZdarzenia.Size = new System.Drawing.Size(204, 23);
             textBoxOpisZdarzenia.TabIndex = 2;
+            // 
+            // label23
+            // 
+            label23.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            label23.AutoSize = true;
+            label23.Location = new System.Drawing.Point(44, 94);
+            label23.Name = "label23";
+            label23.Size = new System.Drawing.Size(96, 15);
+            label23.TabIndex = 14;
+            label23.Text = "Procedura marży";
+            // 
+            // comboBoxProceduraMarzy
+            // 
+            comboBoxProceduraMarzy.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            comboBoxProceduraMarzy.FormattingEnabled = true;
+            comboBoxProceduraMarzy.Items.AddRange(new object[] { "100%", "50%", "0%" });
+            comboBoxProceduraMarzy.Location = new System.Drawing.Point(146, 90);
+            comboBoxProceduraMarzy.Name = "comboBoxProceduraMarzy";
+            comboBoxProceduraMarzy.Size = new System.Drawing.Size(204, 23);
+            comboBoxProceduraMarzy.TabIndex = 3;
             // 
             // tabPageKSeF
             // 
@@ -1156,7 +1178,6 @@ namespace ProFak.UI
             // 
             numericUpDownNetto.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             numericUpDownNetto.DecimalPlaces = 2;
-            numericUpDownNetto.Enabled = false;
             numericUpDownNetto.Location = new System.Drawing.Point(49, 4);
             numericUpDownNetto.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             numericUpDownNetto.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
@@ -1170,7 +1191,6 @@ namespace ProFak.UI
             // 
             numericUpDownVat.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             numericUpDownVat.DecimalPlaces = 2;
-            numericUpDownVat.Enabled = false;
             numericUpDownVat.Location = new System.Drawing.Point(49, 35);
             numericUpDownVat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             numericUpDownVat.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
@@ -1184,7 +1204,6 @@ namespace ProFak.UI
             // 
             numericUpDownBrutto.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             numericUpDownBrutto.DecimalPlaces = 2;
-            numericUpDownBrutto.Enabled = false;
             numericUpDownBrutto.Location = new System.Drawing.Point(49, 66);
             numericUpDownBrutto.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             numericUpDownBrutto.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
@@ -1194,25 +1213,16 @@ namespace ProFak.UI
             numericUpDownBrutto.TabIndex = 52;
             numericUpDownBrutto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // label23
+            // checkBoxReczneKwoty
             // 
-            label23.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            label23.AutoSize = true;
-            label23.Location = new System.Drawing.Point(44, 94);
-            label23.Name = "label23";
-            label23.Size = new System.Drawing.Size(96, 15);
-            label23.TabIndex = 14;
-            label23.Text = "Procedura marży";
-            // 
-            // comboBoxProceduraMarzy
-            // 
-            comboBoxProceduraMarzy.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            comboBoxProceduraMarzy.FormattingEnabled = true;
-            comboBoxProceduraMarzy.Items.AddRange(new object[] { "100%", "50%", "0%" });
-            comboBoxProceduraMarzy.Location = new System.Drawing.Point(146, 90);
-            comboBoxProceduraMarzy.Name = "comboBoxProceduraMarzy";
-            comboBoxProceduraMarzy.Size = new System.Drawing.Size(204, 23);
-            comboBoxProceduraMarzy.TabIndex = 3;
+            checkBoxReczneKwoty.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            checkBoxReczneKwoty.AutoSize = true;
+            checkBoxReczneKwoty.Location = new System.Drawing.Point(376, 119);
+            checkBoxReczneKwoty.Name = "checkBoxReczneKwoty";
+            checkBoxReczneKwoty.Size = new System.Drawing.Size(201, 19);
+            checkBoxReczneKwoty.TabIndex = 8;
+            checkBoxReczneKwoty.Text = "Kwota \"razem\" ustawiona ręcznie";
+            checkBoxReczneKwoty.UseVisualStyleBackColor = true;
             // 
             // FakturaEdytor
             // 
@@ -1357,5 +1367,6 @@ namespace ProFak.UI
 		private NumericUpDownDPI numericUpDownKurs;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.ComboBox comboBoxProceduraMarzy;
+        private System.Windows.Forms.CheckBox checkBoxReczneKwoty;
     }
 }
