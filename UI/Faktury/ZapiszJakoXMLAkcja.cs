@@ -39,6 +39,7 @@ namespace ProFak.UI
 			});
 
 			File.WriteAllText(dialog.FileName, xml);
+			File.SetLastWriteTime(dialog.FileName, naglowek.DataKSeF ?? naglowek.DataWystawienia);
 		}
 
 		private void ZapiszWiele(Kontrahent podmiot, IEnumerable<Faktura> naglowki)
