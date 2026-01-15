@@ -24,6 +24,7 @@ namespace ProFak.UI
 		public List<AkcjaNaSpisie<TRekord>> Akcje => akcje;
 
 		public Kontekst Kontekst { get => Spis.Kontekst; set => Spis.Kontekst = value; }
+		public int PreferowanaSzerokosc => Spis.PreferowanaSzerokosc + Spis.Margin.Right + panelAkcji.Width + panelAkcji.Margin.Right;
 
 		public SpisZAkcjami(Spis<TRekord> spis)
 		{
@@ -52,7 +53,7 @@ namespace ProFak.UI
 			spis.CellDoubleClick += spis_CellDoubleClick;
 			spis.KeyDown += spis_KeyDown;
 			Controls.Add(spis, 0, 0);
-			MinimumSize = new Size(panelAkcji.MinimumSize.Width + spis.MinimumSize.Width, panelAkcji.MinimumSize.Height + spis.MinimumSize.Height);
+			MinimumSize = new Size(panelAkcji.MinimumSize.Width + spis.MinimumSize.Width + panelAkcji.Margin.Left + spis.Margin.Right, panelAkcji.MinimumSize.Height + spis.MinimumSize.Height + Math.Max(panelAkcji.Margin.Top, spis.Margin.Top) + Math.Max(panelAkcji.Margin.Bottom, spis.Margin.Bottom));
 		}
 
 		private void wyszukiwarka_KeyDown(object sender, KeyEventArgs e)

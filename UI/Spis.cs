@@ -108,6 +108,21 @@ namespace ProFak.UI
 			}
 		}
 
+		public virtual int PreferowanaSzerokosc
+		{
+			get
+			{
+				var szerokosc = 0;
+				foreach (DataGridViewColumn kolumna in Columns)
+				{
+					if (!kolumna.Visible) continue;
+					if (kolumna.AutoSizeMode == DataGridViewAutoSizeColumnMode.Fill) szerokosc += 400;
+					else szerokosc += kolumna.Width;
+				}
+				return szerokosc;
+			}
+		}
+
 		public event Action RekordyZmienione;
 		public event Action ZaznaczenieZmienione;
 
@@ -127,7 +142,7 @@ namespace ProFak.UI
 			bindingSource = new BindingSource(container);
 			bindingSource.DataSource = typeof(T);
 			DataSource = bindingSource;
-			MinimumSize = new System.Drawing.Size(500, 100);
+			MinimumSize = new Size(500, 100);
 			Rows.CollectionChanged += Rows_CollectionChanged;
 		}
 
