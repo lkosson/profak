@@ -32,6 +32,7 @@ namespace ProFak.UI
 			var plik = Path.GetFileNameWithoutExtension(dialog.FileName);
 			if (Regex.IsMatch(plik, @"\d{10}-\d{8}-[0-9A-Fa-f]{12}-[0-9A-Fa-f]{2}")) faktura.NumerKSeF = plik;
 			kontekst.Baza.Zapisz(faktura);
+			IO.FA_3.Generator.PoprawPowiazaniaPoZapisie(kontekst.Baza, faktura);
 			return faktura;
 		}
 	}

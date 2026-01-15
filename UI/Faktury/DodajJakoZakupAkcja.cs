@@ -33,6 +33,7 @@ namespace ProFak.UI
 			faktura.NumerKSeF = naglowek.NumerKSeF;
 			faktura.DataKSeF = naglowek.DataKSeF;
 			kontekst.Baza.Zapisz(faktura);
+			IO.FA_3.Generator.PoprawPowiazaniaPoZapisie(kontekst.Baza, faktura);
 			naglowek.Id = faktura.Id;
 			return faktura;
 		}

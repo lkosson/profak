@@ -66,10 +66,13 @@ class Generator
 		ksefFaktura.Podmiot1.Adres.KodKraju = TKodKraju.PL;
 		ksefFaktura.Podmiot1.Adres.AdresL1 = dbFaktura.DaneSprzedawcy.JakoDwieLinie().linia1;
 		ksefFaktura.Podmiot1.Adres.AdresL2 = dbFaktura.DaneSprzedawcy.JakoDwieLinie().linia2;
-		ksefFaktura.Podmiot1.AdresKoresp = new FakturaPodmiot1AdresKoresp();
-		ksefFaktura.Podmiot1.AdresKoresp.KodKraju = TKodKraju.PL;
-		ksefFaktura.Podmiot1.AdresKoresp.AdresL1 = dbFaktura.Sprzedawca.AdresKorespondencyjny.JakoDwieLinie().linia1;
-		ksefFaktura.Podmiot1.AdresKoresp.AdresL2 = dbFaktura.Sprzedawca.AdresKorespondencyjny.JakoDwieLinie().linia2;
+		if (!String.IsNullOrEmpty(dbFaktura.Sprzedawca.AdresKorespondencyjny))
+		{
+			ksefFaktura.Podmiot1.AdresKoresp = new FakturaPodmiot1AdresKoresp();
+			ksefFaktura.Podmiot1.AdresKoresp.KodKraju = TKodKraju.PL;
+			ksefFaktura.Podmiot1.AdresKoresp.AdresL1 = dbFaktura.Sprzedawca.AdresKorespondencyjny.JakoDwieLinie().linia1;
+			ksefFaktura.Podmiot1.AdresKoresp.AdresL2 = dbFaktura.Sprzedawca.AdresKorespondencyjny.JakoDwieLinie().linia2;
+		}
 		ksefFaktura.Podmiot1.DaneKontaktowe.Add(new FakturaPodmiot1DaneKontaktowe { Email = String.IsNullOrWhiteSpace(dbFaktura.Sprzedawca.EMail) ? null : dbFaktura.Sprzedawca.EMail, Telefon = String.IsNullOrWhiteSpace(dbFaktura.Sprzedawca.Telefon) ? null : dbFaktura.Sprzedawca.Telefon });
 		ksefFaktura.Podmiot2 = new FakturaPodmiot2();
 		ksefFaktura.Podmiot2.DaneIdentyfikacyjne = new TPodmiot2();
@@ -400,6 +403,16 @@ class Generator
 			uwagi.AppendLine($"{opis.Klucz}: {opis.Wartosc}");
 		}
 
+		foreach (var ksefFakturaKorygowana in ksefFaktura.Fa.DaneFaKorygowanej)
+		{
+			dbFaktura.FakturaKorygowana = new DBFaktura();
+			if (!String.IsNullOrEmpty(ksefFakturaKorygowana.NrKSeFFaKorygowanej)) dbFaktura.FakturaKorygowana.NumerKSeF = ksefFakturaKorygowana.NrKSeFFaKorygowanej;
+			if (!String.IsNullOrEmpty(ksefFakturaKorygowana.NrFaKorygowanej)) dbFaktura.FakturaKorygowana.Numer = ksefFakturaKorygowana.NrFaKorygowanej;
+			dbFaktura.DataWystawienia = ksefFakturaKorygowana.DataWystFaKorygowanej;
+		}
+
+		if (!String.IsNullOrEmpty(ksefFaktura.Fa.PrzyczynaKorekty)) uwagi.AppendLine($"Przyczyna korekty: {ksefFaktura.Fa.PrzyczynaKorekty}");
+
 		foreach (var fakturaZaliczkowa in ksefFaktura.Fa.FakturaZaliczkowa)
 		{
 			if (fakturaZaliczkowa.NrKSeFZN == TWybor1.Item1) uwagi.AppendLine($"Numer faktury zaliczkowej: {fakturaZaliczkowa.NrFaZaliczkowej}");
@@ -424,7 +437,7 @@ class Generator
 			uwagi.AppendLine();
 			if (!String.IsNullOrEmpty(podmiot3.DaneIdentyfikacyjne.NIP)) uwagi.AppendLine($"NIP: {podmiot3.DaneIdentyfikacyjne.NIP}");
 			if (!String.IsNullOrEmpty(podmiot3.DaneIdentyfikacyjne.NrVatUE)) uwagi.AppendLine($"Nr VAT UE: {podmiot3.DaneIdentyfikacyjne.NrVatUE}");
-			if (!String.IsNullOrEmpty(podmiot3.Adres.AdresL1)) uwagi.AppendLine($"Adres: {podmiot3.Adres.AdresL1}, {podmiot3.Adres.AdresL2}");
+			if (podmiot3.Adres != null) uwagi.AppendLine($"Adres: {podmiot3.Adres.AdresL1}, {podmiot3.Adres.AdresL2}");
 			if (podmiot3.Udzial > 0) uwagi.AppendLine($"Udział: {podmiot3.Udzial}%");
 		}
 
@@ -608,6 +621,15 @@ class Generator
 		if (String.IsNullOrEmpty(faktura.NazwaNabywcy)) faktura.NazwaNabywcy = nabywca.PelnaNazwa;
 		if (String.IsNullOrEmpty(faktura.DaneNabywcy)) faktura.DaneNabywcy = nabywca.AdresRejestrowy;
 
+		if (faktura.FakturaKorygowana != null)
+		{
+			var fakturaKorygowana = String.IsNullOrEmpty(faktura.FakturaKorygowana.NumerKSeF) ? null : baza.Faktury.FirstOrDefault(f => f.NumerKSeF == faktura.FakturaKorygowana.NumerKSeF && f.Rodzaj != RodzajFaktury.Usunięta);
+			fakturaKorygowana ??= String.IsNullOrEmpty(faktura.FakturaKorygowana.Numer) ? null : baza.Faktury.FirstOrDefault(f => f.Numer == f.FakturaKorygowana.Numer && f.Sprzedawca == faktura.Sprzedawca && f.Rodzaj != RodzajFaktury.Usunięta);
+			if (fakturaKorygowana == null) faktura.UwagiPubliczne = $"Korekta do {faktura.FakturaKorygowana.Numer} z dnia {faktura.FakturaKorygowana.DataWystawienia:yyyy-MM-dd}\r\n{faktura.UwagiPubliczne}";
+			else faktura.FakturaKorygowanaRef = fakturaKorygowana;
+			faktura.FakturaKorygowana = null;
+		}
+
 		var sposobyPlatnosci = baza.SposobyPlatnosci.ToList();
 		faktura.SposobPlatnosciRef = sposobyPlatnosci
 			.OrderBy(sposob => sposob.Nazwa.Contains(faktura.OpisSposobuPlatnosci, StringComparison.CurrentCultureIgnoreCase))
@@ -638,6 +660,16 @@ class Generator
 			pozycja.TowarRef = towar;
 			pozycja.Towar = null;
 			if (towar != null) pozycja.JednostkaMiaryRef = towar.JednostkaMiaryRef;
+		}
+	}
+
+	public static void PoprawPowiazaniaPoZapisie(Baza baza, DBFaktura faktura)
+	{
+		if (faktura.FakturaKorygowanaRef.IsNotNull)
+		{
+			var fakturaKorygowana = baza.Znajdz(faktura.FakturaKorygowanaRef);
+			fakturaKorygowana.FakturaKorygujacaRef = faktura;
+			baza.Zapisz(fakturaKorygowana);
 		}
 	}
 }
