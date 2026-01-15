@@ -45,6 +45,10 @@ namespace ProFak.DB
 		public JednostkaMiary JednostkaMiary { get; set; }
 
 		public decimal Cena => CzyWedlugCenBrutto ? CenaBrutto : CenaNetto;
+		public decimal IloscAbs => Math.Abs(Ilosc);
+		public decimal WartoscNettoAbs => Math.Abs(WartoscNetto);
+		public decimal WartoscVatAbs => Math.Abs(WartoscVat);
+		public decimal WartoscBruttoAbs => Math.Abs(WartoscBrutto);
 
 		public override bool CzyPasuje(string fraza)
 			=> base.CzyPasuje(fraza)
