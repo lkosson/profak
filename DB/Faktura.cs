@@ -336,6 +336,7 @@ namespace ProFak.DB
 			nowaFaktura.CzyZakupSrodkowTrwalych = CzyZakupSrodkowTrwalych;
 			nowaFaktura.CzyWDT = CzyWDT;
 			nowaFaktura.CzyWNT = CzyWNT;
+			nowaFaktura.ProceduraMarzy = ProceduraMarzy;
 			nowaFaktura.OpisZdarzenia = OpisZdarzenia;
 
 			if (sposobPlatnosci != null) nowaFaktura.TerminPlatnosci = nowaFaktura.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
