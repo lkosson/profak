@@ -191,6 +191,7 @@ class Generator
 			ksefWiersz.Indeks = dbPozycja.Towar == null ? ksefWiersz.UU_ID : dbPozycja.Towar.Id.ToString();
 			ksefWiersz.P_8A = dbPozycja.JednostkaMiary?.Nazwa ?? "szt";
 			ksefWiersz.P_8B = Math.Abs(dbPozycja.Ilosc);
+			if (dbFaktura.KursWaluty != 0) ksefWiersz.KursWaluty = dbFaktura.KursWaluty;
 			if (dbPozycja.CzyWedlugCenBrutto)
 			{
 				ksefWiersz.P_9B = dbPozycja.CenaBrutto;
@@ -391,6 +392,7 @@ class Generator
 			dbFaktura.RazemNetto += dbPozycja.WartoscNetto;
 			dbFaktura.RazemVat += dbPozycja.WartoscVat;
 			dbFaktura.RazemBrutto += dbPozycja.WartoscBrutto;
+			if (pozycja.KursWalutyValueSpecified) dbFaktura.KursWaluty = pozycja.KursWalutyValue;
 		}
 
 		if (dbFaktura.RazemBrutto != ksefFaktura.Fa.P_15)
