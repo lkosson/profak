@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.Sqlite;
+﻿#define nLOG_SQL
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using System;
@@ -166,9 +167,25 @@ namespace ProFak.DB
 		{
 			base.OnConfiguring(optionsBuilder);
 			optionsBuilder.UseSqlite(PrzygotujParametryPolaczenia());
-			//if (Debugger.IsAttached) optionsBuilder.LogTo(message => Debug.WriteLine(message), new[] { RelationalEventId.CommandExecuting }).EnableSensitiveDataLogging();
+#if LOG_SQL
+			optionsBuilder.EnableSensitiveDataLogging();
+			optionsBuilder.LogTo((evt, level) => evt == RelationalEventId.CommandExecuting || evt == RelationalEventId.CommandExecuted, LogCommand);
+#endif
 		}
-
+#if LOG_SQL
+		private void LogCommand(EventData eventData)
+		{
+			if (eventData.EventId == RelationalEventId.CommandExecuting && eventData is CommandEventData ced)
+			{
+				Debug.WriteLine($"Uruchamianie polecenia\n{ced.Command.CommandText}");
+				if (ced.Command.Parameters.Count > 0) Debug.WriteLine($"Parametry:\n{String.Join("\n", ced.Command.Parameters.Cast<System.Data.Common.DbParameter>().Select(p => p.ParameterName + "='" + p.Value + "'"))}");
+			}
+			else if (eventData.EventId == RelationalEventId.CommandExecuted && eventData is CommandExecutedEventData ceed)
+			{
+				Debug.WriteLine($"Polecenie wykonane w {ceed.Duration.TotalMilliseconds} ms");
+			}
+		}
+#endif
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			DB.Model.ProFakModelBuilder.Configure(modelBuilder);
