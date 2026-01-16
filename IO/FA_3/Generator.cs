@@ -331,7 +331,7 @@ class Generator
 		{
 			var dbPozycja = new PozycjaFaktury();
 			dbPozycja.LP = (int)pozycja.NrWierszaFa;
-			dbPozycja.Opis = pozycja.P_7;
+			dbPozycja.Opis = pozycja.P_7 ?? "";
 			dbPozycja.Ilosc = pozycja.P_8B ?? 1;
 			if (ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.UPR && dbPozycja.LP == 1)
 			{
@@ -639,7 +639,7 @@ class Generator
 			.ThenBy(sposob => sposob.CzyDomyslny ? 0 : 1)
 			.FirstOrDefault();
 
-		var waluta = baza.Waluty.FirstOrDefault(waluta => waluta.Skrot == faktura.Waluta.Skrot);
+		var waluta = baza.Waluty.FirstOrDefault(waluta => waluta.Skrot.ToLower() == faktura.Waluta.Skrot.ToLower());
 		if (waluta == null) baza.Zapisz(waluta = faktura.Waluta);
 		faktura.WalutaRef = waluta;
 		faktura.Waluta = null;
@@ -653,12 +653,14 @@ class Generator
 
 			var jednostka = String.IsNullOrEmpty(pozycja.JednostkaMiary.Nazwa)
 				? baza.JednostkiMiar.FirstOrDefault(jednostka => jednostka.CzyDomyslna)
-				: baza.JednostkiMiar.FirstOrDefault(jednostka => jednostka.Nazwa == pozycja.JednostkaMiary.Nazwa || jednostka.Skrot == pozycja.JednostkaMiary.Skrot || jednostka.Skrot == pozycja.JednostkaMiary.Skrot.TrimEnd('.'));
+				: baza.JednostkiMiar.FirstOrDefault(jednostka => jednostka.Nazwa.ToLower() == pozycja.JednostkaMiary.Nazwa.ToLower()
+					|| jednostka.Skrot.ToLower() == pozycja.JednostkaMiary.Skrot.ToLower()
+					|| jednostka.Skrot.ToLower() == pozycja.JednostkaMiary.Skrot.ToLower().TrimEnd('.'));
 			if (jednostka == null) baza.Zapisz(jednostka = pozycja.JednostkaMiary);
 			pozycja.JednostkaMiaryRef = jednostka;
 			pozycja.JednostkaMiary = null;
 
-			var towar = baza.Towary.FirstOrDefault(towar => towar.Nazwa == pozycja.Opis);
+			var towar = baza.Towary.FirstOrDefault(towar => towar.Nazwa.ToLower() == pozycja.Opis.ToLower());
 			pozycja.TowarRef = towar;
 			pozycja.Towar = null;
 			if (towar != null) pozycja.JednostkaMiaryRef = towar.JednostkaMiaryRef;
