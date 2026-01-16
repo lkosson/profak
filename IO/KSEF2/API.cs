@@ -91,6 +91,7 @@ class API : IDisposable
 
 	public async Task UwierzytelnijAsync(string nip, string ksefToken, CancellationToken cancellationToken)
 	{
+		nip = nip.Replace("-", "");
 		if (cachedAuth.nip == nip && cachedAuth.srodowisko == srodowisko && cachedAuth.accessToken.ValidUntil > DateTime.Now.AddMinutes(1))
 		{
 			accessToken = cachedAuth.accessToken;
