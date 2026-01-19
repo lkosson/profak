@@ -13,6 +13,7 @@ namespace ProFak.UI
 {
 	partial class EkranSQL : UserControl, IKontrolkaZKontekstem
 	{
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Kontekst Kontekst { get; set; }
 
 		public EkranSQL()

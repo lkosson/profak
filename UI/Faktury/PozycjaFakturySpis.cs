@@ -2,6 +2,7 @@
 using ProFak.DB;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace ProFak.UI
 {
 	class PozycjaFakturySpis : Spis<PozycjaFaktury>
 	{
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Ref<Faktura> FakturaRef { get; set; }
 
 		public PozycjaFakturySpis()

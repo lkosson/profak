@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProFak.DB;
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -13,12 +14,25 @@ class FakturaSpis : Spis<Faktura>
 	private readonly DateTime? doDaty;
 	private readonly bool doZaplaty;
 	private readonly bool zaplacone;
+
+	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Ref<Kontrahent> KontrahentRef { get; set; }
+
+	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Ref<Towar> TowarRef { get; set; }
+
+	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Ref<DeklaracjaVat> DeklaracjaVatRef { get; set; }
+
+	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Ref<ZaliczkaPit> ZaliczkaPitRef { get; set; }
+
+	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public bool CzyBezDeklaracjiVat { get; set; }
+
+	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public bool CzyBezZaliczkiPit { get; set; }
+
 	protected virtual RodzajFaktury[] Rodzaje => [];
 	protected virtual bool CzyWidocznySprzedawca => false;
 	protected virtual bool CzyWidocznyNabywca => false;

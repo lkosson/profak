@@ -15,7 +15,9 @@ namespace ProFak.UI
 {
 	partial class BazyDanych : UserControl, IKontrolkaZKontekstem
 	{
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Kontekst Kontekst { get; set; }
+
 		private bool gotowy;
 
 		public BazyDanych()

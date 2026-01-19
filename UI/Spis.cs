@@ -55,7 +55,10 @@ namespace ProFak.UI
 		private bool rekordyPodczasZmiany;
 		private bool kolumnyZmienione;
 
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Kontekst Kontekst { get; set; }
+
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public IEnumerable<T> WybraneRekordy
 		{
 			get => Sortuj(SelectedRows.Cast<DataGridViewRow>().Select(row => row.DataBoundItem).Cast<T>());
@@ -77,6 +80,7 @@ namespace ProFak.UI
 			}
 		}
 
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public IEnumerable<T> Rekordy
 		{
 			get => bindingSource.DataSource as IEnumerable<T>;
@@ -126,6 +130,7 @@ namespace ProFak.UI
 		public event Action RekordyZmienione;
 		public event Action ZaznaczenieZmienione;
 
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Ref<T> RekordPoczatkowy { get; set; }
 
 		public Spis()

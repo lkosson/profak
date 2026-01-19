@@ -23,6 +23,7 @@ namespace ProFak.UI
 		public Spis<TRekord> Spis { get; }
 		public List<AkcjaNaSpisie<TRekord>> Akcje => akcje;
 
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Kontekst Kontekst { get => Spis.Kontekst; set => Spis.Kontekst = value; }
 		public int PreferowanaSzerokosc => Spis.PreferowanaSzerokosc + Spis.Margin.Right + panelAkcji.Width + panelAkcji.Margin.Right;
 

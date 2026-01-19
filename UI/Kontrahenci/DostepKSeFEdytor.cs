@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
@@ -7,8 +8,13 @@ using ProFak.DB;
 namespace ProFak.UI.Kontrahenci;
 partial class DostepKSeFEdytor : UserControl
 {
+	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public SrodowiskoKSeF SrodowiskoKSeF { get; set; }
+
+	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public string Token { get; set; }
+
+	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public string NIP { get => textBoxNIP.Text; set => textBoxNIP.Text = value; }
 
 	public DostepKSeFEdytor()

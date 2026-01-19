@@ -1,6 +1,7 @@
 ﻿using ProFak.DB;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace ProFak.UI
 {
 	class PlikSpis : Spis<Plik>
 	{
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Ref<Faktura> FakturaRef { get; set; }
 
 		public PlikSpis()

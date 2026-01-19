@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,9 @@ namespace ProFak.UI
 {
 	class PanelAkcji : Panel
 	{
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public bool CzyGlownySpis { get; set; }
+
 		private readonly List<(Button przycisk, AdapterAkcji adapter)> przyciski;
 
 		public PanelAkcji()

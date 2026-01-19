@@ -18,7 +18,10 @@ namespace ProFak.UI.Faktury;
 
 partial class WysylkaFakturEdytor : UserControl
 {
+	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public IEnumerable<Faktura> Faktury { get; set; }
+
+	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Kontekst Kontekst { get; set; }
 
 	private string szablonAdresat;

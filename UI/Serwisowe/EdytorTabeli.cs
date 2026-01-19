@@ -14,6 +14,7 @@ namespace ProFak.UI
 {
 	partial class EdytorTabeli : UserControl, IKontrolkaZKontekstem
 	{
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Kontekst Kontekst { get; set; }
 
 		public EdytorTabeli()

@@ -6,11 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace ProFak.UI
 {
 	class ButtonDropDown : Button
 	{
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public ContextMenuStrip Menu { get; set; }
 
 		public ButtonDropDown()
