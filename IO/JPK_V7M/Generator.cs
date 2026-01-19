@@ -80,7 +80,8 @@ namespace ProFak.IO.JPK_V7M
 					jpksprzedaz.DowodSprzedazy = faktura.Numer;
 					jpksprzedaz.DataWystawienia = faktura.DataWystawienia;
 					jpksprzedaz.DataSprzedazy = faktura.DataSprzedazy;
-					if (!String.IsNullOrEmpty(faktura.NumerKSeF)) jpksprzedaz.NrKSeF = faktura.NumerKSeF;
+					if (String.IsNullOrEmpty(faktura.NumerKSeF)) jpksprzedaz.BFK = TWybor1.Item1;
+					else jpksprzedaz.NrKSeF = faktura.NumerKSeF;
 
 					foreach (var pozycja in faktura.Pozycje)
 					{
@@ -134,7 +135,10 @@ namespace ProFak.IO.JPK_V7M
 						jpksprzedaz.NrKontrahenta = nipnumer;
 						jpksprzedaz.NazwaKontrahenta = faktura.NazwaSprzedawcy;
 						jpksprzedaz.DowodSprzedazy = faktura.Numer;
-						if (!String.IsNullOrEmpty(faktura.NumerKSeF)) jpksprzedaz.NrKSeF = faktura.NumerKSeF;
+						if (faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny) jpksprzedaz.DI = TWybor1.Item1;
+						else if (String.IsNullOrEmpty(faktura.NumerKSeF)) jpksprzedaz.BFK = TWybor1.Item1;
+						else if (faktura.NumerKSeF == "OFFLINE") jpksprzedaz.OFF = TWybor1.Item1;
+						else jpksprzedaz.NrKSeF = faktura.NumerKSeF;
 						jpksprzedaz.DataWystawienia = faktura.DataWystawienia;
 						jpksprzedaz.DataSprzedazy = faktura.DataSprzedazy;
 						jpksprzedaz.K_23 = faktura.RazemNetto;
@@ -150,7 +154,10 @@ namespace ProFak.IO.JPK_V7M
 						jpkzakup.NrDostawcy = nipnumer;
 						jpkzakup.NazwaDostawcy = faktura.NazwaSprzedawcy;
 						jpkzakup.DowodZakupu = faktura.Numer;
-						if (!String.IsNullOrEmpty(faktura.NumerKSeF)) jpkzakup.NrKSeF = faktura.NumerKSeF;
+						if (faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny) jpkzakup.DI = TWybor1.Item1;
+						else if (String.IsNullOrEmpty(faktura.NumerKSeF)) jpkzakup.BFK = TWybor1.Item1;
+						else if (faktura.NumerKSeF == "OFFLINE") jpkzakup.OFF = TWybor1.Item1;
+						else jpkzakup.NrKSeF = faktura.NumerKSeF;
 						jpkzakup.DataZakupu = faktura.DataWystawienia;
 						jpkzakup.DataWplywu = faktura.DataWprowadzenia;
 						if (faktura.ProceduraMarzy != ProceduraMarży.NieDotyczy) { jpkzakup.ZakupVAT_Marza ??= 0; jpkzakup.ZakupVAT_Marza += faktura.RazemBrutto; }
