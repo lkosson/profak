@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProFak.DB;
+using ProFak.IO.JPK_PKPIR.DefinicjeTypy;
+using ProFak.IO.JPK_PKPIR.KodyUrzedowSkarbowych;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -36,8 +38,8 @@ namespace ProFak.IO.JPK_PKPIR
 			jpk.Naglowek.KodFormularza = new TNaglowekKodFormularza();
 			jpk.Naglowek.KodFormularza.kodSystemowy = "JPK_PKPIR (3)";
 			jpk.Naglowek.KodFormularza.wersjaSchemy = "1-0";
-			jpk.Naglowek.WariantFormularza = 3;
-			jpk.Naglowek.CelZlozenia = 1;
+			jpk.Naglowek.WariantFormularza = TNaglowekWariantFormularza.Item3;
+			jpk.Naglowek.CelZlozenia = TCelZlozenia.Item1;
 			jpk.Naglowek.DataWytworzeniaJPK = DateTime.Now;
 			jpk.Naglowek.DataOd = zaliczki.Min(e => e.Miesiac);
 			jpk.Naglowek.DataDo = zaliczki.Max(e => e.Miesiac).AddMonths(1).AddDays(-1);
@@ -67,7 +69,7 @@ namespace ProFak.IO.JPK_PKPIR
 				foreach (var pozycje in faktura.Pozycje.Where(e => e.StawkaRyczaltu.HasValue).GroupBy(e => e.StawkaRyczaltu.Value))
 				{
 					var jpkwiersz = new JPKPKPIRWiersz();
-					jpkwiersz.K_1 = (jpkwiersze.Count + 1).ToString();
+					jpkwiersz.K_1 = (ulong)(jpk.PKPIRWiersz.Count + 1);
 					jpkwiersz.K_2 = faktura.DataSprzedazy;
 					jpkwiersz.K_3A = faktura.Numer;
 					jpkwiersz.K_3B = faktura.NumerKSeF;
@@ -77,29 +79,21 @@ namespace ProFak.IO.JPK_PKPIR
 					jpkwiersz.K_5B = faktura.CzySprzedaz ? faktura.DaneNabywcy : faktura.DaneSprzedawcy;
 					jpkwiersz.K_6 = String.IsNullOrEmpty(faktura.OpisZdarzenia) ? faktura.CzySprzedaz ? "Sprzedaż" : "Zakup" : faktura.OpisZdarzenia;
 					jpkwiersz.K_7 = faktura.CzySprzedaz ? faktura.RazemNetto : 0;
-					jpkwiersz.K_7Specified = faktura.CzySprzedaz;
 					jpkwiersz.K_9 = jpkwiersz.K_7 + jpkwiersz.K_8;
-					jpkwiersz.K_9Specified = jpkwiersz.K_7Specified;
 					jpkwiersz.K_10 = faktura.CzyZakup ? faktura.RazemNetto : 0;
-					jpkwiersz.K_10Specified = faktura.CzyZakup;
 					jpkwiersze.Add(jpkwiersz);
 				}
 			}
 
-			jpk.PKPIRWiersz = jpkwiersze.ToArray();
-
 			jpk.PKPIRInfo = new JPKPKPIRInfo();
 			jpk.PKPIRInfo.P_1 = 0m;
 			jpk.PKPIRInfo.P_2 = 0m;
-			jpk.PKPIRInfo.P_3 = jpkwiersze.Sum(wiersz => wiersz.K_10);
-			jpk.PKPIRInfo.P_4 = jpkwiersze.Sum(wiersz => wiersz.K_7) - jpkwiersze.Sum(wiersz => wiersz.K_10);
-
-			jpk.PKPIRSpis = new JPKPKPIRSpis[0];
-
+			jpk.PKPIRInfo.P_3 = jpk.PKPIRWiersz.Sum(wiersz => wiersz.K_10 ?? 0);
+			jpk.PKPIRInfo.P_4 = jpk.PKPIRWiersz.Sum(wiersz => wiersz.K_7 ?? 0) - jpkwiersze.Sum(wiersz => wiersz.K_10 ?? 0);
 
 			jpk.PKPIRCtrl = new JPKPKPIRCtrl();
-			jpk.PKPIRCtrl.LiczbaWierszy = jpkwiersze.Count.ToString();
-			jpk.PKPIRCtrl.SumaPrzychodow = jpkwiersze.Sum(wiersz => wiersz.K_9);
+			jpk.PKPIRCtrl.LiczbaWierszy = (ulong)jpk.PKPIRWiersz.Count;
+			jpk.PKPIRCtrl.SumaPrzychodow = jpk.PKPIRWiersz.Sum(wiersz => wiersz.K_9 ?? 0);
 
 			return jpk;
 		}

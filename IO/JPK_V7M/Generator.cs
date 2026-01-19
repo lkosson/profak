@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProFak.DB;
+using ProFak.IO.JPK_V7M.DefinicjeTypy;
+using ProFak.IO.JPK_V7M.KodyUrzedowSkarbowych;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -102,7 +104,7 @@ namespace ProFak.IO.JPK_V7M
 						else if (pozycja.StawkaVat.Wartosc == 0) { jpksprzedaz.K_13 ??= 0; jpksprzedaz.K_13 += pozycja.WartoscNetto; }
 						else if (pozycja.StawkaVat.Wartosc <= 5) { jpksprzedaz.K_15 ??= 0; jpksprzedaz.K_15 += pozycja.WartoscNetto; }
 						else if (pozycja.StawkaVat.Wartosc <= 8) { jpksprzedaz.K_17 ??= 0; jpksprzedaz.K_17 += pozycja.WartoscNetto; }
-						else { jpksprzedaz.K_19 += pozycja.WartoscNetto; jpksprzedaz.K_20 += pozycja.WartoscVat; }
+						else { jpksprzedaz.K_19 ??= 0; jpksprzedaz.K_19 += pozycja.WartoscNetto; jpksprzedaz.K_20 ??= 0; jpksprzedaz.K_20 += pozycja.WartoscVat; }
 					}
 
 					if (faktura.CzyTP) { jpksprzedaz.TP = TWybor1.Item1; }

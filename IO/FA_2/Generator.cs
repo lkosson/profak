@@ -7,6 +7,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using Microsoft.EntityFrameworkCore;
 using ProFak.DB;
+using ProFak.IO.FA_2.DefinicjeTypy;
 using DBFaktura = ProFak.DB.Faktura;
 using KSEFFaktura = ProFak.IO.FA_2.Faktura;
 

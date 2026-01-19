@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProFak.DB;
+using ProFak.IO.JPK_EWP.DefinicjeTypy;
+using ProFak.IO.JPK_EWP.KodyUrzedowSkarbowych;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -36,8 +38,8 @@ namespace ProFak.IO.JPK_EWP
 			jpk.Naglowek.KodFormularza = new TNaglowekKodFormularza();
 			jpk.Naglowek.KodFormularza.kodSystemowy = "JPK_EWP (4)";
 			jpk.Naglowek.KodFormularza.wersjaSchemy = "1-0";
-			jpk.Naglowek.WariantFormularza = 4;
-			jpk.Naglowek.CelZlozenia = 1;
+			jpk.Naglowek.WariantFormularza = TNaglowekWariantFormularza.Item4;
+			jpk.Naglowek.CelZlozenia = TCelZlozenia.Item1;
 			jpk.Naglowek.DataWytworzeniaJPK = DateTime.Now;
 			jpk.Naglowek.DataOd = zaliczki.Min(e => e.Miesiac);
 			jpk.Naglowek.DataDo = zaliczki.Max(e => e.Miesiac).AddMonths(1).AddDays(-1);
@@ -52,7 +54,6 @@ namespace ProFak.IO.JPK_EWP
 			podmiotOF.Nazwisko = podmiot.OsobaFizycznaNazwisko;
 			podmiotOF.DataUrodzenia = podmiot.OsobaFizycznaDataUrodzenia.Value;
 
-			var jpkwiersze = new List<JPKEWPWiersz>();
 			foreach (var faktura in faktury)
 			{
 				if (!faktura.CzySprzedaz) continue;
@@ -68,7 +69,7 @@ namespace ProFak.IO.JPK_EWP
 				foreach (var pozycje in faktura.Pozycje.Where(e => e.StawkaRyczaltu.HasValue).GroupBy(e => e.StawkaRyczaltu.Value))
 				{
 					var jpkwiersz = new JPKEWPWiersz();
-					jpkwiersz.K_1 = (jpkwiersze.Count + 1).ToString();
+					jpkwiersz.K_1 = (ulong)(jpk.EWPWiersz.Count + 1);
 					jpkwiersz.K_2 = faktura.DataWystawienia;
 					jpkwiersz.K_3 = faktura.DataSprzedazy;
 					jpkwiersz.K_4 = faktura.Numer;
@@ -79,21 +80,19 @@ namespace ProFak.IO.JPK_EWP
 					if (pozycje.Key == 17) jpkwiersz.K_9 = TStawkaPodatku.Item17;
 					else if (pozycje.Key == 15) jpkwiersz.K_9 = TStawkaPodatku.Item15;
 					else if (pozycje.Key == 14) jpkwiersz.K_9 = TStawkaPodatku.Item14;
-					else if (pozycje.Key == 12.5m) jpkwiersz.K_9 = TStawkaPodatku.Item125;
+					else if (pozycje.Key == 12.5m) jpkwiersz.K_9 = TStawkaPodatku.Item12Period5;
 					else if (pozycje.Key == 12) jpkwiersz.K_9 = TStawkaPodatku.Item12;
 					else if (pozycje.Key == 10) jpkwiersz.K_9 = TStawkaPodatku.Item10;
-					else if (pozycje.Key == 8.5m) jpkwiersz.K_9 = TStawkaPodatku.Item85;
-					else if (pozycje.Key == 5.5m) jpkwiersz.K_9 = TStawkaPodatku.Item55;
+					else if (pozycje.Key == 8.5m) jpkwiersz.K_9 = TStawkaPodatku.Item8Period5;
+					else if (pozycje.Key == 5.5m) jpkwiersz.K_9 = TStawkaPodatku.Item5Period5;
 					else if (pozycje.Key == 3) jpkwiersz.K_9 = TStawkaPodatku.Item3;
-					jpkwiersze.Add(jpkwiersz);
+					jpk.EWPWiersz.Add(jpkwiersz);
 				}
 			}
 
-			jpk.EWPWiersz = jpkwiersze.ToArray();
-
 			jpk.EWPCtrl = new JPKEWPCtrl();
-			jpk.EWPCtrl.LiczbaWierszy = jpkwiersze.Count.ToString();
-			jpk.EWPCtrl.SumaPrzychodow = jpkwiersze.Sum(wiersz => wiersz.K_8);
+			jpk.EWPCtrl.LiczbaWierszy = (ulong)jpk.EWPWiersz.Count;
+			jpk.EWPCtrl.SumaPrzychodow = jpk.EWPWiersz.Sum(wiersz => wiersz.K_8);
 
 			return jpk;
 		}
