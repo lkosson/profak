@@ -36,6 +36,7 @@ namespace ProFak.DB
 		public SposobPlatnosci SposobPlatnosci { get; set; }
 
 		public string AdresRejestrowyFmt => AdresRejestrowy.JakoJednaLinia();
+		public string PelnaNazwaLubNazwa => String.IsNullOrEmpty(PelnaNazwa) ? Nazwa : PelnaNazwa;
 
 		public override bool CzyPasuje(string fraza)
 			=> base.CzyPasuje(fraza)

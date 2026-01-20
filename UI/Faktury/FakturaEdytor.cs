@@ -187,7 +187,7 @@ namespace ProFak.UI
 			slownikNabywcaNazwa = new Slownik<Kontrahent>(
 				Kontekst, comboBoxNazwaNabywcy, null,
 				Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == !CzySprzedaz).OrderBy(kontrahent => kontrahent.Nazwa).ToList,
-				kontrahent => kontrahent.PelnaNazwa,
+				kontrahent => kontrahent.PelnaNazwaLubNazwa,
 				kontrahent => { if (UstawNabywce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
 				Spisy.Kontrahenci);
 			slownikNabywcaNazwa.Zainstaluj();
@@ -203,7 +203,7 @@ namespace ProFak.UI
 			slownikSprzedawcaNIP = new Slownik<Kontrahent>(
 				Kontekst, comboBoxNazwaSprzedawcy, null,
 				Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == CzySprzedaz).OrderBy(kontrahent => kontrahent.Nazwa).ToList,
-				kontrahent => kontrahent.PelnaNazwa,
+				kontrahent => kontrahent.PelnaNazwaLubNazwa,
 				kontrahent => { if (UstawSprzedawce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
 				Spisy.Kontrahenci);
 			slownikSprzedawcaNIP.Zainstaluj();
@@ -214,7 +214,7 @@ namespace ProFak.UI
 			if (kontrahent == null || rekord.NabywcaRef == kontrahent.Ref) return false;
 			rekord.NabywcaRef = kontrahent;
 			rekord.NIPNabywcy = kontrahent.NIP;
-			rekord.NazwaNabywcy = kontrahent.PelnaNazwa;
+			rekord.NazwaNabywcy = kontrahent.PelnaNazwaLubNazwa;
 			rekord.DaneNabywcy = kontrahent.AdresRejestrowy;
 			rekord.CzyTP = kontrahent.CzyTP;
 			if (rekord.CzySprzedaz)
@@ -235,7 +235,7 @@ namespace ProFak.UI
 			if (kontrahent == null || rekord.SprzedawcaRef == kontrahent.Ref) return false;
 			rekord.SprzedawcaRef = kontrahent;
 			rekord.NIPSprzedawcy = kontrahent.NIP;
-			rekord.NazwaSprzedawcy = kontrahent.PelnaNazwa;
+			rekord.NazwaSprzedawcy = kontrahent.PelnaNazwaLubNazwa;
 			rekord.DaneSprzedawcy = kontrahent.AdresRejestrowy;
 			rekord.RachunekBankowy = kontrahent.RachunekBankowy;
 			if (rekord.CzySprzedaz)
