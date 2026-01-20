@@ -23,6 +23,9 @@ namespace ProFak.UI
 		private Slownik<Kontrahent> slownikSprzedawcaNazwa;
 		private Slownik<Kontrahent> slownikSprzedawcaNIP;
 
+		private string uwagiNabywcy = "";
+		private string uwagiSprzedawcy = "";
+
 		public virtual bool CzySprzedaz => true;
 
 		public FakturaEdytor()
@@ -214,6 +217,15 @@ namespace ProFak.UI
 			rekord.NazwaNabywcy = kontrahent.PelnaNazwa;
 			rekord.DaneNabywcy = kontrahent.AdresRejestrowy;
 			rekord.CzyTP = kontrahent.CzyTP;
+			if (rekord.CzySprzedaz)
+			{
+				if (!String.IsNullOrWhiteSpace(uwagiNabywcy)) rekord.UwagiPubliczne = (rekord.UwagiPubliczne ?? "").Replace(uwagiNabywcy, "").Trim('\r', '\n');
+				if (!String.IsNullOrWhiteSpace(kontrahent.UwagiPubliczne))
+				{
+					uwagiNabywcy = kontrahent.UwagiPubliczne.Trim('\r', '\n');
+					rekord.UwagiPubliczne = (rekord.UwagiPubliczne + "\r\n" + uwagiNabywcy).Trim('\r', '\n');
+				}
+			}
 			if (kontrahent.SposobPlatnosciRef.IsNotNull) comboBoxSposobPlatnosci.SelectedValue = kontrahent.SposobPlatnosciRef;
 			return true;
 		}
@@ -226,6 +238,15 @@ namespace ProFak.UI
 			rekord.NazwaSprzedawcy = kontrahent.PelnaNazwa;
 			rekord.DaneSprzedawcy = kontrahent.AdresRejestrowy;
 			rekord.RachunekBankowy = kontrahent.RachunekBankowy;
+			if (rekord.CzySprzedaz)
+			{
+				if (!String.IsNullOrWhiteSpace(uwagiSprzedawcy)) rekord.UwagiPubliczne = (rekord.UwagiPubliczne ?? "").Replace(uwagiSprzedawcy, "").Trim('\r', '\n');
+				if (!String.IsNullOrWhiteSpace(kontrahent.UwagiPubliczne))
+				{
+					uwagiSprzedawcy = kontrahent.UwagiPubliczne.Trim('\r', '\n');
+					rekord.UwagiPubliczne = (uwagiSprzedawcy + "\r\n" + rekord.UwagiPubliczne).Trim('\r', '\n');
+				}
+			}
 			if (kontrahent.SposobPlatnosciRef.IsNotNull) comboBoxSposobPlatnosci.SelectedValue = kontrahent.SposobPlatnosciRef;
 			return true;
 		}

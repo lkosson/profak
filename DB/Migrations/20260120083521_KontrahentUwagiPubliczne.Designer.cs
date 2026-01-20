@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProFak.DB;
 
@@ -10,9 +11,11 @@ using ProFak.DB;
 namespace ProFak.DB.Migrations
 {
     [DbContext(typeof(Baza))]
-    partial class ProFakContextModelSnapshot : ModelSnapshot
+    [Migration("20260120083521_KontrahentUwagiPubliczne")]
+    partial class KontrahentUwagiPubliczne
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.1");

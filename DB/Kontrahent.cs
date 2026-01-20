@@ -16,7 +16,8 @@ namespace ProFak.DB
 		public string RachunekBankowy { get; set; } = "";
 		public string Telefon { get; set; } = "";
 		public string EMail { get; set; } = "";
-		public string Uwagi { get; set; } = "";
+		public string UwagiWewnetrzne { get; set; } = "";
+		public string UwagiPubliczne { get; set; } = "";
 		public bool CzyArchiwalny { get; set; }
 		public bool CzyPodmiot { get; set; }
 		public bool CzyTP { get; set; }
@@ -46,7 +47,7 @@ namespace ProFak.DB
 			|| CzyPasuje(RachunekBankowy, fraza)
 			|| CzyPasuje(Telefon, fraza)
 			|| CzyPasuje(EMail, fraza)
-			|| CzyPasuje(Uwagi, fraza)
+			|| CzyPasuje(UwagiWewnetrzne, fraza)
 			|| CzyPasuje(CzyArchiwalny ? "Archiwalny" : "", fraza)
 			|| CzyPasuje(CzyPodmiot ? "Podmiot" : "", fraza);
 	}

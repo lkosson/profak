@@ -25,7 +25,8 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.RachunekBankowy).HasDefaultValue("");
 			builder.Property(e => e.Telefon).HasDefaultValue("");
 			builder.Property(e => e.EMail).HasDefaultValue("");
-			builder.Property(e => e.Uwagi).HasDefaultValue("");
+			builder.Property(e => e.UwagiPubliczne).HasDefaultValue("");
+			builder.Property(e => e.UwagiWewnetrzne).HasDefaultValue("");
 			builder.Property(e => e.CzyArchiwalny).HasDefaultValue(false).IsRequired();
 			builder.Property(e => e.CzyPodmiot).HasDefaultValue(false).IsRequired();
 			builder.Property(e => e.CzyTP).HasDefaultValue(false).IsRequired();

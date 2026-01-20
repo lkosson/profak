@@ -31,7 +31,8 @@ namespace ProFak.UI
 			kontroler.Powiazanie(textBoxTelefon, kontrahent => kontrahent.Telefon);
 			kontroler.Powiazanie(textBoxEMail, kontrahent => kontrahent.EMail);
 			kontroler.Powiazanie(textBoxRachunekBankowy, kontrahent => kontrahent.RachunekBankowy);
-			kontroler.Powiazanie(textBoxUwagi, kontrahent => kontrahent.Uwagi);
+			kontroler.Powiazanie(textBoxUwagiPubliczne, kontrahent => kontrahent.UwagiPubliczne);
+			kontroler.Powiazanie(textBoxUwagiWewnetrzne, kontrahent => kontrahent.UwagiWewnetrzne);
 			kontroler.Powiazanie(comboBoxStan, kontrahent => kontrahent.CzyArchiwalny);
 			kontroler.Powiazanie(checkBoxTP, kontrahent => kontrahent.CzyTP);
 			kontroler.Powiazanie(comboBoxSposobPlatnosci, kontrahent => kontrahent.SposobPlatnosciRef);
