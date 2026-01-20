@@ -192,6 +192,7 @@ class Generator
 			ksefWiersz.Indeks = dbPozycja.Towar == null ? ksefWiersz.UU_ID : dbPozycja.Towar.Id.ToString();
 			ksefWiersz.P_8A = dbPozycja.JednostkaMiary?.Nazwa ?? "szt";
 			ksefWiersz.P_8B = Math.Abs(dbPozycja.Ilosc);
+			if (dbPozycja.RabatRazem != 0 && ksefWiersz.P_8B != 0) ksefWiersz.P_10 = -dbPozycja.RabatRazem / ksefWiersz.P_8B;
 			if (dbFaktura.KursWaluty != 0) ksefWiersz.KursWaluty = dbFaktura.KursWaluty;
 			if (dbPozycja.CzyWedlugCenBrutto)
 			{
@@ -347,6 +348,7 @@ class Generator
 			dbPozycja.LP = (int)pozycja.NrWierszaFa;
 			dbPozycja.Opis = pozycja.P_7 ?? "";
 			dbPozycja.Ilosc = pozycja.P_8B ?? 1;
+			dbPozycja.RabatCena = pozycja.P_10Value;
 			if (ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.UPR && dbPozycja.LP == 1)
 			{
 				dbPozycja.CzyWedlugCenBrutto = true;
