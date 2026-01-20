@@ -131,7 +131,7 @@ class API : IDisposable
 		var authTokenRequest = AuthTokenRequestBuilder
 			.Create()
 			.WithChallenge(challenge.Challenge)
-			.WithContext(AuthenticationTokenContextIdentifierType.Nip, nip)
+			.WithContext(AuthenticationTokenContextIdentifierType.Nip, nip.Replace("-", ""))
 			.WithIdentifierType(AuthenticationTokenSubjectIdentifierTypeEnum.CertificateSubject)
 			.Build();
 		var xml = AuthenticationTokenRequestSerializer.SerializeToXmlString(authTokenRequest);
@@ -144,7 +144,7 @@ class API : IDisposable
 			.Create()
 			.WithGivenName("ProFak")
 			.WithSurname("Test")
-			.WithSerialNumber("TINPL-" + nip)
+			.WithSerialNumber("TINPL-" + nip.Replace("-", ""))
 			.WithCommonName("ProFak")
 			.Build();
 		var signedXml = SignatureService.Sign(xml, certificate);
