@@ -261,9 +261,9 @@ class Generator
 
 		var rejestry = new FakturaStopkaRejestry();
 		var uwagi = dbFaktura.UwagiPubliczne;
-		uwagi = Regex.Replace(uwagi, @"BDO: (?<numer>\d+)", m => { rejestry.BDO = m.Groups["numer"].Value; return ""; });
-		uwagi = Regex.Replace(uwagi, @"KRS: (?<numer>\d+)", m => { rejestry.KRS = m.Groups["numer"].Value; return ""; });
-		uwagi = Regex.Replace(uwagi, @"(REGON|Regon|regon): (?<numer>\d+)", m => { rejestry.REGON = m.Groups["numer"].Value; return ""; });
+		uwagi = Regex.Replace(uwagi, @"BDO: (?<numer>\d{1,9})", m => { rejestry.BDO = m.Groups["numer"].Value; return ""; });
+		uwagi = Regex.Replace(uwagi, @"KRS: (?<numer>\d{10})", m => { rejestry.KRS = m.Groups["numer"].Value; return ""; });
+		uwagi = Regex.Replace(uwagi, @"(REGON|Regon|regon): (?<numer>(\d{9}|\d{14}))", m => { rejestry.REGON = m.Groups["numer"].Value; return ""; });
 		uwagi = uwagi.Trim(' ', '\r', '\n', '\t');
 		if (!String.IsNullOrEmpty(uwagi)) ksefFaktura.Fa.DodatkowyOpis.Add(new TKluczWartosc() { Klucz = "Uwagi", Wartosc = uwagi });
 		if (!String.IsNullOrEmpty(rejestry.BDO) || !String.IsNullOrEmpty(rejestry.KRS) || !String.IsNullOrEmpty(rejestry.REGON))
