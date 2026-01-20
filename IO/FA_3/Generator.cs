@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
 using Microsoft.EntityFrameworkCore;
@@ -119,7 +120,6 @@ class Generator
 			: dbFaktura.Rodzaj == DB.RodzajFaktury.KorektaSprzedaży || dbFaktura.Rodzaj == RodzajFaktury.KorektaVatMarży ? TRodzajFaktury.KOR
 			: throw new ApplicationException("Nieobsługiwany rodzaj faktury: " + dbFaktura.RodzajFmt);
 		if (dbFaktura.CzyTP) { ksefFaktura.Fa.TP = TWybor1.Item1; }
-		if (!String.IsNullOrEmpty(dbFaktura.UwagiPubliczne)) ksefFaktura.Fa.DodatkowyOpis.Add(new TKluczWartosc() { Klucz = "Uwagi", Wartosc = dbFaktura.UwagiPubliczne });
 		ksefFaktura.Fa.Platnosc = new FakturaFaPlatnosc();
 		if (dbFaktura.PozostaloDoZaplaty == 0)
 		{
@@ -257,7 +257,20 @@ class Generator
 
 			ksefFaktura.Fa.FaWiersz.Add(ksefWiersz);
 		}
-		ksefFaktura.Stopka = new FakturaStopka();
+
+		var rejestry = new FakturaStopkaRejestry();
+		var uwagi = dbFaktura.UwagiPubliczne;
+		uwagi = Regex.Replace(uwagi, @"BDO: (?<numer>\d+)", m => { rejestry.BDO = m.Groups["numer"].Value; return ""; });
+		uwagi = Regex.Replace(uwagi, @"KRS: (?<numer>\d+)", m => { rejestry.KRS = m.Groups["numer"].Value; return ""; });
+		uwagi = Regex.Replace(uwagi, @"(REGON|Regon|regon): (?<numer>\d+)", m => { rejestry.REGON = m.Groups["numer"].Value; return ""; });
+		uwagi = uwagi.Trim(' ', '\r', '\n', '\t');
+		if (!String.IsNullOrEmpty(uwagi)) ksefFaktura.Fa.DodatkowyOpis.Add(new TKluczWartosc() { Klucz = "Uwagi", Wartosc = uwagi });
+		if (!String.IsNullOrEmpty(rejestry.BDO) || !String.IsNullOrEmpty(rejestry.KRS) || !String.IsNullOrEmpty(rejestry.REGON))
+		{
+			ksefFaktura.Stopka = new FakturaStopka();
+			ksefFaktura.Stopka.Rejestry.Add(rejestry);
+		}
+
 		return ksefFaktura;
 	}
 
