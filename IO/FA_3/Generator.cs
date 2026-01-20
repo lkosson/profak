@@ -133,7 +133,11 @@ class Generator
 				ksefFaktura.Fa.Platnosc.ZaplataCzesciowa.Add(new FakturaFaPlatnoscZaplataCzesciowa { KwotaZaplatyCzesciowej = wplata.Kwota, DataZaplatyCzesciowej = wplata.Data });
 		}
 		ksefFaktura.Fa.Platnosc.TerminPlatnosci.Add(new FakturaFaPlatnoscTerminPlatnosci { Termin = dbFaktura.TerminPlatnosci });
-		ksefFaktura.Fa.Platnosc.FormaPlatnosci = TFormaPlatnosci.Item6;
+		if ((dbFaktura.OpisSposobuPlatnosci ?? "").Contains("gotówk", StringComparison.InvariantCultureIgnoreCase)) ksefFaktura.Fa.Platnosc.FormaPlatnosci = TFormaPlatnosci.Item1;
+		else if ((dbFaktura.OpisSposobuPlatnosci ?? "").Contains("karta", StringComparison.InvariantCultureIgnoreCase)) ksefFaktura.Fa.Platnosc.FormaPlatnosci = TFormaPlatnosci.Item2;
+		else if ((dbFaktura.OpisSposobuPlatnosci ?? "").Contains("kredyt", StringComparison.InvariantCultureIgnoreCase)) ksefFaktura.Fa.Platnosc.FormaPlatnosci = TFormaPlatnosci.Item5;
+		else if ((dbFaktura.OpisSposobuPlatnosci ?? "").Contains("mobiln", StringComparison.InvariantCultureIgnoreCase)) ksefFaktura.Fa.Platnosc.FormaPlatnosci = TFormaPlatnosci.Item7;
+		else ksefFaktura.Fa.Platnosc.FormaPlatnosci = TFormaPlatnosci.Item6;
 		if (!String.IsNullOrEmpty(dbFaktura.RachunekBankowy))
 		{
 			ksefFaktura.Fa.Platnosc.RachunekBankowy.Add(new TRachunekBankowy { NrRB = dbFaktura.RachunekBankowy.Replace(" ", "") });
