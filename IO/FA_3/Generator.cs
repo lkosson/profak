@@ -91,7 +91,7 @@ class Generator
 		ksefFaktura.Podmiot2.Adres.KodKraju = TKodKraju.PL;
 		ksefFaktura.Podmiot2.Adres.AdresL1 = dbFaktura.DaneNabywcy.JakoDwieLinie().linia1;
 		ksefFaktura.Podmiot2.Adres.AdresL2 = dbFaktura.DaneNabywcy.JakoDwieLinie().linia2;
-		ksefFaktura.Podmiot2.IDNabywcy = dbFaktura.NabywcaRef.Id.ToString();
+		//ksefFaktura.Podmiot2.IDNabywcy = dbFaktura.NabywcaRef.Id.ToString();
 		ksefFaktura.Podmiot2.GV = FakturaPodmiot2GV.Item2;
 		ksefFaktura.Podmiot2.JST = FakturaPodmiot2JST.Item2;
 		ksefFaktura.Fa = new FakturaFa();
@@ -191,9 +191,9 @@ class Generator
 		{
 			var ksefWiersz = new FakturaFaFaWiersz();
 			ksefWiersz.NrWierszaFa = (ulong)dbPozycja.LP;
-			ksefWiersz.UU_ID = dbPozycja.Id.ToString();
+			//ksefWiersz.UU_ID = dbPozycja.Id.ToString();
 			ksefWiersz.P_7 = dbPozycja.Opis;
-			ksefWiersz.Indeks = dbPozycja.Towar == null ? ksefWiersz.UU_ID : dbPozycja.Towar.Id.ToString();
+			//ksefWiersz.Indeks = dbPozycja.Towar == null ? ksefWiersz.UU_ID : dbPozycja.Towar.Id.ToString();
 			ksefWiersz.P_8A = dbPozycja.JednostkaMiary?.Nazwa ?? "szt";
 			ksefWiersz.P_8B = Math.Abs(dbPozycja.Ilosc);
 			if (dbPozycja.RabatRazem != 0 && ksefWiersz.P_8B != 0) ksefWiersz.P_10 = -dbPozycja.RabatRazem / ksefWiersz.P_8B;
