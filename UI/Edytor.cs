@@ -68,6 +68,7 @@ namespace ProFak.UI
 		{
 			textBox.Validating += (control, e) =>
 			{
+				if (ModifierKeys == Keys.Shift) return;
 				var blad = walidator(textBox.Text);
 
 				if (blad == null)
@@ -87,6 +88,7 @@ namespace ProFak.UI
 		{
 			comboBox.Validating += (control, e) =>
 			{
+				if (ModifierKeys == Keys.Shift) return;
 				var wartosc = comboBox.SelectedValue;
 				var blad = wartosc is T t ? walidator(t) : "Wybrana wartość jest nieprawidłowa.";
 
@@ -105,6 +107,7 @@ namespace ProFak.UI
 
 		private void TextBox_Wymagane_Validating(object sender, CancelEventArgs e)
 		{
+			if (ModifierKeys == Keys.Shift) return;
 			var textBox = (TextBox)sender;
 			if (String.IsNullOrEmpty(textBox.Text))
 			{
@@ -120,6 +123,7 @@ namespace ProFak.UI
 
 		private void ComboBox_Wymagane_Validating(object sender, CancelEventArgs e)
 		{
+			if (ModifierKeys == Keys.Shift) return;
 			var comboBox = (ComboBox)sender;
 			if ((comboBox.DropDownStyle == ComboBoxStyle.DropDownList && comboBox.SelectedIndex == -1)
 				|| (comboBox.DropDownStyle != ComboBoxStyle.DropDownList) && String.IsNullOrEmpty(comboBox.Text))
