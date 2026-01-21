@@ -56,9 +56,9 @@ namespace ProFak.Wydruki
 				fakturaDTO.KursWaluty = faktura.KursWaluty;
 				if (faktura.ProceduraMarzy != ProceduraMarży.NieDotyczy) fakturaDTO.ProceduraMarzy = Rekord.Format(faktura.ProceduraMarzy);
 
-				if (faktura.FakturaKorygowanaRef.IsNotNull)
+				if (faktura.FakturaPierwotnaRef.IsNotNull)
 				{
-					var fakturaBazowa = baza.Znajdz(faktura.FakturaKorygowanaRef);
+					var fakturaBazowa = baza.Znajdz(faktura.FakturaPierwotnaRef);
 					if (fakturaBazowa.Rodzaj == RodzajFaktury.Proforma) fakturaDTO.Korekta = "do faktury pro forma <b>" + fakturaBazowa.Numer + "</b>";
 					else if (fakturaBazowa.Rodzaj == RodzajFaktury.VatMarża) fakturaDTO.Korekta = "<b>do faktury VAT marża</b> " + fakturaBazowa.Numer + "<br/><b>z dnia</b> " + fakturaBazowa.DataWystawienia.ToString(UI.Format.Data) + "<br/>";
 					else fakturaDTO.Korekta = (jestvat ? "<b>do faktury VAT</b> " : "<b>do faktury</b> ") + fakturaBazowa.Numer + "<br/><b>z dnia</b> " + fakturaBazowa.DataWystawienia.ToString(UI.Format.Data) + "<br/>";

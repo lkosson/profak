@@ -52,6 +52,7 @@ namespace ProFak.DB
 		public int? NabywcaId { get; set; }
 		public int? FakturaKorygowanaId { get; set; }
 		public int? FakturaKorygujacaId { get; set; }
+		public int? FakturaPierwotnaId { get; set; }
 		public int? WalutaId { get; set; }
 		public int? SposobPlatnosciId { get; set; }
 		public int? DeklaracjaVatId { get; set; }
@@ -61,6 +62,7 @@ namespace ProFak.DB
 		public Ref<Kontrahent> NabywcaRef { get => NabywcaId; set => NabywcaId = value; }
 		public Ref<Faktura> FakturaKorygowanaRef { get => FakturaKorygowanaId; set => FakturaKorygowanaId = value; }
 		public Ref<Faktura> FakturaKorygujacaRef { get => FakturaKorygujacaId; set => FakturaKorygujacaId = value; }
+		public Ref<Faktura> FakturaPierwotnaRef { get => FakturaPierwotnaId; set => FakturaPierwotnaId = value; }
 		public Ref<Waluta> WalutaRef { get => WalutaId; set => WalutaId = value; }
 		public Ref<SposobPlatnosci> SposobPlatnosciRef { get => SposobPlatnosciId; set => SposobPlatnosciId = value; }
 		public Ref<DeklaracjaVat> DeklaracjaVatRef { get => DeklaracjaVatId; set => DeklaracjaVatId = value; }
@@ -70,6 +72,7 @@ namespace ProFak.DB
 		public Kontrahent Nabywca { get; set; }
 		public Faktura FakturaKorygowana { get; set; }
 		public Faktura FakturaKorygujaca { get; set; }
+		public Faktura FakturaPierwotna { get; set; }
 		public Waluta Waluta { get; set; }
 		public SposobPlatnosci SposobPlatnosci { get; set; }
 		public DeklaracjaVat DeklaracjaVat { get; set; }
@@ -211,6 +214,7 @@ namespace ProFak.DB
 			else throw new ApplicationException($"Nie można korygować faktury {bazowa.Rodzaj}.");
 			korekta.DataSprzedazy = bazowa.DataSprzedazy;
 			korekta.FakturaKorygowanaRef = bazowa;
+			korekta.FakturaPierwotnaRef = bazowa.FakturaPierwotnaRef.IsNull ? bazowa : bazowa.FakturaPierwotnaRef;
 			korekta.NIPSprzedawcy = bazowa.NIPSprzedawcy;
 			korekta.NazwaSprzedawcy = bazowa.NazwaSprzedawcy;
 			korekta.DaneSprzedawcy = bazowa.DaneSprzedawcy;

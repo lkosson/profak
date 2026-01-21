@@ -26,6 +26,7 @@ class Generator
 			.Include(e => e.Nabywca)
 			.Include(e => e.Waluta)
 			.Include(e => e.FakturaKorygowana)
+			.Include(e => e.FakturaPierwotna)
 			.Where(e => e.Id == dbFakturaRef.Id)
 			.FirstOrDefault();
 		var ksefFaktura = Zbuduj(dbFaktura);
@@ -142,21 +143,21 @@ class Generator
 		{
 			ksefFaktura.Fa.Platnosc.RachunekBankowy.Add(new TRachunekBankowy { NrRB = dbFaktura.RachunekBankowy.Replace(" ", "") });
 		}
-		if (dbFaktura.FakturaKorygowana != null)
+		if (dbFaktura.FakturaKorygowana != null && dbFaktura.FakturaPierwotna != null)
 		{
 			ksefFaktura.Fa.PrzyczynaKorekty = dbFaktura.UwagiPubliczne;
 			ksefFaktura.Fa.TypKorekty = TTypKorekty.Item2;
 			var ksefDaneKorygowanej = new FakturaFaDaneFaKorygowanej();
-			ksefDaneKorygowanej.DataWystFaKorygowanej = dbFaktura.FakturaKorygowana.DataWystawienia;
-			ksefDaneKorygowanej.NrFaKorygowanej = dbFaktura.FakturaKorygowana.Numer;
-			if (String.IsNullOrEmpty(dbFaktura.FakturaKorygowana.NumerKSeF))
+			ksefDaneKorygowanej.DataWystFaKorygowanej = dbFaktura.FakturaPierwotna.DataWystawienia;
+			ksefDaneKorygowanej.NrFaKorygowanej = dbFaktura.FakturaPierwotna.Numer;
+			if (String.IsNullOrEmpty(dbFaktura.FakturaPierwotna.NumerKSeF))
 			{
 				ksefDaneKorygowanej.NrKSeFN = TWybor1.Item1;
 			}
 			else
 			{
 				ksefDaneKorygowanej.NrKSeF = TWybor1.Item1;
-				ksefDaneKorygowanej.NrKSeFFaKorygowanej = dbFaktura.FakturaKorygowana.NumerKSeF;
+				ksefDaneKorygowanej.NrKSeFFaKorygowanej = dbFaktura.FakturaPierwotna.NumerKSeF;
 			}
 			ksefFaktura.Fa.DaneFaKorygowanej.Add(ksefDaneKorygowanej);
 
