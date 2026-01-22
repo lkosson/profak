@@ -169,7 +169,17 @@ namespace ProFak.UI
 
 		private void buttonNowyTowar_Click(object sender, EventArgs e)
 		{
-			var towar = new Towar { Nazwa = comboBoxTowar.Text, StawkaVatRef = Rekord.StawkaVatRef, CenaNetto = Rekord.CenaNetto, CenaBrutto = Rekord.CenaBrutto, GTU = Rekord.GTU, CzyWedlugCenBrutto = Rekord.CzyWedlugCenBrutto };
+			var towar = new Towar
+			{
+				Nazwa = comboBoxTowar.Text,
+				StawkaVatRef = Rekord.StawkaVatRef,
+				CenaNetto = Rekord.CenaNetto,
+				CenaBrutto = Rekord.CenaBrutto,
+				GTU = Rekord.GTU,
+				CzyWedlugCenBrutto = Rekord.CzyWedlugCenBrutto,
+				JednostkaMiaryRef = Rekord.JednostkaMiaryRef,
+				StawkaRyczaltu = Rekord.StawkaRyczaltu
+			};
 			using var nowyKontekst = new Kontekst(Kontekst);
 			using var transakcja = nowyKontekst.Transakcja();
 			nowyKontekst.Dodaj(towar);
