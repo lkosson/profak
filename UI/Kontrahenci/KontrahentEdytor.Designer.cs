@@ -51,7 +51,7 @@ namespace ProFak.UI
             checkBoxTP = new System.Windows.Forms.CheckBox();
             buttonSprawdzMF = new ButtonDPI();
             buttonPobierzGUS = new ButtonDPI();
-            label16 = new System.Windows.Forms.Label();
+            labelSposobPlatnosci = new System.Windows.Forms.Label();
             comboBoxSposobPlatnosci = new System.Windows.Forms.ComboBox();
             buttonSposobPlatnosci = new ButtonDPI();
             tabPage2 = new System.Windows.Forms.TabPage();
@@ -148,7 +148,7 @@ namespace ProFak.UI
             tableLayoutPanel1.Controls.Add(checkBoxTP, 1, 10);
             tableLayoutPanel1.Controls.Add(buttonSprawdzMF, 2, 6);
             tableLayoutPanel1.Controls.Add(buttonPobierzGUS, 2, 1);
-            tableLayoutPanel1.Controls.Add(label16, 0, 9);
+            tableLayoutPanel1.Controls.Add(labelSposobPlatnosci, 0, 9);
             tableLayoutPanel1.Controls.Add(comboBoxSposobPlatnosci, 1, 9);
             tableLayoutPanel1.Controls.Add(buttonSposobPlatnosci, 2, 9);
             tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -359,15 +359,15 @@ namespace ProFak.UI
             buttonPobierzGUS.UseVisualStyleBackColor = true;
             buttonPobierzGUS.Click += buttonPobierzGUS_Click;
             // 
-            // label16
+            // labelSposobPlatnosci
             // 
-            label16.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            label16.AutoSize = true;
-            label16.Location = new System.Drawing.Point(43, 328);
-            label16.Name = "label16";
-            label16.Size = new System.Drawing.Size(97, 15);
-            label16.TabIndex = 2;
-            label16.Text = "Sposób płatności";
+            labelSposobPlatnosci.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            labelSposobPlatnosci.AutoSize = true;
+            labelSposobPlatnosci.Location = new System.Drawing.Point(43, 328);
+            labelSposobPlatnosci.Name = "labelSposobPlatnosci";
+            labelSposobPlatnosci.Size = new System.Drawing.Size(97, 15);
+            labelSposobPlatnosci.TabIndex = 2;
+            labelSposobPlatnosci.Text = "Sposób płatności";
             // 
             // comboBoxSposobPlatnosci
             // 
@@ -798,7 +798,7 @@ namespace ProFak.UI
 		private System.Windows.Forms.ComboBox comboBoxSrodowiskoKSeF;
 		private ButtonDPI buttonKSeFAuth;
 		private System.Windows.Forms.DateTimePickerFix dateTimePickerOsobaFizycznaDataUrodzenia;
-		private System.Windows.Forms.Label label16;
+		private System.Windows.Forms.Label labelSposobPlatnosci;
 		private System.Windows.Forms.ComboBox comboBoxSposobPlatnosci;
 		private ButtonDPI buttonSposobPlatnosci;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;

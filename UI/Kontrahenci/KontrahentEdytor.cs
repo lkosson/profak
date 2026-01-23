@@ -147,6 +147,7 @@ namespace ProFak.UI
 		{
 			base.RekordGotowy();
 			checkBoxTP.Visible = !Rekord.CzyPodmiot;
+			labelSposobPlatnosci.Visible = comboBoxSposobPlatnosci.Visible = buttonSposobPlatnosci.Visible = !Rekord.CzyPodmiot;
 
 			fakturySprzedazy.Spis.KontrahentRef = Rekord;
 			fakturySprzedazy.Spis.Kontekst = Kontekst;
