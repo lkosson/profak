@@ -83,13 +83,13 @@ namespace ProFak.UI
 				new FakturaPodobnaZakupAkcja(),
 				new KorektaZakupuAkcja(),
 				new DowodWewnetrznyAkcja(),
-				new WczytajKSeFAkcja(),
 				new EdytujRekordAkcja<Faktura, FakturaZakupuEdytor>(),
 				new UsunFaktureAkcja(),
 				new DodajWplateAkcja(),
 				new WydrukFakturyAkcja(),
 				new ZapiszPlikiAkcja(),
 				new WczytajJPK_FAAkcja(),
+				new WczytajKSeFAkcja(),
 				new PrzeladujAkcja<Faktura>()
 			);
 		}
