@@ -263,7 +263,7 @@ namespace ProFak.UI
 
 		private bool UstawSposobPlatnosci(Faktura rekord, SposobPlatnosci sposobPlatnosci)
 		{
-			if (sposobPlatnosci == null || rekord.SposobPlatnosciRef == sposobPlatnosci.Ref) return false;
+			if (sposobPlatnosci == null || rekord == null || rekord.SposobPlatnosciRef == sposobPlatnosci.Ref) return false;
 			rekord.SposobPlatnosciRef = sposobPlatnosci;
 			rekord.OpisSposobuPlatnosci = sposobPlatnosci.Nazwa;
 			rekord.TerminPlatnosci = rekord.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
