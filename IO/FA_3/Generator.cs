@@ -518,7 +518,7 @@ class Generator
 				}
 			}
 
-			if (ksefFaktura.Fa.Rozliczenie.DoZaplatyValueSpecified) uwagi.AppendLine($"Do zapłaty: {ksefFaktura.Fa.Rozliczenie.DoZaplatyValue:0.00} {ksefFaktura.Fa.KodWaluty}");
+			if (ksefFaktura.Fa.Rozliczenie.DoZaplatyValueSpecified && ksefFaktura.Fa.Rozliczenie.DoZaplatyValue != dbFaktura.RazemBrutto) uwagi.AppendLine($"Do zapłaty: {ksefFaktura.Fa.Rozliczenie.DoZaplatyValue:0.00} {ksefFaktura.Fa.KodWaluty}");
 			if (ksefFaktura.Fa.Rozliczenie.DoRozliczeniaValueSpecified) uwagi.AppendLine($"Do rozliczenia: {ksefFaktura.Fa.Rozliczenie.DoRozliczeniaValue:0.00} {ksefFaktura.Fa.KodWaluty}");
 		}
 
