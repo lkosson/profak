@@ -19,6 +19,7 @@ namespace ProFak.UI
 		protected readonly Podsumowanie podsumowanie;
 		protected AdapterAkcji domyslnaAkcja; 
 		protected readonly List<AkcjaNaSpisie<TRekord>> akcje;
+		protected readonly List<AdapterAkcji> adapteryAkcji;
 
 		public Spis<TRekord> Spis { get; }
 		public List<AkcjaNaSpisie<TRekord>> Akcje => akcje;
@@ -30,6 +31,7 @@ namespace ProFak.UI
 		public SpisZAkcjami(Spis<TRekord> spis)
 		{
 			akcje = new List<AkcjaNaSpisie<TRekord>>();
+			adapteryAkcji = [];
 			panelAkcji = new PanelAkcji();
 			wyszukiwarka = new Wyszukiwarka();
 			podsumowanie = new Podsumowanie();
@@ -52,6 +54,7 @@ namespace ProFak.UI
 			spis.ZaznaczenieZmienione += spis_ZaznaczenieZmienione;
 			spis.RekordyZmienione += spis_RekordyZmienione;
 			spis.CellDoubleClick += spis_CellDoubleClick;
+			spis.CellMouseDown += spis_CellMouseDown;
 			spis.KeyDown += spis_KeyDown;
 			Controls.Add(spis, 0, 0);
 			MinimumSize = new Size(panelAkcji.MinimumSize.Width + spis.MinimumSize.Width + panelAkcji.Margin.Left + spis.Margin.Right, panelAkcji.MinimumSize.Height + spis.MinimumSize.Height + Math.Max(panelAkcji.Margin.Top, spis.Margin.Top) + Math.Max(panelAkcji.Margin.Bottom, spis.Margin.Bottom));
@@ -87,6 +90,15 @@ namespace ProFak.UI
 			if (e.RowIndex != -1 && e.ColumnIndex != -1 && domyslnaAkcja != null) domyslnaAkcja.Uruchom();
 		}
 
+		private void spis_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right && e.RowIndex != -1)
+			{
+				var menu = ZbudujMenuKontekstowe();
+				menu.Show(Cursor.Position);
+			}
+		}
+
 		private void spis_ZaznaczenieZmienione()
 		{
 			podsumowanie.Text = Spis.Podsumowanie;
@@ -107,10 +119,45 @@ namespace ProFak.UI
 			else return panelAkcji.ObsluzKlawisz(klawisz, modyfikatory);
 		}
 
+		protected virtual ContextMenuStrip ZbudujMenuKontekstowe()
+		{
+			var menu = new ContextMenuStrip();
+			menu.ShowImageMargin = false;
+			foreach (var adapter in adapteryAkcji.OrderBy(e => e.CzyDomyslna ? 0 : 1))
+			{
+				if (adapter.CzyGlobalna) continue;
+				if (!adapter.CzyDostepna) continue;
+				var pozycja = new ToolStripMenuItem();
+				pozycja.Text = adapter.NazwaBezSkrotu;
+				pozycja.ShortcutKeyDisplayString = adapter.Skrot;
+				pozycja.Click += delegate
+				{
+					adapter.Uruchom();
+				};
+				menu.Items.Add(pozycja);
+			}
+			return menu;
+		}
+
 		protected override void OnGotFocus(EventArgs e)
 		{
 			base.OnGotFocus(e);
 			Spis.Focus();
+		}
+
+		protected override void OnCreateControl()
+		{
+			panelAkcji.CzyGlownySpis = Spis.Kontekst.Dialog == null || !Spis.Kontekst.Dialog.CzyPrzyciskiWidoczne;
+			foreach (var akcja in akcje)
+			{
+				var adapter = akcja.UtworzAdapter(Spis);
+				if (adapter.CzyDomyslna && domyslnaAkcja == null) domyslnaAkcja = adapter;
+				panelAkcji.DodajAkcje(adapter);
+				adapteryAkcji.Add(adapter);
+			}
+			panelAkcji.DodajKontrolke(podsumowanie);
+			panelAkcji.AktualizujUklad();
+			base.OnCreateControl();
 		}
 	}
 
@@ -125,20 +172,6 @@ namespace ProFak.UI
 		{
 			Spis = spis;
 			if (akcje != null) Akcje.AddRange(akcje);
-		}
-
-		protected override void OnCreateControl()
-		{
-			panelAkcji.CzyGlownySpis = Spis.Kontekst.Dialog == null || !Spis.Kontekst.Dialog.CzyPrzyciskiWidoczne;
-			foreach (var akcja in akcje)
-			{
-				var adapter = akcja.UtworzAdapter(Spis);
-				if (adapter.CzyDomyslna && domyslnaAkcja == null) domyslnaAkcja = adapter;
-				panelAkcji.DodajAkcje(adapter);
-			}
-			panelAkcji.DodajKontrolke(podsumowanie);
-			panelAkcji.AktualizujUklad();
-			base.OnCreateControl();
 		}
 	}
 }
