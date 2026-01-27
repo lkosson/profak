@@ -92,11 +92,7 @@ namespace ProFak.UI
 
 		private void spis_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
 		{
-			if (e.Button == MouseButtons.Right && e.RowIndex != -1)
-			{
-				var menu = ZbudujMenuKontekstowe();
-				menu.Show(Cursor.Position);
-			}
+			if (e.Button == MouseButtons.Right && e.RowIndex != -1) PokazMenuKontekstowe();
 		}
 
 		private void spis_ZaznaczenieZmienione()
@@ -116,8 +112,18 @@ namespace ProFak.UI
 			else if (klawisz == Keys.F3 || (klawisz == Keys.F && modyfikatory == Keys.Control)) { wyszukiwarka.Focus(); return true; }
 			else if (klawisz == Keys.Home) { Spis.WybraneRekordy = new[] { Spis.Rekordy.FirstOrDefault() }; return true; }
 			else if (klawisz == Keys.End) { Spis.WybraneRekordy = new[] { Spis.Rekordy.LastOrDefault() }; return true; }
-			else if (klawisz == Keys.Apps || (klawisz == Keys.F10 && modyfikatory == Keys.Shift)) { ZbudujMenuKontekstowe().Show(Cursor.Position); return true; }
+			else if (klawisz == Keys.Apps || (klawisz == Keys.F10 && modyfikatory == Keys.Shift)) { PokazMenuKontekstowe(); return true; }
 			else return panelAkcji.ObsluzKlawisz(klawisz, modyfikatory);
+		}
+
+		private void PokazMenuKontekstowe()
+		{
+			var menu = ZbudujMenuKontekstowe();
+			menu.Closed += delegate
+			{
+				BeginInvoke(delegate { menu.Dispose(); });
+			};
+			menu.Show(Cursor.Position);
 		}
 
 		protected virtual ContextMenuStrip ZbudujMenuKontekstowe()
