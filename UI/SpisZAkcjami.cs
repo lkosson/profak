@@ -116,6 +116,7 @@ namespace ProFak.UI
 			else if (klawisz == Keys.F3 || (klawisz == Keys.F && modyfikatory == Keys.Control)) { wyszukiwarka.Focus(); return true; }
 			else if (klawisz == Keys.Home) { Spis.WybraneRekordy = new[] { Spis.Rekordy.FirstOrDefault() }; return true; }
 			else if (klawisz == Keys.End) { Spis.WybraneRekordy = new[] { Spis.Rekordy.LastOrDefault() }; return true; }
+			else if (klawisz == Keys.Apps || (klawisz == Keys.F10 && modyfikatory == Keys.Shift)) { ZbudujMenuKontekstowe().Show(Cursor.Position); return true; }
 			else return panelAkcji.ObsluzKlawisz(klawisz, modyfikatory);
 		}
 
