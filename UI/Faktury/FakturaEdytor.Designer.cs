@@ -75,6 +75,7 @@ namespace ProFak.UI
             textBoxOpisZdarzenia = new System.Windows.Forms.TextBox();
             label23 = new System.Windows.Forms.Label();
             comboBoxProceduraMarzy = new System.Windows.Forms.ComboBox();
+            checkBoxReczneKwoty = new System.Windows.Forms.CheckBox();
             tabPageKSeF = new System.Windows.Forms.TabPage();
             tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             buttonKSeFGeneruj = new ButtonDPI();
@@ -116,7 +117,6 @@ namespace ProFak.UI
             numericUpDownNetto = new NumericUpDownDPI();
             numericUpDownVat = new NumericUpDownDPI();
             numericUpDownBrutto = new NumericUpDownDPI();
-            checkBoxReczneKwoty = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
             tableLayoutPanel.SuspendLayout();
             tableLayoutPanelKontrahenci.SuspendLayout();
@@ -709,6 +709,17 @@ namespace ProFak.UI
             comboBoxProceduraMarzy.Size = new System.Drawing.Size(204, 23);
             comboBoxProceduraMarzy.TabIndex = 3;
             // 
+            // checkBoxReczneKwoty
+            // 
+            checkBoxReczneKwoty.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            checkBoxReczneKwoty.AutoSize = true;
+            checkBoxReczneKwoty.Location = new System.Drawing.Point(376, 119);
+            checkBoxReczneKwoty.Name = "checkBoxReczneKwoty";
+            checkBoxReczneKwoty.Size = new System.Drawing.Size(201, 19);
+            checkBoxReczneKwoty.TabIndex = 8;
+            checkBoxReczneKwoty.Text = "Kwota \"razem\" ustawiona ręcznie";
+            checkBoxReczneKwoty.UseVisualStyleBackColor = true;
+            // 
             // tabPageKSeF
             // 
             tabPageKSeF.Controls.Add(tableLayoutPanel8);
@@ -742,7 +753,7 @@ namespace ProFak.UI
             // buttonKSeFGeneruj
             // 
             buttonKSeFGeneruj.AutoSize = true;
-            buttonKSeFGeneruj.Location = new System.Drawing.Point(381, 3);
+            buttonKSeFGeneruj.Location = new System.Drawing.Point(313, 3);
             buttonKSeFGeneruj.Name = "buttonKSeFGeneruj";
             buttonKSeFGeneruj.Size = new System.Drawing.Size(103, 25);
             buttonKSeFGeneruj.TabIndex = 5;
@@ -768,14 +779,14 @@ namespace ProFak.UI
             label21.AutoSize = true;
             label21.Location = new System.Drawing.Point(3, 8);
             label21.Name = "label21";
-            label21.Size = new System.Drawing.Size(140, 15);
+            label21.Size = new System.Drawing.Size(72, 15);
             label21.TabIndex = 0;
-            label21.Text = "Numer referencyjny KSeF";
+            label21.Text = "Numer KSeF";
             // 
             // textBoxNumerKSeF
             // 
             textBoxNumerKSeF.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            textBoxNumerKSeF.Location = new System.Drawing.Point(149, 4);
+            textBoxNumerKSeF.Location = new System.Drawing.Point(81, 4);
             textBoxNumerKSeF.Name = "textBoxNumerKSeF";
             textBoxNumerKSeF.Size = new System.Drawing.Size(226, 23);
             textBoxNumerKSeF.TabIndex = 1;
@@ -1212,17 +1223,6 @@ namespace ProFak.UI
             numericUpDownBrutto.Size = new System.Drawing.Size(116, 23);
             numericUpDownBrutto.TabIndex = 52;
             numericUpDownBrutto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // checkBoxReczneKwoty
-            // 
-            checkBoxReczneKwoty.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            checkBoxReczneKwoty.AutoSize = true;
-            checkBoxReczneKwoty.Location = new System.Drawing.Point(376, 119);
-            checkBoxReczneKwoty.Name = "checkBoxReczneKwoty";
-            checkBoxReczneKwoty.Size = new System.Drawing.Size(201, 19);
-            checkBoxReczneKwoty.TabIndex = 8;
-            checkBoxReczneKwoty.Text = "Kwota \"razem\" ustawiona ręcznie";
-            checkBoxReczneKwoty.UseVisualStyleBackColor = true;
             // 
             // FakturaEdytor
             // 
