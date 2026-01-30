@@ -144,7 +144,7 @@ namespace ProFak.Wydruki
 					pozycjaDTO.WartoscVat = (pozycja.WartoscVat * faktura.KursWaluty).Zaokragl();
 					pozycjaDTO.WartoscBrutto = pozycja.WartoscBrutto;
 					pozycjaDTO.StawkaVAT = pozycja.StawkaVat?.Skrot ?? "-";
-					pozycjaDTO.Rabat = pozycja.RabatFmt.Replace(", ", "\n");
+					pozycjaDTO.Rabat = pozycja.RabatFmt.Replace(", ", "\n") + (pozycja.RabatWartosc > 0 || pozycja.RabatCena > 0 ? " " + walutaSkrot : "");
 					pozycjaDTO.RabatRazem = pozycja.RabatRazem;
 					pozycjaDTO.Waluta = walutaSkrot;
 					pozycjaDTO.WalutaVAT = walutaVATSkrot;
