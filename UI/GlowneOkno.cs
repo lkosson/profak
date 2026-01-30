@@ -21,6 +21,7 @@ namespace ProFak.UI
 		public GlowneOkno()
 		{
 			InitializeComponent();
+			ZbudujMenu();
 		}
 
 		public static Icon Ikona => (Icon)new ComponentResourceManager(typeof(GlowneOkno)).GetObject("$this.Icon");
@@ -30,6 +31,77 @@ namespace ProFak.UI
 			RozwinMenu();
 
 			base.OnLoad(e);
+		}
+
+		private void ZbudujMenu()
+		{
+			TreeNode Wezel(string tekst, string nazwa = null, TreeNode[] podrzedne = null)
+			{
+				var wezel = new TreeNode(tekst);
+				if (!String.IsNullOrEmpty(nazwa)) wezel.Name = nazwa;
+				if (podrzedne != null) wezel.Nodes.AddRange(podrzedne);
+				return wezel;
+			}
+
+			TreeNode Ladowanie() => Wezel("(ładowanie)");
+
+			var fakturySprzedazyWszystkie =  Wezel("Wszystkie", "Wszystkie");
+			var fakturySprzedazyDoZaplaty =  Wezel("Do zapłaty", "DoZaplaty");
+			var fakturySprzedazyZaplacone =  Wezel("Zapłacone", "Zaplacone");
+			var fakturySprzedazyKSeFDzis =  Wezel("Dzisiejsze", "Dzis");
+			var fakturySprzedazyKSeFMiesiac =  Wezel("Z tego miesiąca", "Miesiac");
+			var fakturySprzedazyKSeFPoprzedni =  Wezel("Z tego i poprzedniego miesiąca", "Poprzedni");
+			var fakturySprzedazyKSeFRok =  Wezel("Z tego roku", "Rok");
+			var fakturySprzedazyKSeFWszystkie =  Wezel("Wszystkie");
+			var fakturySprzedazyKSeF =  Wezel("KSeF", "KSeFSprzedaz", [fakturySprzedazyKSeFDzis, fakturySprzedazyKSeFMiesiac, fakturySprzedazyKSeFPoprzedni, fakturySprzedazyKSeFRok, fakturySprzedazyKSeFWszystkie]);
+			var fakturySprzedazyWedlugDaty = Wezel("Według daty", "WedlugDaty", [Ladowanie()]);
+			var fakturySprzedazyWedlugNabywcy = Wezel("Według nabywcy", "WedlugKontrahenta", [Ladowanie()]);
+			var fakturySprzedazyWedlugTowaru = Wezel("Według towaru", "WedlugTowaru", [Ladowanie()]);
+			var fakturySprzedazy = Wezel("Faktury sprzedaży", "FakturySprzedazy", [fakturySprzedazyWszystkie, fakturySprzedazyDoZaplaty, fakturySprzedazyZaplacone, fakturySprzedazyKSeF, fakturySprzedazyWedlugDaty, fakturySprzedazyWedlugNabywcy, fakturySprzedazyWedlugTowaru]);
+			var fakturyProformaWszystkie = Wezel("Wszystkie", "Wszystkie");
+			var fakturyProformaDoZaplaty = Wezel("Do zapłaty", "DoZaplaty");
+			var fakturyProformaZaplacone = Wezel("Zapłacone", "Zaplacone");
+			var fakturyProformaWedlugDaty = Wezel("Według daty", "WedlugDaty", [Ladowanie()]);
+			var fakturyProformaWedlugNabywcy = Wezel("Według nabywcy", "WedlugKontrahenta", [Ladowanie()]);
+			var fakturyProformaWedlugTowaru = Wezel("Według towaru", "WedlugTowaru", [Ladowanie()]);
+			var fakturyProforma = Wezel("Faktury proforma", "FakturyProforma", [fakturyProformaWszystkie, fakturyProformaDoZaplaty, fakturyProformaZaplacone, fakturyProformaWedlugDaty, fakturyProformaWedlugNabywcy, fakturyProformaWedlugTowaru]);
+			var fakturyZakupuWszystkie = Wezel("Wszystkie", "Wszystkie");
+			var fakturyZakupuDoZaplaty = Wezel("Do zapłaty", "DoZaplaty");
+			var fakturyZakupuZaplacone = Wezel("Zapłacone", "Zaplacone");
+			var fakturyZakupuKSeFPrzyrostowo = Wezel("Przyrostowo", "Przyrostowo");
+			var fakturyZakupuKSeFDzis = Wezel("Dzisiejsze", "Dzis");
+			var fakturyZakupuKSeFWczoraj = Wezel("Od wczoraj", "Wczoraj");
+			var fakturyZakupuKSeFMiesiac = Wezel("Z tego miesiąca", "Miesiac");
+			var fakturyZakupuKSeFPoprzedni = Wezel("Z tego i poprzedniego miesiąca", "Poprzedni");
+			var fakturyZakupuKSeFRok = Wezel("Z tego roku", "Rok");
+			var fakturyZakupuKSeFWszystkie = Wezel("Wszystkie");
+			var fakturyZakupuKSeF = Wezel("KSeF", "KSeFZakup", [fakturyZakupuKSeFPrzyrostowo, fakturyZakupuKSeFDzis, fakturyZakupuKSeFWczoraj, fakturyZakupuKSeFMiesiac, fakturyZakupuKSeFPoprzedni, fakturyZakupuKSeFRok, fakturyZakupuKSeFWszystkie]);
+			var fakturyZakupuWedlugDaty = Wezel("Według daty", "WedlugDaty", [Ladowanie()]);
+			var fakturyZakupuWedlugSprzedawcy = Wezel("Według sprzedawcy", "WedlugKontrahenta", [Ladowanie()]);
+			var fakturyZakupuWedlugTowaru = Wezel("Według towaru", "WedlugTowaru", [Ladowanie()]);
+			var fakturyZakupu = Wezel("Faktury zakupu", "FakturyZakupu", [fakturyZakupuWszystkie, fakturyZakupuDoZaplaty, fakturyZakupuZaplacone, fakturyZakupuKSeF, fakturyZakupuWedlugDaty, fakturyZakupuWedlugSprzedawcy, fakturyZakupuWedlugTowaru]);
+			var faktury = Wezel("Faktury", "Faktury", [fakturySprzedazy, fakturyProforma, fakturyZakupu]);
+			var deklaracjeVat = Wezel("Deklaracje Vat", "DeklaracjeVat", [Ladowanie()]);
+			var skladkiZus = Wezel("Składki Zus", "SkladkiZus", [Ladowanie()]);
+			var zaliczkiPit = Wezel("Zaliczki Pit", "ZaliczkiPit", [Ladowanie()]);
+			var podatki = Wezel("Podatki", "Podatki", [deklaracjeVat, skladkiZus, zaliczkiPit]);
+			var kontrahenci = Wezel("Kontrahenci", "Kontrahenci");
+			var towary = Wezel("Towary", "Towary");
+			var jednostkiMiar = Wezel("Jednostki miar", "JednostkiMiar");
+			var sposobyPlatnosci = Wezel("Sposoby płatności", "SposobyPlatnosci");
+			var stawkiVat = Wezel("Stawki VAT", "StawkiVat");
+			var urzedySkarbowe = Wezel("Urzędy skarbowe", "UrzedySkarbowe");
+			var waluty = Wezel("Waluty", "Waluty");
+			var slowniki = Wezel("Słowniki", "Slowniki", [jednostkiMiar, sposobyPlatnosci, stawkiVat, urzedySkarbowe, waluty]);
+			var numeracja = Wezel("Numeracja", "Numeratory");
+			var konfiguracja = Wezel("Konfiguracja", "Konfiguracja");
+			var bazaDanych = Wezel("Baza danych", "Baza");
+			var usunieteFaktury = Wezel("Usunięte faktury", "FakturyUsuniete");
+			var polecenieSQL = Wezel("Polecenie SQL", "SQL");
+			var bezposredniaEdycja = Wezel("Bezpośrednia edycja", "Tabele");
+			var oProgramie = Wezel("O programie", "OProgramie");
+			var serwisowe = Wezel("Serwisowe", "Serwisowe", [numeracja, konfiguracja, bazaDanych, usunieteFaktury, polecenieSQL, bezposredniaEdycja, oProgramie]);
+			menu.Nodes.AddRange([faktury, podatki, kontrahenci, towary, slowniki, serwisowe]);
 		}
 
 		private void RozwinMenu()
