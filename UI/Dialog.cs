@@ -25,6 +25,8 @@ namespace ProFak.UI
 			InitializeComponent();
 			ShowInTaskbar = false;
 			Icon = GlowneOkno.Ikona;
+			Wyglad.UsunSkrotPrzycisku(buttonZapisz);
+			Wyglad.UsunSkrotPrzycisku(buttonAnuluj);
 		}
 
 		public Dialog(string tytul, Control zawartosc, Kontekst kontekst)

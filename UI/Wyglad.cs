@@ -14,6 +14,7 @@ namespace ProFak.UI
 
 		public static bool SkrotyKlawiaturoweAkcji { get; set; } = true;
 		public static bool SkrotyKlawiaturoweZakladek { get; set; } = true;
+		public static bool SkrotyKlawiaturowePrzyciskow { get; set; } = true;
 		public static bool IkonyAkcji { get; set; } = true;
 
 		public static string NazwaAkcji(AdapterAkcji adapter)
@@ -35,6 +36,12 @@ namespace ProFak.UI
 			{
 				zakladka.Text = NazwaBezSkrotu(zakladka.Text).Trim();
 			}
+		}
+
+		public static void UsunSkrotPrzycisku(Button przycisk)
+		{
+			if (SkrotyKlawiaturowePrzyciskow) return;
+			przycisk.Text = NazwaBezSkrotu(przycisk.Text);
 		}
 
 		public static string NazwaBezSkrotu(string tekst)
