@@ -473,7 +473,7 @@
                               <Top>4.29535cm</Top>
                               <Left>0.00003cm</Left>
                               <Height>0.56208cm</Height>
-                              <Width>17.78602cm</Width>
+                              <Width>17.8cm</Width>
                               <ZIndex>2</ZIndex>
                               <Visibility>
                                 <Hidden>=Not(Fields!JestVAT.Value And Fields!JestRabat.Value)</Hidden>
@@ -494,7 +494,7 @@
                               <Top>4.85743cm</Top>
                               <Left>0.00003cm</Left>
                               <Height>0.56208cm</Height>
-                              <Width>17.78602cm</Width>
+                              <Width>17.8cm</Width>
                               <ZIndex>3</ZIndex>
                               <Visibility>
                                 <Hidden>=Not(Fields!JestVAT.Value And Not Fields!JestRabat.Value)</Hidden>
@@ -515,7 +515,7 @@
                               <Top>5.41951cm</Top>
                               <Left>0.00003cm</Left>
                               <Height>0.56208cm</Height>
-                              <Width>17.78602cm</Width>
+                              <Width>17.8cm</Width>
                               <ZIndex>4</ZIndex>
                               <Visibility>
                                 <Hidden>=Not(Not Fields!JestVAT.Value And Fields!JestRabat.Value)</Hidden>
@@ -535,7 +535,7 @@
                               </Parameters>
                               <Top>5.98159cm</Top>
                               <Height>0.56208cm</Height>
-                              <Width>17.78602cm</Width>
+                              <Width>17.8cm</Width>
                               <ZIndex>5</ZIndex>
                               <Visibility>
                                 <Hidden>=Not(Not Fields!JestVAT.Value And Not Fields!JestRabat.Value)</Hidden>
@@ -955,7 +955,6 @@
                                               </Border>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                     </TablixCells>
@@ -973,7 +972,7 @@
                                                 <MIMEType>image/png</MIMEType>
                                                 <Sizing>FitProportional</Sizing>
                                                 <Top>0.52917cm</Top>
-                                                <Left>13.49375cm</Left>
+                                                <Left>13.78601cm</Left>
                                                 <Height>4cm</Height>
                                                 <Width>4cm</Width>
                                                 <Style>
@@ -1002,7 +1001,7 @@
                                                 </Paragraphs>
                                                 <rd:DefaultName>Textbox9</rd:DefaultName>
                                                 <Top>4.52917cm</Top>
-                                                <Left>13.49375cm</Left>
+                                                <Left>13.78601cm</Left>
                                                 <Height>0.45cm</Height>
                                                 <Width>4cm</Width>
                                                 <ZIndex>1</ZIndex>
@@ -1021,6 +1020,7 @@
                                               </Border>
                                             </Style>
                                           </Rectangle>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                     </TablixCells>
