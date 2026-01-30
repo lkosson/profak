@@ -69,7 +69,7 @@ namespace ProFak.UI
 				foreach (var podrzedna in adapter.Podrzedne)
 				{
 					var pozycja = new ToolStripButton();
-					pozycja.Text = podrzedna.Nazwa;
+					pozycja.Text = Wyglad.NazwaAkcji(podrzedna);
 					pozycja.Dock = DockStyle.Fill;
 					pozycja.TextAlign = ContentAlignment.MiddleLeft;
 					pozycja.Click += delegate { podrzedna.Uruchom(); };
@@ -93,7 +93,7 @@ namespace ProFak.UI
 
 		private void AktualizujPrzycisk(Button przycisk, AdapterAkcji adapter)
 		{
-			przycisk.Text = adapter.Nazwa;
+			przycisk.Text = Wyglad.NazwaAkcji(adapter);
 			przycisk.Enabled = adapter.CzyDostepna;
 		}
 

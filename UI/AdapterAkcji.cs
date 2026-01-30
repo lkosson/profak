@@ -26,7 +26,6 @@ namespace ProFak.UI
 	class AdapterAkcji<TRekord> : AdapterAkcji
 		where TRekord : Rekord<TRekord>
 	{
-		private readonly Regex opisSkrotuRegex = new Regex(@"(?<nazwa>[^[]+)(\[(?<skrot>.+)\])?");
 		private readonly AkcjaNaSpisie<TRekord> akcja;
 		private readonly Spis<TRekord> spis;
 		private readonly List<AdapterAkcji<TRekord>> podrzedne;
@@ -35,8 +34,8 @@ namespace ProFak.UI
 		public override bool CzyDostepna => akcja.CzyDostepnaDlaRekordow(spis.WybraneRekordy);
 		public override bool CzyDomyslna => akcja.CzyKlawiszSkrotu(Keys.Enter, Keys.None);
 		public override bool CzyGlobalna => akcja.CzyDostepnaDlaRekordow([]);
-		public override string NazwaBezSkrotu => opisSkrotuRegex.Match(Nazwa) is var match ? match.Groups["nazwa"].Value : Nazwa;
-		public override string Skrot => opisSkrotuRegex.Match(Nazwa) is var match && match.Groups["skrot"].Success ? match.Groups["skrot"].Value : "";
+		public override string NazwaBezSkrotu => Wyglad.NazwaBezSkrotu(Nazwa);
+		public override string Skrot => Wyglad.Skrot(Nazwa);
 		public override IReadOnlyCollection<AdapterAkcji> Podrzedne => podrzedne;
 		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => akcja.CzyKlawiszSkrotu(klawisz, modyfikatory);
 

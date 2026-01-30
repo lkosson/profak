@@ -96,6 +96,8 @@ namespace ProFak.UI
 			dateTimePickerDataWprowadzenia.Format = DateTimePickerFormat.Custom;
 			dateTimePickerDataWystawienia.Format = DateTimePickerFormat.Custom;
 			dateTimePickerTerminPlatnosci.Format = DateTimePickerFormat.Custom;
+
+			Wyglad.UsunSkrotyZakladek(tabControl1);
 		}
 
 		private string WalidacjaProceduryMarzy(ProceduraMarży wartosc)
