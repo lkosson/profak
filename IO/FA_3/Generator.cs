@@ -448,26 +448,28 @@ class Generator
 			else uwagi.AppendLine($"Numer faktury zaliczkowej: {fakturaZaliczkowa.NrKSeFFaZaliczkowej}");
 		}
 
-		foreach (var podmiot3 in ksefFaktura.Podmiot3)
+		dbFaktura.DodatkowePodmioty = new List<DodatkowyPodmiot>();
+		foreach (var ksefPodmiot3 in ksefFaktura.Podmiot3)
 		{
-			if (podmiot3.RolaInna == TWybor1.Item1) uwagi.Append(podmiot3.OpisRoli);
-			if (podmiot3.Rola == TRolaPodmiotu3.Item1) uwagi.Append("Faktor");
-			if (podmiot3.Rola == TRolaPodmiotu3.Item2) uwagi.Append("Odbiorca");
-			if (podmiot3.Rola == TRolaPodmiotu3.Item3) uwagi.Append("Podmiot pierwotny");
-			if (podmiot3.Rola == TRolaPodmiotu3.Item4) uwagi.Append("Dodatkowy nabywca");
-			if (podmiot3.Rola == TRolaPodmiotu3.Item5) uwagi.Append("Wystawca faktury");
-			if (podmiot3.Rola == TRolaPodmiotu3.Item6) uwagi.Append("Dokonujący płatności");
-			if (podmiot3.Rola == TRolaPodmiotu3.Item7) uwagi.Append("JST - wystawca");
-			if (podmiot3.Rola == TRolaPodmiotu3.Item8) uwagi.Append("JST - odbiorca");
-			if (podmiot3.Rola == TRolaPodmiotu3.Item9) uwagi.Append("Członek grupy VAT - wystawca");
-			if (podmiot3.Rola == TRolaPodmiotu3.Item10) uwagi.Append("Członek grupy VAT - odbiorca");
-			if (podmiot3.Rola == TRolaPodmiotu3.Item11) uwagi.Append("Pracownik");
-			if (!String.IsNullOrEmpty(podmiot3.DaneIdentyfikacyjne.Nazwa)) uwagi.Append($": {podmiot3.DaneIdentyfikacyjne.Nazwa}");
-			uwagi.AppendLine();
-			if (!String.IsNullOrEmpty(podmiot3.DaneIdentyfikacyjne.NIP)) uwagi.AppendLine($"NIP: {podmiot3.DaneIdentyfikacyjne.NIP}");
-			if (!String.IsNullOrEmpty(podmiot3.DaneIdentyfikacyjne.NrVatUE)) uwagi.AppendLine($"Nr VAT UE: {podmiot3.DaneIdentyfikacyjne.NrVatUE}");
-			if (podmiot3.Adres != null) uwagi.AppendLine($"Adres: {podmiot3.Adres.AdresL1}, {podmiot3.Adres.AdresL2}");
-			if (podmiot3.Udzial > 0) uwagi.AppendLine($"Udział: {podmiot3.Udzial}%");
+			var dbPodmiot3 = new DodatkowyPodmiot();
+			if (ksefPodmiot3.Rola == TRolaPodmiotu3.Item1) dbPodmiot3.Rodzaj = RodzajDodatkowegoPodmiotu.Faktor;
+			if (ksefPodmiot3.Rola == TRolaPodmiotu3.Item2) dbPodmiot3.Rodzaj = RodzajDodatkowegoPodmiotu.Odbiorca;
+			if (ksefPodmiot3.Rola == TRolaPodmiotu3.Item3) dbPodmiot3.Rodzaj = RodzajDodatkowegoPodmiotu.PodmiotPierwotny;
+			if (ksefPodmiot3.Rola == TRolaPodmiotu3.Item4) dbPodmiot3.Rodzaj = RodzajDodatkowegoPodmiotu.DodatkowyNabywca;
+			if (ksefPodmiot3.Rola == TRolaPodmiotu3.Item5) dbPodmiot3.Rodzaj = RodzajDodatkowegoPodmiotu.WystawcaFaktury;
+			if (ksefPodmiot3.Rola == TRolaPodmiotu3.Item6) dbPodmiot3.Rodzaj = RodzajDodatkowegoPodmiotu.DokonującyPłatności;
+			if (ksefPodmiot3.Rola == TRolaPodmiotu3.Item7) dbPodmiot3.Rodzaj = RodzajDodatkowegoPodmiotu.JSTWystawca;
+			if (ksefPodmiot3.Rola == TRolaPodmiotu3.Item8) dbPodmiot3.Rodzaj = RodzajDodatkowegoPodmiotu.JSTOdbiorca;
+			if (ksefPodmiot3.Rola == TRolaPodmiotu3.Item9) dbPodmiot3.Rodzaj = RodzajDodatkowegoPodmiotu.CzłonekGrupyVATWystawca;
+			if (ksefPodmiot3.Rola == TRolaPodmiotu3.Item10) dbPodmiot3.Rodzaj = RodzajDodatkowegoPodmiotu.CzłonekGrupyVATOdbiorca;
+			if (ksefPodmiot3.Rola == TRolaPodmiotu3.Item11) dbPodmiot3.Rodzaj = RodzajDodatkowegoPodmiotu.Pracownik;
+			dbPodmiot3.Nazwa = ksefPodmiot3.DaneIdentyfikacyjne.Nazwa;
+			dbPodmiot3.NIP = ksefPodmiot3.DaneIdentyfikacyjne.NIP;
+			dbPodmiot3.VatUE = ksefPodmiot3.DaneIdentyfikacyjne.NrVatUE;
+			dbPodmiot3.IDwew = ksefPodmiot3.DaneIdentyfikacyjne.IDWew;
+			dbPodmiot3.Adres = ksefPodmiot3.Adres.AdresL1 + "\n" + ksefPodmiot3.Adres.AdresL2;
+			dbPodmiot3.Udzial = ksefPodmiot3.Udzial;
+			dbFaktura.DodatkowePodmioty.Add(dbPodmiot3);
 		}
 
 		if (ksefFaktura.Fa.Adnotacje != null)

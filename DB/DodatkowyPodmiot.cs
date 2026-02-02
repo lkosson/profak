@@ -36,6 +36,7 @@ class DodatkowyPodmiot : Rekord<DodatkowyPodmiot>
 
 enum RodzajDodatkowegoPodmiotu
 {
+	Inny,
 	Faktor,
 	Odbiorca,
 	PodmiotPierwotny,
