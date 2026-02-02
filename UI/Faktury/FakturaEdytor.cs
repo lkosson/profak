@@ -437,6 +437,7 @@ KRS: XXXXXXXXXX
 REGON: XXXXXXXXX
 Zamówienie: XXXX lub Numer zamówienia: XXXX
 Data zamówienia: XXXX-XX-XX
+Przyczyna korekty: XXXX
 
 Pozostałe elementy tekstowe zostaną przekazane jako dodatkowy opis.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
