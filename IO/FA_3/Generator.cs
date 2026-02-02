@@ -299,11 +299,19 @@ class Generator
 
 		var rejestry = new FakturaStopkaRejestry();
 		var uwagi = dbFaktura.UwagiPubliczne;
+		var zamowienie = new FakturaFaWarunkiTransakcjiZamowienia();
 		uwagi = Regex.Replace(uwagi, @"BDO: (?<numer>\d{1,9})", m => { rejestry.BDO = m.Groups["numer"].Value; return ""; });
 		uwagi = Regex.Replace(uwagi, @"KRS: (?<numer>\d{10})", m => { rejestry.KRS = m.Groups["numer"].Value; return ""; });
 		uwagi = Regex.Replace(uwagi, @"(REGON|Regon|regon): (?<numer>(\d{9}|\d{14}))", m => { rejestry.REGON = m.Groups["numer"].Value; return ""; });
+		uwagi = Regex.Replace(uwagi, @"(Zamówienie|Nr zamówienia|Numer zamówienia): (?<numer>[A-Za-z0-9/_.\-]+)", m => { zamowienie.NrZamowienia = m.Groups["numer"].Value; return ""; });
+		uwagi = Regex.Replace(uwagi, @"Data zamówienia: (?<data>[0-9./\-]{8,10})", m => { if (!DateTime.TryParse(m.Groups["data"].Value, out var data)) return "Numer zamówienia: " + m.Groups["data"].Value; zamowienie.DataZamowienia = data; return ""; });
 		uwagi = uwagi.Trim(' ', '\r', '\n', '\t');
 		if (!String.IsNullOrEmpty(uwagi)) ksefFaktura.Fa.DodatkowyOpis.Add(new TKluczWartosc() { Klucz = "Uwagi", Wartosc = uwagi });
+		if (!String.IsNullOrEmpty(zamowienie.NrZamowienia) || zamowienie.DataZamowieniaValueSpecified)
+		{
+			ksefFaktura.Fa.WarunkiTransakcji = new FakturaFaWarunkiTransakcji();
+			ksefFaktura.Fa.WarunkiTransakcji.Zamowienia.Add(zamowienie);
+		}
 		if (!String.IsNullOrEmpty(rejestry.BDO) || !String.IsNullOrEmpty(rejestry.KRS) || !String.IsNullOrEmpty(rejestry.REGON))
 		{
 			ksefFaktura.Stopka = new FakturaStopka();
