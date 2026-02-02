@@ -27,6 +27,7 @@ class Generator
 			.Include(e => e.Waluta)
 			.Include(e => e.FakturaKorygowana)
 			.Include(e => e.FakturaPierwotna)
+			.Include(e => e.DodatkowePodmioty)
 			.Where(e => e.Id == dbFakturaRef.Id)
 			.FirstOrDefault();
 		var ksefFaktura = Zbuduj(dbFaktura);
@@ -187,7 +188,39 @@ class Generator
 			}
 		}
 
-		var wiersze = new List<FakturaFaFaWiersz>();
+		foreach (var dbPodmiot3 in dbFaktura.DodatkowePodmioty)
+		{
+			var ksefPodmiot3 = new FakturaPodmiot3();
+			if (dbPodmiot3.Rodzaj == RodzajDodatkowegoPodmiotu.Inny) { ksefPodmiot3.RolaInna = TWybor1.Item1; ksefPodmiot3.OpisRoli = "Inny podmiot"; }
+			else if (dbPodmiot3.Rodzaj == RodzajDodatkowegoPodmiotu.Faktor) ksefPodmiot3.Rola = TRolaPodmiotu3.Item1;
+			else if (dbPodmiot3.Rodzaj == RodzajDodatkowegoPodmiotu.Odbiorca) ksefPodmiot3.Rola = TRolaPodmiotu3.Item2;
+			else if (dbPodmiot3.Rodzaj == RodzajDodatkowegoPodmiotu.PodmiotPierwotny) ksefPodmiot3.Rola = TRolaPodmiotu3.Item3;
+			else if (dbPodmiot3.Rodzaj == RodzajDodatkowegoPodmiotu.DodatkowyNabywca) ksefPodmiot3.Rola = TRolaPodmiotu3.Item4;
+			else if (dbPodmiot3.Rodzaj == RodzajDodatkowegoPodmiotu.WystawcaFaktury) ksefPodmiot3.Rola = TRolaPodmiotu3.Item5;
+			else if (dbPodmiot3.Rodzaj == RodzajDodatkowegoPodmiotu.DokonującyPłatności) ksefPodmiot3.Rola = TRolaPodmiotu3.Item6;
+			else if (dbPodmiot3.Rodzaj == RodzajDodatkowegoPodmiotu.JSTWystawca) ksefPodmiot3.Rola = TRolaPodmiotu3.Item7;
+			else if (dbPodmiot3.Rodzaj == RodzajDodatkowegoPodmiotu.JSTOdbiorca) ksefPodmiot3.Rola = TRolaPodmiotu3.Item8;
+			else if (dbPodmiot3.Rodzaj == RodzajDodatkowegoPodmiotu.CzłonekGrupyVATWystawca) ksefPodmiot3.Rola = TRolaPodmiotu3.Item9;
+			else if (dbPodmiot3.Rodzaj == RodzajDodatkowegoPodmiotu.CzłonekGrupyVATOdbiorca) ksefPodmiot3.Rola = TRolaPodmiotu3.Item10;
+			else if (dbPodmiot3.Rodzaj == RodzajDodatkowegoPodmiotu.Pracownik) ksefPodmiot3.Rola = TRolaPodmiotu3.Item11;
+
+			ksefPodmiot3.DaneIdentyfikacyjne = new TPodmiot3();
+			if (!String.IsNullOrEmpty(dbPodmiot3.Nazwa)) ksefPodmiot3.DaneIdentyfikacyjne.Nazwa = dbPodmiot3.Nazwa;
+			if (!String.IsNullOrEmpty(dbPodmiot3.NIP)) ksefPodmiot3.DaneIdentyfikacyjne.NIP = dbPodmiot3.NIP;
+			if (!String.IsNullOrEmpty(dbPodmiot3.VatUE)) ksefPodmiot3.DaneIdentyfikacyjne.NrVatUE = dbPodmiot3.VatUE;
+			if (!String.IsNullOrEmpty(dbPodmiot3.IDwew)) ksefPodmiot3.DaneIdentyfikacyjne.IDWew = dbPodmiot3.IDwew;
+			if (!String.IsNullOrEmpty(dbPodmiot3.Adres))
+			{
+				ksefPodmiot3.Adres = new TAdres();
+				ksefPodmiot3.Adres.AdresL1 = dbPodmiot3.Adres.JakoDwieLinie().linia1;
+				ksefPodmiot3.Adres.AdresL2 = dbPodmiot3.Adres.JakoDwieLinie().linia2;
+				ksefPodmiot3.Adres.KodKraju = TKodKraju.PL;
+			}
+			dbPodmiot3.Udzial = ksefPodmiot3.Udzial;
+
+			ksefFaktura.Podmiot3.Add(ksefPodmiot3);
+		}
+
 		foreach (var dbPozycja in dbFaktura.Pozycje)
 		{
 			var ksefWiersz = new FakturaFaFaWiersz();
