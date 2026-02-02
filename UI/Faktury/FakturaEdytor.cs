@@ -428,6 +428,19 @@ namespace ProFak.UI
 			kontroler.AktualizujKontrolki();
 		}
 
+		private void linkLabelUwagiPomoc_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			MessageBox.Show(@"Następujące frazy zostaną rozpoznane i automatycznie umieszczone w odpowiednich polach w momencie wysyłki do KSeF:
+
+BDO: XXXXXXXXX
+KRS: XXXXXXXXXX
+REGON: XXXXXXXXX
+Zamówienie: XXXX lub Numer zamówienia: XXXX
+Data zamówienia: XXXX-XX-XX
+
+Pozostałe elementy tekstowe zostaną przekazane jako dodatkowy opis.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		}
+
 		public override void KoniecEdycji()
 		{
 			Rekord.PoprawNumeracjePozycji(Kontekst.Baza);

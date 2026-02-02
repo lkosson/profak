@@ -58,9 +58,11 @@ namespace ProFak.UI
             tabPageUwagi = new System.Windows.Forms.TabPage();
             tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             groupBox4 = new System.Windows.Forms.GroupBox();
+            linkLabelUwagiPomoc = new System.Windows.Forms.LinkLabel();
             textBoxUwagiPubliczne = new System.Windows.Forms.TextBox();
             groupBox5 = new System.Windows.Forms.GroupBox();
             textBoxUwagiWewnetrzne = new System.Windows.Forms.TextBox();
+            tabPageDodatkowePodmioty = new System.Windows.Forms.TabPage();
             tabPagePodatki = new System.Windows.Forms.TabPage();
             tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             label1 = new System.Windows.Forms.Label();
@@ -117,7 +119,6 @@ namespace ProFak.UI
             numericUpDownNetto = new NumericUpDownDPI();
             numericUpDownVat = new NumericUpDownDPI();
             numericUpDownBrutto = new NumericUpDownDPI();
-            tabPageDodatkowePodmioty = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
             tableLayoutPanel.SuspendLayout();
             tableLayoutPanelKontrahenci.SuspendLayout();
@@ -506,6 +507,7 @@ namespace ProFak.UI
             // 
             // groupBox4
             // 
+            groupBox4.Controls.Add(linkLabelUwagiPomoc);
             groupBox4.Controls.Add(textBoxUwagiPubliczne);
             groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             groupBox4.Location = new System.Drawing.Point(3, 3);
@@ -514,6 +516,18 @@ namespace ProFak.UI
             groupBox4.TabIndex = 1;
             groupBox4.TabStop = false;
             groupBox4.Text = "Uwagi (drukowane na fakturze)";
+            // 
+            // linkLabelUwagiPomoc
+            // 
+            linkLabelUwagiPomoc.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            linkLabelUwagiPomoc.AutoSize = true;
+            linkLabelUwagiPomoc.Location = new System.Drawing.Point(419, 166);
+            linkLabelUwagiPomoc.Name = "linkLabelUwagiPomoc";
+            linkLabelUwagiPomoc.Size = new System.Drawing.Size(12, 15);
+            linkLabelUwagiPomoc.TabIndex = 1;
+            linkLabelUwagiPomoc.TabStop = true;
+            linkLabelUwagiPomoc.Text = "?";
+            linkLabelUwagiPomoc.LinkClicked += linkLabelUwagiPomoc_LinkClicked;
             // 
             // textBoxUwagiPubliczne
             // 
@@ -545,6 +559,15 @@ namespace ProFak.UI
             textBoxUwagiWewnetrzne.Name = "textBoxUwagiWewnetrzne";
             textBoxUwagiWewnetrzne.Size = new System.Drawing.Size(431, 165);
             textBoxUwagiWewnetrzne.TabIndex = 0;
+            // 
+            // tabPageDodatkowePodmioty
+            // 
+            tabPageDodatkowePodmioty.Location = new System.Drawing.Point(4, 24);
+            tabPageDodatkowePodmioty.Name = "tabPageDodatkowePodmioty";
+            tabPageDodatkowePodmioty.Size = new System.Drawing.Size(886, 193);
+            tabPageDodatkowePodmioty.TabIndex = 6;
+            tabPageDodatkowePodmioty.Text = "Dodatkowe podmioty   [ᴄᴛʀʟ-ғ₅]";
+            tabPageDodatkowePodmioty.UseVisualStyleBackColor = true;
             // 
             // tabPagePodatki
             // 
@@ -1226,15 +1249,6 @@ namespace ProFak.UI
             numericUpDownBrutto.TabIndex = 52;
             numericUpDownBrutto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // tabPageDodatkowePodmioty
-            // 
-            tabPageDodatkowePodmioty.Location = new System.Drawing.Point(4, 24);
-            tabPageDodatkowePodmioty.Name = "tabPageDodatkowePodmioty";
-            tabPageDodatkowePodmioty.Size = new System.Drawing.Size(886, 193);
-            tabPageDodatkowePodmioty.TabIndex = 6;
-            tabPageDodatkowePodmioty.Text = "Dodatkowe podmioty   [ᴄᴛʀʟ-ғ₅]";
-            tabPageDodatkowePodmioty.UseVisualStyleBackColor = true;
-            // 
             // FakturaEdytor
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1380,5 +1394,6 @@ namespace ProFak.UI
         private System.Windows.Forms.ComboBox comboBoxProceduraMarzy;
         private System.Windows.Forms.CheckBox checkBoxReczneKwoty;
         private System.Windows.Forms.TabPage tabPageDodatkowePodmioty;
+        private System.Windows.Forms.LinkLabel linkLabelUwagiPomoc;
     }
 }
