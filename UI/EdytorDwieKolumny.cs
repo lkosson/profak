@@ -62,5 +62,14 @@ namespace ProFak.UI
 			var dateTimePicker = dwieKolumny.DodajDatePicker(etykieta);
 			kontroler.Powiazanie(dateTimePicker, wlasciwosc);
 		}
+
+		public void DodajComboBox<TEnum>(Expression<Func<TRekord, TEnum>> wlasciwosc, string etykieta, bool wymagane = false)
+			where TEnum : struct, Enum
+		{
+			var comboBox = dwieKolumny.DodajComboBox(etykieta);
+			kontroler.Slownik<TEnum>(comboBox);
+			kontroler.Powiazanie(comboBox, wlasciwosc);
+			if (wymagane) Wymagane(comboBox);
+		}
 	}
 }

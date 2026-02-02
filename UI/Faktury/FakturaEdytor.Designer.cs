@@ -117,6 +117,7 @@ namespace ProFak.UI
             numericUpDownNetto = new NumericUpDownDPI();
             numericUpDownVat = new NumericUpDownDPI();
             numericUpDownBrutto = new NumericUpDownDPI();
+            tabPageDodatkowePodmioty = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
             tableLayoutPanel.SuspendLayout();
             tableLayoutPanelKontrahenci.SuspendLayout();
@@ -441,6 +442,7 @@ namespace ProFak.UI
             tabControl1.Controls.Add(tabPageWplaty);
             tabControl1.Controls.Add(tabPagePliki);
             tabControl1.Controls.Add(tabPageUwagi);
+            tabControl1.Controls.Add(tabPageDodatkowePodmioty);
             tabControl1.Controls.Add(tabPagePodatki);
             tabControl1.Controls.Add(tabPageKSeF);
             tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -552,7 +554,7 @@ namespace ProFak.UI
             tabPagePodatki.Padding = new System.Windows.Forms.Padding(3);
             tabPagePodatki.Size = new System.Drawing.Size(886, 193);
             tabPagePodatki.TabIndex = 4;
-            tabPagePodatki.Text = "Podatki   [ᴄᴛʀʟ-ғ₅]";
+            tabPagePodatki.Text = "Podatki   [ᴄᴛʀʟ-ғ₆]";
             tabPagePodatki.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel7
@@ -727,7 +729,7 @@ namespace ProFak.UI
             tabPageKSeF.Name = "tabPageKSeF";
             tabPageKSeF.Size = new System.Drawing.Size(886, 193);
             tabPageKSeF.TabIndex = 5;
-            tabPageKSeF.Text = "KSeF   [ᴄᴛʀʟ-ғ₆]";
+            tabPageKSeF.Text = "KSeF   [ᴄᴛʀʟ-ғ₇]";
             tabPageKSeF.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel8
@@ -1224,6 +1226,15 @@ namespace ProFak.UI
             numericUpDownBrutto.TabIndex = 52;
             numericUpDownBrutto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // tabPageDodatkowePodmioty
+            // 
+            tabPageDodatkowePodmioty.Location = new System.Drawing.Point(4, 24);
+            tabPageDodatkowePodmioty.Name = "tabPageDodatkowePodmioty";
+            tabPageDodatkowePodmioty.Size = new System.Drawing.Size(886, 193);
+            tabPageDodatkowePodmioty.TabIndex = 6;
+            tabPageDodatkowePodmioty.Text = "Dodatkowe podmioty   [ᴄᴛʀʟ-ғ₅]";
+            tabPageDodatkowePodmioty.UseVisualStyleBackColor = true;
+            // 
             // FakturaEdytor
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1368,5 +1379,6 @@ namespace ProFak.UI
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.ComboBox comboBoxProceduraMarzy;
         private System.Windows.Forms.CheckBox checkBoxReczneKwoty;
+        private System.Windows.Forms.TabPage tabPageDodatkowePodmioty;
     }
 }

@@ -255,6 +255,17 @@ namespace ProFak.UI
 			);
 		}
 
+		public static SpisZAkcjami<DodatkowyPodmiot, DodatkowyPodmiotSpis> DodatkowePodmioty()
+		{
+			var spis = new DodatkowyPodmiotSpis();
+			return Utworz(spis,
+				new DodajRekordAkcja<DodatkowyPodmiot, DodatkowyPodmiotEdytor>(dodatkowyPodmiot => dodatkowyPodmiot.FakturaRef = spis.FakturaRef),
+				new EdytujRekordAkcja<DodatkowyPodmiot, DodatkowyPodmiotEdytor>(),
+				new UsunRekordAkcja<DodatkowyPodmiot>(),
+				new PrzeladujAkcja<DodatkowyPodmiot>()
+			);
+		}
+
 		public static SpisZAkcjami<ZaliczkaPit, ZaliczkaPitSpis> ZaliczkiPit(string[] parametry = null)
 		{
 			return Utworz(new ZaliczkaPitSpis(parametry),

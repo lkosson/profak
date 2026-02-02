@@ -13,6 +13,8 @@ class DodatkowyPodmiot : Rekord<DodatkowyPodmiot>
 	public string Telefon { get; set; } = "";
 	public decimal? Udzial { get; set; }
 
+	public string RodzajFmt => Format(Rodzaj);
+
 	public Ref<Faktura> FakturaRef { get => FakturaId; set => FakturaId = value; }
 
 	public Faktura Faktura { get; set; }

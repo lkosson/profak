@@ -17,6 +17,7 @@ namespace ProFak.UI
 		private readonly SpisZAkcjami<Wplata, WplataSpis> wplaty;
 		private readonly SpisZAkcjami<PozycjaFaktury, PozycjaFakturySpis> pozycjeFaktury;
 		private readonly SpisZAkcjami<Plik, PlikSpis> pliki;
+		private readonly SpisZAkcjami<DodatkowyPodmiot, DodatkowyPodmiotSpis> dodatkowePodmioty;
 
 		private Slownik<Kontrahent> slownikNabywcaNazwa;
 		private Slownik<Kontrahent> slownikNabywcaNIP;
@@ -85,6 +86,7 @@ namespace ProFak.UI
 			tabPageWplaty.Controls.Add(wplaty = Spisy.Wplaty());
 			tabPagePozycje.Controls.Add(pozycjeFaktury = Spisy.PozycjeFaktur());
 			tabPagePliki.Controls.Add(pliki = Spisy.Pliki());
+			tabPageDodatkowePodmioty.Controls.Add(dodatkowePodmioty = Spisy.DodatkowePodmioty());
 			pozycjeFaktury.Spis.RekordyZmienione += pozycjeFakturySpis_RekordyZmienione;
 
 			dateTimePickerDataSprzedazy.CustomFormat = Format.Data;
@@ -148,10 +150,15 @@ namespace ProFak.UI
 			}
 			else if (e.KeyCode == Keys.F5 && e.Modifiers == Keys.Control)
 			{
-				tabControl1.SelectedTab = tabPagePodatki;
+				tabControl1.SelectedTab = tabPageDodatkowePodmioty;
 				wplaty.Focus();
 			}
 			else if (e.KeyCode == Keys.F6 && e.Modifiers == Keys.Control)
+			{
+				tabControl1.SelectedTab = tabPagePodatki;
+				wplaty.Focus();
+			}
+			else if (e.KeyCode == Keys.F7 && e.Modifiers == Keys.Control)
 			{
 				tabControl1.SelectedTab = tabPageKSeF;
 				textBoxNumerKSeF.Focus();
@@ -303,6 +310,8 @@ namespace ProFak.UI
 			pozycjeFaktury.Spis.Kontekst = Kontekst;
 			pliki.Spis.FakturaRef = Rekord;
 			pliki.Spis.Kontekst = Kontekst;
+			dodatkowePodmioty.Spis.FakturaRef = Rekord;
+			dodatkowePodmioty.Spis.Kontekst = Kontekst;
 
 			var fakturaKorygowana = Kontekst.Baza.Znajdz(Rekord.FakturaKorygowanaRef);
 

@@ -91,5 +91,14 @@ namespace ProFak.UI
 			DodajWiersz(dateTimePicker, etykieta);
 			return dateTimePicker;
 		}
+
+		public ComboBox DodajComboBox(string etykieta)
+		{
+			var comboBox = new ComboBox();
+			comboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+			comboBox.Width = 200 * comboBox.DeviceDpi / 96;
+			DodajWiersz(comboBox, etykieta);
+			return comboBox;
+		}
 	}
 }

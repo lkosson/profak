@@ -32,6 +32,7 @@ namespace ProFak.UI
 			comboBoxTabela.DataSource = new[]
 			{
 				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Deklaracje Vat", Wartosc = GeneratorDanych(Kontekst.Baza.DeklaracjeVat) },
+				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Dodatkowe podmioty", Wartosc = GeneratorDanych(Kontekst.Baza.DodatkowePodmioty) },
 				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Faktury", Wartosc = GeneratorDanych(Kontekst.Baza.Faktury) },
 				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Jednostki miar", Wartosc = GeneratorDanych(Kontekst.Baza.JednostkiMiar) },
 				new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Kolumny spisów", Wartosc = GeneratorDanych(Kontekst.Baza.KolumnySpisow) },
