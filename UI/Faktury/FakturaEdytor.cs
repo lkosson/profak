@@ -422,6 +422,7 @@ namespace ProFak.UI
 				return;
 			}
 			if (!String.IsNullOrWhiteSpace(Rekord.XMLKSeF) && MessageBox.Show("Faktura ma już wygenerowaną postać ustrukturyzowaną. Czy na pewno chcesz ją wygenerować ponownie?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
+			Kontekst.Baza.Zapisz(Rekord);
 			var xml = IO.FA_3.Generator.ZbudujXML(Kontekst.Baza, Rekord);
 			Rekord.XMLKSeF = xml;
 			kontroler.AktualizujKontrolki();
