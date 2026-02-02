@@ -51,11 +51,17 @@ namespace ProFak.UI
 			if (Width < minimalnaSzerokosc) Width = minimalnaSzerokosc;
 		}
 
-		public TextBox DodajTextBox(string etykieta)
+		public TextBox DodajTextBox(string etykieta, int linie = 1)
 		{
 			var textBox = new TextBox();
 			textBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 			textBox.Width = 200 * textBox.DeviceDpi / 96;
+			if (linie > 1)
+			{
+				textBox.AcceptsReturn = true;
+				textBox.Multiline = true;
+				textBox.Height += (textBox.Height - 8) * (linie - 1);
+			}
 			DodajWiersz(textBox, etykieta);
 			return textBox;
 		}

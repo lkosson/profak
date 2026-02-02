@@ -32,9 +32,9 @@ namespace ProFak.UI
 			dwieKolumny.DodajWiersz(kontrolka, etykieta);
 		}
 
-		public void DodajTextBox(Expression<Func<TRekord, string>> wlasciwosc, string etykieta, bool wymagane = false)
+		public void DodajTextBox(Expression<Func<TRekord, string>> wlasciwosc, string etykieta, bool wymagane = false, int linie = 1)
 		{
-			var textbox = dwieKolumny.DodajTextBox(etykieta);
+			var textbox = dwieKolumny.DodajTextBox(etykieta, linie);
 			kontroler.Powiazanie(textbox, wlasciwosc);
 			if (wymagane) Wymagane(textbox);
 		}

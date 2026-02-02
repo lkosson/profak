@@ -16,7 +16,7 @@ namespace ProFak.UI
 		public DodatkowyPodmiotSpis()
 		{
 			DodajKolumne(nameof(DodatkowyPodmiot.RodzajFmt), "Rodzaj");
-			DodajKolumne(nameof(DodatkowyPodmiot.NIP), "NIP");
+			DodajKolumne(nameof(DodatkowyPodmiot.NumerFmt), "Numer");
 			DodajKolumne(nameof(DodatkowyPodmiot.Nazwa), "Nazwa", rozciagnij: true);
 			DodajKolumneId();
 		}

@@ -1,4 +1,6 @@
-﻿namespace ProFak.DB;
+﻿using System;
+
+namespace ProFak.DB;
 
 class DodatkowyPodmiot : Rekord<DodatkowyPodmiot>
 {
@@ -13,6 +15,7 @@ class DodatkowyPodmiot : Rekord<DodatkowyPodmiot>
 	public string Telefon { get; set; } = "";
 	public decimal? Udzial { get; set; }
 
+	public string NumerFmt => !String.IsNullOrWhiteSpace(IDwew) ? IDwew : !String.IsNullOrWhiteSpace(VatUE) ? VatUE : NIP;
 	public string RodzajFmt => Format(Rodzaj);
 
 	public Ref<Faktura> FakturaRef { get => FakturaId; set => FakturaId = value; }
