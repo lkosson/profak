@@ -25,17 +25,84 @@ namespace ProFak.DB
 		public static string Format<TEnum>(TEnum value) where TEnum : Enum
 		{
 			var raw = value.ToString();
-			var sb = new StringBuilder(raw.Length + 4);
+			if (raw.Contains('_')) return raw.Replace('_', ' ').Trim(); /* _10_L */
+
+			var allup = true;
 			for (int i = 0; i < raw.Length; i++)
 			{
 				var ch = raw[i];
-				if (Char.IsUpper(ch) && i > 0 /* && !Char.IsUpper(raw[i - 1]) ZlecenieWPrzygotowaniu */)
+				if (!Char.IsUpper(ch) && !Char.IsDigit(ch) && !Char.IsWhiteSpace(ch))
 				{
-					sb.Append(' ');
-					if (i < raw.Length - 1) ch = Char.ToLower(ch); /* PaczkomatB */
+					allup = false;
+					break;
 				}
-				sb.Append(ch);
 			}
+
+			if (allup) return raw; /* WZ, MP3 */
+
+			var sb = new StringBuilder(raw.Length * 2);
+
+			int start = 0;
+			allup = true;
+			for (int i = 1 /* !! */; i <= /* !! */ raw.Length; i++)
+			{
+				var end = i == raw.Length;
+				var prevLower = Char.IsLower(raw[i - 1]);
+				var curLower = end ? false : Char.IsLower(raw[i]);
+
+				if ((prevLower && !curLower) || end)
+				{
+					// OdbiorWlasny
+					// ^    ^^
+					// s    pc
+					for (int j = start; j < i; j++)
+					{
+						sb.Append(allup || j == 0 ? raw[j] : Char.ToLower(raw[j]));
+					}
+					if (!end) sb.Append(' ');
+					start = i;
+					allup = true;
+				}
+				else if (!prevLower && curLower)
+				{
+					var len = i - 1 - start;
+					if (len == 0)
+					{
+						// Brak
+						// ^^
+						// sc
+					}
+					else if (len == 1)
+					{
+						if (start == 0)
+						{
+							// WMagazynie
+							// ^^^
+							// spc
+							sb.Append(raw[start]);
+						}
+						else
+						{
+							// ZlecenieWPrzygotowaniu
+							//         ^^^
+							//         spc
+							sb.Append(Char.ToLower(raw[start]));
+						}
+						if (!end) sb.Append(' ');
+					}
+					else if (len > 1)
+					{
+						// DokumentWZObcy
+						//         ^ ^^
+						//         s pc
+						sb.Append(raw[start..(i - 1)]);
+						if (!end) sb.Append(' ');
+					}
+					start = i - 1;
+					allup = false;
+				}
+			}
+
 			return sb.ToString();
 		}
 	}
