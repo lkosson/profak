@@ -14,6 +14,7 @@
       <xs:element minOccurs="0" maxOccurs="1" name="NazwaNabywcy" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="AdresNabywcy" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="NIPNabywcy" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="DaneOdbiorcy" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="Slownie" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="TerminPlatnosci" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="FormaPlatnosci" type="xs:string" />

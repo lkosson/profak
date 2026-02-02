@@ -61,6 +61,10 @@
           <DataField>NIPNabywcy</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="DaneOdbiorcy">
+          <DataField>DaneOdbiorcy</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="Slownie">
           <DataField>Slownie</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -323,10 +327,30 @@
                                   </TextRuns>
                                   <Style />
                                 </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Iif(Fields!DaneOdbiorcy.Value = "", "", vbCrLf &amp; "Odbiorca:" &amp; vbCrLf)</Value>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                        <FontSize>12pt</FontSize>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                    <TextRun>
+                                      <Value>=Fields!DaneOdbiorcy.Value</Value>
+                                      <MarkupType>HTML</MarkupType>
+                                      <Style>
+                                        <FontFamily>Calibri</FontFamily>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>DaneSprzedawcy</rd:DefaultName>
                               <Height>4.11896cm</Height>
-                              <Width>9.08813cm</Width>
+                              <Width>10.54334cm</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -449,9 +473,9 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>DaneSprzedawcy</rd:DefaultName>
-                              <Left>9.87417cm</Left>
+                              <Left>11.14417cm</Left>
                               <Height>4.11896cm</Height>
-                              <Width>7.91187cm</Width>
+                              <Width>6.64187cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
                                 <Border>
@@ -1020,7 +1044,6 @@
                                               </Border>
                                             </Style>
                                           </Rectangle>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                     </TablixCells>
@@ -1101,6 +1124,7 @@
                             </Border>
                           </Style>
                         </Rectangle>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>

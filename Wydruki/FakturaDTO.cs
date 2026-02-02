@@ -22,6 +22,8 @@ namespace ProFak.Wydruki
 		public string AdresNabywcy { get; set; }
 		public string NIPNabywcy { get; set; }
 
+		public string DaneOdbiorcy { get; set; }
+
 		public string Slownie { get; set; }
 		public string TerminPlatnosci { get; set; }
 		public string FormaPlatnosci { get; set; }

@@ -29,6 +29,8 @@ namespace ProFak.Wydruki
 					.OrderBy(pozycja => pozycja.LP)
 					.ThenBy(pozycja => pozycja.CzyPrzedKorekta)
 					.ToList();
+				var odbiorca = baza.DodatkowePodmioty
+					.FirstOrDefault(dodatkowyPodmiot => dodatkowyPodmiot.FakturaId == faktura.Id && dodatkowyPodmiot.Rodzaj == RodzajDodatkowegoPodmiotu.Odbiorca);
 				var wplaty = baza.Wplaty.Where(wplata => wplata.FakturaId == faktura.Id).ToList();
 				var zaplacono = wplaty.Sum(wplata => wplata.Kwota);
 				var dozaplaty = faktura.RazemBrutto - zaplacono;
@@ -80,6 +82,14 @@ namespace ProFak.Wydruki
 				fakturaDTO.NazwaSprzedawcy = faktura.NazwaSprzedawcy;
 				fakturaDTO.AdresSprzedawcy = faktura.DaneSprzedawcy;
 				fakturaDTO.NIPSprzedawcy = faktura.NIPSprzedawcy;
+
+				if (odbiorca != null)
+				{
+					fakturaDTO.DaneOdbiorcy = odbiorca.Nazwa;
+					if (!String.IsNullOrEmpty(odbiorca.Adres)) fakturaDTO.DaneOdbiorcy += "<br/>" + odbiorca.Adres.Replace("\n", "<br/>");
+					if (!String.IsNullOrEmpty(odbiorca.NIP)) fakturaDTO.DaneOdbiorcy += "<br/><b>NIP:</b> " + odbiorca.NIP;
+					if (!String.IsNullOrEmpty(odbiorca.VatUE)) fakturaDTO.DaneOdbiorcy += "<br/><b>Nr VAT UE:</b> " + odbiorca.VatUE;
+				}
 
 				if (dozaplaty < 0)
 				{
