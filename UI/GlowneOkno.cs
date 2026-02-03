@@ -17,11 +17,13 @@ namespace ProFak.UI
 	{
 		private TreeNode ostatnioWybrany;
 		private bool trwaAktualizacjaMenu;
+		private ContextMenuStrip menuKontekstowe;
 
 		public GlowneOkno()
 		{
 			InitializeComponent();
 			ZbudujMenu();
+			ZbudujMenuKontekstowe();
 		}
 
 		public static Icon Ikona => (Icon)new ComponentResourceManager(typeof(GlowneOkno)).GetObject("$this.Icon");
@@ -102,6 +104,23 @@ namespace ProFak.UI
 			var oProgramie = Wezel("O programie", "OProgramie");
 			var serwisowe = Wezel("Serwisowe", "Serwisowe", [numeracja, konfiguracja, bazaDanych, usunieteFaktury, polecenieSQL, bezposredniaEdycja, oProgramie]);
 			menu.Nodes.AddRange([faktury, podatki, kontrahenci, towary, slowniki, serwisowe]);
+		}
+
+		private void ZbudujMenuKontekstowe()
+		{
+			menuKontekstowe = new ContextMenuStrip();
+			var menuUkryj = new ToolStripMenuItem("Ukryj");
+			var menuPokazUkryte = new ToolStripMenuItem("Pokaż ukryte");
+			menuUkryj.Click += delegate
+			{
+			};
+			menuPokazUkryte.Click += delegate
+			{
+				menuPokazUkryte.Checked = !menuPokazUkryte.Checked;
+			};
+			menuKontekstowe.Items.Add(menuUkryj);
+			menuKontekstowe.Items.Add(menuPokazUkryte);
+			//menu.ContextMenuStrip = menuKontekstowe;
 		}
 
 		private void RozwinMenu()
