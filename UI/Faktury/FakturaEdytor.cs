@@ -421,6 +421,14 @@ namespace ProFak.UI
 				MessageBox.Show("Przed wygenerowaniem postaci ustrukturyzowanej należy zapisać fakturę w celu nadania jej numeru.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 				return;
 			}
+			if (ModifierKeys == Keys.Shift && !String.IsNullOrEmpty(Rekord.XMLKSeF))
+			{
+				using var api = new IO.KSEF2.API(SrodowiskoKSeF.Prod);
+				var url = api.ZbudujUrl(Rekord.XMLKSeF, Rekord.NIPSprzedawcy, Rekord.DataWystawienia);
+				Rekord.URLKSeF = url;
+				MessageBox.Show(url, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				return;
+			}
 			if (!String.IsNullOrWhiteSpace(Rekord.XMLKSeF) && MessageBox.Show("Faktura ma już wygenerowaną postać ustrukturyzowaną. Czy na pewno chcesz ją wygenerować ponownie?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
 			Kontekst.Baza.Zapisz(Rekord);
 			var xml = IO.FA_3.Generator.ZbudujXML(Kontekst.Baza, Rekord);

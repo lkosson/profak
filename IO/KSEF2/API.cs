@@ -238,7 +238,7 @@ class API : IDisposable
 		return xml;
 	}
 
-	public async Task<(string ksefReferenceNumber, string verificationLink)> WyslijFaktureAsync(string sessionReferenceNumber, EncryptionData encryptionData, string invoiceXml, string nip, DateTime issueDate, CancellationToken cancellationToken)
+	public async Task<string> WyslijFaktureAsync(string sessionReferenceNumber, EncryptionData encryptionData, string invoiceXml, CancellationToken cancellationToken)
 	{
 		var invoice = Encoding.UTF8.GetBytes(invoiceXml);
 		var encryptedInvoice = cryptographyService.EncryptBytesWithAES256(invoice, encryptionData.CipherKey, encryptionData.CipherIv);
@@ -255,9 +255,15 @@ class API : IDisposable
 
 		var sendInvoiceResponse = await UruchomUwzgledniajacLimitAsync(() => ksefClient.SendOnlineSessionInvoiceAsync(sendOnlineInvoiceRequest, sessionReferenceNumber, accessToken.Token, cancellationToken), cancellationToken);
 
-		var url = verificationLinkService.BuildInvoiceVerificationUrl(nip, issueDate, invoiceMetadata.HashSHA);
+		return sendInvoiceResponse.ReferenceNumber;
+	}
 
-		return (sendInvoiceResponse.ReferenceNumber, url);
+	public string ZbudujUrl(string invoiceXml, string nip, DateTime issueDate)
+	{
+		var invoice = Encoding.UTF8.GetBytes(invoiceXml);
+		var invoiceMetadata = cryptographyService.GetMetaData(invoice);
+		var url = verificationLinkService.BuildInvoiceVerificationUrl(nip, issueDate, invoiceMetadata.HashSHA);
+		return url;
 	}
 
 	public async Task SprawdzStanWysylkiAsync(string sessionReferenceNumber, IEnumerable<(Faktura faktura, string invoiceReferenceNumber)> faktury, CancellationToken cancellationToken)

@@ -52,7 +52,8 @@ namespace ProFak.UI
 				foreach (var faktura in doWyslania)
 				{
 					cancellationToken.ThrowIfCancellationRequested();
-					var (invoiceReferenceNumber, verificationLink) = await api.WyslijFaktureAsync(sessionReferenceNumber, encryptionData, faktura.XMLKSeF, faktura.NIPSprzedawcy, faktura.DataWystawienia, cancellationToken);
+					var invoiceReferenceNumber = await api.WyslijFaktureAsync(sessionReferenceNumber, encryptionData, faktura.XMLKSeF, cancellationToken);
+					var verificationLink = api.ZbudujUrl(faktura.XMLKSeF, faktura.NIPSprzedawcy, faktura.DataWystawienia);
 					wyslane.Add((faktura, invoiceReferenceNumber));
 					faktura.URLKSeF = verificationLink;
 					kontekst.Baza.Zapisz(faktura);
