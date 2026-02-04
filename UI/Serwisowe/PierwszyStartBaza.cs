@@ -21,6 +21,31 @@ namespace ProFak.UI
 		public PierwszyStartBaza()
 		{
 			InitializeComponent();
+			radioButtonNowaPrywatnaBaza.Enabled = CzySciezkaDostepna(DB.Baza.PrywatnaSciezka);
+			radioButtonNowaPublicznaBaza.Enabled = CzySciezkaDostepna(DB.Baza.PublicznaSciezka);
+			radioButtonNowaLokalnaBaza.Enabled = CzySciezkaDostepna(DB.Baza.LokalnaSciezka);
+		}
+
+		private bool CzySciezkaDostepna(string sciezka)
+		{
+			try
+			{
+				if (File.Exists(sciezka))
+				{
+					using var f = new FileStream(sciezka, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
+					return true;
+				}
+				else
+				{
+					Directory.CreateDirectory(Path.GetDirectoryName(sciezka));
+					using var f = new FileStream(sciezka, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite, 4096, FileOptions.DeleteOnClose);
+					return true;
+				}
+			}
+			catch
+			{
+				return false;
+			}
 		}
 
 		private void buttonDalej_Click(object sender, EventArgs e)
