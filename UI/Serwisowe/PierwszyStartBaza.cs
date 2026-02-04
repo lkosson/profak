@@ -204,7 +204,9 @@ namespace ProFak.UI
 			}
 
 			using var pierwszyStart = new PierwszyStartBaza();
-			return pierwszyStart.ShowDialog() == DialogResult.OK;
+			var ok = pierwszyStart.ShowDialog() == DialogResult.OK;
+			if (pierwszeUruchomienieWersjiPrzenosnej && (!ok || String.IsNullOrEmpty(DB.Baza.Sciezka))) File.Delete(plikPierwszegoUruchomienia);
+			return ok;
 		}
 	}
 }
