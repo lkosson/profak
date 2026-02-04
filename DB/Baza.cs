@@ -62,15 +62,12 @@ namespace ProFak.DB
 			ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTrackingWithIdentityResolution;
 		}
 
-		public static bool Przygotuj()
+		public static void Przygotuj()
 		{
-			DB.Baza.UstalSciezkeBazy();
-			if (String.IsNullOrEmpty(Sciezka)) return false;
 			WykonajAutomatycznaKopieBazy();
 			using var baza = new DB.Baza();
 			baza.Database.Migrate();
 			DaneStartowe.Zaladuj(baza);
-			return true;
 		}
 
 		private static void WykonajAutomatycznaKopieBazy()
@@ -119,7 +116,7 @@ namespace ProFak.DB
 			if (plikNieaktualny != null) File.Delete(plikNieaktualny);
 		}
 
-		private static void UstalSciezkeBazy()
+		public static void UstalSciezkeBazy()
 		{
 			if (File.Exists(OdnosnikDoBazy)) Sciezka = File.ReadAllLines(OdnosnikDoBazy)[0];
 			else if (File.Exists(LokalnaSciezka)) Sciezka = LokalnaSciezka;

@@ -24,11 +24,9 @@ namespace ProFak
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
 				CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("pl-PL");
-				if (!DB.Baza.Przygotuj())
-				{
-					using var pierwszyStart = new UI.PierwszyStartBaza();
-					if (pierwszyStart.ShowDialog() != DialogResult.OK) return;
-				}
+				Baza.UstalSciezkeBazy();
+				if (!PierwszyStartBaza.Uruchom()) return;
+				Baza.Przygotuj();
 
 				if (args.Length > 0)
 				{

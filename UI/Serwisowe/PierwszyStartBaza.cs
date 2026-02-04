@@ -14,6 +14,7 @@ namespace ProFak.UI
 {
 	public partial class PierwszyStartBaza : Form
 	{
+		private const string ZnacznikPierwszegoUruchomienia = "pierwsze-uruchomienie.txt";
 		private const string BazaDemo = "(demo)";
 		private string bazaZrodlowa;
 		private string bazaDocelowa;
@@ -172,6 +173,38 @@ namespace ProFak.UI
 		private void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
 		{
 			labelStatus.Text = (string)e.UserState;
+		}
+
+		public static bool Uruchom()
+		{
+			var pierwszeUruchomienieWersjiPrzenosnej = false;
+			var plikPierwszegoUruchomienia = Path.Combine(DB.Baza.LokalnyKatalog, ZnacznikPierwszegoUruchomienia);
+			if (!File.Exists(plikPierwszegoUruchomienia))
+			{
+				try
+				{
+					File.WriteAllText(plikPierwszegoUruchomienia, "Ten plik jest znacznikiem, że program był już uruchamiany z tego katalogu.\r\nUsuń go, jeśli chcesz móc ponownie wybrać lokalizację bazy danych.");
+					pierwszeUruchomienieWersjiPrzenosnej = true;
+				}
+				catch
+				{
+				}
+			}
+
+			if (File.Exists(DB.Baza.Sciezka))
+			{
+				if (!pierwszeUruchomienieWersjiPrzenosnej) return true;
+				var ret = MessageBox.Show($"Została znaleziona istniejąca baza danych: {DB.Baza.Sciezka}\n\nCzy chcesz jej użyć?", "ProFak", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+				if (ret == DialogResult.Yes) return true;
+				if (ret == DialogResult.Cancel)
+				{
+					File.Delete(plikPierwszegoUruchomienia);
+					return false;
+				}
+			}
+
+			using var pierwszyStart = new PierwszyStartBaza();
+			return pierwszyStart.ShowDialog() == DialogResult.OK;
 		}
 	}
 }
