@@ -230,7 +230,7 @@ class Generator
 			ksefWiersz.P_8A = dbPozycja.JednostkaMiary?.Nazwa ?? "szt";
 			ksefWiersz.P_8B = Math.Abs(dbPozycja.Ilosc);
 			if (dbPozycja.RabatRazem != 0 && ksefWiersz.P_8B != 0) ksefWiersz.P_10 = -dbPozycja.RabatRazem / ksefWiersz.P_8B;
-			if (dbFaktura.KursWaluty != 0) ksefWiersz.KursWaluty = dbFaktura.KursWaluty;
+			if (dbFaktura.KursWaluty != 0 && dbFaktura.KursWaluty != 1) ksefWiersz.KursWaluty = dbFaktura.KursWaluty;
 			if (dbPozycja.CzyWedlugCenBrutto)
 			{
 				ksefWiersz.P_9B = dbPozycja.CenaBrutto;
