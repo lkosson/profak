@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -312,6 +313,7 @@ namespace ProFak.UI
 			pliki.Spis.Kontekst = Kontekst;
 			dodatkowePodmioty.Spis.FakturaRef = Rekord;
 			dodatkowePodmioty.Spis.Kontekst = Kontekst;
+			linkLabelKSeFUrl.Text = Rekord.URLKSeF;
 
 			var fakturaKorygowana = Kontekst.Baza.Znajdz(Rekord.FakturaKorygowanaRef);
 
@@ -426,7 +428,7 @@ namespace ProFak.UI
 				using var api = new IO.KSEF2.API(SrodowiskoKSeF.Prod);
 				var url = api.ZbudujUrl(Rekord.XMLKSeF, Rekord.NIPSprzedawcy, Rekord.DataWystawienia);
 				Rekord.URLKSeF = url;
-				MessageBox.Show(url, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				linkLabelKSeFUrl.Text = url;
 				return;
 			}
 			if (!String.IsNullOrWhiteSpace(Rekord.XMLKSeF) && MessageBox.Show("Faktura ma już wygenerowaną postać ustrukturyzowaną. Czy na pewno chcesz ją wygenerować ponownie?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
@@ -455,6 +457,13 @@ Pozostałe elementy tekstowe zostaną przekazane jako dodatkowy opis.", "ProFak"
 		{
 			Rekord.PoprawNumeracjePozycji(Kontekst.Baza);
 			base.KoniecEdycji();
+		}
+
+		private void linkLabelKSeFUrl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			if (String.IsNullOrWhiteSpace(Rekord.URLKSeF)) return;
+			if (e.Button == MouseButtons.Right) Clipboard.SetText(Rekord.URLKSeF);
+			else Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = Rekord.URLKSeF });
 		}
 	}
 
