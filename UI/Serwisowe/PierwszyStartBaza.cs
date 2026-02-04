@@ -84,6 +84,8 @@ namespace ProFak.UI
 			}
 			else return;
 
+			if (File.Exists(bazaDocelowa) && MessageBox.Show($"Baza {bazaDocelowa} już istnieje. Czy na pewno chcesz ją nadpisać i utworzyć w jej miejsce pustą bazę?\n\nTen proces jest nieodwracalny i STRACISZ WSZYSTKIE ISTNIEJĄCE DANE.", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
+
 			buttonDalej.Enabled = false;
 			progressBar.Visible = true;
 			labelStatus.Visible = true;
