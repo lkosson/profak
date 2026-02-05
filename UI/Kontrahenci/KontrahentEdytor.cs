@@ -246,6 +246,19 @@ namespace ProFak.UI
 			Rekord.TokenKSeF = token;
 			kontroler.AktualizujKontrolki();
 		}
+
+		private void buttonCertyfikatKSeF_Click(object sender, EventArgs e)
+		{
+			using var nowyKontekst = new Kontekst(Kontekst);
+			using var edytor = new ImportCertyfikatuKSeFEdytor();
+			edytor.SrodowiskoKSeF = Rekord.SrodowiskoKSeF;
+			edytor.NIP = Rekord.NIP;
+			using var okno = new Dialog("Dostęp do KSeF v2", edytor, nowyKontekst);
+			okno.CzyPrzyciskiWidoczne = false;
+			okno.ShowDialog();
+			if (!String.IsNullOrEmpty(edytor.Certyfikat)) Rekord.TokenKSeF = edytor.Certyfikat;
+			kontroler.AktualizujKontrolki();
+		}
 	}
 
 	class KontrahentEdytorBase : Edytor<Kontrahent>

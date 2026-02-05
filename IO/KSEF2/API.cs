@@ -15,6 +15,7 @@ using ProFak.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -89,8 +90,19 @@ class API : IDisposable
 		}
 	}
 
+	public static void ZapomnijAktywnaSesje()
+	{
+		cachedAuth = default;
+	}
+
 	public async Task UwierzytelnijAsync(string nip, string ksefToken, CancellationToken cancellationToken)
 	{
+		if (ksefToken.Length > 120 && ksefToken.StartsWith("MII"))
+		{
+			var certyfikat = new X509Certificate2(Convert.FromBase64String(ksefToken));
+			await UwierzytelnijAsync(nip, certyfikat, cancellationToken);
+			return;
+		}
 		nip = nip.Replace("-", "");
 		if (cachedAuth.nip == nip && cachedAuth.srodowisko == srodowisko && cachedAuth.accessToken.ValidUntil > DateTime.Now.AddMinutes(1))
 		{
@@ -122,6 +134,22 @@ class API : IDisposable
 			cancellationToken);
 		var tokens = await ksefClient.GetAccessTokenAsync(authOperationInfo.AuthenticationToken.Token, cancellationToken);
 		accessToken = tokens.AccessToken;
+		cachedAuth = (accessToken, srodowisko!.Value, nip);
+	}
+
+	public async Task UwierzytelnijAsync(string nip, X509Certificate2 certyfikat, CancellationToken cancellationToken)
+	{
+		nip = nip.Replace("-", "");
+		if (cachedAuth.nip == nip && cachedAuth.srodowisko == srodowisko && cachedAuth.accessToken.ValidUntil > DateTime.Now.AddMinutes(1))
+		{
+			accessToken = cachedAuth.accessToken;
+			return;
+		}
+		await cryptographyService.WarmupAsync(cancellationToken);
+
+		var zadanieDostepu = await PobierzZadanieDostepuDoPodpisuAsync(nip);
+		var podpisanyXml = SignatureService.Sign(zadanieDostepu, certyfikat);
+		await PrzeslijZadanieDostepuAsync(podpisanyXml, cancellationToken);
 		cachedAuth = (accessToken, srodowisko!.Value, nip);
 	}
 

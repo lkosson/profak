@@ -72,6 +72,7 @@ partial class DostepKSeFEdytor : UserControl
 			if (token == null) return;
 
 			Token = token;
+			IO.KSEF2.API.ZapomnijAktywnaSesje();
 			MessageBox.Show("Dostęp do KSeF nadany pomyślnie. Można skasować utworzone pliki.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			ParentForm.Close();
 		}
