@@ -41,6 +41,7 @@
 			buttonCertyfikat = new System.Windows.Forms.Button();
 			buttonKlucz = new System.Windows.Forms.Button();
 			buttonZapisz = new System.Windows.Forms.Button();
+			label6 = new System.Windows.Forms.Label();
 			tableLayoutPanel1.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -61,11 +62,13 @@
 			tableLayoutPanel1.Controls.Add(textBoxHaslo, 1, 5);
 			tableLayoutPanel1.Controls.Add(buttonCertyfikat, 2, 3);
 			tableLayoutPanel1.Controls.Add(buttonKlucz, 2, 4);
-			tableLayoutPanel1.Controls.Add(buttonZapisz, 0, 6);
+			tableLayoutPanel1.Controls.Add(buttonZapisz, 0, 7);
+			tableLayoutPanel1.Controls.Add(label6, 0, 6);
 			tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
 			tableLayoutPanel1.Name = "tableLayoutPanel1";
-			tableLayoutPanel1.RowCount = 7;
+			tableLayoutPanel1.RowCount = 8;
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -73,7 +76,7 @@
 			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			tableLayoutPanel1.Size = new System.Drawing.Size(567, 212);
+			tableLayoutPanel1.Size = new System.Drawing.Size(567, 263);
 			tableLayoutPanel1.TabIndex = 0;
 			// 
 			// label1
@@ -83,9 +86,9 @@
 			label1.Location = new System.Drawing.Point(3, 0);
 			label1.Margin = new System.Windows.Forms.Padding(3, 0, 3, 8);
 			label1.Name = "label1";
-			label1.Size = new System.Drawing.Size(550, 30);
+			label1.Size = new System.Drawing.Size(559, 30);
 			label1.TabIndex = 0;
-			label1.Text = "Aby nadać aplikacji dostęp do KSeF przy użyciu certyfikatu, zaloguj się do Aplikacji Podatnika używając poniższego odnośnika, a następnie wygeneruj nowy certyfikat przeznaczony do uwierzytelniania.";
+			label1.Text = "Aby nadać ProFakowi dostęp do KSeF przy użyciu certyfikatu, zaloguj się do Aplikacji Podatnika używając poniższego odnośnika, a następnie wygeneruj nowy certyfikat przeznaczony do uwierzytelniania.";
 			// 
 			// linkLabelAplikacjaPodatnika
 			// 
@@ -107,15 +110,15 @@
 			label2.Location = new System.Drawing.Point(3, 61);
 			label2.Margin = new System.Windows.Forms.Padding(3, 0, 3, 8);
 			label2.Name = "label2";
-			label2.Size = new System.Drawing.Size(545, 15);
+			label2.Size = new System.Drawing.Size(520, 30);
 			label2.TabIndex = 2;
-			label2.Text = "Załaduj wygenerowany certyfikat i klucz prywatny, a następnie wprowadź hasło do klucza prywatnego.";
+			label2.Text = "Wskaż w poniższych polach pliki z wygenerowanym w Aplikacji Podatnika certyfikatem i kluczem prywatnym oraz wprowadź hasło do klucza prywatnego.";
 			// 
 			// label3
 			// 
 			label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			label3.AutoSize = true;
-			label3.Location = new System.Drawing.Point(3, 92);
+			label3.Location = new System.Drawing.Point(3, 107);
 			label3.Name = "label3";
 			label3.Size = new System.Drawing.Size(85, 15);
 			label3.TabIndex = 3;
@@ -125,7 +128,7 @@
 			// 
 			label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			label4.AutoSize = true;
-			label4.Location = new System.Drawing.Point(3, 123);
+			label4.Location = new System.Drawing.Point(3, 138);
 			label4.Name = "label4";
 			label4.Size = new System.Drawing.Size(128, 15);
 			label4.TabIndex = 3;
@@ -135,7 +138,7 @@
 			// 
 			label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			label5.AutoSize = true;
-			label5.Location = new System.Drawing.Point(3, 153);
+			label5.Location = new System.Drawing.Point(3, 168);
 			label5.Name = "label5";
 			label5.Size = new System.Drawing.Size(139, 15);
 			label5.TabIndex = 3;
@@ -145,7 +148,7 @@
 			// 
 			textBoxCertyfikat.AcceptsReturn = true;
 			textBoxCertyfikat.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			textBoxCertyfikat.Location = new System.Drawing.Point(148, 88);
+			textBoxCertyfikat.Location = new System.Drawing.Point(148, 103);
 			textBoxCertyfikat.Name = "textBoxCertyfikat";
 			textBoxCertyfikat.Size = new System.Drawing.Size(384, 23);
 			textBoxCertyfikat.TabIndex = 4;
@@ -154,7 +157,7 @@
 			// 
 			textBoxKlucz.AcceptsReturn = true;
 			textBoxKlucz.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			textBoxKlucz.Location = new System.Drawing.Point(148, 119);
+			textBoxKlucz.Location = new System.Drawing.Point(148, 134);
 			textBoxKlucz.Name = "textBoxKlucz";
 			textBoxKlucz.Size = new System.Drawing.Size(384, 23);
 			textBoxKlucz.TabIndex = 4;
@@ -163,7 +166,7 @@
 			// 
 			textBoxHaslo.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
 			tableLayoutPanel1.SetColumnSpan(textBoxHaslo, 2);
-			textBoxHaslo.Location = new System.Drawing.Point(148, 149);
+			textBoxHaslo.Location = new System.Drawing.Point(148, 164);
 			textBoxHaslo.Name = "textBoxHaslo";
 			textBoxHaslo.Size = new System.Drawing.Size(416, 23);
 			textBoxHaslo.TabIndex = 4;
@@ -172,7 +175,7 @@
 			// 
 			buttonCertyfikat.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			buttonCertyfikat.AutoSize = true;
-			buttonCertyfikat.Location = new System.Drawing.Point(538, 87);
+			buttonCertyfikat.Location = new System.Drawing.Point(538, 102);
 			buttonCertyfikat.Name = "buttonCertyfikat";
 			buttonCertyfikat.Size = new System.Drawing.Size(26, 25);
 			buttonCertyfikat.TabIndex = 5;
@@ -184,7 +187,7 @@
 			// 
 			buttonKlucz.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			buttonKlucz.AutoSize = true;
-			buttonKlucz.Location = new System.Drawing.Point(538, 118);
+			buttonKlucz.Location = new System.Drawing.Point(538, 133);
 			buttonKlucz.Name = "buttonKlucz";
 			buttonKlucz.Size = new System.Drawing.Size(26, 25);
 			buttonKlucz.TabIndex = 5;
@@ -195,7 +198,7 @@
 			// buttonZapisz
 			// 
 			buttonZapisz.AutoSize = true;
-			buttonZapisz.Location = new System.Drawing.Point(3, 178);
+			buttonZapisz.Location = new System.Drawing.Point(3, 231);
 			buttonZapisz.Name = "buttonZapisz";
 			buttonZapisz.Size = new System.Drawing.Size(59, 25);
 			buttonZapisz.TabIndex = 5;
@@ -203,13 +206,24 @@
 			buttonZapisz.UseVisualStyleBackColor = true;
 			buttonZapisz.Click += buttonZapisz_Click;
 			// 
+			// label6
+			// 
+			label6.AutoSize = true;
+			tableLayoutPanel1.SetColumnSpan(label6, 3);
+			label6.Location = new System.Drawing.Point(3, 190);
+			label6.Margin = new System.Windows.Forms.Padding(3, 0, 3, 8);
+			label6.Name = "label6";
+			label6.Size = new System.Drawing.Size(535, 30);
+			label6.TabIndex = 2;
+			label6.Text = "Po kliknięciu \"Zapisz\" ProFak wczyta podane pliki, a następnie spróbuje uwierzytelnić się przy użyciu certyfikatu w API KSeF.";
+			// 
 			// ImportCertyfikatuKSeFEdytor
 			// 
 			AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			Controls.Add(tableLayoutPanel1);
 			Name = "ImportCertyfikatuKSeFEdytor";
-			Size = new System.Drawing.Size(567, 212);
+			Size = new System.Drawing.Size(567, 263);
 			tableLayoutPanel1.ResumeLayout(false);
 			tableLayoutPanel1.PerformLayout();
 			ResumeLayout(false);
@@ -230,5 +244,6 @@
 		private System.Windows.Forms.Button buttonCertyfikat;
 		private System.Windows.Forms.Button buttonKlucz;
 		private System.Windows.Forms.Button buttonZapisz;
+		private System.Windows.Forms.Label label6;
 	}
 }

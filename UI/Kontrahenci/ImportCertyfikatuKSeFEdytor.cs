@@ -70,36 +70,43 @@ partial class ImportCertyfikatuKSeFEdytor : UserControl
 
 	private void buttonZapisz_Click(object sender, EventArgs e)
 	{
-		if (String.IsNullOrEmpty(textBoxCertyfikat.Text))
+		try
 		{
-			MessageBox.Show("Wskaż plik z certyfikatem dostępowym KSeF.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-			return;
+			if (String.IsNullOrEmpty(textBoxCertyfikat.Text))
+			{
+				MessageBox.Show("Wskaż plik z certyfikatem dostępowym KSeF.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+
+			if (String.IsNullOrEmpty(textBoxKlucz.Text))
+			{
+				MessageBox.Show("Wskaż plik z kluczem prywatnym.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+
+			var plikCertyfikatu = textBoxCertyfikat.Text;
+			var plikKlucza = textBoxKlucz.Text;
+			if (!plikCertyfikatu.StartsWith("-----")) plikCertyfikatu = File.ReadAllText(plikCertyfikatu);
+			if (!plikKlucza.StartsWith("-----")) plikKlucza = File.ReadAllText(plikKlucza);
+
+			var certyfikat = X509CertificateLoaderExtensions.LoadCertificate(Encoding.UTF8.GetBytes(plikCertyfikatu));
+			var polaczonyCertyfikat = X509CertificateLoaderExtensions.MergeWithPemKey(certyfikat, plikKlucza, textBoxHaslo.Text);
+			var blobCertyfikatu = polaczonyCertyfikat.Export(System.Security.Cryptography.X509Certificates.X509ContentType.Pkcs12);
+
+			OknoPostepu.Uruchom(async cancellationToken =>
+			{
+				IO.KSEF2.API.ZapomnijAktywnaSesje();
+				using var api = new IO.KSEF2.API(SrodowiskoKSeF);
+				await api.UwierzytelnijAsync(NIP, polaczonyCertyfikat, cancellationToken);
+			});
+
+			Certyfikat = Convert.ToBase64String(blobCertyfikatu);
+			MessageBox.Show("Certyfikat zaimportowany poprawnie. Możesz skasować pliki certyfikatu i klucza prywatnego.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			ParentForm.Close();
 		}
-
-		if (String.IsNullOrEmpty(textBoxKlucz.Text))
+		catch (Exception exc)
 		{
-			MessageBox.Show("Wskaż plik z kluczem prywatnym.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-			return;
+			OknoBledu.Pokaz(exc);
 		}
-
-		var plikCertyfikatu = textBoxCertyfikat.Text;
-		var plikKlucza = textBoxKlucz.Text;
-		if (!plikCertyfikatu.StartsWith("-----")) plikCertyfikatu = File.ReadAllText(plikCertyfikatu);
-		if (!plikKlucza.StartsWith("-----")) plikKlucza = File.ReadAllText(plikKlucza);
-
-		var certyfikat = X509CertificateLoaderExtensions.LoadCertificate(Encoding.UTF8.GetBytes(plikCertyfikatu));
-		var polaczonyCertyfikat = X509CertificateLoaderExtensions.MergeWithPemKey(certyfikat, plikKlucza, textBoxHaslo.Text);
-		var blobCertyfikatu = polaczonyCertyfikat.Export(System.Security.Cryptography.X509Certificates.X509ContentType.Pkcs12);
-		Certyfikat = Convert.ToBase64String(blobCertyfikatu);
-
-		OknoPostepu.Uruchom(async cancellationToken =>
-		{
-			IO.KSEF2.API.ZapomnijAktywnaSesje();
-			using var api = new IO.KSEF2.API(SrodowiskoKSeF);
-			await api.UwierzytelnijAsync(NIP, polaczonyCertyfikat, cancellationToken);
-		});
-
-		MessageBox.Show("Certyfikat zaimportowany poprawnie. Możesz skasować pliki certyfikatu i klucza prywatnego.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
-		ParentForm.Close();
 	}
 }
