@@ -33,7 +33,7 @@ class API : IDisposable
 
 	private TokenInfo accessToken;
 
-	private static (TokenInfo accessToken, SrodowiskoKSeF srodowisko, string nip) cachedAuth;
+	private static (TokenInfo accessToken, TokenInfo refreshToken, SrodowiskoKSeF srodowisko, string nip) cachedAuth;
 
 	public API(SrodowiskoKSeF srodowisko)
 	{
@@ -95,6 +95,28 @@ class API : IDisposable
 		cachedAuth = default;
 	}
 
+	private async Task<bool> UzyjZapisanejSesjiJesliAktywna(string nip, CancellationToken cancellationToken)
+	{
+		if (cachedAuth.nip != nip) return false;
+		if (cachedAuth.srodowisko != srodowisko) return false;
+
+		if (cachedAuth.accessToken.ValidUntil > DateTime.Now.AddMinutes(1))
+		{
+			accessToken = cachedAuth.accessToken;
+			return true;
+		}
+
+		if (cachedAuth.refreshToken.ValidUntil > DateTime.Now.AddMinutes(1))
+		{
+			var refreshResp = await ksefClient.RefreshAccessTokenAsync(cachedAuth.refreshToken.Token, cancellationToken);
+			accessToken = refreshResp.AccessToken;
+			cachedAuth.accessToken = accessToken;
+			return true;
+		}
+
+		return false;
+	}
+
 	public async Task UwierzytelnijAsync(string nip, string ksefToken, CancellationToken cancellationToken)
 	{
 		if (ksefToken.Length > 120 && ksefToken.StartsWith("MII"))
@@ -104,11 +126,7 @@ class API : IDisposable
 			return;
 		}
 		nip = nip.Replace("-", "");
-		if (cachedAuth.nip == nip && cachedAuth.srodowisko == srodowisko && cachedAuth.accessToken.ValidUntil > DateTime.Now.AddMinutes(1))
-		{
-			accessToken = cachedAuth.accessToken;
-			return;
-		}
+		if (await UzyjZapisanejSesjiJesliAktywna(nip, cancellationToken)) return;
 		await cryptographyService.WarmupAsync(cancellationToken);
 		var challenge = await ksefClient.GetAuthChallengeAsync(cancellationToken);
 		var timestamp = challenge.Timestamp.ToUnixTimeMilliseconds();
@@ -134,23 +152,20 @@ class API : IDisposable
 			cancellationToken);
 		var tokens = await ksefClient.GetAccessTokenAsync(authOperationInfo.AuthenticationToken.Token, cancellationToken);
 		accessToken = tokens.AccessToken;
-		cachedAuth = (accessToken, srodowisko!.Value, nip);
+		cachedAuth = (accessToken, tokens.RefreshToken, srodowisko!.Value, nip);
 	}
 
 	public async Task UwierzytelnijAsync(string nip, X509Certificate2 certyfikat, CancellationToken cancellationToken)
 	{
 		nip = nip.Replace("-", "");
-		if (cachedAuth.nip == nip && cachedAuth.srodowisko == srodowisko && cachedAuth.accessToken.ValidUntil > DateTime.Now.AddMinutes(1))
-		{
-			accessToken = cachedAuth.accessToken;
-			return;
-		}
+		if (await UzyjZapisanejSesjiJesliAktywna(nip, cancellationToken)) return;
+
 		await cryptographyService.WarmupAsync(cancellationToken);
 
 		var zadanieDostepu = await PobierzZadanieDostepuDoPodpisuAsync(nip);
 		var podpisanyXml = SignatureService.Sign(zadanieDostepu, certyfikat);
-		await PrzeslijZadanieDostepuAsync(podpisanyXml, cancellationToken);
-		cachedAuth = (accessToken, srodowisko!.Value, nip);
+		var (accessToken, refreshToken) = await PrzeslijZadanieDostepuAsync(podpisanyXml, cancellationToken);
+		cachedAuth = (accessToken, refreshToken, srodowisko!.Value, nip);
 	}
 
 	public async Task<string> PobierzZadanieDostepuDoPodpisuAsync(string nip)
@@ -179,7 +194,7 @@ class API : IDisposable
 		return signedXml;
 	}
 
-	public async Task PrzeslijZadanieDostepuAsync(string podpisanyXml, CancellationToken cancellationToken)
+	public async Task<(TokenInfo accessToken, TokenInfo refreshToken)> PrzeslijZadanieDostepuAsync(string podpisanyXml, CancellationToken cancellationToken)
 	{
 		var authOperationInfo = await ksefClient.SubmitXadesAuthRequestAsync(podpisanyXml, verifyCertificateChain: false, cancellationToken: cancellationToken);
 		await CzekajNaWynikAsync(() => ksefClient.GetAuthStatusAsync(authOperationInfo.ReferenceNumber, authOperationInfo.AuthenticationToken.Token, cancellationToken: cancellationToken),
@@ -187,6 +202,7 @@ class API : IDisposable
 			cancellationToken);
 		var tokens = await ksefClient.GetAccessTokenAsync(authOperationInfo.AuthenticationToken.Token);
 		accessToken = tokens.AccessToken;
+		return (tokens.AccessToken, tokens.RefreshToken);
 	}
 
 	public async Task<string> UtworzTokenAsync(CancellationToken cancellationToken)
