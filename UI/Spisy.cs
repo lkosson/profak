@@ -167,6 +167,7 @@ namespace ProFak.UI
 			var spis = new PozycjaFakturySpis();
 			return Utworz(spis,
 				new DodajPozycjeFakturyAkcja(pozycja => pozycja.FakturaRef = spis.FakturaRef),
+				new PozycjaFakturyKlonujAkcja(),
 				new EdytujPozycjeFakturyAkcja(),
 				new UsunPozycjeFakturyAkcja(),
 				new PrzeladujAkcja<PozycjaFaktury>()

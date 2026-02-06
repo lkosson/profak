@@ -353,27 +353,9 @@ namespace ProFak.DB
 			{
 				if (staraPozycja.CzyPrzedKorekta) continue;
 
-				var nowaPozycja = new PozycjaFaktury();
+				var nowaPozycja = staraPozycja.PrzygotujPodobna();
 				nowaPozycja.LP = nowePozycje.Count + 1;
 				nowaPozycja.FakturaId = nowaFaktura.Id;
-				nowaPozycja.TowarId = staraPozycja.TowarId;
-				nowaPozycja.Opis = staraPozycja.Opis;
-				nowaPozycja.CenaNetto = staraPozycja.CenaNetto;
-				nowaPozycja.CenaVat = staraPozycja.CenaVat;
-				nowaPozycja.CenaBrutto = staraPozycja.CenaBrutto;
-				nowaPozycja.Ilosc = staraPozycja.Ilosc;
-				nowaPozycja.WartoscNetto = staraPozycja.WartoscNetto;
-				nowaPozycja.WartoscVat = staraPozycja.WartoscVat;
-				nowaPozycja.WartoscBrutto = staraPozycja.WartoscBrutto;
-				nowaPozycja.CzyWedlugCenBrutto = staraPozycja.CzyWedlugCenBrutto;
-				nowaPozycja.CzyWartosciReczne = staraPozycja.CzyWartosciReczne;
-				nowaPozycja.StawkaVatRef = staraPozycja.StawkaVatRef;
-				nowaPozycja.JednostkaMiaryRef = staraPozycja.JednostkaMiaryRef;
-				nowaPozycja.GTU = staraPozycja.GTU;
-				nowaPozycja.StawkaRyczaltu = staraPozycja.StawkaRyczaltu;
-				nowaPozycja.RabatProcent = staraPozycja.RabatProcent;
-				nowaPozycja.RabatCena = staraPozycja.RabatCena;
-				nowaPozycja.RabatWartosc = staraPozycja.RabatWartosc;
 				nowePozycje.Add(nowaPozycja);
 			}
 

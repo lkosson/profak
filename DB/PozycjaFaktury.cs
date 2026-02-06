@@ -97,5 +97,30 @@ namespace ProFak.DB
 				WartoscBrutto = (WartoscNetto + WartoscVat).Zaokragl();
 			}
 		}
+
+		public PozycjaFaktury PrzygotujPodobna()
+		{
+			var nowaPozycja = new PozycjaFaktury();
+			nowaPozycja.FakturaId = FakturaId;
+			nowaPozycja.TowarId = TowarId;
+			nowaPozycja.Opis = Opis;
+			nowaPozycja.CenaNetto = CenaNetto;
+			nowaPozycja.CenaVat = CenaVat;
+			nowaPozycja.CenaBrutto = CenaBrutto;
+			nowaPozycja.Ilosc = Ilosc;
+			nowaPozycja.WartoscNetto = WartoscNetto;
+			nowaPozycja.WartoscVat = WartoscVat;
+			nowaPozycja.WartoscBrutto = WartoscBrutto;
+			nowaPozycja.CzyWedlugCenBrutto = CzyWedlugCenBrutto;
+			nowaPozycja.CzyWartosciReczne = CzyWartosciReczne;
+			nowaPozycja.StawkaVatRef = StawkaVatRef;
+			nowaPozycja.JednostkaMiaryRef = JednostkaMiaryRef;
+			nowaPozycja.GTU = GTU;
+			nowaPozycja.StawkaRyczaltu = StawkaRyczaltu;
+			nowaPozycja.RabatProcent = RabatProcent;
+			nowaPozycja.RabatCena = RabatCena;
+			nowaPozycja.RabatWartosc = RabatWartosc;
+			return nowaPozycja;
+		}
 	}
 }
