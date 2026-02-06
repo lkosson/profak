@@ -65,7 +65,11 @@ namespace ProFak.DB
 		public static void Przygotuj()
 		{
 			WykonajAutomatycznaKopieBazy();
+#if SQLSERVER
+			using var baza = new DB.BazaSqlServer();
+#else
 			using var baza = new DB.Baza();
+#endif
 			baza.Database.Migrate();
 			DaneStartowe.Zaladuj(baza);
 		}
@@ -144,6 +148,9 @@ namespace ProFak.DB
 
 		private static string PrzygotujParametryPolaczenia()
 		{
+#if SQLSERVER
+			return Sciezka;
+#else
 			string polaczenie;
 			if (Sciezka == null)
 			{
@@ -159,12 +166,17 @@ namespace ProFak.DB
 				polaczenie = $"Data Source={Sciezka}";
 			}
 			return polaczenie;
+#endif
 		}
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			base.OnConfiguring(optionsBuilder);
+#if SQLSERVER
+			optionsBuilder.UseSqlServer(PrzygotujParametryPolaczenia());
+#else
 			optionsBuilder.UseSqlite(PrzygotujParametryPolaczenia());
+#endif
 #if LOG_SQL
 			optionsBuilder.EnableSensitiveDataLogging();
 			optionsBuilder.LogTo((evt, level) => evt == RelationalEventId.CommandExecuting || evt == RelationalEventId.CommandExecuted, LogCommand);
@@ -289,4 +301,9 @@ namespace ProFak.DB
 			SqliteConnection.ClearAllPools();
 		}
 	}
+#if SQLSERVER
+	class BazaSqlServer : Baza
+	{
+	}
+#endif
 }

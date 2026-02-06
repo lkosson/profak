@@ -25,7 +25,9 @@ namespace ProFak
 				Application.SetCompatibleTextRenderingDefault(false);
 				CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("pl-PL");
 				Baza.UstalSciezkeBazy();
+#if !SQLSERVER
 				if (!PierwszyStartBaza.Uruchom()) return;
+#endif
 				Baza.Przygotuj();
 
 				if (args.Length > 0)
