@@ -326,7 +326,7 @@ namespace ProFak.UI
 			stan.CzyAktywna = treeNode.IsSelected;
 			if (stan.CzyAktywna)
 			{
-				var aktywne = kontekst.Baza.StanyMenu.Where(e => e.CzyAktywna);
+				var aktywne = kontekst.Baza.StanyMenu.Where(e => e.CzyAktywna).ToList();
 				foreach (var aktywna in aktywne)
 				{
 					aktywna.CzyAktywna = false;
