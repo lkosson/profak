@@ -120,10 +120,10 @@ class Generator
 			: throw new ApplicationException("Nieobsługiwany rodzaj faktury: " + dbFaktura.RodzajFmt);
 		if (dbFaktura.CzyTP) { ksefFaktura.Fa.TP = TWybor1.Item1; }
 		ksefFaktura.Fa.Platnosc = new FakturaFaPlatnosc();
-		if (dbFaktura.PozostaloDoZaplaty == 0)
+		if (dbFaktura.PozostaloDoZaplaty == 0 && dbFaktura.Wplaty.Count > 0)
 		{
 			ksefFaktura.Fa.Platnosc.Zaplacono = TWybor1.Item1;
-			if (dbFaktura.Wplaty.Count > 0) ksefFaktura.Fa.Platnosc.DataZaplaty = dbFaktura.Wplaty.Last().Data;
+			ksefFaktura.Fa.Platnosc.DataZaplaty = dbFaktura.Wplaty.Last().Data;
 		}
 		else if (dbFaktura.PozostaloDoZaplaty < dbFaktura.RazemBrutto)
 		{
@@ -131,7 +131,7 @@ class Generator
 			foreach (var wplata in dbFaktura.Wplaty)
 				ksefFaktura.Fa.Platnosc.ZaplataCzesciowa.Add(new FakturaFaPlatnoscZaplataCzesciowa { KwotaZaplatyCzesciowej = wplata.Kwota, DataZaplatyCzesciowej = wplata.Data });
 		}
-		ksefFaktura.Fa.Platnosc.TerminPlatnosci.Add(new FakturaFaPlatnoscTerminPlatnosci { Termin = dbFaktura.TerminPlatnosci });
+		if (dbFaktura.PozostaloDoZaplaty > 0) ksefFaktura.Fa.Platnosc.TerminPlatnosci.Add(new FakturaFaPlatnoscTerminPlatnosci { Termin = dbFaktura.TerminPlatnosci });
 		if ((dbFaktura.OpisSposobuPlatnosci ?? "").Contains("gotówk", StringComparison.InvariantCultureIgnoreCase)) ksefFaktura.Fa.Platnosc.FormaPlatnosci = TFormaPlatnosci.Item1;
 		else if ((dbFaktura.OpisSposobuPlatnosci ?? "").Contains("karta", StringComparison.InvariantCultureIgnoreCase)) ksefFaktura.Fa.Platnosc.FormaPlatnosci = TFormaPlatnosci.Item2;
 		else if ((dbFaktura.OpisSposobuPlatnosci ?? "").Contains("kredyt", StringComparison.InvariantCultureIgnoreCase)) ksefFaktura.Fa.Platnosc.FormaPlatnosci = TFormaPlatnosci.Item5;
