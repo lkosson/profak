@@ -23,6 +23,7 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.AdresRejestrowy).HasDefaultValue("");
 			builder.Property(e => e.AdresKorespondencyjny).HasDefaultValue("");
 			builder.Property(e => e.RachunekBankowy).HasDefaultValue("");
+			builder.Property(e => e.NazwaBanku).HasDefaultValue("");
 			builder.Property(e => e.Telefon).HasDefaultValue("");
 			builder.Property(e => e.EMail).HasDefaultValue("");
 			builder.Property(e => e.UwagiPubliczne).HasDefaultValue("");

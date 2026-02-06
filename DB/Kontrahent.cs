@@ -14,6 +14,7 @@ namespace ProFak.DB
 		public string AdresRejestrowy { get; set; } = "";
 		public string AdresKorespondencyjny { get; set; } = "";
 		public string RachunekBankowy { get; set; } = "";
+		public string NazwaBanku { get; set; } = "";
 		public string Telefon { get; set; } = "";
 		public string EMail { get; set; } = "";
 		public string UwagiWewnetrzne { get; set; } = "";

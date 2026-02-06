@@ -24,6 +24,7 @@ namespace ProFak.DB
 		public string NazwaNabywcy { get; set; } = "";
 		public string DaneNabywcy { get; set; } = "";
 		public string RachunekBankowy { get; set; } = "";
+		public string NazwaBanku { get; set; } = "";
 		public string UwagiPubliczne { get; set; } = "";
 		public string UwagiWewnetrzne { get; set; } = "";
 		public decimal RazemNetto { get; set; }
