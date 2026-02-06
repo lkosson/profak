@@ -656,7 +656,7 @@ namespace ProFak.UI
 			// 
 			label15.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			label15.AutoSize = true;
-			label15.Location = new System.Drawing.Point(71, 158);
+			label15.Location = new System.Drawing.Point(71, 155);
 			label15.Name = "label15";
 			label15.Size = new System.Drawing.Size(66, 15);
 			label15.TabIndex = 0;
@@ -665,9 +665,9 @@ namespace ProFak.UI
 			// textBoxTokenKSeF
 			// 
 			textBoxTokenKSeF.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			textBoxTokenKSeF.Location = new System.Drawing.Point(220, 154);
+			textBoxTokenKSeF.Location = new System.Drawing.Point(220, 151);
 			textBoxTokenKSeF.Name = "textBoxTokenKSeF";
-			textBoxTokenKSeF.Size = new System.Drawing.Size(329, 23);
+			textBoxTokenKSeF.Size = new System.Drawing.Size(335, 23);
 			textBoxTokenKSeF.TabIndex = 7;
 			// 
 			// comboBoxSrodowiskoKSeF
@@ -685,7 +685,8 @@ namespace ProFak.UI
 			tableLayoutPanel3.SetColumnSpan(flowLayoutPanel1, 2);
 			flowLayoutPanel1.Controls.Add(buttonKSeFAuth);
 			flowLayoutPanel1.Controls.Add(buttonCertyfikatKSeF);
-			flowLayoutPanel1.Location = new System.Drawing.Point(555, 150);
+			flowLayoutPanel1.Location = new System.Drawing.Point(558, 147);
+			flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
 			flowLayoutPanel1.Name = "flowLayoutPanel1";
 			flowLayoutPanel1.Size = new System.Drawing.Size(222, 31);
 			flowLayoutPanel1.TabIndex = 9;
