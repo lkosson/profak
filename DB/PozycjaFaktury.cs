@@ -85,6 +85,7 @@ namespace ProFak.DB
 				CenaNetto = (CenaBrutto * 100m / (100 + procentVat)).Zaokragl();
 				CenaVat = (CenaBrutto - CenaNetto).Zaokragl();
 				WartoscBrutto = (Ilosc * CenaBrutto * (100 - RabatProcent) / 100m - RabatCena * Ilosc - RabatWartosc).Zaokragl();
+				if (WartoscBrutto * Math.Sign(Ilosc) < 0) WartoscBrutto = 0;
 				WartoscNetto = (WartoscBrutto * 100m / (100 + procentVat)).Zaokragl();
 				WartoscVat = (WartoscBrutto - WartoscNetto).Zaokragl();
 			}
@@ -93,6 +94,7 @@ namespace ProFak.DB
 				CenaVat = (CenaNetto * procentVat / 100).Zaokragl();
 				CenaBrutto = (CenaNetto + CenaVat).Zaokragl();
 				WartoscNetto = (Ilosc * CenaNetto * (100 - RabatProcent) / 100m - RabatCena * Ilosc - RabatWartosc).Zaokragl();
+				if (WartoscNetto * Math.Sign(Ilosc) < 0) WartoscNetto = 0;
 				WartoscVat = (WartoscNetto * procentVat / 100).Zaokragl();
 				WartoscBrutto = (WartoscNetto + WartoscVat).Zaokragl();
 			}
