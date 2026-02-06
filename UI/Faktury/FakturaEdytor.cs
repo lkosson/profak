@@ -55,6 +55,7 @@ namespace ProFak.UI
 
 			kontroler.Powiazanie(comboBoxSposobPlatnosci, faktura => faktura.OpisSposobuPlatnosci);
 			kontroler.Powiazanie(textBoxRachunekBankowy, faktura => faktura.RachunekBankowy);
+			kontroler.Powiazanie(textBoxNazwaBanku, faktura => faktura.NazwaBanku);
 
 			kontroler.Powiazanie(numericUpDownNetto, faktura => faktura.RazemNetto);
 			kontroler.Powiazanie(numericUpDownVat, faktura => faktura.RazemVat);

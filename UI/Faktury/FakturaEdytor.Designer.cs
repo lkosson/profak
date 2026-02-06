@@ -84,6 +84,7 @@ namespace ProFak.UI
 			textBoxKSeFXML = new System.Windows.Forms.TextBox();
 			label21 = new System.Windows.Forms.Label();
 			textBoxNumerKSeF = new System.Windows.Forms.TextBox();
+			linkLabelKSeFUrl = new System.Windows.Forms.LinkLabel();
 			tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			textBoxNumer = new System.Windows.Forms.TextBox();
 			labelRodzaj = new System.Windows.Forms.Label();
@@ -103,6 +104,7 @@ namespace ProFak.UI
 			dateTimePickerTerminPlatnosci = new System.Windows.Forms.DateTimePickerFix();
 			comboBoxSposobPlatnosci = new System.Windows.Forms.ComboBoxFix();
 			buttonSposobPlatnosci = new ButtonDPI();
+			textBoxNazwaBanku = new System.Windows.Forms.TextBox();
 			groupBox1 = new System.Windows.Forms.GroupBox();
 			tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			label3 = new System.Windows.Forms.Label();
@@ -119,7 +121,6 @@ namespace ProFak.UI
 			numericUpDownNetto = new NumericUpDownDPI();
 			numericUpDownVat = new NumericUpDownDPI();
 			numericUpDownBrutto = new NumericUpDownDPI();
-			linkLabelKSeFUrl = new System.Windows.Forms.LinkLabel();
 			((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
 			tableLayoutPanel.SuspendLayout();
 			tableLayoutPanelKontrahenci.SuspendLayout();
@@ -819,6 +820,16 @@ namespace ProFak.UI
 			textBoxNumerKSeF.Size = new System.Drawing.Size(226, 23);
 			textBoxNumerKSeF.TabIndex = 1;
 			// 
+			// linkLabelKSeFUrl
+			// 
+			linkLabelKSeFUrl.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			linkLabelKSeFUrl.AutoSize = true;
+			linkLabelKSeFUrl.Location = new System.Drawing.Point(422, 8);
+			linkLabelKSeFUrl.Name = "linkLabelKSeFUrl";
+			linkLabelKSeFUrl.Size = new System.Drawing.Size(0, 15);
+			linkLabelKSeFUrl.TabIndex = 6;
+			linkLabelKSeFUrl.LinkClicked += linkLabelKSeFUrl_LinkClicked;
+			// 
 			// tableLayoutPanel1
 			// 
 			tableLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
@@ -937,8 +948,8 @@ namespace ProFak.UI
 			tableLayoutPanelDatyKwoty.AutoSize = true;
 			tableLayoutPanelDatyKwoty.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			tableLayoutPanelDatyKwoty.ColumnCount = 3;
-			tableLayoutPanelDatyKwoty.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-			tableLayoutPanelDatyKwoty.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+			tableLayoutPanelDatyKwoty.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+			tableLayoutPanelDatyKwoty.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			tableLayoutPanelDatyKwoty.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
 			tableLayoutPanelDatyKwoty.Controls.Add(groupBox6, 1, 0);
 			tableLayoutPanelDatyKwoty.Controls.Add(groupBox1, 0, 0);
@@ -956,9 +967,9 @@ namespace ProFak.UI
 			groupBox6.AutoSize = true;
 			groupBox6.Controls.Add(tableLayoutPanel9);
 			groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
-			groupBox6.Location = new System.Drawing.Point(360, 3);
+			groupBox6.Location = new System.Drawing.Point(271, 3);
 			groupBox6.Name = "groupBox6";
-			groupBox6.Size = new System.Drawing.Size(351, 115);
+			groupBox6.Size = new System.Drawing.Size(441, 115);
 			groupBox6.TabIndex = 40;
 			groupBox6.TabStop = false;
 			groupBox6.Text = "Płatność";
@@ -967,7 +978,8 @@ namespace ProFak.UI
 			// 
 			tableLayoutPanel9.AutoSize = true;
 			tableLayoutPanel9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			tableLayoutPanel9.ColumnCount = 3;
+			tableLayoutPanel9.ColumnCount = 4;
+			tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -977,7 +989,8 @@ namespace ProFak.UI
 			tableLayoutPanel9.Controls.Add(textBoxRachunekBankowy, 1, 2);
 			tableLayoutPanel9.Controls.Add(dateTimePickerTerminPlatnosci, 1, 1);
 			tableLayoutPanel9.Controls.Add(comboBoxSposobPlatnosci, 1, 0);
-			tableLayoutPanel9.Controls.Add(buttonSposobPlatnosci, 2, 0);
+			tableLayoutPanel9.Controls.Add(buttonSposobPlatnosci, 3, 0);
+			tableLayoutPanel9.Controls.Add(textBoxNazwaBanku, 2, 2);
 			tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
 			tableLayoutPanel9.Location = new System.Drawing.Point(3, 19);
 			tableLayoutPanel9.Name = "tableLayoutPanel9";
@@ -986,7 +999,7 @@ namespace ProFak.UI
 			tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			tableLayoutPanel9.Size = new System.Drawing.Size(345, 93);
+			tableLayoutPanel9.Size = new System.Drawing.Size(435, 93);
 			tableLayoutPanel9.TabIndex = 0;
 			// 
 			// label12
@@ -1022,41 +1035,51 @@ namespace ProFak.UI
 			// textBoxRachunekBankowy
 			// 
 			textBoxRachunekBankowy.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			tableLayoutPanel9.SetColumnSpan(textBoxRachunekBankowy, 2);
 			textBoxRachunekBankowy.Location = new System.Drawing.Point(106, 63);
 			textBoxRachunekBankowy.Name = "textBoxRachunekBankowy";
-			textBoxRachunekBankowy.Size = new System.Drawing.Size(236, 23);
-			textBoxRachunekBankowy.TabIndex = 43;
+			textBoxRachunekBankowy.Size = new System.Drawing.Size(201, 23);
+			textBoxRachunekBankowy.TabIndex = 3;
 			// 
 			// dateTimePickerTerminPlatnosci
 			// 
 			dateTimePickerTerminPlatnosci.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			tableLayoutPanel9.SetColumnSpan(dateTimePickerTerminPlatnosci, 2);
+			tableLayoutPanel9.SetColumnSpan(dateTimePickerTerminPlatnosci, 3);
 			dateTimePickerTerminPlatnosci.Location = new System.Drawing.Point(106, 34);
 			dateTimePickerTerminPlatnosci.Name = "dateTimePickerTerminPlatnosci";
-			dateTimePickerTerminPlatnosci.Size = new System.Drawing.Size(236, 23);
-			dateTimePickerTerminPlatnosci.TabIndex = 42;
+			dateTimePickerTerminPlatnosci.Size = new System.Drawing.Size(326, 23);
+			dateTimePickerTerminPlatnosci.TabIndex = 2;
 			// 
 			// comboBoxSposobPlatnosci
 			// 
 			comboBoxSposobPlatnosci.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			tableLayoutPanel9.SetColumnSpan(comboBoxSposobPlatnosci, 2);
 			comboBoxSposobPlatnosci.FormattingEnabled = true;
 			comboBoxSposobPlatnosci.Location = new System.Drawing.Point(106, 4);
 			comboBoxSposobPlatnosci.Name = "comboBoxSposobPlatnosci";
-			comboBoxSposobPlatnosci.Size = new System.Drawing.Size(204, 23);
-			comboBoxSposobPlatnosci.TabIndex = 40;
+			comboBoxSposobPlatnosci.Size = new System.Drawing.Size(294, 23);
+			comboBoxSposobPlatnosci.TabIndex = 0;
 			// 
 			// buttonSposobPlatnosci
 			// 
 			buttonSposobPlatnosci.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			buttonSposobPlatnosci.AutoSize = true;
-			buttonSposobPlatnosci.Location = new System.Drawing.Point(316, 3);
+			buttonSposobPlatnosci.Location = new System.Drawing.Point(406, 3);
 			buttonSposobPlatnosci.Name = "buttonSposobPlatnosci";
 			buttonSposobPlatnosci.Size = new System.Drawing.Size(26, 25);
-			buttonSposobPlatnosci.TabIndex = 41;
+			buttonSposobPlatnosci.TabIndex = 1;
 			buttonSposobPlatnosci.Text = "...";
 			toolTip.SetToolTip(buttonSposobPlatnosci, "Wyświetl pełną listę");
 			buttonSposobPlatnosci.UseVisualStyleBackColor = true;
+			// 
+			// textBoxNazwaBanku
+			// 
+			textBoxNazwaBanku.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			tableLayoutPanel9.SetColumnSpan(textBoxNazwaBanku, 2);
+			textBoxNazwaBanku.Location = new System.Drawing.Point(313, 63);
+			textBoxNazwaBanku.Name = "textBoxNazwaBanku";
+			textBoxNazwaBanku.PlaceholderText = "Nazwa banku";
+			textBoxNazwaBanku.Size = new System.Drawing.Size(119, 23);
+			textBoxNazwaBanku.TabIndex = 4;
 			// 
 			// groupBox1
 			// 
@@ -1065,7 +1088,7 @@ namespace ProFak.UI
 			groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			groupBox1.Location = new System.Drawing.Point(3, 3);
 			groupBox1.Name = "groupBox1";
-			groupBox1.Size = new System.Drawing.Size(351, 115);
+			groupBox1.Size = new System.Drawing.Size(262, 115);
 			groupBox1.TabIndex = 30;
 			groupBox1.TabStop = false;
 			groupBox1.Text = "Daty";
@@ -1091,7 +1114,7 @@ namespace ProFak.UI
 			tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			tableLayoutPanel4.Size = new System.Drawing.Size(345, 93);
+			tableLayoutPanel4.Size = new System.Drawing.Size(256, 93);
 			tableLayoutPanel4.TabIndex = 0;
 			// 
 			// label3
@@ -1129,7 +1152,7 @@ namespace ProFak.UI
 			dateTimePickerDataWystawienia.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
 			dateTimePickerDataWystawienia.Location = new System.Drawing.Point(119, 3);
 			dateTimePickerDataWystawienia.Name = "dateTimePickerDataWystawienia";
-			dateTimePickerDataWystawienia.Size = new System.Drawing.Size(223, 23);
+			dateTimePickerDataWystawienia.Size = new System.Drawing.Size(134, 23);
 			dateTimePickerDataWystawienia.TabIndex = 30;
 			// 
 			// dateTimePickerDataSprzedazy
@@ -1137,7 +1160,7 @@ namespace ProFak.UI
 			dateTimePickerDataSprzedazy.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
 			dateTimePickerDataSprzedazy.Location = new System.Drawing.Point(119, 32);
 			dateTimePickerDataSprzedazy.Name = "dateTimePickerDataSprzedazy";
-			dateTimePickerDataSprzedazy.Size = new System.Drawing.Size(223, 23);
+			dateTimePickerDataSprzedazy.Size = new System.Drawing.Size(134, 23);
 			dateTimePickerDataSprzedazy.TabIndex = 31;
 			// 
 			// dateTimePickerDataWprowadzenia
@@ -1145,7 +1168,7 @@ namespace ProFak.UI
 			dateTimePickerDataWprowadzenia.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
 			dateTimePickerDataWprowadzenia.Location = new System.Drawing.Point(119, 61);
 			dateTimePickerDataWprowadzenia.Name = "dateTimePickerDataWprowadzenia";
-			dateTimePickerDataWprowadzenia.Size = new System.Drawing.Size(223, 23);
+			dateTimePickerDataWprowadzenia.Size = new System.Drawing.Size(134, 23);
 			dateTimePickerDataWprowadzenia.TabIndex = 32;
 			// 
 			// groupBox7
@@ -1153,9 +1176,9 @@ namespace ProFak.UI
 			groupBox7.AutoSize = true;
 			groupBox7.Controls.Add(tableLayoutPanel3);
 			groupBox7.Dock = System.Windows.Forms.DockStyle.Fill;
-			groupBox7.Location = new System.Drawing.Point(717, 3);
+			groupBox7.Location = new System.Drawing.Point(718, 3);
 			groupBox7.Name = "groupBox7";
-			groupBox7.Size = new System.Drawing.Size(174, 115);
+			groupBox7.Size = new System.Drawing.Size(173, 115);
 			groupBox7.TabIndex = 41;
 			groupBox7.TabStop = false;
 			groupBox7.Text = "Razem";
@@ -1180,7 +1203,7 @@ namespace ProFak.UI
 			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			tableLayoutPanel3.Size = new System.Drawing.Size(168, 93);
+			tableLayoutPanel3.Size = new System.Drawing.Size(167, 93);
 			tableLayoutPanel3.TabIndex = 0;
 			// 
 			// label16
@@ -1222,7 +1245,7 @@ namespace ProFak.UI
 			numericUpDownNetto.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
 			numericUpDownNetto.Minimum = new decimal(new int[] { 999999999, 0, 0, int.MinValue });
 			numericUpDownNetto.Name = "numericUpDownNetto";
-			numericUpDownNetto.Size = new System.Drawing.Size(116, 23);
+			numericUpDownNetto.Size = new System.Drawing.Size(115, 23);
 			numericUpDownNetto.TabIndex = 50;
 			numericUpDownNetto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
@@ -1235,7 +1258,7 @@ namespace ProFak.UI
 			numericUpDownVat.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
 			numericUpDownVat.Minimum = new decimal(new int[] { 999999999, 0, 0, int.MinValue });
 			numericUpDownVat.Name = "numericUpDownVat";
-			numericUpDownVat.Size = new System.Drawing.Size(116, 23);
+			numericUpDownVat.Size = new System.Drawing.Size(115, 23);
 			numericUpDownVat.TabIndex = 51;
 			numericUpDownVat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
@@ -1248,19 +1271,9 @@ namespace ProFak.UI
 			numericUpDownBrutto.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
 			numericUpDownBrutto.Minimum = new decimal(new int[] { 999999999, 0, 0, int.MinValue });
 			numericUpDownBrutto.Name = "numericUpDownBrutto";
-			numericUpDownBrutto.Size = new System.Drawing.Size(116, 23);
+			numericUpDownBrutto.Size = new System.Drawing.Size(115, 23);
 			numericUpDownBrutto.TabIndex = 52;
 			numericUpDownBrutto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
-			// linkLabelKSeFUrl
-			// 
-			linkLabelKSeFUrl.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			linkLabelKSeFUrl.AutoSize = true;
-			linkLabelKSeFUrl.Location = new System.Drawing.Point(422, 8);
-			linkLabelKSeFUrl.Name = "linkLabelKSeFUrl";
-			linkLabelKSeFUrl.Size = new System.Drawing.Size(0, 15);
-			linkLabelKSeFUrl.TabIndex = 6;
-			linkLabelKSeFUrl.LinkClicked += linkLabelKSeFUrl_LinkClicked;
 			// 
 			// FakturaEdytor
 			// 
@@ -1409,5 +1422,6 @@ namespace ProFak.UI
         private System.Windows.Forms.TabPage tabPageDodatkowePodmioty;
         private System.Windows.Forms.LinkLabel linkLabelUwagiPomoc;
 		private System.Windows.Forms.LinkLabel linkLabelKSeFUrl;
+		private System.Windows.Forms.TextBox textBoxNazwaBanku;
 	}
 }

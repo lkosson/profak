@@ -54,6 +54,7 @@ namespace ProFak.UI
 			labelSposobPlatnosci = new System.Windows.Forms.Label();
 			comboBoxSposobPlatnosci = new System.Windows.Forms.ComboBox();
 			buttonSposobPlatnosci = new ButtonDPI();
+			textBoxNazwaBanku = new System.Windows.Forms.TextBox();
 			tabPage2 = new System.Windows.Forms.TabPage();
 			tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			groupBox1 = new System.Windows.Forms.GroupBox();
@@ -78,14 +79,14 @@ namespace ProFak.UI
 			label15 = new System.Windows.Forms.Label();
 			textBoxTokenKSeF = new System.Windows.Forms.TextBox();
 			comboBoxSrodowiskoKSeF = new System.Windows.Forms.ComboBox();
+			flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			buttonKSeFAuth = new ButtonDPI();
+			buttonCertyfikatKSeF = new ButtonDPI();
 			textBoxNazwa = new System.Windows.Forms.TextBox();
 			label1 = new System.Windows.Forms.Label();
 			tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			backgroundWorkerSprawdzMF = new System.ComponentModel.BackgroundWorker();
 			backgroundWorkerPobierzGUS = new System.ComponentModel.BackgroundWorker();
-			flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-			buttonCertyfikatKSeF = new ButtonDPI();
 			((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
 			tabControl.SuspendLayout();
 			tabPage1.SuspendLayout();
@@ -96,8 +97,8 @@ namespace ProFak.UI
 			groupBox2.SuspendLayout();
 			tabPagePodatki.SuspendLayout();
 			tableLayoutPanel3.SuspendLayout();
-			tableLayoutPanel2.SuspendLayout();
 			flowLayoutPanel1.SuspendLayout();
+			tableLayoutPanel2.SuspendLayout();
 			SuspendLayout();
 			// 
 			// tabControl
@@ -128,9 +129,10 @@ namespace ProFak.UI
 			// 
 			// tableLayoutPanel1
 			// 
-			tableLayoutPanel1.ColumnCount = 3;
+			tableLayoutPanel1.ColumnCount = 4;
 			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			tableLayoutPanel1.Controls.Add(label2, 0, 0);
 			tableLayoutPanel1.Controls.Add(textBoxPelnaNazwa, 1, 0);
@@ -149,11 +151,12 @@ namespace ProFak.UI
 			tableLayoutPanel1.Controls.Add(comboBoxStan, 1, 7);
 			tableLayoutPanel1.Controls.Add(label9, 0, 7);
 			tableLayoutPanel1.Controls.Add(checkBoxTP, 1, 10);
-			tableLayoutPanel1.Controls.Add(buttonSprawdzMF, 2, 6);
-			tableLayoutPanel1.Controls.Add(buttonPobierzGUS, 2, 1);
+			tableLayoutPanel1.Controls.Add(buttonSprawdzMF, 3, 6);
+			tableLayoutPanel1.Controls.Add(buttonPobierzGUS, 3, 1);
 			tableLayoutPanel1.Controls.Add(labelSposobPlatnosci, 0, 9);
 			tableLayoutPanel1.Controls.Add(comboBoxSposobPlatnosci, 1, 9);
-			tableLayoutPanel1.Controls.Add(buttonSposobPlatnosci, 2, 9);
+			tableLayoutPanel1.Controls.Add(buttonSposobPlatnosci, 3, 9);
+			tableLayoutPanel1.Controls.Add(textBoxNazwaBanku, 2, 6);
 			tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
 			tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -186,11 +189,11 @@ namespace ProFak.UI
 			// textBoxPelnaNazwa
 			// 
 			textBoxPelnaNazwa.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			tableLayoutPanel1.SetColumnSpan(textBoxPelnaNazwa, 2);
+			tableLayoutPanel1.SetColumnSpan(textBoxPelnaNazwa, 3);
 			textBoxPelnaNazwa.Location = new System.Drawing.Point(146, 3);
 			textBoxPelnaNazwa.Name = "textBoxPelnaNazwa";
 			textBoxPelnaNazwa.Size = new System.Drawing.Size(631, 23);
-			textBoxPelnaNazwa.TabIndex = 1;
+			textBoxPelnaNazwa.TabIndex = 0;
 			// 
 			// label3
 			// 
@@ -205,16 +208,17 @@ namespace ProFak.UI
 			// textBoxNIP
 			// 
 			textBoxNIP.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			tableLayoutPanel1.SetColumnSpan(textBoxNIP, 2);
 			textBoxNIP.Location = new System.Drawing.Point(146, 33);
 			textBoxNIP.Name = "textBoxNIP";
 			textBoxNIP.Size = new System.Drawing.Size(465, 23);
-			textBoxNIP.TabIndex = 2;
+			textBoxNIP.TabIndex = 1;
 			// 
 			// textBoxAdresRejestrowy
 			// 
 			textBoxAdresRejestrowy.AcceptsReturn = true;
 			textBoxAdresRejestrowy.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			tableLayoutPanel1.SetColumnSpan(textBoxAdresRejestrowy, 2);
+			tableLayoutPanel1.SetColumnSpan(textBoxAdresRejestrowy, 3);
 			textBoxAdresRejestrowy.Location = new System.Drawing.Point(146, 63);
 			textBoxAdresRejestrowy.Multiline = true;
 			textBoxAdresRejestrowy.Name = "textBoxAdresRejestrowy";
@@ -226,7 +230,7 @@ namespace ProFak.UI
 			// 
 			textBoxAdresKorespondencyjny.AcceptsReturn = true;
 			textBoxAdresKorespondencyjny.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			tableLayoutPanel1.SetColumnSpan(textBoxAdresKorespondencyjny, 2);
+			tableLayoutPanel1.SetColumnSpan(textBoxAdresKorespondencyjny, 3);
 			textBoxAdresKorespondencyjny.Location = new System.Drawing.Point(146, 134);
 			textBoxAdresKorespondencyjny.Multiline = true;
 			textBoxAdresKorespondencyjny.Name = "textBoxAdresKorespondencyjny";
@@ -236,7 +240,7 @@ namespace ProFak.UI
 			// textBoxTelefon
 			// 
 			textBoxTelefon.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			tableLayoutPanel1.SetColumnSpan(textBoxTelefon, 2);
+			tableLayoutPanel1.SetColumnSpan(textBoxTelefon, 3);
 			textBoxTelefon.Location = new System.Drawing.Point(146, 205);
 			textBoxTelefon.Name = "textBoxTelefon";
 			textBoxTelefon.Size = new System.Drawing.Size(631, 23);
@@ -245,7 +249,7 @@ namespace ProFak.UI
 			// textBoxEMail
 			// 
 			textBoxEMail.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			tableLayoutPanel1.SetColumnSpan(textBoxEMail, 2);
+			tableLayoutPanel1.SetColumnSpan(textBoxEMail, 3);
 			textBoxEMail.Location = new System.Drawing.Point(146, 234);
 			textBoxEMail.Name = "textBoxEMail";
 			textBoxEMail.Size = new System.Drawing.Size(631, 23);
@@ -256,7 +260,7 @@ namespace ProFak.UI
 			textBoxRachunekBankowy.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
 			textBoxRachunekBankowy.Location = new System.Drawing.Point(146, 264);
 			textBoxRachunekBankowy.Name = "textBoxRachunekBankowy";
-			textBoxRachunekBankowy.Size = new System.Drawing.Size(465, 23);
+			textBoxRachunekBankowy.Size = new System.Drawing.Size(263, 23);
 			textBoxRachunekBankowy.TabIndex = 7;
 			// 
 			// label4
@@ -312,13 +316,13 @@ namespace ProFak.UI
 			// comboBoxStan
 			// 
 			comboBoxStan.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			tableLayoutPanel1.SetColumnSpan(comboBoxStan, 2);
+			tableLayoutPanel1.SetColumnSpan(comboBoxStan, 3);
 			comboBoxStan.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			comboBoxStan.FormattingEnabled = true;
 			comboBoxStan.Location = new System.Drawing.Point(146, 294);
 			comboBoxStan.Name = "comboBoxStan";
 			comboBoxStan.Size = new System.Drawing.Size(631, 23);
-			comboBoxStan.TabIndex = 8;
+			comboBoxStan.TabIndex = 10;
 			// 
 			// label9
 			// 
@@ -336,7 +340,7 @@ namespace ProFak.UI
 			checkBoxTP.Location = new System.Drawing.Point(146, 354);
 			checkBoxTP.Name = "checkBoxTP";
 			checkBoxTP.Size = new System.Drawing.Size(131, 19);
-			checkBoxTP.TabIndex = 11;
+			checkBoxTP.TabIndex = 13;
 			checkBoxTP.Text = "Podmiot powiązany";
 			checkBoxTP.UseVisualStyleBackColor = true;
 			// 
@@ -346,7 +350,7 @@ namespace ProFak.UI
 			buttonSprawdzMF.Location = new System.Drawing.Point(617, 263);
 			buttonSprawdzMF.Name = "buttonSprawdzMF";
 			buttonSprawdzMF.Size = new System.Drawing.Size(160, 25);
-			buttonSprawdzMF.TabIndex = 10;
+			buttonSprawdzMF.TabIndex = 9;
 			buttonSprawdzMF.Text = "Sprawdź na białej liście VAT";
 			buttonSprawdzMF.UseVisualStyleBackColor = true;
 			buttonSprawdzMF.Click += buttonSprawdzMF_Click;
@@ -357,7 +361,7 @@ namespace ProFak.UI
 			buttonPobierzGUS.Location = new System.Drawing.Point(617, 32);
 			buttonPobierzGUS.Name = "buttonPobierzGUS";
 			buttonPobierzGUS.Size = new System.Drawing.Size(118, 25);
-			buttonPobierzGUS.TabIndex = 10;
+			buttonPobierzGUS.TabIndex = 2;
 			buttonPobierzGUS.Text = "Pobierz dane z GUS";
 			buttonPobierzGUS.UseVisualStyleBackColor = true;
 			buttonPobierzGUS.Click += buttonPobierzGUS_Click;
@@ -375,12 +379,13 @@ namespace ProFak.UI
 			// comboBoxSposobPlatnosci
 			// 
 			comboBoxSposobPlatnosci.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			tableLayoutPanel1.SetColumnSpan(comboBoxSposobPlatnosci, 2);
 			comboBoxSposobPlatnosci.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			comboBoxSposobPlatnosci.FormattingEnabled = true;
 			comboBoxSposobPlatnosci.Location = new System.Drawing.Point(146, 324);
 			comboBoxSposobPlatnosci.Name = "comboBoxSposobPlatnosci";
 			comboBoxSposobPlatnosci.Size = new System.Drawing.Size(465, 23);
-			comboBoxSposobPlatnosci.TabIndex = 9;
+			comboBoxSposobPlatnosci.TabIndex = 11;
 			// 
 			// buttonSposobPlatnosci
 			// 
@@ -388,10 +393,19 @@ namespace ProFak.UI
 			buttonSposobPlatnosci.Location = new System.Drawing.Point(617, 323);
 			buttonSposobPlatnosci.Name = "buttonSposobPlatnosci";
 			buttonSposobPlatnosci.Size = new System.Drawing.Size(26, 25);
-			buttonSposobPlatnosci.TabIndex = 10;
+			buttonSposobPlatnosci.TabIndex = 12;
 			buttonSposobPlatnosci.Text = "...";
 			buttonSposobPlatnosci.UseVisualStyleBackColor = true;
 			buttonSposobPlatnosci.Click += buttonSprawdzMF_Click;
+			// 
+			// textBoxNazwaBanku
+			// 
+			textBoxNazwaBanku.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			textBoxNazwaBanku.Location = new System.Drawing.Point(415, 264);
+			textBoxNazwaBanku.Name = "textBoxNazwaBanku";
+			textBoxNazwaBanku.PlaceholderText = "Nazwa banku";
+			textBoxNazwaBanku.Size = new System.Drawing.Size(196, 23);
+			textBoxNazwaBanku.TabIndex = 8;
 			// 
 			// tabPage2
 			// 
@@ -665,6 +679,18 @@ namespace ProFak.UI
 			comboBoxSrodowiskoKSeF.Size = new System.Drawing.Size(71, 23);
 			comboBoxSrodowiskoKSeF.TabIndex = 6;
 			// 
+			// flowLayoutPanel1
+			// 
+			flowLayoutPanel1.AutoSize = true;
+			tableLayoutPanel3.SetColumnSpan(flowLayoutPanel1, 2);
+			flowLayoutPanel1.Controls.Add(buttonKSeFAuth);
+			flowLayoutPanel1.Controls.Add(buttonCertyfikatKSeF);
+			flowLayoutPanel1.Location = new System.Drawing.Point(555, 150);
+			flowLayoutPanel1.Name = "flowLayoutPanel1";
+			flowLayoutPanel1.Size = new System.Drawing.Size(222, 31);
+			flowLayoutPanel1.TabIndex = 9;
+			flowLayoutPanel1.WrapContents = false;
+			// 
 			// buttonKSeFAuth
 			// 
 			buttonKSeFAuth.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -676,6 +702,18 @@ namespace ProFak.UI
 			buttonKSeFAuth.Text = "Uzyskaj dostęp";
 			buttonKSeFAuth.UseVisualStyleBackColor = true;
 			buttonKSeFAuth.Click += buttonKSeFAuth_Click;
+			// 
+			// buttonCertyfikatKSeF
+			// 
+			buttonCertyfikatKSeF.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			buttonCertyfikatKSeF.AutoSize = true;
+			buttonCertyfikatKSeF.Location = new System.Drawing.Point(104, 3);
+			buttonCertyfikatKSeF.Name = "buttonCertyfikatKSeF";
+			buttonCertyfikatKSeF.Size = new System.Drawing.Size(115, 25);
+			buttonCertyfikatKSeF.TabIndex = 8;
+			buttonCertyfikatKSeF.Text = "Importuj certyfikat";
+			buttonCertyfikatKSeF.UseVisualStyleBackColor = true;
+			buttonCertyfikatKSeF.Click += buttonCertyfikatKSeF_Click;
 			// 
 			// textBoxNazwa
 			// 
@@ -724,30 +762,6 @@ namespace ProFak.UI
 			backgroundWorkerPobierzGUS.DoWork += backgroundWorkerPobierzGUS_DoWork;
 			backgroundWorkerPobierzGUS.RunWorkerCompleted += backgroundWorkerPobierzGUS_RunWorkerCompleted;
 			// 
-			// flowLayoutPanel1
-			// 
-			flowLayoutPanel1.AutoSize = true;
-			tableLayoutPanel3.SetColumnSpan(flowLayoutPanel1, 2);
-			flowLayoutPanel1.Controls.Add(buttonKSeFAuth);
-			flowLayoutPanel1.Controls.Add(buttonCertyfikatKSeF);
-			flowLayoutPanel1.Location = new System.Drawing.Point(555, 150);
-			flowLayoutPanel1.Name = "flowLayoutPanel1";
-			flowLayoutPanel1.Size = new System.Drawing.Size(222, 31);
-			flowLayoutPanel1.TabIndex = 9;
-			flowLayoutPanel1.WrapContents = false;
-			// 
-			// buttonCertyfikatKSeF
-			// 
-			buttonCertyfikatKSeF.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			buttonCertyfikatKSeF.AutoSize = true;
-			buttonCertyfikatKSeF.Location = new System.Drawing.Point(104, 3);
-			buttonCertyfikatKSeF.Name = "buttonCertyfikatKSeF";
-			buttonCertyfikatKSeF.Size = new System.Drawing.Size(115, 25);
-			buttonCertyfikatKSeF.TabIndex = 8;
-			buttonCertyfikatKSeF.Text = "Importuj certyfikat";
-			buttonCertyfikatKSeF.UseVisualStyleBackColor = true;
-			buttonCertyfikatKSeF.Click += buttonCertyfikatKSeF_Click;
-			// 
 			// KontrahentEdytor
 			// 
 			AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -770,10 +784,10 @@ namespace ProFak.UI
 			tabPagePodatki.ResumeLayout(false);
 			tableLayoutPanel3.ResumeLayout(false);
 			tableLayoutPanel3.PerformLayout();
-			tableLayoutPanel2.ResumeLayout(false);
-			tableLayoutPanel2.PerformLayout();
 			flowLayoutPanel1.ResumeLayout(false);
 			flowLayoutPanel1.PerformLayout();
+			tableLayoutPanel2.ResumeLayout(false);
+			tableLayoutPanel2.PerformLayout();
 			ResumeLayout(false);
 		}
 
@@ -835,5 +849,6 @@ namespace ProFak.UI
         private System.Windows.Forms.TextBox textBoxUwagiPubliczne;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
 		private ButtonDPI buttonCertyfikatKSeF;
+		private System.Windows.Forms.TextBox textBoxNazwaBanku;
 	}
 }
