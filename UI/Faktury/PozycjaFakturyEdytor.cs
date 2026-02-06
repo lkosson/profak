@@ -16,6 +16,7 @@ namespace ProFak.UI
 	{
 		private Slownik<Towar> slownikTowarow;
 		private bool vatMarza;
+		private bool trwaPrzeliczanieCen;
 
 		public PozycjaFakturyEdytor()
 		{
@@ -146,8 +147,17 @@ namespace ProFak.UI
 
 		private void PrzeliczCeny()
 		{
-			Rekord.PrzeliczCeny(Kontekst.Baza);
-			kontroler.AktualizujKontrolki();
+			if (trwaPrzeliczanieCen) return;
+			try
+			{
+				trwaPrzeliczanieCen = true;
+				Rekord.PrzeliczCeny(Kontekst.Baza);
+				kontroler.AktualizujKontrolki();
+			}
+			finally
+			{
+				trwaPrzeliczanieCen = false;
+			}
 		}
 
 		private void UstawTowar(Towar towar)
