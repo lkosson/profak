@@ -142,7 +142,9 @@ class Generator
 		else ksefFaktura.Fa.Platnosc.FormaPlatnosci = TFormaPlatnosci.Item6;
 		if (!String.IsNullOrEmpty(dbFaktura.RachunekBankowy))
 		{
-			ksefFaktura.Fa.Platnosc.RachunekBankowy.Add(new TRachunekBankowy { NrRB = dbFaktura.RachunekBankowy.Replace(" ", "") });
+			var ksefRachunek = new TRachunekBankowy { NrRB = dbFaktura.RachunekBankowy.Replace(" ", "") };
+			if (!String.IsNullOrEmpty(dbFaktura.NazwaBanku)) ksefRachunek.NazwaBanku = dbFaktura.NazwaBanku;
+			ksefFaktura.Fa.Platnosc.RachunekBankowy.Add(ksefRachunek);
 		}
 		if (dbFaktura.FakturaKorygowana != null && dbFaktura.FakturaPierwotna != null)
 		{
@@ -373,7 +375,11 @@ class Generator
 		if (ksefFaktura.Fa.Platnosc != null)
 		{
 			if (ksefFaktura.Fa.Platnosc.TerminPlatnosci != null && ksefFaktura.Fa.Platnosc.TerminPlatnosci.Count > 0 && ksefFaktura.Fa.Platnosc.TerminPlatnosci[0].Termin.HasValue) dbFaktura.TerminPlatnosci = ksefFaktura.Fa.Platnosc.TerminPlatnosci[0].Termin.Value;
-			if (ksefFaktura.Fa.Platnosc.RachunekBankowy != null && ksefFaktura.Fa.Platnosc.RachunekBankowy.Count > 0) dbFaktura.RachunekBankowy = ksefFaktura.Fa.Platnosc.RachunekBankowy[0].NrRB;
+			if (ksefFaktura.Fa.Platnosc.RachunekBankowy != null && ksefFaktura.Fa.Platnosc.RachunekBankowy.Count > 0)
+			{
+				dbFaktura.RachunekBankowy = ksefFaktura.Fa.Platnosc.RachunekBankowy[0].NrRB;
+				dbFaktura.NazwaBanku = ksefFaktura.Fa.Platnosc.RachunekBankowy[0].NazwaBanku;
+			}
 
 			dbFaktura.OpisSposobuPlatnosci = ksefFaktura.Fa.Platnosc.FormaPlatnosci switch
 			{
