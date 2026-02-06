@@ -99,6 +99,7 @@ namespace ProFak.Wydruki
 					fakturaDTO.DoZwrotu = (-dozaplaty).ToString(UI.Format.Kwota) + " " + walutaSkrot;
 					fakturaDTO.DoZaplaty = "";
 					fakturaDTO.NumerRachunku = "";
+					fakturaDTO.NazwaBanku = "";
 				}
 				else
 				{
@@ -108,6 +109,7 @@ namespace ProFak.Wydruki
 					fakturaDTO.DoZwrotu = "";
 					fakturaDTO.DoZaplaty = dozaplaty.ToString(UI.Format.Kwota) + " " + walutaSkrot;
 					fakturaDTO.NumerRachunku = faktura.RachunekBankowy;
+					fakturaDTO.NazwaBanku = faktura.NazwaBanku;
 				}
 
 				fakturaDTO.NumerKSeF = faktura.NumerKSeF;

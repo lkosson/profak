@@ -31,6 +31,7 @@ namespace ProFak.Wydruki
 		public string DoZwrotu { get; set; }
 		public string ProceduraMarzy { get; set; }
 		public string NumerRachunku { get; set; }
+		public string NazwaBanku { get; set; }
 		public string Uwagi { get; set; }
 
 		public string LP { get; set; }

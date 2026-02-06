@@ -258,6 +258,7 @@ namespace ProFak.UI
 			rekord.NazwaSprzedawcy = kontrahent.PelnaNazwaLubNazwa;
 			rekord.DaneSprzedawcy = kontrahent.AdresRejestrowy;
 			rekord.RachunekBankowy = kontrahent.RachunekBankowy;
+			rekord.NazwaBanku = kontrahent.NazwaBanku;
 			if (rekord.CzySprzedaz)
 			{
 				if (!String.IsNullOrWhiteSpace(uwagiSprzedawcy)) rekord.UwagiPubliczne = (rekord.UwagiPubliczne ?? "").Replace(uwagiSprzedawcy, "").Trim('\r', '\n');
