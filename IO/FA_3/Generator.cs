@@ -54,6 +54,16 @@ class Generator
 		return dbFaktura;
 	}
 
+	private static T ZbudujAdres<T>(string adres) where T : TAdres, new()
+	{
+		var linie = adres.JakoDwieLinie();
+		var ksefAdres = new T();
+		ksefAdres.KodKraju = TKodKraju.PL;
+		if (!String.IsNullOrWhiteSpace(linie.linia1)) ksefAdres.AdresL1 = linie.linia1;
+		if (!String.IsNullOrWhiteSpace(linie.linia2)) ksefAdres.AdresL2 = linie.linia2;
+		return ksefAdres;
+	}
+
 	private static KSEFFaktura Zbuduj(DBFaktura dbFaktura)
 	{
 		var ksefFaktura = new KSEFFaktura();
@@ -66,17 +76,8 @@ class Generator
 		ksefFaktura.Podmiot1.DaneIdentyfikacyjne = new TPodmiot1();
 		ksefFaktura.Podmiot1.DaneIdentyfikacyjne.NIP = dbFaktura.NIPSprzedawcy.Replace("-", "");
 		ksefFaktura.Podmiot1.DaneIdentyfikacyjne.Nazwa = dbFaktura.NazwaSprzedawcy;
-		ksefFaktura.Podmiot1.Adres = new TAdres();
-		ksefFaktura.Podmiot1.Adres.KodKraju = TKodKraju.PL;
-		ksefFaktura.Podmiot1.Adres.AdresL1 = dbFaktura.DaneSprzedawcy.JakoDwieLinie().linia1;
-		ksefFaktura.Podmiot1.Adres.AdresL2 = dbFaktura.DaneSprzedawcy.JakoDwieLinie().linia2;
-		if (!String.IsNullOrEmpty(dbFaktura.Sprzedawca.AdresKorespondencyjny))
-		{
-			ksefFaktura.Podmiot1.AdresKoresp = new FakturaPodmiot1AdresKoresp();
-			ksefFaktura.Podmiot1.AdresKoresp.KodKraju = TKodKraju.PL;
-			ksefFaktura.Podmiot1.AdresKoresp.AdresL1 = dbFaktura.Sprzedawca.AdresKorespondencyjny.JakoDwieLinie().linia1;
-			ksefFaktura.Podmiot1.AdresKoresp.AdresL2 = dbFaktura.Sprzedawca.AdresKorespondencyjny.JakoDwieLinie().linia2;
-		}
+		ksefFaktura.Podmiot1.Adres = ZbudujAdres<TAdres>(dbFaktura.DaneSprzedawcy);
+		if (!String.IsNullOrEmpty(dbFaktura.Sprzedawca.AdresKorespondencyjny)) ksefFaktura.Podmiot1.AdresKoresp = ZbudujAdres<FakturaPodmiot1AdresKoresp>(dbFaktura.Sprzedawca.AdresKorespondencyjny);
 		ksefFaktura.Podmiot1.DaneKontaktowe.Add(new FakturaPodmiot1DaneKontaktowe { Email = String.IsNullOrWhiteSpace(dbFaktura.Sprzedawca.EMail) ? null : dbFaktura.Sprzedawca.EMail, Telefon = String.IsNullOrWhiteSpace(dbFaktura.Sprzedawca.Telefon) ? null : dbFaktura.Sprzedawca.Telefon });
 		ksefFaktura.Podmiot2 = new FakturaPodmiot2();
 		ksefFaktura.Podmiot2.DaneIdentyfikacyjne = new TPodmiot2();
@@ -89,11 +90,7 @@ class Generator
 			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP = dbFaktura.NIPNabywcy.Replace("-", "");
 		}
 		ksefFaktura.Podmiot2.DaneIdentyfikacyjne.Nazwa = dbFaktura.NazwaNabywcy;
-		ksefFaktura.Podmiot2.Adres = new TAdres();
-		ksefFaktura.Podmiot2.Adres.KodKraju = TKodKraju.PL;
-		ksefFaktura.Podmiot2.Adres.AdresL1 = dbFaktura.DaneNabywcy.JakoDwieLinie().linia1;
-		ksefFaktura.Podmiot2.Adres.AdresL2 = dbFaktura.DaneNabywcy.JakoDwieLinie().linia2;
-		//ksefFaktura.Podmiot2.IDNabywcy = dbFaktura.NabywcaRef.Id.ToString();
+		ksefFaktura.Podmiot2.Adres = ZbudujAdres<TAdres>(dbFaktura.DaneNabywcy);
 		ksefFaktura.Podmiot2.GV = FakturaPodmiot2GV.Item2;
 		ksefFaktura.Podmiot2.JST = FakturaPodmiot2JST.Item2;
 		ksefFaktura.Fa = new FakturaFa();
@@ -169,10 +166,7 @@ class Generator
 				ksefFaktura.Fa.Podmiot1K.DaneIdentyfikacyjne = new TPodmiot1();
 				ksefFaktura.Fa.Podmiot1K.DaneIdentyfikacyjne.Nazwa = dbFaktura.FakturaKorygowana.NazwaSprzedawcy;
 				ksefFaktura.Fa.Podmiot1K.DaneIdentyfikacyjne.NIP = dbFaktura.FakturaKorygowana.NIPSprzedawcy.Replace("-", "");
-				ksefFaktura.Fa.Podmiot1K.Adres = new TAdres();
-				ksefFaktura.Fa.Podmiot1K.Adres.KodKraju = TKodKraju.PL;
-				ksefFaktura.Fa.Podmiot1K.Adres.AdresL1 = dbFaktura.FakturaKorygowana.DaneSprzedawcy.JakoDwieLinie().linia1;
-				ksefFaktura.Fa.Podmiot1K.Adres.AdresL2 = dbFaktura.FakturaKorygowana.DaneSprzedawcy.JakoDwieLinie().linia2;
+				ksefFaktura.Fa.Podmiot1K.Adres = ZbudujAdres<TAdres>(dbFaktura.FakturaKorygowana.DaneSprzedawcy);
 			}
 
 			if (dbFaktura.FakturaKorygowana.NazwaNabywcy != dbFaktura.NazwaNabywcy || dbFaktura.FakturaKorygowana.DaneNabywcy != dbFaktura.DaneNabywcy)
@@ -181,10 +175,7 @@ class Generator
 				podmiot2k.DaneIdentyfikacyjne = new TPodmiot2();
 				podmiot2k.DaneIdentyfikacyjne.Nazwa = dbFaktura.FakturaKorygowana.NazwaNabywcy;
 				podmiot2k.DaneIdentyfikacyjne = ksefFaktura.Podmiot2.DaneIdentyfikacyjne;
-				podmiot2k.Adres = new TAdres();
-				podmiot2k.Adres.KodKraju = TKodKraju.PL;
-				podmiot2k.Adres.AdresL1 = dbFaktura.FakturaKorygowana.DaneNabywcy.JakoDwieLinie().linia1;
-				podmiot2k.Adres.AdresL2 = dbFaktura.FakturaKorygowana.DaneNabywcy.JakoDwieLinie().linia2;
+				podmiot2k.Adres = ZbudujAdres<TAdres>(dbFaktura.FakturaKorygowana.DaneNabywcy);
 				ksefFaktura.Fa.Podmiot2K.Add(podmiot2k);
 			}
 		}
@@ -210,13 +201,7 @@ class Generator
 			if (!String.IsNullOrEmpty(dbPodmiot3.NIP)) ksefPodmiot3.DaneIdentyfikacyjne.NIP = dbPodmiot3.NIP;
 			if (!String.IsNullOrEmpty(dbPodmiot3.VatUE)) ksefPodmiot3.DaneIdentyfikacyjne.NrVatUE = dbPodmiot3.VatUE;
 			if (!String.IsNullOrEmpty(dbPodmiot3.IDwew)) ksefPodmiot3.DaneIdentyfikacyjne.IDWew = dbPodmiot3.IDwew;
-			if (!String.IsNullOrEmpty(dbPodmiot3.Adres))
-			{
-				ksefPodmiot3.Adres = new TAdres();
-				ksefPodmiot3.Adres.AdresL1 = dbPodmiot3.Adres.JakoDwieLinie().linia1;
-				ksefPodmiot3.Adres.AdresL2 = dbPodmiot3.Adres.JakoDwieLinie().linia2;
-				ksefPodmiot3.Adres.KodKraju = TKodKraju.PL;
-			}
+			if (!String.IsNullOrEmpty(dbPodmiot3.Adres)) ksefPodmiot3.Adres = ZbudujAdres<TAdres>(dbPodmiot3.Adres);
 			dbPodmiot3.Udzial = ksefPodmiot3.Udzial;
 
 			ksefFaktura.Podmiot3.Add(ksefPodmiot3);
