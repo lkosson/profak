@@ -259,6 +259,14 @@ namespace ProFak.DB
 			}
 		}
 
+		public void Zablokuj<TRekord>(Ref<TRekord> rekordRef)
+			where TRekord : Rekord<TRekord>
+		{
+#if SQLSERVER
+			Database.ExecuteSqlRaw($"SET LOCK_TIMEOUT 1000; SELECT Id FROM {typeof(TRekord).Name} WITH (ROWLOCK, UPDLOCK) WHERE Id={rekordRef.Id}");
+#endif
+		}
+
 		public TRekord Znajdz<TRekord>(Ref<TRekord> rekordRef)
 			where TRekord : Rekord<TRekord>
 			=> Set<TRekord>().FirstOrDefault(r => r.Id == rekordRef.Id);

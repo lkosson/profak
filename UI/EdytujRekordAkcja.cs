@@ -30,7 +30,9 @@ namespace ProFak.UI
 		{
 			using var nowyKontekst = new Kontekst(kontekst);
 			using var transakcja = nowyKontekst.Transakcja();
-			var rekord = nowyKontekst.Baza.Znajdz(zaznaczoneRekordy.Single().Ref);
+			var rekordRef = zaznaczoneRekordy.Single().Ref;
+			nowyKontekst.Baza.Zablokuj(rekordRef);
+			var rekord = nowyKontekst.Baza.Znajdz(rekordRef);
 			nowyKontekst.Dodaj(rekord);
 			using var edytor = new TEdytor();
 			using var okno = new Dialog("Edycja danych", edytor, nowyKontekst);

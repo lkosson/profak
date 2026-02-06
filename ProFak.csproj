@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <DefineConstants>$(DefineConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);nSQLSERVER;</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,8 +41,12 @@
     <PackageReference Include="ZXing.Net" Version="0.16.11" />
     <PackageReference Include="ZXing.Net.Bindings.Windows.Compatibility" Version="0.16.14" />
   </ItemGroup>
-  <ItemGroup Condition="!$(DefineConstants.Contains(SQLSERVER))">
+  <ItemGroup Condition="$(DefineConstants.Contains(;SQLSERVER;))">
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.2" />
+  </ItemGroup>
+
+  <ItemGroup Condition="!$(DefineConstants.Contains(;SQLSERVER;))">
+    <Compile Remove="DB\Migrations-SqlServer\*.cs"></Compile>
   </ItemGroup>
 
   <ItemGroup>

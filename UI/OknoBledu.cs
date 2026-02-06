@@ -40,6 +40,12 @@ namespace ProFak.UI
 			{
 				MessageBox.Show("Operacja została przerwana.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
+#if SQLSERVER
+			else if (exc is Microsoft.Data.SqlClient.SqlException se && se.Number == 1222)
+			{
+				MessageBox.Show("Rekord jest modyfikowany na innym stanowisku.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			}
+#endif
 			else
 			{
 				using var okno = new OknoBledu(exc);
