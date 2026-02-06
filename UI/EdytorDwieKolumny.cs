@@ -32,44 +32,50 @@ namespace ProFak.UI
 			dwieKolumny.DodajWiersz(kontrolka, etykieta);
 		}
 
-		public void DodajTextBox(Expression<Func<TRekord, string>> wlasciwosc, string etykieta, bool wymagane = false, int linie = 1)
+		public TextBox DodajTextBox(Expression<Func<TRekord, string>> wlasciwosc, string etykieta, bool wymagane = false, int linie = 1)
 		{
 			var textbox = dwieKolumny.DodajTextBox(etykieta, linie);
 			kontroler.Powiazanie(textbox, wlasciwosc);
 			if (wymagane) Wymagane(textbox);
+			return textbox;
 		}
 
-		public void DodajCheckBox(Expression<Func<TRekord, bool>> wlasciwosc, string etykieta)
+		public CheckBox DodajCheckBox(Expression<Func<TRekord, bool>> wlasciwosc, string etykieta)
 		{
 			var checkBox = dwieKolumny.DodajCheckBox(etykieta);
 			kontroler.Powiazanie(checkBox, wlasciwosc);
+			return checkBox;
 		}
 
-		public void DodajNumericUpDown(Expression<Func<TRekord, decimal>> wlasciwosc, string etykieta, int poprzecinku = 2)
+		public NumericUpDown DodajNumericUpDown(Expression<Func<TRekord, decimal>> wlasciwosc, string etykieta, int poprzecinku = 2)
 		{
 			var numericUpDown = dwieKolumny.DodajNumericUpDown(etykieta, poprzecinku);
 			kontroler.Powiazanie(numericUpDown, wlasciwosc);
+			return numericUpDown;
 		}
 
-		public void DodajNumericUpDown(Expression<Func<TRekord, int>> wlasciwosc, string etykieta)
+		public NumericUpDown DodajNumericUpDown(Expression<Func<TRekord, int>> wlasciwosc, string etykieta)
 		{
 			var numericUpDown = dwieKolumny.DodajNumericUpDown(etykieta, 0);
 			kontroler.Powiazanie(numericUpDown, wlasciwosc);
+			return numericUpDown;
 		}
 
-		public void DodajDatePicker(Expression<Func<TRekord, DateTime>> wlasciwosc, string etykieta)
+		public DateTimePicker DodajDatePicker(Expression<Func<TRekord, DateTime>> wlasciwosc, string etykieta)
 		{
 			var dateTimePicker = dwieKolumny.DodajDatePicker(etykieta);
 			kontroler.Powiazanie(dateTimePicker, wlasciwosc);
+			return dateTimePicker;
 		}
 
-		public void DodajComboBox<TEnum>(Expression<Func<TRekord, TEnum>> wlasciwosc, string etykieta, bool wymagane = false)
+		public ComboBox DodajComboBox<TEnum>(Expression<Func<TRekord, TEnum>> wlasciwosc, string etykieta, bool wymagane = false)
 			where TEnum : struct, Enum
 		{
 			var comboBox = dwieKolumny.DodajComboBox(etykieta);
 			kontroler.Slownik<TEnum>(comboBox);
 			kontroler.Powiazanie(comboBox, wlasciwosc);
 			if (wymagane) Wymagane(comboBox);
+			return comboBox;
 		}
 	}
 }
