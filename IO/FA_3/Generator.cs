@@ -216,7 +216,7 @@ class Generator
 			//ksefWiersz.Indeks = dbPozycja.Towar == null ? ksefWiersz.UU_ID : dbPozycja.Towar.Id.ToString();
 			ksefWiersz.P_8A = dbPozycja.JednostkaMiary?.Nazwa ?? "szt";
 			ksefWiersz.P_8B = Math.Abs(dbPozycja.Ilosc);
-			if (dbPozycja.RabatRazem != 0 && ksefWiersz.P_8B != 0) ksefWiersz.P_10 = (-dbPozycja.RabatRazem / ksefWiersz.P_8B.Value).Zaokragl();
+			if (dbPozycja.RabatRazem != 0 && ksefWiersz.P_8B != 0) ksefWiersz.P_10 = Math.Min(dbPozycja.CzyWedlugCenBrutto ? dbPozycja.CenaBrutto : dbPozycja.CenaNetto, -dbPozycja.RabatRazem / ksefWiersz.P_8B.Value).Zaokragl();
 			if (dbFaktura.KursWaluty != 0 && dbFaktura.KursWaluty != 1) ksefWiersz.KursWaluty = dbFaktura.KursWaluty;
 			if (dbPozycja.CzyWedlugCenBrutto)
 			{
