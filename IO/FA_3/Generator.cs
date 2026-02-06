@@ -516,7 +516,7 @@ class Generator
 			dbPodmiot3.NIP = ksefPodmiot3.DaneIdentyfikacyjne.NIP;
 			dbPodmiot3.VatUE = ksefPodmiot3.DaneIdentyfikacyjne.NrVatUE;
 			dbPodmiot3.IDwew = ksefPodmiot3.DaneIdentyfikacyjne.IDWew;
-			dbPodmiot3.Adres = ksefPodmiot3.Adres.AdresL1 + "\n" + ksefPodmiot3.Adres.AdresL2;
+			if (ksefPodmiot3.Adres != null) dbPodmiot3.Adres = ksefPodmiot3.Adres.AdresL1 + "\n" + ksefPodmiot3.Adres.AdresL2;
 			dbPodmiot3.Udzial = ksefPodmiot3.Udzial;
 			dbFaktura.DodatkowePodmioty.Add(dbPodmiot3);
 		}
