@@ -83,6 +83,7 @@ namespace ProFak.UI
 			Wymagane(comboBoxSposobPlatnosci);
 			Wymagane(comboBoxWaluta);
 			Walidacja<ProceduraMarży>(comboBoxProceduraMarzy, WalidacjaProceduryMarzy, false);
+			Walidacja(textBoxNumer, WalidacjaNumer, false);
 
 			tabPageWplaty.Controls.Add(wplaty = Spisy.Wplaty());
 			tabPagePozycje.Controls.Add(pozycjeFaktury = Spisy.PozycjeFaktur());
@@ -111,6 +112,14 @@ namespace ProFak.UI
 				tabControl1.SelectedTab = tabPagePodatki;
 				return "Należy wybrać procedurę marży dla faktury Vat marża.";
 			}
+			return null;
+		}
+
+		private string WalidacjaNumer(string numer)
+		{
+			if (String.IsNullOrWhiteSpace(numer)) return Rekord.Numerator.HasValue ? null : "Należy uzupełnić numer faktury.";
+			var innaFaktura = Kontekst.Baza.Faktury.FirstOrDefault(faktura => faktura.Numer == Rekord.Numer && faktura.NIPSprzedawcy == Rekord.NIPSprzedawcy && faktura.Id != Rekord.Id);
+			if (innaFaktura != null) return Rekord.CzySprzedaz ? $"Faktura z takim numerem była już wystawiona {innaFaktura.DataWystawienia:d MMMM yyyy}." : $"Faktura od tego kontrahenta z takim samym numerem była wprowadzona {innaFaktura.DataWprowadzenia:d MMMM yyyy}.";
 			return null;
 		}
 
@@ -336,7 +345,6 @@ namespace ProFak.UI
 			}
 			else
 			{
-				Wymagane(textBoxNumer);
 				textBoxNumer.Focus();
 				ActiveControl = textBoxNumer;
 			}
