@@ -286,13 +286,13 @@ class Generator
 		var rejestry = new FakturaStopkaRejestry();
 		var uwagi = dbFaktura.UwagiPubliczne;
 		var zamowienie = new FakturaFaWarunkiTransakcjiZamowienia();
-		uwagi = Regex.Replace(uwagi, @"BDO: (?<numer>\d{1,9})", m => { rejestry.BDO = m.Groups["numer"].Value; return ""; });
-		uwagi = Regex.Replace(uwagi, @"KRS: (?<numer>\d{10})", m => { rejestry.KRS = m.Groups["numer"].Value; return ""; });
-		uwagi = Regex.Replace(uwagi, @"(REGON|Regon|regon): (?<numer>(\d{9}|\d{14}))", m => { rejestry.REGON = m.Groups["numer"].Value; return ""; });
-		uwagi = Regex.Replace(uwagi, @"(Zamówienie|Nr zamówienia|Numer zamówienia): (?<numer>.+)", m => { zamowienie.NrZamowienia = m.Groups["numer"].Value.Trim(); return ""; });
-		uwagi = Regex.Replace(uwagi, @"Data zamówienia: (?<data>[0-9./\-]{8,10})", m => { if (!DateTime.TryParse(m.Groups["data"].Value, out var data)) return "Numer zamówienia: " + m.Groups["data"].Value; zamowienie.DataZamowienia = data; return ""; });
-		uwagi = Regex.Replace(uwagi, @"Przyczyna korekty: (?<tekst>.+)", m => { ksefFaktura.Fa.PrzyczynaKorekty = m.Groups["tekst"].Value.Trim(); return ""; });
-		uwagi = Regex.Replace(uwagi, @"(Mechanizm podzielonej płatności|Split payment)", m => { /* P_18A ustawione wcześniej */ return ""; });
+		uwagi = Regex.Replace(uwagi, @"BDO: (?<numer>\d{1,9})", m => { rejestry.BDO = m.Groups["numer"].Value; return ""; }, RegexOptions.IgnoreCase);
+		uwagi = Regex.Replace(uwagi, @"KRS: (?<numer>\d{10})", m => { rejestry.KRS = m.Groups["numer"].Value; return ""; }, RegexOptions.IgnoreCase);
+		uwagi = Regex.Replace(uwagi, @"(REGON|Regon|regon): (?<numer>(\d{9}|\d{14}))", m => { rejestry.REGON = m.Groups["numer"].Value; return ""; }, RegexOptions.IgnoreCase);
+		uwagi = Regex.Replace(uwagi, @"(Zamówienie|Nr zamówienia|Numer zamówienia): (?<numer>.+)", m => { zamowienie.NrZamowienia = m.Groups["numer"].Value.Trim(); return ""; }, RegexOptions.IgnoreCase);
+		uwagi = Regex.Replace(uwagi, @"Data zamówienia: (?<data>[0-9./\-]{8,10})", m => { if (!DateTime.TryParse(m.Groups["data"].Value, out var data)) return "Numer zamówienia: " + m.Groups["data"].Value; zamowienie.DataZamowienia = data; return ""; }, RegexOptions.IgnoreCase);
+		uwagi = Regex.Replace(uwagi, @"Przyczyna korekty: (?<tekst>.+)", m => { ksefFaktura.Fa.PrzyczynaKorekty = m.Groups["tekst"].Value.Trim(); return ""; }, RegexOptions.IgnoreCase);
+		uwagi = Regex.Replace(uwagi, @"(Mechanizm podzielonej płatności|Split payment)", m => { /* P_18A ustawione wcześniej */ return ""; }, RegexOptions.IgnoreCase);
 		uwagi = Regex.Replace(uwagi, @"(?<nazwa>.+): (?<tekst>.+)", m => { ksefFaktura.Fa.DodatkowyOpis.Add(new TKluczWartosc() { Klucz = m.Groups["nazwa"].Value, Wartosc = m.Groups["tekst"].Value.Trim() }); return ""; });
 
 		uwagi = uwagi.Trim(' ', '\r', '\n', '\t');
