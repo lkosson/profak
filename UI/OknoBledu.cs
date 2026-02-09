@@ -45,6 +45,11 @@ namespace ProFak.UI
 			{
 				MessageBox.Show("Rekord jest modyfikowany na innym stanowisku.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 			}
+#else
+			else if (exc is Microsoft.Data.Sqlite.SqliteException se && se.SqliteErrorCode == 5)
+			{
+				MessageBox.Show("Baza danych jest używana na innym stanowisku.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			}
 #endif
 			else
 			{

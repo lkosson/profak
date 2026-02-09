@@ -175,7 +175,7 @@ namespace ProFak.DB
 #if SQLSERVER
 			optionsBuilder.UseSqlServer(PrzygotujParametryPolaczenia());
 #else
-			optionsBuilder.UseSqlite(PrzygotujParametryPolaczenia());
+			optionsBuilder.UseSqlite(PrzygotujParametryPolaczenia(), opts => opts.CommandTimeout(5));
 #endif
 #if LOG_SQL
 			optionsBuilder.EnableSensitiveDataLogging();
