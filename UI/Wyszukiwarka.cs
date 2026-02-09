@@ -11,7 +11,11 @@ namespace ProFak.UI
 	{
 		public Wyszukiwarka()
 		{
-			PlaceholderText = "🔍 Wyszukaj [F3]";
+			var opis = "";
+			if (Wyglad.IkonyAkcji) opis += "🔍 ";
+			opis += "Wyszukaj";
+			if (Wyglad.SkrotyKlawiaturoweAkcji) opis += " [F3]";
+			PlaceholderText = opis;
 			TextAlign = HorizontalAlignment.Center;
 		}
 

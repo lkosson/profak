@@ -32,6 +32,9 @@ partial class WysylkaFakturEdytor : UserControl
 	public WysylkaFakturEdytor()
 	{
 		InitializeComponent();
+		Wyglad.UsunIkonePrzycisku(buttonNastepna);
+		Wyglad.UsunIkonePrzycisku(buttonPoprzednia);
+		Wyglad.UsunIkonePrzycisku(buttonWyslij);
 	}
 
 	protected override void OnLoad(EventArgs e)

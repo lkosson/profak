@@ -23,13 +23,15 @@ namespace ProFak.UI
 		public static string NazwaAkcji(AdapterAkcji adapter)
 		{
 			var nazwa = SkrotyKlawiaturoweAkcji ? adapter.Nazwa : adapter.NazwaBezSkrotu;
-			if (!IkonyAkcji)
-			{
-				var idx = 0;
-				while (idx < nazwa.Length && (!Char.IsLetterOrDigit(nazwa[idx]) || Char.IsWhiteSpace(nazwa[idx]))) idx++;
-				nazwa = nazwa.Substring(idx);
-			}
+			if (!IkonyAkcji) nazwa = NazwaBezIkony(nazwa);
 			return nazwa;
+		}
+
+		public static string NazwaBezIkony(string nazwa)
+		{
+			var idx = 0;
+			while (idx < nazwa.Length && (!Char.IsLetterOrDigit(nazwa[idx]) || Char.IsWhiteSpace(nazwa[idx]))) idx++;
+			return nazwa.Substring(idx);
 		}
 
 		public static void UsunSkrotyZakladek(TabControl tabControl)
@@ -39,6 +41,12 @@ namespace ProFak.UI
 			{
 				zakladka.Text = NazwaBezSkrotu(zakladka.Text).Trim();
 			}
+		}
+
+		public static void UsunIkonePrzycisku(Button przycisk)
+		{
+			if (IkonyAkcji) return;
+			przycisk.Text = NazwaBezIkony(przycisk.Text);
 		}
 
 		public static void UsunSkrotPrzycisku(Button przycisk)

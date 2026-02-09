@@ -18,6 +18,7 @@ namespace ProFak.UI
 			base.OnCreateControl();
 			Height = 23 * DeviceDpi / 96;
 			if (Text == "..." || Text == "➕") Width = Height;
+			if (Text == "➕" && !Wyglad.IkonyAkcji) Text = "+";
 		}
 	}
 }
