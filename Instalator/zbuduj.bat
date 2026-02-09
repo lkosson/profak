@@ -12,6 +12,7 @@ attrib +r *.json
 attrib +r *.exe
 attrib +r pl\*.dll
 del /s /q *.* 2> nul >nul
+for /f "delims=" %d in ('dir /b /ad') do rd "%d"
 attrib /s -r *.*
 
 cd ..\..\Instalator
