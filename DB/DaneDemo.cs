@@ -21,6 +21,7 @@ namespace ProFak.DB
 			ZaladujKontrahentow(baza);
 			ZaladujTowary(baza);
 			ZaladujFaktury(baza);
+			ZaladujPodatki(baza);
 		}
 
 		private static void ZaladujPodmiot(Baza baza)
@@ -35,7 +36,8 @@ namespace ProFak.DB
 				EMail = "profak@lukasz.kosson.net",
 				RachunekBankowy = "92 5823 0295 0295 0320 1204 2442",
 				Telefon = "902-042-120",
-				CzyPodmiot = true
+				CzyPodmiot = true,
+				FormaOpodatkowania = FormaOpodatkowania.Liniowy
 			});
 		}
 
@@ -320,6 +322,30 @@ namespace ProFak.DB
 
 					baza.Zapisz(faktura);
 				}
+			}
+		}
+
+		private static void ZaladujPodatki(Baza baza)
+		{
+			var datyFaktur = baza.Faktury.Select(faktura => faktura.DataSprzedazy);
+			var odDaty = datyFaktur.Min();
+			var doDaty = datyFaktur.Max();
+			var data = new DateTime(odDaty.Year, odDaty.Month, 1);
+			while (data < doDaty)
+			{
+				var deklaracjaVat = new DeklaracjaVat { Miesiac = data };
+				baza.Zapisz(deklaracjaVat);
+				deklaracjaVat.WybierzFaktury(baza);
+				deklaracjaVat.Przelicz(baza);
+				baza.Zapisz(deklaracjaVat);
+
+				var zaliczkaPit = new ZaliczkaPit { Miesiac = data };
+				baza.Zapisz(zaliczkaPit);
+				zaliczkaPit.WybierzFaktury(baza);
+				zaliczkaPit.Przelicz(baza);
+				baza.Zapisz(zaliczkaPit);
+
+				data = data.AddMonths(1);
 			}
 		}
 	}
