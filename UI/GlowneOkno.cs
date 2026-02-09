@@ -18,13 +18,11 @@ namespace ProFak.UI
 		private TreeNode ostatnioWybrany;
 		private bool trwaAktualizacjaMenu;
 		private bool menuGotowe;
-		private ContextMenuStrip menuKontekstowe;
 
 		public GlowneOkno()
 		{
 			InitializeComponent();
 			ZbudujMenu();
-			ZbudujMenuKontekstowe();
 			panelMenu.Width = Wyglad.SzerokoscMenu;
 		}
 
@@ -49,15 +47,15 @@ namespace ProFak.UI
 
 			TreeNode Ladowanie() => Wezel("(ładowanie)");
 
-			var fakturySprzedazyWszystkie =  Wezel("Wszystkie", "Wszystkie");
-			var fakturySprzedazyDoZaplaty =  Wezel("Do zapłaty", "DoZaplaty");
-			var fakturySprzedazyZaplacone =  Wezel("Zapłacone", "Zaplacone");
-			var fakturySprzedazyKSeFDzis =  Wezel("Dzisiejsze", "Dzis");
-			var fakturySprzedazyKSeFMiesiac =  Wezel("Z tego miesiąca", "Miesiac");
-			var fakturySprzedazyKSeFPoprzedni =  Wezel("Z tego i poprzedniego miesiąca", "Poprzedni");
-			var fakturySprzedazyKSeFRok =  Wezel("Z tego roku", "Rok");
-			var fakturySprzedazyKSeFWszystkie =  Wezel("Wszystkie");
-			var fakturySprzedazyKSeF =  Wezel("KSeF", "KSeFSprzedaz", [fakturySprzedazyKSeFDzis, fakturySprzedazyKSeFMiesiac, fakturySprzedazyKSeFPoprzedni, fakturySprzedazyKSeFRok, fakturySprzedazyKSeFWszystkie]);
+			var fakturySprzedazyWszystkie = Wezel("Wszystkie", "Wszystkie");
+			var fakturySprzedazyDoZaplaty = Wezel("Do zapłaty", "DoZaplaty");
+			var fakturySprzedazyZaplacone = Wezel("Zapłacone", "Zaplacone");
+			var fakturySprzedazyKSeFDzis = Wezel("Dzisiejsze", "Dzis");
+			var fakturySprzedazyKSeFMiesiac = Wezel("Z tego miesiąca", "Miesiac");
+			var fakturySprzedazyKSeFPoprzedni = Wezel("Z tego i poprzedniego miesiąca", "Poprzedni");
+			var fakturySprzedazyKSeFRok = Wezel("Z tego roku", "Rok");
+			var fakturySprzedazyKSeFWszystkie = Wezel("Wszystkie");
+			var fakturySprzedazyKSeF = Wezel("KSeF", "KSeFSprzedaz", [fakturySprzedazyKSeFDzis, fakturySprzedazyKSeFMiesiac, fakturySprzedazyKSeFPoprzedni, fakturySprzedazyKSeFRok, fakturySprzedazyKSeFWszystkie]);
 			var fakturySprzedazyWedlugDaty = Wezel("Według daty", "WedlugDaty", [Ladowanie()]);
 			var fakturySprzedazyWedlugNabywcy = Wezel("Według nabywcy", "WedlugKontrahenta", [Ladowanie()]);
 			var fakturySprzedazyWedlugTowaru = Wezel("Według towaru", "WedlugTowaru", [Ladowanie()]);
@@ -107,27 +105,43 @@ namespace ProFak.UI
 			var bezposredniaEdycja = Wezel("Bezpośrednia edycja", "Tabele");
 			var oProgramie = Wezel("O programie", "OProgramie");
 			var serwisowe = Wezel("Serwisowe", "Serwisowe", [numeracja, konfiguracja, bazaDanych, usunieteFaktury, polecenieSQL, bezposredniaEdycja, oProgramie]);
+			menu.Nodes.Clear();
 			menu.Nodes.AddRange([faktury, podatki, kontrahenci, towary, slowniki, serwisowe]);
 		}
 
-		private void ZbudujMenuKontekstowe()
+		private void PokazMenuKontekstowe(TreeNode wezel)
 		{
-			menuKontekstowe = new ContextMenuStrip();
+			var menuKontekstowe = new ContextMenuStrip();
+			var menuPokaz = new ToolStripMenuItem("Pokaż");
 			var menuUkryj = new ToolStripMenuItem("Ukryj");
 			var menuPokazUkryte = new ToolStripMenuItem("Pokaż ukryte");
+			menuPokaz.Click += delegate
+			{
+				ZapiszStanPozycji(wezel, ukryta: false);
+				wezel.ForeColor = SystemColors.ControlText;
+			};
 			menuUkryj.Click += delegate
 			{
+				ZapiszStanPozycji(wezel, ukryta: true);
+				if (wezel.Parent == null) menu.Nodes.Remove(wezel);
+				else wezel.Parent.Nodes.Remove(wezel);
 			};
 			menuPokazUkryte.Click += delegate
 			{
-				menuPokazUkryte.Checked = !menuPokazUkryte.Checked;
+				ZbudujMenu();
+				RozwinMenu(pokazUkryte: true);
 			};
-			menuKontekstowe.Items.Add(menuUkryj);
+			if (wezel.ForeColor == SystemColors.GrayText) menuKontekstowe.Items.Add(menuPokaz);
+			else menuKontekstowe.Items.Add(menuUkryj);
 			menuKontekstowe.Items.Add(menuPokazUkryte);
-			//menu.ContextMenuStrip = menuKontekstowe;
+			menuKontekstowe.Closed += delegate
+			{
+				BeginInvoke(delegate { menuKontekstowe.Dispose(); });
+			};
+			menuKontekstowe.Show(Cursor.Position);
 		}
 
-		private void RozwinMenu()
+		private void RozwinMenu(bool pokazUkryte = false)
 		{
 			using var kontekst = new Kontekst();
 			var stany = kontekst.Baza.StanyMenu.ToList();
@@ -139,13 +153,13 @@ namespace ProFak.UI
 
 			var stanyWedlugNazwy = stany.ToDictionary(stan => stan.Pozycja);
 			TreeNode doWyswietlenia = null;
-			RozwinMenu(menu.Nodes.Cast<TreeNode>(), stanyWedlugNazwy, ref doWyswietlenia);
+			RozwinMenu(menu.Nodes.Cast<TreeNode>(), stanyWedlugNazwy, pokazUkryte, ref doWyswietlenia);
 
 			if (doWyswietlenia == null) WyswietlDomyslny();
 			else menu.SelectedNode = doWyswietlenia;
 		}
 
-		private void RozwinMenu(IEnumerable<TreeNode> wezly, Dictionary<string, StanMenu> stany, ref TreeNode wybrany)
+		private void RozwinMenu(IEnumerable<TreeNode> wezly, Dictionary<string, StanMenu> stany, bool pokazUkryte, ref TreeNode wybrany)
 		{
 			var doUsuniecia = new List<TreeNode>();
 			foreach (var wezel in wezly)
@@ -157,12 +171,13 @@ namespace ProFak.UI
 					if (stan.CzyUkryta) doUsuniecia.Add(wezel);
 				}
 
-				RozwinMenu(wezel.Nodes.Cast<TreeNode>(), stany, ref wybrany);
+				RozwinMenu(wezel.Nodes.Cast<TreeNode>(), stany, pokazUkryte, ref wybrany);
 			}
 
 			foreach (var wezel in doUsuniecia)
 			{
-				wezel.Remove();
+				if (pokazUkryte) wezel.ForeColor = SystemColors.GrayText;
+				else wezel.Remove();
 			}
 		}
 
@@ -319,7 +334,7 @@ namespace ProFak.UI
 			ZapiszStanPozycji(e.Node);
 		}
 
-		private void ZapiszStanPozycji(TreeNode treeNode)
+		private void ZapiszStanPozycji(TreeNode treeNode, bool ukryta = false)
 		{
 			if (!menuGotowe) return;
 			if (String.IsNullOrEmpty(treeNode.Name)) return;
@@ -329,6 +344,7 @@ namespace ProFak.UI
 			if (stan == null) stan = new StanMenu { Pozycja = treeNode.FullPath };
 			stan.CzyZwinieta = !treeNode.IsExpanded;
 			stan.CzyAktywna = treeNode.IsSelected;
+			stan.CzyUkryta = ukryta || treeNode.ForeColor == SystemColors.GrayText;
 			if (stan.CzyAktywna)
 			{
 				var aktywne = kontekst.Baza.StanyMenu.Where(e => e.CzyAktywna).ToList();
@@ -450,6 +466,11 @@ namespace ProFak.UI
 				var treeNodeRok = new TreeNode { Name = "R:" + rok, Text = rok.ToString() };
 				treeNode.Nodes.Add(treeNodeRok);
 			}
+		}
+
+		private void menu_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right) PokazMenuKontekstowe(e.Node);
 		}
 	}
 }

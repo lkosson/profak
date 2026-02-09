@@ -56,6 +56,7 @@ namespace ProFak.UI
 			menu.BeforeExpand += menu_BeforeExpand;
 			menu.AfterExpand += menu_AfterExpand;
 			menu.AfterSelect += menu_AfterSelect;
+			menu.NodeMouseClick += menu_NodeMouseClick;
 			menu.KeyPress += menu_KeyPress;
 			// 
 			// panelZawartosc
