@@ -293,7 +293,8 @@ class Generator
 		uwagi = Regex.Replace(uwagi, @"Data zamówienia: (?<data>[0-9./\-]{8,10})", m => { if (!DateTime.TryParse(m.Groups["data"].Value, out var data)) return "Numer zamówienia: " + m.Groups["data"].Value; zamowienie.DataZamowienia = data; return ""; });
 		uwagi = Regex.Replace(uwagi, @"Przyczyna korekty: (?<tekst>.+)", m => { ksefFaktura.Fa.PrzyczynaKorekty = m.Groups["tekst"].Value.Trim(); return ""; });
 		uwagi = Regex.Replace(uwagi, @"(Mechanizm podzielonej płatności|Split payment)", m => { ksefFaktura.Fa.Adnotacje.P_18A = TWybor1_2.Item1; return ""; });
-		
+		uwagi = Regex.Replace(uwagi, @"(?<nazwa>.+): (?<tekst>.+)", m => { ksefFaktura.Fa.DodatkowyOpis.Add(new TKluczWartosc() { Klucz = m.Groups["nazwa"].Value, Wartosc = m.Groups["tekst"].Value.Trim() }); return ""; });
+
 		uwagi = uwagi.Trim(' ', '\r', '\n', '\t');
 		if (!String.IsNullOrEmpty(uwagi)) ksefFaktura.Fa.DodatkowyOpis.Add(new TKluczWartosc() { Klucz = "Uwagi", Wartosc = uwagi });
 		if (!String.IsNullOrEmpty(zamowienie.NrZamowienia) || zamowienie.DataZamowieniaValueSpecified)
