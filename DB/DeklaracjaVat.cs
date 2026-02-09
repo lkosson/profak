@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -65,5 +66,111 @@ namespace ProFak.DB
 			|| CzyPasuje(NaliczonyRazem, fraza)
 			|| CzyPasuje(DoWplaty, fraza)
 			|| CzyPasuje(DoPrzeniesienia, fraza);
+
+		public void WybierzFaktury(Baza baza)
+		{
+			var nieaktualneFaktury = baza.Faktury.Where(faktura => faktura.DeklaracjaVatId == Id).ToDictionary(faktura => faktura.Ref);
+			var zmienioneFaktury = new List<Faktura>();
+
+			var faktury = baza.Faktury
+				.Where(faktura => faktura.DataSprzedazy < Miesiac.Date.AddMonths(1) && (faktura.DeklaracjaVatId == null || faktura.DeklaracjaVatId == Id))
+				.ToList();
+
+			foreach (var faktura in faktury)
+			{
+				if (!nieaktualneFaktury.Remove(faktura))
+				{
+					faktura.DeklaracjaVatRef = this;
+					zmienioneFaktury.Add(faktura);
+				}
+			}
+
+			foreach (var faktura in nieaktualneFaktury.Values)
+			{
+				faktura.DeklaracjaVatRef = default;
+				zmienioneFaktury.Add(faktura);
+			}
+
+			baza.Zapisz(zmienioneFaktury);
+		}
+
+		public void Przelicz(Baza baza)
+		{
+			NettoZW = 0;
+			Netto0 = 0;
+			Netto5 = 0;
+			Netto8 = 0;
+			Netto23 = 0;
+			NettoWDT = 0;
+			NettoWNT = 0;
+
+			Nalezny5 = 0;
+			Nalezny8 = 0;
+			Nalezny23 = 0;
+			NaleznyWNT = 0;
+
+			NettoSrodkiTrwale = 0;
+			NettoPozostale = 0;
+
+			NaliczonyPrzeniesiony = 0;
+			NaliczonySrodkiTrwale = 0;
+			NaliczonyPozostale = 0;
+
+			var poprzedniaDeklaracja = baza.DeklaracjeVat
+				.Where(deklaracja => deklaracja.Miesiac < Miesiac)
+				.OrderByDescending(deklaracja => deklaracja.Miesiac)
+				.FirstOrDefault();
+
+			if (poprzedniaDeklaracja != null) NaliczonyPrzeniesiony = poprzedniaDeklaracja.DoPrzeniesienia;
+
+			var faktury = baza.Faktury
+				.Where(faktura => faktura.DeklaracjaVatId == Id)
+				.Include(faktura => faktura.Pozycje).ThenInclude(pozycja => pozycja.StawkaVat)
+				.ToList();
+
+			foreach (var faktura in faktury)
+			{
+				if (faktura.CzySprzedaz)
+				{
+					foreach (var pozycja in faktura.Pozycje)
+					{
+						if (pozycja.StawkaVat == null) continue;
+						if (faktura.CzyWDT) { NettoWDT += pozycja.WartoscNetto; }
+						else if (pozycja.StawkaVat.Skrot.ToLower().Contains("zw")) { NettoZW += pozycja.WartoscNetto; }
+						else if (pozycja.StawkaVat.Wartosc == 0) { Netto0 += pozycja.WartoscNetto; }
+						else if (pozycja.StawkaVat.Wartosc <= 5) { Netto5 += pozycja.WartoscNetto; Nalezny5 += pozycja.WartoscVat * faktura.KursWaluty; }
+						else if (pozycja.StawkaVat.Wartosc <= 8) { Netto8 += pozycja.WartoscNetto; Nalezny8 += pozycja.WartoscVat * faktura.KursWaluty; }
+						else { Netto23 += pozycja.WartoscNetto; Nalezny23 += pozycja.WartoscVat * faktura.KursWaluty; }
+					}
+				}
+				else if (faktura.CzyZakup)
+				{
+					if (faktura.CzyWNT) { NettoWNT += faktura.RazemNetto; NaleznyWNT += faktura.VatNaliczony * faktura.KursWaluty; }
+					/* bez else */
+					if (faktura.CzyZakupSrodkowTrwalych) { NettoSrodkiTrwale += faktura.RazemNetto; NaliczonySrodkiTrwale += faktura.VatNaliczony * faktura.KursWaluty; }
+					else { NettoPozostale += faktura.RazemNetto; NaliczonyPozostale += faktura.VatNaliczony * faktura.KursWaluty; }
+				}
+			}
+
+			NettoZW = NettoZW.Zaokragl();
+			Netto0 = Netto0.Zaokragl();
+			Netto5 = Netto5.Zaokragl();
+			Netto8 = Netto8.Zaokragl();
+			Netto23 = Netto23.Zaokragl();
+			NettoWDT = NettoWDT.Zaokragl();
+			NettoWNT = NettoWNT.Zaokragl();
+
+			Nalezny5 = Nalezny5.Zaokragl();
+			Nalezny8 = Nalezny8.Zaokragl();
+			Nalezny23 = Nalezny23.Zaokragl();
+			NaleznyWNT = NaleznyWNT.Zaokragl();
+
+			NettoSrodkiTrwale = NettoSrodkiTrwale.Zaokragl();
+			NettoPozostale = NettoPozostale.Zaokragl();
+
+			NaliczonyPrzeniesiony = NaliczonyPrzeniesiony.Zaokragl();
+			NaliczonySrodkiTrwale = NaliczonySrodkiTrwale.Zaokragl();
+			NaliczonyPozostale = NaliczonyPozostale.Zaokragl();
+		}
 	}
 }

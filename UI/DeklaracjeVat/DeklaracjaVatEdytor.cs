@@ -107,112 +107,14 @@ namespace ProFak.UI
 
 		private void WybierzFaktury()
 		{
-			var nieaktualneFaktury = Kontekst.Baza.Faktury.Where(faktura => faktura.DeklaracjaVatId == Rekord.Id).ToDictionary(faktura => faktura.Ref);
-			var zmienioneFaktury = new List<Faktura>();
-
-			var faktury = Kontekst.Baza.Faktury
-				.Where(faktura => faktura.DataSprzedazy < Rekord.Miesiac.Date.AddMonths(1) && (faktura.DeklaracjaVatId == null || faktura.DeklaracjaVatId == Rekord.Id))
-				.ToList();
-
-			foreach (var faktura in faktury)
-			{
-				if (!nieaktualneFaktury.Remove(faktura))
-				{
-					faktura.DeklaracjaVatRef = Rekord;
-					zmienioneFaktury.Add(faktura);
-				}
-			}
-
-			foreach (var faktura in nieaktualneFaktury.Values)
-			{
-				faktura.DeklaracjaVatRef = default;
-				zmienioneFaktury.Add(faktura);
-			}
-
-			Kontekst.Baza.Zapisz(zmienioneFaktury);
-
+			Rekord.WybierzFaktury(Kontekst.Baza);
 			fakturySprzedazy.Spis.PrzeladujBezpiecznie();
 			fakturyZakupu.Spis.PrzeladujBezpiecznie();
 		}
 
 		private void Przelicz()
 		{
-			Rekord.NettoZW = 0;
-			Rekord.Netto0 = 0;
-			Rekord.Netto5 = 0;
-			Rekord.Netto8 = 0;
-			Rekord.Netto23 = 0;
-			Rekord.NettoWDT = 0;
-			Rekord.NettoWNT = 0;
-
-			Rekord.Nalezny5 = 0;
-			Rekord.Nalezny8 = 0;
-			Rekord.Nalezny23 = 0;
-			Rekord.NaleznyWNT = 0;
-
-			Rekord.NettoSrodkiTrwale = 0;
-			Rekord.NettoPozostale = 0;
-
-			Rekord.NaliczonyPrzeniesiony = 0;
-			Rekord.NaliczonySrodkiTrwale = 0;
-			Rekord.NaliczonyPozostale = 0;
-
-			var poprzedniaDeklaracja = Kontekst.Baza.DeklaracjeVat
-				.Where(deklaracja => deklaracja.Miesiac < Rekord.Miesiac)
-				.OrderByDescending(deklaracja => deklaracja.Miesiac)
-				.FirstOrDefault();
-
-			if (poprzedniaDeklaracja != null) Rekord.NaliczonyPrzeniesiony = poprzedniaDeklaracja.DoPrzeniesienia;
-
-			var faktury = Kontekst.Baza.Faktury
-				.Where(faktura => faktura.DeklaracjaVatId == Rekord.Id)
-				.Include(faktura => faktura.Pozycje).ThenInclude(pozycja => pozycja.StawkaVat)
-				.ToList();
-
-			foreach (var faktura in faktury)
-			{
-				if (faktura.CzySprzedaz)
-				{
-					foreach (var pozycja in faktura.Pozycje)
-					{
-						if (pozycja.StawkaVat == null) continue;
-						if (faktura.CzyWDT) { Rekord.NettoWDT += pozycja.WartoscNetto; }
-						else if (pozycja.StawkaVat.Skrot.ToLower().Contains("zw")) { Rekord.NettoZW += pozycja.WartoscNetto; }
-						else if (pozycja.StawkaVat.Wartosc == 0) { Rekord.Netto0 += pozycja.WartoscNetto; }
-						else if (pozycja.StawkaVat.Wartosc <= 5) { Rekord.Netto5 += pozycja.WartoscNetto; Rekord.Nalezny5 += pozycja.WartoscVat * faktura.KursWaluty; }
-						else if (pozycja.StawkaVat.Wartosc <= 8) { Rekord.Netto8 += pozycja.WartoscNetto; Rekord.Nalezny8 += pozycja.WartoscVat * faktura.KursWaluty; }
-						else { Rekord.Netto23 += pozycja.WartoscNetto; Rekord.Nalezny23 += pozycja.WartoscVat * faktura.KursWaluty; }
-					}
-				}
-				else if (faktura.CzyZakup)
-				{
-					if (faktura.CzyWNT) { Rekord.NettoWNT += faktura.RazemNetto; Rekord.NaleznyWNT += faktura.VatNaliczony * faktura.KursWaluty; }
-					/* bez else */
-					if (faktura.CzyZakupSrodkowTrwalych) { Rekord.NettoSrodkiTrwale += faktura.RazemNetto; Rekord.NaliczonySrodkiTrwale += faktura.VatNaliczony * faktura.KursWaluty; }
-					else { Rekord.NettoPozostale += faktura.RazemNetto; Rekord.NaliczonyPozostale += faktura.VatNaliczony * faktura.KursWaluty; }
-				}
-			}
-
-			Rekord.NettoZW = Rekord.NettoZW.Zaokragl();
-			Rekord.Netto0 = Rekord.Netto0.Zaokragl();
-			Rekord.Netto5 = Rekord.Netto5.Zaokragl();
-			Rekord.Netto8 = Rekord.Netto8.Zaokragl();
-			Rekord.Netto23 = Rekord.Netto23.Zaokragl();
-			Rekord.NettoWDT = Rekord.NettoWDT.Zaokragl();
-			Rekord.NettoWNT = Rekord.NettoWNT.Zaokragl();
-
-			Rekord.Nalezny5 = Rekord.Nalezny5.Zaokragl();
-			Rekord.Nalezny8 = Rekord.Nalezny8.Zaokragl();
-			Rekord.Nalezny23 = Rekord.Nalezny23.Zaokragl();
-			Rekord.NaleznyWNT = Rekord.NaleznyWNT.Zaokragl();
-
-			Rekord.NettoSrodkiTrwale = Rekord.NettoSrodkiTrwale.Zaokragl();
-			Rekord.NettoPozostale = Rekord.NettoPozostale.Zaokragl();
-
-			Rekord.NaliczonyPrzeniesiony = Rekord.NaliczonyPrzeniesiony.Zaokragl();
-			Rekord.NaliczonySrodkiTrwale = Rekord.NaliczonySrodkiTrwale.Zaokragl();
-			Rekord.NaliczonyPozostale = Rekord.NaliczonyPozostale.Zaokragl();
-
+			Rekord.Przelicz(Kontekst.Baza);
 			kontroler.AktualizujKontrolki();
 		}
 	}
