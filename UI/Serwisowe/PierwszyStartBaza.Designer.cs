@@ -29,210 +29,205 @@ namespace ProFak.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.flowLayoutPanelZawartosc = new System.Windows.Forms.FlowLayoutPanel();
-			this.label1 = new System.Windows.Forms.Label();
-			this.label3 = new System.Windows.Forms.Label();
-			this.radioButtonNowaPrywatnaBaza = new System.Windows.Forms.RadioButton();
-			this.radioButtonNowaPublicznaBaza = new System.Windows.Forms.RadioButton();
-			this.radioButtonNowaLokalnaBaza = new System.Windows.Forms.RadioButton();
-			this.radioButtonZewnetrznaBaza = new System.Windows.Forms.RadioButton();
-			this.radioButtonBazaDemo = new System.Windows.Forms.RadioButton();
-			this.radioButtonOdtworzKopie = new System.Windows.Forms.RadioButton();
-			this.flowLayoutPanelStopka = new System.Windows.Forms.FlowLayoutPanel();
-			this.buttonDalej = new System.Windows.Forms.Button();
-			this.progressBar = new System.Windows.Forms.ProgressBar();
-			this.labelStatus = new System.Windows.Forms.Label();
-			this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
-			this.openFileDialogBaza = new System.Windows.Forms.OpenFileDialog();
-			this.openFileDialogBackup = new System.Windows.Forms.OpenFileDialog();
-			this.flowLayoutPanelZawartosc.SuspendLayout();
-			this.flowLayoutPanelStopka.SuspendLayout();
-			this.SuspendLayout();
+			flowLayoutPanelZawartosc = new System.Windows.Forms.FlowLayoutPanel();
+			label1 = new System.Windows.Forms.Label();
+			label3 = new System.Windows.Forms.Label();
+			radioButtonNowaPrywatnaBaza = new System.Windows.Forms.RadioButton();
+			radioButtonNowaPublicznaBaza = new System.Windows.Forms.RadioButton();
+			radioButtonNowaLokalnaBaza = new System.Windows.Forms.RadioButton();
+			radioButtonZewnetrznaBaza = new System.Windows.Forms.RadioButton();
+			radioButtonBazaDemo = new System.Windows.Forms.RadioButton();
+			radioButtonOdtworzKopie = new System.Windows.Forms.RadioButton();
+			flowLayoutPanelStopka = new System.Windows.Forms.FlowLayoutPanel();
+			buttonDalej = new System.Windows.Forms.Button();
+			progressBar = new System.Windows.Forms.ProgressBar();
+			labelStatus = new System.Windows.Forms.Label();
+			backgroundWorker = new System.ComponentModel.BackgroundWorker();
+			openFileDialogBaza = new System.Windows.Forms.OpenFileDialog();
+			openFileDialogBackup = new System.Windows.Forms.OpenFileDialog();
+			flowLayoutPanelZawartosc.SuspendLayout();
+			flowLayoutPanelStopka.SuspendLayout();
+			SuspendLayout();
 			// 
 			// flowLayoutPanelZawartosc
 			// 
-			this.flowLayoutPanelZawartosc.AutoSize = true;
-			this.flowLayoutPanelZawartosc.Controls.Add(this.label1);
-			this.flowLayoutPanelZawartosc.Controls.Add(this.label3);
-			this.flowLayoutPanelZawartosc.Controls.Add(this.radioButtonNowaPrywatnaBaza);
-			this.flowLayoutPanelZawartosc.Controls.Add(this.radioButtonNowaPublicznaBaza);
-			this.flowLayoutPanelZawartosc.Controls.Add(this.radioButtonNowaLokalnaBaza);
-			this.flowLayoutPanelZawartosc.Controls.Add(this.radioButtonZewnetrznaBaza);
-			this.flowLayoutPanelZawartosc.Controls.Add(this.radioButtonBazaDemo);
-			this.flowLayoutPanelZawartosc.Controls.Add(this.radioButtonOdtworzKopie);
-			this.flowLayoutPanelZawartosc.Controls.Add(this.flowLayoutPanelStopka);
-			this.flowLayoutPanelZawartosc.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanelZawartosc.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-			this.flowLayoutPanelZawartosc.Location = new System.Drawing.Point(0, 0);
-			this.flowLayoutPanelZawartosc.Name = "flowLayoutPanelZawartosc";
-			this.flowLayoutPanelZawartosc.Padding = new System.Windows.Forms.Padding(8);
-			this.flowLayoutPanelZawartosc.Size = new System.Drawing.Size(585, 275);
-			this.flowLayoutPanelZawartosc.TabIndex = 0;
-			this.flowLayoutPanelZawartosc.WrapContents = false;
+			flowLayoutPanelZawartosc.AutoSize = true;
+			flowLayoutPanelZawartosc.Controls.Add(label1);
+			flowLayoutPanelZawartosc.Controls.Add(label3);
+			flowLayoutPanelZawartosc.Controls.Add(radioButtonNowaPrywatnaBaza);
+			flowLayoutPanelZawartosc.Controls.Add(radioButtonNowaPublicznaBaza);
+			flowLayoutPanelZawartosc.Controls.Add(radioButtonNowaLokalnaBaza);
+			flowLayoutPanelZawartosc.Controls.Add(radioButtonZewnetrznaBaza);
+			flowLayoutPanelZawartosc.Controls.Add(radioButtonBazaDemo);
+			flowLayoutPanelZawartosc.Controls.Add(radioButtonOdtworzKopie);
+			flowLayoutPanelZawartosc.Controls.Add(flowLayoutPanelStopka);
+			flowLayoutPanelZawartosc.Dock = System.Windows.Forms.DockStyle.Fill;
+			flowLayoutPanelZawartosc.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+			flowLayoutPanelZawartosc.Location = new System.Drawing.Point(0, 0);
+			flowLayoutPanelZawartosc.Name = "flowLayoutPanelZawartosc";
+			flowLayoutPanelZawartosc.Padding = new System.Windows.Forms.Padding(8);
+			flowLayoutPanelZawartosc.Size = new System.Drawing.Size(585, 275);
+			flowLayoutPanelZawartosc.TabIndex = 0;
+			flowLayoutPanelZawartosc.WrapContents = false;
 			// 
 			// label1
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(11, 11);
-			this.label1.Margin = new System.Windows.Forms.Padding(3);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(551, 30);
-			this.label1.TabIndex = 0;
-			this.label1.Text = "Wygląda na to, że program jeszcze nie był uruchamiany na tym komputerze. Przed ro" +
-    "zpoczęciem pracy konieczne jest przygotowanie bazy danych.";
+			label1.AutoSize = true;
+			label1.Location = new System.Drawing.Point(11, 11);
+			label1.Margin = new System.Windows.Forms.Padding(3);
+			label1.Name = "label1";
+			label1.Size = new System.Drawing.Size(551, 30);
+			label1.TabIndex = 0;
+			label1.Text = "Wygląda na to, że program jeszcze nie był uruchamiany na tym komputerze. Przed rozpoczęciem pracy konieczne jest przygotowanie bazy danych.";
 			// 
 			// label3
 			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(11, 47);
-			this.label3.Margin = new System.Windows.Forms.Padding(3);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(551, 30);
-			this.label3.TabIndex = 0;
-			this.label3.Text = "Zaznacz jeden z poniższych punktów i kliknij \"Dalej\". Jeśli nie wiesz co wybrać i" +
-    " chcesz po prostu zacząć korzystać z programu, zostaw domyślny wybór bez zmian i" +
-    " kliknij \"Dalej\".";
+			label3.AutoSize = true;
+			label3.Location = new System.Drawing.Point(11, 47);
+			label3.Margin = new System.Windows.Forms.Padding(3);
+			label3.Name = "label3";
+			label3.Size = new System.Drawing.Size(551, 30);
+			label3.TabIndex = 0;
+			label3.Text = "Zaznacz jeden z poniższych punktów i kliknij \"Dalej\". Jeśli nie wiesz co wybrać i chcesz po prostu zacząć korzystać z programu, zostaw domyślny wybór bez zmian i kliknij \"Dalej\".";
 			// 
 			// radioButtonNowaPrywatnaBaza
 			// 
-			this.radioButtonNowaPrywatnaBaza.AutoSize = true;
-			this.radioButtonNowaPrywatnaBaza.Checked = true;
-			this.radioButtonNowaPrywatnaBaza.Location = new System.Drawing.Point(11, 83);
-			this.radioButtonNowaPrywatnaBaza.Name = "radioButtonNowaPrywatnaBaza";
-			this.radioButtonNowaPrywatnaBaza.Size = new System.Drawing.Size(490, 19);
-			this.radioButtonNowaPrywatnaBaza.TabIndex = 1;
-			this.radioButtonNowaPrywatnaBaza.TabStop = true;
-			this.radioButtonNowaPrywatnaBaza.Text = "Utwórz nową, pustą bazę danych, dostępną tylko dla bieżącego użytkownika komputer" +
-    "a.";
-			this.radioButtonNowaPrywatnaBaza.UseVisualStyleBackColor = true;
+			radioButtonNowaPrywatnaBaza.AutoSize = true;
+			radioButtonNowaPrywatnaBaza.Checked = true;
+			radioButtonNowaPrywatnaBaza.Location = new System.Drawing.Point(11, 83);
+			radioButtonNowaPrywatnaBaza.Name = "radioButtonNowaPrywatnaBaza";
+			radioButtonNowaPrywatnaBaza.Size = new System.Drawing.Size(490, 19);
+			radioButtonNowaPrywatnaBaza.TabIndex = 1;
+			radioButtonNowaPrywatnaBaza.TabStop = true;
+			radioButtonNowaPrywatnaBaza.Text = "Utwórz nową, pustą bazę danych, dostępną tylko dla bieżącego użytkownika komputera.";
+			radioButtonNowaPrywatnaBaza.UseVisualStyleBackColor = true;
 			// 
 			// radioButtonNowaPublicznaBaza
 			// 
-			this.radioButtonNowaPublicznaBaza.AutoSize = true;
-			this.radioButtonNowaPublicznaBaza.Location = new System.Drawing.Point(11, 108);
-			this.radioButtonNowaPublicznaBaza.Name = "radioButtonNowaPublicznaBaza";
-			this.radioButtonNowaPublicznaBaza.Size = new System.Drawing.Size(501, 19);
-			this.radioButtonNowaPublicznaBaza.TabIndex = 2;
-			this.radioButtonNowaPublicznaBaza.Text = "Utwórz nową, pustą bazę danych, dostępną dla wszystkich użytkowników tego kompute" +
-    "ra.";
-			this.radioButtonNowaPublicznaBaza.UseVisualStyleBackColor = true;
+			radioButtonNowaPublicznaBaza.AutoSize = true;
+			radioButtonNowaPublicznaBaza.Location = new System.Drawing.Point(11, 108);
+			radioButtonNowaPublicznaBaza.Name = "radioButtonNowaPublicznaBaza";
+			radioButtonNowaPublicznaBaza.Size = new System.Drawing.Size(501, 19);
+			radioButtonNowaPublicznaBaza.TabIndex = 2;
+			radioButtonNowaPublicznaBaza.Text = "Utwórz nową, pustą bazę danych, dostępną dla wszystkich użytkowników tego komputera.";
+			radioButtonNowaPublicznaBaza.UseVisualStyleBackColor = true;
 			// 
 			// radioButtonNowaLokalnaBaza
 			// 
-			this.radioButtonNowaLokalnaBaza.AutoSize = true;
-			this.radioButtonNowaLokalnaBaza.Location = new System.Drawing.Point(11, 133);
-			this.radioButtonNowaLokalnaBaza.Name = "radioButtonNowaLokalnaBaza";
-			this.radioButtonNowaLokalnaBaza.Size = new System.Drawing.Size(472, 19);
-			this.radioButtonNowaLokalnaBaza.TabIndex = 3;
-			this.radioButtonNowaLokalnaBaza.Text = "Utwórz nową, pustą bazę danych w katalogu w którym został uruchomiony program.";
-			this.radioButtonNowaLokalnaBaza.UseVisualStyleBackColor = true;
+			radioButtonNowaLokalnaBaza.AutoSize = true;
+			radioButtonNowaLokalnaBaza.Location = new System.Drawing.Point(11, 133);
+			radioButtonNowaLokalnaBaza.Name = "radioButtonNowaLokalnaBaza";
+			radioButtonNowaLokalnaBaza.Size = new System.Drawing.Size(472, 19);
+			radioButtonNowaLokalnaBaza.TabIndex = 3;
+			radioButtonNowaLokalnaBaza.Text = "Utwórz nową, pustą bazę danych w katalogu w którym został uruchomiony program.";
+			radioButtonNowaLokalnaBaza.UseVisualStyleBackColor = true;
 			// 
 			// radioButtonZewnetrznaBaza
 			// 
-			this.radioButtonZewnetrznaBaza.AutoSize = true;
-			this.radioButtonZewnetrznaBaza.Location = new System.Drawing.Point(11, 158);
-			this.radioButtonZewnetrznaBaza.Name = "radioButtonZewnetrznaBaza";
-			this.radioButtonZewnetrznaBaza.Size = new System.Drawing.Size(461, 19);
-			this.radioButtonZewnetrznaBaza.TabIndex = 3;
-			this.radioButtonZewnetrznaBaza.Text = "Uruchom program korzystając z zewnętrznej bazy danych we wskazanym katalogu.";
-			this.radioButtonZewnetrznaBaza.UseVisualStyleBackColor = true;
+			radioButtonZewnetrznaBaza.AutoSize = true;
+			radioButtonZewnetrznaBaza.Location = new System.Drawing.Point(11, 158);
+			radioButtonZewnetrznaBaza.Name = "radioButtonZewnetrznaBaza";
+			radioButtonZewnetrznaBaza.Size = new System.Drawing.Size(461, 19);
+			radioButtonZewnetrznaBaza.TabIndex = 3;
+			radioButtonZewnetrznaBaza.Text = "Uruchom program korzystając z zewnętrznej bazy danych we wskazanym katalogu.";
+			radioButtonZewnetrznaBaza.UseVisualStyleBackColor = true;
 			// 
 			// radioButtonBazaDemo
 			// 
-			this.radioButtonBazaDemo.AutoSize = true;
-			this.radioButtonBazaDemo.Location = new System.Drawing.Point(11, 183);
-			this.radioButtonBazaDemo.Name = "radioButtonBazaDemo";
-			this.radioButtonBazaDemo.Size = new System.Drawing.Size(563, 19);
-			this.radioButtonBazaDemo.TabIndex = 3;
-			this.radioButtonBazaDemo.Text = "Uruchom program w trybie demonstracyjnym z przykładowymi danymi, w tymczasowej ba" +
-    "zie danych.";
-			this.radioButtonBazaDemo.UseVisualStyleBackColor = true;
+			radioButtonBazaDemo.AutoSize = true;
+			radioButtonBazaDemo.Location = new System.Drawing.Point(11, 183);
+			radioButtonBazaDemo.Name = "radioButtonBazaDemo";
+			radioButtonBazaDemo.Size = new System.Drawing.Size(563, 19);
+			radioButtonBazaDemo.TabIndex = 3;
+			radioButtonBazaDemo.Text = "Uruchom program w trybie demonstracyjnym z przykładowymi danymi, w tymczasowej bazie danych.";
+			radioButtonBazaDemo.UseVisualStyleBackColor = true;
 			// 
 			// radioButtonOdtworzKopie
 			// 
-			this.radioButtonOdtworzKopie.AutoSize = true;
-			this.radioButtonOdtworzKopie.Location = new System.Drawing.Point(11, 208);
-			this.radioButtonOdtworzKopie.Name = "radioButtonOdtworzKopie";
-			this.radioButtonOdtworzKopie.Size = new System.Drawing.Size(346, 19);
-			this.radioButtonOdtworzKopie.TabIndex = 3;
-			this.radioButtonOdtworzKopie.Text = "Odtwórz bazę danych ze wskazanego pliku z kopią zapasową.";
-			this.radioButtonOdtworzKopie.UseVisualStyleBackColor = true;
+			radioButtonOdtworzKopie.AutoSize = true;
+			radioButtonOdtworzKopie.Location = new System.Drawing.Point(11, 208);
+			radioButtonOdtworzKopie.Name = "radioButtonOdtworzKopie";
+			radioButtonOdtworzKopie.Size = new System.Drawing.Size(346, 19);
+			radioButtonOdtworzKopie.TabIndex = 3;
+			radioButtonOdtworzKopie.Text = "Odtwórz bazę danych ze wskazanego pliku z kopią zapasową.";
+			radioButtonOdtworzKopie.UseVisualStyleBackColor = true;
 			// 
 			// flowLayoutPanelStopka
 			// 
-			this.flowLayoutPanelStopka.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.flowLayoutPanelStopka.Controls.Add(this.buttonDalej);
-			this.flowLayoutPanelStopka.Controls.Add(this.progressBar);
-			this.flowLayoutPanelStopka.Controls.Add(this.labelStatus);
-			this.flowLayoutPanelStopka.Location = new System.Drawing.Point(11, 233);
-			this.flowLayoutPanelStopka.Name = "flowLayoutPanelStopka";
-			this.flowLayoutPanelStopka.Size = new System.Drawing.Size(563, 29);
-			this.flowLayoutPanelStopka.TabIndex = 5;
-			this.flowLayoutPanelStopka.WrapContents = false;
+			flowLayoutPanelStopka.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			flowLayoutPanelStopka.Controls.Add(buttonDalej);
+			flowLayoutPanelStopka.Controls.Add(progressBar);
+			flowLayoutPanelStopka.Controls.Add(labelStatus);
+			flowLayoutPanelStopka.Location = new System.Drawing.Point(11, 233);
+			flowLayoutPanelStopka.Name = "flowLayoutPanelStopka";
+			flowLayoutPanelStopka.Size = new System.Drawing.Size(563, 29);
+			flowLayoutPanelStopka.TabIndex = 5;
+			flowLayoutPanelStopka.WrapContents = false;
 			// 
 			// buttonDalej
 			// 
-			this.buttonDalej.Location = new System.Drawing.Point(3, 3);
-			this.buttonDalej.Name = "buttonDalej";
-			this.buttonDalej.Size = new System.Drawing.Size(75, 23);
-			this.buttonDalej.TabIndex = 4;
-			this.buttonDalej.Text = "Dalej";
-			this.buttonDalej.UseVisualStyleBackColor = true;
-			this.buttonDalej.Click += new System.EventHandler(this.buttonDalej_Click);
+			buttonDalej.Location = new System.Drawing.Point(3, 3);
+			buttonDalej.Name = "buttonDalej";
+			buttonDalej.Size = new System.Drawing.Size(75, 23);
+			buttonDalej.TabIndex = 4;
+			buttonDalej.Text = "Dalej";
+			buttonDalej.UseVisualStyleBackColor = true;
+			buttonDalej.Click += buttonDalej_Click;
 			// 
 			// progressBar
 			// 
-			this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.progressBar.Location = new System.Drawing.Point(84, 3);
-			this.progressBar.Name = "progressBar";
-			this.progressBar.Size = new System.Drawing.Size(105, 23);
-			this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-			this.progressBar.TabIndex = 5;
-			this.progressBar.Visible = false;
+			progressBar.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			progressBar.Location = new System.Drawing.Point(84, 3);
+			progressBar.Name = "progressBar";
+			progressBar.Size = new System.Drawing.Size(105, 23);
+			progressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+			progressBar.TabIndex = 5;
+			progressBar.Visible = false;
 			// 
 			// labelStatus
 			// 
-			this.labelStatus.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelStatus.AutoSize = true;
-			this.labelStatus.Location = new System.Drawing.Point(195, 7);
-			this.labelStatus.Name = "labelStatus";
-			this.labelStatus.Size = new System.Drawing.Size(38, 15);
-			this.labelStatus.TabIndex = 6;
-			this.labelStatus.Text = "label2";
-			this.labelStatus.Visible = false;
+			labelStatus.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			labelStatus.AutoSize = true;
+			labelStatus.Location = new System.Drawing.Point(195, 7);
+			labelStatus.Name = "labelStatus";
+			labelStatus.Size = new System.Drawing.Size(38, 15);
+			labelStatus.TabIndex = 6;
+			labelStatus.Text = "label2";
+			labelStatus.Visible = false;
 			// 
 			// backgroundWorker
 			// 
-			this.backgroundWorker.WorkerReportsProgress = true;
-			this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
-			this.backgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_ProgressChanged);
-			this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
+			backgroundWorker.WorkerReportsProgress = true;
+			backgroundWorker.DoWork += backgroundWorker_DoWork;
+			backgroundWorker.ProgressChanged += backgroundWorker_ProgressChanged;
+			backgroundWorker.RunWorkerCompleted += backgroundWorker_RunWorkerCompleted;
 			// 
 			// openFileDialogBaza
 			// 
-			this.openFileDialogBaza.FileName = "profak.sqlite3";
-			this.openFileDialogBaza.Filter = "Baza danych ProFak (profak.sqlite3)|profak.sqlite3|Wszystkie pliki (*.*)|*.*";
-			this.openFileDialogBaza.RestoreDirectory = true;
+			openFileDialogBaza.FileName = "profak.sqlite3";
+			openFileDialogBaza.Filter = "Baza danych ProFak (profak.sqlite3)|profak.sqlite3|Wszystkie pliki (*.*)|*.*";
+			openFileDialogBaza.RestoreDirectory = true;
 			// 
 			// openFileDialogBackup
 			// 
-			this.openFileDialogBackup.Filter = "Kopia zapasowa programu ProFak (*.probak)|*.probak|Wszystkie pliki (*.*)|*.*";
-			this.openFileDialogBackup.RestoreDirectory = true;
+			openFileDialogBackup.Filter = "Kopia zapasowa programu ProFak (*.probak)|*.probak|Wszystkie pliki (*.*)|*.*";
+			openFileDialogBackup.RestoreDirectory = true;
 			// 
 			// PierwszyStartBaza
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(585, 275);
-			this.Controls.Add(this.flowLayoutPanelZawartosc);
-			this.Name = "PierwszyStartBaza";
-			this.Text = "ProFak - Pierwsze uruchomienie";
-			this.flowLayoutPanelZawartosc.ResumeLayout(false);
-			this.flowLayoutPanelZawartosc.PerformLayout();
-			this.flowLayoutPanelStopka.ResumeLayout(false);
-			this.flowLayoutPanelStopka.PerformLayout();
-			this.ResumeLayout(false);
-			this.PerformLayout();
+			AcceptButton = buttonDalej;
+			AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+			AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			ClientSize = new System.Drawing.Size(585, 275);
+			Controls.Add(flowLayoutPanelZawartosc);
+			Name = "PierwszyStartBaza";
+			Text = "ProFak - Pierwsze uruchomienie";
+			flowLayoutPanelZawartosc.ResumeLayout(false);
+			flowLayoutPanelZawartosc.PerformLayout();
+			flowLayoutPanelStopka.ResumeLayout(false);
+			flowLayoutPanelStopka.PerformLayout();
+			ResumeLayout(false);
+			PerformLayout();
 
 		}
 
