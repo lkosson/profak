@@ -275,6 +275,35 @@ namespace ProFak.DB
 #endif
 		}
 
+		public bool CzyZablokowana()
+		{
+#if !SQLSERVER
+			if (Database.CurrentTransaction != null) return false;
+			if (Sciezka == null) return false;
+			try
+			{
+				using var connection = new SqliteConnection(PrzygotujParametryPolaczenia());
+				connection.Open();
+				using (var command = connection.CreateCommand())
+				{
+					command.CommandText = "BEGIN IMMEDIATE TRANSACTION";
+					command.CommandTimeout = -1;
+					command.ExecuteNonQuery();
+				}
+				using (var command = connection.CreateCommand())
+				{
+					command.CommandText = "ROLLBACK";
+					command.ExecuteNonQuery();
+				}
+			}
+			catch (SqliteException se) when (se.SqliteErrorCode == 5)
+			{
+				return true;
+			}
+#endif
+			return false;
+		}
+
 		public TRekord Znajdz<TRekord>(Ref<TRekord> rekordRef)
 			where TRekord : Rekord<TRekord>
 			=> Set<TRekord>().FirstOrDefault(r => r.Id == rekordRef.Id);

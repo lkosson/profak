@@ -577,6 +577,7 @@ namespace ProFak.UI
 
 		private void ZapiszKonfiguracje()
 		{
+			if (Kontekst.Baza.CzyZablokowana()) return;
 			var spis = GetType().Name;
 			var stareKolumny = Kontekst.Baza.KolumnySpisow.Where(e => e.Spis == spis).ToList();
 			Kontekst.Baza.Usun(stareKolumny);

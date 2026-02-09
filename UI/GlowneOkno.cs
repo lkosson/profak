@@ -339,6 +339,7 @@ namespace ProFak.UI
 			if (!menuGotowe) return;
 			if (String.IsNullOrEmpty(treeNode.Name)) return;
 			using var kontekst = new Kontekst();
+			if (kontekst.Baza.CzyZablokowana()) return;
 			using var transakcja = kontekst.Transakcja();
 			var stan = kontekst.Baza.StanyMenu.FirstOrDefault(e => e.Pozycja == treeNode.FullPath);
 			if (stan == null) stan = new StanMenu { Pozycja = treeNode.FullPath };
