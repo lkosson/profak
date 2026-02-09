@@ -104,7 +104,11 @@ namespace ProFak.UI
 			var polecenieSQL = Wezel("Polecenie SQL", "SQL");
 			var bezposredniaEdycja = Wezel("Bezpośrednia edycja", "Tabele");
 			var oProgramie = Wezel("O programie", "OProgramie");
+#if SQLSERVER
+			var serwisowe = Wezel("Serwisowe", "Serwisowe", [numeracja, konfiguracja, usunieteFaktury, polecenieSQL, bezposredniaEdycja, oProgramie]);
+#else
 			var serwisowe = Wezel("Serwisowe", "Serwisowe", [numeracja, konfiguracja, bazaDanych, usunieteFaktury, polecenieSQL, bezposredniaEdycja, oProgramie]);
+#endif
 			menu.Nodes.Clear();
 			menu.Nodes.AddRange([faktury, podatki, kontrahenci, towary, slowniki, serwisowe]);
 		}
