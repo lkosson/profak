@@ -74,7 +74,7 @@ namespace ProFak.UI
 			kontroler.Powiazanie(textBoxOpisZdarzenia, faktura => faktura.OpisZdarzenia);
 			kontroler.Powiazanie(comboBoxProceduraMarzy, faktura => faktura.ProceduraMarzy);
 
-			kontroler.Powiazanie(textBoxKSeFXML, faktura => faktura.XMLKSeF);
+			kontroler.Powiazanie(textBoxKSeFXML, faktura => faktura.XMLKSeFFmt);
 			kontroler.Powiazanie(textBoxNumerKSeF, faktura => faktura.NumerKSeF);
 
 			Wymagane(textBoxDaneNabywcy);

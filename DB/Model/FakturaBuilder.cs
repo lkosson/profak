@@ -74,6 +74,8 @@ namespace ProFak.DB.Model
 			builder.Ignore(e => e.DeklaracjaVatRef);
 			builder.Ignore(e => e.ZaliczkaPitRef);
 
+			builder.Ignore(e => e.XMLKSeFFmt);
+
 			builder.HasOne(e => e.Sprzedawca).WithMany().HasForeignKey(e => e.SprzedawcaId).OnDelete(DeleteBehavior.Restrict);
 			builder.HasOne(e => e.Nabywca).WithMany().HasForeignKey(e => e.NabywcaId).OnDelete(DeleteBehavior.Restrict);
 			builder.HasOne(e => e.FakturaKorygowana).WithMany().HasForeignKey(e => e.FakturaKorygowanaId).OnDelete(DeleteBehavior.Restrict);

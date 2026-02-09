@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ProFak.DB
 {
@@ -129,6 +130,29 @@ namespace ProFak.DB
 		public string NazwaSkroconaNabywcy => Nabywca == null ? "" : Nabywca.Nazwa;
 
 		public IComparable NumerSegmenty => String.Join('/', Numer.Split('/', '-').Where(fragment => !String.IsNullOrWhiteSpace(fragment)).Select(fragment => Regex.IsMatch(fragment, @"\d+") ? fragment.PadLeft(20, '0') : fragment.PadRight(20, ' ')));
+
+		public string XMLKSeFFmt
+		{
+			get
+			{
+				if (CzySprzedaz) return XMLKSeF;
+				if (String.IsNullOrEmpty(XMLKSeF)) return "";
+				try
+				{
+					return XDocument.Parse(XMLKSeF).ToString();
+				}
+				catch
+				{
+				}
+				return XMLKSeF;
+			}
+
+			set
+			{
+				if (!CzySprzedaz) return;
+				XMLKSeF = value;
+			}
+		}
 
 		public void PrzeliczRazem(Baza baza)
 		{
