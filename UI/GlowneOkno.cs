@@ -17,6 +17,7 @@ namespace ProFak.UI
 	{
 		private TreeNode ostatnioWybrany;
 		private bool trwaAktualizacjaMenu;
+		private bool menuGotowe;
 		private ContextMenuStrip menuKontekstowe;
 
 		public GlowneOkno()
@@ -32,7 +33,7 @@ namespace ProFak.UI
 		protected override void OnLoad(EventArgs e)
 		{
 			RozwinMenu();
-
+			menuGotowe = true;
 			base.OnLoad(e);
 		}
 
@@ -98,7 +99,9 @@ namespace ProFak.UI
 			var slowniki = Wezel("Słowniki", "Slowniki", [jednostkiMiar, sposobyPlatnosci, stawkiVat, urzedySkarbowe, waluty]);
 			var numeracja = Wezel("Numeracja", "Numeratory");
 			var konfiguracja = Wezel("Konfiguracja", "Konfiguracja");
+#if !SQLSERVER
 			var bazaDanych = Wezel("Baza danych", "Baza");
+#endif
 			var usunieteFaktury = Wezel("Usunięte faktury", "FakturyUsuniete");
 			var polecenieSQL = Wezel("Polecenie SQL", "SQL");
 			var bezposredniaEdycja = Wezel("Bezpośrednia edycja", "Tabele");
@@ -318,6 +321,7 @@ namespace ProFak.UI
 
 		private void ZapiszStanPozycji(TreeNode treeNode)
 		{
+			if (!menuGotowe) return;
 			if (String.IsNullOrEmpty(treeNode.Name)) return;
 			using var kontekst = new Kontekst();
 			using var transakcja = kontekst.Transakcja();
