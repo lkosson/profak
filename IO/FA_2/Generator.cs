@@ -97,7 +97,7 @@ class Generator
 		ksefFaktura.Fa.Adnotacje.P_16 = TWybor1_2.Item2;
 		ksefFaktura.Fa.Adnotacje.P_17 = TWybor1_2.Item2;
 		ksefFaktura.Fa.Adnotacje.P_18 = TWybor1_2.Item2;
-		ksefFaktura.Fa.Adnotacje.P_18A = (dbFaktura.OpisSposobuPlatnosci ?? "").Contains("podzielon", StringComparison.CurrentCultureIgnoreCase) ? TWybor1_2.Item1 : TWybor1_2.Item2;
+		ksefFaktura.Fa.Adnotacje.P_18A = dbFaktura.CzyMechanizmPodzielonejPlatnosci ? TWybor1_2.Item1 : TWybor1_2.Item2;
 		ksefFaktura.Fa.Adnotacje.Zwolnienie = new FakturaFaAdnotacjeZwolnienie();
 		ksefFaktura.Fa.Adnotacje.Zwolnienie.P_19N = TWybor1.Item1;
 		ksefFaktura.Fa.Adnotacje.NoweSrodkiTransportu = new FakturaFaAdnotacjeNoweSrodkiTransportu();

@@ -89,7 +89,7 @@ namespace ProFak.IO.JPK_FA
 				jpkfaktura.P_5B = faktura.NIPNabywcy;
 				jpkfaktura.P_6 = faktura.DataSprzedazy;
 				jpkfaktura.P_15 = faktura.RazemBrutto;
-				jpkfaktura.P_18A = faktura.OpisSposobuPlatnosci.ToLower().Contains("podzielon");
+				jpkfaktura.P_18A = faktura.CzyMechanizmPodzielonejPlatnosci;
 				if (faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży)
 				{
 					jpkfaktura.RodzajFaktury = JPKFakturaRodzajFaktury.KOREKTA;

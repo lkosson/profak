@@ -123,6 +123,10 @@ namespace ProFak.DB
 
 		public bool CzyZakup => !CzySprzedaz;
 
+		public bool CzyMechanizmPodzielonejPlatnosci => (OpisSposobuPlatnosci ?? "").Contains("podzielon", StringComparison.CurrentCultureIgnoreCase)
+			|| (UwagiPubliczne ?? "").Contains("mechanizm podzielonej płatności", StringComparison.CurrentCultureIgnoreCase)
+			|| (UwagiPubliczne ?? "").Contains("split payment", StringComparison.CurrentCultureIgnoreCase);
+
 		public decimal? RazemRabat => Pozycje == null || !Pozycje.Any(p => p.RabatRazem != 0) ? null : -Pozycje.Sum(p => p.RabatRazem);
 		public string PozycjeFmt => Pozycje == null ? "" : String.Join("  \n", Pozycje.Select(p => p.Opis));
 

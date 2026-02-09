@@ -103,7 +103,7 @@ class Generator
 		ksefFaktura.Fa.Adnotacje.P_16 = TWybor1_2.Item2;
 		ksefFaktura.Fa.Adnotacje.P_17 = TWybor1_2.Item2;
 		ksefFaktura.Fa.Adnotacje.P_18 = TWybor1_2.Item2;
-		ksefFaktura.Fa.Adnotacje.P_18A = (dbFaktura.OpisSposobuPlatnosci ?? "").Contains("podzielon", StringComparison.CurrentCultureIgnoreCase) ? TWybor1_2.Item1 : TWybor1_2.Item2;
+		ksefFaktura.Fa.Adnotacje.P_18A = dbFaktura.CzyMechanizmPodzielonejPlatnosci ? TWybor1_2.Item1 : TWybor1_2.Item2;
 		ksefFaktura.Fa.Adnotacje.Zwolnienie = new FakturaFaAdnotacjeZwolnienie();
 		ksefFaktura.Fa.Adnotacje.Zwolnienie.P_19N = TWybor1.Item1;
 		ksefFaktura.Fa.Adnotacje.NoweSrodkiTransportu = new FakturaFaAdnotacjeNoweSrodkiTransportu();
@@ -292,7 +292,7 @@ class Generator
 		uwagi = Regex.Replace(uwagi, @"(Zamówienie|Nr zamówienia|Numer zamówienia): (?<numer>.+)", m => { zamowienie.NrZamowienia = m.Groups["numer"].Value.Trim(); return ""; });
 		uwagi = Regex.Replace(uwagi, @"Data zamówienia: (?<data>[0-9./\-]{8,10})", m => { if (!DateTime.TryParse(m.Groups["data"].Value, out var data)) return "Numer zamówienia: " + m.Groups["data"].Value; zamowienie.DataZamowienia = data; return ""; });
 		uwagi = Regex.Replace(uwagi, @"Przyczyna korekty: (?<tekst>.+)", m => { ksefFaktura.Fa.PrzyczynaKorekty = m.Groups["tekst"].Value.Trim(); return ""; });
-		uwagi = Regex.Replace(uwagi, @"(Mechanizm podzielonej płatności|Split payment)", m => { ksefFaktura.Fa.Adnotacje.P_18A = TWybor1_2.Item1; return ""; });
+		uwagi = Regex.Replace(uwagi, @"(Mechanizm podzielonej płatności|Split payment)", m => { /* P_18A ustawione wcześniej */ return ""; });
 		uwagi = Regex.Replace(uwagi, @"(?<nazwa>.+): (?<tekst>.+)", m => { ksefFaktura.Fa.DodatkowyOpis.Add(new TKluczWartosc() { Klucz = m.Groups["nazwa"].Value, Wartosc = m.Groups["tekst"].Value.Trim() }); return ""; });
 
 		uwagi = uwagi.Trim(' ', '\r', '\n', '\t');
@@ -528,7 +528,11 @@ class Generator
 				if (ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_3ValueSpecified) { dbFaktura.ProceduraMarzy = ProceduraMarży.PrzedmiotyKolekcjonerskie; uwagi.AppendLine("Procedura marży: przedmioty kolekcjonerskie i antyki"); }
 			}
 
-			if (ksefFaktura.Fa.Adnotacje.P_18A == TWybor1_2.Item1) uwagi.AppendLine("Mechanizm podzielonej płatności");
+			if (ksefFaktura.Fa.Adnotacje.P_18A == TWybor1_2.Item1)
+			{
+				uwagi.AppendLine("Mechanizm podzielonej płatności");
+				if (!String.IsNullOrEmpty(dbFaktura.OpisSposobuPlatnosci)) dbFaktura.OpisSposobuPlatnosci += ", mechanizm podzielonej płatności";
+			}
 			if (ksefFaktura.Fa.Adnotacje.P_16 == TWybor1_2.Item1) uwagi.AppendLine("Metoda kasowa");
 			if (ksefFaktura.Fa.Adnotacje.P_17 == TWybor1_2.Item1) uwagi.AppendLine("Samofakturowanie");
 			if (ksefFaktura.Fa.Adnotacje.P_18 == TWybor1_2.Item1) uwagi.AppendLine("Odwrotne obciążenie");
