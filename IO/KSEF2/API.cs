@@ -121,7 +121,7 @@ class API : IDisposable
 	{
 		if (ksefToken.Length > 120 && ksefToken.StartsWith("MII"))
 		{
-			var certyfikat = new X509Certificate2(Convert.FromBase64String(ksefToken));
+			var certyfikat = X509CertificateLoader.LoadCertificate(Convert.FromBase64String(ksefToken));
 			await UwierzytelnijAsync(nip, certyfikat, cancellationToken);
 			return;
 		}
