@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -16,6 +17,8 @@ namespace ProFak.UI
 		public static bool SkrotyKlawiaturoweZakladek { get; set; } = true;
 		public static bool SkrotyKlawiaturowePrzyciskow { get; set; } = true;
 		public static bool IkonyAkcji { get; set; } = true;
+		public static bool DomyslnyPodgladStrony { get; set; } = true;
+		public static int SzerokoscMenu { get; set; } = 270;
 
 		public static string NazwaAkcji(AdapterAkcji adapter)
 		{
@@ -56,6 +59,18 @@ namespace ProFak.UI
 			var dopasowanie = nazwaPlusSkrot.Match(tekst);
 			if (!dopasowanie.Groups["skrot"].Success) return "";
 			return dopasowanie.Groups["skrot"].Value;
+		}
+
+		public static void DostosujDoWine()
+		{
+			var ntdll = NativeLibrary.Load("ntdll.dll");
+			if (NativeLibrary.TryGetExport(ntdll, "wine_get_version", out _))
+			{
+				SkrotyKlawiaturoweZakladek = false;
+				IkonyAkcji = false;
+				DomyslnyPodgladStrony = false;
+			}
+			NativeLibrary.Free(ntdll);
 		}
 	}
 }

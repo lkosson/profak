@@ -20,7 +20,7 @@ namespace ProFak.UI
 			Text = "ProFak - Wydruk";
 			reportViewer = new Microsoft.Reporting.WinForms.ReportViewer();
 			reportViewer.Dock = DockStyle.Fill;
-			reportViewer.SetDisplayMode(Microsoft.Reporting.WinForms.DisplayMode.PrintLayout);
+			if (Wyglad.DomyslnyPodgladStrony) reportViewer.SetDisplayMode(Microsoft.Reporting.WinForms.DisplayMode.PrintLayout);
 			reportViewer.ZoomMode = Microsoft.Reporting.WinForms.ZoomMode.PageWidth;
 			Controls.Add(reportViewer);
 			this.wydruk = wydruk;

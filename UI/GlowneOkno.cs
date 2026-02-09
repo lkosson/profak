@@ -24,6 +24,7 @@ namespace ProFak.UI
 			InitializeComponent();
 			ZbudujMenu();
 			ZbudujMenuKontekstowe();
+			panelMenu.Width = Wyglad.SzerokoscMenu;
 		}
 
 		public static Icon Ikona => (Icon)new ComponentResourceManager(typeof(GlowneOkno)).GetObject("$this.Icon");

@@ -29,21 +29,21 @@ namespace ProFak.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			var resources = new System.ComponentModel.ComponentResourceManager(typeof(GlowneOkno));
-			panel1 = new System.Windows.Forms.Panel();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GlowneOkno));
+			panelMenu = new System.Windows.Forms.Panel();
 			menu = new Menu();
 			panelZawartosc = new System.Windows.Forms.Panel();
-			panel1.SuspendLayout();
+			panelMenu.SuspendLayout();
 			SuspendLayout();
 			// 
-			// panel1
+			// panelMenu
 			// 
-			panel1.Controls.Add(menu);
-			panel1.Dock = System.Windows.Forms.DockStyle.Left;
-			panel1.Location = new System.Drawing.Point(0, 0);
-			panel1.Name = "panel1";
-			panel1.Size = new System.Drawing.Size(247, 593);
-			panel1.TabIndex = 2;
+			panelMenu.Controls.Add(menu);
+			panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
+			panelMenu.Location = new System.Drawing.Point(0, 0);
+			panelMenu.Name = "panelMenu";
+			panelMenu.Size = new System.Drawing.Size(247, 593);
+			panelMenu.TabIndex = 2;
 			// 
 			// menu
 			// 
@@ -72,19 +72,19 @@ namespace ProFak.UI
 			AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			ClientSize = new System.Drawing.Size(1098, 593);
 			Controls.Add(panelZawartosc);
-			Controls.Add(panel1);
+			Controls.Add(panelMenu);
 			Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
 			KeyPreview = true;
 			Name = "GlowneOkno";
 			Text = "ProFak";
 			WindowState = System.Windows.Forms.FormWindowState.Maximized;
-			panel1.ResumeLayout(false);
+			panelMenu.ResumeLayout(false);
 			ResumeLayout(false);
 		}
 
 		#endregion
 
-		private System.Windows.Forms.Panel panel1;
+		private System.Windows.Forms.Panel panelMenu;
 		private Menu menu;
 		private System.Windows.Forms.Panel panelZawartosc;
 	}
