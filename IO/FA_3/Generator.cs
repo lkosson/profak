@@ -385,7 +385,8 @@ class Generator
 		foreach (var pozycja in ksefFaktura.Fa.FaWiersz)
 		{
 			var dbPozycja = new PozycjaFaktury();
-			dbPozycja.LP = (int)pozycja.NrWierszaFa;
+			if (pozycja.NrWierszaFa > 100 && (int)pozycja.NrWierszaFa > ksefFaktura.Fa.FaWiersz.Count) dbPozycja.LP = dbFaktura.Pozycje.Count + 1;
+			else dbPozycja.LP = (int)pozycja.NrWierszaFa;
 			dbPozycja.Opis = pozycja.P_7 ?? "";
 			dbPozycja.Ilosc = pozycja.P_8B ?? 1;
 			dbPozycja.RabatCena = pozycja.P_10Value;
