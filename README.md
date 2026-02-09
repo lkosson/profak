@@ -36,6 +36,17 @@ ProFak to prosty, darmowy program do fakturowania; skierowany przede wszystkim d
  * Może być uruchamiany z udziału sieciowego
  * Korzysta z plikowej bazy dancyh SQLite
 
+## Zrzuty ekranów
+
+### Okno główne
+![Główne okno programu ze spisem faktur w głównej części, hierarchicznym menu z lewej strony i przyciskami akcji z prawej strony ekranu. Kilka faktur w spisie jest podświetlonych. W bocznym panelu widoczne podsumowanie pozycji.](/Materiały/zrzut-faktury.png)
+
+### Edycja faktury
+![Okno edycji faktury sprzedaży. W dolnej części widoczny panel z zakładkami. Aktywna zakładka zawiera spis pozycji faktury.](/Materiały/zrzut-faktura.png)
+
+### Podgląd wydruku
+![Okno podglądu wydruku faktury sprzedażowej. Większość wydruku zajmuje tabelka ze specyfikacją towarów i usług wraz z cenami i ilościami.](/Materiały/zrzut-wydruk.png)
+
 ## Licencja
 
 Licencja na korzystanie z programu jest bezpłatna i bezterminowa. W ramach licencji dozwolone jest powielanie i korzystanie z programu na dowolnej liczbie stanowisk. Program nie jest objęty gwarancją. Osoba korzystająca z programu ponosi pełną i wyłączną odpowiedzialność za dane przetwarzane przez program; w szczególności za poprawność wykonywanych obliczeń i ich zgodność z obowiązującymi przepisami fiskalnymi.
