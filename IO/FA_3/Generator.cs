@@ -379,6 +379,8 @@ class Generator
 				_ => ksefFaktura.Fa.Platnosc.OpisPlatnosci ?? "",
 			};
 
+			if (ksefFaktura.Fa.Platnosc.Zaplacono == TWybor1.Item1 && String.IsNullOrEmpty(dbFaktura.OpisSposobuPlatnosci)) dbFaktura.OpisSposobuPlatnosci = "Zapłacono";
+
 			if (ksefFaktura.Fa.Platnosc.DataZaplaty.HasValue) dbFaktura.Wplaty = [new Wplata { Data = ksefFaktura.Fa.Platnosc.DataZaplaty.Value, Kwota = ksefFaktura.Fa.P_15 }];
 		}
 		dbFaktura.Pozycje = new List<PozycjaFaktury>();
