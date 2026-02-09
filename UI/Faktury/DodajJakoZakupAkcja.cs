@@ -32,6 +32,8 @@ namespace ProFak.UI
 			var faktura = IO.FA_3.Generator.ZbudujDB(kontekst.Baza, xml);
 			faktura.NumerKSeF = naglowek.NumerKSeF;
 			faktura.DataKSeF = naglowek.DataKSeF;
+			using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
+			faktura.URLKSeF = api.ZbudujUrl(xml, faktura.NIPSprzedawcy, faktura.DataWystawienia);
 			kontekst.Baza.Zapisz(faktura);
 			IO.FA_3.Generator.PoprawPowiazaniaPoZapisie(kontekst.Baza, faktura);
 			naglowek.Id = faktura.Id;
