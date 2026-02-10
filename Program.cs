@@ -60,6 +60,7 @@ namespace ProFak
 					}
 				}
 
+				if (Wyglad.WstepneLadowanieReportingServices) OknoWydruku.ZaladujWstepnieReportViewer();
 				Application.Run(new UI.GlowneOkno());
 			}
 			catch (Exception exc)

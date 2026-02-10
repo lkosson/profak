@@ -32,5 +32,27 @@ namespace ProFak.UI
 			reportViewer.RefreshReport();
 			base.OnLoad(e);
 		}
+
+		public static void ZaladujWstepnieReportViewer()
+		{
+			_ = Task.Run(async delegate
+			{
+				try
+				{
+					await Task.Delay(TimeSpan.FromSeconds(3));
+					using var kontekst = new Kontekst();
+					var faktura = kontekst.Baza.Faktury.Where(e => e.Rodzaj == DB.RodzajFaktury.Sprzedaż).OrderByDescending(e => e.Id).FirstOrDefault();
+					if (faktura == null) return;
+					var wydruk = new Wydruki.Faktura(kontekst.Baza, [faktura.Ref]);
+					using var okno = new OknoWydruku(wydruk);
+					wydruk.Przygotuj(okno.reportViewer.LocalReport);
+					okno.reportViewer.RefreshReport();
+				}
+				catch
+				{
+					// ignored
+				}
+			});
+		}
 	}
 }

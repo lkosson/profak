@@ -20,6 +20,7 @@ namespace ProFak.UI
 		public static bool DomyslnyPodgladStrony { get; set; } = true;
 		public static bool PotwierdzanieZamknieciaEdytora { get; set; } = true;
 		public static bool PotwierdzanieZamknieciaProgramu { get; set; } = false;
+		public static bool WstepneLadowanieReportingServices { get; set; } = true;
 		public static int SzerokoscMenu { get; set; } = 270;
 
 		public static string NazwaAkcji(AdapterAkcji adapter)
