@@ -35,6 +35,18 @@ namespace ProFak.UI
 			base.OnLoad(e);
 		}
 
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			if (e.CloseReason == CloseReason.UserClosing && Wyglad.PotwierdzanieZamknieciaProgramu)
+			{
+				if (MessageBox.Show("Czy na pewno chcesz zamknąć program?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+				{
+					e.Cancel = true;
+				}
+			}
+			base.OnFormClosing(e);
+		}
+
 		private void ZbudujMenu()
 		{
 			TreeNode Wezel(string tekst, string nazwa = null, TreeNode[] podrzedne = null)
