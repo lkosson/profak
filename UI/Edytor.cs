@@ -138,6 +138,28 @@ namespace ProFak.UI
 			}
 		}
 
+		protected override void OnParentChanged(EventArgs e)
+		{
+			base.OnParentChanged(e);
+			if (ParentForm != null) ParentForm.FormClosing += ParentForm_FormClosing;
+		}
+
+		private void ParentForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (ParentForm.DialogResult == DialogResult.Cancel
+				&& e.CloseReason != CloseReason.WindowsShutDown
+				&& e.CloseReason != CloseReason.TaskManagerClosing
+				/* nie wystarczy sprawdzenie CloseReason.UserClosing - nie działa dla ESC */
+				&& kontroler.CzyModelZmieniony
+				&& Wyglad.PotwierdzanieZamknieciaEdytora)
+			{
+				if (MessageBox.Show("Czy na pewno chcesz porzucić wprowadzone zmiany?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+				{
+					e.Cancel = true;
+				}
+			}
+		}
+
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing) container.Dispose();

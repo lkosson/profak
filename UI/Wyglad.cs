@@ -18,6 +18,7 @@ namespace ProFak.UI
 		public static bool SkrotyKlawiaturowePrzyciskow { get; set; } = true;
 		public static bool IkonyAkcji { get; set; } = true;
 		public static bool DomyslnyPodgladStrony { get; set; } = true;
+		public static bool PotwierdzanieZamknieciaEdytora { get; set; } = true;
 		public static int SzerokoscMenu { get; set; } = 270;
 
 		public static string NazwaAkcji(AdapterAkcji adapter)

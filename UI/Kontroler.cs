@@ -14,8 +14,10 @@ namespace ProFak.UI
 		private readonly HashSet<Control> aktualizowaneKontrolki;
 		private TModel model;
 		private List<Action> powiazania;
+		private bool modelZmieniony;
 
 		public TModel Model { get => model; set { model = value; AktualizujKontrolki(); } }
+		public bool CzyModelZmieniony => modelZmieniony;
 
 		public Kontroler()
 		{
@@ -122,6 +124,7 @@ namespace ProFak.UI
 			{
 				var wartosc = pobierzWartosc(kontrolka);
 				ustawWartosc(model, wartosc);
+				modelZmieniony = true;
 			}
 			finally
 			{
