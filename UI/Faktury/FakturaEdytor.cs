@@ -184,7 +184,7 @@ namespace ProFak.UI
 				Kontekst, comboBoxWaluta, buttonWaluta,
 				Kontekst.Baza.Waluty.OrderBy(waluta => waluta.Nazwa).ToList,
 				waluta => waluta.Skrot,
-				waluta => { if (waluta == null) return; numericUpDownKurs.Enabled = !waluta.CzyDomyslna; if (waluta.CzyDomyslna) numericUpDownKurs.Value = 1; },
+				waluta => { if (waluta == null) return; numericUpDownKurs.Enabled = !waluta.CzyDomyslna; if (waluta.CzyDomyslna && Rekord.KursWaluty != 1) numericUpDownKurs.Value = 1; },
 				Spisy.Waluty)
 				.Zainstaluj();
 
