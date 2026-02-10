@@ -25,6 +25,7 @@ namespace ProFak.UI
 			RowHeadersWidth = 16;
 			ShowCellToolTips = true;
 			EnableHeadersVisualStyles = false;
+			ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.False;
 		}
 
 		protected override void OnMouseDown(MouseEventArgs e)
@@ -510,19 +511,21 @@ namespace ProFak.UI
 		protected override void OnColumnHeadersHeightChanged(EventArgs e)
 		{
 			base.OnColumnHeadersHeightChanged(e);
-			if (kolumnyZmienione) return;
-			kolumnyZmienione = true;
-			var wysokosc = ColumnHeadersHeight;
-			foreach (DataGridViewRow row in Rows) row.Height = wysokosc;
+			UstawWysokoscWierszy(ColumnHeadersHeight);
 		}
 
 		protected override void OnRowHeightChanged(DataGridViewRowEventArgs e)
 		{
 			base.OnRowHeightChanged(e);
 			if (e.Row.Index == -1) return;
+			UstawWysokoscWierszy(e.Row.Height);
+		}
+
+		private void UstawWysokoscWierszy(int wysokosc)
+		{
 			if (kolumnyZmienione) return;
 			kolumnyZmienione = true;
-			var wysokosc = e.Row.Height;
+			ColumnHeadersDefaultCellStyle.WrapMode = wysokosc < FontHeight * 2 ? DataGridViewTriState.False : DataGridViewTriState.True;
 			foreach (DataGridViewRow row in Rows) row.Height = wysokosc;
 			ColumnHeadersHeight = wysokosc;
 		}
