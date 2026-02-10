@@ -54,6 +54,7 @@ namespace ProFak.UI
 				new WyslijMailAkcja(),
 				new WyslijDoKSeFAkcja(),
 				new ZapiszPlikiAkcja(),
+				new ZapiszJakoXMLLokalneAkcja(),
 				new WczytajJPK_FAAkcja(),
 				new WczytajKSeFAkcja(),
 				new PrzeladujAkcja<Faktura>()
@@ -87,6 +88,7 @@ namespace ProFak.UI
 				new DodajWplateAkcja(),
 				new WydrukFakturyAkcja(),
 				new ZapiszPlikiAkcja(),
+				new ZapiszJakoXMLLokalneAkcja(),
 				new WczytajJPK_FAAkcja(),
 				new WczytajKSeFAkcja(),
 				new PrzeladujAkcja<Faktura>()
