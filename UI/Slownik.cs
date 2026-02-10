@@ -36,12 +36,12 @@ namespace ProFak.UI
 
 		public void Zainstaluj()
 		{
-			WypelnijListe();
 			if (comboBox.DropDownStyle != ComboBoxStyle.DropDownList)
 			{
 				comboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 				comboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
 			}
+			WypelnijListe();
 			comboBox.SelectedIndexChanged += comboBox_SelectedIndexChanged;
 			comboBox.HandleCreated += ComboBox_HandleCreated;
 			comboBox.KeyDown += ComboBox_KeyDown;
@@ -103,7 +103,9 @@ namespace ProFak.UI
 		{
 			var dostepneWartosci = pobierzWartosci();
 			comboBox.BeginUpdate();
-			var pozycje = new List<PozycjaListyRekordu<T>>();
+			comboBox.ValueMember = nameof(PozycjaListyRekordu<>.Ref);
+			comboBox.DisplayMember = nameof(PozycjaListyRekordu<>.Opis);
+			var pozycje = new List<PozycjaListyRekordu<T>>(dostepneWartosci.Count() + 1);
 			if (dopuscPustaWartosc) pozycje.Add(new PozycjaListyRekordu<T> { Wartosc = null, Opis = "" });
 			foreach (var wartosc in dostepneWartosci)
 			{
@@ -113,8 +115,6 @@ namespace ProFak.UI
 				pozycje.Add(pozycja);
 			}
 			comboBox.DataSource = pozycje;
-			comboBox.ValueMember = nameof(PozycjaListyRekordu<T>.Ref);
-			comboBox.DisplayMember = nameof(PozycjaListyRekordu<T>.Opis);
 			comboBox.EndUpdate();
 		}
 	}
