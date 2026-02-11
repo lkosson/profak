@@ -115,6 +115,8 @@ partial class WysylkaFakturEdytor : UserControl
 		var tresc = textBoxTresc.Text;
 		var adresat = textBoxAdresat.Text;
 		var nadawca = fakturaDoWysylki.PodstawPolaWysylki(szablonNadawca);
+		if (!MailAddress.TryCreate(adresat, out var _)) throw new ApplicationException($"Adres odbiorcy \"{adresat}\" jest nieprawidłowy.");
+		if (!MailAddress.TryCreate(nadawca, out var _)) throw new ApplicationException($"Adres nadawcy \"{nadawca}\" jest nieprawidłowy.");
 		OknoPostepu.Uruchom(async cancellationToken =>
 		{
 			var pdf = PrzygotujPDF(fakturaDoWysylki);
@@ -163,6 +165,8 @@ partial class WysylkaFakturEdytor : UserControl
 				var temat = fakturaDoWysylki.PodstawPolaWysylki(szablonTemat);
 				var tresc = fakturaDoWysylki.PodstawPolaWysylki(szablonTresc);
 				var nadawca = fakturaDoWysylki.PodstawPolaWysylki(szablonNadawca);
+				if (!MailAddress.TryCreate(adresat, out var _)) throw new ApplicationException($"Adres odbiorcy \"{adresat}\" dla faktury {fakturaDoWysylki.Numer} jest nieprawidłowy.");
+				if (!MailAddress.TryCreate(nadawca, out var _)) throw new ApplicationException($"Adres nadawcy \"{nadawca}\" jest nieprawidłowy.");
 				var pdf = PrzygotujPDF(fakturaDoWysylki);
 				await Wyslij(temat, tresc, adresat, nadawca, pdf, fakturaDoWysylki.Numer, cancellationToken);
 				transakcja.Zatwierdz();
