@@ -135,20 +135,20 @@ namespace ProFak.DB
 					foreach (var pozycja in faktura.Pozycje)
 					{
 						if (pozycja.StawkaVat == null) continue;
-						if (faktura.CzyWDT) { NettoWDT += pozycja.WartoscNetto; }
-						else if (pozycja.StawkaVat.Skrot.ToLower().Contains("zw")) { NettoZW += pozycja.WartoscNetto; }
-						else if (pozycja.StawkaVat.Wartosc == 0) { Netto0 += pozycja.WartoscNetto; }
-						else if (pozycja.StawkaVat.Wartosc <= 5) { Netto5 += pozycja.WartoscNetto; Nalezny5 += pozycja.WartoscVat * faktura.KursWaluty; }
-						else if (pozycja.StawkaVat.Wartosc <= 8) { Netto8 += pozycja.WartoscNetto; Nalezny8 += pozycja.WartoscVat * faktura.KursWaluty; }
-						else { Netto23 += pozycja.WartoscNetto; Nalezny23 += pozycja.WartoscVat * faktura.KursWaluty; }
+						if (faktura.CzyWDT) { NettoWDT += pozycja.WartoscNetto * faktura.KursWaluty; }
+						else if (pozycja.StawkaVat.Skrot.ToLower().Contains("zw")) { NettoZW += pozycja.WartoscNetto * faktura.KursWaluty; }
+						else if (pozycja.StawkaVat.Wartosc == 0) { Netto0 += pozycja.WartoscNetto * faktura.KursWaluty; }
+						else if (pozycja.StawkaVat.Wartosc <= 5) { Netto5 += pozycja.WartoscNetto * faktura.KursWaluty; Nalezny5 += pozycja.WartoscVat * faktura.KursWaluty; }
+						else if (pozycja.StawkaVat.Wartosc <= 8) { Netto8 += pozycja.WartoscNetto * faktura.KursWaluty; Nalezny8 += pozycja.WartoscVat * faktura.KursWaluty; }
+						else { Netto23 += pozycja.WartoscNetto * faktura.KursWaluty; Nalezny23 += pozycja.WartoscVat * faktura.KursWaluty; }
 					}
 				}
 				else if (faktura.CzyZakup)
 				{
-					if (faktura.CzyWNT) { NettoWNT += faktura.RazemNetto; NaleznyWNT += faktura.VatNaliczony * faktura.KursWaluty; }
+					if (faktura.CzyWNT) { NettoWNT += faktura.RazemNetto * faktura.KursWaluty; NaleznyWNT += faktura.VatNaliczony * faktura.KursWaluty; }
 					/* bez else */
-					if (faktura.CzyZakupSrodkowTrwalych) { NettoSrodkiTrwale += faktura.RazemNetto; NaliczonySrodkiTrwale += faktura.VatNaliczony * faktura.KursWaluty; }
-					else { NettoPozostale += faktura.RazemNetto; NaliczonyPozostale += faktura.VatNaliczony * faktura.KursWaluty; }
+					if (faktura.CzyZakupSrodkowTrwalych) { NettoSrodkiTrwale += faktura.RazemNetto * faktura.KursWaluty; NaliczonySrodkiTrwale += faktura.VatNaliczony * faktura.KursWaluty; }
+					else { NettoPozostale += faktura.RazemNetto * faktura.KursWaluty; NaliczonyPozostale += faktura.VatNaliczony * faktura.KursWaluty; }
 				}
 			}
 

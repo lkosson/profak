@@ -64,12 +64,13 @@ namespace ProFak.UI
 		private string WalidacjaNIP(string nip)
 		{
 			if (String.IsNullOrWhiteSpace(nip)) return null;
+			nip = nip.Replace("-", "");
 
-			var innyKontrahent = Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.NIP == Rekord.NIP && kontrahent.Id != Rekord.Id);
+			var innyKontrahent = Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.NIP.Replace("-", "") == nip && kontrahent.Id != Rekord.Id);
 
 			if (innyKontrahent != null) return "Istnieje już kontrahent z takim samym NIPem.";
 
-			if (!Regex.IsMatch(nip, @"(\w\w)?\d{10}")) return "NIP ma nieprawidłowy format.";
+			if (!Regex.IsMatch(nip, @"^(\w\w)?\d{10}$")) return "NIP ma nieprawidłowy format.";
 			if (nip.Length == 12)
 			{
 				if (nip.StartsWith("PL")) nip = nip.Substring(2);
@@ -184,7 +185,7 @@ namespace ProFak.UI
 			var dane = (string[])e.Argument;
 			var nip = dane[0];
 			var nrb = dane[1].Replace(" ", "");
-			var rid = IO.MF.SprawdzBialaListeVAT(nip, nrb);
+			var rid = IO.MF.SprawdzBialaListeVAT(nip, nrb).GetAwaiter().GetResult();
 			e.Result = $"Rachunek znajduje się na białej liście VAT, RequestId: {rid}";
 		}
 
