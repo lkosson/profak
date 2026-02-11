@@ -7,10 +7,11 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
 
 namespace ProFak.UI
 {
@@ -36,23 +37,31 @@ namespace ProFak.UI
         {
             try
             {
-                var wb = new WebClient();
-                wb.Headers.Add("User-Agent: Other"); // fix for HTTP 403
-                var response = wb.DownloadString("https://api.github.com/repos/lkosson/profak/releases/latest");
-                var json = JObject.Parse(response);
-                Version wersjaGitHub = Version.Parse(json["tag_name"].ToString().Replace("v", ""));
+                string response = null;
+                OknoPostepu.Uruchom(async cancellationToken =>
+                {
+                    using var wb = new HttpClient();
+                    wb.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0)");
+                    response = await wb.GetStringAsync("https://api.github.com/repos/lkosson/profak/releases/latest");
+                    cancellationToken.ThrowIfCancellationRequested();
+                });
+                
+                
+                var json = JsonDocument.Parse(response);
+                Version wersjaGitHub = Version.Parse(json.RootElement.GetProperty("tag_name").ToString().Replace("v", ""));
                 Version wersjaAplikacji = GetType().Assembly.GetName().Version;
                 if (wersjaGitHub.Major > wersjaAplikacji.Major ||
                     (wersjaGitHub.Major == wersjaAplikacji.Major && wersjaGitHub.Minor > wersjaAplikacji.Minor))
                 {
-                    if (MessageBox.Show("Dostępna jest nowa wersja " + json["tag_name"] + ". \r\nCzy chcesz przejść do strony pobierania?", "Aktualizacja programu", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    if (MessageBox.Show("Dostępna jest nowa wersja " + wersjaGitHub.ToString() + ". \r\nCzy chcesz przejść do strony pobierania?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                        
                     {
-                        System.Diagnostics.Process.Start("explorer.exe", json["html_url"].ToString());
+                        Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = json.RootElement.GetProperty("html_url").ToString() });
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Nie znaleziono nowej wersji oprogramowania.", "Aktualizacja programu");
+                    MessageBox.Show("Nie znaleziono nowej wersji programu", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
