@@ -98,16 +98,17 @@ partial class WysylkaFakturEdytor : UserControl
 	private void WyslijBiezaca()
 	{
 		var fakturaDoWysylki = (Faktura)comboBoxFaktura.SelectedItem;
-		using var transakcja = Kontekst.Transakcja();
-		var fakturaDoZapisu = Kontekst.Baza.Znajdz(fakturaDoWysylki.Ref);
+		using var nowyKontekst = new Kontekst(Kontekst);
+		using var transakcja = nowyKontekst.Transakcja();
+		var fakturaDoZapisu = nowyKontekst.Baza.Znajdz(fakturaDoWysylki.Ref);
 		if (checkBoxUstawDate.Checked) fakturaDoZapisu.DataWystawienia = DateTime.Now;
 		if (checkBoxPrzeliczTermin.Checked)
 		{
-			var sposobPlatnosci = Kontekst.Baza.Znajdz(fakturaDoZapisu.SposobPlatnosciRef);
+			var sposobPlatnosci = nowyKontekst.Baza.Znajdz(fakturaDoZapisu.SposobPlatnosciRef);
 			if (sposobPlatnosci != null) fakturaDoZapisu.TerminPlatnosci = fakturaDoZapisu.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
 		}
 		fakturaDoZapisu.DataWyslania = DateTime.Now;
-		Kontekst.Baza.Zapisz(fakturaDoZapisu);
+		nowyKontekst.Baza.Zapisz(fakturaDoZapisu);
 
 		var idx = comboBoxFaktura.SelectedIndex;
 		var temat = textBoxTemat.Text;
@@ -142,26 +143,27 @@ partial class WysylkaFakturEdytor : UserControl
 		var przeliczTermin = checkBoxPrzeliczTermin.Checked;
 		OknoPostepu.Uruchom(async cancellationToken =>
 		{
+			using var nowyKontekst = new Kontekst(Kontekst);
 			var faktury = (List<Faktura>)comboBoxFaktura.DataSource;
 			foreach (var fakturaDoWysylki in faktury)
 			{
 				if (cancellationToken.IsCancellationRequested) return;
 				if (fakturaDoWysylki.Id == 0) continue;
-				using var transakcja = Kontekst.Transakcja();
-				var fakturaDoZapisu = Kontekst.Baza.Znajdz(fakturaDoWysylki.Ref);
+				using var transakcja = nowyKontekst.Transakcja();
+				var fakturaDoZapisu = nowyKontekst.Baza.Znajdz(fakturaDoWysylki.Ref);
 				if (ustawDate) fakturaDoZapisu.DataWystawienia = DateTime.Now;
 				if (przeliczTermin)
 				{
-					var sposobPlatnosci = Kontekst.Baza.Znajdz(fakturaDoZapisu.SposobPlatnosciRef);
+					var sposobPlatnosci = nowyKontekst.Baza.Znajdz(fakturaDoZapisu.SposobPlatnosciRef);
 					if (sposobPlatnosci != null) fakturaDoZapisu.TerminPlatnosci = fakturaDoZapisu.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
 				}
 				fakturaDoZapisu.DataWyslania = DateTime.Now;
-				Kontekst.Baza.Zapisz(fakturaDoZapisu);
-				var pdf = PrzygotujPDF(fakturaDoWysylki);
+				nowyKontekst.Baza.Zapisz(fakturaDoZapisu);
 				var adresat = fakturaDoWysylki.PodstawPolaWysylki(szablonAdresat);
 				var temat = fakturaDoWysylki.PodstawPolaWysylki(szablonTemat);
 				var tresc = fakturaDoWysylki.PodstawPolaWysylki(szablonTresc);
 				var nadawca = fakturaDoWysylki.PodstawPolaWysylki(szablonNadawca);
+				var pdf = PrzygotujPDF(fakturaDoWysylki);
 				await Wyslij(temat, tresc, adresat, nadawca, pdf, fakturaDoWysylki.Numer, cancellationToken);
 				transakcja.Zatwierdz();
 			}
