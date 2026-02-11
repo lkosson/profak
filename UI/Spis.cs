@@ -99,6 +99,17 @@ namespace ProFak.UI
 			}
 		}
 
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+		public string Komunikat
+		{
+			get => field;
+			set
+			{
+				field = value;
+				Invalidate();
+			}
+		}
+
 		public virtual string Podsumowanie
 		{
 			get
@@ -190,6 +201,20 @@ namespace ProFak.UI
 			if (Kontekst != null) PrzeladujBezpiecznie();
 			bindingSource.ResetBindings(true);
 			WczytajKonfiguracje();
+		}
+
+		protected override void OnPaint(PaintEventArgs e)
+		{
+			base.OnPaint(e);
+			var komunikat = Komunikat;
+			if (String.IsNullOrEmpty(komunikat) && Rekordy.Count() == 0) komunikat = oryginalneRekordy == null || !oryginalneRekordy.Any() ? "Spis nie zawiera danych" : "Nie znaleziono pasujących rekordów";
+			if (!String.IsNullOrEmpty(komunikat))
+			{
+				using var font = new Font(Font.FontFamily, 24, FontStyle.Bold);
+				using var brush = new SolidBrush(Color.FromArgb(200, 50, 50, 50));
+				using var sf = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+				e.Graphics.DrawString(komunikat, font, brush, new RectangleF(0, 0, Width, Height), sf);
+			}
 		}
 
 		public void PrzeladujBezpiecznie()

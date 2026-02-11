@@ -52,6 +52,7 @@ namespace ProFak.UI
 			DodajKolumneKwota(nameof(Faktura.RazemBrutto), "Brutto");
 			DodajKolumne(nameof(Faktura.WalutaFmt), "Waluta", szerokosc: 70);
 			DodajKolumne(nameof(Faktura.NumerKSeF), "Id", szerokosc: 230);
+			Komunikat = "Przeładuj spis, aby pobrać dane z KSeF";
 		}
 
 		public KSeFSpis(bool sprzedaz, string[] parametry)
@@ -80,12 +81,11 @@ namespace ProFak.UI
 
 			if (pierwszeZaladowanie)
 			{
-				Rekordy = new[] { new Faktura { NazwaNabywcy = "Przeładuj spis aby pobrać dane z KSeF", NazwaSprzedawcy = "Przeładuj spis aby pobrać dane z KSeF", Id = -1 } };
 				pierwszeZaladowanie = false;
 				return;
 			}
 
-			Rekordy = new[] { new Faktura { NazwaNabywcy = "Pobieranie danych z KSEF", NazwaSprzedawcy = "Pobieranie danych z KSEF", Id = -1 } };
+			Komunikat = "Pobieranie danych z KSEF";
 
 			List<Faktura> rekordy = [];
 
@@ -138,6 +138,7 @@ namespace ProFak.UI
 			});
 
 			Rekordy = rekordy;
+			Komunikat = null;
 		}
 
 		protected override void UstawStylWiersza(Faktura rekord, string kolumna, DataGridViewCellStyle styl)
