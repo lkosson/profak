@@ -113,7 +113,7 @@ partial class WysylkaFakturEdytor : UserControl
 		var temat = textBoxTemat.Text;
 		var tresc = textBoxTresc.Text;
 		var adresat = textBoxAdresat.Text;
-		var nadawca = faktura.PodstawPolaWysylki(szablonNadawca);
+		var nadawca = _faktura.PodstawPolaWysylki(szablonNadawca);
 		OknoPostepu.Uruchom(async cancellationToken =>
 		{
 			var pdf = PrzygotujPDF(faktura);
@@ -158,10 +158,10 @@ partial class WysylkaFakturEdytor : UserControl
 				faktura.DataWyslania = DateTime.Now;
 				Kontekst.Baza.Zapisz(faktura);
 				var pdf = PrzygotujPDF(faktura);
-				var adresat = faktura.PodstawPolaWysylki(szablonAdresat);
-				var temat = faktura.PodstawPolaWysylki(szablonTemat);
-				var tresc = faktura.PodstawPolaWysylki(szablonTresc);
-				var nadawca = faktura.PodstawPolaWysylki(szablonNadawca);
+				var adresat = _faktura.PodstawPolaWysylki(szablonAdresat);
+				var temat = _faktura.PodstawPolaWysylki(szablonTemat);
+				var tresc = _faktura.PodstawPolaWysylki(szablonTresc);
+				var nadawca = _faktura.PodstawPolaWysylki(szablonNadawca);
 				await Wyslij(temat, tresc, adresat, nadawca, pdf, faktura.Numer, cancellationToken);
 				transakcja.Zatwierdz();
 			}
