@@ -97,31 +97,31 @@ partial class WysylkaFakturEdytor : UserControl
 
 	private void WyslijBiezaca()
 	{
-		var _faktura = (Faktura)comboBoxFaktura.SelectedItem;
+		var fakturaDoWysylki = (Faktura)comboBoxFaktura.SelectedItem;
 		using var transakcja = Kontekst.Transakcja();
-		var faktura = Kontekst.Baza.Znajdz(_faktura.Ref);
-		if (checkBoxUstawDate.Checked) faktura.DataWystawienia = DateTime.Now;
+		var fakturaDoZapisu = Kontekst.Baza.Znajdz(fakturaDoWysylki.Ref);
+		if (checkBoxUstawDate.Checked) fakturaDoZapisu.DataWystawienia = DateTime.Now;
 		if (checkBoxPrzeliczTermin.Checked)
 		{
-			var sposobPlatnosci = Kontekst.Baza.Znajdz(faktura.SposobPlatnosciRef);
-			if (sposobPlatnosci != null) faktura.TerminPlatnosci = faktura.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
+			var sposobPlatnosci = Kontekst.Baza.Znajdz(fakturaDoZapisu.SposobPlatnosciRef);
+			if (sposobPlatnosci != null) fakturaDoZapisu.TerminPlatnosci = fakturaDoZapisu.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
 		}
-		faktura.DataWyslania = DateTime.Now;
-		Kontekst.Baza.Zapisz(faktura);
+		fakturaDoZapisu.DataWyslania = DateTime.Now;
+		Kontekst.Baza.Zapisz(fakturaDoZapisu);
 
 		var idx = comboBoxFaktura.SelectedIndex;
 		var temat = textBoxTemat.Text;
 		var tresc = textBoxTresc.Text;
 		var adresat = textBoxAdresat.Text;
-		var nadawca = _faktura.PodstawPolaWysylki(szablonNadawca);
+		var nadawca = fakturaDoWysylki.PodstawPolaWysylki(szablonNadawca);
 		OknoPostepu.Uruchom(async cancellationToken =>
 		{
-			var pdf = PrzygotujPDF(faktura);
-			await Wyslij(temat, tresc, adresat, nadawca, pdf, faktura.Numer, cancellationToken);
+			var pdf = PrzygotujPDF(fakturaDoWysylki);
+			await Wyslij(temat, tresc, adresat, nadawca, pdf, fakturaDoWysylki.Numer, cancellationToken);
 		});
 		transakcja.Zatwierdz();
 		var faktury = (List<Faktura>)comboBoxFaktura.DataSource;
-		faktury.Remove(faktura);
+		faktury.Remove(fakturaDoWysylki);
 		comboBoxFaktura.BeginUpdate();
 		comboBoxFaktura.DataSource = Array.Empty<Faktura>();
 		comboBoxFaktura.DataSource = faktury;
@@ -143,26 +143,26 @@ partial class WysylkaFakturEdytor : UserControl
 		OknoPostepu.Uruchom(async cancellationToken =>
 		{
 			var faktury = (List<Faktura>)comboBoxFaktura.DataSource;
-			foreach (var _faktura in faktury)
+			foreach (var fakturaDoWysylki in faktury)
 			{
 				if (cancellationToken.IsCancellationRequested) return;
-				if (_faktura.Id == 0) continue;
+				if (fakturaDoWysylki.Id == 0) continue;
 				using var transakcja = Kontekst.Transakcja();
-				var faktura = Kontekst.Baza.Znajdz(_faktura.Ref);
-				if (ustawDate) faktura.DataWystawienia = DateTime.Now;
+				var fakturaDoZapisu = Kontekst.Baza.Znajdz(fakturaDoWysylki.Ref);
+				if (ustawDate) fakturaDoZapisu.DataWystawienia = DateTime.Now;
 				if (przeliczTermin)
 				{
-					var sposobPlatnosci = Kontekst.Baza.Znajdz(faktura.SposobPlatnosciRef);
-					if (sposobPlatnosci != null) faktura.TerminPlatnosci = faktura.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
+					var sposobPlatnosci = Kontekst.Baza.Znajdz(fakturaDoZapisu.SposobPlatnosciRef);
+					if (sposobPlatnosci != null) fakturaDoZapisu.TerminPlatnosci = fakturaDoZapisu.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
 				}
-				faktura.DataWyslania = DateTime.Now;
-				Kontekst.Baza.Zapisz(faktura);
-				var pdf = PrzygotujPDF(faktura);
-				var adresat = _faktura.PodstawPolaWysylki(szablonAdresat);
-				var temat = _faktura.PodstawPolaWysylki(szablonTemat);
-				var tresc = _faktura.PodstawPolaWysylki(szablonTresc);
-				var nadawca = _faktura.PodstawPolaWysylki(szablonNadawca);
-				await Wyslij(temat, tresc, adresat, nadawca, pdf, faktura.Numer, cancellationToken);
+				fakturaDoZapisu.DataWyslania = DateTime.Now;
+				Kontekst.Baza.Zapisz(fakturaDoZapisu);
+				var pdf = PrzygotujPDF(fakturaDoWysylki);
+				var adresat = fakturaDoWysylki.PodstawPolaWysylki(szablonAdresat);
+				var temat = fakturaDoWysylki.PodstawPolaWysylki(szablonTemat);
+				var tresc = fakturaDoWysylki.PodstawPolaWysylki(szablonTresc);
+				var nadawca = fakturaDoWysylki.PodstawPolaWysylki(szablonNadawca);
+				await Wyslij(temat, tresc, adresat, nadawca, pdf, fakturaDoWysylki.Numer, cancellationToken);
 				transakcja.Zatwierdz();
 			}
 		});
