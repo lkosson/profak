@@ -38,8 +38,8 @@ namespace ProFak.UI
 		{
 			if (comboBox.DropDownStyle != ComboBoxStyle.DropDownList)
 			{
-				comboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-				comboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
+				if (comboBox.AutoCompleteMode != AutoCompleteMode.SuggestAppend) comboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+				if (comboBox.AutoCompleteSource != AutoCompleteSource.ListItems) comboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
 			}
 			WypelnijListe();
 			comboBox.SelectedIndexChanged += comboBox_SelectedIndexChanged;

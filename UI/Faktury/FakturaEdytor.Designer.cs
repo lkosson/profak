@@ -291,6 +291,8 @@ namespace ProFak.UI
 			comboBoxNIPSprzedawcy.Name = "comboBoxNIPSprzedawcy";
 			comboBoxNIPSprzedawcy.Size = new System.Drawing.Size(314, 23);
 			comboBoxNIPSprzedawcy.TabIndex = 10;
+			comboBoxNIPSprzedawcy.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			comboBoxNIPSprzedawcy.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			// 
 			// comboBoxNazwaSprzedawcy
 			// 
@@ -301,6 +303,9 @@ namespace ProFak.UI
 			comboBoxNazwaSprzedawcy.Name = "comboBoxNazwaSprzedawcy";
 			comboBoxNazwaSprzedawcy.Size = new System.Drawing.Size(381, 23);
 			comboBoxNazwaSprzedawcy.TabIndex = 20;
+			comboBoxNazwaSprzedawcy.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			comboBoxNazwaSprzedawcy.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+
 			// 
 			// buttonNowySprzedawca
 			// 
@@ -415,6 +420,9 @@ namespace ProFak.UI
 			comboBoxNIPNabywcy.Name = "comboBoxNIPNabywcy";
 			comboBoxNIPNabywcy.Size = new System.Drawing.Size(314, 23);
 			comboBoxNIPNabywcy.TabIndex = 10;
+			comboBoxNIPNabywcy.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			comboBoxNIPNabywcy.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+
 			// 
 			// comboBoxNazwaNabywcy
 			// 
@@ -425,6 +433,9 @@ namespace ProFak.UI
 			comboBoxNazwaNabywcy.Name = "comboBoxNazwaNabywcy";
 			comboBoxNazwaNabywcy.Size = new System.Drawing.Size(381, 23);
 			comboBoxNazwaNabywcy.TabIndex = 20;
+			comboBoxNazwaNabywcy.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			comboBoxNazwaNabywcy.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+
 			// 
 			// buttonNowyNabywca
 			// 
@@ -932,6 +943,9 @@ namespace ProFak.UI
 			comboBoxWaluta.Name = "comboBoxWaluta";
 			comboBoxWaluta.Size = new System.Drawing.Size(114, 23);
 			comboBoxWaluta.TabIndex = 1;
+			comboBoxWaluta.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			comboBoxWaluta.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+
 			// 
 			// label22
 			// 
@@ -1058,6 +1072,8 @@ namespace ProFak.UI
 			comboBoxSposobPlatnosci.Name = "comboBoxSposobPlatnosci";
 			comboBoxSposobPlatnosci.Size = new System.Drawing.Size(294, 23);
 			comboBoxSposobPlatnosci.TabIndex = 0;
+			comboBoxSposobPlatnosci.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			comboBoxSposobPlatnosci.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			// 
 			// buttonSposobPlatnosci
 			// 
