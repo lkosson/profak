@@ -42,29 +42,22 @@ namespace ProFak.UI
 				{
 					using var wb = new HttpClient();
 					wb.DefaultRequestHeaders.UserAgent.ParseAdd("ProFak (https://github.com/lkosson/profak)");
-					response = await wb.GetStringAsync("https://api.github.com/repos/lkosson/profak/releases/latest",cancellationToken);
+					response = await wb.GetStringAsync("https://api.github.com/repos/lkosson/profak/releases/latest", cancellationToken);
 					cancellationToken.ThrowIfCancellationRequested();
 				});
-				
-				
+
 				var json = JsonDocument.Parse(response);
-				Version wersjaGitHub;
-				Version.TryParse(json.RootElement.GetProperty("tag_name").ToString().Replace("v", ""),out wersjaGitHub);
-				Version wersjaAplikacji = GetType().Assembly.GetName().Version;
-				if(wersjaGitHub == null)
+				Version.TryParse(json.RootElement.GetProperty("tag_name").ToString().Replace("v", ""), out var wersjaGitHub);
+				var wersjaAplikacji = GetType().Assembly.GetName().Version;
+				if (wersjaGitHub != null && wersjaGitHub > wersjaAplikacji)
 				{
-					MessageBox.Show("Nie znaleziono nowej wersji programu", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
-					return;
-				}
-				if (wersjaGitHub.Major > wersjaAplikacji.Major ||
-					(wersjaGitHub.Major == wersjaAplikacji.Major && wersjaGitHub.Minor > wersjaAplikacji.Minor))
-				{
-					if (MessageBox.Show("Dostępna jest nowa wersja " + wersjaGitHub.ToString() + ". \r\nCzy chcesz przejść do strony pobierania?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
-						
+					if (MessageBox.Show("Dostępna jest nowa wersja " + wersjaGitHub.ToString() + ".\r\nCzy chcesz przejść do strony pobierania?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 					{
 						Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = json.RootElement.GetProperty("html_url").ToString() });
 					}
-				} else {
+				}
+				else
+				{
 					MessageBox.Show("Nie znaleziono nowej wersji programu", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				}
 			}
