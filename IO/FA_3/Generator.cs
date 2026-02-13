@@ -691,7 +691,7 @@ class Generator
 		if (faktura.FakturaKorygowana != null)
 		{
 			var fakturaKorygowana = String.IsNullOrEmpty(faktura.FakturaKorygowana.NumerKSeF) ? null : baza.Faktury.FirstOrDefault(f => f.NumerKSeF == faktura.FakturaKorygowana.NumerKSeF && f.Rodzaj != RodzajFaktury.Usunięta);
-			fakturaKorygowana ??= String.IsNullOrEmpty(faktura.FakturaKorygowana.Numer) ? null : baza.Faktury.FirstOrDefault(f => f.Numer == f.FakturaKorygowana.Numer && f.Sprzedawca == faktura.Sprzedawca && f.Rodzaj != RodzajFaktury.Usunięta);
+			fakturaKorygowana ??= String.IsNullOrEmpty(faktura.FakturaKorygowana.Numer) ? null : baza.Faktury.FirstOrDefault(f => f.Numer == faktura.FakturaKorygowana.Numer && f.Sprzedawca == faktura.Sprzedawca && f.Rodzaj != RodzajFaktury.Usunięta);
 			if (fakturaKorygowana == null) faktura.UwagiPubliczne = $"Korekta do {faktura.FakturaKorygowana.Numer} z dnia {faktura.FakturaKorygowana.DataWystawienia:yyyy-MM-dd}\r\n{faktura.UwagiPubliczne}";
 			else faktura.FakturaKorygowanaRef = fakturaKorygowana;
 			faktura.FakturaKorygowana = null;
