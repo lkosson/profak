@@ -85,8 +85,6 @@ namespace ProFak.UI
 			textBoxNazwa = new System.Windows.Forms.TextBox();
 			label1 = new System.Windows.Forms.Label();
 			tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			backgroundWorkerSprawdzMF = new System.ComponentModel.BackgroundWorker();
-			backgroundWorkerPobierzGUS = new System.ComponentModel.BackgroundWorker();
 			((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
 			tabControl.SuspendLayout();
 			tabPage1.SuspendLayout();
@@ -753,16 +751,6 @@ namespace ProFak.UI
 			tableLayoutPanel2.Size = new System.Drawing.Size(800, 452);
 			tableLayoutPanel2.TabIndex = 3;
 			// 
-			// backgroundWorkerSprawdzMF
-			// 
-			backgroundWorkerSprawdzMF.DoWork += backgroundWorkerSprawdzMF_DoWork;
-			backgroundWorkerSprawdzMF.RunWorkerCompleted += backgroundWorkerSprawdzMF_RunWorkerCompleted;
-			// 
-			// backgroundWorkerPobierzGUS
-			// 
-			backgroundWorkerPobierzGUS.DoWork += backgroundWorkerPobierzGUS_DoWork;
-			backgroundWorkerPobierzGUS.RunWorkerCompleted += backgroundWorkerPobierzGUS_RunWorkerCompleted;
-			// 
 			// KontrahentEdytor
 			// 
 			AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -833,9 +821,7 @@ namespace ProFak.UI
 		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.ComboBox comboBoxFormaOpodatkowania;
 		private ButtonDPI buttonSprawdzMF;
-		private System.ComponentModel.BackgroundWorker backgroundWorkerSprawdzMF;
 		private ButtonDPI buttonPobierzGUS;
-		private System.ComponentModel.BackgroundWorker backgroundWorkerPobierzGUS;
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.TextBox textBoxTokenKSeF;
 		private System.Windows.Forms.ComboBox comboBoxSrodowiskoKSeF;

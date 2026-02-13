@@ -176,43 +176,37 @@ namespace ProFak.UI
 
 		private void buttonSprawdzMF_Click(object sender, EventArgs e)
 		{
-			buttonSprawdzMF.Enabled = false;
-			backgroundWorkerSprawdzMF.RunWorkerAsync(new[] { Rekord.NIP, Rekord.RachunekBankowy });
-		}
+			var wynik = "";
+			try
+			{
+				OknoPostepu.Uruchom(async cancellationToken =>
+				{
+					wynik = await IO.MF.SprawdzBialaListeVAT(Rekord.NIP, Rekord.RachunekBankowy.Replace(" ", ""), cancellationToken);
+				});
 
-		private void backgroundWorkerSprawdzMF_DoWork(object sender, DoWorkEventArgs e)
-		{
-			var dane = (string[])e.Argument;
-			var nip = dane[0];
-			var nrb = dane[1].Replace(" ", "");
-			var rid = IO.MF.SprawdzBialaListeVAT(nip, nrb).GetAwaiter().GetResult();
-			e.Result = $"Rachunek znajduje się na białej liście VAT, RequestId: {rid}";
-		}
-
-		private void backgroundWorkerSprawdzMF_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-		{
-			buttonSprawdzMF.Enabled = true;
-			if (e.Error != null) OknoBledu.Pokaz(e.Error);
-			else MessageBox.Show((string)e.Result, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				MessageBox.Show($"Rachunek znajduje się na białej liście VAT, RequestId: {wynik}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+			catch (Exception exc)
+			{
+				OknoBledu.Pokaz(exc);
+			}
 		}
 
 		private void buttonPobierzGUS_Click(object sender, EventArgs e)
 		{
-			buttonPobierzGUS.Enabled = false;
-			backgroundWorkerPobierzGUS.RunWorkerAsync(Rekord);
-		}
+			try
+			{
+				OknoPostepu.Uruchom(async cancellationToken =>
+				{
+					await IO.GUS.PobierzGUS(Rekord, cancellationToken);
+				});
 
-		private void backgroundWorkerPobierzGUS_DoWork(object sender, DoWorkEventArgs e)
-		{
-			var kontrahent = (Kontrahent)e.Argument;
-			IO.GUS.PobierzGUS(kontrahent).GetAwaiter().GetResult();
-		}
-
-		private void backgroundWorkerPobierzGUS_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-		{
-			buttonPobierzGUS.Enabled = true;
-			if (e.Error != null) OknoBledu.Pokaz(e.Error);
-			else kontroler.AktualizujKontrolki();
+				kontroler.AktualizujKontrolki();
+			}
+			catch (Exception exc)
+			{
+				OknoBledu.Pokaz(exc);
+			}
 		}
 
 		private void buttonKSeFAuth_Click(object sender, EventArgs e)

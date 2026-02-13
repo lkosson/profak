@@ -4,19 +4,20 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ProFak.IO
 {
 	class MF
 	{
-		public static async Task<string> SprawdzBialaListeVAT(string nip, string nrb)
+		public static async Task<string> SprawdzBialaListeVAT(string nip, string nrb, CancellationToken cancellationToken)
 		{
 			if (String.IsNullOrEmpty(nip)) throw new ApplicationException("Nie podano NIPu kontrahenta.");
 			if (String.IsNullOrEmpty(nrb)) throw new ApplicationException("Nie podano numeru rachunku bankowego kontrahenta.");
 			var url = "https://wl-api.mf.gov.pl/api/check/nip/" + nip + "/bank-account/" + nrb;
 			using var client = new HttpClient();
-			var wynik = await client.GetStringAsync(url);
+			var wynik = await client.GetStringAsync(url, cancellationToken);
 			var json = JsonDocument.Parse(wynik);
 			if (!json.RootElement.TryGetProperty("result", out var jsonResult)) throw new ApplicationException($"Nieprawidłowa struktura odpowiedzi:\n\n{wynik}");
 			if (!jsonResult.TryGetProperty("accountAssigned", out var jsonResultAccountAssigned)) throw new ApplicationException($"Nieprawidłowa struktura odpowiedzi:\n\n{wynik}");
