@@ -40,10 +40,18 @@ namespace ProFak.UI
 			SuspendLayout();
 			int y = 0;
 			y += Padding.Top;
+			var szerokosc = MinimumSize.Width;
+			foreach (Control kontrolka in Controls)
+			{
+				var szerokoscKontrolki = kontrolka.PreferredSize.Width + Math.Max(Padding.Left, kontrolka.Margin.Left) + Math.Max(Padding.Right, kontrolka.Margin.Right);
+				if (szerokoscKontrolki> szerokosc) szerokosc = szerokoscKontrolki;
+			}
+
+			Width = szerokosc;
 			foreach (Control kontrolka in Controls)
 			{
 				kontrolka.Location = new Point(Math.Max(Padding.Left, kontrolka.Margin.Left), y);
-				kontrolka.Width = ClientSize.Width - Math.Max(Padding.Left, kontrolka.Margin.Left) - Math.Max(Padding.Right, kontrolka.Margin.Right);
+				kontrolka.Width = szerokosc - Math.Max(Padding.Left, kontrolka.Margin.Left) - Math.Max(Padding.Right, kontrolka.Margin.Right);
 				y += kontrolka.Height;
 				y += kontrolka.Margin.Bottom;
 			}
