@@ -325,7 +325,7 @@ namespace ProFak.DB
 				parametr.Value = wartoscParametru;
 				polecenie.Parameters.Add(parametr);
 			}
-			var sql = String.Format(zapytanie.Format, nazwyParametrow);
+			var sql = String.Format(zapytanie.Format, nazwyParametrow.ToArray());
 			polecenie.CommandText = sql;
 			using var reader = polecenie.ExecuteReader();
 			var wynik = new List<Dictionary<string, object>>();
