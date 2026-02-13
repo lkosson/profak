@@ -49,8 +49,7 @@ namespace ProFak.UI
 			label9 = new System.Windows.Forms.Label();
 			linkLabelTrescPomoc = new System.Windows.Forms.LinkLabel();
 			tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			backgroundWorkerSprawdzMF = new System.ComponentModel.BackgroundWorker();
-			backgroundWorkerPobierzGUS = new System.ComponentModel.BackgroundWorker();
+			((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
 			tabControl.SuspendLayout();
 			tabPageEMail.SuspendLayout();
 			tableLayoutPanel1.SuspendLayout();
@@ -297,6 +296,7 @@ namespace ProFak.UI
 			MinimumSize = new System.Drawing.Size(800, 425);
 			Name = "KonfiguracjaEdytor";
 			Size = new System.Drawing.Size(800, 425);
+			((System.ComponentModel.ISupportInitialize)errorProvider).EndInit();
 			tabControl.ResumeLayout(false);
 			tabPageEMail.ResumeLayout(false);
 			tableLayoutPanel1.ResumeLayout(false);
@@ -322,8 +322,6 @@ namespace ProFak.UI
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.Label label9;
-		private System.ComponentModel.BackgroundWorker backgroundWorkerSprawdzMF;
-		private System.ComponentModel.BackgroundWorker backgroundWorkerPobierzGUS;
 		private System.Windows.Forms.Label label7;
 		private NumericUpDownDPI numericUpDownSMTPort;
 		private System.Windows.Forms.TextBox textBoxEMailNadawca;
