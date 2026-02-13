@@ -93,5 +93,11 @@ namespace ProFak.UI
 			if (!String.IsNullOrEmpty(NazwaCzcionki)) Application.SetDefaultFont(new Font(NazwaCzcionki, RozmiarCzcionki.Value));
 			else Application.SetDefaultFont(new Font(SystemFonts.MessageBoxFont.FontFamily, RozmiarCzcionki.Value, SystemFonts.MessageBoxFont.Style));
 		}
+
+		public static int PrzeskalujRozmiar(int rozmiarPx)
+		{
+			if (!RozmiarCzcionki.HasValue) return rozmiarPx;
+			return (int)(rozmiarPx * RozmiarCzcionki.Value / SystemFonts.MessageBoxFont.Size);
+		}
 	}
 }

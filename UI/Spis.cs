@@ -23,6 +23,7 @@ namespace ProFak.UI
 			AllowUserToOrderColumns = true;
 			RowHeadersVisible = true;
 			RowHeadersWidth = 16;
+			ColumnHeadersHeight = Wyglad.PrzeskalujRozmiar(ColumnHeadersHeight);
 			ShowCellToolTips = true;
 			EnableHeadersVisualStyles = false;
 			ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.False;
@@ -245,7 +246,7 @@ namespace ProFak.UI
 			kolumna.AutoSizeMode = rozciagnij ? DataGridViewAutoSizeColumnMode.Fill : DataGridViewAutoSizeColumnMode.NotSet;
 			kolumna.Visible = szerokosc != 0;
 			if (!String.IsNullOrEmpty(format)) kolumna.DefaultCellStyle.Format = format;
-			if (szerokosc.HasValue) kolumna.Width = szerokosc.Value * DeviceDpi / 96;
+			if (szerokosc.HasValue) kolumna.Width = Wyglad.PrzeskalujRozmiar(szerokosc.Value) * DeviceDpi / 96;
 			if (rozciagnij) kolumna.MinimumWidth = 50;
 			Columns.Add(kolumna);
 			if (tooltip != null)
@@ -262,7 +263,7 @@ namespace ProFak.UI
 			kolumna.HeaderText = naglowek;
 			kolumna.DataPropertyName = wlasciwosc;
 			kolumna.Name = wlasciwosc;
-			if (szerokosc.HasValue) kolumna.Width = szerokosc.Value * DeviceDpi / 96;
+			if (szerokosc.HasValue) kolumna.Width = Wyglad.PrzeskalujRozmiar(szerokosc.Value) * DeviceDpi / 96;
 			kolumna.SortMode = DataGridViewColumnSortMode.Programmatic;
 			kolumna.Visible = szerokosc != 0;
 			Columns.Add(kolumna);
