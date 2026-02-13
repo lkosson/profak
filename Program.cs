@@ -21,6 +21,7 @@ namespace ProFak
 			{
 				Wyglad.DostosujDoWine();
 				Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+				Wyglad.UstawCzcionke();
 				Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);

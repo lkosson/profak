@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -22,6 +23,8 @@ namespace ProFak.UI
 		public static bool PotwierdzanieZamknieciaProgramu { get; set; } = false;
 		public static bool WstepneLadowanieReportingServices { get; set; } = true;
 		public static int SzerokoscMenu { get; set; } = 270;
+		public static int? RozmiarCzcionki { get; set; } = null;
+		public static string NazwaCzcionki { get; set; } = null;
 
 		public static string NazwaAkcji(AdapterAkcji adapter)
 		{
@@ -82,6 +85,13 @@ namespace ProFak.UI
 				DomyslnyPodgladStrony = false;
 			}
 			NativeLibrary.Free(ntdll);
+		}
+
+		public static void UstawCzcionke()
+		{
+			if (!RozmiarCzcionki.HasValue) return;
+			if (!String.IsNullOrEmpty(NazwaCzcionki)) Application.SetDefaultFont(new Font(NazwaCzcionki, RozmiarCzcionki.Value));
+			else Application.SetDefaultFont(new Font(SystemFonts.MessageBoxFont.FontFamily, RozmiarCzcionki.Value, SystemFonts.MessageBoxFont.Style));
 		}
 	}
 }
