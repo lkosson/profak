@@ -66,23 +66,20 @@ namespace ProFak.IO.JPK_PKPIR
 				}
 				else if (String.IsNullOrEmpty(nipnumer)) nipnumer = "BRAK";
 
-				foreach (var pozycje in faktura.Pozycje.Where(e => e.StawkaRyczaltu.HasValue).GroupBy(e => e.StawkaRyczaltu.Value))
-				{
-					var jpkwiersz = new JPKPKPIRWiersz();
-					jpkwiersz.K_1 = (ulong)(jpk.PKPIRWiersz.Count + 1);
-					jpkwiersz.K_2 = faktura.DataSprzedazy;
-					jpkwiersz.K_3A = faktura.Numer;
-					jpkwiersz.K_3B = faktura.NumerKSeF;
-					jpkwiersz.K_4A = Enum.Parse<TKodKraju>(nipkraj);
-					jpkwiersz.K_4B = nipnumer;
-					jpkwiersz.K_5A = faktura.CzySprzedaz ? faktura.NazwaNabywcy : faktura.NazwaSprzedawcy;
-					jpkwiersz.K_5B = faktura.CzySprzedaz ? faktura.DaneNabywcy : faktura.DaneSprzedawcy;
-					jpkwiersz.K_6 = String.IsNullOrEmpty(faktura.OpisZdarzenia) ? faktura.CzySprzedaz ? "Sprzedaż" : "Zakup" : faktura.OpisZdarzenia;
-					jpkwiersz.K_7 = faktura.CzySprzedaz ? faktura.RazemNetto : 0;
-					jpkwiersz.K_9 = jpkwiersz.K_7 + jpkwiersz.K_8;
-					jpkwiersz.K_10 = faktura.CzyZakup ? faktura.RazemNetto : 0;
-					jpkwiersze.Add(jpkwiersz);
-				}
+				var jpkwiersz = new JPKPKPIRWiersz();
+				jpkwiersz.K_1 = (ulong)(jpk.PKPIRWiersz.Count + 1);
+				jpkwiersz.K_2 = faktura.DataSprzedazy;
+				jpkwiersz.K_3A = faktura.Numer;
+				jpkwiersz.K_3B = faktura.NumerKSeF;
+				jpkwiersz.K_4A = Enum.Parse<TKodKraju>(nipkraj);
+				jpkwiersz.K_4B = nipnumer;
+				jpkwiersz.K_5A = faktura.CzySprzedaz ? faktura.NazwaNabywcy : faktura.NazwaSprzedawcy;
+				jpkwiersz.K_5B = faktura.CzySprzedaz ? faktura.DaneNabywcy : faktura.DaneSprzedawcy;
+				jpkwiersz.K_6 = String.IsNullOrEmpty(faktura.OpisZdarzenia) ? faktura.CzySprzedaz ? "Sprzedaż" : "Zakup" : faktura.OpisZdarzenia;
+				jpkwiersz.K_7 = faktura.CzySprzedaz ? faktura.RazemNetto : 0;
+				jpkwiersz.K_9 = jpkwiersz.K_7 + jpkwiersz.K_8;
+				jpkwiersz.K_10 = faktura.CzyZakup ? faktura.RazemNetto : 0;
+				jpkwiersze.Add(jpkwiersz);
 			}
 
 			jpk.PKPIRInfo = new JPKPKPIRInfo();
