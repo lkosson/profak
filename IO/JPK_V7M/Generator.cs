@@ -28,6 +28,7 @@ namespace ProFak.IO.JPK_V7M
 		private static JPK Zbuduj(Baza baza, DeklaracjaVat deklaracja)
 		{
 			var podmiot = baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot);
+			if (podmiot == null) throw new ApplicationException("Nie uzupełniono danych firmy.");
 			var faktury = baza.Faktury.Where(faktura => faktura.DeklaracjaVatId == deklaracja.Id)
 				.Include(faktura => faktura.Pozycje).ThenInclude(pozycja => pozycja.StawkaVat)
 				.ToList();
@@ -42,7 +43,7 @@ namespace ProFak.IO.JPK_V7M
 			jpk.Naglowek.NazwaSystemu = "ProFak (https://github.com/lkosson/profak)";
 			jpk.Naglowek.CelZlozenia = new TNaglowekCelZlozenia();
 			jpk.Naglowek.CelZlozenia.Value = TCelZlozenia.Item1;
-			jpk.Naglowek.KodUrzedu = Enum.Parse<TKodUS>("Item" + Wymagane(podmiot.KodUrzedu, "Nie uzupełniono kodu urzędu w karcie podmiotu."));
+			jpk.Naglowek.KodUrzedu = Enum.Parse<TKodUS>("Item" + Wymagane(podmiot.KodUrzedu, "Nie uzupełniono kodu urzędu w danych urzędowych firmy."));
 			jpk.Naglowek.Rok = deklaracja.Miesiac.Year.ToString();
 			jpk.Naglowek.Miesiac = (sbyte)deklaracja.Miesiac.Month;
 
@@ -50,10 +51,10 @@ namespace ProFak.IO.JPK_V7M
 			var jpkpodmiot = new TPodmiotDowolnyBezAdresuOsobaFizyczna();
 			jpk.Podmiot1.OsobaFizyczna = jpkpodmiot;
 			jpkpodmiot.NIP = Wymagane(podmiot.NIP, "Nie uzupełniono NIPu firmy.");
-			jpkpodmiot.ImiePierwsze = Wymagane(podmiot.OsobaFizycznaImie, "Nie podano imienia w karcie podmiotu.");
-			jpkpodmiot.Nazwisko = Wymagane(podmiot.OsobaFizycznaNazwisko, "Nie podano nazwiska w karcie podmiotu.");
-			jpkpodmiot.DataUrodzenia = podmiot.OsobaFizycznaDataUrodzenia.HasValue ? podmiot.OsobaFizycznaDataUrodzenia.Value : throw new ApplicationException("Nie podano daty urodzenia w karcie podmiotu.");
-			jpkpodmiot.Email = Wymagane(podmiot.EMail, "Nie podano adresu e-mail w karcie podmiotu.");
+			jpkpodmiot.ImiePierwsze = Wymagane(podmiot.OsobaFizycznaImie, "Nie podano imienia w danych urzędowych firmy.");
+			jpkpodmiot.Nazwisko = Wymagane(podmiot.OsobaFizycznaNazwisko, "Nie podano nazwiska w danych urzędowych firmy.");
+			jpkpodmiot.DataUrodzenia = podmiot.OsobaFizycznaDataUrodzenia.HasValue ? podmiot.OsobaFizycznaDataUrodzenia.Value : throw new ApplicationException("Nie podano daty urodzenia w danych urzędowych firmy.");
+			jpkpodmiot.Email = Wymagane(podmiot.EMail, "Nie podano adresu e-mail w danych urzędowych firmy.");
 			jpkpodmiot.Telefon = podmiot.Telefon;
 
 			jpk.Ewidencja = new JPKEwidencja();

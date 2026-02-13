@@ -28,6 +28,7 @@ namespace ProFak.IO.JPK_PKPIR
 		private static JPK Zbuduj(Baza baza, IEnumerable<ZaliczkaPit> zaliczki)
 		{
 			var podmiot = baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot);
+			if (podmiot == null) throw new ApplicationException("Nie uzupełniono danych firmy.");
 			var faktury = baza.Faktury.Where(faktura => zaliczki.Contains(faktura.ZaliczkaPit))
 				.Include(faktura => faktura.Pozycje)
 				.Include(faktura => faktura.FakturaKorygowana)
@@ -46,13 +47,14 @@ namespace ProFak.IO.JPK_PKPIR
 			jpk.Naglowek.KodUrzedu = Enum.Parse<TKodUS>("Item" + Wymagane(podmiot.KodUrzedu, "Nie uzupełniono kodu urzędu w karcie podmiotu."));
 
 			jpk.Podmiot1 = new JPKPodmiot1();
-			var podmiotOF = new TPodmiotDowolnyBezAdresuOsobaFizyczna();
-			podmiotOF.NIP = podmiot.NIP;
-			podmiotOF.Email = podmiot.EMail;
-			podmiotOF.Telefon = podmiot.Telefon;
-			podmiotOF.ImiePierwsze = podmiot.OsobaFizycznaImie;
-			podmiotOF.Nazwisko = podmiot.OsobaFizycznaNazwisko;
-			podmiotOF.DataUrodzenia = podmiot.OsobaFizycznaDataUrodzenia.Value;
+			var jpkpodmiot = new TPodmiotDowolnyBezAdresuOsobaFizyczna();
+			jpk.Podmiot1.OsobaFizyczna = jpkpodmiot;
+			jpkpodmiot.NIP = Wymagane(podmiot.NIP, "Nie uzupełniono NIPu firmy.");
+			jpkpodmiot.ImiePierwsze = Wymagane(podmiot.OsobaFizycznaImie, "Nie podano imienia w danych urzędowych firmy.");
+			jpkpodmiot.Nazwisko = Wymagane(podmiot.OsobaFizycznaNazwisko, "Nie podano nazwiska w danych urzędowych firmy.");
+			jpkpodmiot.DataUrodzenia = podmiot.OsobaFizycznaDataUrodzenia.HasValue ? podmiot.OsobaFizycznaDataUrodzenia.Value : throw new ApplicationException("Nie podano daty urodzenia w danych urzędowych firmy.");
+			jpkpodmiot.Email = Wymagane(podmiot.EMail, "Nie podano adresu e-mail w danych urzędowych firmy.");
+			jpkpodmiot.Telefon = podmiot.Telefon;
 
 			var jpkwiersze = new List<JPKPKPIRWiersz>();
 			foreach (var faktura in faktury)

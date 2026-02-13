@@ -27,6 +27,7 @@ namespace ProFak.IO.JPK_FA
 		private static JPK Zbuduj(Baza baza, IEnumerable<DeklaracjaVat> deklaracje)
 		{
 			var podmiot = baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot);
+			if (podmiot == null) throw new ApplicationException("Nie uzupełniono danych firmy.");
 			var faktury = baza.Faktury.Where(faktura => deklaracje.Contains(faktura.DeklaracjaVat))
 				.Include(faktura => faktura.Pozycje).ThenInclude(pozycja => pozycja.StawkaVat)
 				.Include(faktura => faktura.Pozycje).ThenInclude(pozycja => pozycja.Towar).ThenInclude(towar => towar.JednostkaMiary)
