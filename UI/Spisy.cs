@@ -10,7 +10,7 @@ namespace ProFak.UI
 {
 	class Spisy
 	{
-		public static TRekord Wybierz<TRekord>(Kontekst kontekst, SpisZAkcjami<TRekord> spis, string tytul, Ref<TRekord> biezacaWartosc)
+		public static TRekord? Wybierz<TRekord>(Kontekst kontekst, SpisZAkcjami<TRekord> spis, string tytul, Ref<TRekord> biezacaWartosc)
 			where TRekord : Rekord<TRekord>
 		{
 			var wybor = new WybierzRekordAkcja<TRekord>();
@@ -27,7 +27,7 @@ namespace ProFak.UI
 			return wybor.WybranyRekord;
 		}
 
-		public static SpisZAkcjami<DeklaracjaVat, DeklaracjaVatSpis> DeklaracjeVat(string[] parametry = null)
+		public static SpisZAkcjami<DeklaracjaVat, DeklaracjaVatSpis> DeklaracjeVat(string[]? parametry = null)
 		{
 			return Utworz(new DeklaracjaVatSpis(parametry),
 				new DodajRekordAkcja<DeklaracjaVat, DeklaracjaVatEdytor>(),
@@ -39,7 +39,7 @@ namespace ProFak.UI
 			);
 		}
 
-		public static SpisZAkcjami<Faktura, FakturaSprzedazySpis> FakturySprzedazy(string[] parametry = null)
+		public static SpisZAkcjami<Faktura, FakturaSprzedazySpis> FakturySprzedazy(string[]? parametry = null)
 		{
 			return Utworz(new FakturaSprzedazySpis(parametry),
 				new FakturaSprzedazyAkcja(),
@@ -61,7 +61,7 @@ namespace ProFak.UI
 			);
 		}
 
-		public static SpisZAkcjami<Faktura, FakturaProformaSpis> FakturyProforma(string[] parametry = null)
+		public static SpisZAkcjami<Faktura, FakturaProformaSpis> FakturyProforma(string[]? parametry = null)
 		{
 			return Utworz(new FakturaProformaSpis(parametry),
 				new FakturaProformaAkcja(),
@@ -76,7 +76,7 @@ namespace ProFak.UI
 			);
 		}
 
-		public static SpisZAkcjami<Faktura, FakturaZakupuSpis> FakturyZakupu(string[] parametry = null)
+		public static SpisZAkcjami<Faktura, FakturaZakupuSpis> FakturyZakupu(string[]? parametry = null)
 		{
 			return Utworz(new FakturaZakupuSpis(parametry),
 				new FakturaZakupuAkcja(),
@@ -104,7 +104,7 @@ namespace ProFak.UI
 			);
 		}
 
-		public static SpisZAkcjami<Faktura, KSeFSpis> KSeFSprzedaz(params string[] parametry)
+		public static SpisZAkcjami<Faktura, KSeFSpis> KSeFSprzedaz(string[]? parametry)
 		{
 			return Utworz(new KSeFSpis(true, parametry),
 				new ZapiszJakoXMLAkcja(),
@@ -112,7 +112,7 @@ namespace ProFak.UI
 			);
 		}
 
-		public static SpisZAkcjami<Faktura, KSeFSpis> KSeFZakup(params string[] parametry)
+		public static SpisZAkcjami<Faktura, KSeFSpis> KSeFZakup(string[]? parametry)
 		{
 			return Utworz(new KSeFSpis(false, parametry),
 				new DodajJakoZakupAkcja(),
@@ -176,7 +176,7 @@ namespace ProFak.UI
 			);
 		}
 
-		public static SpisZAkcjami<SkladkaZus, SkladkaZusSpis> SkladkiZus(string[] parametry = null)
+		public static SpisZAkcjami<SkladkaZus, SkladkaZusSpis> SkladkiZus(string[]? parametry = null)
 		{
 			return Utworz(new SkladkaZusSpis(parametry),
 				new DodajRekordAkcja<SkladkaZus, SkladkaZusEdytor>(),
@@ -270,7 +270,7 @@ namespace ProFak.UI
 			);
 		}
 
-		public static SpisZAkcjami<ZaliczkaPit, ZaliczkaPitSpis> ZaliczkiPit(string[] parametry = null)
+		public static SpisZAkcjami<ZaliczkaPit, ZaliczkaPitSpis> ZaliczkiPit(string[]? parametry = null)
 		{
 			return Utworz(new ZaliczkaPitSpis(parametry),
 				new DodajRekordAkcja<ZaliczkaPit, ZaliczkaPitEdytor>(),

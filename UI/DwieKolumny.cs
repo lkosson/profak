@@ -27,7 +27,7 @@ namespace ProFak.UI
 			base.OnCreateControl();
 		}
 
-		public void DodajWiersz(Control kontrolka, string etykieta)
+		public void DodajWiersz(Control kontrolka, string? etykieta)
 		{
 			szerokoscKontrolek = Math.Max(szerokoscKontrolek, kontrolka.Width);
 			Height += kontrolka.Height + kontrolka.Margin.Top + kontrolka.Margin.Bottom;

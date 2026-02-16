@@ -19,12 +19,13 @@ namespace ProFak.UI
 		{
 		}
 
-		protected override DodatkowyPodmiot UtworzRekord(Kontekst kontekst, IEnumerable<DodatkowyPodmiot> zaznaczoneRekordy)
+		protected override DodatkowyPodmiot? UtworzRekord(Kontekst kontekst, IEnumerable<DodatkowyPodmiot> zaznaczoneRekordy)
 		{
 			using var spis = Spisy.Kontrahenci();
 			var kontrahent = Spisy.Wybierz(kontekst, spis, "Wybierz pozycję", default);
 			if (kontrahent == null) return null;
 			var dodatkowyPodmiot = base.UtworzRekord(kontekst, zaznaczoneRekordy);
+			if (dodatkowyPodmiot == null) return null;
 			dodatkowyPodmiot.Adres = kontrahent.AdresRejestrowy;
 			dodatkowyPodmiot.NIP = kontrahent.NIP;
 			dodatkowyPodmiot.Nazwa = kontrahent.PelnaNazwaLubNazwa;

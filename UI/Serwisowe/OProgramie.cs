@@ -18,26 +18,26 @@ namespace ProFak.UI
 	partial class OProgramie : UserControl, IKontrolkaZKontekstem
 	{
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public Kontekst Kontekst { get; set; }
+		public Kontekst Kontekst { get; set; } = default!;
 
 		public OProgramie()
 		{
 			InitializeComponent();
-			labelWersja.Text = GetType().Assembly.GetName().Version.ToString();
+			labelWersja.Text = GetType().Assembly.GetName().Version!.ToString();
 			labelSciezka.Text = Environment.ProcessPath;
-			labelData.Text = File.GetLastWriteTime(Environment.ProcessPath).ToString("d MMMM yyyy, H:mm:ss");
+			labelData.Text = File.GetLastWriteTime(Environment.ProcessPath!).ToString("d MMMM yyyy, H:mm:ss");
 		}
 
-		private void linkLabelStrona_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		private void linkLabelStrona_LinkClicked(object? sender, LinkLabelLinkClickedEventArgs e)
 		{
 			Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = "https://github.com/lkosson/profak/" });
 		}
 
-		private void btnSprawdzAktualizacje_Click(object sender, EventArgs e)
+		private void btnSprawdzAktualizacje_Click(object? sender, EventArgs e)
 		{
 			try
 			{
-				string response = null;
+				string? response = null;
 				OknoPostepu.Uruchom(async cancellationToken =>
 				{
 					using var wb = new HttpClient();
@@ -46,7 +46,7 @@ namespace ProFak.UI
 					cancellationToken.ThrowIfCancellationRequested();
 				});
 
-				var json = JsonDocument.Parse(response);
+				var json = JsonDocument.Parse(response!);
 				Version.TryParse(json.RootElement.GetProperty("tag_name").ToString().Replace("v", ""), out var wersjaGitHub);
 				var wersjaAplikacji = GetType().Assembly.GetName().Version;
 				if (wersjaGitHub != null && wersjaGitHub > wersjaAplikacji)

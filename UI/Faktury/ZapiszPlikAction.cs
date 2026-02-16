@@ -28,7 +28,7 @@ namespace ProFak.UI
 			dialog.FileName = plik.Nazwa;
 			if (dialog.ShowDialog() != DialogResult.OK) return;
 			using var transakcja = nowyKontekst.Transakcja();
-			var zawartosc = nowyKontekst.Baza.Zawartosci.FirstOrDefault(zawartosc => zawartosc.Id == plik.ZawartoscId);
+			var zawartosc = nowyKontekst.Baza.Znajdz<Zawartosc>(plik.ZawartoscId);
 			File.WriteAllBytes(dialog.FileName, zawartosc.Dane);
 		}
 	}

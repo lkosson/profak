@@ -61,7 +61,7 @@ namespace ProFak.UI
 			dateTimePickerOsobaFizycznaDataUrodzenia.Format = DateTimePickerFormat.Custom;
 		}
 
-		private string WalidacjaNIP(string nip)
+		private string? WalidacjaNIP(string nip)
 		{
 			if (String.IsNullOrWhiteSpace(nip)) return null;
 			nip = nip.Replace("-", "");
@@ -85,7 +85,7 @@ namespace ProFak.UI
 			return null;
 		}
 
-		private string WalidacjaNazwy(string nazwa)
+		private string? WalidacjaNazwy(string nazwa)
 		{
 			if (String.IsNullOrWhiteSpace(nazwa)) return null;
 			static string TrzonNazwy(string nazwa) => String.Join("", nazwa.Where(Char.IsLetterOrDigit).Select(Char.ToLower));
@@ -105,7 +105,7 @@ namespace ProFak.UI
 			return null;
 		}
 
-		private string WalidacjaPelnejNazwy(string pelnaNazwa)
+		private string? WalidacjaPelnejNazwy(string pelnaNazwa)
 		{
 			if (String.IsNullOrWhiteSpace(pelnaNazwa)) return null;
 			var innyKontrahent = Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.PelnaNazwa == pelnaNazwa && kontrahent.Id != Rekord.Id);
@@ -113,12 +113,12 @@ namespace ProFak.UI
 			return null;
 		}
 
-		private void textBoxNazwa_TextChanged(object sender, EventArgs e)
+		private void textBoxNazwa_TextChanged(object? sender, EventArgs e)
 		{
 			textBoxPelnaNazwa.PlaceholderText = textBoxNazwa.Text;
 		}
 
-		private void textBoxAdresRejestrowy_TextChanged(object sender, EventArgs e)
+		private void textBoxAdresRejestrowy_TextChanged(object? sender, EventArgs e)
 		{
 			textBoxAdresKorespondencyjny.PlaceholderText = textBoxAdresRejestrowy.Text;
 		}
@@ -174,7 +174,7 @@ namespace ProFak.UI
 			if (String.IsNullOrEmpty(Rekord.AdresKorespondencyjny)) Rekord.AdresKorespondencyjny = Rekord.AdresRejestrowy;
 		}
 
-		private void buttonSprawdzMF_Click(object sender, EventArgs e)
+		private void buttonSprawdzMF_Click(object? sender, EventArgs e)
 		{
 			var wynik = "";
 			try
@@ -192,7 +192,7 @@ namespace ProFak.UI
 			}
 		}
 
-		private void buttonPobierzGUS_Click(object sender, EventArgs e)
+		private void buttonPobierzGUS_Click(object? sender, EventArgs e)
 		{
 			try
 			{
@@ -209,10 +209,10 @@ namespace ProFak.UI
 			}
 		}
 
-		private void buttonKSeFAuth_Click(object sender, EventArgs e)
+		private void buttonKSeFAuth_Click(object? sender, EventArgs e)
 		{
 			var nip = Rekord.NIP;
-			string token = null;
+			string? token = null;
 			if (Rekord.SrodowiskoKSeF == SrodowiskoKSeF.Test)
 			{
 				OknoPostepu.Uruchom(async cancellationToken =>
@@ -243,7 +243,7 @@ namespace ProFak.UI
 			kontroler.AktualizujKontrolki();
 		}
 
-		private void buttonCertyfikatKSeF_Click(object sender, EventArgs e)
+		private void buttonCertyfikatKSeF_Click(object? sender, EventArgs e)
 		{
 			using var nowyKontekst = new Kontekst(Kontekst);
 			using var edytor = new ImportCertyfikatuKSeFEdytor();

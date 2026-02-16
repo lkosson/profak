@@ -61,9 +61,9 @@ namespace ProFak.IO
 			var ulica = podmiot.GetProperty("Ulica").GetString();
 			var numer = podmiot.GetProperty("Numer_Nieruchomosci").GetString();
 
-			kontrahent.Nazwa = nazwa;
-			kontrahent.PelnaNazwa = nazwa;
-			kontrahent.AdresRejestrowy = ulica.Replace("&#8209;", "") + "\r\n" + kodpocztowy + " " + miejscowosc;
+			kontrahent.Nazwa = nazwa ?? "";
+			kontrahent.PelnaNazwa = nazwa ?? "";
+			kontrahent.AdresRejestrowy = ulica?.Replace("&#8209;", "") + "\r\n" + kodpocztowy + " " + miejscowosc;
 			kontrahent.AdresKorespondencyjny = kontrahent.AdresRejestrowy;
 		}
 

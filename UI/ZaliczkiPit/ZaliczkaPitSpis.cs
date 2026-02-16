@@ -38,7 +38,7 @@ namespace ProFak.UI
 			DodajKolumneId();
 		}
 
-		public ZaliczkaPitSpis(string[] parametry)
+		public ZaliczkaPitSpis(string[]? parametry)
 			: this()
 		{
 			if (parametry == null) return;

@@ -13,12 +13,12 @@ namespace ProFak.UI
 		where TRekord : Rekord<TRekord>, new()
 		where TEdytor : Edytor<TRekord>, new()
 	{
-		private readonly Action<TRekord> przygotujRekord;
+		private readonly Action<TRekord>? przygotujRekord;
 		private readonly bool pelnyEkran;
 
 		public override string Nazwa => "➕ Dodaj [INS]";
 		
-		public DodajRekordAkcja(Action<TRekord> przygotujRekord = null, bool pelnyEkran = false)
+		public DodajRekordAkcja(Action<TRekord>? przygotujRekord = null, bool pelnyEkran = false)
 		{
 			this.przygotujRekord = przygotujRekord;
 			this.pelnyEkran = pelnyEkran;
@@ -27,7 +27,7 @@ namespace ProFak.UI
 		public override bool CzyDostepnaDlaRekordow(IEnumerable<TRekord> zaznaczoneRekordy) => true;
 		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.None && klawisz == Keys.Insert;
 
-		protected virtual TRekord UtworzRekord(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy)
+		protected virtual TRekord? UtworzRekord(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy)
 		{
 			var rekord = new TRekord();
 			if (przygotujRekord != null) przygotujRekord(rekord);

@@ -39,10 +39,10 @@ namespace ProFak.DB
 		public Ref<StawkaVat> StawkaVatRef { get => StawkaVatId; set => StawkaVatId = value; }
 		public Ref<JednostkaMiary> JednostkaMiaryRef { get => JednostkaMiaryId; set => JednostkaMiaryId = value; }
 
-		public Faktura Faktura { get; set; }
-		public Towar Towar { get; set; }
-		public StawkaVat StawkaVat { get; set; }
-		public JednostkaMiary JednostkaMiary { get; set; }
+		public Faktura? Faktura { get; set; }
+		public Towar? Towar { get; set; }
+		public StawkaVat? StawkaVat { get; set; }
+		public JednostkaMiary? JednostkaMiary { get; set; }
 
 		public decimal Cena => CzyWedlugCenBrutto ? CenaBrutto : CenaNetto;
 		public decimal IloscAbs => Math.Abs(Ilosc);

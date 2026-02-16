@@ -20,10 +20,10 @@ namespace ProFak.UI
 		private readonly SpisZAkcjami<Plik, PlikSpis> pliki;
 		private readonly SpisZAkcjami<DodatkowyPodmiot, DodatkowyPodmiotSpis> dodatkowePodmioty;
 
-		private Slownik<Kontrahent> slownikNabywcaNazwa;
-		private Slownik<Kontrahent> slownikNabywcaNIP;
-		private Slownik<Kontrahent> slownikSprzedawcaNazwa;
-		private Slownik<Kontrahent> slownikSprzedawcaNIP;
+		private Slownik<Kontrahent> slownikNabywcaNazwa = default!;
+		private Slownik<Kontrahent> slownikNabywcaNIP = default!;
+		private Slownik<Kontrahent> slownikSprzedawcaNazwa = default!;
+		private Slownik<Kontrahent> slownikSprzedawcaNIP = default!;
 
 		private string uwagiNabywcy = "";
 		private string uwagiSprzedawcy = "";
@@ -105,7 +105,7 @@ namespace ProFak.UI
 			Wyglad.UsunSkrotyZakladek(tabControl1);
 		}
 
-		private string WalidacjaProceduryMarzy(ProceduraMarży wartosc)
+		private string? WalidacjaProceduryMarzy(ProceduraMarży wartosc)
 		{
 			if (Rekord.Rodzaj != RodzajFaktury.VatMarża && Rekord.Rodzaj != RodzajFaktury.KorektaVatMarży) return null;
 			if (wartosc == ProceduraMarży.NieDotyczy)
@@ -116,7 +116,7 @@ namespace ProFak.UI
 			return null;
 		}
 
-		private string WalidacjaNumer(string numer)
+		private string? WalidacjaNumer(string numer)
 		{
 			if (String.IsNullOrWhiteSpace(numer)) return Rekord.Numerator.HasValue ? null : "Należy uzupełnić numer faktury.";
 			var innaFaktura = Kontekst.Baza.Faktury.FirstOrDefault(faktura => faktura.Numer == Rekord.Numer && faktura.NIPSprzedawcy == Rekord.NIPSprzedawcy && faktura.Id != Rekord.Id);
@@ -134,10 +134,10 @@ namespace ProFak.UI
 		protected override void OnHandleCreated(EventArgs e)
 		{
 			base.OnHandleCreated(e);
-			ParentForm.KeyDown += Form_OnKeyDown;
+			ParentForm?.KeyDown += Form_OnKeyDown;
 		}
 
-		private void Form_OnKeyDown(object sender, KeyEventArgs e)
+		private void Form_OnKeyDown(object? sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.F1 && e.Modifiers == Keys.Control)
 			{
@@ -229,7 +229,7 @@ namespace ProFak.UI
 			slownikSprzedawcaNIP.Zainstaluj();
 		}
 
-		private bool UstawNabywce(Faktura rekord, Kontrahent kontrahent)
+		private bool UstawNabywce(Faktura rekord, Kontrahent? kontrahent)
 		{
 			if (kontrahent == null || rekord.NabywcaRef == kontrahent.Ref) return false;
 			rekord.NabywcaRef = kontrahent;
@@ -250,7 +250,7 @@ namespace ProFak.UI
 			return true;
 		}
 
-		private bool UstawSprzedawce(Faktura rekord, Kontrahent kontrahent)
+		private bool UstawSprzedawce(Faktura rekord, Kontrahent? kontrahent)
 		{
 			if (kontrahent == null || rekord.SprzedawcaRef == kontrahent.Ref) return false;
 			rekord.SprzedawcaRef = kontrahent;
@@ -282,7 +282,7 @@ namespace ProFak.UI
 			kontroler.AktualizujKontrolki();
 		}
 
-		private bool UstawSposobPlatnosci(Faktura rekord, SposobPlatnosci sposobPlatnosci)
+		private bool UstawSposobPlatnosci(Faktura rekord, SposobPlatnosci? sposobPlatnosci)
 		{
 			if (sposobPlatnosci == null || rekord == null || rekord.SposobPlatnosciRef == sposobPlatnosci.Ref) return false;
 			rekord.SposobPlatnosciRef = sposobPlatnosci;
@@ -326,7 +326,7 @@ namespace ProFak.UI
 			dodatkowePodmioty.Spis.Kontekst = Kontekst;
 			linkLabelKSeFUrl.Text = Rekord.URLKSeF;
 
-			var fakturaKorygowana = Kontekst.Baza.Znajdz(Rekord.FakturaKorygowanaRef);
+			var fakturaKorygowana = Rekord.FakturaKorygowanaRef.IsNull ? null : Kontekst.Baza.Znajdz(Rekord.FakturaKorygowanaRef);
 
 			if (Rekord.Rodzaj == RodzajFaktury.Sprzedaż) labelRodzaj.Text = "Sprzedaż";
 			else if (Rekord.Rodzaj == RodzajFaktury.Zakup) labelRodzaj.Text = "Zakup";
@@ -390,7 +390,7 @@ namespace ProFak.UI
 			}
 		}
 
-		private void buttonNowySprzedawca_Click(object sender, EventArgs e)
+		private void buttonNowySprzedawca_Click(object? sender, EventArgs e)
 		{
 			var kontrahent = new Kontrahent { Nazwa = comboBoxNazwaSprzedawcy.Text, NIP = comboBoxNIPSprzedawcy.Text, AdresRejestrowy = textBoxDaneSprzedawcy.Text };
 			if (!EdytorNowegoKontrahenta(kontrahent)) return;
@@ -400,7 +400,7 @@ namespace ProFak.UI
 			kontroler.AktualizujKontrolki();
 		}
 
-		private void buttonNowyNabywca_Click(object sender, EventArgs e)
+		private void buttonNowyNabywca_Click(object? sender, EventArgs e)
 		{
 			var kontrahent = new Kontrahent { Nazwa = comboBoxNazwaNabywcy.Text, NIP = comboBoxNIPNabywcy.Text, AdresRejestrowy = textBoxDaneNabywcy.Text };
 			if (!EdytorNowegoKontrahenta(kontrahent)) return;
@@ -426,7 +426,7 @@ namespace ProFak.UI
 			return true;
 		}
 
-		private void buttonKSeFGeneruj_Click(object sender, EventArgs e)
+		private void buttonKSeFGeneruj_Click(object? sender, EventArgs e)
 		{
 			if (String.IsNullOrEmpty(Rekord.Numer))
 			{
@@ -448,7 +448,7 @@ namespace ProFak.UI
 			kontroler.AktualizujKontrolki();
 		}
 
-		private void linkLabelUwagiPomoc_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		private void linkLabelUwagiPomoc_LinkClicked(object? sender, LinkLabelLinkClickedEventArgs e)
 		{
 			MessageBox.Show(@"Następujące frazy zostaną rozpoznane i automatycznie umieszczone w odpowiednich polach w momencie wysyłki do KSeF:
 
@@ -469,7 +469,7 @@ Pozostałe elementy tekstowe zostaną przekazane jako dodatkowy opis.", "ProFak"
 			base.KoniecEdycji();
 		}
 
-		private void linkLabelKSeFUrl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		private void linkLabelKSeFUrl_LinkClicked(object? sender, LinkLabelLinkClickedEventArgs e)
 		{
 			if (String.IsNullOrWhiteSpace(Rekord.URLKSeF)) return;
 			if (e.Button == MouseButtons.Right) Clipboard.SetText(Rekord.URLKSeF);

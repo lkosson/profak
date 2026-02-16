@@ -78,7 +78,7 @@ namespace ProFak.UI
 			fakturyZakupu.Spis.Kontekst = Kontekst;
 		}
 
-		private void buttonPrzelicz_Click(object sender, EventArgs e)
+		private void buttonPrzelicz_Click(object? sender, EventArgs e)
 		{
 			try
 			{

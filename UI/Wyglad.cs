@@ -24,7 +24,7 @@ namespace ProFak.UI
 		public static bool WstepneLadowanieReportingServices { get; set; } = true;
 		public static int SzerokoscMenu { get; set; } = 270;
 		public static int? RozmiarCzcionki { get; set; } = null;
-		public static string NazwaCzcionki { get; set; } = null;
+		public static string? NazwaCzcionki { get; set; } = null;
 
 		public static string NazwaAkcji(AdapterAkcji adapter)
 		{
@@ -91,13 +91,13 @@ namespace ProFak.UI
 		{
 			if (!RozmiarCzcionki.HasValue) return;
 			if (!String.IsNullOrEmpty(NazwaCzcionki)) Application.SetDefaultFont(new Font(NazwaCzcionki, RozmiarCzcionki.Value));
-			else Application.SetDefaultFont(new Font(SystemFonts.MessageBoxFont.FontFamily, RozmiarCzcionki.Value, SystemFonts.MessageBoxFont.Style));
+			else Application.SetDefaultFont(new Font(SystemFonts.MessageBoxFont!.FontFamily, RozmiarCzcionki.Value, SystemFonts.MessageBoxFont.Style));
 		}
 
 		public static int PrzeskalujRozmiar(int rozmiarPx)
 		{
 			if (!RozmiarCzcionki.HasValue) return rozmiarPx;
-			return (int)(rozmiarPx * RozmiarCzcionki.Value / SystemFonts.MessageBoxFont.Size);
+			return (int)(rozmiarPx * RozmiarCzcionki.Value / SystemFonts.MessageBoxFont!.Size);
 		}
 	}
 }

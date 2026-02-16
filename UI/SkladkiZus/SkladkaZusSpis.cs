@@ -38,7 +38,7 @@ namespace ProFak.UI
 			DodajKolumneId();
 		}
 
-		public SkladkaZusSpis(string[] parametry)
+		public SkladkaZusSpis(string[]? parametry)
 			: this()
 		{
 			if (parametry == null) return;

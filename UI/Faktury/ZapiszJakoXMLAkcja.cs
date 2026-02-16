@@ -22,7 +22,7 @@ namespace ProFak.UI
 			else ZapiszWiele(podmiot, zaznaczoneRekordy);
 		}
 
-		protected string WybierzPlik(string numerKSeF)
+		protected string? WybierzPlik(string numerKSeF)
 		{
 			using var dialog = new SaveFileDialog();
 			dialog.Title = "Zapisywanie pliku";
@@ -32,7 +32,7 @@ namespace ProFak.UI
 			return dialog.FileName;
 		}
 
-		protected string WybierzKatalog()
+		protected string? WybierzKatalog()
 		{
 			using var dialog = new FolderBrowserDialog();
 			dialog.Description = "Wybierz katalog, do którego mają zostać zapisane pliki.";

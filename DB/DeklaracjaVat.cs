@@ -40,7 +40,7 @@ namespace ProFak.DB
 		public decimal DoWplaty => Math.Max(NaleznyRazem - NaliczonyRazem, 0);
 		public decimal DoPrzeniesienia => Math.Max(NaliczonyRazem - NaleznyRazem, 0);
 
-		public List<Faktura> Faktury { get; set; }
+		public List<Faktura> Faktury { get; set; } = default!;
 
 		public override bool CzyPasuje(string fraza)
 			=> base.CzyPasuje(fraza)

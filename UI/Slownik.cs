@@ -13,16 +13,16 @@ namespace ProFak.UI
 	{
 		private readonly Kontekst kontekst;
 		private readonly ComboBox comboBox;
-		private readonly Button button;
+		private readonly Button? button;
 		private readonly Func<IEnumerable<T>> pobierzWartosci;
 		private readonly Func<T, string> wyswietlanaWartosc;
-		private readonly Action<T> ustawWartosc;
+		private readonly Action<T?> ustawWartosc;
 		private readonly Func<SpisZAkcjami<T>> generatorSpisu;
 		private bool gotowy;
 		private bool ustawionaNowaWartosc;
 		private bool dopuscPustaWartosc;
 
-		public Slownik(Kontekst kontekst, ComboBox comboBox, Button button, Func<IEnumerable<T>> pobierzWartosci, Func<T, string> wyswietlanaWartosc, Action<T> ustawWartosc, Func<SpisZAkcjami<T>> generatorSpisu, bool dopuscPustaWartosc = false)
+		public Slownik(Kontekst kontekst, ComboBox comboBox, Button? button, Func<IEnumerable<T>> pobierzWartosci, Func<T, string> wyswietlanaWartosc, Action<T?> ustawWartosc, Func<SpisZAkcjami<T>> generatorSpisu, bool dopuscPustaWartosc = false)
 		{
 			this.kontekst = kontekst;
 			this.comboBox = comboBox;
@@ -58,20 +58,20 @@ namespace ProFak.UI
 			comboBox.SelectedItem = wybranaWartosc;
 		}
 
-		private void ComboBox_KeyDown(object sender, KeyEventArgs e)
+		private void ComboBox_KeyDown(object? sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.F2) PokazSpis();
 			if (dopuscPustaWartosc && (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)) comboBox.SelectedIndex = -1;
 		}
 
-		private void ComboBox_HandleCreated(object sender, EventArgs e)
+		private void ComboBox_HandleCreated(object? sender, EventArgs e)
 		{
 			gotowy = true;
 		}
 
 		private void PokazSpis()
 		{
-			var dotychczasowaPozycja = (PozycjaListyRekordu<T>)comboBox.SelectedItem;
+			var dotychczasowaPozycja = (PozycjaListyRekordu<T>?)comboBox.SelectedItem;
 			using var spis = generatorSpisu();
 			var wartosc = Spisy.Wybierz(kontekst, spis, "Wybierz pozycję", dotychczasowaPozycja?.Wartosc);
 			if (wartosc == null) return;
@@ -85,15 +85,15 @@ namespace ProFak.UI
 			if (!ustawionaNowaWartosc) ustawWartosc(wartosc);
 		}
 
-		private void button_Click(object sender, EventArgs e)
+		private void button_Click(object? sender, EventArgs e)
 		{
 			PokazSpis();
 		}
 
-		private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
+		private void comboBox_SelectedIndexChanged(object? sender, EventArgs e)
 		{
 			if (!gotowy) return;
-			var pozycja = (PozycjaListyRekordu<T>)comboBox.SelectedItem;
+			var pozycja = (PozycjaListyRekordu<T>?)comboBox.SelectedItem;
 			ustawWartosc(pozycja?.Wartosc);
 			if (comboBox.Focused && comboBox.DropDownStyle == ComboBoxStyle.DropDown) comboBox.Focus();
 			ustawionaNowaWartosc = true;

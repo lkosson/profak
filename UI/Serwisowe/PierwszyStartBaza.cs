@@ -16,8 +16,8 @@ namespace ProFak.UI
 	{
 		private const string ZnacznikPierwszegoUruchomienia = "pierwsze-uruchomienie.txt";
 		private const string BazaDemo = "(demo)";
-		private string bazaZrodlowa;
-		private string bazaDocelowa;
+		private string? bazaZrodlowa;
+		private string? bazaDocelowa;
 
 		public PierwszyStartBaza()
 		{
@@ -38,7 +38,7 @@ namespace ProFak.UI
 				}
 				else
 				{
-					Directory.CreateDirectory(Path.GetDirectoryName(sciezka));
+					Directory.CreateDirectory(Path.GetDirectoryName(sciezka)!);
 					using var f = new FileStream(sciezka, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite, 4096, FileOptions.DeleteOnClose);
 					return true;
 				}
@@ -49,7 +49,7 @@ namespace ProFak.UI
 			}
 		}
 
-		private void buttonDalej_Click(object sender, EventArgs e)
+		private void buttonDalej_Click(object? sender, EventArgs e)
 		{
 			if (radioButtonNowaPrywatnaBaza.Checked)
 			{
@@ -94,7 +94,7 @@ namespace ProFak.UI
 			backgroundWorker.RunWorkerAsync();
 		}
 
-		private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+		private void backgroundWorker_DoWork(object? sender, DoWorkEventArgs e)
 		{
 			backgroundWorker.ReportProgress(0, "Weryfikacja bazy źródłowej");
 			var zrodloJestPlikiem = !String.IsNullOrEmpty(bazaZrodlowa) && bazaZrodlowa != BazaDemo;
@@ -124,14 +124,14 @@ namespace ProFak.UI
 					File.Move(bazaDocelowa, kopiaBazyDocelowej);
 				}
 
-				var katalogDocelowy = Path.GetDirectoryName(bazaDocelowa);
+				var katalogDocelowy = Path.GetDirectoryName(bazaDocelowa)!;
 				Directory.CreateDirectory(katalogDocelowy);
 
 				if (zrodloJestPlikiem)
 				{
 					backgroundWorker.ReportProgress(0, "Kopiowanie bazy");
 					// Tu nie potrzeba korzystać z mechanizmów SQLite'a - plik źródłowy nie jest aktywną bazą
-					File.Copy(bazaZrodlowa, bazaDocelowa);
+					File.Copy(bazaZrodlowa!, bazaDocelowa);
 				}
 
 				DB.Baza.Sciezka = bazaDocelowa;
@@ -155,7 +155,7 @@ namespace ProFak.UI
 			backgroundWorker.ReportProgress(0, "Baza gotowa");
 		}
 
-		private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+		private void backgroundWorker_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
 		{
 			if (e.Error == null)
 			{
@@ -170,9 +170,9 @@ namespace ProFak.UI
 			labelStatus.Visible = false;
 		}
 
-		private void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+		private void backgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
 		{
-			labelStatus.Text = (string)e.UserState;
+			labelStatus.Text = (string?)e.UserState ?? "";
 		}
 
 		public static bool Uruchom()

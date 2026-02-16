@@ -13,7 +13,7 @@ namespace ProFak.UI
 	class ButtonDropDown : Button
 	{
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public ContextMenuStrip Menu { get; set; }
+		public ContextMenuStrip? Menu { get; set; }
 
 		public ButtonDropDown()
 		{

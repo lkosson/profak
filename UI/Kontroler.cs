@@ -12,7 +12,7 @@ namespace ProFak.UI
 	class Kontroler<TModel>
 	{
 		private readonly HashSet<Control> aktualizowaneKontrolki;
-		private TModel model;
+		private TModel model = default!;
 		private List<Action> powiazania;
 		private bool modelZmieniony;
 
@@ -25,26 +25,27 @@ namespace ProFak.UI
 			powiazania = new List<Action>();
 		}
 
-		public void Powiazanie(DateTimePicker dateTimePicker, Expression<Func<TModel, DateTime>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(dateTimePicker, wlasciwosc, Powiazanie, wartoscZmieniona);
-		public void Powiazanie(DateTimePicker dateTimePicker, Expression<Func<TModel, DateTime?>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(dateTimePicker, wlasciwosc, Powiazanie, wartoscZmieniona);
-		public void Powiazanie(NumericUpDown numericUpDown, Expression<Func<TModel, decimal>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(numericUpDown, wlasciwosc, Powiazanie, wartoscZmieniona);
-		public void Powiazanie(NumericUpDown numericUpDown, Expression<Func<TModel, int>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(numericUpDown, wlasciwosc, Powiazanie, wartoscZmieniona);
-		public void Powiazanie(TextBox textBox, Expression<Func<TModel, string>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(textBox, wlasciwosc, Powiazanie, wartoscZmieniona);
-		public void Powiazanie(CheckBox checkBox, Expression<Func<TModel, bool>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(checkBox, wlasciwosc, Powiazanie, wartoscZmieniona);
-		public void Powiazanie(ComboBox comboBox, Expression<Func<TModel, string>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(comboBox, wlasciwosc, Powiazanie, wartoscZmieniona);
-		public void Powiazanie(ComboBox comboBox, Expression<Func<TModel, int>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(comboBox, wlasciwosc, Powiazanie, wartoscZmieniona);
-		public void Powiazanie<TWartosc>(ComboBox comboBox, Expression<Func<TModel, TWartosc>> wlasciwosc, Action wartoscZmieniona = null) => Powiazanie(comboBox, wlasciwosc, Powiazanie, wartoscZmieniona);
+		public void Powiazanie(DateTimePicker dateTimePicker, Expression<Func<TModel, DateTime>> wlasciwosc, Action? wartoscZmieniona = null) => Powiazanie(dateTimePicker, wlasciwosc, Powiazanie, wartoscZmieniona);
+		public void Powiazanie(DateTimePicker dateTimePicker, Expression<Func<TModel, DateTime?>> wlasciwosc, Action? wartoscZmieniona = null) => Powiazanie(dateTimePicker, wlasciwosc, Powiazanie, wartoscZmieniona);
+		public void Powiazanie(NumericUpDown numericUpDown, Expression<Func<TModel, decimal>> wlasciwosc, Action? wartoscZmieniona = null) => Powiazanie(numericUpDown, wlasciwosc, Powiazanie, wartoscZmieniona);
+		public void Powiazanie(NumericUpDown numericUpDown, Expression<Func<TModel, int>> wlasciwosc, Action? wartoscZmieniona = null) => Powiazanie(numericUpDown, wlasciwosc, Powiazanie, wartoscZmieniona);
+		public void Powiazanie(TextBox textBox, Expression<Func<TModel, string>> wlasciwosc, Action? wartoscZmieniona = null) => Powiazanie(textBox, wlasciwosc, Powiazanie, wartoscZmieniona);
+		public void Powiazanie(CheckBox checkBox, Expression<Func<TModel, bool>> wlasciwosc, Action? wartoscZmieniona = null) => Powiazanie(checkBox, wlasciwosc, Powiazanie, wartoscZmieniona);
+		public void Powiazanie(ComboBox comboBox, Expression<Func<TModel, string>> wlasciwosc, Action? wartoscZmieniona = null) => Powiazanie(comboBox, wlasciwosc, Powiazanie, wartoscZmieniona);
+		public void Powiazanie(ComboBox comboBox, Expression<Func<TModel, int>> wlasciwosc, Action? wartoscZmieniona = null) => Powiazanie(comboBox, wlasciwosc, Powiazanie, wartoscZmieniona);
+		public void Powiazanie<TWartosc>(ComboBox comboBox, Expression<Func<TModel, TWartosc>> wlasciwosc, Action? wartoscZmieniona = null) => Powiazanie(comboBox, wlasciwosc, Powiazanie, wartoscZmieniona);
 
-		private void Powiazanie<TKontrolka, TWartosc>(TKontrolka kontrolka, Expression<Func<TModel, TWartosc>> wlasciwosc, Action<TKontrolka, Func<TModel, TWartosc>, Action<TModel, TWartosc>, Action> powiazanie, Action wartoscZmieniona = null)
+		private void Powiazanie<TKontrolka, TWartosc>(TKontrolka kontrolka, Expression<Func<TModel, TWartosc>> wlasciwosc, Action<TKontrolka, Func<TModel, TWartosc>, Action<TModel, TWartosc>?, Action?> powiazanie, Action? wartoscZmieniona = null)
 		{
 			var exp = (MemberExpression)wlasciwosc.Body;
 			var pi = (PropertyInfo)exp.Member;
-			var getter = (Func<TModel, TWartosc>)pi.GetGetMethod().CreateDelegate(typeof(Func<TModel, TWartosc>));
-			var setter = pi.CanWrite ? (Action<TModel, TWartosc>)pi.GetSetMethod().CreateDelegate(typeof(Action<TModel, TWartosc>)) : null;
+			var getterMI = pi.GetGetMethod() ?? throw new ArgumentException($"Nieprawidłowa właściwość {wlasciwosc} dowiązana do {kontrolka}.");
+			var getter = (Func<TModel, TWartosc>)getterMI.CreateDelegate(typeof(Func<TModel, TWartosc>));
+			var setter = pi.CanWrite ? (Action<TModel, TWartosc>)pi.GetSetMethod()!.CreateDelegate(typeof(Action<TModel, TWartosc>)) : null;
 			powiazanie(kontrolka, getter, setter, wartoscZmieniona);
 		}
 
-		public void Powiazanie(DateTimePicker dateTimePicker, Func<TModel, DateTime> pobierzWartosc, Action<TModel, DateTime> ustawWartosc, Action wartoscZmieniona = null)
+		public void Powiazanie(DateTimePicker dateTimePicker, Func<TModel, DateTime> pobierzWartosc, Action<TModel, DateTime>? ustawWartosc, Action? wartoscZmieniona = null)
 		{
 			dateTimePicker.ValueChanged += delegate { AktualizujModel(dateTimePicker, ustawWartosc, dtp => dtp.Value); if (wartoscZmieniona != null) wartoscZmieniona(); };
 			Action powiazanie = delegate { AktualizujKontrolke(dateTimePicker, pobierzWartosc, (dtp, wartosc) => dtp.Value = wartosc); };
@@ -52,7 +53,7 @@ namespace ProFak.UI
 			powiazania.Add(powiazanie);
 		}
 
-		public void Powiazanie(DateTimePicker dateTimePicker, Func<TModel, DateTime?> pobierzWartosc, Action<TModel, DateTime?> ustawWartosc, Action wartoscZmieniona = null)
+		public void Powiazanie(DateTimePicker dateTimePicker, Func<TModel, DateTime?> pobierzWartosc, Action<TModel, DateTime?>? ustawWartosc, Action? wartoscZmieniona = null)
 		{
 			dateTimePicker.ValueChanged += delegate { AktualizujModel(dateTimePicker, ustawWartosc, dtp => dtp.Checked ? (DateTime?)dtp.Value : null); if (wartoscZmieniona != null) wartoscZmieniona(); };
 			Action powiazanie = delegate { AktualizujKontrolke(dateTimePicker, pobierzWartosc, (dtp, wartosc) => { dtp.Checked = wartosc.HasValue; if (wartosc.HasValue) dtp.Value = wartosc.Value; }); };
@@ -60,12 +61,12 @@ namespace ProFak.UI
 			powiazania.Add(powiazanie);
 		}
 
-		public void Powiazanie(NumericUpDown numericUpDown, Func<TModel, int> pobierzWartosc, Action<TModel, int> ustawWartosc, Action wartoscZmieniona = null)
+		public void Powiazanie(NumericUpDown numericUpDown, Func<TModel, int> pobierzWartosc, Action<TModel, int>? ustawWartosc, Action? wartoscZmieniona = null)
 		{
-			Powiazanie(numericUpDown, model => pobierzWartosc(model), (TModel model, decimal wartosc) => ustawWartosc(model, (int)wartosc), wartoscZmieniona);
+			Powiazanie(numericUpDown, model => pobierzWartosc(model), (TModel model, decimal wartosc) => ustawWartosc?.Invoke(model, (int)wartosc), wartoscZmieniona);
 		}
 
-		public void Powiazanie(NumericUpDown numericUpDown, Func<TModel, decimal> pobierzWartosc, Action<TModel, decimal> ustawWartosc, Action wartoscZmieniona = null)
+		public void Powiazanie(NumericUpDown numericUpDown, Func<TModel, decimal> pobierzWartosc, Action<TModel, decimal>? ustawWartosc, Action? wartoscZmieniona = null)
 		{
 			numericUpDown.Enter += delegate { numericUpDown.Select(0, numericUpDown.Text.Length); };
 			numericUpDown.ValueChanged += delegate { if (ustawWartosc != null) AktualizujModel(numericUpDown, ustawWartosc, nud => nud.Value); if (wartoscZmieniona != null) wartoscZmieniona(); };
@@ -74,7 +75,7 @@ namespace ProFak.UI
 			powiazania.Add(powiazanie);
 		}
 
-		public void Powiazanie(TextBox textBox, Func<TModel, string> pobierzWartosc, Action<TModel, string> ustawWartosc, Action wartoscZmieniona = null)
+		public void Powiazanie(TextBox textBox, Func<TModel, string> pobierzWartosc, Action<TModel, string>? ustawWartosc, Action? wartoscZmieniona = null)
 		{
 			textBox.TextChanged += delegate { AktualizujModel(textBox, ustawWartosc, txt => txt.Text); if (wartoscZmieniona != null) wartoscZmieniona(); };
 			Action powiazanie = delegate { AktualizujKontrolke(textBox, pobierzWartosc, (txt, wartosc) => txt.Text = wartosc); };
@@ -82,7 +83,7 @@ namespace ProFak.UI
 			powiazania.Add(powiazanie);
 		}
 
-		public void Powiazanie(CheckBox checkBox, Func<TModel, bool> pobierzWartosc, Action<TModel, bool> ustawWartosc, Action wartoscZmieniona = null)
+		public void Powiazanie(CheckBox checkBox, Func<TModel, bool> pobierzWartosc, Action<TModel, bool>? ustawWartosc, Action? wartoscZmieniona = null)
 		{
 			checkBox.CheckedChanged += delegate { AktualizujModel(checkBox, ustawWartosc, chk => chk.Checked); if (wartoscZmieniona != null) wartoscZmieniona(); };
 			Action powiazanie = delegate { AktualizujKontrolke(checkBox, pobierzWartosc, (chk, wartosc) => chk.Checked = wartosc); };
@@ -90,7 +91,7 @@ namespace ProFak.UI
 			powiazania.Add(powiazanie);
 		}
 
-		public void Powiazanie(ComboBox comboBox, Func<TModel, string> pobierzWartosc, Action<TModel, string> ustawWartosc, Action wartoscZmieniona = null)
+		public void Powiazanie(ComboBox comboBox, Func<TModel, string> pobierzWartosc, Action<TModel, string>? ustawWartosc, Action? wartoscZmieniona = null)
 		{
 			comboBox.TextChanged += delegate { AktualizujModel(comboBox, ustawWartosc, comboBox => comboBox.Text); if (wartoscZmieniona != null) wartoscZmieniona(); };
 			Action powiazanie = delegate { AktualizujKontrolke(comboBox, pobierzWartosc, (comboBox, wartosc) => { if (comboBox.SelectedIndex != -1) comboBox.SelectedIndex = -1; comboBox.Text = wartosc; }); };
@@ -98,7 +99,7 @@ namespace ProFak.UI
 			powiazania.Add(powiazanie);
 		}
 
-		public void Powiazanie(ComboBox comboBox, Func<TModel, int> pobierzWartosc, Action<TModel, int> ustawWartosc, Action wartoscZmieniona = null)
+		public void Powiazanie(ComboBox comboBox, Func<TModel, int> pobierzWartosc, Action<TModel, int>? ustawWartosc, Action? wartoscZmieniona = null)
 		{
 			comboBox.TextChanged += delegate { AktualizujModel(comboBox, ustawWartosc, comboBox => comboBox.SelectedIndex); if (wartoscZmieniona != null) wartoscZmieniona(); };
 			Action powiazanie = delegate { AktualizujKontrolke(comboBox, pobierzWartosc, (comboBox, wartosc) => { comboBox.SelectedIndex = wartosc; }); };
@@ -106,15 +107,15 @@ namespace ProFak.UI
 			powiazania.Add(powiazanie);
 		}
 
-		public void Powiazanie<TWartosc>(ComboBox comboBox, Func<TModel, TWartosc> pobierzWartosc, Action<TModel, TWartosc> ustawWartosc, Action wartoscZmieniona = null)
+		public void Powiazanie<TWartosc>(ComboBox comboBox, Func<TModel, TWartosc> pobierzWartosc, Action<TModel, TWartosc>? ustawWartosc, Action? wartoscZmieniona = null)
 		{
-			comboBox.SelectedIndexChanged += delegate { AktualizujModel(comboBox, ustawWartosc, comboBox => comboBox.SelectedIndex == -1 ? default : (TWartosc)comboBox.SelectedValue); if (wartoscZmieniona != null) wartoscZmieniona(); };
+			comboBox.SelectedIndexChanged += delegate { AktualizujModel(comboBox, ustawWartosc, comboBox => comboBox.SelectedIndex == -1 ? default : (TWartosc)comboBox.SelectedValue!); if (wartoscZmieniona != null) wartoscZmieniona(); };
 			Action powiazanie = delegate { AktualizujKontrolke(comboBox, pobierzWartosc, (comboBox, wartosc) => { if (comboBox.SelectedIndex != -1) comboBox.SelectedIndex = -1; if (wartosc != null) comboBox.SelectedValue = wartosc; }); };
 			if (model != null) powiazanie();
 			powiazania.Add(powiazanie);
 		}
 
-		private void AktualizujModel<TWartosc, TKontrolka>(TKontrolka kontrolka, Action<TModel, TWartosc> ustawWartosc, Func<TKontrolka, TWartosc> pobierzWartosc)
+		private void AktualizujModel<TWartosc, TKontrolka>(TKontrolka kontrolka, Action<TModel, TWartosc>? ustawWartosc, Func<TKontrolka, TWartosc> pobierzWartosc)
 			where TKontrolka : Control
 		{
 			if (model is null) return;
@@ -123,7 +124,7 @@ namespace ProFak.UI
 			try
 			{
 				var wartosc = pobierzWartosc(kontrolka);
-				ustawWartosc(model, wartosc);
+				if (ustawWartosc != null) ustawWartosc(model, wartosc);
 				modelZmieniony = true;
 			}
 			finally
@@ -181,7 +182,7 @@ namespace ProFak.UI
 			comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 			comboBox.DisplayMember = "Opis";
 			comboBox.ValueMember = "Wartosc";
-			comboBox.DataSource = wartosci.Select(wartosc => new PozycjaListy<T> { Wartosc = wartosc, Opis = wartosc.ToString() }).ToArray();
+			comboBox.DataSource = wartosci.Select(wartosc => new PozycjaListy<T> { Wartosc = wartosc, Opis = wartosc?.ToString() ?? "" }).ToArray();
 		}
 	}
 }

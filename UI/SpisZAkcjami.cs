@@ -17,7 +17,7 @@ namespace ProFak.UI
 		protected readonly PanelAkcji panelAkcji;
 		protected readonly Wyszukiwarka wyszukiwarka;
 		protected readonly Podsumowanie podsumowanie;
-		protected AdapterAkcji domyslnaAkcja; 
+		protected AdapterAkcji? domyslnaAkcja;
 		protected readonly List<AkcjaNaSpisie<TRekord>> akcje;
 		protected readonly List<AdapterAkcji> adapteryAkcji;
 
@@ -60,7 +60,7 @@ namespace ProFak.UI
 			MinimumSize = new Size(panelAkcji.MinimumSize.Width + spis.MinimumSize.Width + panelAkcji.Margin.Left + spis.Margin.Right, panelAkcji.MinimumSize.Height + spis.MinimumSize.Height + Math.Max(panelAkcji.Margin.Top, spis.Margin.Top) + Math.Max(panelAkcji.Margin.Bottom, spis.Margin.Bottom));
 		}
 
-		private void wyszukiwarka_KeyDown(object sender, KeyEventArgs e)
+		private void wyszukiwarka_KeyDown(object? sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Escape)
 			{
@@ -75,22 +75,22 @@ namespace ProFak.UI
 			}
 		}
 
-		private void wyszukiwarka_TextChanged(object sender, EventArgs e)
+		private void wyszukiwarka_TextChanged(object? sender, EventArgs e)
 		{
 			Spis.UstawFiltr(wyszukiwarka.Text);
 		}
 
-		private void spis_KeyDown(object sender, KeyEventArgs e)
+		private void spis_KeyDown(object? sender, KeyEventArgs e)
 		{
 			e.Handled = ObsluzKlawisz(e.KeyCode, e.Modifiers);
 		}
 
-		private void spis_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+		private void spis_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
 		{
 			if (e.RowIndex != -1 && e.ColumnIndex != -1 && domyslnaAkcja != null) domyslnaAkcja.Uruchom();
 		}
 
-		private void spis_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+		private void spis_CellMouseDown(object? sender, DataGridViewCellMouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Right && e.RowIndex != -1) PokazMenuKontekstowe();
 		}
@@ -110,8 +110,8 @@ namespace ProFak.UI
 		{
 			if (klawisz == Keys.Escape) { Dispose(); return true; }
 			else if (klawisz == Keys.F3 || (klawisz == Keys.F && modyfikatory == Keys.Control)) { wyszukiwarka.Focus(); return true; }
-			else if (klawisz == Keys.Home) { Spis.WybraneRekordy = new[] { Spis.Rekordy.FirstOrDefault() }; return true; }
-			else if (klawisz == Keys.End) { Spis.WybraneRekordy = new[] { Spis.Rekordy.LastOrDefault() }; return true; }
+			else if (klawisz == Keys.Home && Spis.Rekordy.FirstOrDefault() is TRekord pierwszyRekord) { Spis.WybraneRekordy = [pierwszyRekord]; return true; }
+			else if (klawisz == Keys.End && Spis.Rekordy.LastOrDefault() is TRekord ostatniRekord) { Spis.WybraneRekordy = [ostatniRekord]; return true; }
 			else if (klawisz == Keys.Apps || (klawisz == Keys.F10 && modyfikatory == Keys.Shift)) { PokazMenuKontekstowe(); return true; }
 			else return panelAkcji.ObsluzKlawisz(klawisz, modyfikatory);
 		}
@@ -174,7 +174,7 @@ namespace ProFak.UI
 	{
 		public new TSpis Spis { get; }
 
-		public SpisZAkcjami(TSpis spis, IEnumerable<AkcjaNaSpisie<TRekord>> akcje = null)
+		public SpisZAkcjami(TSpis spis, IEnumerable<AkcjaNaSpisie<TRekord>>? akcje = null)
 			: base(spis)
 		{
 			Spis = spis;

@@ -25,7 +25,7 @@ namespace ProFak.UI
 			textBoxWyjatek.Text = exc.ToString();
 		}
 
-		private void linkLabelURL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		private void linkLabelURL_LinkClicked(object? sender, LinkLabelLinkClickedEventArgs e)
 		{
 			Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = "https://github.com/lkosson/profak/issues" });
 		}

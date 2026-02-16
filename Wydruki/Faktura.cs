@@ -25,7 +25,7 @@ namespace ProFak.Wydruki
 					.Where(pozycja => pozycja.FakturaId == faktura.Id)
 					.Include(pozycja => pozycja.StawkaVat)
 					.Include(pozycja => pozycja.JednostkaMiary)
-					.Include(pozycja => pozycja.Towar).ThenInclude(towar => towar.JednostkaMiary)
+					.Include(pozycja => pozycja.Towar).ThenInclude(towar => towar!.JednostkaMiary)
 					.OrderBy(pozycja => pozycja.LP)
 					.ThenBy(pozycja => pozycja.CzyPrzedKorekta)
 					.ToList();
@@ -178,7 +178,7 @@ namespace ProFak.Wydruki
 			report.SubreportProcessing += SubreportProcessing;
 			report.DataSources.Add(new ReportDataSource("DSFaktury", dane));
 
-			void SubreportProcessing(object sender, SubreportProcessingEventArgs e)
+			void SubreportProcessing(object? sender, SubreportProcessingEventArgs e)
 			{
 				e.DataSources.Add(report.DataSources[0]);
 			}

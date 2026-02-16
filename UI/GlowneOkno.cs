@@ -15,7 +15,7 @@ namespace ProFak.UI
 {
 	public partial class GlowneOkno : Form
 	{
-		private TreeNode ostatnioWybrany;
+		private TreeNode? ostatnioWybrany;
 		private bool trwaAktualizacjaMenu;
 		private bool menuGotowe;
 
@@ -26,7 +26,7 @@ namespace ProFak.UI
 			panelMenu.Width = Wyglad.SzerokoscMenu;
 		}
 
-		public static Icon Ikona => (Icon)new ComponentResourceManager(typeof(GlowneOkno)).GetObject("$this.Icon");
+		public static Icon? Ikona => (Icon?)new ComponentResourceManager(typeof(GlowneOkno)).GetObject("$this.Icon");
 
 		protected override void OnLoad(EventArgs e)
 		{
@@ -49,7 +49,7 @@ namespace ProFak.UI
 
 		private void ZbudujMenu()
 		{
-			TreeNode Wezel(string tekst, string nazwa = null, TreeNode[] podrzedne = null)
+			TreeNode Wezel(string tekst, string? nazwa = null, TreeNode[]? podrzedne = null)
 			{
 				var wezel = new TreeNode(tekst);
 				if (!String.IsNullOrEmpty(nazwa)) wezel.Name = nazwa;
@@ -168,14 +168,14 @@ namespace ProFak.UI
 			}
 
 			var stanyWedlugNazwy = stany.ToDictionary(stan => stan.Pozycja);
-			TreeNode doWyswietlenia = null;
+			TreeNode? doWyswietlenia = null;
 			RozwinMenu(menu.Nodes.Cast<TreeNode>(), stanyWedlugNazwy, pokazUkryte, ref doWyswietlenia);
 
 			if (doWyswietlenia == null) WyswietlDomyslny();
 			else menu.SelectedNode = doWyswietlenia;
 		}
 
-		private void RozwinMenu(IEnumerable<TreeNode> wezly, Dictionary<string, StanMenu> stany, bool pokazUkryte, ref TreeNode wybrany)
+		private void RozwinMenu(IEnumerable<TreeNode> wezly, Dictionary<string, StanMenu> stany, bool pokazUkryte, ref TreeNode? wybrany)
 		{
 			var doUsuniecia = new List<TreeNode>();
 			foreach (var wezel in wezly)
@@ -197,31 +197,44 @@ namespace ProFak.UI
 			}
 		}
 
+		private TreeNode? WezelMenu(string pierwszy, params string[] sciezka)
+		{
+			var wezel = menu.Nodes[pierwszy];
+			if (wezel == null) return null;
+			foreach (var nazwa in sciezka)
+			{
+				if (nazwa == "*") wezel = wezel.Nodes.Cast<TreeNode>().LastOrDefault();
+				else wezel = wezel.Nodes[nazwa];
+				if (wezel == null) return null;
+			}
+			return wezel;
+		}
+
 		private void RozwinMenuDomyslne()
 		{
-			menu.Nodes["Faktury"].Expand();
-			menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Expand();
-			menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["WedlugDaty"].Expand();
-			menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["WedlugDaty"].Nodes.Cast<TreeNode>().LastOrDefault()?.Expand();
-			menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["KSeFSprzedaz"].Expand();
-			menu.Nodes["Faktury"].Nodes["FakturyProforma"].Expand();
-			menu.Nodes["Faktury"].Nodes["FakturyZakupu"].Expand();
-			menu.Nodes["Faktury"].Nodes["FakturyZakupu"].Nodes["WedlugDaty"].Expand();
-			menu.Nodes["Faktury"].Nodes["FakturyZakupu"].Nodes["WedlugDaty"].Nodes.Cast<TreeNode>().LastOrDefault()?.Expand();
-			menu.Nodes["Faktury"].Nodes["FakturyZakupu"].Nodes["KSeFZakup"].Expand();
-			menu.Nodes["Slowniki"].Expand();
-			menu.Nodes["Podatki"].Expand();
+			WezelMenu("Faktury")?.Expand();
+			WezelMenu("Faktury", "FakturySprzedazy")?.Expand();
+			WezelMenu("Faktury", "FakturySprzedazy", "WedlugDaty")?.Expand();
+			WezelMenu("Faktury", "FakturySprzedazy", "WedlugDaty", "*")?.Expand();
+			WezelMenu("Faktury", "FakturySprzedazy", "KSeFSprzedaz")?.Expand();
+			WezelMenu("Faktury", "FakturyProforma")?.Expand();
+			WezelMenu("Faktury", "FakturyZakupu")?.Expand();
+			WezelMenu("Faktury", "FakturyZakupu", "WedlugDaty")?.Expand();
+			WezelMenu("Faktury", "FakturyZakupu", "WedlugDaty", "*")?.Expand();
+			WezelMenu("Faktury", "FakturyZakupu", "KSeFZakup")?.Expand();
+			WezelMenu("Slowniki")?.Expand();
+			WezelMenu("Podatki")?.Expand();
 			WyswietlDomyslny();
 		}
 
 		private void WyswietlDomyslny()
 		{
-			var doWybrania = menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["WedlugDaty"].Nodes.Cast<TreeNode>().LastOrDefault()?.Nodes?.Cast<TreeNode>()?.LastOrDefault();
-			if (doWybrania == null) doWybrania = menu.Nodes["Faktury"].Nodes["FakturySprzedazy"].Nodes["Wszystkie"];
+			var doWybrania = WezelMenu("Faktury", "FakturySprzedazy", "WedlugDaty", "*", "*");
+			if (doWybrania == null) doWybrania = WezelMenu("Faktury", "FakturySprzedazy", "Wszystkie");
 			Wyswietl(doWybrania);
 		}
 
-		private void menu_AfterSelect(object sender, TreeViewEventArgs e)
+		private void menu_AfterSelect(object? sender, TreeViewEventArgs e)
 		{
 			if (trwaAktualizacjaMenu) return;
 			if ((e.Action & TreeViewAction.ByKeyboard) == TreeViewAction.ByKeyboard) return;
@@ -234,7 +247,7 @@ namespace ProFak.UI
 			ZapiszStanPozycji(menu.SelectedNode /* dla spisu według kontrahentów/towarów/dat mogło się zmienić */);
 		}
 
-		private void menu_KeyPress(object sender, KeyPressEventArgs e)
+		private void menu_KeyPress(object? sender, KeyPressEventArgs e)
 		{
 			if (e.KeyChar == '\r')
 			{
@@ -244,12 +257,13 @@ namespace ProFak.UI
 			else if (e.KeyChar == '/')
 			{
 				e.Handled = true;
-				menu.SelectedNode.Collapse(false);
+				menu.SelectedNode?.Collapse(false);
 			}
 		}
 
-		private void Wyswietl(TreeNode pozycja, string[] parametry = null)
+		private void Wyswietl(TreeNode? pozycja, string[]? parametry = null)
 		{
+			if (pozycja == null) return;
 			if (parametry == null)
 			{
 				if (ostatnioWybrany != null)
@@ -312,24 +326,25 @@ namespace ProFak.UI
 			kontrolka.Focus();
 		}
 
-		private void menu_BeforeExpand(object sender, TreeViewCancelEventArgs e)
+		private void menu_BeforeExpand(object? sender, TreeViewCancelEventArgs e)
 		{
+			if (e.Node == null) return;
 			if (trwaAktualizacjaMenu) return;
 			trwaAktualizacjaMenu = true;
 			try
-			{
-				if (e.Node.Name == "WedlugDaty" && e.Node.Parent.Name == "FakturySprzedazy") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży);
-				else if (e.Node.Name == "WedlugDaty" && e.Node.Parent.Name == "FakturyProforma") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Proforma);
-				else if (e.Node.Name == "WedlugDaty" && e.Node.Parent.Name == "FakturyZakupu") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny);
-				else if (e.Node.Name == "WedlugDaty" && e.Node.Parent.Name == "FakturyVatMarza") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży);
-				else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent.Name == "FakturySprzedazy") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży, faktura => faktura.Nabywca);
-				else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent.Name == "FakturyProforma") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Proforma, faktura => faktura.Nabywca);
-				else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent.Name == "FakturyZakupu") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny, faktura => faktura.Sprzedawca);
-				else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent.Name == "FakturyVatMarza") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży, faktura => faktura.Nabywca);
-				else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent.Name == "FakturySprzedazy") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura.Rodzaj == RodzajFaktury.Sprzedaż || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży);
-				else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent.Name == "FakturyProforma") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura.Rodzaj == RodzajFaktury.Proforma);
-				else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent.Name == "FakturyZakupu") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura.Rodzaj == RodzajFaktury.Zakup || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaZakupu || pozycja.Faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny);
-				else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent.Name == "FakturyVatMarza") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura.Rodzaj == RodzajFaktury.VatMarża || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaVatMarży);
+			{				
+				if (e.Node.Name == "WedlugDaty" && e.Node.Parent?.Name == "FakturySprzedazy") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży);
+				else if (e.Node.Name == "WedlugDaty" && e.Node.Parent?.Name == "FakturyProforma") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Proforma);
+				else if (e.Node.Name == "WedlugDaty" && e.Node.Parent?.Name == "FakturyZakupu") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny);
+				else if (e.Node.Name == "WedlugDaty" && e.Node.Parent?.Name == "FakturyVatMarza") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży);
+				else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent?.Name == "FakturySprzedazy") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży, faktura => faktura.Nabywca!);
+				else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent?.Name == "FakturyProforma") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Proforma, faktura => faktura.Nabywca!);
+				else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent?.Name == "FakturyZakupu") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny, faktura => faktura.Sprzedawca!);
+				else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent?.Name == "FakturyVatMarza") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży, faktura => faktura.Nabywca!);
+				else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent?.Name == "FakturySprzedazy") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.Sprzedaż || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży);
+				else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent?.Name == "FakturyProforma") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.Proforma);
+				else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent?.Name == "FakturyZakupu") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.Zakup || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaZakupu || pozycja.Faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny);
+				else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent?.Name == "FakturyVatMarza") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.VatMarża || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaVatMarży);
 				else if (e.Node.Name == "DeklaracjeVat") WypelnijDeklaracjeVat(e.Node);
 				else if (e.Node.Name == "SkladkiZus") WypelnijSkladkiZus(e.Node);
 				else if (e.Node.Name == "ZaliczkiPit") WypelnijZaliczkiPit(e.Node);
@@ -340,19 +355,20 @@ namespace ProFak.UI
 			}
 		}
 
-		private void menu_AfterExpand(object sender, TreeViewEventArgs e)
+		private void menu_AfterExpand(object? sender, TreeViewEventArgs e)
 		{
 			ZapiszStanPozycji(e.Node);
 		}
 
-		private void menu_AfterCollapse(object sender, TreeViewEventArgs e)
+		private void menu_AfterCollapse(object? sender, TreeViewEventArgs e)
 		{
 			ZapiszStanPozycji(e.Node);
 		}
 
-		private void ZapiszStanPozycji(TreeNode treeNode, bool ukryta = false)
+		private void ZapiszStanPozycji(TreeNode? treeNode, bool ukryta = false)
 		{
 			if (!menuGotowe) return;
+			if (treeNode == null) return;
 			if (String.IsNullOrEmpty(treeNode.Name)) return;
 			using var kontekst = new Kontekst();
 			if (kontekst.Baza.CzyZablokowana()) return;
@@ -427,7 +443,7 @@ namespace ProFak.UI
 			var towary = kontekst.Baza.PozycjeFaktur
 				.Where(warunek)
 				.Include(pozycja => pozycja.Towar)
-				.Select(pozycja => pozycja.Towar)
+				.Select(pozycja => pozycja.Towar!)
 				.Distinct()
 				.Where(towar => !towar.CzyArchiwalny)
 				.OrderBy(towar => towar.Nazwa)
@@ -485,9 +501,9 @@ namespace ProFak.UI
 			}
 		}
 
-		private void menu_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+		private void menu_NodeMouseClick(object? sender, TreeNodeMouseClickEventArgs e)
 		{
-			if (e.Button == MouseButtons.Right) PokazMenuKontekstowe(e.Node);
+			if (e.Button == MouseButtons.Right && e.Node != null) PokazMenuKontekstowe(e.Node);
 		}
 	}
 }

@@ -33,7 +33,7 @@ namespace ProFak.UI
 			kontroler.Powiazanie(numericUpDownOdliczenieOdDochodu, skladka => skladka.OdliczenieOdDochodu);
 		}
 
-		private void buttonPrzelicz_Click(object sender, EventArgs e)
+		private void buttonPrzelicz_Click(object? sender, EventArgs e)
 		{
 			try
 			{

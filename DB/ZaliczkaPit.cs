@@ -21,7 +21,7 @@ namespace ProFak.DB
 
 		public string MiesiacFmt => Miesiac.ToString("MM/yyyy");
 
-		public List<Faktura> Faktury { get; set; }
+		public List<Faktura> Faktury { get; set; } = default!;
 
 		public void WybierzFaktury(Baza baza)
 		{

@@ -23,7 +23,7 @@ namespace ProFak.UI
 			using var nowyKontekst = new Kontekst(kontekst);
 			nowyKontekst.Dodaj(plik);
 			using var transakcja = nowyKontekst.Transakcja();
-			var zawartosc = nowyKontekst.Baza.Zawartosci.FirstOrDefault(zawartosc => zawartosc.Id == plik.ZawartoscId);
+			var zawartosc = nowyKontekst.Baza.Znajdz<Zawartosc>(plik.ZawartoscId);
 			var sciezka = Path.GetTempFileName();
 			var pelnaSciezka = sciezka + Path.GetExtension(plik.Nazwa);
 			File.WriteAllBytes(sciezka, zawartosc.Dane);

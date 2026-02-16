@@ -6,7 +6,7 @@ class DodatkowyPodmiot : Rekord<DodatkowyPodmiot>
 {
 	public int FakturaId { get; set; }
 	public RodzajDodatkowegoPodmiotu Rodzaj { get; set; }
-	public string IDwew { get; set; }
+	public string IDwew { get; set; } = "";
 	public string Nazwa { get; set; } = "";
 	public string NIP { get; set; } = "";
 	public string VatUE { get; set; } = "";
@@ -20,7 +20,7 @@ class DodatkowyPodmiot : Rekord<DodatkowyPodmiot>
 
 	public Ref<Faktura> FakturaRef { get => FakturaId; set => FakturaId = value; }
 
-	public Faktura Faktura { get; set; }
+	public Faktura Faktura { get; set; } = default!;
 
 	public override bool CzyPasuje(string fraza)
 		=> base.CzyPasuje(fraza)
@@ -31,7 +31,7 @@ class DodatkowyPodmiot : Rekord<DodatkowyPodmiot>
 		|| CzyPasuje(Adres, fraza)
 		|| CzyPasuje(EMail, fraza)
 		|| CzyPasuje(Telefon, fraza)
-		|| CzyPasuje(Udzial, fraza);
+		|| CzyPasuje(Udzial ?? 0, fraza);
 }
 
 enum RodzajDodatkowegoPodmiotu

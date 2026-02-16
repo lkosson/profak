@@ -15,7 +15,7 @@ namespace ProFak.UI
 	partial class EdytorTabeli : UserControl, IKontrolkaZKontekstem
 	{
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public Kontekst Kontekst { get; set; }
+		public Kontekst Kontekst { get; set; } = default!;
 
 		public EdytorTabeli()
 		{
@@ -65,11 +65,11 @@ namespace ProFak.UI
 			};
 		}
 
-		private void buttonUruchom_Click(object sender, EventArgs e)
+		private void buttonUruchom_Click(object? sender, EventArgs e)
 		{
 			try
 			{
-				var generator = (Func<IEnumerable<object>>)comboBoxTabela.SelectedValue;
+				if (comboBoxTabela.SelectedValue is not Func<IEnumerable<object>> generator) return;
 				var dane = generator();
 				dataGridViewWynik.DataSource = dane;
 				textBoxStatus.Text = "Liczba pozycji: " + dane.Count();
@@ -80,7 +80,7 @@ namespace ProFak.UI
 			}
 		}
 
-		private void dataGridViewWynik_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+		private void dataGridViewWynik_CellEndEdit(object? sender, DataGridViewCellEventArgs e)
 		{
 			try
 			{
@@ -88,7 +88,7 @@ namespace ProFak.UI
 				using var nowyKontekst = new Kontekst(Kontekst);
 				using var tx = nowyKontekst.Transakcja();
 				var rekord = dataGridViewWynik.Rows[e.RowIndex].DataBoundItem;
-				Kontekst.Baza.Zapisz(rekord);
+				if (rekord != null) Kontekst.Baza.Zapisz(rekord);
 				tx.Zatwierdz();
 				textBoxStatus.Text = "Zapisano zmianę.";
 			}
@@ -98,7 +98,7 @@ namespace ProFak.UI
 			}
 		}
 
-		private void dataGridViewWynik_KeyUp(object sender, KeyEventArgs e)
+		private void dataGridViewWynik_KeyUp(object? sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Delete && e.Modifiers == Keys.None)
 			{
@@ -111,7 +111,7 @@ namespace ProFak.UI
 					foreach (DataGridViewRow wiersz in dataGridViewWynik.SelectedRows)
 					{
 						var rekord = wiersz.DataBoundItem;
-						Kontekst.Baza.Usun(rekord);
+						if (rekord != null) Kontekst.Baza.Usun(rekord);
 					}
 					tx.Zatwierdz();
 					if (dataGridViewWynik.SelectedRows.Count == 1) textBoxStatus.Text = "Usunięto rekord.";

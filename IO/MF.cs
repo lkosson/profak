@@ -23,7 +23,8 @@ namespace ProFak.IO
 			if (!jsonResult.TryGetProperty("accountAssigned", out var jsonResultAccountAssigned)) throw new ApplicationException($"Nieprawidłowa struktura odpowiedzi:\n\n{wynik}");
 			if (jsonResultAccountAssigned.GetString() != "TAK") throw new ApplicationException("Rachunek nie znajduje się na białej liście VAT.");
 			if (!jsonResult.TryGetProperty("requestId", out var jsonResultRequestId)) throw new ApplicationException($"Nieprawidłowa struktura odpowiedzi:\n\n{wynik}");
-			return jsonResultRequestId.GetString();
+			if (jsonResultRequestId.GetString() is not string requestId) throw new ApplicationException("Pusta odpowiedź z API.");
+			return requestId;
 		}
 	}
 }

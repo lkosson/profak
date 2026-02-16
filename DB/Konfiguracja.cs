@@ -8,14 +8,14 @@ namespace ProFak.DB
 {
 	class Konfiguracja : Rekord<Konfiguracja>
 	{
-		public string SMTPSerwer { get; set; }
-		public string SMTPLogin { get; set; }
-		public string SMTPHaslo { get; set; }
+		public string SMTPSerwer { get; set; } = "";
+		public string SMTPLogin { get; set; } = "";
+		public string SMTPHaslo { get; set; } = "";
 		public int SMTPPort { get; set; }
 
-		public string EMailNadawca { get; set; }
-		public string EMailTemat { get; set; }
-		public string EMailTresc { get; set; }
+		public string EMailNadawca { get; set; } = "";
+		public string EMailTemat { get; set; } = "";
+		public string EMailTresc { get; set; } = "";
 
 		public bool CzyDomyslna => SMTPSerwer == Domyslna.SMTPSerwer || String.IsNullOrEmpty(SMTPSerwer);
 

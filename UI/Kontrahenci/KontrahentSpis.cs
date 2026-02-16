@@ -28,7 +28,7 @@ namespace ProFak.UI
 		protected override void UstawStylWiersza(Kontrahent rekord, string kolumna, DataGridViewCellStyle styl)
 		{
 			base.UstawStylWiersza(rekord, kolumna, styl);
-			if (rekord.CzyPodmiot) styl.Font = new Font(styl.Font, FontStyle.Bold);
+			if (rekord.CzyPodmiot) styl.Font = new Font(styl.Font!, FontStyle.Bold);
 			else if (rekord.CzyArchiwalny) styl.ForeColor = Color.Gray;
 		}
 	}

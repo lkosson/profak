@@ -15,7 +15,7 @@ namespace ProFak.Wydruki
 
 		private static string SlownieDo1000(int wartosc)
 		{
-			if (wartosc == 0) return null;
+			if (wartosc == 0) return "";
 
 			var wynik = new StringBuilder();
 

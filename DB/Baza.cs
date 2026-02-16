@@ -21,17 +21,17 @@ namespace ProFak.DB
 		public static string NazwaKataloguKopiiZapasowych => "Kopie zapasowe";
 		public static string PrywatnyKatalog => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 		public static string PublicznyKatalog => Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-		public static string LokalnyKatalog => Path.GetDirectoryName(Environment.ProcessPath);
+		public static string LokalnyKatalog => Path.GetDirectoryName(Environment.ProcessPath)!;
 		public static string PrywatnaSciezka => Path.Combine(PrywatnyKatalog, NazwaKataloguProgramu, NazwaPlikuBazy);
 		public static string PublicznaSciezka => Path.Combine(PublicznyKatalog, NazwaKataloguProgramu, NazwaPlikuBazy);
 		public static string LokalnaSciezka => Path.Combine(LokalnyKatalog, NazwaPlikuBazy);
 		public static string OdnosnikDoBazy => Path.Combine(LokalnyKatalog, NazwaOdnosnikaDoBazy);
-		public static string AktywnyKatalog => Path.GetDirectoryName(Sciezka);
+		public static string AktywnyKatalog => Path.GetDirectoryName(Sciezka)!;
 		public static string KatalogKopiiZapasowych => Path.Combine(AktywnyKatalog, NazwaKataloguKopiiZapasowych);
 
-		public static string Sciezka { get; set; }
+		public static string? Sciezka { get; set; }
 
-		private static SqliteConnection bazaTymczasowa;
+		private static SqliteConnection? bazaTymczasowa;
 
 		public IQueryable<DeklaracjaVat> DeklaracjeVat => Set<DeklaracjaVat>();
 		public IQueryable<DodatkowyPodmiot> DodatkowePodmioty => Set<DodatkowyPodmiot>();
@@ -105,7 +105,7 @@ namespace ProFak.DB
 
 		public static void WykonajKopie(string plikDocelowy)
 		{
-			string plikNieaktualny = null;
+			string? plikNieaktualny = null;
 			if (File.Exists(plikDocelowy))
 			{
 				plikNieaktualny = plikDocelowy + "-del";
@@ -306,7 +306,7 @@ namespace ProFak.DB
 
 		public TRekord Znajdz<TRekord>(Ref<TRekord> rekordRef)
 			where TRekord : Rekord<TRekord>
-			=> Set<TRekord>().FirstOrDefault(r => r.Id == rekordRef.Id);
+			=> Set<TRekord>().FirstOrDefault(r => r.Id == rekordRef.Id) ?? throw new ApplicationException($"Nie znaleziono rekordu {rekordRef}.");
 
 		public IEnumerable<Dictionary<string, object>> Zapytanie(FormattableString zapytanie)
 		{

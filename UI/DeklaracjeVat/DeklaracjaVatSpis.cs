@@ -39,7 +39,7 @@ namespace ProFak.UI
 			DodajKolumneId();
 		}
 
-		public DeklaracjaVatSpis(string[] parametry)
+		public DeklaracjaVatSpis(string[]? parametry)
 			: this()
 		{
 			if (parametry == null) return;

@@ -14,7 +14,7 @@ namespace ProFak.DB
 
 		public Ref(int id) => Id = id;
 		public override string ToString() => Typ.Name + "#" + Id;
-		public override bool Equals(object otherObj) => otherObj is Ref<T> other && other.Id == Id && other.Typ == Typ;
+		public override bool Equals(object? otherObj) => otherObj is Ref<T> other && other.Id == Id && other.Typ == Typ;
 		public override int GetHashCode() => Id;
 		public static bool operator ==(Ref<T> ref1, Ref<T> ref2) => ref1.Id == ref2.Id;
 		public static bool operator !=(Ref<T> ref1, Ref<T> ref2) => ref1.Id != ref2.Id;
@@ -22,7 +22,7 @@ namespace ProFak.DB
 		public static implicit operator int?(Ref<T> r) => r.Id == 0 ? null : r.Id;
 		public static implicit operator Ref<T>(int id) => new Ref<T>(id);
 		public static implicit operator Ref<T>(int? id) => id.GetValueOrDefault();
-		public static implicit operator Ref<T>(Rekord<T> rekord) => rekord?.Id;
+		public static implicit operator Ref<T>(Rekord<T>? rekord) => rekord?.Id;
 		public bool IsNull => Id == 0;
 		public bool IsNotNull => !IsNull;
 	}

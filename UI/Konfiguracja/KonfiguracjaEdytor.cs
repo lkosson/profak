@@ -39,7 +39,7 @@ namespace ProFak.UI
 			transakcja.Zatwierdz();
 		}
 
-		private void linkLabelTrescPomoc_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		private void linkLabelTrescPomoc_LinkClicked(object? sender, LinkLabelLinkClickedEventArgs e)
 		{
 			MessageBox.Show(@"Lista dostępnych pól:
 

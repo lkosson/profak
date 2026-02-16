@@ -30,8 +30,8 @@ namespace ProFak.UI
 			base.UstawStylWiersza(rekord, kolumna, styl);
 			if (rekord.CzyArchiwalny) styl.ForeColor = Color.LightGray;
 			else if (rekord.Rodzaj == RodzajTowaru.Usługa) styl.ForeColor = Color.DarkBlue;
-			if (rekord.CzyWedlugCenBrutto && kolumna == nameof(Towar.CenaBrutto)) styl.Font = new Font(styl.Font, FontStyle.Bold);
-			if (!rekord.CzyWedlugCenBrutto && kolumna == nameof(Towar.CenaNetto)) styl.Font = new Font(styl.Font, FontStyle.Bold);
+			if (rekord.CzyWedlugCenBrutto && kolumna == nameof(Towar.CenaBrutto)) styl.Font = new Font(styl.Font!, FontStyle.Bold);
+			if (!rekord.CzyWedlugCenBrutto && kolumna == nameof(Towar.CenaNetto)) styl.Font = new Font(styl.Font!, FontStyle.Bold);
 		}
 	}
 }

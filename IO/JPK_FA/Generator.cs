@@ -30,7 +30,7 @@ namespace ProFak.IO.JPK_FA
 			if (podmiot == null) throw new ApplicationException("Nie uzupełniono danych firmy.");
 			var faktury = baza.Faktury.Where(faktura => deklaracje.Contains(faktura.DeklaracjaVat))
 				.Include(faktura => faktura.Pozycje).ThenInclude(pozycja => pozycja.StawkaVat)
-				.Include(faktura => faktura.Pozycje).ThenInclude(pozycja => pozycja.Towar).ThenInclude(towar => towar.JednostkaMiary)
+				.Include(faktura => faktura.Pozycje).ThenInclude(pozycja => pozycja.Towar).ThenInclude(towar => towar!.JednostkaMiary)
 				.Include(faktura => faktura.FakturaKorygowana)
 				.ToList();
 
@@ -95,7 +95,7 @@ namespace ProFak.IO.JPK_FA
 				{
 					jpkfaktura.RodzajFaktury = JPKFakturaRodzajFaktury.KOREKTA;
 					jpkfaktura.PrzyczynaKorekty = faktura.UwagiPubliczne;
-					jpkfaktura.NrFaKorygowanej = faktura.FakturaKorygowana.Numer;
+					jpkfaktura.NrFaKorygowanej = faktura.FakturaKorygowana?.Numer;
 				}
 				if (faktura.ProceduraMarzy == ProceduraMarży.BiuraPodróży) jpkfaktura.P_106E_2 = true;
 				if (faktura.ProceduraMarzy == ProceduraMarży.TowaryUżywane) { jpkfaktura.P_106E_3 = true; jpkfaktura.P_106E_3A = "procedura marży - towary używane"; }

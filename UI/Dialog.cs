@@ -13,7 +13,7 @@ namespace ProFak.UI
 	partial class Dialog : Form
 	{
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public Control Zawartosc { get { return panelZawartosc.Controls.Cast<Control>().FirstOrDefault(); } set { panelZawartosc.Controls.Clear(); if (value != null) UstawZawartosc(value); } }
+		public Control? Zawartosc { get { return panelZawartosc.Controls.Cast<Control>().FirstOrDefault(); } set { panelZawartosc.Controls.Clear(); if (value != null) UstawZawartosc(value); } }
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public bool CzyPrzyciskiWidoczne { get => flowLayoutPanelPrzyciski.Visible; set { flowLayoutPanelPrzyciski.Visible = value; CancelButton = value ? buttonAnuluj : null; } }
@@ -40,7 +40,7 @@ namespace ProFak.UI
 		private void UstawZawartosc(Control zawartosc)
 		{
 			panelZawartosc.Controls.Add(zawartosc);
-			panelZawartosc.Size = Zawartosc.Size;
+			panelZawartosc.Size = Zawartosc!.Size;
 			ClientSize = tableLayoutPanelZawartosc.Size;
 			MinimumSize = Size;
 			Zawartosc.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;

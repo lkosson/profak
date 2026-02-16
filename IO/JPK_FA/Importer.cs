@@ -15,7 +15,8 @@ class Importer
 	public static void Wczytaj(Stream wejscie, Kontekst kontekst)
 	{
 		var xs = new XmlSerializer(typeof(JPK));
-		var jpk = (JPK)xs.Deserialize(wejscie);
+		var jpk = (JPK?)xs.Deserialize(wejscie);
+		if (jpk == null) throw new ApplicationException("Nieznana struktura pliku wejściowego.");
 
 		var waluty = kontekst.Baza.Waluty.ToList();
 		var stawkiVat = kontekst.Baza.StawkiVat.ToList();
@@ -104,7 +105,7 @@ class Importer
 			if (jpkPozycja.P_12 is null) pozycja.StawkaVatRef = stawkiVat.FirstOrDefault(e => e.Wartosc == (int)Decimal.Round((pozycja.WartoscBrutto - pozycja.WartoscNetto) / pozycja.WartoscNetto * 100));
 			else if (jpkPozycja.P_12 == JPKFakturaWierszP_12.np) pozycja.StawkaVatRef = stawkiVat.FirstOrDefault(e => e.Skrot == "NP");
 			else if (jpkPozycja.P_12 == JPKFakturaWierszP_12.zw) pozycja.StawkaVatRef = stawkiVat.FirstOrDefault(e => e.Skrot == "ZW");
-			else if (jpkPozycja.P_12.ToString().StartsWith("Item")) pozycja.StawkaVatRef = stawkiVat.FirstOrDefault(e => e.Wartosc == Int32.Parse(jpkPozycja.P_12.ToString().Substring(4)));
+			else if (jpkPozycja.P_12?.ToString()?.StartsWith("Item") ?? false) pozycja.StawkaVatRef = stawkiVat.FirstOrDefault(e => e.Wartosc == Int32.Parse(jpkPozycja.P_12.ToString()!.Substring(4)));
 			pozycja.PrzeliczCeny(kontekst.Baza);
 
 			kontekst.Baza.Zapisz(pozycja);

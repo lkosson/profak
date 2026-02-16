@@ -55,7 +55,7 @@ namespace ProFak.UI
 			Komunikat = "Przeładuj spis, aby pobrać dane z KSeF";
 		}
 
-		public KSeFSpis(bool sprzedaz, string[] parametry)
+		public KSeFSpis(bool sprzedaz, string[]? parametry)
 			: this()
 		{
 			this.sprzedaz = sprzedaz;

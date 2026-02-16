@@ -13,10 +13,10 @@ namespace ProFak.UI
 	class Kontekst : IDisposable
 	{
 		public Baza Baza { get; }
-		public Dialog Dialog { get; set; }
-		public Kontekst Poprzedni { get; }
-		private Transakcja AktywnaTransakcja => lokalnaTransakcja ?? Poprzedni?.AktywnaTransakcja;
-		private Transakcja lokalnaTransakcja;
+		public Dialog? Dialog { get; set; }
+		public Kontekst? Poprzedni { get; }
+		private Transakcja? AktywnaTransakcja => lokalnaTransakcja ?? Poprzedni?.AktywnaTransakcja;
+		private Transakcja? lokalnaTransakcja;
 		private readonly HashSet<object> obiekty = new HashSet<object>();
 
 		public Kontekst()
@@ -32,10 +32,10 @@ namespace ProFak.UI
 
 		public void Dodaj<T>(T obiekt)
 		{
-			obiekty.Add(obiekt);
+			if (obiekt != null) obiekty.Add(obiekt);
 		}
 
-		public T Znajdz<T>()
+		public T? Znajdz<T>()
 		{
 			foreach (var obiekt in obiekty)
 			{

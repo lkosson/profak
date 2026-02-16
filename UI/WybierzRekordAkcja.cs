@@ -13,7 +13,7 @@ namespace ProFak.UI
 		where TRekord : Rekord<TRekord>
 	{
 		public override string Nazwa => "✔️ Wybierz [ENTER]";
-		public TRekord WybranyRekord { get; private set; }
+		public TRekord? WybranyRekord { get; private set; }
 
 		public WybierzRekordAkcja()
 		{
@@ -25,6 +25,7 @@ namespace ProFak.UI
 
 		public override void Uruchom(Kontekst kontekst, ref IEnumerable<TRekord> zaznaczoneRekordy)
 		{
+			if (kontekst.Dialog == null) return;
 			WybranyRekord = zaznaczoneRekordy.Single();
 			kontekst.Dialog.DialogResult = DialogResult.OK;
 			kontekst.Dialog.Close();

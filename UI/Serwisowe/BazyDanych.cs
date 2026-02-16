@@ -16,7 +16,7 @@ namespace ProFak.UI
 	partial class BazyDanych : UserControl, IKontrolkaZKontekstem
 	{
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public Kontekst Kontekst { get; set; }
+		public Kontekst Kontekst { get; set; } = default!;
 
 		private bool gotowy;
 
@@ -56,11 +56,16 @@ namespace ProFak.UI
 			gotowy = true;
 		}
 
-		private void buttonPrzenies_Click(object sender, EventArgs e)
+		private void buttonPrzenies_Click(object? sender, EventArgs e)
 		{
 			if (!gotowy) return;
 			var staryPlik = Baza.Sciezka;
 			var nowyPlik = comboBoxPlik.Text;
+			if (staryPlik == null)
+			{
+				MessageBox.Show("Nie można przenieść tymczasowej bazy danych.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
 			if (staryPlik == nowyPlik)
 			{
 				MessageBox.Show("Wprowadź ręcznie lub wybierz z listy obok ścieżkę, do której ma zostać przeniesiona baza danych.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -79,7 +84,7 @@ namespace ProFak.UI
 				return;
 			}
 			Baza.ZamknijPolaczenia();
-			var katalog = Path.GetDirectoryName(nowyPlik);
+			var katalog = Path.GetDirectoryName(nowyPlik)!;
 			Directory.CreateDirectory(katalog);
 			File.Move(staryPlik, nowyPlik);
 			Baza.Sciezka = nowyPlik;
@@ -87,7 +92,7 @@ namespace ProFak.UI
 			Wypelnij();
 		}
 
-		private void buttonUtworzKopie_Click(object sender, EventArgs e)
+		private void buttonUtworzKopie_Click(object? sender, EventArgs e)
 		{
 			try
 			{
@@ -110,8 +115,13 @@ namespace ProFak.UI
 			}
 		}
 
-		private void buttonPrzywrocKopie_Click(object sender, EventArgs e)
+		private void buttonPrzywrocKopie_Click(object? sender, EventArgs e)
 		{
+			if (String.IsNullOrEmpty(Baza.Sciezka))
+			{
+				MessageBox.Show("Nie można odtworzyć kopii zapasowej do tymczasowej bazy danych.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
 			if (Directory.Exists(Baza.KatalogKopiiZapasowych)) openFileDialogBackup.InitialDirectory = Baza.KatalogKopiiZapasowych;
 			if (openFileDialogBackup.ShowDialog() != DialogResult.OK) return;
 

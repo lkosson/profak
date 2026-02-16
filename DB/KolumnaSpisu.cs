@@ -10,8 +10,8 @@ namespace ProFak.DB
 {
 	class KolumnaSpisu : Rekord<KolumnaSpisu>
 	{
-		public string Spis { get; set; }
-		public string Kolumna { get; set; }
+		public string Spis { get; set; } = "";
+		public string Kolumna { get; set; } = "";
 		public int Kolejnosc { get; set; }
 		public int Szerokosc { get; set; }
 		public int PoziomSortowania { get; set; }

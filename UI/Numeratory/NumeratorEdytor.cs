@@ -37,7 +37,7 @@ namespace ProFak.UI
 			stanyNumeratora.Spis.Kontekst = Kontekst;
 		}
 
-		private void comboBoxFormat_TextChanged(object sender, EventArgs e)
+		private void comboBoxFormat_TextChanged(object? sender, EventArgs e)
 		{
 			var faktura = new Faktura { DataWystawienia = DateTime.Now.Date };
 			try

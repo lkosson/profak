@@ -43,7 +43,7 @@ namespace ProFak.DB
 		public bool CzyWDT { get; set; }
 		public bool CzyWNT { get; set; }
 		public ProceduraMarży ProceduraMarzy { get; set; }
-		public string OpisZdarzenia { get; set; }
+		public string OpisZdarzenia { get; set; } = "";
 
 		public string NumerKSeF { get; set; } = "";
 		public string XMLKSeF { get; set; } = "";
@@ -70,20 +70,20 @@ namespace ProFak.DB
 		public Ref<DeklaracjaVat> DeklaracjaVatRef { get => DeklaracjaVatId; set => DeklaracjaVatId = value; }
 		public Ref<ZaliczkaPit> ZaliczkaPitRef { get => ZaliczkaPitId; set => ZaliczkaPitId = value; }
 
-		public Kontrahent Sprzedawca { get; set; }
-		public Kontrahent Nabywca { get; set; }
-		public Faktura FakturaKorygowana { get; set; }
-		public Faktura FakturaKorygujaca { get; set; }
-		public Faktura FakturaPierwotna { get; set; }
-		public Waluta Waluta { get; set; }
-		public SposobPlatnosci SposobPlatnosci { get; set; }
-		public DeklaracjaVat DeklaracjaVat { get; set; }
-		public ZaliczkaPit ZaliczkaPit { get; set; }
+		public Kontrahent? Sprzedawca { get; set; }
+		public Kontrahent? Nabywca { get; set; }
+		public Faktura? FakturaKorygowana { get; set; }
+		public Faktura? FakturaKorygujaca { get; set; }
+		public Faktura? FakturaPierwotna { get; set; }
+		public Waluta? Waluta { get; set; }
+		public SposobPlatnosci? SposobPlatnosci { get; set; }
+		public DeklaracjaVat? DeklaracjaVat { get; set; }
+		public ZaliczkaPit? ZaliczkaPit { get; set; }
 
-		public List<PozycjaFaktury> Pozycje { get; set; }
-		public List<Wplata> Wplaty { get; set; }
-		public List<Plik> Pliki { get; set; }
-		public List<DodatkowyPodmiot> DodatkowePodmioty { get; set; }
+		public List<PozycjaFaktury> Pozycje { get; set; } = default!;
+		public List<Wplata> Wplaty { get; set; } = default!;
+		public List<Plik> Pliki { get; set; } = default!;
+		public List<DodatkowyPodmiot> DodatkowePodmioty { get; set; } = default!;
 
 		public decimal SumaWplat => Wplaty?.Sum(wplata => wplata.Kwota) ?? 0;
 		public decimal PozostaloDoZaplaty => Math.Max(RazemBrutto - SumaWplat, 0);
@@ -100,9 +100,9 @@ namespace ProFak.DB
 
 		public string RodzajFmt => Format(Rodzaj);
 		public string NumerPowiazanej => FakturaKorygowana?.Numer ?? FakturaKorygujaca?.Numer ?? "";
-		public string NumerPrzedUsunieciem => Numer?.Replace(" (USUNIĘTA)", "");
+		public string NumerPrzedUsunieciem => Numer?.Replace(" (USUNIĘTA)", "") ?? "";
 
-		public string WalutaFmt => Waluta?.Skrot;
+		public string WalutaFmt => Waluta?.Skrot ?? "";
 		public PrzeznaczenieNumeratora? Numerator => Rodzaj switch
 		{
 			RodzajFaktury.Sprzedaż => PrzeznaczenieNumeratora.Faktura,
@@ -158,6 +158,12 @@ namespace ProFak.DB
 			}
 		}
 
+		public void NadajNumer(Baza baza)
+		{
+			if (Numerator == null) return;
+			Numer = DB.Numerator.NadajNumer(baza, Numerator.Value, Podstawienie);
+		}
+
 		public void PrzeliczRazem(Baza baza)
 		{
 			var pozycje = baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == Id).ToList();
@@ -188,7 +194,7 @@ namespace ProFak.DB
 			}
 		}
 
-		internal IFormattable Podstawienie(string pole)
+		internal IFormattable? Podstawienie(string pole)
 		{
 			if (String.Equals(pole, "dzien", StringComparison.CurrentCultureIgnoreCase)) return DataWystawienia.Day;
 			if (String.Equals(pole, "dzień", StringComparison.CurrentCultureIgnoreCase)) return DataWystawienia.Day;

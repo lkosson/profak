@@ -19,7 +19,7 @@ namespace ProFak.UI
 		protected readonly ToolTip toolTip;
 
 		public TRekord Rekord { get => kontroler.Model; private set => kontroler.Model = value; }
-		public Kontekst Kontekst { get; private set; }
+		public Kontekst Kontekst { get; private set; } = default!;
 
 		public Edytor()
 		{
@@ -64,7 +64,7 @@ namespace ProFak.UI
 			comboBox.Validating += ComboBox_Wymagane_Validating;
 		}
 
-		public void Walidacja(TextBox textBox, Func<string, string> walidator, bool miekki)
+		public void Walidacja(TextBox textBox, Func<string, string?> walidator, bool miekki)
 		{
 			textBox.Validating += (control, e) =>
 			{
@@ -84,7 +84,7 @@ namespace ProFak.UI
 			};
 		}
 
-		public void Walidacja<T>(ComboBox comboBox, Func<T, string> walidator, bool miekki)
+		public void Walidacja<T>(ComboBox comboBox, Func<T, string?> walidator, bool miekki)
 		{
 			comboBox.Validating += (control, e) =>
 			{
@@ -105,10 +105,10 @@ namespace ProFak.UI
 			};
 		}
 
-		private void TextBox_Wymagane_Validating(object sender, CancelEventArgs e)
+		private void TextBox_Wymagane_Validating(object? sender, CancelEventArgs e)
 		{
 			if (ModifierKeys == Keys.Shift) return;
-			var textBox = (TextBox)sender;
+			if (sender is not TextBox textBox) return;
 			if (String.IsNullOrEmpty(textBox.Text))
 			{
 				errorProvider.SetIconAlignment(textBox, ErrorIconAlignment.MiddleLeft);
@@ -121,10 +121,10 @@ namespace ProFak.UI
 			}
 		}
 
-		private void ComboBox_Wymagane_Validating(object sender, CancelEventArgs e)
+		private void ComboBox_Wymagane_Validating(object? sender, CancelEventArgs e)
 		{
 			if (ModifierKeys == Keys.Shift) return;
-			var comboBox = (ComboBox)sender;
+			if (sender is not ComboBox comboBox) return;
 			if ((comboBox.DropDownStyle == ComboBoxStyle.DropDownList && comboBox.SelectedIndex == -1)
 				|| (comboBox.DropDownStyle != ComboBoxStyle.DropDownList) && String.IsNullOrEmpty(comboBox.Text))
 			{
@@ -144,9 +144,10 @@ namespace ProFak.UI
 			if (ParentForm != null) ParentForm.FormClosing += ParentForm_FormClosing;
 		}
 
-		private void ParentForm_FormClosing(object sender, FormClosingEventArgs e)
+		private void ParentForm_FormClosing(object? sender, FormClosingEventArgs e)
 		{
-			if (ParentForm.DialogResult == DialogResult.Cancel
+			if (ParentForm != null
+				&& ParentForm.DialogResult == DialogResult.Cancel
 				&& e.CloseReason != CloseReason.WindowsShutDown
 				&& e.CloseReason != CloseReason.TaskManagerClosing
 				/* nie wystarczy sprawdzenie CloseReason.UserClosing - nie działa dla ESC */

@@ -11,7 +11,7 @@ class FakturaProformaSpis : FakturaSpis
 	{
 	}
 
-	public FakturaProformaSpis(string[] parametry)
+	public FakturaProformaSpis(string[]? parametry)
 		: base(parametry)
 	{
 	}

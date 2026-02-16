@@ -24,17 +24,17 @@ namespace ProFak.DB
 		public bool CzyTP { get; set; }
 		public int? SposobPlatnosciId { get; set; }
 
-		public string KodUrzedu { get; set; }
-		public string OsobaFizycznaImie { get; set; }
-		public string OsobaFizycznaNazwisko { get; set; }
+		public string KodUrzedu { get; set; } = "";
+		public string OsobaFizycznaImie { get; set; } = "";
+		public string OsobaFizycznaNazwisko { get; set; } = "";
 		public DateTime? OsobaFizycznaDataUrodzenia { get; set; }
 		public FormaOpodatkowania? FormaOpodatkowania { get; set; }
-		public string TokenKSeF { get; set; }
+		public string TokenKSeF { get; set; } = "";
 		public SrodowiskoKSeF SrodowiskoKSeF { get; set; }
 
 		public Ref<SposobPlatnosci> SposobPlatnosciRef { get => SposobPlatnosciId; set => SposobPlatnosciId = value; }
 
-		public SposobPlatnosci SposobPlatnosci { get; set; }
+		public SposobPlatnosci? SposobPlatnosci { get; set; }
 
 		public string AdresRejestrowyFmt => AdresRejestrowy.JakoJednaLinia();
 		public string PelnaNazwaLubNazwa => String.IsNullOrEmpty(PelnaNazwa) ? Nazwa : PelnaNazwa;

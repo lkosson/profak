@@ -15,14 +15,14 @@ namespace ProFak.DB
 
 		public string PrzeznaczenieFmt => Format(Przeznaczenie);
 
-		public List<StanNumeratora> Stany { get; set; }
+		public List<StanNumeratora> Stany { get; set; } = default!;
 
 		public override bool CzyPasuje(string fraza)
 			=> base.CzyPasuje(fraza)
 			|| CzyPasuje(Przeznaczenie, fraza)
 			|| CzyPasuje(Format, fraza);
 
-		public static string NadajNumer(Baza baza, PrzeznaczenieNumeratora przeznaczenie, Func<string, IFormattable> podstawienie, bool zwiekszLicznik = true)
+		public static string NadajNumer(Baza baza, PrzeznaczenieNumeratora przeznaczenie, Func<string, IFormattable?> podstawienie, bool zwiekszLicznik = true)
 		{
 			baza.Zablokuj<Numerator>();
 			var numerator = baza.Numeratory.FirstOrDefault(numerator => numerator.Przeznaczenie == przeznaczenie);
@@ -44,16 +44,16 @@ namespace ProFak.DB
 			return numer;
 		}
 
-		public static string PrzygotujWzorzec(string format, Func<string, IFormattable> podstawienie)
+		public static string PrzygotujWzorzec(string format, Func<string, IFormattable?> podstawienie)
 		{
 			return Regex.Replace(format, @"\[(?<nazwa>\w+)(:(?<format>[^\]]+))?\]", fragment =>
 			{
-				var nazwa = fragment.Groups["nazwa"]?.Value;
+				var nazwa = fragment.Groups["nazwa"].Value;
 				var format = fragment.Groups["format"]?.Value;
 				if (String.Equals(nazwa, "numer", StringComparison.CurrentCultureIgnoreCase)) return "{0" + (String.IsNullOrEmpty(format) ? "" : ":" + format) + "}";
 				var wartosc = podstawienie(nazwa);
 				if (wartosc == null) throw new ApplicationException($"Nieznane wyrażenie numeratora \"{nazwa}\".");
-				var tekst = String.IsNullOrWhiteSpace(format) ? wartosc.ToString() : wartosc.ToString(format, CultureInfo.CurrentCulture);
+				var tekst = String.IsNullOrWhiteSpace(format) ? wartosc.ToString() ?? "" : wartosc.ToString(format, CultureInfo.CurrentCulture);
 				return tekst;
 			});
 		}

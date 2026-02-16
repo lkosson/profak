@@ -68,7 +68,7 @@ namespace ProFak.IO.JPK_EWP
 				}
 				else if (String.IsNullOrEmpty(nipnumer)) nipnumer = "BRAK";
 
-				foreach (var pozycje in faktura.Pozycje.Where(e => e.StawkaRyczaltu.HasValue).GroupBy(e => e.StawkaRyczaltu.Value))
+				foreach (var pozycje in faktura.Pozycje.Where(e => e.StawkaRyczaltu.HasValue).GroupBy(e => e.StawkaRyczaltu!.Value))
 				{
 					var jpkwiersz = new JPKEWPWiersz();
 					jpkwiersz.K_1 = (ulong)(jpk.EWPWiersz.Count + 1);

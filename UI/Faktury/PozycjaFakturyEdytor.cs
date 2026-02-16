@@ -14,7 +14,7 @@ namespace ProFak.UI
 {
 	partial class PozycjaFakturyEdytor : PozycjaFakturyEdytorBase
 	{
-		private Slownik<Towar> slownikTowarow;
+		private Slownik<Towar> slownikTowarow = default!;
 		private bool vatMarza;
 		private bool trwaPrzeliczanieCen;
 
@@ -77,7 +77,7 @@ namespace ProFak.UI
 				Spisy.JednostkiMiar)
 				.Zainstaluj();
 
-			vatMarza = Kontekst.Znajdz<Faktura>() is var faktura && (faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży);
+			vatMarza = Kontekst.Znajdz<Faktura>() is Faktura faktura && (faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży);
 
 			numericUpDownCenaZakupu.Visible = vatMarza;
 			labelCenaZakupu.Visible = vatMarza;
@@ -160,7 +160,7 @@ namespace ProFak.UI
 			}
 		}
 
-		private void UstawTowar(Towar towar)
+		private void UstawTowar(Towar? towar)
 		{
 			if (towar == null || Rekord.TowarRef == towar.Ref) return;
 			Rekord.TowarRef = towar;
@@ -177,7 +177,7 @@ namespace ProFak.UI
 			PrzeliczCeny();
 		}
 
-		private void buttonNowyTowar_Click(object sender, EventArgs e)
+		private void buttonNowyTowar_Click(object? sender, EventArgs e)
 		{
 			var towar = new Towar
 			{

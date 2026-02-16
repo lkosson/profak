@@ -50,15 +50,15 @@ namespace ProFak.UI
 		private const string WYSOKOSC_WIERSZA = "(wysokość)";
 		private readonly Container container;
 		private readonly BindingSource bindingSource;
-		private IEnumerable<T> oryginalneRekordy;
+		private IEnumerable<T>? oryginalneRekordy;
 		private Func<T, bool> filtr;
 		private List<(string kolumna, bool malejaco, Func<T, IComparable> metoda)> kolumnyKolejnosci;
-		private Dictionary<int, Func<T, string>> tooltipyDlaKolumn;
+		private Dictionary<int, Func<T, string?>> tooltipyDlaKolumn = [];
 		private bool rekordyPodczasZmiany;
 		private bool kolumnyZmienione;
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public Kontekst Kontekst { get; set; }
+		public Kontekst Kontekst { get; set; } = default!;
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public IEnumerable<T> WybraneRekordy
@@ -85,7 +85,7 @@ namespace ProFak.UI
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public IEnumerable<T> Rekordy
 		{
-			get => bindingSource.DataSource as IEnumerable<T>;
+			get => bindingSource.DataSource as IEnumerable<T> ?? [];
 			set
 			{
 				var zaznaczoneRekordy = WybraneRekordy.ToList();
@@ -101,7 +101,7 @@ namespace ProFak.UI
 		}
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public string Komunikat
+		public string? Komunikat
 		{
 			get => field;
 			set
@@ -140,8 +140,8 @@ namespace ProFak.UI
 			}
 		}
 
-		public event Action RekordyZmienione;
-		public event Action ZaznaczenieZmienione;
+		public event Action? RekordyZmienione;
+		public event Action? ZaznaczenieZmienione;
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Ref<T> RekordPoczatkowy { get; set; }
@@ -164,7 +164,7 @@ namespace ProFak.UI
 			Rows.CollectionChanged += Rows_CollectionChanged;
 		}
 
-		private void Rows_CollectionChanged(object sender, CollectionChangeEventArgs e)
+		private void Rows_CollectionChanged(object? sender, CollectionChangeEventArgs e)
 		{
 			if (RekordPoczatkowy == default) return;
 
@@ -179,6 +179,7 @@ namespace ProFak.UI
 
 		private void OdswiezWiersze()
 		{
+			if (oryginalneRekordy == null) return;
 			Rekordy = oryginalneRekordy;
 		}
 
@@ -236,7 +237,7 @@ namespace ProFak.UI
 			base.Dispose(disposing);
 		}
 
-		public DataGridViewTextBoxColumn DodajKolumne(string wlasciwosc, string naglowek, bool wyrownajDoPrawej = false, bool rozciagnij = false, string format = null, int? szerokosc = null, Func<T, string> tooltip = null)
+		public DataGridViewTextBoxColumn DodajKolumne(string wlasciwosc, string naglowek, bool wyrownajDoPrawej = false, bool rozciagnij = false, string? format = null, int? szerokosc = null, Func<T, string?>? tooltip = null)
 		{
 			var kolumna = new DataGridViewTextBoxColumn();
 			kolumna.HeaderText = naglowek;
@@ -249,15 +250,11 @@ namespace ProFak.UI
 			if (szerokosc.HasValue) kolumna.Width = Wyglad.PrzeskalujRozmiar(szerokosc.Value) * DeviceDpi / 96;
 			if (rozciagnij) kolumna.MinimumWidth = 50;
 			Columns.Add(kolumna);
-			if (tooltip != null)
-			{
-				if (tooltipyDlaKolumn == null) tooltipyDlaKolumn = new Dictionary<int, Func<T, string>>();
-				tooltipyDlaKolumn[kolumna.Index] = tooltip;
-			}
+			if (tooltip != null) tooltipyDlaKolumn[kolumna.Index] = tooltip;
 			return kolumna;
 		}
 
-		public DataGridViewCheckBoxColumn DodajKolumneBool(string wlasciwosc, string naglowek, int? szerokosc = null, Func<T, string> tooltip = null)
+		public DataGridViewCheckBoxColumn DodajKolumneBool(string wlasciwosc, string naglowek, int? szerokosc = null, Func<T, string>? tooltip = null)
 		{
 			var kolumna = new DataGridViewCheckBoxColumn();
 			kolumna.HeaderText = naglowek;
@@ -267,23 +264,21 @@ namespace ProFak.UI
 			kolumna.SortMode = DataGridViewColumnSortMode.Programmatic;
 			kolumna.Visible = szerokosc != 0;
 			Columns.Add(kolumna);
-			if (tooltip != null)
-			{
-				if (tooltipyDlaKolumn == null) tooltipyDlaKolumn = new Dictionary<int, Func<T, string>>();
-				tooltipyDlaKolumn[kolumna.Index] = tooltip;
-			}
+			if (tooltip != null) tooltipyDlaKolumn[kolumna.Index] = tooltip;
 			return kolumna;
 		}
 
-		public DataGridViewTextBoxColumn DodajKolumneData(string wlasciwosc, string naglowek, string format = Format.Data, int? szerokosc = 120, Func<T, string> tooltip = null) => DodajKolumne(wlasciwosc, naglowek, wyrownajDoPrawej: true, format: format, szerokosc: szerokosc, tooltip: tooltip);
-		public DataGridViewTextBoxColumn DodajKolumneKwota(string wlasciwosc, string naglowek, string format = Format.Kwota, int? szerokosc = 80, Func<T, string> tooltip = null) => DodajKolumne(wlasciwosc, naglowek, wyrownajDoPrawej: true, format: format, szerokosc: szerokosc, tooltip: tooltip);
+		public DataGridViewTextBoxColumn DodajKolumneData(string wlasciwosc, string naglowek, string format = Format.Data, int? szerokosc = 120, Func<T, string?>? tooltip = null) => DodajKolumne(wlasciwosc, naglowek, wyrownajDoPrawej: true, format: format, szerokosc: szerokosc, tooltip: tooltip);
+		public DataGridViewTextBoxColumn DodajKolumneKwota(string wlasciwosc, string naglowek, string format = Format.Kwota, int? szerokosc = 80, Func<T, string?>? tooltip = null) => DodajKolumne(wlasciwosc, naglowek, wyrownajDoPrawej: true, format: format, szerokosc: szerokosc, tooltip: tooltip);
 		public DataGridViewTextBoxColumn DodajKolumneId() => DodajKolumne("Id", "Id", wyrownajDoPrawej: true, szerokosc: 60);
 
 		protected abstract void Przeladuj();
 
 		protected override void OnCellToolTipTextNeeded(DataGridViewCellToolTipTextNeededEventArgs e)
 		{
-			if (tooltipyDlaKolumn != null && e.RowIndex != -1 && tooltipyDlaKolumn.TryGetValue(e.ColumnIndex, out var tooltip)) e.ToolTipText = tooltip((T)Rows[e.RowIndex].DataBoundItem);
+			if (e.RowIndex != -1 
+				&& tooltipyDlaKolumn.TryGetValue(e.ColumnIndex, out var tooltip)
+				&& Rows[e.RowIndex].DataBoundItem is T rekord) e.ToolTipText = tooltip(rekord);
 			else base.OnCellToolTipTextNeeded(e);
 		}
 
@@ -292,14 +287,13 @@ namespace ProFak.UI
 			base.OnCellPainting(e);
 			if (e.RowIndex == -1)
 			{
-				e.CellStyle.SelectionBackColor = System.Drawing.SystemColors.Control;
+				e.CellStyle?.SelectionBackColor = System.Drawing.SystemColors.Control;
 			}
-			else if (e.ColumnIndex != -1)
+			else if (e.ColumnIndex != -1 && e.CellStyle != null)
 			{
 				if (Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection == SortOrder.Ascending) e.CellStyle.BackColor = Color.FromArgb(210, 242, 167);
 				else if (Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection == SortOrder.Descending) e.CellStyle.BackColor = Color.FromArgb(242, 219, 167);
-
-				UstawStylWiersza((T)Rows[e.RowIndex].DataBoundItem, Columns[e.ColumnIndex].DataPropertyName, e.CellStyle);
+				if (Rows[e.RowIndex].DataBoundItem is T rekord) UstawStylWiersza(rekord, Columns[e.ColumnIndex].DataPropertyName, e.CellStyle);
 			}
 		}
 
@@ -337,7 +331,7 @@ namespace ProFak.UI
 			base.OnCellMouseDown(e);
 		}
 
-		public override DataObject GetClipboardContent()
+		public override DataObject? GetClipboardContent()
 		{
 			var dataObject = base.GetClipboardContent();
 			if (dataObject == null) return null;
@@ -362,6 +356,7 @@ namespace ProFak.UI
 
 		private void PokazKonfiguracjeSpisu()
 		{
+			if (Kontekst == null) return;
 			using var nowyKontekst = new Kontekst(Kontekst);
 			using var transakcja = nowyKontekst.Transakcja();
 
@@ -413,13 +408,13 @@ namespace ProFak.UI
 					Func<T, bool> dopasowanieFragmentu = rekord => rekord.CzyPasuje(fraza);
 					dopasowania.Add(dopasowanieFragmentu);
 				}
-				filtr = (Func<T, bool>)Delegate.Combine(dopasowania.ToArray());
+				filtr = (Func<T, bool>)Delegate.Combine(dopasowania.ToArray())!;
 			}
 
-			Rekordy = oryginalneRekordy;
+			Rekordy = oryginalneRekordy ?? [];
 		}
 
-		protected virtual Func<T, IComparable> KolumnaDlaSortowania(string kolumna)
+		protected virtual Func<T, IComparable>? KolumnaDlaSortowania(string kolumna)
 		{
 			var getter = typeof(T).GetProperty(kolumna)?.GetGetMethod();
 			if (getter == null) return null;
@@ -438,6 +433,7 @@ namespace ProFak.UI
 				var parametr = Expression.Parameter(typeof(T), "rekord");
 				var wartoscExpr = Expression.Call(parametr, getter);
 				var getValueOrDefaultMethod = getter.ReturnType.GetMethod(nameof(Nullable<int>.GetValueOrDefault), Type.EmptyTypes);
+				if (getValueOrDefaultMethod == null) return null;
 				var wartoscOrDefaultExpr = Expression.Call(wartoscExpr, getValueOrDefaultMethod);
 				var wartoscCompExpr = Expression.Convert(wartoscOrDefaultExpr, typeof(IComparable));
 				var lambdaExpr = Expression.Lambda<Func<T, IComparable>>(wartoscCompExpr, parametr);
@@ -518,7 +514,7 @@ namespace ProFak.UI
 
 			foreach (var kolumna in kolumnyKolejnosci)
 			{
-				Columns[kolumna.kolumna].HeaderCell.SortGlyphDirection = kolumna.malejaco ? SortOrder.Descending : SortOrder.Ascending;
+				Columns[kolumna.kolumna]?.HeaderCell.SortGlyphDirection = kolumna.malejaco ? SortOrder.Descending : SortOrder.Ascending;
 			}
 		}
 
@@ -568,6 +564,7 @@ namespace ProFak.UI
 
 		private void WczytajKonfiguracje()
 		{
+			if (Kontekst == null) return;
 			var spis = GetType().Name;
 			var kolumny = Kontekst.Baza.KolumnySpisow.Where(e => e.Spis == spis).OrderBy(e => e.Kolejnosc);
 			kolumnyKolejnosci.Clear();
@@ -606,6 +603,7 @@ namespace ProFak.UI
 
 		private void ZapiszKonfiguracje()
 		{
+			if (Kontekst == null) return;
 			if (Kontekst.Baza.CzyZablokowana()) return;
 			var spis = GetType().Name;
 			var stareKolumny = Kontekst.Baza.KolumnySpisow.Where(e => e.Spis == spis).ToList();

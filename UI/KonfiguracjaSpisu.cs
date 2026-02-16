@@ -24,9 +24,9 @@ partial class KonfiguracjaSpisu : UserControl
 		listBoxKolumny.DataSource = konfiguracjaKolumn.Where(e => e.Kolejnosc >= 0).OrderBy(e => e.Kolejnosc).ToList();
 	}
 
-	private void listBoxKolumny_SelectedIndexChanged(object sender, EventArgs e)
+	private void listBoxKolumny_SelectedIndexChanged(object? sender, EventArgs e)
 	{
-		var kolumna = (KolumnaSpisu)listBoxKolumny.SelectedItem;
+		if (listBoxKolumny.SelectedItem is not KolumnaSpisu kolumna) return;
 		textBoxKolumna.Text = kolumna.Kolumna;
 		numericUpDownKolejnosc.Value = kolumna.Kolejnosc;
 		numericUpDownSzerokosc.Value = kolumna.Szerokosc;
@@ -35,31 +35,27 @@ partial class KonfiguracjaSpisu : UserControl
 		checkBoxRozciagnij.Checked = kolumna.Szerokosc == -1;
 	}
 
-	private void numericUpDownSzerokosc_ValueChanged(object sender, EventArgs e)
+	private void numericUpDownSzerokosc_ValueChanged(object? sender, EventArgs e)
 	{
-		var kolumna = (KolumnaSpisu)listBoxKolumny.SelectedItem;
-		if (kolumna == null) return;
+		if (listBoxKolumny.SelectedItem is not KolumnaSpisu kolumna) return;
 		kolumna.Szerokosc = (int)numericUpDownSzerokosc.Value;
 	}
 
-	private void numericUpDownKolejnosc_ValueChanged(object sender, EventArgs e)
+	private void numericUpDownKolejnosc_ValueChanged(object? sender, EventArgs e)
 	{
-		var kolumna = (KolumnaSpisu)listBoxKolumny.SelectedItem;
-		if (kolumna == null) return;
+		if (listBoxKolumny.SelectedItem is not KolumnaSpisu kolumna) return;
 		kolumna.Kolejnosc = (int)numericUpDownKolejnosc.Value;
 	}
 
-	private void numericUpDownPoziomSortowania_ValueChanged(object sender, EventArgs e)
+	private void numericUpDownPoziomSortowania_ValueChanged(object? sender, EventArgs e)
 	{
-		var kolumna = (KolumnaSpisu)listBoxKolumny.SelectedItem;
-		if (kolumna == null) return;
+		if (listBoxKolumny.SelectedItem is not KolumnaSpisu kolumna) return;
 		kolumna.PoziomSortowania = (int)numericUpDownPoziomSortowania.Value;
 	}
 
-	private void checkBoxUkryta_CheckedChanged(object sender, EventArgs e)
+	private void checkBoxUkryta_CheckedChanged(object? sender, EventArgs e)
 	{
-		var kolumna = (KolumnaSpisu)listBoxKolumny.SelectedItem;
-		if (kolumna == null) return;
+		if (listBoxKolumny.SelectedItem is not KolumnaSpisu kolumna) return;
 		if (checkBoxUkryta.Checked)
 		{
 			checkBoxRozciagnij.Enabled = false;
@@ -75,10 +71,9 @@ partial class KonfiguracjaSpisu : UserControl
 		}
 	}
 
-	private void checkBoxRozciagnij_CheckedChanged(object sender, EventArgs e)
+	private void checkBoxRozciagnij_CheckedChanged(object? sender, EventArgs e)
 	{
-		var kolumna = (KolumnaSpisu)listBoxKolumny.SelectedItem;
-		if (kolumna == null) return;
+		if (listBoxKolumny.SelectedItem is not KolumnaSpisu kolumna) return;
 		if (checkBoxRozciagnij.Checked)
 		{
 			checkBoxUkryta.Enabled = false;

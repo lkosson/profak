@@ -19,15 +19,15 @@ namespace ProFak.UI.Faktury;
 partial class WysylkaFakturEdytor : UserControl
 {
 	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-	public IEnumerable<Faktura> Faktury { get; set; }
+	public IEnumerable<Faktura> Faktury { get; set; } = [];
 
 	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-	public Kontekst Kontekst { get; set; }
+	public Kontekst Kontekst { get; set; } = default!;
 
-	private string szablonAdresat;
-	private string szablonTemat;
-	private string szablonTresc;
-	private string szablonNadawca;
+	private string szablonAdresat = "";
+	private string szablonTemat = "";
+	private string szablonTresc = "";
+	private string szablonNadawca = "";
 
 	public WysylkaFakturEdytor()
 	{
@@ -52,7 +52,7 @@ partial class WysylkaFakturEdytor : UserControl
 		base.OnLoad(e);
 	}
 
-	private void comboBoxFaktura_SelectedIndexChanged(object sender, EventArgs e)
+	private void comboBoxFaktura_SelectedIndexChanged(object? sender, EventArgs e)
 	{
 		if (comboBoxFaktura.SelectedIndex == 0)
 		{
@@ -60,28 +60,27 @@ partial class WysylkaFakturEdytor : UserControl
 			textBoxTemat.Text = szablonTemat;
 			textBoxTresc.Text = szablonTresc;
 		}
-		else
+		else if (comboBoxFaktura.SelectedItem is Faktura faktura)
 		{
-			var faktura = (Faktura)comboBoxFaktura.SelectedItem;
 			textBoxAdresat.Text = faktura.PodstawPolaWysylki(szablonAdresat);
 			textBoxTemat.Text = faktura.PodstawPolaWysylki(szablonTemat);
 			textBoxTresc.Text = faktura.PodstawPolaWysylki(szablonTresc);
 		}
 	}
 
-	private void buttonPoprzednia_Click(object sender, EventArgs e)
+	private void buttonPoprzednia_Click(object? sender, EventArgs e)
 	{
 		if (comboBoxFaktura.SelectedIndex == 0) return;
 		comboBoxFaktura.SelectedIndex--;
 	}
 
-	private void buttonNastepna_Click(object sender, EventArgs e)
+	private void buttonNastepna_Click(object? sender, EventArgs e)
 	{
 		if (comboBoxFaktura.SelectedIndex == comboBoxFaktura.Items.Count - 1) return;
 		comboBoxFaktura.SelectedIndex++;
 	}
 
-	private void buttonWyslij_Click(object sender, EventArgs e)
+	private void buttonWyslij_Click(object? sender, EventArgs e)
 	{
 		try
 		{
@@ -97,7 +96,7 @@ partial class WysylkaFakturEdytor : UserControl
 
 	private void WyslijBiezaca()
 	{
-		var fakturaDoWysylki = (Faktura)comboBoxFaktura.SelectedItem;
+		if (comboBoxFaktura.SelectedItem is not Faktura fakturaDoWysylki) return;
 		using var nowyKontekst = new Kontekst(Kontekst);
 		using var transakcja = nowyKontekst.Transakcja();
 		var fakturaDoZapisu = nowyKontekst.Baza.Znajdz(fakturaDoWysylki.Ref);
@@ -123,7 +122,7 @@ partial class WysylkaFakturEdytor : UserControl
 			await Wyslij(temat, tresc, adresat, nadawca, pdf, fakturaDoWysylki.Numer, cancellationToken);
 		});
 		transakcja.Zatwierdz();
-		var faktury = (List<Faktura>)comboBoxFaktura.DataSource;
+		var faktury = (List<Faktura>)comboBoxFaktura.DataSource!;
 		faktury.Remove(fakturaDoWysylki);
 		comboBoxFaktura.BeginUpdate();
 		comboBoxFaktura.DataSource = Array.Empty<Faktura>();
@@ -132,7 +131,7 @@ partial class WysylkaFakturEdytor : UserControl
 		comboBoxFaktura.SelectedIndex = Math.Min(idx, faktury.Count - 1);
 		comboBoxFaktura.EndUpdate();
 
-		if (faktury.Count == 1)
+		if (faktury.Count == 1 && ParentForm != null)
 		{
 			ParentForm.DialogResult = DialogResult.OK;
 			ParentForm.Close();
@@ -146,7 +145,7 @@ partial class WysylkaFakturEdytor : UserControl
 		OknoPostepu.Uruchom(async cancellationToken =>
 		{
 			using var nowyKontekst = new Kontekst(Kontekst);
-			var faktury = (List<Faktura>)comboBoxFaktura.DataSource;
+			var faktury = (List<Faktura>)comboBoxFaktura.DataSource!;
 			foreach (var fakturaDoWysylki in faktury)
 			{
 				if (cancellationToken.IsCancellationRequested) return;
@@ -172,8 +171,12 @@ partial class WysylkaFakturEdytor : UserControl
 				transakcja.Zatwierdz();
 			}
 		});
-		ParentForm.DialogResult = DialogResult.OK;
-		ParentForm.Close();
+
+		if (ParentForm != null)
+		{
+			ParentForm.DialogResult = DialogResult.OK;
+			ParentForm.Close();
+		}
 	}
 
 	private byte[] PrzygotujPDF(Ref<Faktura> fakturaRef)
@@ -202,25 +205,25 @@ partial class WysylkaFakturEdytor : UserControl
 		await smtp.SendMailAsync(wiadomosc, cancellationToken);
 	}
 
-	private void textBoxAdresat_TextChanged(object sender, EventArgs e)
+	private void textBoxAdresat_TextChanged(object? sender, EventArgs e)
 	{
 		if (comboBoxFaktura.SelectedIndex != 0) return;
 		szablonAdresat = textBoxAdresat.Text;
 	}
 
-	private void textBoxTemat_TextChanged(object sender, EventArgs e)
+	private void textBoxTemat_TextChanged(object? sender, EventArgs e)
 	{
 		if (comboBoxFaktura.SelectedIndex != 0) return;
 		szablonTemat = textBoxTemat.Text;
 	}
 
-	private void textBoxTresc_TextChanged(object sender, EventArgs e)
+	private void textBoxTresc_TextChanged(object? sender, EventArgs e)
 	{
 		if (comboBoxFaktura.SelectedIndex != 0) return;
 		szablonTresc = textBoxTresc.Text;
 	}
 
-	private void checkBoxUstawDate_CheckedChanged(object sender, EventArgs e)
+	private void checkBoxUstawDate_CheckedChanged(object? sender, EventArgs e)
 	{
 		checkBoxPrzeliczTermin.Enabled = checkBoxUstawDate.Checked;
 		if (!checkBoxUstawDate.Checked) checkBoxPrzeliczTermin.Checked = false;

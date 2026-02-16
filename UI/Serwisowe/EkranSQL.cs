@@ -14,14 +14,14 @@ namespace ProFak.UI
 	partial class EkranSQL : UserControl, IKontrolkaZKontekstem
 	{
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public Kontekst Kontekst { get; set; }
+		public Kontekst Kontekst { get; set; } = default!;
 
 		public EkranSQL()
 		{
 			InitializeComponent();
 		}
 
-		private void buttonUruchom_Click(object sender, EventArgs e)
+		private void buttonUruchom_Click(object? sender, EventArgs e)
 		{
 			try
 			{
@@ -49,7 +49,7 @@ namespace ProFak.UI
 			}
 		}
 
-		private void textBoxSQL_KeyDown(object sender, KeyEventArgs e)
+		private void textBoxSQL_KeyDown(object? sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.F5) buttonUruchom_Click(sender, e);
 		}
