@@ -17,13 +17,13 @@ namespace ProFak.DB.Model
 			builder.HasKey(e => e.Id);
 
 			builder.Property(e => e.Id).ValueGeneratedOnAdd().IsRequired();
-			builder.Property(e => e.SMTPSerwer);
-			builder.Property(e => e.SMTPLogin);
-			builder.Property(e => e.SMTPHaslo);
+			builder.Property(e => e.SMTPSerwer).HasDefaultValue("").IsRequired();
+			builder.Property(e => e.SMTPLogin).HasDefaultValue("").IsRequired();
+			builder.Property(e => e.SMTPHaslo).HasDefaultValue("").IsRequired();
 			builder.Property(e => e.SMTPPort);
-			builder.Property(e => e.EMailNadawca);
-			builder.Property(e => e.EMailTemat);
-			builder.Property(e => e.EMailTresc);
+			builder.Property(e => e.EMailNadawca).HasDefaultValue("").IsRequired();
+			builder.Property(e => e.EMailTemat).HasDefaultValue("").IsRequired();
+			builder.Property(e => e.EMailTresc).HasDefaultValue("").IsRequired();
 
 			builder.HasData(Konfiguracja.Domyslna);
 		}

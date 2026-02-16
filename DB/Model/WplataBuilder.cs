@@ -20,7 +20,7 @@ namespace ProFak.DB.Model
 			builder.Property(e => e.FakturaId).IsRequired();
 			builder.Property(e => e.Data).IsRequired();
 			builder.Property(e => e.Kwota).HasDefaultValue(0).IsRequired();
-			builder.Property(e => e.Uwagi).HasDefaultValue("");
+			builder.Property(e => e.Uwagi).HasDefaultValue("").IsRequired();
 
 			builder.Ignore(e => e.FakturaRef);
 
