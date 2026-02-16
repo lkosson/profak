@@ -4,6 +4,11 @@ class DaneStartowe
 {
 	public static void Zaladuj(Baza baza)
 	{
+		if (!baza.Konfiguracja.Any())
+		{
+			baza.Zapisz(Konfiguracja.Domyslna);
+		}
+
 		if (!baza.JednostkiMiar.Any())
 		{
 			baza.Zapisz(new JednostkaMiary { CzyDomyslna = true, LiczbaMiescPoPrzecinku = 0, Nazwa = "Sztuka", Skrot = "szt" });

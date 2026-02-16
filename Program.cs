@@ -12,9 +12,8 @@ public static class Program
 	{
 		try
 		{
-			Wyglad.DostosujDoWine();
 			Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-			Wyglad.UstawCzcionke();
+			Wyglad.ZaladujDomyslny();
 			Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
@@ -24,6 +23,7 @@ public static class Program
 			if (!PierwszyStartBaza.Uruchom()) return;
 #endif
 			Baza.Przygotuj();
+			Wyglad.WczytajZBazy();
 
 			if (args.Length > 0)
 			{
