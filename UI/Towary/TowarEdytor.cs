@@ -88,10 +88,26 @@ partial class TowarEdytor : TowarEdytorBase
 	private void PrzeliczCeny()
 	{
 		if (Rekord == null) return;
+		if (Rekord.CzyWedlugCenBrutto) PrzeliczCeneNetto(Rekord.CenaBrutto);
+		else PrzeliczCeneBrutto(Rekord.CenaNetto);
+	}
+
+	private void PrzeliczCeneNetto(decimal cenaBrutto)
+	{
 		// Ustawione w PrzygotujRekord
 		ArgumentNullException.ThrowIfNull(Rekord.StawkaVat);
-		if (Rekord.CzyWedlugCenBrutto) numericUpDownCenaNetto.Value = (Rekord.CenaBrutto * 100m / (100 + Rekord.StawkaVat.Wartosc)).Zaokragl();
-		else numericUpDownCenaBrutto.Value = (Rekord.CenaNetto * (100 + Rekord.StawkaVat.Wartosc) / 100m).Zaokragl();
+		var cenaNetto = (cenaBrutto * 100m / (100 + Rekord.StawkaVat.Wartosc)).Zaokragl();
+		if (Rekord.CenaNetto == cenaNetto) return; // Powodowało ustawienie Kontroler.modelZmieniony
+		numericUpDownCenaNetto.Value = cenaNetto;
+	}
+
+	private void PrzeliczCeneBrutto(decimal cenaNetto)
+	{
+		// Ustawione w PrzygotujRekord
+		ArgumentNullException.ThrowIfNull(Rekord.StawkaVat);
+		var cenaBrutto = (cenaNetto * (100 + Rekord.StawkaVat.Wartosc) / 100m).Zaokragl();
+		if (Rekord.CenaBrutto == cenaBrutto) return; // Powodowało ustawienie Kontroler.modelZmieniony
+		numericUpDownCenaBrutto.Value = cenaBrutto;
 	}
 
 	private void comboBoxSposobLiczenia_SelectedIndexChanged(object? sender, EventArgs e)
@@ -107,17 +123,13 @@ partial class TowarEdytor : TowarEdytorBase
 	private void numericUpDownCenaNetto_ValueChanged(object? sender, EventArgs e)
 	{
 		if (Rekord.CzyWedlugCenBrutto) return;
-		// Ustawione w PrzygotujRekord
-		ArgumentNullException.ThrowIfNull(Rekord.StawkaVat);
-		numericUpDownCenaBrutto.Value = (numericUpDownCenaNetto.Value * (100 + Rekord.StawkaVat.Wartosc) / 100m).Zaokragl();
+		PrzeliczCeneBrutto(numericUpDownCenaNetto.Value);
 	}
 
 	private void numericUpDownCenaBrutto_ValueChanged(object? sender, EventArgs e)
 	{
 		if (!Rekord.CzyWedlugCenBrutto) return;
-		// Ustawione w PrzygotujRekord
-		ArgumentNullException.ThrowIfNull(Rekord.StawkaVat);
-		numericUpDownCenaNetto.Value = (numericUpDownCenaBrutto.Value * 100m / (100 + Rekord.StawkaVat.Wartosc)).Zaokragl();
+		PrzeliczCeneNetto(numericUpDownCenaBrutto.Value);
 	}
 }
 
