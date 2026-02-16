@@ -82,7 +82,7 @@ partial class KontrahentEdytor : KontrahentEdytorBase
 
 	private string? WalidacjaNazwy(string nazwa)
 	{
-		if (String.IsNullOrWhiteSpace(nazwa)) return null;
+		if (String.IsNullOrWhiteSpace(nazwa)) return "Należy podać nazwę firmy"; // Potrzebne (żeby się wyświeliła ikona błędu) mimo Wymagane(textBoxNazwa) w konstrukorze
 		static string TrzonNazwy(string nazwa) => String.Join("", nazwa.Where(Char.IsLetterOrDigit).Select(Char.ToLower));
 		var szukanaNazwa = TrzonNazwy(nazwa);
 		if (szukanaNazwa.Length < 3) return null;
