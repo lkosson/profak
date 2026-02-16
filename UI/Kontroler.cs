@@ -7,7 +7,7 @@ class Kontroler<TModel>
 {
 	private readonly HashSet<Control> aktualizowaneKontrolki;
 	private TModel model = default!;
-	private List<Action> powiazania;
+	private readonly List<Action> powiazania;
 	private bool modelZmieniony;
 
 	public TModel Model { get => model; set { model = value; AktualizujKontrolki(); } }
@@ -15,8 +15,8 @@ class Kontroler<TModel>
 
 	public Kontroler()
 	{
-		aktualizowaneKontrolki = new HashSet<Control>();
-		powiazania = new List<Action>();
+		aktualizowaneKontrolki = [];
+		powiazania = [];
 	}
 
 	public void Powiazanie(DateTimePicker dateTimePicker, Expression<Func<TModel, DateTime>> wlasciwosc, Action? wartoscZmieniona = null) => Powiazanie(dateTimePicker, wlasciwosc, Powiazanie, wartoscZmieniona);
@@ -34,25 +34,29 @@ class Kontroler<TModel>
 		var exp = (MemberExpression)wlasciwosc.Body;
 		var pi = (PropertyInfo)exp.Member;
 		var getterMI = pi.GetGetMethod() ?? throw new ArgumentException($"Nieprawidłowa właściwość {wlasciwosc} dowiązana do {kontrolka}.");
-		var getter = (Func<TModel, TWartosc>)getterMI.CreateDelegate(typeof(Func<TModel, TWartosc>));
-		var setter = pi.CanWrite ? (Action<TModel, TWartosc>)pi.GetSetMethod()!.CreateDelegate(typeof(Action<TModel, TWartosc>)) : null;
+		var getter = getterMI.CreateDelegate<Func<TModel, TWartosc>>();
+		var setter = pi.GetSetMethod()?.CreateDelegate<Action<TModel, TWartosc>>();
 		powiazanie(kontrolka, getter, setter, wartoscZmieniona);
+	}
+
+	private void DodajPowiazanie<TKontrolka, TWartosc>(TKontrolka kontrolka, Func<TModel, TWartosc> pobierzWartosc, Action<TKontrolka, TWartosc> ustawWartosc)
+		where TKontrolka : Control
+	{
+		void Powiazanie() => AktualizujKontrolke(kontrolka, pobierzWartosc, ustawWartosc);
+		if (model != null) Powiazanie();
+		powiazania.Add(Powiazanie);
 	}
 
 	public void Powiazanie(DateTimePicker dateTimePicker, Func<TModel, DateTime> pobierzWartosc, Action<TModel, DateTime>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
-		dateTimePicker.ValueChanged += delegate { AktualizujModel(dateTimePicker, ustawWartosc, dtp => dtp.Value); if (wartoscZmieniona != null) wartoscZmieniona(); };
-		Action powiazanie = delegate { AktualizujKontrolke(dateTimePicker, pobierzWartosc, (dtp, wartosc) => dtp.Value = wartosc); };
-		if (model != null) powiazanie();
-		powiazania.Add(powiazanie);
+		dateTimePicker.ValueChanged += delegate { AktualizujModel(dateTimePicker, ustawWartosc, dtp => dtp.Value); wartoscZmieniona?.Invoke(); };
+		DodajPowiazanie(dateTimePicker, pobierzWartosc, (dtp, wartosc) => dtp.Value = wartosc);
 	}
 
 	public void Powiazanie(DateTimePicker dateTimePicker, Func<TModel, DateTime?> pobierzWartosc, Action<TModel, DateTime?>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
-		dateTimePicker.ValueChanged += delegate { AktualizujModel(dateTimePicker, ustawWartosc, dtp => dtp.Checked ? (DateTime?)dtp.Value : null); if (wartoscZmieniona != null) wartoscZmieniona(); };
-		Action powiazanie = delegate { AktualizujKontrolke(dateTimePicker, pobierzWartosc, (dtp, wartosc) => { dtp.Checked = wartosc.HasValue; if (wartosc.HasValue) dtp.Value = wartosc.Value; }); };
-		if (model != null) powiazanie();
-		powiazania.Add(powiazanie);
+		dateTimePicker.ValueChanged += delegate { AktualizujModel(dateTimePicker, ustawWartosc, dtp => dtp.Checked ? (DateTime?)dtp.Value : null); wartoscZmieniona?.Invoke(); };
+		DodajPowiazanie(dateTimePicker, pobierzWartosc, (dtp, wartosc) => { dtp.Checked = wartosc.HasValue; if (wartosc.HasValue) dtp.Value = wartosc.Value; });
 	}
 
 	public void Powiazanie(NumericUpDown numericUpDown, Func<TModel, int> pobierzWartosc, Action<TModel, int>? ustawWartosc, Action? wartoscZmieniona = null)
@@ -63,50 +67,38 @@ class Kontroler<TModel>
 	public void Powiazanie(NumericUpDown numericUpDown, Func<TModel, decimal> pobierzWartosc, Action<TModel, decimal>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
 		numericUpDown.Enter += delegate { numericUpDown.Select(0, numericUpDown.Text.Length); };
-		numericUpDown.ValueChanged += delegate { if (ustawWartosc != null) AktualizujModel(numericUpDown, ustawWartosc, nud => nud.Value); if (wartoscZmieniona != null) wartoscZmieniona(); };
-		Action powiazanie = delegate { AktualizujKontrolke(numericUpDown, pobierzWartosc, (nud, wartosc) => nud.Value = wartosc); };
-		if (model != null) powiazanie();
-		powiazania.Add(powiazanie);
+		numericUpDown.ValueChanged += delegate { if (ustawWartosc != null) AktualizujModel(numericUpDown, ustawWartosc, nud => nud.Value); wartoscZmieniona?.Invoke(); };
+		DodajPowiazanie(numericUpDown, pobierzWartosc, (nud, wartosc) => nud.Value = wartosc);
 	}
 
 	public void Powiazanie(TextBox textBox, Func<TModel, string> pobierzWartosc, Action<TModel, string>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
-		textBox.TextChanged += delegate { AktualizujModel(textBox, ustawWartosc, txt => txt.Text); if (wartoscZmieniona != null) wartoscZmieniona(); };
-		Action powiazanie = delegate { AktualizujKontrolke(textBox, pobierzWartosc, (txt, wartosc) => txt.Text = wartosc); };
-		if (model != null) powiazanie();
-		powiazania.Add(powiazanie);
+		textBox.TextChanged += delegate { AktualizujModel(textBox, ustawWartosc, txt => txt.Text); wartoscZmieniona?.Invoke(); };
+		DodajPowiazanie(textBox, pobierzWartosc, (txt, wartosc) => txt.Text = wartosc);
 	}
 
 	public void Powiazanie(CheckBox checkBox, Func<TModel, bool> pobierzWartosc, Action<TModel, bool>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
-		checkBox.CheckedChanged += delegate { AktualizujModel(checkBox, ustawWartosc, chk => chk.Checked); if (wartoscZmieniona != null) wartoscZmieniona(); };
-		Action powiazanie = delegate { AktualizujKontrolke(checkBox, pobierzWartosc, (chk, wartosc) => chk.Checked = wartosc); };
-		if (model != null) powiazanie();
-		powiazania.Add(powiazanie);
+		checkBox.CheckedChanged += delegate { AktualizujModel(checkBox, ustawWartosc, chk => chk.Checked); wartoscZmieniona?.Invoke(); };
+		DodajPowiazanie(checkBox, pobierzWartosc, (chk, wartosc) => chk.Checked = wartosc);
 	}
 
 	public void Powiazanie(ComboBox comboBox, Func<TModel, string> pobierzWartosc, Action<TModel, string>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
-		comboBox.TextChanged += delegate { AktualizujModel(comboBox, ustawWartosc, comboBox => comboBox.Text); if (wartoscZmieniona != null) wartoscZmieniona(); };
-		Action powiazanie = delegate { AktualizujKontrolke(comboBox, pobierzWartosc, (comboBox, wartosc) => { if (comboBox.SelectedIndex != -1) comboBox.SelectedIndex = -1; comboBox.Text = wartosc; }); };
-		if (model != null) powiazanie();
-		powiazania.Add(powiazanie);
+		comboBox.TextChanged += delegate { AktualizujModel(comboBox, ustawWartosc, comboBox => comboBox.Text); wartoscZmieniona?.Invoke(); };
+		DodajPowiazanie(comboBox, pobierzWartosc, (comboBox, wartosc) => { if (comboBox.SelectedIndex != -1) comboBox.SelectedIndex = -1; comboBox.Text = wartosc; });
 	}
 
 	public void Powiazanie(ComboBox comboBox, Func<TModel, int> pobierzWartosc, Action<TModel, int>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
-		comboBox.TextChanged += delegate { AktualizujModel(comboBox, ustawWartosc, comboBox => comboBox.SelectedIndex); if (wartoscZmieniona != null) wartoscZmieniona(); };
-		Action powiazanie = delegate { AktualizujKontrolke(comboBox, pobierzWartosc, (comboBox, wartosc) => { comboBox.SelectedIndex = wartosc; }); };
-		if (model != null) powiazanie();
-		powiazania.Add(powiazanie);
+		comboBox.TextChanged += delegate { AktualizujModel(comboBox, ustawWartosc, comboBox => comboBox.SelectedIndex); wartoscZmieniona?.Invoke(); };
+		DodajPowiazanie(comboBox, pobierzWartosc, (comboBox, wartosc) => { comboBox.SelectedIndex = wartosc; });
 	}
 
 	public void Powiazanie<TWartosc>(ComboBox comboBox, Func<TModel, TWartosc> pobierzWartosc, Action<TModel, TWartosc>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
-		comboBox.SelectedIndexChanged += delegate { AktualizujModel(comboBox, ustawWartosc, comboBox => comboBox.SelectedIndex == -1 ? default : (TWartosc)comboBox.SelectedValue!); if (wartoscZmieniona != null) wartoscZmieniona(); };
-		Action powiazanie = delegate { AktualizujKontrolke(comboBox, pobierzWartosc, (comboBox, wartosc) => { if (comboBox.SelectedIndex != -1) comboBox.SelectedIndex = -1; if (wartosc != null) comboBox.SelectedValue = wartosc; }); };
-		if (model != null) powiazanie();
-		powiazania.Add(powiazanie);
+		comboBox.SelectedIndexChanged += delegate { AktualizujModel(comboBox, (model, wartosc) => ustawWartosc?.Invoke(model, wartosc!), comboBox => comboBox.SelectedIndex == -1 ? default : (TWartosc)comboBox.SelectedValue!); wartoscZmieniona?.Invoke(); };
+		DodajPowiazanie(comboBox, pobierzWartosc, (comboBox, wartosc) => { if (comboBox.SelectedIndex != -1) comboBox.SelectedIndex = -1; if (wartosc != null) comboBox.SelectedValue = wartosc; });
 	}
 
 	private void AktualizujModel<TWartosc, TKontrolka>(TKontrolka kontrolka, Action<TModel, TWartosc>? ustawWartosc, Func<TKontrolka, TWartosc> pobierzWartosc)
@@ -118,7 +110,7 @@ class Kontroler<TModel>
 		try
 		{
 			var wartosc = pobierzWartosc(kontrolka);
-			if (ustawWartosc != null) ustawWartosc(model, wartosc);
+			ustawWartosc?.Invoke(model, wartosc);
 			modelZmieniony = true;
 		}
 		finally
