@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using ProFak.DB;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 
 namespace ProFak
 {

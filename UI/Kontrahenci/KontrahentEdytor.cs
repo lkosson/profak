@@ -1,12 +1,7 @@
 ﻿using ProFak.DB;
 using ProFak.UI.Kontrahenci;
-using System;
-using System.ComponentModel;
 using System.Data;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Windows.Forms;
 
 namespace ProFak.UI
 {

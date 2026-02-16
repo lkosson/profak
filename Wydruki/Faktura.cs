@@ -1,11 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Reporting.WinForms;
 using ProFak.DB;
-using System;
-using System.Collections.Generic;
 using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
 using ZXing;
 using ZXing.Windows.Compatibility;
 

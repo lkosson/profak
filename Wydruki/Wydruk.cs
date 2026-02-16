@@ -1,6 +1,4 @@
 ﻿using ProFak.DB;
-using System;
-using System.IO;
 using System.Reflection;
 
 namespace ProFak.Wydruki

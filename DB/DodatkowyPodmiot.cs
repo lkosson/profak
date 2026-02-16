@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ProFak.DB;
+﻿namespace ProFak.DB;
 
 class DodatkowyPodmiot : Rekord<DodatkowyPodmiot>
 {

@@ -1,8 +1,5 @@
 ﻿using Microsoft.Reporting.WinForms;
 using ProFak.DB;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ProFak.Wydruki
 {

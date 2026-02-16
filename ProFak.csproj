@@ -13,6 +13,7 @@
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);nSQLSERVER;</DefineConstants>
     <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
