@@ -22,7 +22,15 @@ class WczytajKSeFAkcja : DodajRekordAkcja<Faktura, FakturaEdytor>
 		var faktura = IO.FA_3.Generator.ZbudujDB(kontekst.Baza, xml);
 		faktura.DataKSeF = DateTime.Now;
 		var plik = Path.GetFileNameWithoutExtension(dialog.FileName);
-		if (Regex.IsMatch(plik, @"\d{10}-\d{8}-[0-9A-Fa-f]{12}-[0-9A-Fa-f]{2}")) faktura.NumerKSeF = plik;
+		if (Regex.IsMatch(plik, @"\d{10}-\d{8}-[0-9A-Fa-f]{12}-[0-9A-Fa-f]{2}"))
+		{
+			var istniejaca = kontekst.Baza.Faktury.FirstOrDefault(e => e.NumerKSeF == plik);
+			if (istniejaca != null)
+			{
+				if (MessageBox.Show($"Faktura {istniejaca.Numer} ({istniejaca.NumerKSeF}) już istnieje w bazie. Czy mimo to chcesz ją dodać ponownie?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) != DialogResult.Yes) return null;
+			}
+			faktura.NumerKSeF = plik;
+		}
 		kontekst.Baza.Zapisz(faktura);
 		IO.FA_3.Generator.PoprawPowiazaniaPoZapisie(kontekst.Baza, faktura);
 		return faktura;
