@@ -4,6 +4,9 @@ namespace ProFak.UI;
 
 partial class KonfiguracjaEdytor : KonfiguracjaEdytorBase
 {
+	public bool PrzywrocUstawieniaSpisow => checkBoxPrzywrocUstawieniaSpisow.Checked;
+	public bool PrzywrocUstawieniaMenu => checkBoxPrzywrocUstawieniaMenu.Checked;
+
 	public KonfiguracjaEdytor()
 	{
 		InitializeComponent();
@@ -45,6 +48,8 @@ partial class KonfiguracjaEdytor : KonfiguracjaEdytorBase
 		edytor.Przygotuj(nowyKontekst, rekord);
 		if (okno.ShowDialog() != DialogResult.OK) return;
 		nowyKontekst.Baza.Zapisz(rekord);
+		if (edytor.PrzywrocUstawieniaSpisow) nowyKontekst.Baza.Usun<KolumnaSpisu>();
+		if (edytor.PrzywrocUstawieniaMenu) nowyKontekst.Baza.Usun<StanMenu>();
 		transakcja.Zatwierdz();
 		Wyglad.WczytajZBazy();
 	}

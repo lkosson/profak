@@ -221,6 +221,10 @@ class Baza : DbContext
 		ZapiszZmiany();
 	}
 
+	public void Usun<TRekord>()
+		where TRekord : Rekord<TRekord>
+		=> Set<TRekord>().ExecuteDelete();
+
 	public void Usun<TRekord>(TRekord rekord)
 		where TRekord : Rekord<TRekord>
 		=> Usun(new[] { rekord });
