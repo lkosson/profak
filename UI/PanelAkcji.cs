@@ -1,114 +1,113 @@
 ﻿using System.ComponentModel;
 
-namespace ProFak.UI
+namespace ProFak.UI;
+
+class PanelAkcji : Panel
 {
-	class PanelAkcji : Panel
+	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+	public bool CzyGlownySpis { get; set; }
+
+	private readonly List<(Button przycisk, AdapterAkcji adapter)> przyciski;
+
+	public PanelAkcji()
 	{
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public bool CzyGlownySpis { get; set; }
+		przyciski = new List<(Button przycisk, AdapterAkcji adapter)>();
+		MinimumSize = new Size(200 * DeviceDpi / 96, 50);
+		TabIndex = 100;
+	}
 
-		private readonly List<(Button przycisk, AdapterAkcji adapter)> przyciski;
+	protected override void OnSizeChanged(EventArgs e)
+	{
+		base.OnSizeChanged(e);
+		AktualizujUklad();
+	}
 
-		public PanelAkcji()
+	protected override void OnCreateControl()
+	{
+		base.OnCreateControl();
+		AktualizujUklad();
+	}
+
+	public void AktualizujUklad()
+	{
+		SuspendLayout();
+		int y = 0;
+		y += Padding.Top;
+		var szerokosc = MinimumSize.Width;
+		foreach (Control kontrolka in Controls)
 		{
-			przyciski = new List<(Button przycisk, AdapterAkcji adapter)>();
-			MinimumSize = new Size(200 * DeviceDpi / 96, 50);
-			TabIndex = 100;
+			var szerokoscKontrolki = kontrolka.PreferredSize.Width + Math.Max(Padding.Left, kontrolka.Margin.Left) + Math.Max(Padding.Right, kontrolka.Margin.Right);
+			if (szerokoscKontrolki> szerokosc) szerokosc = szerokoscKontrolki;
 		}
 
-		protected override void OnSizeChanged(EventArgs e)
+		Width = szerokosc;
+		foreach (Control kontrolka in Controls)
 		{
-			base.OnSizeChanged(e);
-			AktualizujUklad();
+			kontrolka.Location = new Point(Math.Max(Padding.Left, kontrolka.Margin.Left), y);
+			kontrolka.Width = szerokosc - Math.Max(Padding.Left, kontrolka.Margin.Left) - Math.Max(Padding.Right, kontrolka.Margin.Right);
+			y += kontrolka.Height;
+			y += kontrolka.Margin.Bottom;
 		}
+		Height = y;
+		ResumeLayout();
+	}
 
-		protected override void OnCreateControl()
-		{
-			base.OnCreateControl();
-			AktualizujUklad();
-		}
+	public void DodajKontrolke(Control kontrolka)
+	{
+		Controls.Add(kontrolka);
+	}
 
-		public void AktualizujUklad()
+	public void DodajAkcje(AdapterAkcji adapter)
+	{
+		var przycisk = new ButtonDropDown();
+		przycisk.AutoSize = true;
+		przycisk.TabIndex = TabIndex + Controls.Count;
+		przycisk.Click += delegate { adapter.Uruchom(); };
+		if (adapter.Podrzedne.Count > 0)
 		{
-			SuspendLayout();
-			int y = 0;
-			y += Padding.Top;
-			var szerokosc = MinimumSize.Width;
-			foreach (Control kontrolka in Controls)
+			var menu = new ContextMenuStrip();
+			menu.ShowImageMargin = false;
+			foreach (var podrzedna in adapter.Podrzedne)
 			{
-				var szerokoscKontrolki = kontrolka.PreferredSize.Width + Math.Max(Padding.Left, kontrolka.Margin.Left) + Math.Max(Padding.Right, kontrolka.Margin.Right);
-				if (szerokoscKontrolki> szerokosc) szerokosc = szerokoscKontrolki;
+				var pozycja = new ToolStripButton();
+				pozycja.Text = Wyglad.NazwaAkcji(podrzedna);
+				pozycja.Dock = DockStyle.Fill;
+				pozycja.TextAlign = ContentAlignment.MiddleLeft;
+				pozycja.Click += delegate { podrzedna.Uruchom(); };
+				menu.Items.Add(pozycja);
 			}
-
-			Width = szerokosc;
-			foreach (Control kontrolka in Controls)
-			{
-				kontrolka.Location = new Point(Math.Max(Padding.Left, kontrolka.Margin.Left), y);
-				kontrolka.Width = szerokosc - Math.Max(Padding.Left, kontrolka.Margin.Left) - Math.Max(Padding.Right, kontrolka.Margin.Right);
-				y += kontrolka.Height;
-				y += kontrolka.Margin.Bottom;
-			}
-			Height = y;
-			ResumeLayout();
+			przycisk.Menu = menu;
 		}
+		AktualizujPrzycisk(przycisk, adapter);
+		Controls.Add(przycisk);
+		przyciski.Add((przycisk, adapter));
+	}
 
-		public void DodajKontrolke(Control kontrolka)
+	public void Aktualizuj()
+	{
+		foreach ((var przycisk, var adapter) in przyciski)
 		{
-			Controls.Add(kontrolka);
-		}
-
-		public void DodajAkcje(AdapterAkcji adapter)
-		{
-			var przycisk = new ButtonDropDown();
-			przycisk.AutoSize = true;
-			przycisk.TabIndex = TabIndex + Controls.Count;
-			przycisk.Click += delegate { adapter.Uruchom(); };
-			if (adapter.Podrzedne.Count > 0)
-			{
-				var menu = new ContextMenuStrip();
-				menu.ShowImageMargin = false;
-				foreach (var podrzedna in adapter.Podrzedne)
-				{
-					var pozycja = new ToolStripButton();
-					pozycja.Text = Wyglad.NazwaAkcji(podrzedna);
-					pozycja.Dock = DockStyle.Fill;
-					pozycja.TextAlign = ContentAlignment.MiddleLeft;
-					pozycja.Click += delegate { podrzedna.Uruchom(); };
-					menu.Items.Add(pozycja);
-				}
-				przycisk.Menu = menu;
-			}
 			AktualizujPrzycisk(przycisk, adapter);
-			Controls.Add(przycisk);
-			przyciski.Add((przycisk, adapter));
 		}
+		AktualizujUklad();
+	}
 
-		public void Aktualizuj()
+	private void AktualizujPrzycisk(Button przycisk, AdapterAkcji adapter)
+	{
+		przycisk.Text = Wyglad.NazwaAkcji(adapter);
+		przycisk.Enabled = adapter.CzyDostepna;
+	}
+
+	public bool ObsluzKlawisz(Keys klawisz, Keys modyfikatory)
+	{
+		foreach ((_, var adapter) in przyciski)
 		{
-			foreach ((var przycisk, var adapter) in przyciski)
+			if (adapter.CzyKlawiszSkrotu(klawisz, modyfikatory))
 			{
-				AktualizujPrzycisk(przycisk, adapter);
+				adapter.Uruchom();
+				return true;
 			}
-			AktualizujUklad();
 		}
-
-		private void AktualizujPrzycisk(Button przycisk, AdapterAkcji adapter)
-		{
-			przycisk.Text = Wyglad.NazwaAkcji(adapter);
-			przycisk.Enabled = adapter.CzyDostepna;
-		}
-
-		public bool ObsluzKlawisz(Keys klawisz, Keys modyfikatory)
-		{
-			foreach ((_, var adapter) in przyciski)
-			{
-				if (adapter.CzyKlawiszSkrotu(klawisz, modyfikatory))
-				{
-					adapter.Uruchom();
-					return true;
-				}
-			}
-			return false;
-		}
+		return false;
 	}
 }

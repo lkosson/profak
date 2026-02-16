@@ -1,7 +1,6 @@
-﻿namespace ProFak.UI
+﻿namespace ProFak.UI;
+
+interface IKontrolkaZKontekstem
 {
-	interface IKontrolkaZKontekstem
-	{
-		Kontekst Kontekst { get; set; }
-	}
+	Kontekst Kontekst { get; set; }
 }

@@ -1,15 +1,14 @@
 ﻿using ProFak.DB;
 
-namespace ProFak.UI
+namespace ProFak.UI;
+
+class SposobPlatnosciEdytor : EdytorDwieKolumny<SposobPlatnosci>
 {
-	class SposobPlatnosciEdytor : EdytorDwieKolumny<SposobPlatnosci>
+	public SposobPlatnosciEdytor()
 	{
-		public SposobPlatnosciEdytor()
-		{
-			DodajTextBox(sposobPlatnosci => sposobPlatnosci.Nazwa, "Nazwa", wymagane: true);
-			DodajNumericUpDown(sposobPlatnosci => sposobPlatnosci.LiczbaDni, "Liczba dni");
-			DodajCheckBox(sposobPlatnosci => sposobPlatnosci.CzyDomyslny, "Domyślny");
-			UstawRozmiar();
-		}
+		DodajTextBox(sposobPlatnosci => sposobPlatnosci.Nazwa, "Nazwa", wymagane: true);
+		DodajNumericUpDown(sposobPlatnosci => sposobPlatnosci.LiczbaDni, "Liczba dni");
+		DodajCheckBox(sposobPlatnosci => sposobPlatnosci.CzyDomyslny, "Domyślny");
+		UstawRozmiar();
 	}
 }

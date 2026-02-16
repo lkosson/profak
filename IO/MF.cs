@@ -1,23 +1,22 @@
 ﻿using System.Text.Json;
 
-namespace ProFak.IO
+namespace ProFak.IO;
+
+class MF
 {
-	class MF
+	public static async Task<string> SprawdzBialaListeVAT(string nip, string nrb, CancellationToken cancellationToken)
 	{
-		public static async Task<string> SprawdzBialaListeVAT(string nip, string nrb, CancellationToken cancellationToken)
-		{
-			if (String.IsNullOrEmpty(nip)) throw new ApplicationException("Nie podano NIPu kontrahenta.");
-			if (String.IsNullOrEmpty(nrb)) throw new ApplicationException("Nie podano numeru rachunku bankowego kontrahenta.");
-			var url = "https://wl-api.mf.gov.pl/api/check/nip/" + nip + "/bank-account/" + nrb;
-			using var client = new HttpClient();
-			var wynik = await client.GetStringAsync(url, cancellationToken);
-			var json = JsonDocument.Parse(wynik);
-			if (!json.RootElement.TryGetProperty("result", out var jsonResult)) throw new ApplicationException($"Nieprawidłowa struktura odpowiedzi:\n\n{wynik}");
-			if (!jsonResult.TryGetProperty("accountAssigned", out var jsonResultAccountAssigned)) throw new ApplicationException($"Nieprawidłowa struktura odpowiedzi:\n\n{wynik}");
-			if (jsonResultAccountAssigned.GetString() != "TAK") throw new ApplicationException("Rachunek nie znajduje się na białej liście VAT.");
-			if (!jsonResult.TryGetProperty("requestId", out var jsonResultRequestId)) throw new ApplicationException($"Nieprawidłowa struktura odpowiedzi:\n\n{wynik}");
-			if (jsonResultRequestId.GetString() is not string requestId) throw new ApplicationException("Pusta odpowiedź z API.");
-			return requestId;
-		}
+		if (String.IsNullOrEmpty(nip)) throw new ApplicationException("Nie podano NIPu kontrahenta.");
+		if (String.IsNullOrEmpty(nrb)) throw new ApplicationException("Nie podano numeru rachunku bankowego kontrahenta.");
+		var url = "https://wl-api.mf.gov.pl/api/check/nip/" + nip + "/bank-account/" + nrb;
+		using var client = new HttpClient();
+		var wynik = await client.GetStringAsync(url, cancellationToken);
+		var json = JsonDocument.Parse(wynik);
+		if (!json.RootElement.TryGetProperty("result", out var jsonResult)) throw new ApplicationException($"Nieprawidłowa struktura odpowiedzi:\n\n{wynik}");
+		if (!jsonResult.TryGetProperty("accountAssigned", out var jsonResultAccountAssigned)) throw new ApplicationException($"Nieprawidłowa struktura odpowiedzi:\n\n{wynik}");
+		if (jsonResultAccountAssigned.GetString() != "TAK") throw new ApplicationException("Rachunek nie znajduje się na białej liście VAT.");
+		if (!jsonResult.TryGetProperty("requestId", out var jsonResultRequestId)) throw new ApplicationException($"Nieprawidłowa struktura odpowiedzi:\n\n{wynik}");
+		if (jsonResultRequestId.GetString() is not string requestId) throw new ApplicationException("Pusta odpowiedź z API.");
+		return requestId;
 	}
 }

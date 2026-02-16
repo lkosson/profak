@@ -1,14 +1,13 @@
 ﻿using ProFak.DB;
 
-namespace ProFak.UI
+namespace ProFak.UI;
+
+class UrzadSkarbowyEdytor : EdytorDwieKolumny<UrzadSkarbowy>
 {
-	class UrzadSkarbowyEdytor : EdytorDwieKolumny<UrzadSkarbowy>
+	public UrzadSkarbowyEdytor()
 	{
-		public UrzadSkarbowyEdytor()
-		{
-			DodajTextBox(urzad => urzad.Kod, "Kod", wymagane: true);
-			DodajTextBox(urzad => urzad.Nazwa, "Nazwa", wymagane: true);
-			UstawRozmiar();
-		}
+		DodajTextBox(urzad => urzad.Kod, "Kod", wymagane: true);
+		DodajTextBox(urzad => urzad.Nazwa, "Nazwa", wymagane: true);
+		UstawRozmiar();
 	}
 }

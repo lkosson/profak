@@ -1,17 +1,16 @@
-﻿namespace ProFak.DB
+﻿namespace ProFak.DB;
+
+class SposobPlatnosci : Rekord<SposobPlatnosci>
 {
-	class SposobPlatnosci : Rekord<SposobPlatnosci>
-	{
-		public string Nazwa { get; set; } = "";
-		public int LiczbaDni { get; set; }
-		public bool CzyDomyslny { get; set; }
+	public string Nazwa { get; set; } = "";
+	public int LiczbaDni { get; set; }
+	public bool CzyDomyslny { get; set; }
 
-		public string CzyDomyslnyFmt => CzyDomyslny ? "Tak" : "Nie";
+	public string CzyDomyslnyFmt => CzyDomyslny ? "Tak" : "Nie";
 
-		public override bool CzyPasuje(string fraza)
-			=> base.CzyPasuje(fraza)
-			|| CzyPasuje(Nazwa, fraza)
-			|| CzyPasuje(LiczbaDni, fraza)
-			|| CzyPasuje(CzyDomyslny ? "Domyślny" : "", fraza);
-	}
+	public override bool CzyPasuje(string fraza)
+		=> base.CzyPasuje(fraza)
+		|| CzyPasuje(Nazwa, fraza)
+		|| CzyPasuje(LiczbaDni, fraza)
+		|| CzyPasuje(CzyDomyslny ? "Domyślny" : "", fraza);
 }

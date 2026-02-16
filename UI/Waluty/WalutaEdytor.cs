@@ -1,15 +1,14 @@
 ﻿using ProFak.DB;
 
-namespace ProFak.UI
+namespace ProFak.UI;
+
+class WalutaEdytor : EdytorDwieKolumny<Waluta>
 {
-	class WalutaEdytor : EdytorDwieKolumny<Waluta>
+	public WalutaEdytor()
 	{
-		public WalutaEdytor()
-		{
-			DodajTextBox(waluta => waluta.Skrot, "Skrót", wymagane: true);
-			DodajTextBox(waluta => waluta.Nazwa, "Nazwa", wymagane: true);
-			DodajCheckBox(waluta => waluta.CzyDomyslna, "Domyślna");
-			UstawRozmiar();
-		}
+		DodajTextBox(waluta => waluta.Skrot, "Skrót", wymagane: true);
+		DodajTextBox(waluta => waluta.Nazwa, "Nazwa", wymagane: true);
+		DodajCheckBox(waluta => waluta.CzyDomyslna, "Domyślna");
+		UstawRozmiar();
 	}
 }

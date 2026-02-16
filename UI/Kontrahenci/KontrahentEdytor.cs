@@ -3,256 +3,255 @@ using ProFak.UI.Kontrahenci;
 using System.Data;
 using System.Text.RegularExpressions;
 
-namespace ProFak.UI
+namespace ProFak.UI;
+
+partial class KontrahentEdytor : KontrahentEdytorBase
 {
-	partial class KontrahentEdytor : KontrahentEdytorBase
+	private readonly SpisZAkcjami<Faktura, FakturaSprzedazySpis> fakturySprzedazy;
+	private readonly SpisZAkcjami<Faktura, FakturaZakupuSpis> fakturyZakupu;
+
+	public KontrahentEdytor()
 	{
-		private readonly SpisZAkcjami<Faktura, FakturaSprzedazySpis> fakturySprzedazy;
-		private readonly SpisZAkcjami<Faktura, FakturaZakupuSpis> fakturyZakupu;
+		InitializeComponent();
 
-		public KontrahentEdytor()
+		kontroler.Slownik(comboBoxStan, "archiwalny", "aktywny");
+		kontroler.Slownik<FormaOpodatkowania>(comboBoxFormaOpodatkowania, dopuscPuste: true);
+		kontroler.Slownik<SrodowiskoKSeF>(comboBoxSrodowiskoKSeF);
+
+		kontroler.Powiazanie(textBoxNazwa, kontrahent => kontrahent.Nazwa);
+		kontroler.Powiazanie(textBoxPelnaNazwa, kontrahent => kontrahent.PelnaNazwa);
+		kontroler.Powiazanie(textBoxNIP, kontrahent => kontrahent.NIP);
+		kontroler.Powiazanie(textBoxAdresRejestrowy, kontrahent => kontrahent.AdresRejestrowy);
+		kontroler.Powiazanie(textBoxAdresKorespondencyjny, kontrahent => kontrahent.AdresKorespondencyjny);
+		kontroler.Powiazanie(textBoxTelefon, kontrahent => kontrahent.Telefon);
+		kontroler.Powiazanie(textBoxEMail, kontrahent => kontrahent.EMail);
+		kontroler.Powiazanie(textBoxRachunekBankowy, kontrahent => kontrahent.RachunekBankowy);
+		kontroler.Powiazanie(textBoxNazwaBanku, kontrahent => kontrahent.NazwaBanku);
+		kontroler.Powiazanie(textBoxUwagiPubliczne, kontrahent => kontrahent.UwagiPubliczne);
+		kontroler.Powiazanie(textBoxUwagiWewnetrzne, kontrahent => kontrahent.UwagiWewnetrzne);
+		kontroler.Powiazanie(comboBoxStan, kontrahent => kontrahent.CzyArchiwalny);
+		kontroler.Powiazanie(checkBoxTP, kontrahent => kontrahent.CzyTP);
+		kontroler.Powiazanie(comboBoxSposobPlatnosci, kontrahent => kontrahent.SposobPlatnosciRef);
+
+		kontroler.Powiazanie(comboBoxKodUrzedu, kontrahent => kontrahent.KodUrzedu);
+		kontroler.Powiazanie(textBoxOsobaFizycznaImie, kontrahent => kontrahent.OsobaFizycznaImie);
+		kontroler.Powiazanie(textBoxOsobaFizycznaNazwisko, kontrahent => kontrahent.OsobaFizycznaNazwisko);
+		kontroler.Powiazanie(dateTimePickerOsobaFizycznaDataUrodzenia, kontrahent => kontrahent.OsobaFizycznaDataUrodzenia);
+		kontroler.Powiazanie(comboBoxFormaOpodatkowania, kontrahent => kontrahent.FormaOpodatkowania);
+		kontroler.Powiazanie(textBoxTokenKSeF, kontrahent => kontrahent.TokenKSeF);
+		kontroler.Powiazanie(comboBoxSrodowiskoKSeF, kontrahent => kontrahent.SrodowiskoKSeF);
+
+		Wymagane(textBoxNazwa);
+		Walidacja(textBoxNIP, WalidacjaNIP, true);
+		Walidacja(textBoxNazwa, WalidacjaNazwy, true);
+		Walidacja(textBoxPelnaNazwa, WalidacjaPelnejNazwy, true);
+
+		fakturySprzedazy = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazyBezNabywcySpis(), new AkcjaNaSpisie<Faktura>[] { new EdytujRekordAkcja<Faktura, FakturaEdytor>(), new WydrukFakturyAkcja(), new PrzeladujAkcja<Faktura>() });
+		fakturyZakupu = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuBezSprzedawcySpis(), new AkcjaNaSpisie<Faktura>[] { new EdytujRekordAkcja<Faktura, FakturaEdytor>(), new PrzeladujAkcja<Faktura>() });
+
+		tabPageFakturySprzedazy.Controls.Add(fakturySprzedazy);
+		tabPageFakturyZakupu.Controls.Add(fakturyZakupu);
+
+		dateTimePickerOsobaFizycznaDataUrodzenia.CustomFormat = Format.Data;
+		dateTimePickerOsobaFizycznaDataUrodzenia.Format = DateTimePickerFormat.Custom;
+	}
+
+	private string? WalidacjaNIP(string nip)
+	{
+		if (String.IsNullOrWhiteSpace(nip)) return null;
+		nip = nip.Replace("-", "");
+
+		var innyKontrahent = Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.NIP.Replace("-", "") == nip && kontrahent.Id != Rekord.Id);
+
+		if (innyKontrahent != null) return "Istnieje już kontrahent z takim samym NIPem.";
+
+		if (!Regex.IsMatch(nip, @"^(\w\w)?\d{10}$")) return "NIP ma nieprawidłowy format.";
+		if (nip.Length == 12)
 		{
-			InitializeComponent();
-
-			kontroler.Slownik(comboBoxStan, "archiwalny", "aktywny");
-			kontroler.Slownik<FormaOpodatkowania>(comboBoxFormaOpodatkowania, dopuscPuste: true);
-			kontroler.Slownik<SrodowiskoKSeF>(comboBoxSrodowiskoKSeF);
-
-			kontroler.Powiazanie(textBoxNazwa, kontrahent => kontrahent.Nazwa);
-			kontroler.Powiazanie(textBoxPelnaNazwa, kontrahent => kontrahent.PelnaNazwa);
-			kontroler.Powiazanie(textBoxNIP, kontrahent => kontrahent.NIP);
-			kontroler.Powiazanie(textBoxAdresRejestrowy, kontrahent => kontrahent.AdresRejestrowy);
-			kontroler.Powiazanie(textBoxAdresKorespondencyjny, kontrahent => kontrahent.AdresKorespondencyjny);
-			kontroler.Powiazanie(textBoxTelefon, kontrahent => kontrahent.Telefon);
-			kontroler.Powiazanie(textBoxEMail, kontrahent => kontrahent.EMail);
-			kontroler.Powiazanie(textBoxRachunekBankowy, kontrahent => kontrahent.RachunekBankowy);
-			kontroler.Powiazanie(textBoxNazwaBanku, kontrahent => kontrahent.NazwaBanku);
-			kontroler.Powiazanie(textBoxUwagiPubliczne, kontrahent => kontrahent.UwagiPubliczne);
-			kontroler.Powiazanie(textBoxUwagiWewnetrzne, kontrahent => kontrahent.UwagiWewnetrzne);
-			kontroler.Powiazanie(comboBoxStan, kontrahent => kontrahent.CzyArchiwalny);
-			kontroler.Powiazanie(checkBoxTP, kontrahent => kontrahent.CzyTP);
-			kontroler.Powiazanie(comboBoxSposobPlatnosci, kontrahent => kontrahent.SposobPlatnosciRef);
-
-			kontroler.Powiazanie(comboBoxKodUrzedu, kontrahent => kontrahent.KodUrzedu);
-			kontroler.Powiazanie(textBoxOsobaFizycznaImie, kontrahent => kontrahent.OsobaFizycznaImie);
-			kontroler.Powiazanie(textBoxOsobaFizycznaNazwisko, kontrahent => kontrahent.OsobaFizycznaNazwisko);
-			kontroler.Powiazanie(dateTimePickerOsobaFizycznaDataUrodzenia, kontrahent => kontrahent.OsobaFizycznaDataUrodzenia);
-			kontroler.Powiazanie(comboBoxFormaOpodatkowania, kontrahent => kontrahent.FormaOpodatkowania);
-			kontroler.Powiazanie(textBoxTokenKSeF, kontrahent => kontrahent.TokenKSeF);
-			kontroler.Powiazanie(comboBoxSrodowiskoKSeF, kontrahent => kontrahent.SrodowiskoKSeF);
-
-			Wymagane(textBoxNazwa);
-			Walidacja(textBoxNIP, WalidacjaNIP, true);
-			Walidacja(textBoxNazwa, WalidacjaNazwy, true);
-			Walidacja(textBoxPelnaNazwa, WalidacjaPelnejNazwy, true);
-
-			fakturySprzedazy = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazyBezNabywcySpis(), new AkcjaNaSpisie<Faktura>[] { new EdytujRekordAkcja<Faktura, FakturaEdytor>(), new WydrukFakturyAkcja(), new PrzeladujAkcja<Faktura>() });
-			fakturyZakupu = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuBezSprzedawcySpis(), new AkcjaNaSpisie<Faktura>[] { new EdytujRekordAkcja<Faktura, FakturaEdytor>(), new PrzeladujAkcja<Faktura>() });
-
-			tabPageFakturySprzedazy.Controls.Add(fakturySprzedazy);
-			tabPageFakturyZakupu.Controls.Add(fakturyZakupu);
-
-			dateTimePickerOsobaFizycznaDataUrodzenia.CustomFormat = Format.Data;
-			dateTimePickerOsobaFizycznaDataUrodzenia.Format = DateTimePickerFormat.Custom;
+			if (nip.StartsWith("PL")) nip = nip.Substring(2);
+			else return null;
 		}
 
-		private string? WalidacjaNIP(string nip)
+		int[] wagi = [6, 5, 7, 2, 3, 4, 5, 6, 7, 0];
+		int suma = 0;
+		for (int i = 0; i < wagi.Length; i++) suma += (nip[i] - '0') * wagi[i];
+		if (suma % 11 != (nip[9] - '0')) return "NIP nie jest poprawny.";
+
+		return null;
+	}
+
+	private string? WalidacjaNazwy(string nazwa)
+	{
+		if (String.IsNullOrWhiteSpace(nazwa)) return null;
+		static string TrzonNazwy(string nazwa) => String.Join("", nazwa.Where(Char.IsLetterOrDigit).Select(Char.ToLower));
+		var szukanaNazwa = TrzonNazwy(nazwa);
+		if (szukanaNazwa.Length < 3) return null;
+
+		var inneNazwy = Kontekst.Baza.Kontrahenci.Where(e => e.Id != Rekord.Id).Select(e => e.Nazwa).ToList();
+
+		foreach (var _innaNazwa in inneNazwy)
 		{
-			if (String.IsNullOrWhiteSpace(nip)) return null;
-			nip = nip.Replace("-", "");
+			var innaNazwa = TrzonNazwy(_innaNazwa);
+			if (innaNazwa.Length < 3) continue;
 
-			var innyKontrahent = Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.NIP.Replace("-", "") == nip && kontrahent.Id != Rekord.Id);
+			if (innaNazwa.Contains(szukanaNazwa) || szukanaNazwa.Contains(innaNazwa)) return $"Istnieje już kontrahent o podobnej nazwie \"{_innaNazwa}\"";
+		}
 
-			if (innyKontrahent != null) return "Istnieje już kontrahent z takim samym NIPem.";
+		return null;
+	}
 
-			if (!Regex.IsMatch(nip, @"^(\w\w)?\d{10}$")) return "NIP ma nieprawidłowy format.";
-			if (nip.Length == 12)
+	private string? WalidacjaPelnejNazwy(string pelnaNazwa)
+	{
+		if (String.IsNullOrWhiteSpace(pelnaNazwa)) return null;
+		var innyKontrahent = Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.PelnaNazwa == pelnaNazwa && kontrahent.Id != Rekord.Id);
+		if (innyKontrahent != null) return "Istnieje już kontrahent z taką samą nazwą.";
+		return null;
+	}
+
+	private void textBoxNazwa_TextChanged(object? sender, EventArgs e)
+	{
+		textBoxPelnaNazwa.PlaceholderText = textBoxNazwa.Text;
+	}
+
+	private void textBoxAdresRejestrowy_TextChanged(object? sender, EventArgs e)
+	{
+		textBoxAdresKorespondencyjny.PlaceholderText = textBoxAdresRejestrowy.Text;
+	}
+
+	protected override void KontekstGotowy()
+	{
+		base.KontekstGotowy();
+
+		new Slownik<SposobPlatnosci>(
+			Kontekst, comboBoxSposobPlatnosci, buttonSposobPlatnosci,
+			Kontekst.Baza.SposobyPlatnosci.ToList,
+			sposobPlatnosci => sposobPlatnosci.Nazwa,
+			sposobPlatnosci => { },
+			Spisy.SposobyPlatnosci,
+			dopuscPustaWartosc: true)
+			.Zainstaluj();
+
+		new Slownik<UrzadSkarbowy>(
+			Kontekst, comboBoxKodUrzedu, buttonUrzadSkarbowy,
+			Kontekst.Baza.UrzedySkarbowe.OrderBy(urzad => urzad.Kod).ToList,
+			urzad => urzad.Kod,
+			urzad => { if (urzad == null || Rekord.KodUrzedu == urzad.Kod) return; Rekord.KodUrzedu = urzad.Kod; kontroler.AktualizujKontrolki(); },
+			Spisy.UrzedySkarbowe)
+			.Zainstaluj();
+	}
+
+	protected override void RekordGotowy()
+	{
+		base.RekordGotowy();
+		checkBoxTP.Visible = !Rekord.CzyPodmiot;
+		labelSposobPlatnosci.Visible = comboBoxSposobPlatnosci.Visible = buttonSposobPlatnosci.Visible = !Rekord.CzyPodmiot;
+
+		fakturySprzedazy.Spis.KontrahentRef = Rekord;
+		fakturySprzedazy.Spis.Kontekst = Kontekst;
+		fakturyZakupu.Spis.KontrahentRef = Rekord;
+		fakturyZakupu.Spis.Kontekst = Kontekst;
+
+		if (Rekord.CzyPodmiot)
+		{
+			tabControl.TabPages.Remove(tabPageFakturySprzedazy);
+			tabControl.TabPages.Remove(tabPageFakturyZakupu);
+		}
+		else
+		{
+			tabControl.TabPages.Remove(tabPagePodatki);
+		}
+	}
+
+	public override void KoniecEdycji()
+	{
+		base.KoniecEdycji();
+		if (String.IsNullOrEmpty(Rekord.PelnaNazwa)) Rekord.PelnaNazwa = Rekord.Nazwa;
+		if (String.IsNullOrEmpty(Rekord.AdresKorespondencyjny)) Rekord.AdresKorespondencyjny = Rekord.AdresRejestrowy;
+	}
+
+	private void buttonSprawdzMF_Click(object? sender, EventArgs e)
+	{
+		var wynik = "";
+		try
+		{
+			OknoPostepu.Uruchom(async cancellationToken =>
 			{
-				if (nip.StartsWith("PL")) nip = nip.Substring(2);
-				else return null;
-			}
+				wynik = await IO.MF.SprawdzBialaListeVAT(Rekord.NIP, Rekord.RachunekBankowy.Replace(" ", ""), cancellationToken);
+			});
 
-			int[] wagi = [6, 5, 7, 2, 3, 4, 5, 6, 7, 0];
-			int suma = 0;
-			for (int i = 0; i < wagi.Length; i++) suma += (nip[i] - '0') * wagi[i];
-			if (suma % 11 != (nip[9] - '0')) return "NIP nie jest poprawny.";
-
-			return null;
+			MessageBox.Show($"Rachunek znajduje się na białej liście VAT, RequestId: {wynik}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
-
-		private string? WalidacjaNazwy(string nazwa)
+		catch (Exception exc)
 		{
-			if (String.IsNullOrWhiteSpace(nazwa)) return null;
-			static string TrzonNazwy(string nazwa) => String.Join("", nazwa.Where(Char.IsLetterOrDigit).Select(Char.ToLower));
-			var szukanaNazwa = TrzonNazwy(nazwa);
-			if (szukanaNazwa.Length < 3) return null;
+			OknoBledu.Pokaz(exc);
+		}
+	}
 
-			var inneNazwy = Kontekst.Baza.Kontrahenci.Where(e => e.Id != Rekord.Id).Select(e => e.Nazwa).ToList();
-
-			foreach (var _innaNazwa in inneNazwy)
+	private void buttonPobierzGUS_Click(object? sender, EventArgs e)
+	{
+		try
+		{
+			OknoPostepu.Uruchom(async cancellationToken =>
 			{
-				var innaNazwa = TrzonNazwy(_innaNazwa);
-				if (innaNazwa.Length < 3) continue;
+				await IO.GUS.PobierzGUS(Rekord, cancellationToken);
+			});
 
-				if (innaNazwa.Contains(szukanaNazwa) || szukanaNazwa.Contains(innaNazwa)) return $"Istnieje już kontrahent o podobnej nazwie \"{_innaNazwa}\"";
-			}
-
-			return null;
-		}
-
-		private string? WalidacjaPelnejNazwy(string pelnaNazwa)
-		{
-			if (String.IsNullOrWhiteSpace(pelnaNazwa)) return null;
-			var innyKontrahent = Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.PelnaNazwa == pelnaNazwa && kontrahent.Id != Rekord.Id);
-			if (innyKontrahent != null) return "Istnieje już kontrahent z taką samą nazwą.";
-			return null;
-		}
-
-		private void textBoxNazwa_TextChanged(object? sender, EventArgs e)
-		{
-			textBoxPelnaNazwa.PlaceholderText = textBoxNazwa.Text;
-		}
-
-		private void textBoxAdresRejestrowy_TextChanged(object? sender, EventArgs e)
-		{
-			textBoxAdresKorespondencyjny.PlaceholderText = textBoxAdresRejestrowy.Text;
-		}
-
-		protected override void KontekstGotowy()
-		{
-			base.KontekstGotowy();
-
-			new Slownik<SposobPlatnosci>(
-				Kontekst, comboBoxSposobPlatnosci, buttonSposobPlatnosci,
-				Kontekst.Baza.SposobyPlatnosci.ToList,
-				sposobPlatnosci => sposobPlatnosci.Nazwa,
-				sposobPlatnosci => { },
-				Spisy.SposobyPlatnosci,
-				dopuscPustaWartosc: true)
-				.Zainstaluj();
-
-			new Slownik<UrzadSkarbowy>(
-				Kontekst, comboBoxKodUrzedu, buttonUrzadSkarbowy,
-				Kontekst.Baza.UrzedySkarbowe.OrderBy(urzad => urzad.Kod).ToList,
-				urzad => urzad.Kod,
-				urzad => { if (urzad == null || Rekord.KodUrzedu == urzad.Kod) return; Rekord.KodUrzedu = urzad.Kod; kontroler.AktualizujKontrolki(); },
-				Spisy.UrzedySkarbowe)
-				.Zainstaluj();
-		}
-
-		protected override void RekordGotowy()
-		{
-			base.RekordGotowy();
-			checkBoxTP.Visible = !Rekord.CzyPodmiot;
-			labelSposobPlatnosci.Visible = comboBoxSposobPlatnosci.Visible = buttonSposobPlatnosci.Visible = !Rekord.CzyPodmiot;
-
-			fakturySprzedazy.Spis.KontrahentRef = Rekord;
-			fakturySprzedazy.Spis.Kontekst = Kontekst;
-			fakturyZakupu.Spis.KontrahentRef = Rekord;
-			fakturyZakupu.Spis.Kontekst = Kontekst;
-
-			if (Rekord.CzyPodmiot)
-			{
-				tabControl.TabPages.Remove(tabPageFakturySprzedazy);
-				tabControl.TabPages.Remove(tabPageFakturyZakupu);
-			}
-			else
-			{
-				tabControl.TabPages.Remove(tabPagePodatki);
-			}
-		}
-
-		public override void KoniecEdycji()
-		{
-			base.KoniecEdycji();
-			if (String.IsNullOrEmpty(Rekord.PelnaNazwa)) Rekord.PelnaNazwa = Rekord.Nazwa;
-			if (String.IsNullOrEmpty(Rekord.AdresKorespondencyjny)) Rekord.AdresKorespondencyjny = Rekord.AdresRejestrowy;
-		}
-
-		private void buttonSprawdzMF_Click(object? sender, EventArgs e)
-		{
-			var wynik = "";
-			try
-			{
-				OknoPostepu.Uruchom(async cancellationToken =>
-				{
-					wynik = await IO.MF.SprawdzBialaListeVAT(Rekord.NIP, Rekord.RachunekBankowy.Replace(" ", ""), cancellationToken);
-				});
-
-				MessageBox.Show($"Rachunek znajduje się na białej liście VAT, RequestId: {wynik}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
-			}
-			catch (Exception exc)
-			{
-				OknoBledu.Pokaz(exc);
-			}
-		}
-
-		private void buttonPobierzGUS_Click(object? sender, EventArgs e)
-		{
-			try
-			{
-				OknoPostepu.Uruchom(async cancellationToken =>
-				{
-					await IO.GUS.PobierzGUS(Rekord, cancellationToken);
-				});
-
-				kontroler.AktualizujKontrolki();
-			}
-			catch (Exception exc)
-			{
-				OknoBledu.Pokaz(exc);
-			}
-		}
-
-		private void buttonKSeFAuth_Click(object? sender, EventArgs e)
-		{
-			var nip = Rekord.NIP;
-			string? token = null;
-			if (Rekord.SrodowiskoKSeF == SrodowiskoKSeF.Test)
-			{
-				OknoPostepu.Uruchom(async cancellationToken =>
-				{
-					var api = new IO.KSEF2.API(Rekord.SrodowiskoKSeF);
-					var unsignedXml = await api.PobierzZadanieDostepuDoPodpisuAsync(nip);
-					cancellationToken.ThrowIfCancellationRequested();
-					var signedXml = api.PodpiszZadanieDlaSrodowiskaTestowego(unsignedXml, nip);
-					await api.PrzeslijZadanieDostepuAsync(signedXml, cancellationToken);
-					cancellationToken.ThrowIfCancellationRequested();
-					token = await api.UtworzTokenAsync(cancellationToken);
-				});
-			}
-			else
-			{
-				using var nowyKontekst = new Kontekst(Kontekst);
-				using var edytor = new DostepKSeFEdytor();
-				edytor.SrodowiskoKSeF = Rekord.SrodowiskoKSeF;
-				edytor.NIP = nip;
-				using var okno = new Dialog("Dostęp do KSeF v2", edytor, nowyKontekst);
-				okno.CzyPrzyciskiWidoczne = false;
-				okno.ShowDialog();
-				token = edytor.Token;
-			}
-
-			if (token == null) return;
-			Rekord.TokenKSeF = token;
 			kontroler.AktualizujKontrolki();
 		}
+		catch (Exception exc)
+		{
+			OknoBledu.Pokaz(exc);
+		}
+	}
 
-		private void buttonCertyfikatKSeF_Click(object? sender, EventArgs e)
+	private void buttonKSeFAuth_Click(object? sender, EventArgs e)
+	{
+		var nip = Rekord.NIP;
+		string? token = null;
+		if (Rekord.SrodowiskoKSeF == SrodowiskoKSeF.Test)
+		{
+			OknoPostepu.Uruchom(async cancellationToken =>
+			{
+				var api = new IO.KSEF2.API(Rekord.SrodowiskoKSeF);
+				var unsignedXml = await api.PobierzZadanieDostepuDoPodpisuAsync(nip);
+				cancellationToken.ThrowIfCancellationRequested();
+				var signedXml = api.PodpiszZadanieDlaSrodowiskaTestowego(unsignedXml, nip);
+				await api.PrzeslijZadanieDostepuAsync(signedXml, cancellationToken);
+				cancellationToken.ThrowIfCancellationRequested();
+				token = await api.UtworzTokenAsync(cancellationToken);
+			});
+		}
+		else
 		{
 			using var nowyKontekst = new Kontekst(Kontekst);
-			using var edytor = new ImportCertyfikatuKSeFEdytor();
+			using var edytor = new DostepKSeFEdytor();
 			edytor.SrodowiskoKSeF = Rekord.SrodowiskoKSeF;
-			edytor.NIP = Rekord.NIP;
+			edytor.NIP = nip;
 			using var okno = new Dialog("Dostęp do KSeF v2", edytor, nowyKontekst);
 			okno.CzyPrzyciskiWidoczne = false;
 			okno.ShowDialog();
-			if (!String.IsNullOrEmpty(edytor.Certyfikat)) Rekord.TokenKSeF = edytor.Certyfikat;
-			kontroler.AktualizujKontrolki();
+			token = edytor.Token;
 		}
+
+		if (token == null) return;
+		Rekord.TokenKSeF = token;
+		kontroler.AktualizujKontrolki();
 	}
 
-	class KontrahentEdytorBase : Edytor<Kontrahent>
+	private void buttonCertyfikatKSeF_Click(object? sender, EventArgs e)
 	{
+		using var nowyKontekst = new Kontekst(Kontekst);
+		using var edytor = new ImportCertyfikatuKSeFEdytor();
+		edytor.SrodowiskoKSeF = Rekord.SrodowiskoKSeF;
+		edytor.NIP = Rekord.NIP;
+		using var okno = new Dialog("Dostęp do KSeF v2", edytor, nowyKontekst);
+		okno.CzyPrzyciskiWidoczne = false;
+		okno.ShowDialog();
+		if (!String.IsNullOrEmpty(edytor.Certyfikat)) Rekord.TokenKSeF = edytor.Certyfikat;
+		kontroler.AktualizujKontrolki();
 	}
+}
+
+class KontrahentEdytorBase : Edytor<Kontrahent>
+{
 }

@@ -1,7 +1,6 @@
-﻿namespace ProFak.UI
+﻿namespace ProFak.UI;
+
+class KorektaZakupuAkcja : KorektaAkcja<FakturaZakupuEdytor>
 {
-	class KorektaZakupuAkcja : KorektaAkcja<FakturaZakupuEdytor>
-	{
-		public override string Nazwa => "➕ Wprowadź korektę";
-	}
+	public override string Nazwa => "➕ Wprowadź korektę";
 }

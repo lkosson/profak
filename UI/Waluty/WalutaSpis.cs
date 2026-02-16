@@ -1,26 +1,25 @@
 ﻿using ProFak.DB;
 
-namespace ProFak.UI
+namespace ProFak.UI;
+
+class WalutaSpis : Spis<Waluta>
 {
-	class WalutaSpis : Spis<Waluta>
+	public WalutaSpis()
 	{
-		public WalutaSpis()
-		{
-			DodajKolumne(nameof(Waluta.Skrot), "Skrót");
-			DodajKolumne(nameof(Waluta.Nazwa), "Nazwa", rozciagnij: true);
-			DodajKolumne(nameof(Waluta.CzyDomyslnaFmt), "Domyślna");
-			DodajKolumneId();
-		}
+		DodajKolumne(nameof(Waluta.Skrot), "Skrót");
+		DodajKolumne(nameof(Waluta.Nazwa), "Nazwa", rozciagnij: true);
+		DodajKolumne(nameof(Waluta.CzyDomyslnaFmt), "Domyślna");
+		DodajKolumneId();
+	}
 
-		protected override void Przeladuj()
-		{
-			Rekordy = Kontekst.Baza.Waluty.AsEnumerable().OrderBy(waluta => waluta.Skrot);
-		}
+	protected override void Przeladuj()
+	{
+		Rekordy = Kontekst.Baza.Waluty.AsEnumerable().OrderBy(waluta => waluta.Skrot);
+	}
 
-		protected override void UstawStylWiersza(Waluta rekord, string kolumna, DataGridViewCellStyle styl)
-		{
-			base.UstawStylWiersza(rekord, kolumna, styl);
-			if (rekord.CzyDomyslna) styl.Font = new Font(styl.Font!, FontStyle.Bold);
-		}
+	protected override void UstawStylWiersza(Waluta rekord, string kolumna, DataGridViewCellStyle styl)
+	{
+		base.UstawStylWiersza(rekord, kolumna, styl);
+		if (rekord.CzyDomyslna) styl.Font = new Font(styl.Font!, FontStyle.Bold);
 	}
 }

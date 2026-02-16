@@ -1,9 +1,8 @@
 ﻿using ProFak.DB;
 
-namespace ProFak.UI
+namespace ProFak.UI;
+
+class UsunPozycjeFakturyAkcja : UsunRekordAkcja<PozycjaFaktury>
 {
-	class UsunPozycjeFakturyAkcja : UsunRekordAkcja<PozycjaFaktury>
-	{
-		public override bool CzyDostepnaDlaRekordow(IEnumerable<PozycjaFaktury> zaznaczoneRekordy) => base.CzyDostepnaDlaRekordow(zaznaczoneRekordy) && !zaznaczoneRekordy.Any(faktura => faktura.CzyPrzedKorekta);
-	}
+	public override bool CzyDostepnaDlaRekordow(IEnumerable<PozycjaFaktury> zaznaczoneRekordy) => base.CzyDostepnaDlaRekordow(zaznaczoneRekordy) && !zaznaczoneRekordy.Any(faktura => faktura.CzyPrzedKorekta);
 }

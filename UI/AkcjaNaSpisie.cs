@@ -1,17 +1,16 @@
 ﻿using ProFak.DB;
 
-namespace ProFak.UI
-{
-	abstract class AkcjaNaSpisie<TRekord>
-		where TRekord : Rekord<TRekord>
-	{
-		public abstract string Nazwa { get; }
-		public abstract bool CzyDostepnaDlaRekordow(IEnumerable<TRekord> zaznaczoneRekordy);
-		public abstract void Uruchom(Kontekst kontekst, ref IEnumerable<TRekord> zaznaczoneRekordy);
-		public virtual bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => false;
-		public virtual IReadOnlyCollection<AkcjaNaSpisie<TRekord>> Podrzedne => [];
-		public virtual bool PrzeladujPoZakonczeniu => true;
+namespace ProFak.UI;
 
-		public AdapterAkcji UtworzAdapter(Spis<TRekord> spis) => new AdapterAkcji<TRekord>(this, spis);
-	}
+abstract class AkcjaNaSpisie<TRekord>
+	where TRekord : Rekord<TRekord>
+{
+	public abstract string Nazwa { get; }
+	public abstract bool CzyDostepnaDlaRekordow(IEnumerable<TRekord> zaznaczoneRekordy);
+	public abstract void Uruchom(Kontekst kontekst, ref IEnumerable<TRekord> zaznaczoneRekordy);
+	public virtual bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => false;
+	public virtual IReadOnlyCollection<AkcjaNaSpisie<TRekord>> Podrzedne => [];
+	public virtual bool PrzeladujPoZakonczeniu => true;
+
+	public AdapterAkcji UtworzAdapter(Spis<TRekord> spis) => new AdapterAkcji<TRekord>(this, spis);
 }

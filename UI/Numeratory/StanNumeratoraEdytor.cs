@@ -1,14 +1,13 @@
 ﻿using ProFak.DB;
 
-namespace ProFak.UI
+namespace ProFak.UI;
+
+class StanNumeratoraEdytor : EdytorDwieKolumny<StanNumeratora>
 {
-	class StanNumeratoraEdytor : EdytorDwieKolumny<StanNumeratora>
+	public StanNumeratoraEdytor()
 	{
-		public StanNumeratoraEdytor()
-		{
-			DodajTextBox(stanNumeratora => stanNumeratora.Parametry, "Parametry");
-			DodajNumericUpDown(stanNumeratora => stanNumeratora.OstatniaWartosc, "Ostatnia wartość");
-			UstawRozmiar();
-		}
+		DodajTextBox(stanNumeratora => stanNumeratora.Parametry, "Parametry");
+		DodajNumericUpDown(stanNumeratora => stanNumeratora.OstatniaWartosc, "Ostatnia wartość");
+		UstawRozmiar();
 	}
 }

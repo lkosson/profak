@@ -1,18 +1,17 @@
 ﻿using ProFak.DB;
 using System.Reflection;
 
-namespace ProFak.Wydruki
-{
-	abstract class Wydruk
-	{
-		public abstract void Przygotuj(Microsoft.Reporting.WinForms.LocalReport report);
+namespace ProFak.Wydruki;
 
-		protected Stream WczytajSzablon(string nazwa)
-		{
-			var lokalnyPlik = Path.Combine(Baza.LokalnyKatalog, nazwa + ".rdlc");
-			if (File.Exists(lokalnyPlik)) return File.OpenRead(lokalnyPlik);
-			var asm = Assembly.GetCallingAssembly();
-			return asm.GetManifestResourceStream("ProFak.Wydruki." + nazwa + ".rdlc") ?? throw new InvalidOperationException($"Nie znaleziono szablonu wydruku {nazwa}.");
-		}
+abstract class Wydruk
+{
+	public abstract void Przygotuj(Microsoft.Reporting.WinForms.LocalReport report);
+
+	protected Stream WczytajSzablon(string nazwa)
+	{
+		var lokalnyPlik = Path.Combine(Baza.LokalnyKatalog, nazwa + ".rdlc");
+		if (File.Exists(lokalnyPlik)) return File.OpenRead(lokalnyPlik);
+		var asm = Assembly.GetCallingAssembly();
+		return asm.GetManifestResourceStream("ProFak.Wydruki." + nazwa + ".rdlc") ?? throw new InvalidOperationException($"Nie znaleziono szablonu wydruku {nazwa}.");
 	}
 }

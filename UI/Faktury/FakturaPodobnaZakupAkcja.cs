@@ -1,7 +1,6 @@
-﻿namespace ProFak.UI
+﻿namespace ProFak.UI;
+
+class FakturaPodobnaZakupAkcja : FakturaPodobnaAkcja
 {
-	class FakturaPodobnaZakupAkcja : FakturaPodobnaAkcja
-	{
-		public override string Nazwa => "➕ Wprowadź podobną [SHIFT-INS]";
-	}
+	public override string Nazwa => "➕ Wprowadź podobną [SHIFT-INS]";
 }

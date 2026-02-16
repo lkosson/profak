@@ -1,7 +1,6 @@
-﻿namespace ProFak.UI
+﻿namespace ProFak.UI;
+
+class FakturaZakupuEdytor : FakturaEdytor
 {
-	class FakturaZakupuEdytor : FakturaEdytor
-	{
-		public override bool CzySprzedaz => false;
-	}
+	public override bool CzySprzedaz => false;
 }
