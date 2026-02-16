@@ -32,7 +32,7 @@ partial class ImportCertyfikatuKSeFEdytor : UserControl
 
 	private void linkLabelAplikacjaPodatnika_LinkClicked(object? sender, LinkLabelLinkClickedEventArgs e)
 	{
-		if (sender is LinkLabel link) Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = link.Text});
+		if (sender is LinkLabel link) Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = link.Text });
 	}
 
 	private void buttonCertyfikat_Click(object? sender, EventArgs e)

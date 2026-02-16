@@ -325,7 +325,7 @@ public partial class GlowneOkno : Form
 		if (trwaAktualizacjaMenu) return;
 		trwaAktualizacjaMenu = true;
 		try
-		{				
+		{
 			if (e.Node.Name == "WedlugDaty" && e.Node.Parent?.Name == "FakturySprzedazy") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży);
 			else if (e.Node.Name == "WedlugDaty" && e.Node.Parent?.Name == "FakturyProforma") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Proforma);
 			else if (e.Node.Name == "WedlugDaty" && e.Node.Parent?.Name == "FakturyZakupu") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny);

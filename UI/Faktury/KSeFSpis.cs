@@ -110,7 +110,7 @@ class KSeFSpis : Spis<Faktura>
 					naglowki.AddRange(fragment);
 					odDaty = koniecFragmentu;
 				}
-				
+
 				rekordy = naglowki.Select(api.WczytajNaglowek).ToList();
 				var i = 1;
 				foreach (var rekord in rekordy)

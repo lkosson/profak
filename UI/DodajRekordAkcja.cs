@@ -10,7 +10,7 @@ class DodajRekordAkcja<TRekord, TEdytor> : AkcjaNaSpisie<TRekord>
 	private readonly bool pelnyEkran;
 
 	public override string Nazwa => "➕ Dodaj [INS]";
-	
+
 	public DodajRekordAkcja(Action<TRekord>? przygotujRekord = null, bool pelnyEkran = false)
 	{
 		this.przygotujRekord = przygotujRekord;

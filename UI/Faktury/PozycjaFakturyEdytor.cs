@@ -121,7 +121,7 @@ partial class PozycjaFakturyEdytor : PozycjaFakturyEdytorBase
 		}
 		else
 		{
-			
+
 			numericUpDownIlosc.DecimalPlaces = jm.LiczbaMiescPoPrzecinku;
 		}
 	}

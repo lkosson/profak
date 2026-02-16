@@ -5,7 +5,7 @@ namespace ProFak.UI;
 class DeklaracjaVatSpis : Spis<DeklaracjaVat>
 {
 	private readonly DateTime? odDaty;
-	private readonly DateTime? doDaty; 
+	private readonly DateTime? doDaty;
 
 	public override string Podsumowanie
 	{

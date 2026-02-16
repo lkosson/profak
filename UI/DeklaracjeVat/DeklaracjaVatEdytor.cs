@@ -65,8 +65,8 @@ partial class DeklaracjaVatEdytor : DeklaracjaVatEdytorBase
 			Przelicz();
 		}, Keys.Delete, Keys.None);
 
-		fakturySprzedazy = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazySpis(), new AkcjaNaSpisie<Faktura>[] { dodajSprzedazDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new WydrukFakturyAkcja(), new PrzeladujAkcja<Faktura>()});
-		fakturyZakupu = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis(), new AkcjaNaSpisie<Faktura>[] { dodajZakupDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new PrzeladujAkcja<Faktura>()});
+		fakturySprzedazy = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazySpis(), new AkcjaNaSpisie<Faktura>[] { dodajSprzedazDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new WydrukFakturyAkcja(), new PrzeladujAkcja<Faktura>() });
+		fakturyZakupu = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis(), new AkcjaNaSpisie<Faktura>[] { dodajZakupDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new PrzeladujAkcja<Faktura>() });
 
 		tabPageFakturySprzedazy.Controls.Add(fakturySprzedazy);
 		tabPageFakturyZakupu.Controls.Add(fakturyZakupu);

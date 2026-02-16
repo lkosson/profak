@@ -37,7 +37,7 @@ class PanelAkcji : Panel
 		foreach (Control kontrolka in Controls)
 		{
 			var szerokoscKontrolki = kontrolka.PreferredSize.Width + Math.Max(Padding.Left, kontrolka.Margin.Left) + Math.Max(Padding.Right, kontrolka.Margin.Right);
-			if (szerokoscKontrolki> szerokosc) szerokosc = szerokoscKontrolki;
+			if (szerokoscKontrolki > szerokosc) szerokosc = szerokoscKontrolki;
 		}
 
 		Width = szerokosc;

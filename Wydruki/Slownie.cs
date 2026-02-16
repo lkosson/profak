@@ -7,7 +7,7 @@ class SlowniePL
 	private readonly static string[] JEDNOSCI = { "zero", "jeden", "dwa", "trzy", "cztery", "pięć", "sześć", "siedem", "osiem", "dziewięć", "dziesięć", "jedenaście", "dwanaście", "trzynaście", "czternaście", "piętnaście", "szesnaście", "siedemnaście", "osiemnaście", "dziewiętnaście" };
 	private readonly static string[] DZIESIATKI = { "", "", "dwadzieścia", "trzydzieści", "czterdzieści", "pięćdziesiąt", "sześćdziesiąt", "siedemdziesiąt", "osiemdziesiąt", "dziewięćdziesiąt" };
 	private readonly static string[] SETKI = { "", "sto", "dwieście", "trzysta", "czterysta", "pięćset", "sześćset", "siedemset", "osiemset", "dziewięćset" };
-	private readonly static string[][] TYSIACE = { new[] { "", "", "" }, new [] { " tysiąc", " tysiące", " tysięcy" }, new [] { " milion", " miliony", " milionów" }, new [] { " miliard", " miliardy", " miliardów" } };
+	private readonly static string[][] TYSIACE = { new[] { "", "", "" }, new[] { " tysiąc", " tysiące", " tysięcy" }, new[] { " milion", " miliony", " milionów" }, new[] { " miliard", " miliardy", " miliardów" } };
 
 	private static string SlownieDo1000(int wartosc)
 	{

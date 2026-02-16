@@ -269,7 +269,7 @@ abstract class Spis<T> : Spis
 
 	protected override void OnCellToolTipTextNeeded(DataGridViewCellToolTipTextNeededEventArgs e)
 	{
-		if (e.RowIndex != -1 
+		if (e.RowIndex != -1
 			&& tooltipyDlaKolumn.TryGetValue(e.ColumnIndex, out var tooltip)
 			&& Rows[e.RowIndex].DataBoundItem is T rekord) e.ToolTipText = tooltip(rekord);
 		else base.OnCellToolTipTextNeeded(e);
@@ -378,7 +378,7 @@ abstract class Spis<T> : Spis
 		if (wynik == DialogResult.Ignore)
 		{
 			nowyKontekst.Baza.Usun(kolumny.Where(e => e.Id > 0));
-			MessageBox.Show("Domyślne ustawienia zostaną załadowane po ponownym wyświetleniu spisu." , "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			MessageBox.Show("Domyślne ustawienia zostaną załadowane po ponownym wyświetleniu spisu.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 		transakcja.Zatwierdz();
 		WczytajKonfiguracje();

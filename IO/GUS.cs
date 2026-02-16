@@ -68,7 +68,7 @@ class GUS
 		{
 			var c = wejscie.Substring(i, 3);
 			output += ZnakiB64[Array.IndexOf(FragmentyKodu, c)];
-		};
+		}
 
 		return Encoding.UTF8.GetString(Convert.FromBase64String(output));
 	}

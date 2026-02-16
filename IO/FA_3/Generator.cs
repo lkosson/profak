@@ -1,10 +1,10 @@
-﻿using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
+using ProFak.DB;
+using ProFak.IO.FA_3.DefinicjeTypy;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
-using Microsoft.EntityFrameworkCore;
-using ProFak.DB;
-using ProFak.IO.FA_3.DefinicjeTypy;
 using DBFaktura = ProFak.DB.Faktura;
 using KSEFFaktura = ProFak.IO.FA_3.Faktura;
 
@@ -318,8 +318,8 @@ class Generator
 	{
 		var dbFaktura = new DBFaktura();
 		dbFaktura.Numer = ksefFaktura.Fa.P_2;
-		dbFaktura.Rodzaj = ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.VAT || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ROZ || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.UPR ? DB.RodzajFaktury.Zakup 
-			: ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ROZ ? DB.RodzajFaktury.KorektaZakupu 
+		dbFaktura.Rodzaj = ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.VAT || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ROZ || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.UPR ? DB.RodzajFaktury.Zakup
+			: ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ROZ ? DB.RodzajFaktury.KorektaZakupu
 			: ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ZAL || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ZAL ? throw new ApplicationException("Faktury zaliczkowe nie są obsługiwane")
 			: throw new ApplicationException($"Nieobsługiwany rodzaj faktury: {ksefFaktura.Fa.RodzajFaktury}.");
 		dbFaktura.DataWystawienia = ksefFaktura.Fa.P_1;
@@ -690,7 +690,7 @@ class Generator
 
 		if (sprzedawca.CzyPodmiot) faktura.Rodzaj = faktura.ProceduraMarzy == ProceduraMarży.NieDotyczy
 			? faktura.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaSprzedaży : RodzajFaktury.Sprzedaż
-			: faktura.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaVatMarży: RodzajFaktury.VatMarża;
+			: faktura.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaVatMarży : RodzajFaktury.VatMarża;
 
 		if (String.IsNullOrEmpty(faktura.NIPNabywcy)) faktura.NIPNabywcy = nabywca.NIP;
 		if (String.IsNullOrEmpty(faktura.NazwaNabywcy)) faktura.NazwaNabywcy = nabywca.PelnaNazwa;

@@ -1,10 +1,10 @@
 ﻿#nullable disable
-using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
 using Microsoft.EntityFrameworkCore;
 using ProFak.DB;
 using ProFak.IO.FA_2.DefinicjeTypy;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 using DBFaktura = ProFak.DB.Faktura;
 using KSEFFaktura = ProFak.IO.FA_2.Faktura;
 
@@ -224,7 +224,8 @@ class Generator
 				ksefFaktura.Fa.P_14_2 += dbPozycja.WartoscVat;
 				ksefWiersz.P_12 = TStawkaPodatku.Item8;
 			}
-			else {
+			else
+			{
 				ksefFaktura.Fa.P_13_1 ??= 0;
 				ksefFaktura.Fa.P_14_1 ??= 0;
 				ksefFaktura.Fa.P_13_1 += dbPozycja.WartoscNetto;

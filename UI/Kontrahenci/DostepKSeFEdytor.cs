@@ -1,8 +1,9 @@
-﻿using System.ComponentModel;
+﻿using ProFak.DB;
+using System.ComponentModel;
 using System.Diagnostics;
-using ProFak.DB;
 
 namespace ProFak.UI.Kontrahenci;
+
 partial class DostepKSeFEdytor : UserControl
 {
 	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]

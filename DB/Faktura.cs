@@ -225,7 +225,7 @@ class Faktura : Rekord<Faktura>
 		|| CzyPasuje(CzyWartosciReczne ? "Ręczne" : "", fraza)
 		|| CzyPasuje(CzyTP ? "TP" : "", fraza)
 		|| CzyPasuje(CzyWDT ? "WDT" : "", fraza)
-		|| CzyPasuje(CzyWNT? "WNT" : "", fraza)
+		|| CzyPasuje(CzyWNT ? "WNT" : "", fraza)
 		;
 
 	public Faktura PrzygotujKorekte(Baza baza)
