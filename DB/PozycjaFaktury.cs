@@ -60,7 +60,7 @@ class PozycjaFaktury : Rekord<PozycjaFaktury>
 	public void PrzeliczCeny(Baza baza)
 	{
 		if (CzyWartosciReczne) return;
-		var stawkaVat = baza.Znajdz(StawkaVatRef);
+		var stawkaVat = baza.ZnajdzLubNull(StawkaVatRef);
 		var procentVat = stawkaVat?.Wartosc ?? 0;
 
 		if (CenaZakupuDlaMarzy > 0)

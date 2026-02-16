@@ -94,7 +94,7 @@ partial class WysylkaFakturEdytor : UserControl
 		if (checkBoxUstawDate.Checked) fakturaDoZapisu.DataWystawienia = DateTime.Now;
 		if (checkBoxPrzeliczTermin.Checked)
 		{
-			var sposobPlatnosci = nowyKontekst.Baza.Znajdz(fakturaDoZapisu.SposobPlatnosciRef);
+			var sposobPlatnosci = nowyKontekst.Baza.ZnajdzLubNull(fakturaDoZapisu.SposobPlatnosciRef);
 			if (sposobPlatnosci != null) fakturaDoZapisu.TerminPlatnosci = fakturaDoZapisu.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
 		}
 		fakturaDoZapisu.DataWyslania = DateTime.Now;
@@ -146,7 +146,7 @@ partial class WysylkaFakturEdytor : UserControl
 				if (ustawDate) fakturaDoZapisu.DataWystawienia = DateTime.Now;
 				if (przeliczTermin)
 				{
-					var sposobPlatnosci = nowyKontekst.Baza.Znajdz(fakturaDoZapisu.SposobPlatnosciRef);
+					var sposobPlatnosci = nowyKontekst.Baza.ZnajdzLubNull(fakturaDoZapisu.SposobPlatnosciRef);
 					if (sposobPlatnosci != null) fakturaDoZapisu.TerminPlatnosci = fakturaDoZapisu.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
 				}
 				fakturaDoZapisu.DataWyslania = DateTime.Now;

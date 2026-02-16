@@ -30,7 +30,7 @@ class Faktura : Wydruk
 			var wplaty = baza.Wplaty.Where(wplata => wplata.FakturaId == faktura.Id).ToList();
 			var zaplacono = wplaty.Sum(wplata => wplata.Kwota);
 			var dozaplaty = faktura.RazemBrutto - zaplacono;
-			var waluta = baza.Znajdz(faktura.WalutaRef);
+			var waluta = baza.ZnajdzLubNull(faktura.WalutaRef);
 			var walutaVAT = baza.Waluty.FirstOrDefault(waluta => waluta.CzyDomyslna);
 			var walutaSkrot = waluta?.Skrot ?? "zł";
 			var walutaVATSkrot = walutaVAT?.Skrot ?? walutaSkrot;

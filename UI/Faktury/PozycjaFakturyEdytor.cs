@@ -93,7 +93,7 @@ partial class PozycjaFakturyEdytor : PozycjaFakturyEdytorBase
 		}
 		if (rekord.JednostkaMiaryRef.IsNull)
 		{
-			var towar = Kontekst.Baza.Znajdz(rekord.TowarRef);
+			var towar = Kontekst.Baza.ZnajdzLubNull(rekord.TowarRef);
 			if (towar != null && towar.JednostkaMiaryRef.IsNotNull)
 			{
 				rekord.JednostkaMiaryRef = towar.JednostkaMiaryRef;
@@ -114,7 +114,7 @@ partial class PozycjaFakturyEdytor : PozycjaFakturyEdytorBase
 
 	private void KonfigurujPoleIlosci()
 	{
-		var jm = Kontekst.Baza.Znajdz(Rekord.JednostkaMiaryRef);
+		var jm = Kontekst.Baza.ZnajdzLubNull(Rekord.JednostkaMiaryRef);
 		if (jm == null)
 		{
 			numericUpDownIlosc.DecimalPlaces = 0;

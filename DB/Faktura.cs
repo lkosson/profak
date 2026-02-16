@@ -340,7 +340,7 @@ class Faktura : Rekord<Faktura>
 		var nowaFaktura = new Faktura();
 		baza.Zapisz(nowaFaktura);
 
-		var sposobPlatnosci = baza.Znajdz(SposobPlatnosciRef);
+		var sposobPlatnosci = baza.ZnajdzLubNull(SposobPlatnosciRef);
 		if (!Numerator.HasValue) nowaFaktura.Numer = Numer;
 		nowaFaktura.Rodzaj = Rodzaj;
 		if (!nowaFaktura.CzySprzedaz)

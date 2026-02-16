@@ -267,7 +267,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 	{
 		if (rekord.DataWystawienia == dataWystawienia) return;
 		rekord.DataWystawienia = dataWystawienia;
-		var sposobPlatnosci = Kontekst.Baza.Znajdz(Rekord.SposobPlatnosciRef);
+		var sposobPlatnosci = Kontekst.Baza.ZnajdzLubNull(Rekord.SposobPlatnosciRef);
 		if (sposobPlatnosci == null) return;
 		Rekord.TerminPlatnosci = Rekord.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
 		kontroler.AktualizujKontrolki();
@@ -317,7 +317,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 		dodatkowePodmioty.Spis.Kontekst = Kontekst;
 		linkLabelKSeFUrl.Text = Rekord.URLKSeF;
 
-		var fakturaKorygowana = Rekord.FakturaKorygowanaRef.IsNull ? null : Kontekst.Baza.Znajdz(Rekord.FakturaKorygowanaRef);
+		var fakturaKorygowana = Kontekst.Baza.ZnajdzLubNull(Rekord.FakturaKorygowanaRef);
 
 		if (Rekord.Rodzaj == RodzajFaktury.Sprzedaż) labelRodzaj.Text = "Sprzedaż";
 		else if (Rekord.Rodzaj == RodzajFaktury.Zakup) labelRodzaj.Text = "Zakup";

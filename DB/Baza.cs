@@ -299,6 +299,11 @@ class Baza : DbContext
 		where TRekord : Rekord<TRekord>
 		=> Set<TRekord>().FirstOrDefault(r => r.Id == rekordRef.Id) ?? throw new ApplicationException($"Nie znaleziono rekordu {rekordRef}.");
 
+
+	public TRekord? ZnajdzLubNull<TRekord>(Ref<TRekord> rekordRef)
+		where TRekord : Rekord<TRekord>
+		=> rekordRef.IsNull ? null : Znajdz(rekordRef);
+
 	public IEnumerable<Dictionary<string, object>> Zapytanie(FormattableString zapytanie)
 	{
 		using var polaczenie = Database.GetDbConnection();
