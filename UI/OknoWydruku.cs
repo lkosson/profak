@@ -10,6 +10,7 @@ class OknoWydruku : Form
 		Icon = GlowneOkno.Ikona;
 		WindowState = FormWindowState.Maximized;
 		ShowInTaskbar = false;
+		KeyPreview = true;
 		Text = "ProFak - Wydruk";
 		reportViewer = new Microsoft.Reporting.WinForms.ReportViewer();
 		reportViewer.Dock = DockStyle.Fill;
@@ -24,6 +25,16 @@ class OknoWydruku : Form
 		wydruk.Przygotuj(reportViewer.LocalReport);
 		reportViewer.RefreshReport();
 		base.OnLoad(e);
+	}
+
+	protected override void OnKeyDown(KeyEventArgs e)
+	{
+		base.OnKeyDown(e);
+		if (e.KeyCode == Keys.Escape)
+		{
+			DialogResult = DialogResult.Cancel;
+			Close();
+		}
 	}
 
 	public static void ZaladujWstepnieReportViewer()
