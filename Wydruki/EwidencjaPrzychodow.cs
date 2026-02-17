@@ -8,25 +8,29 @@ class EwidencjaPrzychodow : Wydruk
 {
 	private readonly List<EwidencjaPrzychodowDTO> dane;
 
-	public EwidencjaPrzychodow(Baza baza, Ref<DB.ZaliczkaPit> zaliczkaRef)
+	public EwidencjaPrzychodow(Baza baza, IEnumerable<ZaliczkaPit> zaliczki)
 	{
-		dane = new List<EwidencjaPrzychodowDTO>();
+		dane = [];
 
+		var zaliczkiIds = zaliczki.Select(e => e.Id).ToList();
 		var faktury = baza.Faktury
 			.Include(faktura => faktura.Pozycje)
-			.Where(faktura => faktura.ZaliczkaPitId == zaliczkaRef.Id)
+			.Where(faktura => zaliczkiIds.Contains(faktura.ZaliczkaPitId!.Value))
 			.OrderBy(faktura => faktura.DataSprzedazy)
 			.ToList();
 
-		var zaliczka = baza.Znajdz(zaliczkaRef);
-		var tytul = "Podatkowa księga przychodów i rozchodów, " + zaliczka.Miesiac.ToString("MMMM yyyy");
+		var tytul = "Ewidencja przychodów, ";
 		var podmiot = baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
+		if (zaliczki.Count() == 1) tytul += zaliczki.Single().Miesiac.ToString("MMMM yyyy");
+		else tytul += zaliczki.Select(e => e.Miesiac).Min().ToString("MMMM yyyy") + " - " + zaliczki.Select(e => e.Miesiac).Max().ToString("MMMM yyyy");
 
 		int lp = 1;
 		foreach (var faktura in faktury)
 		{
 			if (!faktura.CzySprzedaz) continue;
 			var dto = new EwidencjaPrzychodowDTO();
+			dto.Tytul = tytul;
+			dto.Podmiot = podmiot.PelnaNazwa + "\r\n" + podmiot.AdresRejestrowy;
 			dto.LP = lp++;
 			dto.NumerDowodu = faktura.Numer;
 			dto.DataWpisu = faktura.DataWystawienia;

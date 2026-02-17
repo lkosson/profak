@@ -2,6 +2,8 @@
 
 public class EwidencjaPrzychodowDTO
 {
+	public string? Tytul { get; set; }
+	public string? Podmiot { get; set; }
 	public int LP { get; set; }
 	public DateTime DataWpisu { get; set; }
 	public DateTime DataPrzychodu { get; set; }

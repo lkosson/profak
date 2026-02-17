@@ -7,18 +7,20 @@ class PKPiR : Wydruk
 {
 	private readonly List<PKPiRDTO> dane;
 
-	public PKPiR(Baza baza, Ref<DB.ZaliczkaPit> zaliczkaRef)
+	public PKPiR(Baza baza, IEnumerable<ZaliczkaPit> zaliczki)
 	{
-		dane = new List<PKPiRDTO>();
+		dane = [];
 
+		var zaliczkiIds = zaliczki.Select(e => e.Id).ToList();
 		var faktury = baza.Faktury
-			.Where(faktura => faktura.ZaliczkaPitId == zaliczkaRef.Id)
+			.Where(faktura => zaliczkiIds.Contains(faktura.ZaliczkaPitId!.Value))
 			.OrderBy(faktura => faktura.DataSprzedazy)
 			.ToList();
 
-		var zaliczka = baza.Znajdz(zaliczkaRef);
-		var tytul = "Podatkowa księga przychodów i rozchodów, " + zaliczka.Miesiac.ToString("MMMM yyyy");
+		var tytul = "Podatkowa księga przychodów i rozchodów, ";
 		var podmiot = baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
+		if (zaliczki.Count() == 1) tytul += zaliczki.Single().Miesiac.ToString("MMMM yyyy");
+		else tytul += zaliczki.Select(e => e.Miesiac).Min().ToString("MMMM yyyy") + " - " + zaliczki.Select(e => e.Miesiac).Max().ToString("MMMM yyyy");
 
 		int lp = 1;
 		foreach (var faktura in faktury)
