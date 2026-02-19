@@ -10,6 +10,7 @@ using KSeF.Client.Core.Models.Authorization;
 using KSeF.Client.Core.Models.Invoices;
 using KSeF.Client.Core.Models.Sessions;
 using KSeF.Client.DI;
+using KSeF.Client.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using ProFak.DB;
 using System.Security.Cryptography.X509Certificates;
@@ -116,7 +117,7 @@ class API : IDisposable
 	{
 		if (ksefToken.Length > 120 && ksefToken.StartsWith("MII"))
 		{
-			var certyfikat = X509CertificateLoader.LoadCertificate(Convert.FromBase64String(ksefToken));
+			var certyfikat = Convert.FromBase64String(ksefToken).LoadPkcs12();
 			await UwierzytelnijAsync(nip, certyfikat, cancellationToken);
 			return;
 		}
