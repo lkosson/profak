@@ -267,6 +267,7 @@ class API : IDisposable
 				invoices.Add(invoiceHeader);
 			}
 			pageOffset++;
+			if (pageOffset == 100) break;
 			if (pagedInvoiceResponse.Invoices.Count < pageSize) break;
 		}
 		return invoices;
