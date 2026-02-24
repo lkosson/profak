@@ -6,7 +6,6 @@ namespace ProFak.UI;
 partial class PozycjaFakturyEdytor : PozycjaFakturyEdytorBase
 {
 	private Slownik<Towar> slownikTowarow = default!;
-	private bool vatMarza;
 	private bool trwaPrzeliczanieCen;
 
 	public PozycjaFakturyEdytor()
@@ -68,7 +67,7 @@ partial class PozycjaFakturyEdytor : PozycjaFakturyEdytorBase
 			Spisy.JednostkiMiar)
 			.Zainstaluj();
 
-		vatMarza = Kontekst.Znajdz<Faktura>() is Faktura faktura && (faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży);
+		var vatMarza = Kontekst.Znajdz<Faktura>() is Faktura faktura && (faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży);
 
 		numericUpDownCenaZakupu.Visible = vatMarza;
 		labelCenaZakupu.Visible = vatMarza;
@@ -154,15 +153,7 @@ partial class PozycjaFakturyEdytor : PozycjaFakturyEdytorBase
 	private void UstawTowar(Towar? towar)
 	{
 		if (towar == null || Rekord.TowarRef == towar.Ref) return;
-		Rekord.TowarRef = towar;
-		Rekord.JednostkaMiaryRef = towar.JednostkaMiaryRef;
-		Rekord.Opis = towar.Nazwa;
-		if (!vatMarza) Rekord.CzyWedlugCenBrutto = towar.CzyWedlugCenBrutto;
-		Rekord.CenaBrutto = towar.CenaBrutto;
-		Rekord.CenaNetto = towar.CenaNetto;
-		Rekord.StawkaVatRef = towar.StawkaVatRef;
-		Rekord.GTU = towar.GTU;
-		Rekord.StawkaRyczaltu = towar.StawkaRyczaltu;
+		Rekord.UstawTowar(towar);
 		KonfigurujPoleIlosci();
 		KonfigurujCeny();
 		PrzeliczCeny();

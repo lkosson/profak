@@ -60,6 +60,9 @@ public class PozycjaFaktury : Rekord<PozycjaFaktury>
 	public void PrzeliczCeny(Baza baza)
 	{
 		if (CzyWartosciReczne) return;
+		var faktura = baza.Znajdz(FakturaRef);
+		if (faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży) CzyWedlugCenBrutto = true;
+
 		var stawkaVat = baza.ZnajdzLubNull(StawkaVatRef);
 		var procentVat = stawkaVat?.Wartosc ?? 0;
 
@@ -116,5 +119,18 @@ public class PozycjaFaktury : Rekord<PozycjaFaktury>
 		nowaPozycja.RabatCena = RabatCena;
 		nowaPozycja.RabatWartosc = RabatWartosc;
 		return nowaPozycja;
+	}
+
+	public void UstawTowar(Towar towar)
+	{
+		TowarRef = towar;
+		JednostkaMiaryRef = towar.JednostkaMiaryRef;
+		Opis = towar.Nazwa;
+		CzyWedlugCenBrutto = towar.CzyWedlugCenBrutto;
+		CenaBrutto = towar.CenaBrutto;
+		CenaNetto = towar.CenaNetto;
+		StawkaVatRef = towar.StawkaVatRef;
+		GTU = towar.GTU;
+		StawkaRyczaltu = towar.StawkaRyczaltu;
 	}
 }

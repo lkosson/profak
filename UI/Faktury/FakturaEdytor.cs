@@ -16,9 +16,6 @@ partial class FakturaEdytor : FakturaEdytorBase
 	private Slownik<Kontrahent> slownikSprzedawcaNazwa = default!;
 	private Slownik<Kontrahent> slownikSprzedawcaNIP = default!;
 
-	private string uwagiNabywcy = "";
-	private string uwagiSprzedawcy = "";
-
 	public virtual bool CzySprzedaz => true;
 
 	public FakturaEdytor()
@@ -223,20 +220,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 	private bool UstawNabywce(Faktura rekord, Kontrahent? kontrahent)
 	{
 		if (kontrahent == null || rekord.NabywcaRef == kontrahent.Ref) return false;
-		rekord.NabywcaRef = kontrahent;
-		rekord.NIPNabywcy = kontrahent.NIP;
-		rekord.NazwaNabywcy = kontrahent.PelnaNazwaLubNazwa;
-		rekord.DaneNabywcy = kontrahent.AdresRejestrowy;
-		rekord.CzyTP = kontrahent.CzyTP;
-		if (rekord.CzySprzedaz)
-		{
-			if (!String.IsNullOrWhiteSpace(uwagiNabywcy)) rekord.UwagiPubliczne = (rekord.UwagiPubliczne ?? "").Replace(uwagiNabywcy, "").Trim('\r', '\n');
-			if (!String.IsNullOrWhiteSpace(kontrahent.UwagiPubliczne))
-			{
-				uwagiNabywcy = kontrahent.UwagiPubliczne.Trim('\r', '\n');
-				rekord.UwagiPubliczne = (rekord.UwagiPubliczne + "\r\n" + uwagiNabywcy).Trim('\r', '\n');
-			}
-		}
+		rekord.UstawNabywce(kontrahent);
 		if (kontrahent.SposobPlatnosciRef.IsNotNull) comboBoxSposobPlatnosci.SelectedValue = kontrahent.SposobPlatnosciRef;
 		return true;
 	}
@@ -244,21 +228,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 	private bool UstawSprzedawce(Faktura rekord, Kontrahent? kontrahent)
 	{
 		if (kontrahent == null || rekord.SprzedawcaRef == kontrahent.Ref) return false;
-		rekord.SprzedawcaRef = kontrahent;
-		rekord.NIPSprzedawcy = kontrahent.NIP;
-		rekord.NazwaSprzedawcy = kontrahent.PelnaNazwaLubNazwa;
-		rekord.DaneSprzedawcy = kontrahent.AdresRejestrowy;
-		rekord.RachunekBankowy = kontrahent.RachunekBankowy;
-		rekord.NazwaBanku = kontrahent.NazwaBanku;
-		if (rekord.CzySprzedaz)
-		{
-			if (!String.IsNullOrWhiteSpace(uwagiSprzedawcy)) rekord.UwagiPubliczne = (rekord.UwagiPubliczne ?? "").Replace(uwagiSprzedawcy, "").Trim('\r', '\n');
-			if (!String.IsNullOrWhiteSpace(kontrahent.UwagiPubliczne))
-			{
-				uwagiSprzedawcy = kontrahent.UwagiPubliczne.Trim('\r', '\n');
-				rekord.UwagiPubliczne = (uwagiSprzedawcy + "\r\n" + rekord.UwagiPubliczne).Trim('\r', '\n');
-			}
-		}
+		rekord.UstawSprzedawce(kontrahent);
 		if (kontrahent.SposobPlatnosciRef.IsNotNull) comboBoxSposobPlatnosci.SelectedValue = kontrahent.SposobPlatnosciRef;
 		return true;
 	}
@@ -276,9 +246,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 	private bool UstawSposobPlatnosci(Faktura rekord, SposobPlatnosci? sposobPlatnosci)
 	{
 		if (sposobPlatnosci == null || rekord == null || rekord.SposobPlatnosciRef == sposobPlatnosci.Ref) return false;
-		rekord.SposobPlatnosciRef = sposobPlatnosci;
-		rekord.OpisSposobuPlatnosci = sposobPlatnosci.Nazwa;
-		rekord.TerminPlatnosci = rekord.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
+		rekord.UstawSposobPlatnosci(sposobPlatnosci);
 		return true;
 	}
 

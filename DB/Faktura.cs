@@ -393,6 +393,53 @@ public class Faktura : Rekord<Faktura>
 		return nowaFaktura;
 	}
 
+	private string uwagiNabywcy = "";
+	private string uwagiSprzedawcy = "";
+
+	public void UstawSprzedawce(Kontrahent kontrahent)
+	{
+		SprzedawcaRef = kontrahent;
+		NIPSprzedawcy = kontrahent.NIP;
+		NazwaSprzedawcy = kontrahent.PelnaNazwaLubNazwa;
+		DaneSprzedawcy = kontrahent.AdresRejestrowy;
+		RachunekBankowy = kontrahent.RachunekBankowy;
+		NazwaBanku = kontrahent.NazwaBanku;
+		if (CzySprzedaz)
+		{
+			if (!String.IsNullOrWhiteSpace(uwagiSprzedawcy)) UwagiPubliczne = (UwagiPubliczne ?? "").Replace(uwagiSprzedawcy, "").Trim('\r', '\n');
+			if (!String.IsNullOrWhiteSpace(kontrahent.UwagiPubliczne))
+			{
+				uwagiSprzedawcy = kontrahent.UwagiPubliczne.Trim('\r', '\n');
+				UwagiPubliczne = (uwagiSprzedawcy + "\r\n" + UwagiPubliczne).Trim('\r', '\n');
+			}
+		}
+	}
+
+	public void UstawNabywce(Kontrahent kontrahent)
+	{
+		NabywcaRef = kontrahent;
+		NIPNabywcy = kontrahent.NIP;
+		NazwaNabywcy = kontrahent.PelnaNazwaLubNazwa;
+		DaneNabywcy = kontrahent.AdresRejestrowy;
+		CzyTP = kontrahent.CzyTP;
+		if (CzySprzedaz)
+		{
+			if (!String.IsNullOrWhiteSpace(uwagiNabywcy)) UwagiPubliczne = (UwagiPubliczne ?? "").Replace(uwagiNabywcy, "").Trim('\r', '\n');
+			if (!String.IsNullOrWhiteSpace(kontrahent.UwagiPubliczne))
+			{
+				uwagiNabywcy = kontrahent.UwagiPubliczne.Trim('\r', '\n');
+				UwagiPubliczne = (UwagiPubliczne + "\r\n" + uwagiNabywcy).Trim('\r', '\n');
+			}
+		}
+	}
+
+	public void UstawSposobPlatnosci(SposobPlatnosci sposobPlatnosci)
+	{
+		SposobPlatnosciRef = sposobPlatnosci;
+		OpisSposobuPlatnosci = sposobPlatnosci.Nazwa;
+		TerminPlatnosci = DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
+	}
+
 	public string PodstawPolaWysylki(string szablon)
 	{
 		return szablon
