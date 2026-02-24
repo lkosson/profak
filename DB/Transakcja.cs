@@ -3,7 +3,7 @@ using ProFak.DB;
 
 namespace ProFak;
 
-class Transakcja : IDisposable
+public class Transakcja : IDisposable
 {
 	private readonly Transakcja? poprzednia;
 	private readonly IDbContextTransaction dbContextTransaction;

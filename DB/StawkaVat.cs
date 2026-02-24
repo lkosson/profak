@@ -1,6 +1,6 @@
 ﻿namespace ProFak.DB;
 
-class StawkaVat : Rekord<StawkaVat>
+public class StawkaVat : Rekord<StawkaVat>
 {
 	public string Skrot { get; set; } = "";
 	public decimal Wartosc { get; set; }

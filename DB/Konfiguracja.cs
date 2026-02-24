@@ -1,6 +1,6 @@
 ﻿namespace ProFak.DB;
 
-class Konfiguracja : Rekord<Konfiguracja>
+public class Konfiguracja : Rekord<Konfiguracja>
 {
 	public int Wersja { get; set; }
 

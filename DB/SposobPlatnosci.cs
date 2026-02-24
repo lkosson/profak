@@ -1,6 +1,6 @@
 ﻿namespace ProFak.DB;
 
-class SposobPlatnosci : Rekord<SposobPlatnosci>
+public class SposobPlatnosci : Rekord<SposobPlatnosci>
 {
 	public string Nazwa { get; set; } = "";
 	public int LiczbaDni { get; set; }

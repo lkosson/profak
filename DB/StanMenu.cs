@@ -1,6 +1,6 @@
 ﻿namespace ProFak.DB;
 
-class StanMenu : Rekord<StanMenu>
+public class StanMenu : Rekord<StanMenu>
 {
 	public string Pozycja { get; set; } = "";
 	public bool CzyZwinieta { get; set; }

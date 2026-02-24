@@ -1,6 +1,6 @@
 ﻿namespace ProFak.DB;
 
-class JednostkaMiary : Rekord<JednostkaMiary>
+public class JednostkaMiary : Rekord<JednostkaMiary>
 {
 	public string Skrot { get; set; } = "";
 	public string Nazwa { get; set; } = "";

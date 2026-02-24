@@ -1,6 +1,6 @@
 ﻿namespace ProFak.DB;
 
-class SkladkaZus : Rekord<SkladkaZus>
+public class SkladkaZus : Rekord<SkladkaZus>
 {
 	public DateTime Miesiac { get; set; } = DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-1);
 

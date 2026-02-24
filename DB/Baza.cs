@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ProFak.DB;
 
-class Baza : DbContext
+public class Baza : DbContext
 {
 	public static string NazwaKataloguProgramu => "ProFak";
 	public static string NazwaPlikuBazy => "profak.sqlite3";

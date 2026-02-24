@@ -1,6 +1,6 @@
 ﻿namespace ProFak.DB;
 
-class Plik : Rekord<Plik>
+public class Plik : Rekord<Plik>
 {
 	public int FakturaId { get; set; }
 	public string Nazwa { get; set; } = "";

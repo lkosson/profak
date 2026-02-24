@@ -1,6 +1,6 @@
 ﻿namespace ProFak.DB;
 
-readonly struct Ref<T> where T : Rekord<T>
+public readonly struct Ref<T> where T : Rekord<T>
 {
 	public readonly int Id { get; }
 

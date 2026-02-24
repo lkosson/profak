@@ -1,6 +1,6 @@
 ﻿namespace ProFak.DB;
 
-class StanNumeratora : Rekord<StanNumeratora>
+public class StanNumeratora : Rekord<StanNumeratora>
 {
 	public int NumeratorId { get; set; }
 	public string Parametry { get; set; } = "";

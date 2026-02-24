@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace ProFak.DB;
 
-class Numerator : Rekord<Numerator>
+public class Numerator : Rekord<Numerator>
 {
 	public PrzeznaczenieNumeratora Przeznaczenie { get; set; } = PrzeznaczenieNumeratora.Faktura;
 	public string Format { get; set; } = "[Numer]";
@@ -54,7 +54,7 @@ class Numerator : Rekord<Numerator>
 	}
 }
 
-enum PrzeznaczenieNumeratora
+public enum PrzeznaczenieNumeratora
 {
 	Faktura,
 	Proforma,

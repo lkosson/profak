@@ -1,6 +1,6 @@
 ﻿namespace ProFak.DB;
 
-class PozycjaFaktury : Rekord<PozycjaFaktury>
+public class PozycjaFaktury : Rekord<PozycjaFaktury>
 {
 	public int FakturaId { get; set; }
 	public int? TowarId { get; set; }

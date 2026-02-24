@@ -2,7 +2,7 @@
 
 namespace ProFak.DB;
 
-class Rekord
+public class Rekord
 {
 	public int Id { get; set; }
 
@@ -103,7 +103,7 @@ class Rekord
 	}
 }
 
-class Rekord<T> : Rekord, IConvertible
+public class Rekord<T> : Rekord, IConvertible
 	where T : Rekord<T>
 {
 	public Ref<T> Ref => new Ref<T>(Id);

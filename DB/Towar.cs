@@ -1,6 +1,6 @@
 ﻿namespace ProFak.DB;
 
-class Towar : Rekord<Towar>
+public class Towar : Rekord<Towar>
 {
 	public string Nazwa { get; set; } = "";
 	public RodzajTowaru Rodzaj { get; set; } = RodzajTowaru.Towar;
@@ -30,7 +30,7 @@ class Towar : Rekord<Towar>
 		|| CzyPasuje(CzyArchiwalny ? "Archiwalny" : "", fraza);
 }
 
-enum RodzajTowaru
+public enum RodzajTowaru
 {
 	Towar,
 	Usługa

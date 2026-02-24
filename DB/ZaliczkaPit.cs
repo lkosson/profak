@@ -2,7 +2,7 @@
 
 namespace ProFak.DB;
 
-class ZaliczkaPit : Rekord<ZaliczkaPit>
+public class ZaliczkaPit : Rekord<ZaliczkaPit>
 {
 	public DateTime Miesiac { get; set; } = DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-1);
 

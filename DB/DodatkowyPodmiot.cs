@@ -1,6 +1,6 @@
 ﻿namespace ProFak.DB;
 
-class DodatkowyPodmiot : Rekord<DodatkowyPodmiot>
+public class DodatkowyPodmiot : Rekord<DodatkowyPodmiot>
 {
 	public int FakturaId { get; set; }
 	public RodzajDodatkowegoPodmiotu Rodzaj { get; set; }
@@ -32,7 +32,7 @@ class DodatkowyPodmiot : Rekord<DodatkowyPodmiot>
 		|| CzyPasuje(Udzial ?? 0, fraza);
 }
 
-enum RodzajDodatkowegoPodmiotu
+public enum RodzajDodatkowegoPodmiotu
 {
 	Inny,
 	Faktor,

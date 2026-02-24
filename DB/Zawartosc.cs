@@ -1,6 +1,6 @@
 ﻿namespace ProFak.DB;
 
-class Zawartosc : Rekord<Zawartosc>
+public class Zawartosc : Rekord<Zawartosc>
 {
 	public byte[] Dane { get; set; } = default!;
 	public int? PlikId { get; set; }

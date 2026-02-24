@@ -1,6 +1,6 @@
 ﻿namespace ProFak.DB;
 
-class Kontrahent : Rekord<Kontrahent>
+public class Kontrahent : Rekord<Kontrahent>
 {
 	public string Nazwa { get; set; } = "";
 	public string PelnaNazwa { get; set; } = "";
@@ -48,14 +48,14 @@ class Kontrahent : Rekord<Kontrahent>
 		|| CzyPasuje(CzyPodmiot ? "Podmiot" : "", fraza);
 }
 
-enum FormaOpodatkowania
+public enum FormaOpodatkowania
 {
 	Liniowy,
 	Skala,
 	Ryczałt
 }
 
-enum SrodowiskoKSeF
+public enum SrodowiskoKSeF
 {
 	Test,
 	Demo,

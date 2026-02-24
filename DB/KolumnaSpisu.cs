@@ -1,6 +1,6 @@
 ﻿namespace ProFak.DB;
 
-class KolumnaSpisu : Rekord<KolumnaSpisu>
+public class KolumnaSpisu : Rekord<KolumnaSpisu>
 {
 	public string Spis { get; set; } = "";
 	public string Kolumna { get; set; } = "";

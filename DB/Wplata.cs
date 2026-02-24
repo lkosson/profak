@@ -1,6 +1,6 @@
 ﻿namespace ProFak.DB;
 
-class Wplata : Rekord<Wplata>
+public class Wplata : Rekord<Wplata>
 {
 	public int FakturaId { get; set; }
 	public DateTime Data { get; set; } = DateTime.Now.Date;

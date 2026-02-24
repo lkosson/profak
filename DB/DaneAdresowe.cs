@@ -2,7 +2,7 @@
 
 namespace ProFak.DB;
 
-class DaneAdresowe
+public class DaneAdresowe
 {
 	public string Ulica { get; } = "";
 	public string NumerDomu { get; } = "";

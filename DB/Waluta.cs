@@ -1,6 +1,6 @@
 ﻿namespace ProFak.DB;
 
-class Waluta : Rekord<Waluta>
+public class Waluta : Rekord<Waluta>
 {
 	public string Skrot { get; set; } = "";
 	public string Nazwa { get; set; } = "";

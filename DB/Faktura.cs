@@ -3,7 +3,7 @@ using System.Xml.Linq;
 
 namespace ProFak.DB;
 
-class Faktura : Rekord<Faktura>
+public class Faktura : Rekord<Faktura>
 {
 	public string Numer { get; set; } = "";
 	public DateTime DataWystawienia { get; set; } = DateTime.Now.Date;
@@ -418,7 +418,7 @@ class Faktura : Rekord<Faktura>
 	}
 }
 
-enum RodzajFaktury
+public enum RodzajFaktury
 {
 	Sprzedaż,
 	Zakup,
@@ -431,7 +431,7 @@ enum RodzajFaktury
 	KorektaVatMarży
 }
 
-enum ProceduraMarży
+public enum ProceduraMarży
 {
 	NieDotyczy,
 	TowaryUżywane,
