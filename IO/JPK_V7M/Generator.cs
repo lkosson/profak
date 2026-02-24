@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace ProFak.IO.JPK_V7M;
 
-class Generator
+public class Generator
 {
 	public static void Utworz(string plik, Baza baza, DeklaracjaVat deklaracja)
 	{

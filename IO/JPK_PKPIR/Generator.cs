@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace ProFak.IO.JPK_PKPIR;
 
-class Generator
+public class Generator
 {
 	public static void Utworz(string plik, Baza baza, IEnumerable<ZaliczkaPit> zaliczki)
 	{

@@ -1,6 +1,6 @@
 ﻿namespace ProFak.IO.KSEF2;
 
-class InvoiceHeader
+public class InvoiceHeader
 {
 	public string ReferenceNumber { get; set; } = "";
 	public string KsefReferenceNumber { get; set; } = "";

@@ -2,7 +2,7 @@
 
 namespace ProFak.IO;
 
-class MF
+public class MF
 {
 	public static async Task<string> SprawdzBialaListeVAT(string nip, string nrb, CancellationToken cancellationToken)
 	{

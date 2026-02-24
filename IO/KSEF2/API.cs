@@ -18,7 +18,7 @@ using System.Text;
 
 namespace ProFak.IO.KSEF2;
 
-class API : IDisposable
+public class API : IDisposable
 {
 	private static ServiceProvider? serviceProvider;
 	private static SrodowiskoKSeF? srodowisko;

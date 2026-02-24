@@ -10,7 +10,7 @@ using KSEFFaktura = ProFak.IO.FA_2.Faktura;
 
 namespace ProFak.IO.FA_2;
 
-class Generator
+public class Generator
 {
 	public static string ZbudujXML(Baza baza, Ref<DBFaktura> dbFakturaRef)
 	{

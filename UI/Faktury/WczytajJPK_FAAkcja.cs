@@ -20,7 +20,7 @@ class WczytajJPK_FAAkcja : AkcjaNaSpisie<Faktura>
 		using var transakcja = nowyKontekst.Transakcja();
 
 		using var fs = File.OpenRead(dialog.FileName);
-		IO.JPK_FA.Importer.Wczytaj(fs, nowyKontekst);
+		IO.JPK_FA.Importer.Wczytaj(fs, nowyKontekst.Baza);
 
 		transakcja.Zatwierdz();
 	}

@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace ProFak.IO;
 
-class GUS
+public class GUS
 {
 	private static readonly string[] FragmentyKodu = ["y1y", "yy2", "yy3", "yy4", "yy5", "yy6", "yy7", "yy8", "yy9", "y20", "y2y", "y22", "y23", "y24", "y25", "y26", "y27", "y28", "y29", "y30", "!3!", "!32", "!33", "!34", "!35", "!36", "!37", "!38", "!39", "!40", "!4!", "!42", "!43", "!44", "!45", "!46", "!47", "!48", "!49", "!50", "!5!", "!52", "!53", "1b4", "1bb", "1ba", "1b7", "1b8", "1b9", "1a0", "1a1", "1a2", "1a3", "1a4", "1ab", "1aa", "1a7", "1a8", "1a9", "170", "171", "172", "173", "174", "17b", "71a"];
 	private static readonly string ZnakiB64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
