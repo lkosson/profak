@@ -7,7 +7,7 @@ using ZXing.Windows.Compatibility;
 
 namespace ProFak.Wydruki;
 
-class Faktura : Wydruk
+public class Faktura : Wydruk
 {
 	private readonly List<FakturaDTO> dane;
 

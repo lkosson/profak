@@ -3,7 +3,7 @@ using ProFak.DB;
 
 namespace ProFak.Wydruki;
 
-class PKPiR : Wydruk
+public class PKPiR : Wydruk
 {
 	private readonly List<PKPiRDTO> dane;
 

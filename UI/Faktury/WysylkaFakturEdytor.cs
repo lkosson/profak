@@ -172,11 +172,8 @@ partial class WysylkaFakturEdytor : UserControl
 
 	private byte[] PrzygotujPDF(Ref<Faktura> fakturaRef)
 	{
-		using var localReport = new LocalReport();
 		var wydruk = new Wydruki.Faktura(Kontekst.Baza, new[] { fakturaRef });
-		wydruk.Przygotuj(localReport);
-		var pdf = localReport.Render("PDF");
-		return pdf;
+		return wydruk.ZapiszJako();
 	}
 
 	private async Task Wyslij(string temat, string tresc, string adresat, string nadawca, byte[] pdf, string nazwa, CancellationToken cancellationToken)

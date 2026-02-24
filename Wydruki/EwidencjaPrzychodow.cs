@@ -4,7 +4,7 @@ using ProFak.DB;
 
 namespace ProFak.Wydruki;
 
-class EwidencjaPrzychodow : Wydruk
+public class EwidencjaPrzychodow : Wydruk
 {
 	private readonly List<EwidencjaPrzychodowDTO> dane;
 
