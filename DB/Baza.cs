@@ -23,6 +23,7 @@ public class Baza : DbContext
 	public static string? Sciezka { get; set; }
 
 	private static SqliteConnection? bazaTymczasowa;
+	private readonly string parametryPolaczenia;
 
 	public IQueryable<DeklaracjaVat> DeklaracjeVat => Set<DeklaracjaVat>();
 	public IQueryable<DodatkowyPodmiot> DodatkowePodmioty => Set<DodatkowyPodmiot>();
@@ -46,11 +47,17 @@ public class Baza : DbContext
 	public IQueryable<Zawartosc> Zawartosci => Set<Zawartosc>();
 	public IQueryable<ZaliczkaPit> ZaliczkiPit => Set<ZaliczkaPit>();
 
-	public Baza()
+	public Baza(string? sciezka)
 	{
+		parametryPolaczenia = PrzygotujParametryPolaczenia(sciezka ?? Sciezka);
 		// IdentityResolution potrzebne, żeby dało się jednocześnie skasować dwie faktury z dołączoną taką samą walutą;
 		// bez tego RemoveRange próbuje dodać dwie takie same waluty do konktekstu i wywala się na duplikacji.
 		ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTrackingWithIdentityResolution;
+	}
+
+	public Baza()
+		: this(null)
+	{
 	}
 
 	public static void Przygotuj()
@@ -102,7 +109,7 @@ public class Baza : DbContext
 			plikNieaktualny = plikDocelowy + "-del";
 			File.Move(plikDocelowy, plikNieaktualny);
 		}
-		using (var zrodlo = new SqliteConnection(PrzygotujParametryPolaczenia()))
+		using (var zrodlo = new SqliteConnection(PrzygotujParametryPolaczenia(Sciezka)))
 		{
 			zrodlo.Open();
 			using var cel = new SqliteConnection($"Data Source={plikDocelowy};Pooling=false");
@@ -137,13 +144,13 @@ public class Baza : DbContext
 		}
 	}
 
-	private static string PrzygotujParametryPolaczenia()
+	private static string PrzygotujParametryPolaczenia(string? sciezka)
 	{
 #if SQLSERVER
-		return Sciezka;
+		return sciezka;
 #else
 		string polaczenie;
-		if (Sciezka == null)
+		if (sciezka == null)
 		{
 			polaczenie = "Data Source=ProFak;Mode=Memory;Cache=Shared";
 			if (bazaTymczasowa == null)
@@ -154,7 +161,7 @@ public class Baza : DbContext
 		}
 		else
 		{
-			polaczenie = $"Data Source={Sciezka}";
+			polaczenie = $"Data Source={sciezka}";
 		}
 		return polaczenie;
 #endif
@@ -164,9 +171,9 @@ public class Baza : DbContext
 	{
 		base.OnConfiguring(optionsBuilder);
 #if SQLSERVER
-		optionsBuilder.UseSqlServer(PrzygotujParametryPolaczenia());
+		optionsBuilder.UseSqlServer(parametryPolaczenia);
 #else
-		optionsBuilder.UseSqlite(PrzygotujParametryPolaczenia(), opts => opts.CommandTimeout(5));
+		optionsBuilder.UseSqlite(parametryPolaczenia, opts => opts.CommandTimeout(5));
 #endif
 #if LOG_SQL
 		optionsBuilder.EnableSensitiveDataLogging();
@@ -277,7 +284,7 @@ public class Baza : DbContext
 		if (Sciezka == null) return false;
 		try
 		{
-			using var connection = new SqliteConnection(PrzygotujParametryPolaczenia());
+			using var connection = new SqliteConnection(PrzygotujParametryPolaczenia(Sciezka));
 			connection.Open();
 			using (var command = connection.CreateCommand())
 			{
