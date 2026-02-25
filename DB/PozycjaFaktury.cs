@@ -38,7 +38,7 @@ public class PozycjaFaktury : Rekord<PozycjaFaktury>
 	public JednostkaMiary? JednostkaMiary { get; set; }
 
 	public decimal Cena => CzyWedlugCenBrutto ? CenaBrutto : CenaNetto;
-	public decimal IloscAbs => Math.Abs(Ilosc);
+	public decimal IloscAbs => Math.Abs(Ilosc) / 1.0000000m;
 	public decimal WartoscNettoAbs => Math.Abs(WartoscNetto);
 	public decimal WartoscVatAbs => Math.Abs(WartoscVat);
 	public decimal WartoscBruttoAbs => Math.Abs(WartoscBrutto);
