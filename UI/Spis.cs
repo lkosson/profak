@@ -207,9 +207,21 @@ abstract class Spis<T> : Spis
 		{
 			using var font = new Font(Font.FontFamily, 24, FontStyle.Bold);
 			using var brush = new SolidBrush(Color.FromArgb(200, 50, 50, 50));
-			using var sf = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+			using var sf = new StringFormat(StringFormat.GenericTypographic) { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
 			e.Graphics.DrawString(komunikat, font, brush, new RectangleF(0, 0, Width, Height), sf);
 		}
+	}
+
+	protected override void OnResize(EventArgs e)
+	{
+		if (!String.IsNullOrWhiteSpace(Komunikat)) Invalidate();
+		base.OnResize(e);
+	}
+
+	protected override void OnScroll(ScrollEventArgs e)
+	{
+		if (!String.IsNullOrWhiteSpace(Komunikat)) Invalidate();
+		base.OnScroll(e);
 	}
 
 	public void PrzeladujBezpiecznie()
