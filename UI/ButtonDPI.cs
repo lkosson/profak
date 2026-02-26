@@ -1,24 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿namespace ProFak.UI;
 
-namespace ProFak.UI
+class ButtonDPI : Button
 {
-	class ButtonDPI : Button
+	public ButtonDPI()
 	{
-		public ButtonDPI()
-		{
-		}
+	}
 
-		protected override void OnCreateControl()
-		{
-			base.OnCreateControl();
-			Height = 23 * DeviceDpi / 96;
-			if (Text == "..." || Text == "➕") Width = Height;
-			if (Text == "➕" && !Wyglad.IkonyAkcji) Text = "+";
-		}
+	protected override void OnCreateControl()
+	{
+		base.OnCreateControl();
+		Height = 23 * DeviceDpi / 96;
+		if (Text == "..." || Text == "➕") Width = Height;
+		if (Text == "➕" && !Wyglad.IkonyAkcji) Text = "+";
 	}
 }

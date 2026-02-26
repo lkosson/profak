@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿namespace ProFak.UI;
 
-namespace ProFak.UI
+class NumericUpDownDPI : NumericUpDown
 {
-	class NumericUpDownDPI : NumericUpDown
+	public NumericUpDownDPI()
 	{
-		public NumericUpDownDPI()
-		{
-		}
+	}
 
-		protected override void OnParentChanged(EventArgs e)
-		{
-			base.OnParentChanged(e);
-			AutoScaleMode = AutoScaleMode.None;
-		}
+	protected override void OnParentChanged(EventArgs e)
+	{
+		base.OnParentChanged(e);
+		AutoScaleMode = AutoScaleMode.None;
 	}
 }

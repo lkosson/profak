@@ -1,30 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ProFak.DB.Model
+namespace ProFak.DB.Model;
+
+class ZaliczkaPitBuilder
 {
-	class ZaliczkaPitBuilder
+	public static void Configure(EntityTypeBuilder<ZaliczkaPit> builder)
 	{
-		public static void Configure(EntityTypeBuilder<ZaliczkaPit> builder)
-		{
-			builder.ToTable(nameof(ZaliczkaPit));
+		builder.ToTable(nameof(ZaliczkaPit));
 
-			builder.HasKey(e => e.Id);
+		builder.HasKey(e => e.Id);
 
-			builder.Property(e => e.Id).ValueGeneratedOnAdd().IsRequired();
-			builder.Property(e => e.Miesiac).IsRequired();
-			builder.Property(e => e.Przychody).HasDefaultValue(0).IsRequired();
-			builder.Property(e => e.Koszty).HasDefaultValue(0).IsRequired();
-			builder.Property(e => e.SkladkiZus).HasDefaultValue(0).IsRequired();
-			builder.Property(e => e.Podatek).HasDefaultValue(0).IsRequired();
-			builder.Property(e => e.Przeniesiony).HasDefaultValue(0).IsRequired();
-			builder.Property(e => e.DoPrzeniesienia).HasDefaultValue(0).IsRequired();
-			builder.Property(e => e.DoWplaty).HasDefaultValue(0).IsRequired();
-		}
+		builder.Property(e => e.Id).ValueGeneratedOnAdd().IsRequired();
+		builder.Property(e => e.Miesiac).IsRequired();
+		builder.Property(e => e.Przychody).HasDefaultValue(0).IsRequired();
+		builder.Property(e => e.Koszty).HasDefaultValue(0).IsRequired();
+		builder.Property(e => e.SkladkiZus).HasDefaultValue(0).IsRequired();
+		builder.Property(e => e.Podatek).HasDefaultValue(0).IsRequired();
+		builder.Property(e => e.Przeniesiony).HasDefaultValue(0).IsRequired();
+		builder.Property(e => e.DoPrzeniesienia).HasDefaultValue(0).IsRequired();
+		builder.Property(e => e.DoWplaty).HasDefaultValue(0).IsRequired();
 	}
 }

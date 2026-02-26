@@ -1,8 +1,6 @@
-﻿namespace ProFak.UI;
-using System;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Windows.Forms;
+﻿using System.Runtime.CompilerServices;
+
+namespace ProFak.UI;
 
 // https://devblogs.microsoft.com/oldnewthing/20190329-00/?p=102373
 

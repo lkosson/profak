@@ -15,7 +15,7 @@ namespace ProFak.DB.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.1");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.2");
 
             modelBuilder.Entity("ProFak.DB.DeklaracjaVat", b =>
                 {
@@ -480,43 +480,87 @@ namespace ProFak.DB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("DomyslnyPodgladStrony")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("EMailNadawca")
-                        .HasColumnType("TEXT");
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("");
 
                     b.Property<string>("EMailTemat")
-                        .HasColumnType("TEXT");
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("");
 
                     b.Property<string>("EMailTresc")
-                        .HasColumnType("TEXT");
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("");
+
+                    b.Property<bool>("IkonyAkcji")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("NazwaCzcionki")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("");
+
+                    b.Property<bool>("PotwierdzanieZamknieciaEdytora")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("PotwierdzanieZamknieciaProgramu")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("RozmiarCzcionki")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("SMTPHaslo")
-                        .HasColumnType("TEXT");
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("");
 
                     b.Property<string>("SMTPLogin")
-                        .HasColumnType("TEXT");
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("");
 
                     b.Property<int>("SMTPPort")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("SMTPSerwer")
-                        .HasColumnType("TEXT");
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("");
+
+                    b.Property<bool>("SkrotyKlawiaturoweAkcji")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("SkrotyKlawiaturowePrzyciskow")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("SkrotyKlawiaturoweZakladek")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SzerokoscMenu")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Wersja")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("WstepneLadowanieReportingServices")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.ToTable("Konfiguracja", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            EMailNadawca = "[SPRZEDAWCA-NAZWA] <[SPRZEDAWCA-EMAIL]>",
-                            EMailTemat = "Faktura - [NUMER]",
-                            EMailTresc = "Dzień dobry,\r\n\r\nw załączniku znajduje się faktura numer [NUMER] z dnia [DATA-SPRZEDAZY] na kwotę [KWOTA-BRUTTO] [WALUTA].\r\n\r\nWiadomość wygenerowana automatycznie.\r\n\r\n-- \r\n[SPRZEDAWCA-NAZWA]\r\n[SPRZEDAWCA-ADRES]",
-                            SMTPHaslo = "tajnehaslo",
-                            SMTPLogin = "biuro",
-                            SMTPPort = 465,
-                            SMTPSerwer = "smtp.example.com"
-                        });
                 });
 
             modelBuilder.Entity("ProFak.DB.Kontrahent", b =>
@@ -526,11 +570,13 @@ namespace ProFak.DB.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("AdresKorespondencyjny")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValue("");
 
                     b.Property<string>("AdresRejestrowy")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValue("");
@@ -551,6 +597,7 @@ namespace ProFak.DB.Migrations
                         .HasDefaultValue(false);
 
                     b.Property<string>("EMail")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValue("");
@@ -559,6 +606,7 @@ namespace ProFak.DB.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("KodUrzedu")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValue("");
@@ -576,6 +624,7 @@ namespace ProFak.DB.Migrations
                         .HasDefaultValue("");
 
                     b.Property<string>("NazwaBanku")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValue("");
@@ -584,11 +633,13 @@ namespace ProFak.DB.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("OsobaFizycznaImie")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValue("");
 
                     b.Property<string>("OsobaFizycznaNazwisko")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValue("");
@@ -600,6 +651,7 @@ namespace ProFak.DB.Migrations
                         .HasDefaultValue("");
 
                     b.Property<string>("RachunekBankowy")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValue("");
@@ -613,21 +665,25 @@ namespace ProFak.DB.Migrations
                         .HasDefaultValue(0);
 
                     b.Property<string>("Telefon")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValue("");
 
                     b.Property<string>("TokenKSeF")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValue("");
 
                     b.Property<string>("UwagiPubliczne")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValue("");
 
                     b.Property<string>("UwagiWewnetrzne")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValue("");
@@ -1114,6 +1170,7 @@ namespace ProFak.DB.Migrations
                         .HasDefaultValue(0m);
 
                     b.Property<string>("Uwagi")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValue("");

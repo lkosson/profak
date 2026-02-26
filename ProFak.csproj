@@ -6,12 +6,14 @@
     <UseWindowsForms>true</UseWindowsForms>
     <Authors>Łukasz Kosson</Authors>
     <ApplicationIcon>ikona.ico</ApplicationIcon>
-    <Version>1.16.0</Version>
+    <Version>1.16.1</Version>
     <PublishDir>bin\Publish</PublishDir>
   </PropertyGroup>
 
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);nSQLSERVER;</DefineConstants>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>

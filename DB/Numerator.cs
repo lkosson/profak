@@ -1,71 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
+﻿using System.Globalization;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
-namespace ProFak.DB
+namespace ProFak.DB;
+
+public class Numerator : Rekord<Numerator>
 {
-	class Numerator : Rekord<Numerator>
+	public PrzeznaczenieNumeratora Przeznaczenie { get; set; } = PrzeznaczenieNumeratora.Faktura;
+	public string Format { get; set; } = "[Numer]";
+
+	public string PrzeznaczenieFmt => Format(Przeznaczenie);
+
+	public List<StanNumeratora> Stany { get; set; } = default!;
+
+	public override bool CzyPasuje(string fraza)
+		=> base.CzyPasuje(fraza)
+		|| CzyPasuje(Przeznaczenie, fraza)
+		|| CzyPasuje(Format, fraza);
+
+	public static string NadajNumer(Baza baza, PrzeznaczenieNumeratora przeznaczenie, Func<string, IFormattable?> podstawienie, bool zwiekszLicznik = true)
 	{
-		public PrzeznaczenieNumeratora Przeznaczenie { get; set; } = PrzeznaczenieNumeratora.Faktura;
-		public string Format { get; set; } = "[Numer]";
+		baza.Zablokuj<Numerator>();
+		var numerator = baza.Numeratory.FirstOrDefault(numerator => numerator.Przeznaczenie == przeznaczenie);
+		if (numerator == null) throw new ApplicationException($"Brak definicji numeratora \"{przeznaczenie}\" - dodaj pozycję w spisie \"Serwisowe\" - \"Numeracja\".");
+		var szablon = PrzygotujWzorzec(numerator.Format, podstawienie);
+		var parametry = String.Format(szablon, "");
 
-		public string PrzeznaczenieFmt => Format(Przeznaczenie);
+		var stanNumeratora = baza.StanyNumeratorow.FirstOrDefault(stan => stan.NumeratorId == numerator.Id && stan.Parametry == parametry);
+		if (stanNumeratora == null) stanNumeratora = new StanNumeratora { NumeratorRef = numerator, Parametry = parametry, OstatniaWartosc = 0 };
 
-		public List<StanNumeratora> Stany { get; set; }
-
-		public override bool CzyPasuje(string fraza)
-			=> base.CzyPasuje(fraza)
-			|| CzyPasuje(Przeznaczenie, fraza)
-			|| CzyPasuje(Format, fraza);
-
-		public static string NadajNumer(Baza baza, PrzeznaczenieNumeratora przeznaczenie, Func<string, IFormattable> podstawienie, bool zwiekszLicznik = true)
+		var licznik = stanNumeratora.OstatniaWartosc + 1;
+		var numer = String.Format(szablon, licznik);
+		if (zwiekszLicznik)
 		{
-			baza.Zablokuj<Numerator>();
-			var numerator = baza.Numeratory.FirstOrDefault(numerator => numerator.Przeznaczenie == przeznaczenie);
-			if (numerator == null) throw new ApplicationException($"Brak definicji numeratora \"{przeznaczenie}\" - dodaj pozycję w spisie \"Serwisowe\" - \"Numeracja\".");
-			var szablon = PrzygotujWzorzec(numerator.Format, podstawienie);
-			var parametry = String.Format(szablon, "");
-
-			var stanNumeratora = baza.StanyNumeratorow.FirstOrDefault(stan => stan.NumeratorId == numerator.Id && stan.Parametry == parametry);
-			if (stanNumeratora == null) stanNumeratora = new StanNumeratora { NumeratorRef = numerator, Parametry = parametry, OstatniaWartosc = 0 };
-
-			var licznik = stanNumeratora.OstatniaWartosc + 1;
-			var numer = String.Format(szablon, licznik);
-			if (zwiekszLicznik)
-			{
-				stanNumeratora.OstatniaWartosc = licznik;
-				baza.Zapisz(stanNumeratora);
-			}
-
-			return numer;
+			stanNumeratora.OstatniaWartosc = licznik;
+			baza.Zapisz(stanNumeratora);
 		}
 
-		public static string PrzygotujWzorzec(string format, Func<string, IFormattable> podstawienie)
-		{
-			return Regex.Replace(format, @"\[(?<nazwa>\w+)(:(?<format>[^\]]+))?\]", fragment =>
-			{
-				var nazwa = fragment.Groups["nazwa"]?.Value;
-				var format = fragment.Groups["format"]?.Value;
-				if (String.Equals(nazwa, "numer", StringComparison.CurrentCultureIgnoreCase)) return "{0" + (String.IsNullOrEmpty(format) ? "" : ":" + format) + "}";
-				var wartosc = podstawienie(nazwa);
-				if (wartosc == null) throw new ApplicationException($"Nieznane wyrażenie numeratora \"{nazwa}\".");
-				var tekst = String.IsNullOrWhiteSpace(format) ? wartosc.ToString() : wartosc.ToString(format, CultureInfo.CurrentCulture);
-				return tekst;
-			});
-		}
+		return numer;
 	}
 
-	enum PrzeznaczenieNumeratora
+	public static string PrzygotujWzorzec(string format, Func<string, IFormattable?> podstawienie)
 	{
-		Faktura,
-		Proforma,
-		KorektaSprzedaży,
-		DowódWewnętrzny,
-		VatMarża,
-		KorektaVatMarży
+		return Regex.Replace(format, @"\[(?<nazwa>\w+)(:(?<format>[^\]]+))?\]", fragment =>
+		{
+			var nazwa = fragment.Groups["nazwa"].Value;
+			var format = fragment.Groups["format"]?.Value;
+			if (String.Equals(nazwa, "numer", StringComparison.CurrentCultureIgnoreCase)) return "{0" + (String.IsNullOrEmpty(format) ? "" : ":" + format) + "}";
+			var wartosc = podstawienie(nazwa);
+			if (wartosc == null) throw new ApplicationException($"Nieznane wyrażenie numeratora \"{nazwa}\".");
+			var tekst = String.IsNullOrWhiteSpace(format) ? wartosc.ToString() ?? "" : wartosc.ToString(format, CultureInfo.CurrentCulture);
+			return tekst;
+		});
 	}
+}
+
+public enum PrzeznaczenieNumeratora
+{
+	Faktura,
+	Proforma,
+	KorektaSprzedaży,
+	DowódWewnętrzny,
+	VatMarża,
+	KorektaVatMarży
 }

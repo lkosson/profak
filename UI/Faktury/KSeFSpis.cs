@@ -1,150 +1,140 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ProFak.DB;
+﻿using ProFak.DB;
 using ProFak.IO.KSEF2;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace ProFak.UI
+namespace ProFak.UI;
+
+class KSeFSpis : Spis<Faktura>
 {
-	class KSeFSpis : Spis<Faktura>
+	private bool pierwszeZaladowanie = true;
+	private readonly bool sprzedaz;
+	private readonly bool przyrostowo;
+	private readonly DateTime odDaty;
+	private readonly DataGridViewTextBoxColumn kolumnaNazwaNabywcy;
+	private readonly DataGridViewTextBoxColumn kolumnaNIPNabywcy;
+	private readonly DataGridViewTextBoxColumn kolumnaNazwaSprzedawcy;
+	private readonly DataGridViewTextBoxColumn kolumnaNIPSprzedawcy;
+	public override string Podsumowanie
 	{
-		private bool pierwszeZaladowanie = true;
-		private readonly bool sprzedaz;
-		private readonly bool przyrostowo;
-		private readonly DateTime odDaty;
-		private readonly DataGridViewTextBoxColumn kolumnaNazwaNabywcy;
-		private readonly DataGridViewTextBoxColumn kolumnaNIPNabywcy;
-		private readonly DataGridViewTextBoxColumn kolumnaNazwaSprzedawcy;
-		private readonly DataGridViewTextBoxColumn kolumnaNIPSprzedawcy;
-		public override string Podsumowanie
+		get
 		{
-			get
+			var podsumowanie = base.Podsumowanie;
+			if (WybraneRekordy.Count() > 1)
 			{
-				var podsumowanie = base.Podsumowanie;
-				if (WybraneRekordy.Count() > 1)
-				{
-					podsumowanie += $"\nRazem netto: <{WybraneRekordy.Sum(faktura => faktura.RazemNetto).ToString(Format.Kwota)}>";
-					podsumowanie += $"\nRazem VAT: <{WybraneRekordy.Sum(faktura => faktura.RazemVat).ToString(Format.Kwota)}>";
-					podsumowanie += $"\nRazem brutto: <{WybraneRekordy.Sum(faktura => faktura.RazemBrutto).ToString(Format.Kwota)}>";
-				}
-				return podsumowanie;
+				podsumowanie += $"\nRazem netto: <{WybraneRekordy.Sum(faktura => faktura.RazemNetto).ToString(Format.Kwota)}>";
+				podsumowanie += $"\nRazem VAT: <{WybraneRekordy.Sum(faktura => faktura.RazemVat).ToString(Format.Kwota)}>";
+				podsumowanie += $"\nRazem brutto: <{WybraneRekordy.Sum(faktura => faktura.RazemBrutto).ToString(Format.Kwota)}>";
 			}
+			return podsumowanie;
+		}
+	}
+
+	public KSeFSpis()
+	{
+		DodajKolumne(nameof(Faktura.Numer), "Numer");
+		DodajKolumne(nameof(Faktura.RodzajFmt), "Rodzaj");
+		DodajKolumneData(nameof(Faktura.DataSprzedazy), "Data sprzedaży");
+		DodajKolumneData(nameof(Faktura.DataKSeF), "Data wystawienia", tooltip: faktura => faktura.DataKSeF?.ToString("yyyy-MM-dd HH:mm:ss"));
+		kolumnaNazwaNabywcy = DodajKolumne(nameof(Faktura.NazwaNabywcy), "Nabywca", rozciagnij: true);
+		kolumnaNIPNabywcy = DodajKolumne(nameof(Faktura.NIPNabywcy), "NIP nabywcy", szerokosc: 120);
+		kolumnaNazwaSprzedawcy = DodajKolumne(nameof(Faktura.NazwaSprzedawcy), "Sprzedawca", rozciagnij: true);
+		kolumnaNIPSprzedawcy = DodajKolumne(nameof(Faktura.NIPSprzedawcy), "NIP sprzedawcy", szerokosc: 120);
+		DodajKolumneKwota(nameof(Faktura.RazemNetto), "Netto");
+		DodajKolumneKwota(nameof(Faktura.RazemVat), "VAT");
+		DodajKolumneKwota(nameof(Faktura.RazemBrutto), "Brutto");
+		DodajKolumne(nameof(Faktura.WalutaFmt), "Waluta", szerokosc: 70);
+		DodajKolumne(nameof(Faktura.NumerKSeF), "Id", szerokosc: 230);
+		Komunikat = "Przeładuj spis, aby pobrać dane z KSeF";
+	}
+
+	public KSeFSpis(bool sprzedaz, string[]? parametry)
+		: this()
+	{
+		this.sprzedaz = sprzedaz;
+		if (parametry == null) return;
+		odDaty = DateTime.Now.Date.AddMonths(-12);
+		foreach (var parametr in parametry)
+		{
+			if (parametr == "Przyrostowo") przyrostowo = true;
+			else if (parametr == "Dzis") odDaty = DateTime.Now.Date;
+			else if (parametr == "Wczoraj") odDaty = DateTime.Now.Date.AddDays(-1);
+			else if (parametr == "Miesiac") odDaty = DateTime.Now.Date.AddDays(1 - DateTime.Now.Day);
+			else if (parametr == "Poprzedni") odDaty = DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-1);
+			else if (parametr == "Rok") odDaty = new DateTime(DateTime.Now.Year, 1, 1);
+		}
+	}
+
+	protected override void Przeladuj()
+	{
+		kolumnaNazwaNabywcy.Visible = sprzedaz;
+		kolumnaNIPNabywcy.Visible = sprzedaz;
+		kolumnaNazwaSprzedawcy.Visible = !sprzedaz;
+		kolumnaNIPSprzedawcy.Visible = !sprzedaz;
+
+		if (pierwszeZaladowanie)
+		{
+			pierwszeZaladowanie = false;
+			return;
 		}
 
-		public KSeFSpis()
+		Komunikat = "Pobieranie danych z KSEF";
+
+		List<Faktura> rekordy = [];
+
+		OknoPostepu.Uruchom(async cancellationToken =>
 		{
-			DodajKolumne(nameof(Faktura.Numer), "Numer");
-			DodajKolumne(nameof(Faktura.RodzajFmt), "Rodzaj");
-			DodajKolumneData(nameof(Faktura.DataSprzedazy), "Data sprzedaży");
-			DodajKolumneData(nameof(Faktura.DataKSeF), "Data wystawienia", tooltip: faktura => faktura.DataKSeF?.ToString("yyyy-MM-dd HH:mm:ss"));
-			kolumnaNazwaNabywcy = DodajKolumne(nameof(Faktura.NazwaNabywcy), "Nabywca", rozciagnij: true);
-			kolumnaNIPNabywcy = DodajKolumne(nameof(Faktura.NIPNabywcy), "NIP nabywcy", szerokosc: 120);
-			kolumnaNazwaSprzedawcy = DodajKolumne(nameof(Faktura.NazwaSprzedawcy), "Sprzedawca", rozciagnij: true);
-			kolumnaNIPSprzedawcy = DodajKolumne(nameof(Faktura.NIPSprzedawcy), "NIP sprzedawcy", szerokosc: 120);
-			DodajKolumneKwota(nameof(Faktura.RazemNetto), "Netto");
-			DodajKolumneKwota(nameof(Faktura.RazemVat), "VAT");
-			DodajKolumneKwota(nameof(Faktura.RazemBrutto), "Brutto");
-			DodajKolumne(nameof(Faktura.WalutaFmt), "Waluta", szerokosc: 70);
-			DodajKolumne(nameof(Faktura.NumerKSeF), "Id", szerokosc: 230);
-			Komunikat = "Przeładuj spis, aby pobrać dane z KSeF";
-		}
-
-		public KSeFSpis(bool sprzedaz, string[] parametry)
-			: this()
-		{
-			this.sprzedaz = sprzedaz;
-			if (parametry == null) return;
-			odDaty = DateTime.Now.Date.AddMonths(-12);
-			foreach (var parametr in parametry)
+			try
 			{
-				if (parametr == "Przyrostowo") przyrostowo = true;
-				else if (parametr == "Dzis") odDaty = DateTime.Now.Date;
-				else if (parametr == "Wczoraj") odDaty = DateTime.Now.Date.AddDays(-1);
-				else if (parametr == "Miesiac") odDaty = DateTime.Now.Date.AddDays(1 - DateTime.Now.Day);
-				else if (parametr == "Poprzedni") odDaty = DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-1);
-				else if (parametr == "Rok") odDaty = new DateTime(DateTime.Now.Year, 1, 1);
-			}
-		}
-
-		protected override void Przeladuj()
-		{
-			kolumnaNazwaNabywcy.Visible = sprzedaz;
-			kolumnaNIPNabywcy.Visible = sprzedaz;
-			kolumnaNazwaSprzedawcy.Visible = !sprzedaz;
-			kolumnaNIPSprzedawcy.Visible = !sprzedaz;
-
-			if (pierwszeZaladowanie)
-			{
-				pierwszeZaladowanie = false;
-				return;
-			}
-
-			Komunikat = "Pobieranie danych z KSEF";
-
-			List<Faktura> rekordy = [];
-
-			OknoPostepu.Uruchom(async cancellationToken =>
-			{
-				try
+				var odDaty = this.odDaty;
+				var doDaty = DateTime.Now;
+				var podmiot = Kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
+				if (String.IsNullOrEmpty(podmiot.TokenKSeF)) throw new ApplicationException("Brak tokena dostępowego do KSeF w danych firmy.\nNadaj dostęp do KSeF w oknie \"Kontrahenci\" -> \"Moja firma\" -> \"Dane urzędowe\" -> \"Token KSeF\".");
+				if (przyrostowo)
 				{
-					var odDaty = this.odDaty;
-					var doDaty = DateTime.Now;
-					var podmiot = Kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
-					if (String.IsNullOrEmpty(podmiot.TokenKSeF)) throw new ApplicationException("Brak tokena dostępowego do KSeF w danych firmy.\nNadaj dostęp do KSeF w oknie \"Kontrahenci\" -> \"Moja firma\" -> \"Dane urzędowe\" -> \"Token KSeF\".");
-					if (przyrostowo)
-					{
-						var ostatnia = Kontekst.Baza.Faktury
-							.Where(e => e.Rodzaj == RodzajFaktury.Zakup || e.Rodzaj == RodzajFaktury.KorektaZakupu)
-							.Where(e => !String.IsNullOrEmpty(e.NumerKSeF))
-							.OrderByDescending(e => e.DataKSeF)
-							.FirstOrDefault();
-						if (ostatnia != null && ostatnia.DataKSeF.HasValue) odDaty = ostatnia.DataKSeF.Value;
-					}
-					var istniejace = Kontekst.Baza.Faktury.Where(e => !String.IsNullOrEmpty(e.NumerKSeF)).Select(e => e.NumerKSeF).ToHashSet();
-					using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
-					await api.UwierzytelnijAsync(podmiot.NIP, podmiot.TokenKSeF, cancellationToken);
-					var naglowki = new List<InvoiceHeader>();
-					while (odDaty < doDaty)
-					{
-						if (cancellationToken.IsCancellationRequested) break;
-						var koniecFragmentu = odDaty.AddMonths(3);
-						if (koniecFragmentu > doDaty) koniecFragmentu = doDaty;
-						var fragment = await api.PobierzFakturyAsync(przyrostowo, sprzedaz, odDaty, koniecFragmentu, cancellationToken);
-						naglowki.AddRange(fragment);
-						odDaty = koniecFragmentu;
-					}
-					
-					rekordy = naglowki.Select(api.WczytajNaglowek).ToList();
-					var i = 1;
-					foreach (var rekord in rekordy)
-					{
-						if (sprzedaz) rekord.Rodzaj = rekord.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaSprzedaży : RodzajFaktury.Sprzedaż;
-						rekord.Id = istniejace.Contains(rekord.NumerKSeF) ? i : -i;
-						i++;
-					}
-					if (przyrostowo) rekordy.RemoveAll(e => e.Id > 0);
-					rekordy.Sort((e, f) => e.DataKSeF.GetValueOrDefault().CompareTo(f.DataKSeF.GetValueOrDefault()));
+					var ostatnia = Kontekst.Baza.Faktury
+						.Where(e => e.Rodzaj == RodzajFaktury.Zakup || e.Rodzaj == RodzajFaktury.KorektaZakupu)
+						.Where(e => !String.IsNullOrEmpty(e.NumerKSeF))
+						.OrderByDescending(e => e.DataKSeF)
+						.FirstOrDefault();
+					if (ostatnia != null && ostatnia.DataKSeF.HasValue) odDaty = ostatnia.DataKSeF.Value;
 				}
-				catch (Exception exc)
+				var istniejace = Kontekst.Baza.Faktury.Where(e => !String.IsNullOrEmpty(e.NumerKSeF)).Select(e => e.NumerKSeF).ToHashSet();
+				using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
+				await api.UwierzytelnijAsync(podmiot.NIP, podmiot.TokenKSeF, cancellationToken);
+				var naglowki = new List<InvoiceHeader>();
+				while (odDaty < doDaty)
 				{
-					OknoBledu.Pokaz(exc);
+					if (cancellationToken.IsCancellationRequested) break;
+					var koniecFragmentu = odDaty.AddMonths(3);
+					if (koniecFragmentu > doDaty) koniecFragmentu = doDaty;
+					var fragment = await api.PobierzFakturyAsync(przyrostowo, sprzedaz, odDaty, koniecFragmentu, cancellationToken);
+					naglowki.AddRange(fragment);
+					odDaty = koniecFragmentu;
 				}
-			});
 
-			Rekordy = rekordy;
-			Komunikat = null;
-		}
+				rekordy = naglowki.Select(api.WczytajNaglowek).ToList();
+				var i = 1;
+				foreach (var rekord in rekordy)
+				{
+					if (sprzedaz) rekord.Rodzaj = rekord.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaSprzedaży : RodzajFaktury.Sprzedaż;
+					rekord.Id = istniejace.Contains(rekord.NumerKSeF) ? i : -i;
+					i++;
+				}
+				if (przyrostowo) rekordy.RemoveAll(e => e.Id > 0);
+				rekordy.Sort((e, f) => e.DataKSeF.GetValueOrDefault().CompareTo(f.DataKSeF.GetValueOrDefault()));
+			}
+			catch (Exception exc)
+			{
+				OknoBledu.Pokaz(exc);
+			}
+		});
 
-		protected override void UstawStylWiersza(Faktura rekord, string kolumna, DataGridViewCellStyle styl)
-		{
-			base.UstawStylWiersza(rekord, kolumna, styl);
-			if (rekord.Id > 0) styl.ForeColor = Color.FromArgb(20, 170, 30);
-		}
+		Rekordy = rekordy;
+		Komunikat = null;
+	}
+
+	protected override void UstawStylWiersza(Faktura rekord, string kolumna, DataGridViewCellStyle styl)
+	{
+		base.UstawStylWiersza(rekord, kolumna, styl);
+		if (rekord.Id > 0) styl.ForeColor = Color.FromArgb(20, 170, 30);
 	}
 }

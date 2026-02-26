@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
+using ProFak.DB;
+using ProFak.IO.FA_3.DefinicjeTypy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
-using Microsoft.EntityFrameworkCore;
-using ProFak.DB;
-using ProFak.IO.FA_3.DefinicjeTypy;
 using DBFaktura = ProFak.DB.Faktura;
 using KSEFFaktura = ProFak.IO.FA_3.Faktura;
 
 namespace ProFak.IO.FA_3;
 
-class Generator
+public class Generator
 {
 	public static string ZbudujXML(Baza baza, Ref<DBFaktura> dbFakturaRef)
 	{
@@ -29,7 +25,7 @@ class Generator
 			.Include(e => e.FakturaPierwotna)
 			.Include(e => e.DodatkowePodmioty)
 			.Where(e => e.Id == dbFakturaRef.Id)
-			.FirstOrDefault();
+			.FirstOrDefault() ?? throw new ApplicationException($"Nie znaleziono faktury {dbFakturaRef}.");
 		var ksefFaktura = Zbuduj(dbFaktura);
 		var xo = new XmlAttributeOverrides();
 		var xs = new XmlSerializer(typeof(KSEFFaktura), xo);
@@ -47,7 +43,8 @@ class Generator
 		var xs = new XmlSerializer(typeof(KSEFFaktura), xo);
 		using var xr = XmlReader.Create(new StringReader(xml), new XmlReaderSettings() { });
 		var nss = new XmlSerializerNamespaces();
-		var ksefFaktura = (KSEFFaktura)xs.Deserialize(xr);
+		var ksefFaktura = (KSEFFaktura?)xs.Deserialize(xr);
+		if (ksefFaktura == null) throw new ApplicationException("Nieznany format faktury.");
 		var dbFaktura = Zbuduj(ksefFaktura);
 		dbFaktura.XMLKSeF = xml;
 		PoprawPowiazaniaPoImporcie(baza, dbFaktura);
@@ -66,6 +63,10 @@ class Generator
 
 	private static KSEFFaktura Zbuduj(DBFaktura dbFaktura)
 	{
+		// Pobrane przez wywołanie w ZbudujXML
+		ArgumentNullException.ThrowIfNull(dbFaktura.Sprzedawca);
+		ArgumentNullException.ThrowIfNull(dbFaktura.Nabywca);
+		ArgumentNullException.ThrowIfNull(dbFaktura.Waluta);
 		var ksefFaktura = new KSEFFaktura();
 		ksefFaktura.Naglowek = new TNaglowek();
 		ksefFaktura.Naglowek.KodFormularza = new TNaglowekKodFormularza();
@@ -209,6 +210,8 @@ class Generator
 
 		foreach (var dbPozycja in dbFaktura.Pozycje)
 		{
+			// Pobrane przez wywołanie w ZbudujXML
+			ArgumentNullException.ThrowIfNull(dbPozycja.StawkaVat);
 			var ksefWiersz = new FakturaFaFaWiersz();
 			ksefWiersz.NrWierszaFa = (ulong)dbPozycja.LP;
 			//ksefWiersz.UU_ID = dbPozycja.Id.ToString();
@@ -315,8 +318,8 @@ class Generator
 	{
 		var dbFaktura = new DBFaktura();
 		dbFaktura.Numer = ksefFaktura.Fa.P_2;
-		dbFaktura.Rodzaj = ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.VAT || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ROZ || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.UPR ? DB.RodzajFaktury.Zakup 
-			: ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ROZ ? DB.RodzajFaktury.KorektaZakupu 
+		dbFaktura.Rodzaj = ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.VAT || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ROZ || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.UPR ? DB.RodzajFaktury.Zakup
+			: ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ROZ ? DB.RodzajFaktury.KorektaZakupu
 			: ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ZAL || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ZAL ? throw new ApplicationException("Faktury zaliczkowe nie są obsługiwane")
 			: throw new ApplicationException($"Nieobsługiwany rodzaj faktury: {ksefFaktura.Fa.RodzajFaktury}.");
 		dbFaktura.DataWystawienia = ksefFaktura.Fa.P_1;
@@ -360,7 +363,7 @@ class Generator
 		}
 		if (ksefFaktura.Fa.Platnosc != null)
 		{
-			if (ksefFaktura.Fa.Platnosc.TerminPlatnosci != null && ksefFaktura.Fa.Platnosc.TerminPlatnosci.Count > 0 && ksefFaktura.Fa.Platnosc.TerminPlatnosci[0].Termin.HasValue) dbFaktura.TerminPlatnosci = ksefFaktura.Fa.Platnosc.TerminPlatnosci[0].Termin.Value;
+			if (ksefFaktura.Fa.Platnosc.TerminPlatnosci != null && ksefFaktura.Fa.Platnosc.TerminPlatnosci.Count > 0 && ksefFaktura.Fa.Platnosc.TerminPlatnosci[0].Termin.HasValue) dbFaktura.TerminPlatnosci = ksefFaktura.Fa.Platnosc.TerminPlatnosci[0].Termin!.Value;
 			if (ksefFaktura.Fa.Platnosc.RachunekBankowy != null && ksefFaktura.Fa.Platnosc.RachunekBankowy.Count > 0)
 			{
 				dbFaktura.RachunekBankowy = ksefFaktura.Fa.Platnosc.RachunekBankowy[0].NrRB;
@@ -410,7 +413,7 @@ class Generator
 				dbPozycja.WartoscNetto = pozycja.P_11.GetValueOrDefault();
 			}
 			dbPozycja.Towar = new Towar();
-			dbPozycja.Towar.Nazwa = pozycja.P_7;
+			dbPozycja.Towar.Nazwa = pozycja.P_7 ?? "";
 			dbPozycja.Towar.JednostkaMiary = dbPozycja.JednostkaMiary = new JednostkaMiary { Nazwa = pozycja.P_8A, Skrot = pozycja.P_8A };
 			dbPozycja.StawkaVat = new StawkaVat();
 			if (pozycja.P_12 == TStawkaPodatku.Item23) dbPozycja.StawkaVat = new StawkaVat { Wartosc = 23, Skrot = "23" };
@@ -658,7 +661,6 @@ class Generator
 
 	private static Kontrahent ZnajdzLubUtworzKontrahenta(Baza baza, Kontrahent kontrahent)
 	{
-		if (kontrahent == null) return null;
 		if (kontrahent.Id > 0) return kontrahent;
 		var nip = kontrahent.NIP;
 		if (String.IsNullOrEmpty(nip)) return kontrahent;
@@ -672,6 +674,12 @@ class Generator
 
 	private static void PoprawPowiazaniaPoImporcie(Baza baza, DBFaktura faktura)
 	{
+		// Zawsze ustawione przez Zbuduj:
+		ArgumentNullException.ThrowIfNull(faktura.Sprzedawca);
+		ArgumentNullException.ThrowIfNull(faktura.Nabywca);
+		ArgumentNullException.ThrowIfNull(faktura.Waluta);
+		ArgumentNullException.ThrowIfNull(faktura.Sprzedawca);
+
 		var sprzedawca = ZnajdzLubUtworzKontrahenta(baza, faktura.Sprzedawca);
 		faktura.SprzedawcaRef = sprzedawca;
 		faktura.Sprzedawca = null;
@@ -682,7 +690,7 @@ class Generator
 
 		if (sprzedawca.CzyPodmiot) faktura.Rodzaj = faktura.ProceduraMarzy == ProceduraMarży.NieDotyczy
 			? faktura.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaSprzedaży : RodzajFaktury.Sprzedaż
-			: faktura.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaVatMarży: RodzajFaktury.VatMarża;
+			: faktura.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaVatMarży : RodzajFaktury.VatMarża;
 
 		if (String.IsNullOrEmpty(faktura.NIPNabywcy)) faktura.NIPNabywcy = nabywca.NIP;
 		if (String.IsNullOrEmpty(faktura.NazwaNabywcy)) faktura.NazwaNabywcy = nabywca.PelnaNazwa;
@@ -691,7 +699,7 @@ class Generator
 		if (faktura.FakturaKorygowana != null)
 		{
 			var fakturaKorygowana = String.IsNullOrEmpty(faktura.FakturaKorygowana.NumerKSeF) ? null : baza.Faktury.FirstOrDefault(f => f.NumerKSeF == faktura.FakturaKorygowana.NumerKSeF && f.Rodzaj != RodzajFaktury.Usunięta);
-			fakturaKorygowana ??= String.IsNullOrEmpty(faktura.FakturaKorygowana.Numer) ? null : baza.Faktury.FirstOrDefault(f => f.Numer == f.FakturaKorygowana.Numer && f.Sprzedawca == faktura.Sprzedawca && f.Rodzaj != RodzajFaktury.Usunięta);
+			fakturaKorygowana ??= String.IsNullOrEmpty(faktura.FakturaKorygowana.Numer) ? null : baza.Faktury.FirstOrDefault(f => f.Numer == faktura.FakturaKorygowana.Numer && f.Sprzedawca == faktura.Sprzedawca && f.Rodzaj != RodzajFaktury.Usunięta);
 			if (fakturaKorygowana == null) faktura.UwagiPubliczne = $"Korekta do {faktura.FakturaKorygowana.Numer} z dnia {faktura.FakturaKorygowana.DataWystawienia:yyyy-MM-dd}\r\n{faktura.UwagiPubliczne}";
 			else faktura.FakturaKorygowanaRef = fakturaKorygowana;
 			faktura.FakturaKorygowana = null;
@@ -711,6 +719,9 @@ class Generator
 
 		foreach (var pozycja in faktura.Pozycje)
 		{
+			// Zawsze ustawione przez Zbuduj:
+			ArgumentNullException.ThrowIfNull(pozycja.StawkaVat);
+			ArgumentNullException.ThrowIfNull(pozycja.JednostkaMiary);
 			var stawkaVat = baza.StawkiVat.FirstOrDefault(stawkaVat => stawkaVat.Wartosc == pozycja.StawkaVat.Wartosc);
 			if (stawkaVat == null) baza.Zapisz(stawkaVat = pozycja.StawkaVat);
 			pozycja.StawkaVatRef = stawkaVat;

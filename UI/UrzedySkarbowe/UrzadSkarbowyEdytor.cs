@@ -1,20 +1,13 @@
 ﻿using ProFak.DB;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ProFak.UI
+namespace ProFak.UI;
+
+class UrzadSkarbowyEdytor : EdytorDwieKolumny<UrzadSkarbowy>
 {
-	class UrzadSkarbowyEdytor : EdytorDwieKolumny<UrzadSkarbowy>
+	public UrzadSkarbowyEdytor()
 	{
-		public UrzadSkarbowyEdytor()
-		{
-			DodajTextBox(urzad => urzad.Kod, "Kod", wymagane: true);
-			DodajTextBox(urzad => urzad.Nazwa, "Nazwa", wymagane: true);
-			UstawRozmiar();
-		}
+		DodajTextBox(urzad => urzad.Kod, "Kod", wymagane: true);
+		DodajTextBox(urzad => urzad.Nazwa, "Nazwa", wymagane: true);
+		UstawRozmiar();
 	}
 }

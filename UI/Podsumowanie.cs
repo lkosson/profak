@@ -1,28 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace ProFak.UI
+namespace ProFak.UI;
+
+class Podsumowanie : LinkLabel
 {
-	class Podsumowanie : LinkLabel
+	public Podsumowanie()
 	{
-		public Podsumowanie()
-		{
-			AutoSize = true;
-			LinkBehavior = LinkBehavior.HoverUnderline;
-			Links.Clear();
-		}
+		AutoSize = true;
+		LinkBehavior = LinkBehavior.HoverUnderline;
+		Links.Clear();
+	}
 
-		public override string Text
+	[AllowNull]
+	public override string Text
+	{
+		get => base.Text;
+		set
 		{
-			get => base.Text;
-			set
+			var odnosniki = new List<(int poczatek, string wartosc)>();
+			if (value != null)
 			{
-				var odnosniki = new List<(int poczatek, string wartosc)>();
 				var sb = new StringBuilder(value.Length);
 				int? poczatek = null;
 				for (var i = 0; i < value.Length; i++)
@@ -45,17 +44,21 @@ namespace ProFak.UI
 					}
 				}
 				base.Text = sb.ToString();
-				Links.Clear();
-				foreach (var odnosnik in odnosniki)
-					Links.Add(odnosnik.poczatek, odnosnik.wartosc.Length, odnosnik.wartosc);
 			}
+			else
+			{
+				base.Text = "";
+			}
+			Links.Clear();
+			foreach (var odnosnik in odnosniki)
+				Links.Add(odnosnik.poczatek, odnosnik.wartosc.Length, odnosnik.wartosc);
 		}
+	}
 
-		protected override void OnLinkClicked(LinkLabelLinkClickedEventArgs e)
-		{
-			if (e.Link.LinkData is not string tekst) return;
-			if (Regex.IsMatch(tekst, @"[0-9,\s]+")) tekst = tekst.Replace("\u00A0", "");
-			Clipboard.SetText(tekst);
-		}
+	protected override void OnLinkClicked(LinkLabelLinkClickedEventArgs e)
+	{
+		if (e.Link?.LinkData is not string tekst) return;
+		if (Regex.IsMatch(tekst, @"[0-9,\s]+")) tekst = tekst.Replace("\u00A0", "");
+		Clipboard.SetText(tekst);
 	}
 }

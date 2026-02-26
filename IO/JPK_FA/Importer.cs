@@ -1,30 +1,25 @@
 ﻿using ProFak.DB;
 using ProFak.UI;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace ProFak.IO.JPK_FA;
 
-class Importer
+public class Importer
 {
-	public static void Wczytaj(Stream wejscie, Kontekst kontekst)
+	public static void Wczytaj(Stream wejscie, Baza baza)
 	{
 		var xs = new XmlSerializer(typeof(JPK));
-		var jpk = (JPK)xs.Deserialize(wejscie);
+		var jpk = (JPK?)xs.Deserialize(wejscie);
+		if (jpk == null) throw new ApplicationException("Nieznana struktura pliku wejściowego.");
 
-		var waluty = kontekst.Baza.Waluty.ToList();
-		var stawkiVat = kontekst.Baza.StawkiVat.ToList();
-		var sposobPlatnosci = kontekst.Baza.SposobyPlatnosci.FirstOrDefault(e => e.CzyDomyslny);
+		var waluty = baza.Waluty.ToList();
+		var stawkiVat = baza.StawkiVat.ToList();
+		var sposobPlatnosci = baza.SposobyPlatnosci.FirstOrDefault(e => e.CzyDomyslny);
 
 		var faktury = new Dictionary<string, Faktura>();
 		foreach (var jpkFaktura in jpk.Faktura)
 		{
-			var faktura = kontekst.Baza.Faktury.FirstOrDefault(e => e.Numer == jpkFaktura.P_2A && e.NIPSprzedawcy == jpkFaktura.P_4B);
+			var faktura = baza.Faktury.FirstOrDefault(e => e.Numer == jpkFaktura.P_2A && e.NIPSprzedawcy == jpkFaktura.P_4B);
 			if (faktura != null) continue;
 
 			faktura = new Faktura();
@@ -54,7 +49,7 @@ class Importer
 				if (faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży) faktura.Rodzaj = RodzajFaktury.KorektaVatMarży;
 			}
 
-			var sprzedawca = kontekst.Baza.Kontrahenci.FirstOrDefault(e => e.NIP == jpkFaktura.P_4B);
+			var sprzedawca = baza.Kontrahenci.FirstOrDefault(e => e.NIP == jpkFaktura.P_4B);
 			if (sprzedawca == null)
 			{
 				sprzedawca = new Kontrahent();
@@ -68,7 +63,7 @@ class Importer
 				faktura.SprzedawcaRef = sprzedawca;
 			}
 
-			var nabywca = kontekst.Baza.Kontrahenci.FirstOrDefault(e => e.NIP == jpkFaktura.P_5B);
+			var nabywca = baza.Kontrahenci.FirstOrDefault(e => e.NIP == jpkFaktura.P_5B);
 			if (nabywca == null && !String.IsNullOrEmpty(jpkFaktura.P_5B))
 			{
 				nabywca = new Kontrahent();
@@ -82,9 +77,9 @@ class Importer
 				faktura.NabywcaRef = nabywca;
 			}
 
-			kontekst.Baza.Zapisz(faktura);
+			baza.Zapisz(faktura);
 
-			faktura.PrzeliczRazem(kontekst.Baza);
+			faktura.PrzeliczRazem(baza);
 			faktury[faktura.Numer] = faktura;
 		}
 
@@ -104,36 +99,36 @@ class Importer
 			if (jpkPozycja.P_12 is null) pozycja.StawkaVatRef = stawkiVat.FirstOrDefault(e => e.Wartosc == (int)Decimal.Round((pozycja.WartoscBrutto - pozycja.WartoscNetto) / pozycja.WartoscNetto * 100));
 			else if (jpkPozycja.P_12 == JPKFakturaWierszP_12.np) pozycja.StawkaVatRef = stawkiVat.FirstOrDefault(e => e.Skrot == "NP");
 			else if (jpkPozycja.P_12 == JPKFakturaWierszP_12.zw) pozycja.StawkaVatRef = stawkiVat.FirstOrDefault(e => e.Skrot == "ZW");
-			else if (jpkPozycja.P_12.ToString().StartsWith("Item")) pozycja.StawkaVatRef = stawkiVat.FirstOrDefault(e => e.Wartosc == Int32.Parse(jpkPozycja.P_12.ToString().Substring(4)));
-			pozycja.PrzeliczCeny(kontekst.Baza);
+			else if (jpkPozycja.P_12?.ToString()?.StartsWith("Item") ?? false) pozycja.StawkaVatRef = stawkiVat.FirstOrDefault(e => e.Wartosc == Int32.Parse(jpkPozycja.P_12.ToString()!.Substring(4)));
+			pozycja.PrzeliczCeny(baza);
 
-			kontekst.Baza.Zapisz(pozycja);
+			baza.Zapisz(pozycja);
 		}
 
 		foreach (var faktura in faktury.Values)
 		{
-			faktura.PrzeliczRazem(kontekst.Baza);
-			kontekst.Baza.Zapisz(faktura);
+			faktura.PrzeliczRazem(baza);
+			baza.Zapisz(faktura);
 
 			var wplata = new Wplata();
 			wplata.FakturaRef = faktura;
 			wplata.Data = faktura.TerminPlatnosci;
 			wplata.Kwota = faktura.PozostaloDoZaplaty;
-			kontekst.Baza.Zapisz(wplata);
+			baza.Zapisz(wplata);
 		}
 
 		foreach (var jpkFaktura in jpk.Faktura)
 		{
 			if (jpkFaktura.RodzajFaktury != JPKFakturaRodzajFaktury.KOREKTA) continue;
-			var fakturaKorygujaca = kontekst.Baza.Faktury.FirstOrDefault(e => e.Numer == jpkFaktura.P_2A && e.NIPSprzedawcy == jpkFaktura.P_4B);
+			var fakturaKorygujaca = baza.Faktury.FirstOrDefault(e => e.Numer == jpkFaktura.P_2A && e.NIPSprzedawcy == jpkFaktura.P_4B);
 			if (fakturaKorygujaca == null) continue;
-			var fakturaKorygowana = kontekst.Baza.Faktury.FirstOrDefault(e => e.Numer == jpkFaktura.NrFaKorygowanej && e.NIPSprzedawcy == jpkFaktura.P_4B);
+			var fakturaKorygowana = baza.Faktury.FirstOrDefault(e => e.Numer == jpkFaktura.NrFaKorygowanej && e.NIPSprzedawcy == jpkFaktura.P_4B);
 			if (fakturaKorygowana == null) continue;
 			fakturaKorygujaca.FakturaKorygowana = fakturaKorygowana;
 			fakturaKorygowana.FakturaKorygujaca = fakturaKorygujaca;
 
-			kontekst.Baza.Zapisz(fakturaKorygowana);
-			kontekst.Baza.Zapisz(fakturaKorygujaca);
+			baza.Zapisz(fakturaKorygowana);
+			baza.Zapisz(fakturaKorygujaca);
 		}
 	}
 }

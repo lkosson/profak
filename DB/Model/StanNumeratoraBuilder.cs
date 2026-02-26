@@ -1,29 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ProFak.DB.Model
+namespace ProFak.DB.Model;
+
+class StanNumeratoraBuilder
 {
-	class StanNumeratoraBuilder
+	public static void Configure(EntityTypeBuilder<StanNumeratora> builder)
 	{
-		public static void Configure(EntityTypeBuilder<StanNumeratora> builder)
-		{
-			builder.ToTable(nameof(StanNumeratora));
+		builder.ToTable(nameof(StanNumeratora));
 
-			builder.HasKey(e => e.Id);
+		builder.HasKey(e => e.Id);
 
-			builder.Property(e => e.Id).ValueGeneratedOnAdd().IsRequired();
-			builder.Property(e => e.NumeratorId).IsRequired();
-			builder.Property(e => e.Parametry).HasDefaultValue("").IsRequired();
-			builder.Property(e => e.OstatniaWartosc).HasDefaultValue(0).IsRequired();
+		builder.Property(e => e.Id).ValueGeneratedOnAdd().IsRequired();
+		builder.Property(e => e.NumeratorId).IsRequired();
+		builder.Property(e => e.Parametry).HasDefaultValue("").IsRequired();
+		builder.Property(e => e.OstatniaWartosc).HasDefaultValue(0).IsRequired();
 
-			builder.Ignore(e => e.NumeratorRef);
+		builder.Ignore(e => e.NumeratorRef);
 
-			builder.HasOne(e => e.Numerator).WithMany(e => e.Stany).HasForeignKey(e => e.NumeratorId).OnDelete(DeleteBehavior.Cascade);
-		}
+		builder.HasOne(e => e.Numerator).WithMany(e => e.Stany).HasForeignKey(e => e.NumeratorId).OnDelete(DeleteBehavior.Cascade);
 	}
 }

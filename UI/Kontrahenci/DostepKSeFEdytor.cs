@@ -1,33 +1,32 @@
-﻿using System;
+﻿using ProFak.DB;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
-using System.Windows.Forms;
-using ProFak.DB;
 
 namespace ProFak.UI.Kontrahenci;
+
 partial class DostepKSeFEdytor : UserControl
 {
 	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public SrodowiskoKSeF SrodowiskoKSeF { get; set; }
 
 	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-	public string Token { get; set; }
+	public string? Token { get; set; }
 
 	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-	public string NIP { get => textBoxNIP.Text; set => textBoxNIP.Text = value; }
+	public string? NIP { get => textBoxNIP.Text; set => textBoxNIP.Text = value; }
 
 	public DostepKSeFEdytor()
 	{
 		InitializeComponent();
 	}
 
-	private void buttonPobierzXML_Click(object sender, EventArgs e)
+	private void buttonPobierzXML_Click(object? sender, EventArgs e)
 	{
 		try
 		{
 			var nip = NIP;
-			string xml = null;
+			if (String.IsNullOrEmpty(nip)) throw new ApplicationException("Należy podać NIP firmy.");
+			string? xml = null;
 			OknoPostepu.Uruchom(async () =>
 			{
 				using var api = new IO.KSEF2.API(SrodowiskoKSeF);
@@ -50,7 +49,7 @@ partial class DostepKSeFEdytor : UserControl
 		}
 	}
 
-	private void buttonWskazXML_Click(object sender, EventArgs e)
+	private void buttonWskazXML_Click(object? sender, EventArgs e)
 	{
 		try
 		{
@@ -62,7 +61,7 @@ partial class DostepKSeFEdytor : UserControl
 
 			var signedXml = File.ReadAllText(dialog.FileName);
 
-			string token = null;
+			string? token = null;
 			OknoPostepu.Uruchom(async cancellationToken =>
 			{
 				using var api = new IO.KSEF2.API(SrodowiskoKSeF);
@@ -74,7 +73,7 @@ partial class DostepKSeFEdytor : UserControl
 			Token = token;
 			IO.KSEF2.API.ZapomnijAktywnaSesje();
 			MessageBox.Show("Dostęp do KSeF nadany pomyślnie. Można skasować utworzone pliki.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
-			ParentForm.Close();
+			ParentForm?.Close();
 		}
 		catch (Exception exc)
 		{
@@ -82,7 +81,7 @@ partial class DostepKSeFEdytor : UserControl
 		}
 	}
 
-	private void linkEPUAP_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+	private void linkEPUAP_LinkClicked(object? sender, LinkLabelLinkClickedEventArgs e)
 	{
 		Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = "https://moj.gov.pl/nforms/signer/upload?xFormsAppName=SIGNER" });
 	}

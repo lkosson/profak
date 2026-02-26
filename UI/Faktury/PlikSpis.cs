@@ -1,31 +1,25 @@
 ﻿using ProFak.DB;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ProFak.UI
+namespace ProFak.UI;
+
+class PlikSpis : Spis<Plik>
 {
-	class PlikSpis : Spis<Plik>
+	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+	public Ref<Faktura> FakturaRef { get; set; }
+
+	public PlikSpis()
 	{
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public Ref<Faktura> FakturaRef { get; set; }
+		DodajKolumne(nameof(Plik.Nazwa), "Nazwa", rozciagnij: true);
+		DodajKolumne(nameof(Plik.Rozmiar), "Rozmiar", wyrownajDoPrawej: true);
+		DodajKolumneId();
+	}
 
-		public PlikSpis()
-		{
-			DodajKolumne(nameof(Plik.Nazwa), "Nazwa", rozciagnij: true);
-			DodajKolumne(nameof(Plik.Rozmiar), "Rozmiar", wyrownajDoPrawej: true);
-			DodajKolumneId();
-		}
-
-		protected override void Przeladuj()
-		{
-			IQueryable<Plik> q = Kontekst.Baza.Pliki;
-			if (FakturaRef.IsNotNull) q = q.Where(plik => plik.FakturaId == FakturaRef.Id);
-			q = q.OrderBy(plik => plik.Id);
-			Rekordy = q.ToList();
-		}
+	protected override void Przeladuj()
+	{
+		IQueryable<Plik> q = Kontekst.Baza.Pliki;
+		if (FakturaRef.IsNotNull) q = q.Where(plik => plik.FakturaId == FakturaRef.Id);
+		q = q.OrderBy(plik => plik.Id);
+		Rekordy = q.ToList();
 	}
 }

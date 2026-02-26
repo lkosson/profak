@@ -1,18 +1,12 @@
 ﻿using ProFak.DB;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace ProFak.UI;
 
 partial class KonfiguracjaSpisu : UserControl
 {
+	private bool trwaZmianaWartosci;
+
 	public KonfiguracjaSpisu()
 	{
 		InitializeComponent();
@@ -24,73 +18,105 @@ partial class KonfiguracjaSpisu : UserControl
 		listBoxKolumny.DataSource = konfiguracjaKolumn.Where(e => e.Kolejnosc >= 0).OrderBy(e => e.Kolejnosc).ToList();
 	}
 
-	private void listBoxKolumny_SelectedIndexChanged(object sender, EventArgs e)
+	private void ZmienWartosci(Action zmianaWartosci)
 	{
-		var kolumna = (KolumnaSpisu)listBoxKolumny.SelectedItem;
-		textBoxKolumna.Text = kolumna.Kolumna;
-		numericUpDownKolejnosc.Value = kolumna.Kolejnosc;
-		numericUpDownSzerokosc.Value = kolumna.Szerokosc;
-		numericUpDownPoziomSortowania.Value = kolumna.PoziomSortowania;
-		checkBoxUkryta.Checked = kolumna.Szerokosc == 0;
-		checkBoxRozciagnij.Checked = kolumna.Szerokosc == -1;
-	}
-
-	private void numericUpDownSzerokosc_ValueChanged(object sender, EventArgs e)
-	{
-		var kolumna = (KolumnaSpisu)listBoxKolumny.SelectedItem;
-		if (kolumna == null) return;
-		kolumna.Szerokosc = (int)numericUpDownSzerokosc.Value;
-	}
-
-	private void numericUpDownKolejnosc_ValueChanged(object sender, EventArgs e)
-	{
-		var kolumna = (KolumnaSpisu)listBoxKolumny.SelectedItem;
-		if (kolumna == null) return;
-		kolumna.Kolejnosc = (int)numericUpDownKolejnosc.Value;
-	}
-
-	private void numericUpDownPoziomSortowania_ValueChanged(object sender, EventArgs e)
-	{
-		var kolumna = (KolumnaSpisu)listBoxKolumny.SelectedItem;
-		if (kolumna == null) return;
-		kolumna.PoziomSortowania = (int)numericUpDownPoziomSortowania.Value;
-	}
-
-	private void checkBoxUkryta_CheckedChanged(object sender, EventArgs e)
-	{
-		var kolumna = (KolumnaSpisu)listBoxKolumny.SelectedItem;
-		if (kolumna == null) return;
-		if (checkBoxUkryta.Checked)
+		if (trwaZmianaWartosci) return;
+		trwaZmianaWartosci = true;
+		try
 		{
-			checkBoxRozciagnij.Enabled = false;
-			checkBoxRozciagnij.Checked = false;
-			numericUpDownSzerokosc.Enabled = false;
-			kolumna.Szerokosc = 0;
+			zmianaWartosci();
 		}
-		else
+		finally
 		{
-			numericUpDownSzerokosc.Enabled = true;
-			numericUpDownSzerokosc.Value = 100;
-			kolumna.Szerokosc = 100;
+			trwaZmianaWartosci = false;
 		}
 	}
 
-	private void checkBoxRozciagnij_CheckedChanged(object sender, EventArgs e)
+	private void UstawDostepnosc(KolumnaSpisu kolumna)
 	{
-		var kolumna = (KolumnaSpisu)listBoxKolumny.SelectedItem;
-		if (kolumna == null) return;
-		if (checkBoxRozciagnij.Checked)
+		numericUpDownSzerokosc.Enabled = kolumna.Szerokosc > 0;
+		checkBoxUkryta.Enabled = kolumna.Szerokosc != -1;
+		checkBoxRozciagnij.Enabled = kolumna.Szerokosc != 0;
+		if (checkBoxUkryta.Checked && !checkBoxUkryta.Enabled) checkBoxUkryta.Checked = false;
+		if (checkBoxRozciagnij.Checked && !checkBoxRozciagnij.Enabled) checkBoxRozciagnij.Checked = false;
+	}
+
+	private void listBoxKolumny_SelectedIndexChanged(object? sender, EventArgs e)
+	{
+		if (listBoxKolumny.SelectedItem is not KolumnaSpisu kolumna) return;
+		ZmienWartosci(delegate
 		{
-			checkBoxUkryta.Enabled = false;
-			checkBoxUkryta.Checked = false;
-			numericUpDownSzerokosc.Enabled = false;
-			kolumna.Szerokosc = -1;
-		}
-		else
+			textBoxKolumna.Text = kolumna.Kolumna;
+			numericUpDownKolejnosc.Value = kolumna.Kolejnosc;
+			numericUpDownSzerokosc.Value = kolumna.Szerokosc;
+			numericUpDownPoziomSortowania.Value = kolumna.PoziomSortowania;
+			checkBoxUkryta.Checked = kolumna.Szerokosc == 0;
+			checkBoxRozciagnij.Checked = kolumna.Szerokosc == -1;
+			UstawDostepnosc(kolumna);
+		});
+	}
+
+	private void numericUpDownSzerokosc_ValueChanged(object? sender, EventArgs e)
+	{
+		if (listBoxKolumny.SelectedItem is not KolumnaSpisu kolumna) return;
+		ZmienWartosci(delegate
 		{
-			numericUpDownSzerokosc.Enabled = true;
-			numericUpDownSzerokosc.Value = 100;
-			kolumna.Szerokosc = 100;
-		}
+			kolumna.Szerokosc = (int)numericUpDownSzerokosc.Value;
+		});
+	}
+
+	private void numericUpDownKolejnosc_ValueChanged(object? sender, EventArgs e)
+	{
+		if (listBoxKolumny.SelectedItem is not KolumnaSpisu kolumna) return;
+		ZmienWartosci(delegate
+		{
+			kolumna.Kolejnosc = (int)numericUpDownKolejnosc.Value;
+		});
+	}
+
+	private void numericUpDownPoziomSortowania_ValueChanged(object? sender, EventArgs e)
+	{
+		if (listBoxKolumny.SelectedItem is not KolumnaSpisu kolumna) return;
+		ZmienWartosci(delegate
+		{
+			kolumna.PoziomSortowania = (int)numericUpDownPoziomSortowania.Value;
+		});
+	}
+
+	private void checkBoxUkryta_CheckedChanged(object? sender, EventArgs e)
+	{
+		if (listBoxKolumny.SelectedItem is not KolumnaSpisu kolumna) return;
+		ZmienWartosci(delegate
+		{
+			if (checkBoxUkryta.Checked)
+			{
+				kolumna.Szerokosc = 0;
+			}
+			else
+			{
+				numericUpDownSzerokosc.Value = 100;
+				kolumna.Szerokosc = 100;
+			}
+			UstawDostepnosc(kolumna);
+		});
+	}
+
+	private void checkBoxRozciagnij_CheckedChanged(object? sender, EventArgs e)
+	{
+		if (listBoxKolumny.SelectedItem is not KolumnaSpisu kolumna) return;
+		ZmienWartosci(delegate
+		{
+			if (checkBoxRozciagnij.Checked)
+			{
+				checkBoxUkryta.Checked = false;
+				kolumna.Szerokosc = -1;
+			}
+			else
+			{
+				numericUpDownSzerokosc.Value = 100;
+				kolumna.Szerokosc = 100;
+			}
+			UstawDostepnosc(kolumna);
+		});
 	}
 }

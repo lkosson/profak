@@ -1,24 +1,18 @@
 ﻿using ProFak.DB;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ProFak.UI
+namespace ProFak.UI;
+
+class NumeratorSpis : Spis<Numerator>
 {
-	class NumeratorSpis : Spis<Numerator>
+	public NumeratorSpis()
 	{
-		public NumeratorSpis()
-		{
-			DodajKolumne(nameof(Numerator.PrzeznaczenieFmt), "Przeznaczenie", rozciagnij: true);
-			DodajKolumne(nameof(Numerator.Format), "Format");
-			DodajKolumneId();
-		}
+		DodajKolumne(nameof(Numerator.PrzeznaczenieFmt), "Przeznaczenie", rozciagnij: true);
+		DodajKolumne(nameof(Numerator.Format), "Format");
+		DodajKolumneId();
+	}
 
-		protected override void Przeladuj()
-		{
-			Rekordy = Kontekst.Baza.Numeratory.OrderBy(numerator => numerator.Przeznaczenie).ThenBy(numerator => numerator.Id).ToList();
-		}
+	protected override void Przeladuj()
+	{
+		Rekordy = Kontekst.Baza.Numeratory.OrderBy(numerator => numerator.Przeznaczenie).ThenBy(numerator => numerator.Id).ToList();
 	}
 }

@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProFak.DB;
-using System;
 using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
 
 namespace ProFak.UI;
 
@@ -102,7 +98,7 @@ class FakturaSpis : Spis<Faktura>
 		DodajKolumneId();
 	}
 
-	public FakturaSpis(string[] parametry)
+	public FakturaSpis(string[]? parametry)
 		: this()
 	{
 		if (parametry == null) return;
@@ -168,7 +164,7 @@ class FakturaSpis : Spis<Faktura>
 		else if (rekord.Rodzaj == RodzajFaktury.DowódWewnętrzny) styl.ForeColor = Color.FromArgb(220, 60, 220);
 	}
 
-	protected override Func<Faktura, IComparable> KolumnaDlaSortowania(string kolumna)
+	protected override Func<Faktura, IComparable>? KolumnaDlaSortowania(string kolumna)
 	{
 		if (kolumna == nameof(Faktura.Numer)) kolumna = nameof(Faktura.NumerSegmenty);
 		return base.KolumnaDlaSortowania(kolumna);

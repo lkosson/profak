@@ -1,25 +1,25 @@
 ﻿
-namespace ProFak.UI
-{
-	partial class DeklaracjaVatEdytor
-	{
-		/// <summary> 
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+namespace ProFak.UI;
 
-		/// <summary> 
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
+partial class DeklaracjaVatEdytor
+{
+	/// <summary> 
+	/// Required designer variable.
+	/// </summary>
+	private System.ComponentModel.IContainer components = null;
+
+	/// <summary> 
+	/// Clean up any resources being used.
+	/// </summary>
+	/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+	protected override void Dispose(bool disposing)
+	{
+		if (disposing && (components != null))
 		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
+			components.Dispose();
 		}
+		base.Dispose(disposing);
+	}
 
         #region Component Designer generated code
 
@@ -717,52 +717,51 @@ namespace ProFak.UI
 
         #endregion
         private System.Windows.Forms.TabControl tabControl;
-		private System.Windows.Forms.TabPage tabPageObliczenia;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-		private System.Windows.Forms.TabPage tabPageFakturySprzedazy;
-		private System.Windows.Forms.TabPage tabPageFakturyZakupu;
-		private ButtonDPI buttonPrzelicz;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.Label label10;
-		private System.Windows.Forms.Label label11;
-		private NumericUpDownDPI numericUpDownNettoZW;
-		private NumericUpDownDPI numericUpDownNetto0;
-		private NumericUpDownDPI numericUpDownNetto5;
-		private NumericUpDownDPI numericUpDownNalezny5;
-		private NumericUpDownDPI numericUpDownNetto8;
-		private NumericUpDownDPI numericUpDownNalezny8;
-		private NumericUpDownDPI numericUpDownNetto23;
-		private NumericUpDownDPI numericUpDownNalezny23;
-		private NumericUpDownDPI numericUpDownNettoWDT;
-		private NumericUpDownDPI numericUpDownNettoWNT;
-		private NumericUpDownDPI numericUpDownNaleznyWNT;
-		private System.Windows.Forms.Label label13;
-		private System.Windows.Forms.Label label14;
-		private System.Windows.Forms.Label label15;
-		private System.Windows.Forms.Label label12;
-		private System.Windows.Forms.Label label16;
-		private System.Windows.Forms.Label label17;
-		private System.Windows.Forms.Label label18;
-		private System.Windows.Forms.Label label19;
-		private NumericUpDownDPI numericUpDownNaliczonyPrzeniesiony;
-		private NumericUpDownDPI numericUpDownNettoSrodkiTrwale;
-		private NumericUpDownDPI numericUpDownNaliczonySrodkiTrwale;
-		private NumericUpDownDPI numericUpDownNettoPozostale;
-		private NumericUpDownDPI numericUpDownNaliczonyPozostale;
-		private NumericUpDownDPI numericUpDownNettoRazem;
-		private NumericUpDownDPI numericUpDownNaliczonyRazem;
-		private NumericUpDownDPI numericUpDownDoWplaty;
-		private NumericUpDownDPI numericUpDownDoPrzeniesienia;
-		private System.Windows.Forms.Label label9;
-		private NumericUpDownDPI numericUpDownNaleznyRazem;
+	private System.Windows.Forms.TabPage tabPageObliczenia;
+	private System.Windows.Forms.Label label1;
+	private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+	private System.Windows.Forms.TabPage tabPageFakturySprzedazy;
+	private System.Windows.Forms.TabPage tabPageFakturyZakupu;
+	private ButtonDPI buttonPrzelicz;
+	private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+	private System.Windows.Forms.Label label2;
+	private System.Windows.Forms.Label label3;
+	private System.Windows.Forms.Label label4;
+	private System.Windows.Forms.Label label5;
+	private System.Windows.Forms.Label label6;
+	private System.Windows.Forms.Label label7;
+	private System.Windows.Forms.Label label8;
+	private System.Windows.Forms.Label label10;
+	private System.Windows.Forms.Label label11;
+	private NumericUpDownDPI numericUpDownNettoZW;
+	private NumericUpDownDPI numericUpDownNetto0;
+	private NumericUpDownDPI numericUpDownNetto5;
+	private NumericUpDownDPI numericUpDownNalezny5;
+	private NumericUpDownDPI numericUpDownNetto8;
+	private NumericUpDownDPI numericUpDownNalezny8;
+	private NumericUpDownDPI numericUpDownNetto23;
+	private NumericUpDownDPI numericUpDownNalezny23;
+	private NumericUpDownDPI numericUpDownNettoWDT;
+	private NumericUpDownDPI numericUpDownNettoWNT;
+	private NumericUpDownDPI numericUpDownNaleznyWNT;
+	private System.Windows.Forms.Label label13;
+	private System.Windows.Forms.Label label14;
+	private System.Windows.Forms.Label label15;
+	private System.Windows.Forms.Label label12;
+	private System.Windows.Forms.Label label16;
+	private System.Windows.Forms.Label label17;
+	private System.Windows.Forms.Label label18;
+	private System.Windows.Forms.Label label19;
+	private NumericUpDownDPI numericUpDownNaliczonyPrzeniesiony;
+	private NumericUpDownDPI numericUpDownNettoSrodkiTrwale;
+	private NumericUpDownDPI numericUpDownNaliczonySrodkiTrwale;
+	private NumericUpDownDPI numericUpDownNettoPozostale;
+	private NumericUpDownDPI numericUpDownNaliczonyPozostale;
+	private NumericUpDownDPI numericUpDownNettoRazem;
+	private NumericUpDownDPI numericUpDownNaliczonyRazem;
+	private NumericUpDownDPI numericUpDownDoWplaty;
+	private NumericUpDownDPI numericUpDownDoPrzeniesienia;
+	private System.Windows.Forms.Label label9;
+	private NumericUpDownDPI numericUpDownNaleznyRazem;
         private System.Windows.Forms.DateTimePickerFix dateTimePickerMiesiac;
     }
-}

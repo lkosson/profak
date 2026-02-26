@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace ProFak.UI;
 
-namespace ProFak.UI
+interface IKontrolkaZKontekstem
 {
-	interface IKontrolkaZKontekstem
-	{
-		Kontekst Kontekst { get; set; }
-	}
+	Kontekst Kontekst { get; set; }
 }

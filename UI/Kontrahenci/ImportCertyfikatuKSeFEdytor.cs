@@ -1,16 +1,8 @@
 ﻿using KSeF.Client.Extensions;
 using ProFak.DB;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace ProFak.UI.Kontrahenci;
 
@@ -20,10 +12,10 @@ partial class ImportCertyfikatuKSeFEdytor : UserControl
 	public SrodowiskoKSeF SrodowiskoKSeF { get; set; }
 
 	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-	public string Certyfikat { get; set; }
+	public string Certyfikat { get; set; } = "";
 
 	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-	public string NIP { get; set; }
+	public string NIP { get; set; } = "";
 
 	public ImportCertyfikatuKSeFEdytor()
 	{
@@ -38,12 +30,12 @@ partial class ImportCertyfikatuKSeFEdytor : UserControl
 		base.OnLoad(e);
 	}
 
-	private void linkLabelAplikacjaPodatnika_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+	private void linkLabelAplikacjaPodatnika_LinkClicked(object? sender, LinkLabelLinkClickedEventArgs e)
 	{
-		Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = ((LinkLabel)sender).Text});
+		if (sender is LinkLabel link) Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = link.Text });
 	}
 
-	private void buttonCertyfikat_Click(object sender, EventArgs e)
+	private void buttonCertyfikat_Click(object? sender, EventArgs e)
 	{
 		using var dialog = new OpenFileDialog();
 		dialog.Filter = "Certyfikaty (*.crt)|*.crt|Wszystkie pliki (*.*)|*.*";
@@ -55,7 +47,7 @@ partial class ImportCertyfikatuKSeFEdytor : UserControl
 		else MessageBox.Show("Wskazany plik nie zawiera poprawnego certyfikatu.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 	}
 
-	private void buttonKlucz_Click(object sender, EventArgs e)
+	private void buttonKlucz_Click(object? sender, EventArgs e)
 	{
 		using var dialog = new OpenFileDialog();
 		dialog.Filter = "Klucze prywatne (*.key)|*.key|Wszystkie pliki (*.*)|*.*";
@@ -68,7 +60,7 @@ partial class ImportCertyfikatuKSeFEdytor : UserControl
 		else MessageBox.Show("Wskazany plik nie zawiera poprawnego klucza prywatnego.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 	}
 
-	private void buttonZapisz_Click(object sender, EventArgs e)
+	private void buttonZapisz_Click(object? sender, EventArgs e)
 	{
 		try
 		{
@@ -102,7 +94,7 @@ partial class ImportCertyfikatuKSeFEdytor : UserControl
 
 			Certyfikat = Convert.ToBase64String(blobCertyfikatu);
 			MessageBox.Show("Certyfikat zaimportowany poprawnie. Możesz skasować pliki certyfikatu i klucza prywatnego.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
-			ParentForm.Close();
+			ParentForm?.Close();
 		}
 		catch (Exception exc)
 		{

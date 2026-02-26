@@ -10,19 +10,15 @@ using KSeF.Client.Core.Models.Authorization;
 using KSeF.Client.Core.Models.Invoices;
 using KSeF.Client.Core.Models.Sessions;
 using KSeF.Client.DI;
+using KSeF.Client.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using ProFak.DB;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ProFak.IO.KSEF2;
 
-class API : IDisposable
+public class API : IDisposable
 {
 	private static ServiceProvider? serviceProvider;
 	private static SrodowiskoKSeF? srodowisko;
@@ -121,7 +117,7 @@ class API : IDisposable
 	{
 		if (ksefToken.Length > 120 && ksefToken.StartsWith("MII"))
 		{
-			var certyfikat = X509CertificateLoader.LoadCertificate(Convert.FromBase64String(ksefToken));
+			var certyfikat = Convert.FromBase64String(ksefToken).LoadPkcs12();
 			await UwierzytelnijAsync(nip, certyfikat, cancellationToken);
 			return;
 		}
@@ -271,6 +267,7 @@ class API : IDisposable
 				invoices.Add(invoiceHeader);
 			}
 			pageOffset++;
+			if (pageOffset == 100) break;
 			if (pagedInvoiceResponse.Invoices.Count < pageSize) break;
 		}
 		return invoices;

@@ -1,39 +1,65 @@
 ﻿using ProFak.DB;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace ProFak.UI
+namespace ProFak.UI;
+
+class WczytajKSeFAkcja : AkcjaNaSpisie<Faktura>
 {
-	class WczytajKSeFAkcja : DodajRekordAkcja<Faktura, FakturaEdytor>
+	public override string Nazwa => "➕ Wczytaj XML KSeF [CTRL-K]";
+	public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) => true;
+	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => klawisz == Keys.K && modyfikatory == Keys.Control;
+
+	public override void Uruchom(Kontekst kontekst, ref IEnumerable<Faktura> zaznaczoneRekordy)
 	{
-		public override string Nazwa => "➕ Wczytaj XML KSeF [CTRL-K]";
-		public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) => true;
-		public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => klawisz == Keys.K && modyfikatory == Keys.Control;
+		using var dialog = new OpenFileDialog();
+		dialog.Filter = "e-Faktura XML (*.xml)|*.xml|Wszystkie pliki (*.*)|*.*";
+		dialog.Title = "Wybierz e-Fakturę do załadowania";
+		dialog.RestoreDirectory = true;
+		dialog.Multiselect = true;
+		if (dialog.ShowDialog() != DialogResult.OK) return;
 
-		protected override Faktura UtworzRekord(Kontekst kontekst, IEnumerable<Faktura> zaznaczoneRekordy)
+		var rekordy = new List<Faktura>();
+		var pliki = dialog.FileNames;
+		for (var i = 0; i < pliki.Length; i++)
 		{
-			using var dialog = new OpenFileDialog();
-			dialog.Filter = "e-Faktura XML (*.xml)|*.xml|Wszystkie pliki (*.*)|*.*";
-			dialog.Title = "Wybierz e-Fakturę do załadowania";
-			dialog.RestoreDirectory = true;
-			if (dialog.ShowDialog() != DialogResult.OK) return null;
-
-			var podmiot = kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
-			var xml = File.ReadAllText(dialog.FileName);
-			var faktura = IO.FA_3.Generator.ZbudujDB(kontekst.Baza, xml);
-			faktura.DataKSeF = DateTime.Now;
-			var plik = Path.GetFileNameWithoutExtension(dialog.FileName);
-			if (Regex.IsMatch(plik, @"\d{10}-\d{8}-[0-9A-Fa-f]{12}-[0-9A-Fa-f]{2}")) faktura.NumerKSeF = plik;
-			kontekst.Baza.Zapisz(faktura);
-			IO.FA_3.Generator.PoprawPowiazaniaPoZapisie(kontekst.Baza, faktura);
-			return faktura;
+			var plik = pliki[i];
+			using var nowyKontekst = new Kontekst(kontekst);
+			using var transakcja = nowyKontekst.Transakcja();
+			var faktura = DodajFakture(nowyKontekst, plik);
+			if (faktura == null)
+			{
+				if (i < pliki.Length - 1 && MessageBox.Show("Kontynuować dodawanie faktur ze wskazanych plików?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
+					break;
+				continue;
+			}
+			transakcja.Zatwierdz();
+			rekordy.Add(faktura);
 		}
+		zaznaczoneRekordy = rekordy;
+	}
+
+	private Faktura? DodajFakture(Kontekst kontekst, string plik)
+	{
+		var xml = File.ReadAllText(plik);
+		var faktura = IO.FA_3.Generator.ZbudujDB(kontekst.Baza, xml);
+		faktura.DataKSeF = DateTime.Now;
+		var numerKsef = Path.GetFileNameWithoutExtension(plik);
+		if (Regex.IsMatch(numerKsef, @"\d{10}-\d{8}-[0-9A-Fa-f]{12}-[0-9A-Fa-f]{2}"))
+		{
+			var istniejaca = kontekst.Baza.Faktury.FirstOrDefault(e => e.NumerKSeF == numerKsef);
+			if (istniejaca != null && MessageBox.Show($"Faktura {istniejaca.Numer} ({istniejaca.NumerKSeF}) już istnieje w bazie. Czy mimo to chcesz ją dodać ponownie?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) != DialogResult.Yes) 
+				return null;
+			faktura.NumerKSeF = numerKsef;
+		}
+		kontekst.Baza.Zapisz(faktura);
+
+		kontekst.Dodaj(faktura);
+		using var edytor = new FakturaEdytor();
+		using var okno = new Dialog("Nowa pozycja", edytor, kontekst);
+		edytor.Przygotuj(kontekst, faktura);
+		if (okno.ShowDialog() != DialogResult.OK) return null;
+		edytor.KoniecEdycji();
+		kontekst.Baza.Zapisz(faktura);
+		return faktura;
 	}
 }

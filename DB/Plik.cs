@@ -1,27 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace ProFak.DB;
 
-namespace ProFak.DB
+public class Plik : Rekord<Plik>
 {
-	class Plik : Rekord<Plik>
-	{
-		public int FakturaId { get; set; }
-		public string Nazwa { get; set; }
-		public int Rozmiar { get; set; }
-		public int ZawartoscId { get; set; }
+	public int FakturaId { get; set; }
+	public string Nazwa { get; set; } = "";
+	public int Rozmiar { get; set; }
+	public int ZawartoscId { get; set; }
 
-		public Ref<Faktura> FakturaRef { get => FakturaId; set => FakturaId = value; }
-		public Ref<Zawartosc> ZawartoscRef { get => ZawartoscId; set => ZawartoscId = value; }
+	public Ref<Faktura> FakturaRef { get => FakturaId; set => FakturaId = value; }
+	public Ref<Zawartosc> ZawartoscRef { get => ZawartoscId; set => ZawartoscId = value; }
 
-		public Faktura Faktura { get; set; }
-		public Zawartosc Zawartosc { get; set; }
+	public Faktura? Faktura { get; set; }
+	public Zawartosc? Zawartosc { get; set; }
 
-		public override bool CzyPasuje(string fraza)
-			=> base.CzyPasuje(fraza)
-			|| CzyPasuje(Nazwa, fraza)
-			|| CzyPasuje(Rozmiar, fraza);
-	}
+	public override bool CzyPasuje(string fraza)
+		=> base.CzyPasuje(fraza)
+		|| CzyPasuje(Nazwa, fraza)
+		|| CzyPasuje(Rozmiar, fraza);
 }

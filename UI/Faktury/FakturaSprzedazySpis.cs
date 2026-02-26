@@ -11,7 +11,7 @@ class FakturaSprzedazySpis : FakturaSpis
 	{
 	}
 
-	public FakturaSprzedazySpis(string[] parametry)
+	public FakturaSprzedazySpis(string[]? parametry)
 		: base(parametry)
 	{
 	}

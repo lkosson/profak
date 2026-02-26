@@ -1,25 +1,25 @@
 ﻿
-namespace ProFak.UI
-{
-	partial class OknoPostepu
-	{
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+namespace ProFak.UI;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
+partial class OknoPostepu
+{
+	/// <summary>
+	/// Required designer variable.
+	/// </summary>
+	private System.ComponentModel.IContainer components = null;
+
+	/// <summary>
+	/// Clean up any resources being used.
+	/// </summary>
+	/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+	protected override void Dispose(bool disposing)
+	{
+		if (disposing && (components != null))
 		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
+			components.Dispose();
 		}
+		base.Dispose(disposing);
+	}
 
         #region Windows Form Designer generated code
 
@@ -99,8 +99,7 @@ namespace ProFak.UI
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-		private System.Windows.Forms.Label labelInfo;
-		private System.Windows.Forms.Button buttonAnuluj;
-		private System.Windows.Forms.ProgressBar progressBar;
-	}
+	private System.Windows.Forms.Label labelInfo;
+	private System.Windows.Forms.Button buttonAnuluj;
+	private System.Windows.Forms.ProgressBar progressBar;
 }
