@@ -17,6 +17,7 @@ public class Kontrahent : Rekord<Kontrahent>
 	public bool CzyPodmiot { get; set; }
 	public bool CzyTP { get; set; }
 	public int? SposobPlatnosciId { get; set; }
+	public int? DomyslnaWalutaId { get; set; }
 
 	public string KodUrzedu { get; set; } = "";
 	public string OsobaFizycznaImie { get; set; } = "";
@@ -27,8 +28,10 @@ public class Kontrahent : Rekord<Kontrahent>
 	public SrodowiskoKSeF SrodowiskoKSeF { get; set; }
 
 	public Ref<SposobPlatnosci> SposobPlatnosciRef { get => SposobPlatnosciId; set => SposobPlatnosciId = value; }
+	public Ref<Waluta> DomyslnaWalutaRef { get => DomyslnaWalutaId; set => DomyslnaWalutaId = value; }
 
 	public SposobPlatnosci? SposobPlatnosci { get; set; }
+	public Waluta? DomyslnaWaluta { get; set; }
 
 	public string AdresRejestrowyFmt => AdresRejestrowy.JakoJednaLinia();
 	public string PelnaNazwaLubNazwa => String.IsNullOrEmpty(PelnaNazwa) ? Nazwa : PelnaNazwa;

@@ -32,6 +32,7 @@ partial class KontrahentEdytor : KontrahentEdytorBase
 		kontroler.Powiazanie(comboBoxStan, kontrahent => kontrahent.CzyArchiwalny);
 		kontroler.Powiazanie(checkBoxTP, kontrahent => kontrahent.CzyTP);
 		kontroler.Powiazanie(comboBoxSposobPlatnosci, kontrahent => kontrahent.SposobPlatnosciRef);
+		kontroler.Powiazanie(comboBoxWaluta, kontrahent => kontrahent.DomyslnaWalutaRef);
 
 		kontroler.Powiazanie(comboBoxKodUrzedu, kontrahent => kontrahent.KodUrzedu);
 		kontroler.Powiazanie(textBoxOsobaFizycznaImie, kontrahent => kontrahent.OsobaFizycznaImie);
@@ -128,6 +129,15 @@ partial class KontrahentEdytor : KontrahentEdytorBase
 			sposobPlatnosci => sposobPlatnosci.Nazwa,
 			sposobPlatnosci => { },
 			Spisy.SposobyPlatnosci,
+			dopuscPustaWartosc: true)
+			.Zainstaluj();
+
+		new Slownik<Waluta>(
+			Kontekst, comboBoxWaluta, buttonWaluta,
+			Kontekst.Baza.Waluty.ToList,
+			domyslnaWaluta => domyslnaWaluta.Nazwa,
+			domyslnaWaluta => { },
+			Spisy.Waluty,
 			dopuscPustaWartosc: true)
 			.Zainstaluj();
 
