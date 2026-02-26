@@ -18,6 +18,7 @@ ProFak to prosty, darmowy program do fakturowania; skierowany przede wszystkim d
  * [Integracja z KSeF](/Materiały/ksef.md)
  * Wysyłka faktur e-mailem
  * [Własny wzór wydruku faktury](/Materiały/wydruki.md)
+ * [Interfejs programistyczny dla zewnętrznych narzędzi](/Materiały/api.md)
 
 ## Poza zakresem projektu
 
