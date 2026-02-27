@@ -60,7 +60,7 @@ public class PozycjaFaktury : Rekord<PozycjaFaktury>
 	public void PrzeliczCeny(Baza baza)
 	{
 		if (CzyWartosciReczne) return;
-		var faktura = baza.Znajdz(FakturaRef);
+		var faktura = Faktura ?? baza.Znajdz(FakturaRef);
 		if (faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży) CzyWedlugCenBrutto = true;
 
 		var stawkaVat = baza.ZnajdzLubNull(StawkaVatRef);
