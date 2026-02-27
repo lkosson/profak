@@ -143,7 +143,7 @@ partial class OProgramie
 		btnSprawdzAktualizacje.Name = "btnSprawdzAktualizacje";
 		btnSprawdzAktualizacje.Size = new System.Drawing.Size(134, 30);
 		btnSprawdzAktualizacje.TabIndex = 2;
-		btnSprawdzAktualizacje.Text = "Sprawdź aktualiazcje";
+		btnSprawdzAktualizacje.Text = "Sprawdź aktualizacje";
 		btnSprawdzAktualizacje.UseVisualStyleBackColor = true;
 		btnSprawdzAktualizacje.Click += btnSprawdzAktualizacje_Click;
 		// 
