@@ -282,7 +282,7 @@ class DaneDemo
 							CzyWedlugCenBrutto = towar.CzyWedlugCenBrutto,
 							LP = j + 1,
 							Opis = towar.Nazwa,
-							FakturaRef = faktura,
+							Faktura = faktura,
 							Ilosc = faktura.CzyZakup ? rnd.Next(10, 100) : rnd.Next(1, 20),
 							RabatProcent = faktura.CzyZakup ? 0 : rnd.Next(0, 10) == 0 ? rnd.Next(0, 90) : 0,
 							RabatCena = faktura.CzyZakup ? 0 : rnd.Next(0, 20) == 0 ? rnd.Next(0, (int)towar.CenaNetto) : 0,
