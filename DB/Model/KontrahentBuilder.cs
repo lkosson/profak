@@ -35,9 +35,12 @@ class KontrahentBuilder
 		builder.Property(e => e.SrodowiskoKSeF).HasDefaultValue(SrodowiskoKSeF.Test).IsRequired();
 
 		builder.Property(e => e.SposobPlatnosciId);
+		builder.Property(e => e.DomyslnaWalutaId);
 
 		builder.Ignore(e => e.SposobPlatnosciRef);
+		builder.Ignore(e => e.DomyslnaWalutaRef);
 
 		builder.HasOne(e => e.SposobPlatnosci).WithMany().HasForeignKey(e => e.SposobPlatnosciId).OnDelete(DeleteBehavior.SetNull);
+		builder.HasOne(e => e.DomyslnaWaluta).WithMany().HasForeignKey(e => e.DomyslnaWalutaId).OnDelete(DeleteBehavior.SetNull);
 	}
 }
