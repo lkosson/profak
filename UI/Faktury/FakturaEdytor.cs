@@ -222,7 +222,13 @@ partial class FakturaEdytor : FakturaEdytorBase
 		if (kontrahent == null || rekord.NabywcaRef == kontrahent.Ref) return false;
 		rekord.UstawNabywce(kontrahent);
 		if (kontrahent.SposobPlatnosciRef.IsNotNull) comboBoxSposobPlatnosci.SelectedValue = kontrahent.SposobPlatnosciRef;
-		if (kontrahent.DomyslnaWalutaRef.IsNotNull) comboBoxWaluta.SelectedValue = kontrahent.DomyslnaWalutaRef;
+
+		if (kontrahent.DomyslnaWalutaRef.IsNotNull)
+			comboBoxWaluta.SelectedValue = kontrahent.DomyslnaWalutaRef;
+		else
+		{
+			comboBoxWaluta.SelectedValue = Kontekst.Baza.Waluty.FirstOrDefault(waluta => waluta.CzyDomyslna).Ref;
+		}
 		return true;
 	}
 

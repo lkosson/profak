@@ -176,7 +176,7 @@ partial class KontrahentEdytor
 		tableLayoutPanel1.RowStyles.Add(new RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new RowStyle());
-		tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+		tableLayoutPanel1.RowStyles.Add(new RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 16F));
 		tableLayoutPanel1.Size = new Size(780, 424);
 		tableLayoutPanel1.TabIndex = 0;
@@ -292,9 +292,9 @@ partial class KontrahentEdytor
 		// 
 		label6.Anchor = AnchorStyles.Right;
 		label6.AutoSize = true;
-		label6.Location = new Point(95, 209);
+		label6.Location = new Point(94, 209);
 		label6.Name = "label6";
-		label6.Size = new Size(45, 15);
+		label6.Size = new Size(46, 15);
 		label6.TabIndex = 2;
 		label6.Text = "Telefon";
 		// 
@@ -428,7 +428,7 @@ partial class KontrahentEdytor
 		buttonWaluta.Location = new Point(415, 379);
 		buttonWaluta.Name = "buttonWaluta";
 		buttonWaluta.Size = new Size(26, 25);
-		buttonWaluta.TabIndex = 15;
+		buttonWaluta.TabIndex = 16;
 		buttonWaluta.Text = "...";
 		buttonWaluta.UseVisualStyleBackColor = true;
 		// 
@@ -440,7 +440,7 @@ partial class KontrahentEdytor
 		comboBoxWaluta.Location = new Point(146, 380);
 		comboBoxWaluta.Name = "comboBoxWaluta";
 		comboBoxWaluta.Size = new Size(263, 23);
-		comboBoxWaluta.TabIndex = 16;
+		comboBoxWaluta.TabIndex = 15;
 		// 
 		// tabPage2
 		// 
@@ -691,9 +691,9 @@ partial class KontrahentEdytor
 		// 
 		label15.Anchor = AnchorStyles.Right;
 		label15.AutoSize = true;
-		label15.Location = new Point(71, 155);
+		label15.Location = new Point(70, 155);
 		label15.Name = "label15";
-		label15.Size = new Size(66, 15);
+		label15.Size = new Size(67, 15);
 		label15.TabIndex = 0;
 		label15.Text = "Token KSeF";
 		// 
