@@ -17,12 +17,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="IO\KSEFPDF\ksef-fe-invoice-converter.umd.cjs" />
     <None Remove="Wydruki\EwidencjaPrzychodow.rdlc" />
     <None Remove="Wydruki\Faktura.rdlc" />
     <None Remove="Wydruki\PKPiR.rdlc" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="IO\KSEFPDF\ksef-fe-invoice-converter.umd.cjs" />
     <EmbeddedResource Include="Wydruki\FakturaPozycje.rdlc" />
     <EmbeddedResource Include="Wydruki\FakturaPozycjeVat.rdlc" />
     <EmbeddedResource Include="Wydruki\FakturaPozycjeRabat.rdlc" />
@@ -33,6 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Jint" Version="4.6.1" />
     <PackageReference Include="KSeF.Client" Version="1.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.2">
       <PrivateAssets>all</PrivateAssets>

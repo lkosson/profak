@@ -415,7 +415,20 @@ partial class FakturaEdytor : FakturaEdytorBase
 
 	private void toolStripMenuItemZapiszWizualizacje_Click(object sender, EventArgs e)
 	{
-
+		using var dialog = new SaveFileDialog();
+		dialog.Filter = "Dokument PDF (*.pdf)|*.pdf";
+		dialog.Title = "Zapisywanie wizualizacji faktury";
+		dialog.RestoreDirectory = true;
+		dialog.FileName = Rekord.NumerKSeFJakoNazwaPliku + ".pdf";
+		if (dialog.ShowDialog() != DialogResult.OK) return;
+		byte[] pdf = [];
+		OknoPostepu.Uruchom(cancellationToken =>
+		{
+			pdf = IO.KSEFPDF.Generator.ZbudujPDF(Rekord.XMLKSeF, Rekord.NumerKSeF, cancellationToken);
+			return Task.CompletedTask;
+		});
+		File.WriteAllBytes(dialog.FileName, pdf);
+		Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = dialog.FileName });
 	}
 
 	private void toolStripMenuItemKopiujOdnosnik_Click(object sender, EventArgs e)
