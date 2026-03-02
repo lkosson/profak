@@ -29,6 +29,7 @@ partial class FakturaEdytor
 	/// </summary>
 	private void InitializeComponent()
 	{
+		components = new System.ComponentModel.Container();
 		tableLayoutPanel = new TableLayoutPanel();
 		tableLayoutPanelKontrahenci = new TableLayoutPanel();
 		groupBox2 = new GroupBox();
@@ -80,13 +81,18 @@ partial class FakturaEdytor
 		checkBoxReczneKwoty = new CheckBox();
 		tabPageKSeF = new TabPage();
 		tableLayoutPanel8 = new TableLayoutPanel();
-		buttonKSeFGeneruj = new ButtonDPI();
 		textBoxKSeFXML = new TextBox();
 		label21 = new Label();
 		textBoxNumerKSeF = new TextBox();
-		linkLabelKSeFUrl = new LinkLabel();
 		label24 = new Label();
 		dateTimePickerDataKSeF = new DateTimePickerFix();
+		buttonDropDownKSeF = new ButtonDropDown();
+		contextMenuStripKSeF = new ContextMenuStrip(components);
+		toolStripMenuItemGenerujXML = new ToolStripMenuItem();
+		toolStripMenuItemZapiszXML = new ToolStripMenuItem();
+		toolStripMenuItemZapiszWizualizacje = new ToolStripMenuItem();
+		toolStripMenuItemKopiujOdnosnik = new ToolStripMenuItem();
+		toolStripMenuItemOtworzOdnosnik = new ToolStripMenuItem();
 		tableLayoutPanel1 = new TableLayoutPanel();
 		textBoxNumer = new TextBox();
 		labelRodzaj = new Label();
@@ -139,6 +145,7 @@ partial class FakturaEdytor
 		tableLayoutPanel7.SuspendLayout();
 		tabPageKSeF.SuspendLayout();
 		tableLayoutPanel8.SuspendLayout();
+		contextMenuStripKSeF.SuspendLayout();
 		tableLayoutPanel1.SuspendLayout();
 		((System.ComponentModel.ISupportInitialize)numericUpDownKurs).BeginInit();
 		tableLayoutPanelDatyKwoty.SuspendLayout();
@@ -778,13 +785,12 @@ partial class FakturaEdytor
 		tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle());
 		tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle());
 		tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-		tableLayoutPanel8.Controls.Add(buttonKSeFGeneruj, 5, 0);
 		tableLayoutPanel8.Controls.Add(textBoxKSeFXML, 0, 1);
 		tableLayoutPanel8.Controls.Add(label21, 0, 0);
 		tableLayoutPanel8.Controls.Add(textBoxNumerKSeF, 1, 0);
-		tableLayoutPanel8.Controls.Add(linkLabelKSeFUrl, 6, 0);
 		tableLayoutPanel8.Controls.Add(label24, 3, 0);
 		tableLayoutPanel8.Controls.Add(dateTimePickerDataKSeF, 4, 0);
+		tableLayoutPanel8.Controls.Add(buttonDropDownKSeF, 5, 0);
 		tableLayoutPanel8.Dock = DockStyle.Fill;
 		tableLayoutPanel8.Location = new Point(0, 0);
 		tableLayoutPanel8.Name = "tableLayoutPanel8";
@@ -793,17 +799,6 @@ partial class FakturaEdytor
 		tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
 		tableLayoutPanel8.Size = new Size(886, 193);
 		tableLayoutPanel8.TabIndex = 0;
-		// 
-		// buttonKSeFGeneruj
-		// 
-		buttonKSeFGeneruj.AutoSize = true;
-		buttonKSeFGeneruj.Location = new Point(570, 3);
-		buttonKSeFGeneruj.Name = "buttonKSeFGeneruj";
-		buttonKSeFGeneruj.Size = new Size(103, 25);
-		buttonKSeFGeneruj.TabIndex = 2;
-		buttonKSeFGeneruj.Text = "Generuj XML";
-		buttonKSeFGeneruj.UseVisualStyleBackColor = true;
-		buttonKSeFGeneruj.Click += buttonKSeFGeneruj_Click;
 		// 
 		// textBoxKSeFXML
 		// 
@@ -835,16 +830,6 @@ partial class FakturaEdytor
 		textBoxNumerKSeF.Size = new Size(226, 23);
 		textBoxNumerKSeF.TabIndex = 0;
 		// 
-		// linkLabelKSeFUrl
-		// 
-		linkLabelKSeFUrl.Anchor = AnchorStyles.Left;
-		linkLabelKSeFUrl.AutoSize = true;
-		linkLabelKSeFUrl.Location = new Point(679, 8);
-		linkLabelKSeFUrl.Name = "linkLabelKSeFUrl";
-		linkLabelKSeFUrl.Size = new Size(0, 15);
-		linkLabelKSeFUrl.TabIndex = 6;
-		linkLabelKSeFUrl.LinkClicked += linkLabelKSeFUrl_LinkClicked;
-		// 
 		// label24
 		// 
 		label24.Anchor = AnchorStyles.Right;
@@ -863,6 +848,58 @@ partial class FakturaEdytor
 		dateTimePickerDataKSeF.Name = "dateTimePickerDataKSeF";
 		dateTimePickerDataKSeF.Size = new Size(166, 23);
 		dateTimePickerDataKSeF.TabIndex = 1;
+		// 
+		// buttonDropDownKSeF
+		// 
+		buttonDropDownKSeF.Location = new Point(570, 3);
+		buttonDropDownKSeF.Menu = contextMenuStripKSeF;
+		buttonDropDownKSeF.Name = "buttonDropDownKSeF";
+		buttonDropDownKSeF.OpenMenuOnClick = true;
+		buttonDropDownKSeF.Size = new Size(115, 25);
+		buttonDropDownKSeF.TabIndex = 7;
+		buttonDropDownKSeF.Text = "e-Faktura    ";
+		buttonDropDownKSeF.UseVisualStyleBackColor = true;
+		// 
+		// contextMenuStripKSeF
+		// 
+		contextMenuStripKSeF.Items.AddRange(new ToolStripItem[] { toolStripMenuItemGenerujXML, toolStripMenuItemZapiszXML, toolStripMenuItemZapiszWizualizacje, toolStripMenuItemKopiujOdnosnik, toolStripMenuItemOtworzOdnosnik });
+		contextMenuStripKSeF.Name = "contextMenuStrip1";
+		contextMenuStripKSeF.Size = new Size(247, 114);
+		// 
+		// toolStripMenuItemGenerujXML
+		// 
+		toolStripMenuItemGenerujXML.Name = "toolStripMenuItemGenerujXML";
+		toolStripMenuItemGenerujXML.Size = new Size(246, 22);
+		toolStripMenuItemGenerujXML.Text = "Generuj XML";
+		toolStripMenuItemGenerujXML.Click += toolStripMenuItemGenerujXML_Click;
+		// 
+		// toolStripMenuItemZapiszXML
+		// 
+		toolStripMenuItemZapiszXML.Name = "toolStripMenuItemZapiszXML";
+		toolStripMenuItemZapiszXML.Size = new Size(246, 22);
+		toolStripMenuItemZapiszXML.Text = "Zapisz XML";
+		toolStripMenuItemZapiszXML.Click += toolStripMenuItemZapiszXML_Click;
+		// 
+		// toolStripMenuItemZapiszWizualizacje
+		// 
+		toolStripMenuItemZapiszWizualizacje.Name = "toolStripMenuItemZapiszWizualizacje";
+		toolStripMenuItemZapiszWizualizacje.Size = new Size(246, 22);
+		toolStripMenuItemZapiszWizualizacje.Text = "Zapisz PDF z wizualizacją";
+		toolStripMenuItemZapiszWizualizacje.Click += toolStripMenuItemZapiszWizualizacje_Click;
+		// 
+		// toolStripMenuItemKopiujOdnosnik
+		// 
+		toolStripMenuItemKopiujOdnosnik.Name = "toolStripMenuItemKopiujOdnosnik";
+		toolStripMenuItemKopiujOdnosnik.Size = new Size(246, 22);
+		toolStripMenuItemKopiujOdnosnik.Text = "Kopiuj odnośnik do schowka";
+		toolStripMenuItemKopiujOdnosnik.Click += toolStripMenuItemKopiujOdnosnik_Click;
+		// 
+		// toolStripMenuItemOtworzOdnosnik
+		// 
+		toolStripMenuItemOtworzOdnosnik.Name = "toolStripMenuItemOtworzOdnosnik";
+		toolStripMenuItemOtworzOdnosnik.Size = new Size(246, 22);
+		toolStripMenuItemOtworzOdnosnik.Text = "Otwórz odnośnik w przeglądarce";
+		toolStripMenuItemOtworzOdnosnik.Click += toolStripMenuItemOtworzOdnosnik_Click;
 		// 
 		// tableLayoutPanel1
 		// 
@@ -1345,6 +1382,7 @@ partial class FakturaEdytor
 		tabPageKSeF.ResumeLayout(false);
 		tableLayoutPanel8.ResumeLayout(false);
 		tableLayoutPanel8.PerformLayout();
+		contextMenuStripKSeF.ResumeLayout(false);
 		tableLayoutPanel1.ResumeLayout(false);
 		tableLayoutPanel1.PerformLayout();
 		((System.ComponentModel.ISupportInitialize)numericUpDownKurs).EndInit();
@@ -1447,7 +1485,6 @@ partial class FakturaEdytor
 	private System.Windows.Forms.Label label21;
 	private System.Windows.Forms.TextBox textBoxNumerKSeF;
 	private System.Windows.Forms.TextBox textBoxKSeFXML;
-	private ButtonDPI buttonKSeFGeneruj;
 	private System.Windows.Forms.Label label22;
 	private System.Windows.Forms.DateTimePickerFix dateTimePickerDataWystawienia;
 	private System.Windows.Forms.DateTimePickerFix dateTimePickerDataSprzedazy;
@@ -1459,8 +1496,14 @@ partial class FakturaEdytor
 	private System.Windows.Forms.CheckBox checkBoxReczneKwoty;
 	private System.Windows.Forms.TabPage tabPageDodatkowePodmioty;
 	private System.Windows.Forms.LinkLabel linkLabelUwagiPomoc;
-	private System.Windows.Forms.LinkLabel linkLabelKSeFUrl;
 	private System.Windows.Forms.TextBox textBoxNazwaBanku;
 	private Label label24;
 	private System.Windows.Forms.DateTimePickerFix dateTimePickerDataKSeF;
+	private ButtonDropDown buttonDropDownKSeF;
+	private ContextMenuStrip contextMenuStripKSeF;
+	private ToolStripMenuItem toolStripMenuItemZapiszXML;
+	private ToolStripMenuItem toolStripMenuItemZapiszWizualizacje;
+	private ToolStripMenuItem toolStripMenuItemKopiujOdnosnik;
+	private ToolStripMenuItem toolStripMenuItemOtworzOdnosnik;
+	private ToolStripMenuItem toolStripMenuItemGenerujXML;
 }

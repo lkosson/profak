@@ -5,8 +5,11 @@ namespace ProFak.UI;
 
 class ButtonDropDown : Button
 {
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+	[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 	public ContextMenuStrip? Menu { get; set; }
+
+	[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+	public bool OpenMenuOnClick { get; set; }
 
 	public ButtonDropDown()
 	{
@@ -20,6 +23,16 @@ class ButtonDropDown : Button
 			return;
 		}
 		base.OnMouseDown(mevent);
+	}
+
+	protected override void OnClick(EventArgs e)
+	{
+		if (OpenMenuOnClick && Menu != null)
+		{
+			Menu.Show(this, 0, Height);
+			return;
+		}
+		base.OnClick(e);
 	}
 
 	protected override void OnPaint(PaintEventArgs pevent)

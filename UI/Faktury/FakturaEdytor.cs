@@ -287,7 +287,10 @@ partial class FakturaEdytor : FakturaEdytorBase
 		pliki.Spis.Kontekst = Kontekst;
 		dodatkowePodmioty.Spis.FakturaRef = Rekord;
 		dodatkowePodmioty.Spis.Kontekst = Kontekst;
-		linkLabelKSeFUrl.Text = Rekord.URLKSeF;
+		toolStripMenuItemKopiujOdnosnik.Enabled = !String.IsNullOrEmpty(Rekord.URLKSeF) || !String.IsNullOrEmpty(Rekord.XMLKSeF);
+		toolStripMenuItemOtworzOdnosnik.Enabled = !String.IsNullOrEmpty(Rekord.URLKSeF) || !String.IsNullOrEmpty(Rekord.XMLKSeF);
+		toolStripMenuItemZapiszXML.Enabled = !String.IsNullOrEmpty(Rekord.XMLKSeF) || CzySprzedaz;
+		toolStripMenuItemZapiszWizualizacje.Enabled = !String.IsNullOrEmpty(Rekord.XMLKSeF);
 
 		var fakturaKorygowana = Kontekst.Baza.ZnajdzLubNull(Rekord.FakturaKorygowanaRef);
 
@@ -348,7 +351,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 			buttonNowyNabywca.Enabled = false;
 			textBoxDaneNabywcy.Enabled = false;
 
-			buttonKSeFGeneruj.Enabled = false;
+			toolStripMenuItemGenerujXML.Enabled = false;
 			textBoxKSeFXML.ReadOnly = true;
 		}
 	}
@@ -389,19 +392,11 @@ partial class FakturaEdytor : FakturaEdytorBase
 		return true;
 	}
 
-	private void buttonKSeFGeneruj_Click(object? sender, EventArgs e)
+	private void toolStripMenuItemGenerujXML_Click(object? sender, EventArgs e)
 	{
 		if (String.IsNullOrEmpty(Rekord.Numer))
 		{
 			MessageBox.Show("Przed wygenerowaniem postaci ustrukturyzowanej należy zapisać fakturę w celu nadania jej numeru.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-			return;
-		}
-		if (ModifierKeys == Keys.Shift && !String.IsNullOrEmpty(Rekord.XMLKSeF))
-		{
-			using var api = new IO.KSEF2.API(SrodowiskoKSeF.Prod);
-			var url = api.ZbudujUrl(Rekord.XMLKSeF, Rekord.NIPSprzedawcy, Rekord.DataWystawienia);
-			Rekord.URLKSeF = url;
-			linkLabelKSeFUrl.Text = url;
 			return;
 		}
 		if (!String.IsNullOrWhiteSpace(Rekord.XMLKSeF) && MessageBox.Show("Faktura ma już wygenerowaną postać ustrukturyzowaną. Czy na pewno chcesz ją wygenerować ponownie?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
@@ -409,6 +404,43 @@ partial class FakturaEdytor : FakturaEdytorBase
 		var xml = IO.FA_3.Generator.ZbudujXML(Kontekst.Baza, Rekord);
 		Rekord.XMLKSeF = xml;
 		kontroler.AktualizujKontrolki();
+	}
+
+	private void toolStripMenuItemZapiszXML_Click(object sender, EventArgs e)
+	{
+		var nowyKontekst = new Kontekst(Kontekst);
+		var akcja = new ZapiszJakoXMLLokalneAkcja();
+		IEnumerable<Faktura> rekord = [ Rekord ];
+		akcja.Uruchom(nowyKontekst, ref rekord);
+	}
+
+	private void toolStripMenuItemZapiszWizualizacje_Click(object sender, EventArgs e)
+	{
+
+	}
+
+	private void toolStripMenuItemKopiujOdnosnik_Click(object sender, EventArgs e)
+	{
+		var url = Rekord.URLKSeF;
+		if (String.IsNullOrEmpty(url))
+		{
+			var podmiot = Kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
+			using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
+			url = api.ZbudujUrl(Rekord.XMLKSeF, Rekord.NIPSprzedawcy, Rekord.DataWystawienia);
+		}
+		Clipboard.SetText(url);
+	}
+
+	private void toolStripMenuItemOtworzOdnosnik_Click(object sender, EventArgs e)
+	{
+		var url = Rekord.URLKSeF;
+		if (String.IsNullOrEmpty(url))
+		{
+			var podmiot = Kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
+			using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
+			url = api.ZbudujUrl(Rekord.XMLKSeF, Rekord.NIPSprzedawcy, Rekord.DataWystawienia);
+		}
+		Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = url });
 	}
 
 	private void linkLabelUwagiPomoc_LinkClicked(object? sender, LinkLabelLinkClickedEventArgs e)
@@ -430,13 +462,6 @@ Pozostałe elementy tekstowe zostaną przekazane jako dodatkowy opis.", "ProFak"
 	{
 		Rekord.PoprawNumeracjePozycji(Kontekst.Baza);
 		base.KoniecEdycji();
-	}
-
-	private void linkLabelKSeFUrl_LinkClicked(object? sender, LinkLabelLinkClickedEventArgs e)
-	{
-		if (String.IsNullOrWhiteSpace(Rekord.URLKSeF)) return;
-		if (e.Button == MouseButtons.Right) Clipboard.SetText(Rekord.URLKSeF);
-		else Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = Rekord.URLKSeF });
 	}
 }
 
