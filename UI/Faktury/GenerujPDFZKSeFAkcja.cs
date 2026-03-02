@@ -5,7 +5,7 @@ namespace ProFak.UI;
 
 class GenerujPDFZKSeFAkcja : AkcjaNaSpisie<Faktura>
 {
-	public override string Nazwa => "?? Generuj PDF (KSeF)";
+	public override string Nazwa => "ðŸ–« Generuj PDF (KSeF)";
 	public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) 
 		=> zaznaczoneRekordy.Any(e => !String.IsNullOrEmpty(e.XMLKSeF));
 
@@ -14,7 +14,7 @@ class GenerujPDFZKSeFAkcja : AkcjaNaSpisie<Faktura>
 		var faktury = zaznaczoneRekordy.Where(e => !String.IsNullOrEmpty(e.XMLKSeF)).ToList();
 		if (faktury.Count == 0)
 		{
-			MessageBox.Show("¯adna z wybranych faktur nie posiada danych KSeF.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			MessageBox.Show("Å»adna z wybranych faktur nie posiada danych KSeF.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 			return;
 		}
 
@@ -41,7 +41,7 @@ class GenerujPDFZKSeFAkcja : AkcjaNaSpisie<Faktura>
 		{
 			using var dialog = new FolderBrowserDialog();
 			dialog.AutoUpgradeEnabled = false;
-			dialog.Description = "Wybierz folder, do którego maj¹ zostaæ zapisane pliki PDF.";
+			dialog.Description = "Wybierz folder, do ktÃ³rego majÄ… zostaÃ¦ zapisane pliki PDF.";
 			if (dialog.ShowDialog() != DialogResult.OK) return;
 			var katalog = dialog.SelectedPath;
 			
@@ -57,7 +57,7 @@ class GenerujPDFZKSeFAkcja : AkcjaNaSpisie<Faktura>
 				}
 				return Task.CompletedTask;
 			});
-			MessageBox.Show($"Liczba wygenerowanych plików PDF: {liczbaPlikow}.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			MessageBox.Show($"Liczba wygenerowanych plikÃ³w PDF: {liczbaPlikow}.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 	}
 }
