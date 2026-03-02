@@ -64,6 +64,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 
 		kontroler.Powiazanie(textBoxKSeFXML, faktura => faktura.XMLKSeFFmt);
 		kontroler.Powiazanie(textBoxNumerKSeF, faktura => faktura.NumerKSeF);
+		kontroler.Powiazanie(dateTimePickerDataKSeF, faktura => faktura.DataKSeF);
 
 		Wymagane(textBoxDaneNabywcy);
 		Wymagane(textBoxDaneSprzedawcy);
@@ -84,11 +85,13 @@ partial class FakturaEdytor : FakturaEdytorBase
 		dateTimePickerDataWprowadzenia.CustomFormat = Format.Data;
 		dateTimePickerDataWystawienia.CustomFormat = Format.Data;
 		dateTimePickerTerminPlatnosci.CustomFormat = Format.Data;
+		dateTimePickerDataKSeF.CustomFormat = Format.DataCzas;
 
 		dateTimePickerDataSprzedazy.Format = DateTimePickerFormat.Custom;
 		dateTimePickerDataWprowadzenia.Format = DateTimePickerFormat.Custom;
 		dateTimePickerDataWystawienia.Format = DateTimePickerFormat.Custom;
 		dateTimePickerTerminPlatnosci.Format = DateTimePickerFormat.Custom;
+		dateTimePickerDataKSeF.Format = DateTimePickerFormat.Custom;
 
 		Wyglad.UsunSkrotyZakladek(tabControl1);
 	}

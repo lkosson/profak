@@ -29,95 +29,97 @@ partial class FakturaEdytor
 	/// </summary>
 	private void InitializeComponent()
 	{
-		tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-		tableLayoutPanelKontrahenci = new System.Windows.Forms.TableLayoutPanel();
-		groupBox2 = new System.Windows.Forms.GroupBox();
-		tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-		label6 = new System.Windows.Forms.Label();
-		label7 = new System.Windows.Forms.Label();
-		label8 = new System.Windows.Forms.Label();
-		textBoxDaneSprzedawcy = new System.Windows.Forms.TextBox();
+		tableLayoutPanel = new TableLayoutPanel();
+		tableLayoutPanelKontrahenci = new TableLayoutPanel();
+		groupBox2 = new GroupBox();
+		tableLayoutPanel5 = new TableLayoutPanel();
+		label6 = new Label();
+		label7 = new Label();
+		label8 = new Label();
+		textBoxDaneSprzedawcy = new TextBox();
 		buttonSprzedawca = new ButtonDPI();
-		comboBoxNIPSprzedawcy = new System.Windows.Forms.ComboBoxFix();
-		comboBoxNazwaSprzedawcy = new System.Windows.Forms.ComboBoxFix();
+		comboBoxNIPSprzedawcy = new ComboBoxFix();
+		comboBoxNazwaSprzedawcy = new ComboBoxFix();
 		buttonNowySprzedawca = new ButtonDPI();
-		groupBox3 = new System.Windows.Forms.GroupBox();
-		tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-		label9 = new System.Windows.Forms.Label();
-		label10 = new System.Windows.Forms.Label();
-		label11 = new System.Windows.Forms.Label();
-		textBoxDaneNabywcy = new System.Windows.Forms.TextBox();
+		groupBox3 = new GroupBox();
+		tableLayoutPanel6 = new TableLayoutPanel();
+		label9 = new Label();
+		label10 = new Label();
+		label11 = new Label();
+		textBoxDaneNabywcy = new TextBox();
 		buttonNabywca = new ButtonDPI();
-		comboBoxNIPNabywcy = new System.Windows.Forms.ComboBoxFix();
-		comboBoxNazwaNabywcy = new System.Windows.Forms.ComboBoxFix();
+		comboBoxNIPNabywcy = new ComboBoxFix();
+		comboBoxNazwaNabywcy = new ComboBoxFix();
 		buttonNowyNabywca = new ButtonDPI();
-		tabControl1 = new System.Windows.Forms.TabControl();
-		tabPagePozycje = new System.Windows.Forms.TabPage();
-		tabPageWplaty = new System.Windows.Forms.TabPage();
-		tabPagePliki = new System.Windows.Forms.TabPage();
-		tabPageUwagi = new System.Windows.Forms.TabPage();
-		tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-		groupBox4 = new System.Windows.Forms.GroupBox();
-		linkLabelUwagiPomoc = new System.Windows.Forms.LinkLabel();
-		textBoxUwagiPubliczne = new System.Windows.Forms.TextBox();
-		groupBox5 = new System.Windows.Forms.GroupBox();
-		textBoxUwagiWewnetrzne = new System.Windows.Forms.TextBox();
-		tabPageDodatkowePodmioty = new System.Windows.Forms.TabPage();
-		tabPagePodatki = new System.Windows.Forms.TabPage();
-		tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
-		label1 = new System.Windows.Forms.Label();
-		label19 = new System.Windows.Forms.Label();
-		comboBoxProcentKosztow = new System.Windows.Forms.ComboBox();
-		comboBoxProcentVat = new System.Windows.Forms.ComboBox();
-		checkBoxWDT = new System.Windows.Forms.CheckBox();
-		checkBoxWNT = new System.Windows.Forms.CheckBox();
-		checkBoxTP = new System.Windows.Forms.CheckBox();
-		checkBoxZakupSrodkowTrwalych = new System.Windows.Forms.CheckBox();
-		label20 = new System.Windows.Forms.Label();
-		textBoxOpisZdarzenia = new System.Windows.Forms.TextBox();
-		label23 = new System.Windows.Forms.Label();
-		comboBoxProceduraMarzy = new System.Windows.Forms.ComboBox();
-		checkBoxReczneKwoty = new System.Windows.Forms.CheckBox();
-		tabPageKSeF = new System.Windows.Forms.TabPage();
-		tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+		tabControl1 = new TabControl();
+		tabPagePozycje = new TabPage();
+		tabPageWplaty = new TabPage();
+		tabPagePliki = new TabPage();
+		tabPageUwagi = new TabPage();
+		tableLayoutPanel2 = new TableLayoutPanel();
+		groupBox4 = new GroupBox();
+		linkLabelUwagiPomoc = new LinkLabel();
+		textBoxUwagiPubliczne = new TextBox();
+		groupBox5 = new GroupBox();
+		textBoxUwagiWewnetrzne = new TextBox();
+		tabPageDodatkowePodmioty = new TabPage();
+		tabPagePodatki = new TabPage();
+		tableLayoutPanel7 = new TableLayoutPanel();
+		label1 = new Label();
+		label19 = new Label();
+		comboBoxProcentKosztow = new ComboBox();
+		comboBoxProcentVat = new ComboBox();
+		checkBoxWDT = new CheckBox();
+		checkBoxWNT = new CheckBox();
+		checkBoxTP = new CheckBox();
+		checkBoxZakupSrodkowTrwalych = new CheckBox();
+		label20 = new Label();
+		textBoxOpisZdarzenia = new TextBox();
+		label23 = new Label();
+		comboBoxProceduraMarzy = new ComboBox();
+		checkBoxReczneKwoty = new CheckBox();
+		tabPageKSeF = new TabPage();
+		tableLayoutPanel8 = new TableLayoutPanel();
 		buttonKSeFGeneruj = new ButtonDPI();
-		textBoxKSeFXML = new System.Windows.Forms.TextBox();
-		label21 = new System.Windows.Forms.Label();
-		textBoxNumerKSeF = new System.Windows.Forms.TextBox();
-		linkLabelKSeFUrl = new System.Windows.Forms.LinkLabel();
-		tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-		textBoxNumer = new System.Windows.Forms.TextBox();
-		labelRodzaj = new System.Windows.Forms.Label();
-		label2 = new System.Windows.Forms.Label();
+		textBoxKSeFXML = new TextBox();
+		label21 = new Label();
+		textBoxNumerKSeF = new TextBox();
+		linkLabelKSeFUrl = new LinkLabel();
+		label24 = new Label();
+		dateTimePickerDataKSeF = new DateTimePickerFix();
+		tableLayoutPanel1 = new TableLayoutPanel();
+		textBoxNumer = new TextBox();
+		labelRodzaj = new Label();
+		label2 = new Label();
 		numericUpDownKurs = new NumericUpDownDPI();
 		buttonWaluta = new ButtonDPI();
-		label15 = new System.Windows.Forms.Label();
-		comboBoxWaluta = new System.Windows.Forms.ComboBoxFix();
-		label22 = new System.Windows.Forms.Label();
-		tableLayoutPanelDatyKwoty = new System.Windows.Forms.TableLayoutPanel();
-		groupBox6 = new System.Windows.Forms.GroupBox();
-		tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
-		label12 = new System.Windows.Forms.Label();
-		label13 = new System.Windows.Forms.Label();
-		label14 = new System.Windows.Forms.Label();
-		textBoxRachunekBankowy = new System.Windows.Forms.TextBox();
-		dateTimePickerTerminPlatnosci = new System.Windows.Forms.DateTimePickerFix();
-		comboBoxSposobPlatnosci = new System.Windows.Forms.ComboBoxFix();
+		label15 = new Label();
+		comboBoxWaluta = new ComboBoxFix();
+		label22 = new Label();
+		tableLayoutPanelDatyKwoty = new TableLayoutPanel();
+		groupBox6 = new GroupBox();
+		tableLayoutPanel9 = new TableLayoutPanel();
+		label12 = new Label();
+		label13 = new Label();
+		label14 = new Label();
+		textBoxRachunekBankowy = new TextBox();
+		dateTimePickerTerminPlatnosci = new DateTimePickerFix();
+		comboBoxSposobPlatnosci = new ComboBoxFix();
 		buttonSposobPlatnosci = new ButtonDPI();
-		textBoxNazwaBanku = new System.Windows.Forms.TextBox();
-		groupBox1 = new System.Windows.Forms.GroupBox();
-		tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-		label3 = new System.Windows.Forms.Label();
-		label4 = new System.Windows.Forms.Label();
-		label5 = new System.Windows.Forms.Label();
-		dateTimePickerDataWystawienia = new System.Windows.Forms.DateTimePickerFix();
-		dateTimePickerDataSprzedazy = new System.Windows.Forms.DateTimePickerFix();
-		dateTimePickerDataWprowadzenia = new System.Windows.Forms.DateTimePickerFix();
-		groupBox7 = new System.Windows.Forms.GroupBox();
-		tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-		label16 = new System.Windows.Forms.Label();
-		label17 = new System.Windows.Forms.Label();
-		label18 = new System.Windows.Forms.Label();
+		textBoxNazwaBanku = new TextBox();
+		groupBox1 = new GroupBox();
+		tableLayoutPanel4 = new TableLayoutPanel();
+		label3 = new Label();
+		label4 = new Label();
+		label5 = new Label();
+		dateTimePickerDataWystawienia = new DateTimePickerFix();
+		dateTimePickerDataSprzedazy = new DateTimePickerFix();
+		dateTimePickerDataWprowadzenia = new DateTimePickerFix();
+		groupBox7 = new GroupBox();
+		tableLayoutPanel3 = new TableLayoutPanel();
+		label16 = new Label();
+		label17 = new Label();
+		label18 = new Label();
 		numericUpDownNetto = new NumericUpDownDPI();
 		numericUpDownVat = new NumericUpDownDPI();
 		numericUpDownBrutto = new NumericUpDownDPI();
@@ -154,64 +156,64 @@ partial class FakturaEdytor
 		// tableLayoutPanel
 		// 
 		tableLayoutPanel.ColumnCount = 1;
-		tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+		tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
 		tableLayoutPanel.Controls.Add(tableLayoutPanelKontrahenci, 0, 1);
 		tableLayoutPanel.Controls.Add(tabControl1, 0, 3);
 		tableLayoutPanel.Controls.Add(tableLayoutPanel1, 0, 0);
 		tableLayoutPanel.Controls.Add(tableLayoutPanelDatyKwoty, 0, 2);
-		tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-		tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
+		tableLayoutPanel.Dock = DockStyle.Fill;
+		tableLayoutPanel.Location = new Point(0, 0);
 		tableLayoutPanel.Name = "tableLayoutPanel";
 		tableLayoutPanel.RowCount = 4;
-		tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-		tableLayoutPanel.Size = new System.Drawing.Size(900, 550);
+		tableLayoutPanel.RowStyles.Add(new RowStyle());
+		tableLayoutPanel.RowStyles.Add(new RowStyle());
+		tableLayoutPanel.RowStyles.Add(new RowStyle());
+		tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+		tableLayoutPanel.Size = new Size(900, 550);
 		tableLayoutPanel.TabIndex = 0;
 		// 
 		// tableLayoutPanelKontrahenci
 		// 
 		tableLayoutPanelKontrahenci.AutoSize = true;
-		tableLayoutPanelKontrahenci.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+		tableLayoutPanelKontrahenci.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 		tableLayoutPanelKontrahenci.ColumnCount = 6;
-		tableLayoutPanelKontrahenci.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-		tableLayoutPanelKontrahenci.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-		tableLayoutPanelKontrahenci.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-		tableLayoutPanelKontrahenci.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-		tableLayoutPanelKontrahenci.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-		tableLayoutPanelKontrahenci.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+		tableLayoutPanelKontrahenci.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.66667F));
+		tableLayoutPanelKontrahenci.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.66667F));
+		tableLayoutPanelKontrahenci.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.66667F));
+		tableLayoutPanelKontrahenci.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.66667F));
+		tableLayoutPanelKontrahenci.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.66667F));
+		tableLayoutPanelKontrahenci.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.66667F));
 		tableLayoutPanelKontrahenci.Controls.Add(groupBox2, 0, 0);
 		tableLayoutPanelKontrahenci.Controls.Add(groupBox3, 3, 0);
-		tableLayoutPanelKontrahenci.Dock = System.Windows.Forms.DockStyle.Fill;
-		tableLayoutPanelKontrahenci.Location = new System.Drawing.Point(3, 40);
+		tableLayoutPanelKontrahenci.Dock = DockStyle.Fill;
+		tableLayoutPanelKontrahenci.Location = new Point(3, 40);
 		tableLayoutPanelKontrahenci.Name = "tableLayoutPanelKontrahenci";
 		tableLayoutPanelKontrahenci.RowCount = 1;
-		tableLayoutPanelKontrahenci.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanelKontrahenci.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 153F));
-		tableLayoutPanelKontrahenci.Size = new System.Drawing.Size(894, 153);
+		tableLayoutPanelKontrahenci.RowStyles.Add(new RowStyle());
+		tableLayoutPanelKontrahenci.RowStyles.Add(new RowStyle(SizeType.Absolute, 153F));
+		tableLayoutPanelKontrahenci.Size = new Size(894, 153);
 		tableLayoutPanelKontrahenci.TabIndex = 2;
 		// 
 		// groupBox2
 		// 
 		tableLayoutPanelKontrahenci.SetColumnSpan(groupBox2, 3);
 		groupBox2.Controls.Add(tableLayoutPanel5);
-		groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-		groupBox2.Location = new System.Drawing.Point(3, 3);
+		groupBox2.Dock = DockStyle.Fill;
+		groupBox2.Location = new Point(3, 3);
 		groupBox2.Name = "groupBox2";
-		groupBox2.Size = new System.Drawing.Size(441, 147);
+		groupBox2.Size = new Size(441, 147);
 		groupBox2.TabIndex = 10;
 		groupBox2.TabStop = false;
 		groupBox2.Text = "Sprzedawca";
 		// 
 		// tableLayoutPanel5
 		// 
-		tableLayoutPanel5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+		tableLayoutPanel5.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 		tableLayoutPanel5.ColumnCount = 4;
-		tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-		tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-		tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-		tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+		tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle());
+		tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+		tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle());
+		tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle());
 		tableLayoutPanel5.Controls.Add(label6, 0, 0);
 		tableLayoutPanel5.Controls.Add(label7, 0, 1);
 		tableLayoutPanel5.Controls.Add(label8, 0, 2);
@@ -220,43 +222,43 @@ partial class FakturaEdytor
 		tableLayoutPanel5.Controls.Add(comboBoxNIPSprzedawcy, 1, 0);
 		tableLayoutPanel5.Controls.Add(comboBoxNazwaSprzedawcy, 1, 1);
 		tableLayoutPanel5.Controls.Add(buttonNowySprzedawca, 3, 0);
-		tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-		tableLayoutPanel5.Location = new System.Drawing.Point(3, 19);
+		tableLayoutPanel5.Dock = DockStyle.Fill;
+		tableLayoutPanel5.Location = new Point(3, 19);
 		tableLayoutPanel5.Name = "tableLayoutPanel5";
 		tableLayoutPanel5.RowCount = 3;
-		tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-		tableLayoutPanel5.Size = new System.Drawing.Size(435, 125);
+		tableLayoutPanel5.RowStyles.Add(new RowStyle());
+		tableLayoutPanel5.RowStyles.Add(new RowStyle());
+		tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+		tableLayoutPanel5.Size = new Size(435, 125);
 		tableLayoutPanel5.TabIndex = 0;
 		// 
 		// label6
 		// 
-		label6.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label6.Anchor = AnchorStyles.Right;
 		label6.AutoSize = true;
-		label6.Location = new System.Drawing.Point(19, 8);
+		label6.Location = new Point(19, 8);
 		label6.Name = "label6";
-		label6.Size = new System.Drawing.Size(26, 15);
+		label6.Size = new Size(26, 15);
 		label6.TabIndex = 0;
 		label6.Text = "NIP";
 		// 
 		// label7
 		// 
-		label7.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label7.Anchor = AnchorStyles.Right;
 		label7.AutoSize = true;
-		label7.Location = new System.Drawing.Point(3, 38);
+		label7.Location = new Point(3, 38);
 		label7.Name = "label7";
-		label7.Size = new System.Drawing.Size(42, 15);
+		label7.Size = new Size(42, 15);
 		label7.TabIndex = 0;
 		label7.Text = "Nazwa";
 		// 
 		// label8
 		// 
-		label8.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label8.Anchor = AnchorStyles.Right;
 		label8.AutoSize = true;
-		label8.Location = new System.Drawing.Point(8, 85);
+		label8.Location = new Point(8, 85);
 		label8.Name = "label8";
-		label8.Size = new System.Drawing.Size(37, 15);
+		label8.Size = new Size(37, 15);
 		label8.TabIndex = 0;
 		label8.Text = "Adres";
 		// 
@@ -264,20 +266,20 @@ partial class FakturaEdytor
 		// 
 		textBoxDaneSprzedawcy.AcceptsReturn = true;
 		tableLayoutPanel5.SetColumnSpan(textBoxDaneSprzedawcy, 3);
-		textBoxDaneSprzedawcy.Dock = System.Windows.Forms.DockStyle.Fill;
-		textBoxDaneSprzedawcy.Location = new System.Drawing.Point(51, 63);
+		textBoxDaneSprzedawcy.Dock = DockStyle.Fill;
+		textBoxDaneSprzedawcy.Location = new Point(51, 63);
 		textBoxDaneSprzedawcy.Multiline = true;
 		textBoxDaneSprzedawcy.Name = "textBoxDaneSprzedawcy";
-		textBoxDaneSprzedawcy.Size = new System.Drawing.Size(381, 59);
+		textBoxDaneSprzedawcy.Size = new Size(381, 59);
 		textBoxDaneSprzedawcy.TabIndex = 30;
 		// 
 		// buttonSprzedawca
 		// 
-		buttonSprzedawca.Anchor = System.Windows.Forms.AnchorStyles.Left;
+		buttonSprzedawca.Anchor = AnchorStyles.Left;
 		buttonSprzedawca.AutoSize = true;
-		buttonSprzedawca.Location = new System.Drawing.Point(371, 3);
+		buttonSprzedawca.Location = new Point(375, 3);
 		buttonSprzedawca.Name = "buttonSprzedawca";
-		buttonSprzedawca.Size = new System.Drawing.Size(26, 25);
+		buttonSprzedawca.Size = new Size(26, 25);
 		buttonSprzedawca.TabIndex = 11;
 		buttonSprzedawca.Text = "...";
 		toolTip.SetToolTip(buttonSprzedawca, "Wyświetl pełną listę");
@@ -285,37 +287,36 @@ partial class FakturaEdytor
 		// 
 		// comboBoxNIPSprzedawcy
 		// 
-		comboBoxNIPSprzedawcy.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+		comboBoxNIPSprzedawcy.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+		comboBoxNIPSprzedawcy.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+		comboBoxNIPSprzedawcy.AutoCompleteSource = AutoCompleteSource.ListItems;
 		comboBoxNIPSprzedawcy.FormattingEnabled = true;
-		comboBoxNIPSprzedawcy.Location = new System.Drawing.Point(51, 4);
+		comboBoxNIPSprzedawcy.Location = new Point(51, 4);
 		comboBoxNIPSprzedawcy.Name = "comboBoxNIPSprzedawcy";
-		comboBoxNIPSprzedawcy.Size = new System.Drawing.Size(314, 23);
+		comboBoxNIPSprzedawcy.Size = new Size(318, 23);
 		comboBoxNIPSprzedawcy.TabIndex = 10;
-		comboBoxNIPSprzedawcy.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-		comboBoxNIPSprzedawcy.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 		// 
 		// comboBoxNazwaSprzedawcy
 		// 
-		comboBoxNazwaSprzedawcy.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+		comboBoxNazwaSprzedawcy.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+		comboBoxNazwaSprzedawcy.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+		comboBoxNazwaSprzedawcy.AutoCompleteSource = AutoCompleteSource.ListItems;
 		tableLayoutPanel5.SetColumnSpan(comboBoxNazwaSprzedawcy, 3);
 		comboBoxNazwaSprzedawcy.FormattingEnabled = true;
-		comboBoxNazwaSprzedawcy.Location = new System.Drawing.Point(51, 34);
+		comboBoxNazwaSprzedawcy.Location = new Point(51, 34);
 		comboBoxNazwaSprzedawcy.Name = "comboBoxNazwaSprzedawcy";
-		comboBoxNazwaSprzedawcy.Size = new System.Drawing.Size(381, 23);
+		comboBoxNazwaSprzedawcy.Size = new Size(381, 23);
 		comboBoxNazwaSprzedawcy.TabIndex = 20;
-		comboBoxNazwaSprzedawcy.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-		comboBoxNazwaSprzedawcy.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-
 		// 
 		// buttonNowySprzedawca
 		// 
-		buttonNowySprzedawca.Anchor = System.Windows.Forms.AnchorStyles.Left;
+		buttonNowySprzedawca.Anchor = AnchorStyles.Left;
 		buttonNowySprzedawca.AutoSize = true;
-		buttonNowySprzedawca.Location = new System.Drawing.Point(403, 3);
+		buttonNowySprzedawca.Location = new Point(407, 3);
 		buttonNowySprzedawca.Name = "buttonNowySprzedawca";
-		buttonNowySprzedawca.Size = new System.Drawing.Size(29, 25);
+		buttonNowySprzedawca.Size = new Size(25, 25);
 		buttonNowySprzedawca.TabIndex = 12;
-		buttonNowySprzedawca.Text = "➕";
+		buttonNowySprzedawca.Text = "+";
 		toolTip.SetToolTip(buttonNowySprzedawca, "Dodaj sprzedawcę do słownika kontrahentów");
 		buttonNowySprzedawca.UseVisualStyleBackColor = true;
 		buttonNowySprzedawca.Click += buttonNowySprzedawca_Click;
@@ -324,10 +325,10 @@ partial class FakturaEdytor
 		// 
 		tableLayoutPanelKontrahenci.SetColumnSpan(groupBox3, 3);
 		groupBox3.Controls.Add(tableLayoutPanel6);
-		groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-		groupBox3.Location = new System.Drawing.Point(450, 3);
+		groupBox3.Dock = DockStyle.Fill;
+		groupBox3.Location = new Point(450, 3);
 		groupBox3.Name = "groupBox3";
-		groupBox3.Size = new System.Drawing.Size(441, 147);
+		groupBox3.Size = new Size(441, 147);
 		groupBox3.TabIndex = 20;
 		groupBox3.TabStop = false;
 		groupBox3.Text = "Nabywca";
@@ -335,12 +336,12 @@ partial class FakturaEdytor
 		// tableLayoutPanel6
 		// 
 		tableLayoutPanel6.AutoSize = true;
-		tableLayoutPanel6.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+		tableLayoutPanel6.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 		tableLayoutPanel6.ColumnCount = 4;
-		tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-		tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-		tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-		tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+		tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle());
+		tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+		tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle());
+		tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle());
 		tableLayoutPanel6.Controls.Add(label9, 0, 0);
 		tableLayoutPanel6.Controls.Add(label10, 0, 1);
 		tableLayoutPanel6.Controls.Add(label11, 0, 2);
@@ -349,43 +350,43 @@ partial class FakturaEdytor
 		tableLayoutPanel6.Controls.Add(comboBoxNIPNabywcy, 1, 0);
 		tableLayoutPanel6.Controls.Add(comboBoxNazwaNabywcy, 1, 1);
 		tableLayoutPanel6.Controls.Add(buttonNowyNabywca, 3, 0);
-		tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-		tableLayoutPanel6.Location = new System.Drawing.Point(3, 19);
+		tableLayoutPanel6.Dock = DockStyle.Fill;
+		tableLayoutPanel6.Location = new Point(3, 19);
 		tableLayoutPanel6.Name = "tableLayoutPanel6";
 		tableLayoutPanel6.RowCount = 3;
-		tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-		tableLayoutPanel6.Size = new System.Drawing.Size(435, 125);
+		tableLayoutPanel6.RowStyles.Add(new RowStyle());
+		tableLayoutPanel6.RowStyles.Add(new RowStyle());
+		tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+		tableLayoutPanel6.Size = new Size(435, 125);
 		tableLayoutPanel6.TabIndex = 0;
 		// 
 		// label9
 		// 
-		label9.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label9.Anchor = AnchorStyles.Right;
 		label9.AutoSize = true;
-		label9.Location = new System.Drawing.Point(19, 8);
+		label9.Location = new Point(19, 8);
 		label9.Name = "label9";
-		label9.Size = new System.Drawing.Size(26, 15);
+		label9.Size = new Size(26, 15);
 		label9.TabIndex = 0;
 		label9.Text = "NIP";
 		// 
 		// label10
 		// 
-		label10.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label10.Anchor = AnchorStyles.Right;
 		label10.AutoSize = true;
-		label10.Location = new System.Drawing.Point(3, 38);
+		label10.Location = new Point(3, 38);
 		label10.Name = "label10";
-		label10.Size = new System.Drawing.Size(42, 15);
+		label10.Size = new Size(42, 15);
 		label10.TabIndex = 0;
 		label10.Text = "Nazwa";
 		// 
 		// label11
 		// 
-		label11.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label11.Anchor = AnchorStyles.Right;
 		label11.AutoSize = true;
-		label11.Location = new System.Drawing.Point(8, 85);
+		label11.Location = new Point(8, 85);
 		label11.Name = "label11";
-		label11.Size = new System.Drawing.Size(37, 15);
+		label11.Size = new Size(37, 15);
 		label11.TabIndex = 0;
 		label11.Text = "Adres";
 		// 
@@ -393,20 +394,20 @@ partial class FakturaEdytor
 		// 
 		textBoxDaneNabywcy.AcceptsReturn = true;
 		tableLayoutPanel6.SetColumnSpan(textBoxDaneNabywcy, 3);
-		textBoxDaneNabywcy.Dock = System.Windows.Forms.DockStyle.Fill;
-		textBoxDaneNabywcy.Location = new System.Drawing.Point(51, 63);
+		textBoxDaneNabywcy.Dock = DockStyle.Fill;
+		textBoxDaneNabywcy.Location = new Point(51, 63);
 		textBoxDaneNabywcy.Multiline = true;
 		textBoxDaneNabywcy.Name = "textBoxDaneNabywcy";
-		textBoxDaneNabywcy.Size = new System.Drawing.Size(381, 59);
+		textBoxDaneNabywcy.Size = new Size(381, 59);
 		textBoxDaneNabywcy.TabIndex = 30;
 		// 
 		// buttonNabywca
 		// 
-		buttonNabywca.Anchor = System.Windows.Forms.AnchorStyles.Left;
+		buttonNabywca.Anchor = AnchorStyles.Left;
 		buttonNabywca.AutoSize = true;
-		buttonNabywca.Location = new System.Drawing.Point(371, 3);
+		buttonNabywca.Location = new Point(375, 3);
 		buttonNabywca.Name = "buttonNabywca";
-		buttonNabywca.Size = new System.Drawing.Size(26, 25);
+		buttonNabywca.Size = new Size(26, 25);
 		buttonNabywca.TabIndex = 11;
 		buttonNabywca.Text = "...";
 		toolTip.SetToolTip(buttonNabywca, "Wyświetl pełną listę");
@@ -414,38 +415,36 @@ partial class FakturaEdytor
 		// 
 		// comboBoxNIPNabywcy
 		// 
-		comboBoxNIPNabywcy.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+		comboBoxNIPNabywcy.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+		comboBoxNIPNabywcy.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+		comboBoxNIPNabywcy.AutoCompleteSource = AutoCompleteSource.ListItems;
 		comboBoxNIPNabywcy.FormattingEnabled = true;
-		comboBoxNIPNabywcy.Location = new System.Drawing.Point(51, 4);
+		comboBoxNIPNabywcy.Location = new Point(51, 4);
 		comboBoxNIPNabywcy.Name = "comboBoxNIPNabywcy";
-		comboBoxNIPNabywcy.Size = new System.Drawing.Size(314, 23);
+		comboBoxNIPNabywcy.Size = new Size(318, 23);
 		comboBoxNIPNabywcy.TabIndex = 10;
-		comboBoxNIPNabywcy.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-		comboBoxNIPNabywcy.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-
 		// 
 		// comboBoxNazwaNabywcy
 		// 
-		comboBoxNazwaNabywcy.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+		comboBoxNazwaNabywcy.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+		comboBoxNazwaNabywcy.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+		comboBoxNazwaNabywcy.AutoCompleteSource = AutoCompleteSource.ListItems;
 		tableLayoutPanel6.SetColumnSpan(comboBoxNazwaNabywcy, 3);
 		comboBoxNazwaNabywcy.FormattingEnabled = true;
-		comboBoxNazwaNabywcy.Location = new System.Drawing.Point(51, 34);
+		comboBoxNazwaNabywcy.Location = new Point(51, 34);
 		comboBoxNazwaNabywcy.Name = "comboBoxNazwaNabywcy";
-		comboBoxNazwaNabywcy.Size = new System.Drawing.Size(381, 23);
+		comboBoxNazwaNabywcy.Size = new Size(381, 23);
 		comboBoxNazwaNabywcy.TabIndex = 20;
-		comboBoxNazwaNabywcy.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-		comboBoxNazwaNabywcy.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-
 		// 
 		// buttonNowyNabywca
 		// 
-		buttonNowyNabywca.Anchor = System.Windows.Forms.AnchorStyles.Left;
+		buttonNowyNabywca.Anchor = AnchorStyles.Left;
 		buttonNowyNabywca.AutoSize = true;
-		buttonNowyNabywca.Location = new System.Drawing.Point(403, 3);
+		buttonNowyNabywca.Location = new Point(407, 3);
 		buttonNowyNabywca.Name = "buttonNowyNabywca";
-		buttonNowyNabywca.Size = new System.Drawing.Size(29, 25);
+		buttonNowyNabywca.Size = new Size(25, 25);
 		buttonNowyNabywca.TabIndex = 12;
-		buttonNowyNabywca.Text = "➕";
+		buttonNowyNabywca.Text = "+";
 		toolTip.SetToolTip(buttonNowyNabywca, "Dodaj nabywcę do słownika kontrahentów");
 		buttonNowyNabywca.UseVisualStyleBackColor = true;
 		buttonNowyNabywca.Click += buttonNowyNabywca_Click;
@@ -459,36 +458,36 @@ partial class FakturaEdytor
 		tabControl1.Controls.Add(tabPageDodatkowePodmioty);
 		tabControl1.Controls.Add(tabPagePodatki);
 		tabControl1.Controls.Add(tabPageKSeF);
-		tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-		tabControl1.Location = new System.Drawing.Point(3, 326);
+		tabControl1.Dock = DockStyle.Fill;
+		tabControl1.Location = new Point(3, 326);
 		tabControl1.Name = "tabControl1";
 		tabControl1.SelectedIndex = 0;
-		tabControl1.Size = new System.Drawing.Size(894, 221);
+		tabControl1.Size = new Size(894, 221);
 		tabControl1.TabIndex = 4;
 		// 
 		// tabPagePozycje
 		// 
-		tabPagePozycje.Location = new System.Drawing.Point(4, 24);
+		tabPagePozycje.Location = new Point(4, 24);
 		tabPagePozycje.Name = "tabPagePozycje";
-		tabPagePozycje.Size = new System.Drawing.Size(886, 193);
+		tabPagePozycje.Size = new Size(886, 193);
 		tabPagePozycje.TabIndex = 0;
 		tabPagePozycje.Text = "Pozycje   [ᴄᴛʀʟ-ғ₁]";
 		tabPagePozycje.UseVisualStyleBackColor = true;
 		// 
 		// tabPageWplaty
 		// 
-		tabPageWplaty.Location = new System.Drawing.Point(4, 24);
+		tabPageWplaty.Location = new Point(4, 24);
 		tabPageWplaty.Name = "tabPageWplaty";
-		tabPageWplaty.Size = new System.Drawing.Size(886, 193);
+		tabPageWplaty.Size = new Size(886, 193);
 		tabPageWplaty.TabIndex = 1;
 		tabPageWplaty.Text = "Wpłaty   [ᴄᴛʀʟ-ғ₂]";
 		tabPageWplaty.UseVisualStyleBackColor = true;
 		// 
 		// tabPagePliki
 		// 
-		tabPagePliki.Location = new System.Drawing.Point(4, 24);
+		tabPagePliki.Location = new Point(4, 24);
 		tabPagePliki.Name = "tabPagePliki";
-		tabPagePliki.Size = new System.Drawing.Size(886, 193);
+		tabPagePliki.Size = new Size(886, 193);
 		tabPagePliki.TabIndex = 3;
 		tabPagePliki.Text = "Pliki   [ᴄᴛʀʟ-ғ₃]";
 		tabPagePliki.UseVisualStyleBackColor = true;
@@ -496,9 +495,9 @@ partial class FakturaEdytor
 		// tabPageUwagi
 		// 
 		tabPageUwagi.Controls.Add(tableLayoutPanel2);
-		tabPageUwagi.Location = new System.Drawing.Point(4, 24);
+		tabPageUwagi.Location = new Point(4, 24);
 		tabPageUwagi.Name = "tabPageUwagi";
-		tabPageUwagi.Size = new System.Drawing.Size(886, 193);
+		tabPageUwagi.Size = new Size(886, 193);
 		tabPageUwagi.TabIndex = 2;
 		tabPageUwagi.Text = "Uwagi   [ᴄᴛʀʟ-ғ₄]";
 		tabPageUwagi.UseVisualStyleBackColor = true;
@@ -506,37 +505,37 @@ partial class FakturaEdytor
 		// tableLayoutPanel2
 		// 
 		tableLayoutPanel2.ColumnCount = 2;
-		tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-		tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+		tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+		tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
 		tableLayoutPanel2.Controls.Add(groupBox4, 0, 0);
 		tableLayoutPanel2.Controls.Add(groupBox5, 1, 0);
-		tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-		tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+		tableLayoutPanel2.Dock = DockStyle.Fill;
+		tableLayoutPanel2.Location = new Point(0, 0);
 		tableLayoutPanel2.Name = "tableLayoutPanel2";
 		tableLayoutPanel2.RowCount = 1;
-		tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-		tableLayoutPanel2.Size = new System.Drawing.Size(886, 193);
+		tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+		tableLayoutPanel2.Size = new Size(886, 193);
 		tableLayoutPanel2.TabIndex = 2;
 		// 
 		// groupBox4
 		// 
 		groupBox4.Controls.Add(linkLabelUwagiPomoc);
 		groupBox4.Controls.Add(textBoxUwagiPubliczne);
-		groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-		groupBox4.Location = new System.Drawing.Point(3, 3);
+		groupBox4.Dock = DockStyle.Fill;
+		groupBox4.Location = new Point(3, 3);
 		groupBox4.Name = "groupBox4";
-		groupBox4.Size = new System.Drawing.Size(437, 187);
+		groupBox4.Size = new Size(437, 187);
 		groupBox4.TabIndex = 1;
 		groupBox4.TabStop = false;
 		groupBox4.Text = "Uwagi (drukowane na fakturze)";
 		// 
 		// linkLabelUwagiPomoc
 		// 
-		linkLabelUwagiPomoc.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+		linkLabelUwagiPomoc.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
 		linkLabelUwagiPomoc.AutoSize = true;
-		linkLabelUwagiPomoc.Location = new System.Drawing.Point(419, 166);
+		linkLabelUwagiPomoc.Location = new Point(419, 166);
 		linkLabelUwagiPomoc.Name = "linkLabelUwagiPomoc";
-		linkLabelUwagiPomoc.Size = new System.Drawing.Size(12, 15);
+		linkLabelUwagiPomoc.Size = new Size(12, 15);
 		linkLabelUwagiPomoc.TabIndex = 1;
 		linkLabelUwagiPomoc.TabStop = true;
 		linkLabelUwagiPomoc.Text = "?";
@@ -545,20 +544,20 @@ partial class FakturaEdytor
 		// textBoxUwagiPubliczne
 		// 
 		textBoxUwagiPubliczne.AcceptsReturn = true;
-		textBoxUwagiPubliczne.Dock = System.Windows.Forms.DockStyle.Fill;
-		textBoxUwagiPubliczne.Location = new System.Drawing.Point(3, 19);
+		textBoxUwagiPubliczne.Dock = DockStyle.Fill;
+		textBoxUwagiPubliczne.Location = new Point(3, 19);
 		textBoxUwagiPubliczne.Multiline = true;
 		textBoxUwagiPubliczne.Name = "textBoxUwagiPubliczne";
-		textBoxUwagiPubliczne.Size = new System.Drawing.Size(431, 165);
+		textBoxUwagiPubliczne.Size = new Size(431, 165);
 		textBoxUwagiPubliczne.TabIndex = 0;
 		// 
 		// groupBox5
 		// 
 		groupBox5.Controls.Add(textBoxUwagiWewnetrzne);
-		groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-		groupBox5.Location = new System.Drawing.Point(446, 3);
+		groupBox5.Dock = DockStyle.Fill;
+		groupBox5.Location = new Point(446, 3);
 		groupBox5.Name = "groupBox5";
-		groupBox5.Size = new System.Drawing.Size(437, 187);
+		groupBox5.Size = new Size(437, 187);
 		groupBox5.TabIndex = 1;
 		groupBox5.TabStop = false;
 		groupBox5.Text = "Uwagi (wewnętrzne)";
@@ -566,18 +565,18 @@ partial class FakturaEdytor
 		// textBoxUwagiWewnetrzne
 		// 
 		textBoxUwagiWewnetrzne.AcceptsReturn = true;
-		textBoxUwagiWewnetrzne.Dock = System.Windows.Forms.DockStyle.Fill;
-		textBoxUwagiWewnetrzne.Location = new System.Drawing.Point(3, 19);
+		textBoxUwagiWewnetrzne.Dock = DockStyle.Fill;
+		textBoxUwagiWewnetrzne.Location = new Point(3, 19);
 		textBoxUwagiWewnetrzne.Multiline = true;
 		textBoxUwagiWewnetrzne.Name = "textBoxUwagiWewnetrzne";
-		textBoxUwagiWewnetrzne.Size = new System.Drawing.Size(431, 165);
+		textBoxUwagiWewnetrzne.Size = new Size(431, 165);
 		textBoxUwagiWewnetrzne.TabIndex = 0;
 		// 
 		// tabPageDodatkowePodmioty
 		// 
-		tabPageDodatkowePodmioty.Location = new System.Drawing.Point(4, 24);
+		tabPageDodatkowePodmioty.Location = new Point(4, 24);
 		tabPageDodatkowePodmioty.Name = "tabPageDodatkowePodmioty";
-		tabPageDodatkowePodmioty.Size = new System.Drawing.Size(886, 193);
+		tabPageDodatkowePodmioty.Size = new Size(886, 193);
 		tabPageDodatkowePodmioty.TabIndex = 6;
 		tabPageDodatkowePodmioty.Text = "Dodatkowe podmioty   [ᴄᴛʀʟ-ғ₅]";
 		tabPageDodatkowePodmioty.UseVisualStyleBackColor = true;
@@ -585,10 +584,10 @@ partial class FakturaEdytor
 		// tabPagePodatki
 		// 
 		tabPagePodatki.Controls.Add(tableLayoutPanel7);
-		tabPagePodatki.Location = new System.Drawing.Point(4, 24);
+		tabPagePodatki.Location = new Point(4, 24);
 		tabPagePodatki.Name = "tabPagePodatki";
-		tabPagePodatki.Padding = new System.Windows.Forms.Padding(3);
-		tabPagePodatki.Size = new System.Drawing.Size(886, 193);
+		tabPagePodatki.Padding = new Padding(3);
+		tabPagePodatki.Size = new Size(886, 193);
 		tabPagePodatki.TabIndex = 4;
 		tabPagePodatki.Text = "Podatki   [ᴄᴛʀʟ-ғ₆]";
 		tabPagePodatki.UseVisualStyleBackColor = true;
@@ -596,10 +595,10 @@ partial class FakturaEdytor
 		// tableLayoutPanel7
 		// 
 		tableLayoutPanel7.ColumnCount = 4;
-		tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-		tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-		tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-		tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+		tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle());
+		tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+		tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+		tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
 		tableLayoutPanel7.Controls.Add(label1, 0, 0);
 		tableLayoutPanel7.Controls.Add(label19, 0, 1);
 		tableLayoutPanel7.Controls.Add(comboBoxProcentKosztow, 1, 0);
@@ -613,147 +612,147 @@ partial class FakturaEdytor
 		tableLayoutPanel7.Controls.Add(label23, 0, 3);
 		tableLayoutPanel7.Controls.Add(comboBoxProceduraMarzy, 1, 3);
 		tableLayoutPanel7.Controls.Add(checkBoxReczneKwoty, 3, 4);
-		tableLayoutPanel7.Location = new System.Drawing.Point(6, 6);
+		tableLayoutPanel7.Location = new Point(6, 6);
 		tableLayoutPanel7.Name = "tableLayoutPanel7";
 		tableLayoutPanel7.RowCount = 6;
-		tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-		tableLayoutPanel7.Size = new System.Drawing.Size(583, 152);
+		tableLayoutPanel7.RowStyles.Add(new RowStyle());
+		tableLayoutPanel7.RowStyles.Add(new RowStyle());
+		tableLayoutPanel7.RowStyles.Add(new RowStyle());
+		tableLayoutPanel7.RowStyles.Add(new RowStyle());
+		tableLayoutPanel7.RowStyles.Add(new RowStyle());
+		tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+		tableLayoutPanel7.Size = new Size(583, 152);
 		tableLayoutPanel7.TabIndex = 0;
 		// 
 		// label1
 		// 
-		label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label1.Anchor = AnchorStyles.Right;
 		label1.AutoSize = true;
-		label1.Location = new System.Drawing.Point(40, 7);
+		label1.Location = new Point(40, 7);
 		label1.Name = "label1";
-		label1.Size = new System.Drawing.Size(100, 15);
+		label1.Size = new Size(100, 15);
 		label1.TabIndex = 0;
 		label1.Text = "Udział w kosztach";
 		// 
 		// label19
 		// 
-		label19.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label19.Anchor = AnchorStyles.Right;
 		label19.AutoSize = true;
-		label19.Location = new System.Drawing.Point(3, 36);
+		label19.Location = new Point(3, 36);
 		label19.Name = "label19";
-		label19.Size = new System.Drawing.Size(137, 15);
+		label19.Size = new Size(137, 15);
 		label19.TabIndex = 0;
 		label19.Text = "Udział w VAT naliczonym";
 		// 
 		// comboBoxProcentKosztow
 		// 
-		comboBoxProcentKosztow.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+		comboBoxProcentKosztow.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		comboBoxProcentKosztow.FormattingEnabled = true;
 		comboBoxProcentKosztow.Items.AddRange(new object[] { "100%", "75%", "20%", "0%" });
-		comboBoxProcentKosztow.Location = new System.Drawing.Point(146, 3);
+		comboBoxProcentKosztow.Location = new Point(146, 3);
 		comboBoxProcentKosztow.Name = "comboBoxProcentKosztow";
-		comboBoxProcentKosztow.Size = new System.Drawing.Size(204, 23);
+		comboBoxProcentKosztow.Size = new Size(204, 23);
 		comboBoxProcentKosztow.TabIndex = 0;
 		// 
 		// comboBoxProcentVat
 		// 
-		comboBoxProcentVat.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+		comboBoxProcentVat.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		comboBoxProcentVat.FormattingEnabled = true;
 		comboBoxProcentVat.Items.AddRange(new object[] { "100%", "50%", "0%" });
-		comboBoxProcentVat.Location = new System.Drawing.Point(146, 32);
+		comboBoxProcentVat.Location = new Point(146, 32);
 		comboBoxProcentVat.Name = "comboBoxProcentVat";
-		comboBoxProcentVat.Size = new System.Drawing.Size(204, 23);
+		comboBoxProcentVat.Size = new Size(204, 23);
 		comboBoxProcentVat.TabIndex = 1;
 		// 
 		// checkBoxWDT
 		// 
-		checkBoxWDT.Anchor = System.Windows.Forms.AnchorStyles.Left;
+		checkBoxWDT.Anchor = AnchorStyles.Left;
 		checkBoxWDT.AutoSize = true;
-		checkBoxWDT.Location = new System.Drawing.Point(376, 5);
+		checkBoxWDT.Location = new Point(376, 5);
 		checkBoxWDT.Name = "checkBoxWDT";
-		checkBoxWDT.Size = new System.Drawing.Size(50, 19);
+		checkBoxWDT.Size = new Size(50, 19);
 		checkBoxWDT.TabIndex = 4;
 		checkBoxWDT.Text = "WDT";
 		checkBoxWDT.UseVisualStyleBackColor = true;
 		// 
 		// checkBoxWNT
 		// 
-		checkBoxWNT.Anchor = System.Windows.Forms.AnchorStyles.Left;
+		checkBoxWNT.Anchor = AnchorStyles.Left;
 		checkBoxWNT.AutoSize = true;
-		checkBoxWNT.Location = new System.Drawing.Point(376, 34);
+		checkBoxWNT.Location = new Point(376, 34);
 		checkBoxWNT.Name = "checkBoxWNT";
-		checkBoxWNT.Size = new System.Drawing.Size(52, 19);
+		checkBoxWNT.Size = new Size(52, 19);
 		checkBoxWNT.TabIndex = 5;
 		checkBoxWNT.Text = "WNT";
 		checkBoxWNT.UseVisualStyleBackColor = true;
 		// 
 		// checkBoxTP
 		// 
-		checkBoxTP.Anchor = System.Windows.Forms.AnchorStyles.Left;
+		checkBoxTP.Anchor = AnchorStyles.Left;
 		checkBoxTP.AutoSize = true;
-		checkBoxTP.Location = new System.Drawing.Point(376, 63);
+		checkBoxTP.Location = new Point(376, 63);
 		checkBoxTP.Name = "checkBoxTP";
-		checkBoxTP.Size = new System.Drawing.Size(131, 19);
+		checkBoxTP.Size = new Size(131, 19);
 		checkBoxTP.TabIndex = 6;
 		checkBoxTP.Text = "Podmiot powiązany";
 		checkBoxTP.UseVisualStyleBackColor = true;
 		// 
 		// checkBoxZakupSrodkowTrwalych
 		// 
-		checkBoxZakupSrodkowTrwalych.Anchor = System.Windows.Forms.AnchorStyles.Left;
+		checkBoxZakupSrodkowTrwalych.Anchor = AnchorStyles.Left;
 		checkBoxZakupSrodkowTrwalych.AutoSize = true;
-		checkBoxZakupSrodkowTrwalych.Location = new System.Drawing.Point(376, 92);
+		checkBoxZakupSrodkowTrwalych.Location = new Point(376, 92);
 		checkBoxZakupSrodkowTrwalych.Name = "checkBoxZakupSrodkowTrwalych";
-		checkBoxZakupSrodkowTrwalych.Size = new System.Drawing.Size(155, 19);
+		checkBoxZakupSrodkowTrwalych.Size = new Size(155, 19);
 		checkBoxZakupSrodkowTrwalych.TabIndex = 7;
 		checkBoxZakupSrodkowTrwalych.Text = "Zakup środków trwałych";
 		checkBoxZakupSrodkowTrwalych.UseVisualStyleBackColor = true;
 		// 
 		// label20
 		// 
-		label20.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label20.Anchor = AnchorStyles.Right;
 		label20.AutoSize = true;
-		label20.Location = new System.Drawing.Point(7, 65);
+		label20.Location = new Point(7, 65);
 		label20.Name = "label20";
-		label20.Size = new System.Drawing.Size(133, 15);
+		label20.Size = new Size(133, 15);
 		label20.TabIndex = 14;
 		label20.Text = "Opis zdarzenia na PKPiR";
 		// 
 		// textBoxOpisZdarzenia
 		// 
-		textBoxOpisZdarzenia.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-		textBoxOpisZdarzenia.Location = new System.Drawing.Point(146, 61);
+		textBoxOpisZdarzenia.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+		textBoxOpisZdarzenia.Location = new Point(146, 61);
 		textBoxOpisZdarzenia.Name = "textBoxOpisZdarzenia";
-		textBoxOpisZdarzenia.Size = new System.Drawing.Size(204, 23);
+		textBoxOpisZdarzenia.Size = new Size(204, 23);
 		textBoxOpisZdarzenia.TabIndex = 2;
 		// 
 		// label23
 		// 
-		label23.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label23.Anchor = AnchorStyles.Right;
 		label23.AutoSize = true;
-		label23.Location = new System.Drawing.Point(44, 94);
+		label23.Location = new Point(44, 94);
 		label23.Name = "label23";
-		label23.Size = new System.Drawing.Size(96, 15);
+		label23.Size = new Size(96, 15);
 		label23.TabIndex = 14;
 		label23.Text = "Procedura marży";
 		// 
 		// comboBoxProceduraMarzy
 		// 
-		comboBoxProceduraMarzy.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+		comboBoxProceduraMarzy.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		comboBoxProceduraMarzy.FormattingEnabled = true;
 		comboBoxProceduraMarzy.Items.AddRange(new object[] { "100%", "50%", "0%" });
-		comboBoxProceduraMarzy.Location = new System.Drawing.Point(146, 90);
+		comboBoxProceduraMarzy.Location = new Point(146, 90);
 		comboBoxProceduraMarzy.Name = "comboBoxProceduraMarzy";
-		comboBoxProceduraMarzy.Size = new System.Drawing.Size(204, 23);
+		comboBoxProceduraMarzy.Size = new Size(204, 23);
 		comboBoxProceduraMarzy.TabIndex = 3;
 		// 
 		// checkBoxReczneKwoty
 		// 
-		checkBoxReczneKwoty.Anchor = System.Windows.Forms.AnchorStyles.Left;
+		checkBoxReczneKwoty.Anchor = AnchorStyles.Left;
 		checkBoxReczneKwoty.AutoSize = true;
-		checkBoxReczneKwoty.Location = new System.Drawing.Point(376, 119);
+		checkBoxReczneKwoty.Location = new Point(376, 119);
 		checkBoxReczneKwoty.Name = "checkBoxReczneKwoty";
-		checkBoxReczneKwoty.Size = new System.Drawing.Size(201, 19);
+		checkBoxReczneKwoty.Size = new Size(201, 19);
 		checkBoxReczneKwoty.TabIndex = 8;
 		checkBoxReczneKwoty.Text = "Kwota \"razem\" ustawiona ręcznie";
 		checkBoxReczneKwoty.UseVisualStyleBackColor = true;
@@ -761,102 +760,126 @@ partial class FakturaEdytor
 		// tabPageKSeF
 		// 
 		tabPageKSeF.Controls.Add(tableLayoutPanel8);
-		tabPageKSeF.Location = new System.Drawing.Point(4, 24);
+		tabPageKSeF.Location = new Point(4, 24);
 		tabPageKSeF.Name = "tabPageKSeF";
-		tabPageKSeF.Size = new System.Drawing.Size(886, 193);
+		tabPageKSeF.Size = new Size(886, 193);
 		tabPageKSeF.TabIndex = 5;
 		tabPageKSeF.Text = "KSeF   [ᴄᴛʀʟ-ғ₇]";
 		tabPageKSeF.UseVisualStyleBackColor = true;
 		// 
 		// tableLayoutPanel8
 		// 
-		tableLayoutPanel8.ColumnCount = 5;
-		tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-		tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-		tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-		tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-		tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-		tableLayoutPanel8.Controls.Add(buttonKSeFGeneruj, 2, 0);
+		tableLayoutPanel8.ColumnCount = 8;
+		tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle());
+		tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle());
+		tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+		tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle());
+		tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle());
+		tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle());
+		tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle());
+		tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+		tableLayoutPanel8.Controls.Add(buttonKSeFGeneruj, 5, 0);
 		tableLayoutPanel8.Controls.Add(textBoxKSeFXML, 0, 1);
 		tableLayoutPanel8.Controls.Add(label21, 0, 0);
 		tableLayoutPanel8.Controls.Add(textBoxNumerKSeF, 1, 0);
-		tableLayoutPanel8.Controls.Add(linkLabelKSeFUrl, 3, 0);
-		tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
-		tableLayoutPanel8.Location = new System.Drawing.Point(0, 0);
+		tableLayoutPanel8.Controls.Add(linkLabelKSeFUrl, 6, 0);
+		tableLayoutPanel8.Controls.Add(label24, 3, 0);
+		tableLayoutPanel8.Controls.Add(dateTimePickerDataKSeF, 4, 0);
+		tableLayoutPanel8.Dock = DockStyle.Fill;
+		tableLayoutPanel8.Location = new Point(0, 0);
 		tableLayoutPanel8.Name = "tableLayoutPanel8";
 		tableLayoutPanel8.RowCount = 2;
-		tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-		tableLayoutPanel8.Size = new System.Drawing.Size(886, 193);
+		tableLayoutPanel8.RowStyles.Add(new RowStyle());
+		tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+		tableLayoutPanel8.Size = new Size(886, 193);
 		tableLayoutPanel8.TabIndex = 0;
 		// 
 		// buttonKSeFGeneruj
 		// 
 		buttonKSeFGeneruj.AutoSize = true;
-		buttonKSeFGeneruj.Location = new System.Drawing.Point(313, 3);
+		buttonKSeFGeneruj.Location = new Point(570, 3);
 		buttonKSeFGeneruj.Name = "buttonKSeFGeneruj";
-		buttonKSeFGeneruj.Size = new System.Drawing.Size(103, 25);
-		buttonKSeFGeneruj.TabIndex = 5;
+		buttonKSeFGeneruj.Size = new Size(103, 25);
+		buttonKSeFGeneruj.TabIndex = 2;
 		buttonKSeFGeneruj.Text = "Generuj XML";
 		buttonKSeFGeneruj.UseVisualStyleBackColor = true;
 		buttonKSeFGeneruj.Click += buttonKSeFGeneruj_Click;
 		// 
 		// textBoxKSeFXML
 		// 
-		tableLayoutPanel8.SetColumnSpan(textBoxKSeFXML, 5);
-		textBoxKSeFXML.Dock = System.Windows.Forms.DockStyle.Fill;
-		textBoxKSeFXML.Font = new System.Drawing.Font("Consolas", 9F);
-		textBoxKSeFXML.Location = new System.Drawing.Point(3, 34);
+		tableLayoutPanel8.SetColumnSpan(textBoxKSeFXML, 8);
+		textBoxKSeFXML.Dock = DockStyle.Fill;
+		textBoxKSeFXML.Font = new Font("Consolas", 9F);
+		textBoxKSeFXML.Location = new Point(3, 34);
 		textBoxKSeFXML.Multiline = true;
 		textBoxKSeFXML.Name = "textBoxKSeFXML";
-		textBoxKSeFXML.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-		textBoxKSeFXML.Size = new System.Drawing.Size(880, 156);
-		textBoxKSeFXML.TabIndex = 4;
+		textBoxKSeFXML.ScrollBars = ScrollBars.Both;
+		textBoxKSeFXML.Size = new Size(880, 156);
+		textBoxKSeFXML.TabIndex = 3;
 		// 
 		// label21
 		// 
-		label21.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label21.Anchor = AnchorStyles.Right;
 		label21.AutoSize = true;
-		label21.Location = new System.Drawing.Point(3, 8);
+		label21.Location = new Point(3, 8);
 		label21.Name = "label21";
-		label21.Size = new System.Drawing.Size(72, 15);
+		label21.Size = new Size(72, 15);
 		label21.TabIndex = 0;
 		label21.Text = "Numer KSeF";
 		// 
 		// textBoxNumerKSeF
 		// 
-		textBoxNumerKSeF.Anchor = System.Windows.Forms.AnchorStyles.Left;
-		textBoxNumerKSeF.Location = new System.Drawing.Point(81, 4);
+		textBoxNumerKSeF.Anchor = AnchorStyles.Left;
+		textBoxNumerKSeF.Location = new Point(81, 4);
 		textBoxNumerKSeF.Name = "textBoxNumerKSeF";
-		textBoxNumerKSeF.Size = new System.Drawing.Size(226, 23);
-		textBoxNumerKSeF.TabIndex = 1;
+		textBoxNumerKSeF.Size = new Size(226, 23);
+		textBoxNumerKSeF.TabIndex = 0;
 		// 
 		// linkLabelKSeFUrl
 		// 
-		linkLabelKSeFUrl.Anchor = System.Windows.Forms.AnchorStyles.Left;
+		linkLabelKSeFUrl.Anchor = AnchorStyles.Left;
 		linkLabelKSeFUrl.AutoSize = true;
-		linkLabelKSeFUrl.Location = new System.Drawing.Point(422, 8);
+		linkLabelKSeFUrl.Location = new Point(679, 8);
 		linkLabelKSeFUrl.Name = "linkLabelKSeFUrl";
-		linkLabelKSeFUrl.Size = new System.Drawing.Size(0, 15);
+		linkLabelKSeFUrl.Size = new Size(0, 15);
 		linkLabelKSeFUrl.TabIndex = 6;
 		linkLabelKSeFUrl.LinkClicked += linkLabelKSeFUrl_LinkClicked;
 		// 
+		// label24
+		// 
+		label24.Anchor = AnchorStyles.Right;
+		label24.AutoSize = true;
+		label24.Location = new Point(333, 8);
+		label24.Name = "label24";
+		label24.Size = new Size(59, 15);
+		label24.TabIndex = 0;
+		label24.Text = "Data KSeF";
+		// 
+		// dateTimePickerDataKSeF
+		// 
+		dateTimePickerDataKSeF.Anchor = AnchorStyles.Left;
+		dateTimePickerDataKSeF.Enabled = false;
+		dateTimePickerDataKSeF.Location = new Point(398, 4);
+		dateTimePickerDataKSeF.Name = "dateTimePickerDataKSeF";
+		dateTimePickerDataKSeF.Size = new Size(166, 23);
+		dateTimePickerDataKSeF.TabIndex = 1;
+		// 
 		// tableLayoutPanel1
 		// 
-		tableLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+		tableLayoutPanel1.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		tableLayoutPanel1.AutoSize = true;
 		tableLayoutPanel1.ColumnCount = 11;
-		tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-		tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-		tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-		tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-		tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-		tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-		tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-		tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-		tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-		tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-		tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+		tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
+		tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+		tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
+		tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+		tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+		tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
+		tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120F));
+		tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
+		tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+		tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
+		tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 80F));
 		tableLayoutPanel1.Controls.Add(textBoxNumer, 3, 0);
 		tableLayoutPanel1.Controls.Add(labelRodzaj, 0, 0);
 		tableLayoutPanel1.Controls.Add(label2, 2, 0);
@@ -865,60 +888,60 @@ partial class FakturaEdytor
 		tableLayoutPanel1.Controls.Add(label15, 5, 0);
 		tableLayoutPanel1.Controls.Add(comboBoxWaluta, 6, 0);
 		tableLayoutPanel1.Controls.Add(label22, 9, 0);
-		tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+		tableLayoutPanel1.Location = new Point(3, 3);
 		tableLayoutPanel1.Name = "tableLayoutPanel1";
 		tableLayoutPanel1.RowCount = 1;
-		tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-		tableLayoutPanel1.Size = new System.Drawing.Size(894, 31);
+		tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+		tableLayoutPanel1.Size = new Size(894, 31);
 		tableLayoutPanel1.TabIndex = 1;
 		// 
 		// textBoxNumer
 		// 
-		textBoxNumer.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-		textBoxNumer.Location = new System.Drawing.Point(129, 4);
+		textBoxNumer.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+		textBoxNumer.Location = new Point(129, 4);
 		textBoxNumer.Name = "textBoxNumer";
-		textBoxNumer.Size = new System.Drawing.Size(404, 23);
+		textBoxNumer.Size = new Size(404, 23);
 		textBoxNumer.TabIndex = 0;
 		// 
 		// labelRodzaj
 		// 
-		labelRodzaj.Anchor = System.Windows.Forms.AnchorStyles.Left;
+		labelRodzaj.Anchor = AnchorStyles.Left;
 		labelRodzaj.AutoSize = true;
-		labelRodzaj.Location = new System.Drawing.Point(3, 8);
+		labelRodzaj.Location = new Point(3, 8);
 		labelRodzaj.Name = "labelRodzaj";
-		labelRodzaj.Size = new System.Drawing.Size(50, 15);
+		labelRodzaj.Size = new Size(50, 15);
 		labelRodzaj.TabIndex = 0;
 		labelRodzaj.Text = "[Rodzaj]";
 		// 
 		// label2
 		// 
-		label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label2.Anchor = AnchorStyles.Right;
 		label2.AutoSize = true;
-		label2.Location = new System.Drawing.Point(79, 8);
+		label2.Location = new Point(79, 8);
 		label2.Name = "label2";
-		label2.Size = new System.Drawing.Size(44, 15);
+		label2.Size = new Size(44, 15);
 		label2.TabIndex = 2;
 		label2.Text = "Numer";
 		// 
 		// numericUpDownKurs
 		// 
-		numericUpDownKurs.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+		numericUpDownKurs.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		numericUpDownKurs.DecimalPlaces = 4;
-		numericUpDownKurs.Location = new System.Drawing.Point(817, 4);
-		numericUpDownKurs.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+		numericUpDownKurs.Location = new Point(817, 4);
+		numericUpDownKurs.Margin = new Padding(3, 4, 3, 4);
 		numericUpDownKurs.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
 		numericUpDownKurs.Name = "numericUpDownKurs";
-		numericUpDownKurs.Size = new System.Drawing.Size(74, 23);
+		numericUpDownKurs.Size = new Size(74, 23);
 		numericUpDownKurs.TabIndex = 3;
-		numericUpDownKurs.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+		numericUpDownKurs.TextAlign = HorizontalAlignment.Right;
 		// 
 		// buttonWaluta
 		// 
-		buttonWaluta.Anchor = System.Windows.Forms.AnchorStyles.Left;
+		buttonWaluta.Anchor = AnchorStyles.Left;
 		buttonWaluta.AutoSize = true;
-		buttonWaluta.Location = new System.Drawing.Point(729, 3);
+		buttonWaluta.Location = new Point(729, 3);
 		buttonWaluta.Name = "buttonWaluta";
-		buttonWaluta.Size = new System.Drawing.Size(26, 25);
+		buttonWaluta.Size = new Size(26, 25);
 		buttonWaluta.TabIndex = 2;
 		buttonWaluta.Text = "...";
 		toolTip.SetToolTip(buttonWaluta, "Wyświetl pełną listę");
@@ -926,64 +949,63 @@ partial class FakturaEdytor
 		// 
 		// label15
 		// 
-		label15.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label15.Anchor = AnchorStyles.Right;
 		label15.AutoSize = true;
-		label15.Location = new System.Drawing.Point(559, 8);
+		label15.Location = new Point(559, 8);
 		label15.Name = "label15";
-		label15.Size = new System.Drawing.Size(44, 15);
+		label15.Size = new Size(44, 15);
 		label15.TabIndex = 0;
 		label15.Text = "Waluta";
 		// 
 		// comboBoxWaluta
 		// 
-		comboBoxWaluta.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-		comboBoxWaluta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+		comboBoxWaluta.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+		comboBoxWaluta.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+		comboBoxWaluta.AutoCompleteSource = AutoCompleteSource.ListItems;
+		comboBoxWaluta.DropDownStyle = ComboBoxStyle.DropDownList;
 		comboBoxWaluta.FormattingEnabled = true;
-		comboBoxWaluta.Location = new System.Drawing.Point(609, 4);
+		comboBoxWaluta.Location = new Point(609, 4);
 		comboBoxWaluta.Name = "comboBoxWaluta";
-		comboBoxWaluta.Size = new System.Drawing.Size(114, 23);
+		comboBoxWaluta.Size = new Size(114, 23);
 		comboBoxWaluta.TabIndex = 1;
-		comboBoxWaluta.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-		comboBoxWaluta.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-
 		// 
 		// label22
 		// 
-		label22.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label22.Anchor = AnchorStyles.Right;
 		label22.AutoSize = true;
-		label22.Location = new System.Drawing.Point(781, 8);
+		label22.Location = new Point(781, 8);
 		label22.Name = "label22";
-		label22.Size = new System.Drawing.Size(30, 15);
+		label22.Size = new Size(30, 15);
 		label22.TabIndex = 0;
 		label22.Text = "Kurs";
 		// 
 		// tableLayoutPanelDatyKwoty
 		// 
 		tableLayoutPanelDatyKwoty.AutoSize = true;
-		tableLayoutPanelDatyKwoty.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+		tableLayoutPanelDatyKwoty.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 		tableLayoutPanelDatyKwoty.ColumnCount = 3;
-		tableLayoutPanelDatyKwoty.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-		tableLayoutPanelDatyKwoty.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-		tableLayoutPanelDatyKwoty.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+		tableLayoutPanelDatyKwoty.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+		tableLayoutPanelDatyKwoty.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+		tableLayoutPanelDatyKwoty.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
 		tableLayoutPanelDatyKwoty.Controls.Add(groupBox6, 1, 0);
 		tableLayoutPanelDatyKwoty.Controls.Add(groupBox1, 0, 0);
 		tableLayoutPanelDatyKwoty.Controls.Add(groupBox7, 2, 0);
-		tableLayoutPanelDatyKwoty.Dock = System.Windows.Forms.DockStyle.Fill;
-		tableLayoutPanelDatyKwoty.Location = new System.Drawing.Point(3, 199);
+		tableLayoutPanelDatyKwoty.Dock = DockStyle.Fill;
+		tableLayoutPanelDatyKwoty.Location = new Point(3, 199);
 		tableLayoutPanelDatyKwoty.Name = "tableLayoutPanelDatyKwoty";
 		tableLayoutPanelDatyKwoty.RowCount = 1;
-		tableLayoutPanelDatyKwoty.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-		tableLayoutPanelDatyKwoty.Size = new System.Drawing.Size(894, 121);
+		tableLayoutPanelDatyKwoty.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+		tableLayoutPanelDatyKwoty.Size = new Size(894, 121);
 		tableLayoutPanelDatyKwoty.TabIndex = 3;
 		// 
 		// groupBox6
 		// 
 		groupBox6.AutoSize = true;
 		groupBox6.Controls.Add(tableLayoutPanel9);
-		groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
-		groupBox6.Location = new System.Drawing.Point(271, 3);
+		groupBox6.Dock = DockStyle.Fill;
+		groupBox6.Location = new Point(271, 3);
 		groupBox6.Name = "groupBox6";
-		groupBox6.Size = new System.Drawing.Size(441, 115);
+		groupBox6.Size = new Size(441, 115);
 		groupBox6.TabIndex = 40;
 		groupBox6.TabStop = false;
 		groupBox6.Text = "Płatność";
@@ -991,12 +1013,12 @@ partial class FakturaEdytor
 		// tableLayoutPanel9
 		// 
 		tableLayoutPanel9.AutoSize = true;
-		tableLayoutPanel9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+		tableLayoutPanel9.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 		tableLayoutPanel9.ColumnCount = 4;
-		tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-		tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-		tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-		tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+		tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle());
+		tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle());
+		tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+		tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle());
 		tableLayoutPanel9.Controls.Add(label12, 0, 0);
 		tableLayoutPanel9.Controls.Add(label13, 0, 1);
 		tableLayoutPanel9.Controls.Add(label14, 0, 2);
@@ -1005,83 +1027,83 @@ partial class FakturaEdytor
 		tableLayoutPanel9.Controls.Add(comboBoxSposobPlatnosci, 1, 0);
 		tableLayoutPanel9.Controls.Add(buttonSposobPlatnosci, 3, 0);
 		tableLayoutPanel9.Controls.Add(textBoxNazwaBanku, 2, 2);
-		tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
-		tableLayoutPanel9.Location = new System.Drawing.Point(3, 19);
+		tableLayoutPanel9.Dock = DockStyle.Fill;
+		tableLayoutPanel9.Location = new Point(3, 19);
 		tableLayoutPanel9.Name = "tableLayoutPanel9";
 		tableLayoutPanel9.RowCount = 4;
-		tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-		tableLayoutPanel9.Size = new System.Drawing.Size(435, 93);
+		tableLayoutPanel9.RowStyles.Add(new RowStyle());
+		tableLayoutPanel9.RowStyles.Add(new RowStyle());
+		tableLayoutPanel9.RowStyles.Add(new RowStyle());
+		tableLayoutPanel9.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+		tableLayoutPanel9.Size = new Size(435, 93);
 		tableLayoutPanel9.TabIndex = 0;
 		// 
 		// label12
 		// 
-		label12.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label12.Anchor = AnchorStyles.Right;
 		label12.AutoSize = true;
-		label12.Location = new System.Drawing.Point(3, 8);
+		label12.Location = new Point(3, 8);
 		label12.Name = "label12";
-		label12.Size = new System.Drawing.Size(97, 15);
+		label12.Size = new Size(97, 15);
 		label12.TabIndex = 0;
 		label12.Text = "Sposób płatności";
 		// 
 		// label13
 		// 
-		label13.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label13.Anchor = AnchorStyles.Right;
 		label13.AutoSize = true;
-		label13.Location = new System.Drawing.Point(6, 38);
+		label13.Location = new Point(6, 38);
 		label13.Name = "label13";
-		label13.Size = new System.Drawing.Size(94, 15);
+		label13.Size = new Size(94, 15);
 		label13.TabIndex = 0;
 		label13.Text = "Termin płatności";
 		// 
 		// label14
 		// 
-		label14.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label14.Anchor = AnchorStyles.Right;
 		label14.AutoSize = true;
-		label14.Location = new System.Drawing.Point(3, 67);
+		label14.Location = new Point(3, 67);
 		label14.Name = "label14";
-		label14.Size = new System.Drawing.Size(97, 15);
+		label14.Size = new Size(97, 15);
 		label14.TabIndex = 0;
 		label14.Text = "Numer rachunku";
 		// 
 		// textBoxRachunekBankowy
 		// 
-		textBoxRachunekBankowy.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-		textBoxRachunekBankowy.Location = new System.Drawing.Point(106, 63);
+		textBoxRachunekBankowy.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+		textBoxRachunekBankowy.Location = new Point(106, 63);
 		textBoxRachunekBankowy.Name = "textBoxRachunekBankowy";
-		textBoxRachunekBankowy.Size = new System.Drawing.Size(201, 23);
+		textBoxRachunekBankowy.Size = new Size(201, 23);
 		textBoxRachunekBankowy.TabIndex = 3;
 		// 
 		// dateTimePickerTerminPlatnosci
 		// 
-		dateTimePickerTerminPlatnosci.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+		dateTimePickerTerminPlatnosci.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		tableLayoutPanel9.SetColumnSpan(dateTimePickerTerminPlatnosci, 3);
-		dateTimePickerTerminPlatnosci.Location = new System.Drawing.Point(106, 34);
+		dateTimePickerTerminPlatnosci.Location = new Point(106, 34);
 		dateTimePickerTerminPlatnosci.Name = "dateTimePickerTerminPlatnosci";
-		dateTimePickerTerminPlatnosci.Size = new System.Drawing.Size(326, 23);
+		dateTimePickerTerminPlatnosci.Size = new Size(326, 23);
 		dateTimePickerTerminPlatnosci.TabIndex = 2;
 		// 
 		// comboBoxSposobPlatnosci
 		// 
-		comboBoxSposobPlatnosci.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+		comboBoxSposobPlatnosci.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+		comboBoxSposobPlatnosci.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+		comboBoxSposobPlatnosci.AutoCompleteSource = AutoCompleteSource.ListItems;
 		tableLayoutPanel9.SetColumnSpan(comboBoxSposobPlatnosci, 2);
 		comboBoxSposobPlatnosci.FormattingEnabled = true;
-		comboBoxSposobPlatnosci.Location = new System.Drawing.Point(106, 4);
+		comboBoxSposobPlatnosci.Location = new Point(106, 4);
 		comboBoxSposobPlatnosci.Name = "comboBoxSposobPlatnosci";
-		comboBoxSposobPlatnosci.Size = new System.Drawing.Size(294, 23);
+		comboBoxSposobPlatnosci.Size = new Size(294, 23);
 		comboBoxSposobPlatnosci.TabIndex = 0;
-		comboBoxSposobPlatnosci.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-		comboBoxSposobPlatnosci.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 		// 
 		// buttonSposobPlatnosci
 		// 
-		buttonSposobPlatnosci.Anchor = System.Windows.Forms.AnchorStyles.Left;
+		buttonSposobPlatnosci.Anchor = AnchorStyles.Left;
 		buttonSposobPlatnosci.AutoSize = true;
-		buttonSposobPlatnosci.Location = new System.Drawing.Point(406, 3);
+		buttonSposobPlatnosci.Location = new Point(406, 3);
 		buttonSposobPlatnosci.Name = "buttonSposobPlatnosci";
-		buttonSposobPlatnosci.Size = new System.Drawing.Size(26, 25);
+		buttonSposobPlatnosci.Size = new Size(26, 25);
 		buttonSposobPlatnosci.TabIndex = 1;
 		buttonSposobPlatnosci.Text = "...";
 		toolTip.SetToolTip(buttonSposobPlatnosci, "Wyświetl pełną listę");
@@ -1089,22 +1111,22 @@ partial class FakturaEdytor
 		// 
 		// textBoxNazwaBanku
 		// 
-		textBoxNazwaBanku.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+		textBoxNazwaBanku.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		tableLayoutPanel9.SetColumnSpan(textBoxNazwaBanku, 2);
-		textBoxNazwaBanku.Location = new System.Drawing.Point(313, 63);
+		textBoxNazwaBanku.Location = new Point(313, 63);
 		textBoxNazwaBanku.Name = "textBoxNazwaBanku";
 		textBoxNazwaBanku.PlaceholderText = "Nazwa banku";
-		textBoxNazwaBanku.Size = new System.Drawing.Size(119, 23);
+		textBoxNazwaBanku.Size = new Size(119, 23);
 		textBoxNazwaBanku.TabIndex = 4;
 		// 
 		// groupBox1
 		// 
 		groupBox1.AutoSize = true;
 		groupBox1.Controls.Add(tableLayoutPanel4);
-		groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-		groupBox1.Location = new System.Drawing.Point(3, 3);
+		groupBox1.Dock = DockStyle.Fill;
+		groupBox1.Location = new Point(3, 3);
 		groupBox1.Name = "groupBox1";
-		groupBox1.Size = new System.Drawing.Size(262, 115);
+		groupBox1.Size = new Size(262, 115);
 		groupBox1.TabIndex = 30;
 		groupBox1.TabStop = false;
 		groupBox1.Text = "Daty";
@@ -1112,89 +1134,89 @@ partial class FakturaEdytor
 		// tableLayoutPanel4
 		// 
 		tableLayoutPanel4.AutoSize = true;
-		tableLayoutPanel4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+		tableLayoutPanel4.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 		tableLayoutPanel4.ColumnCount = 2;
-		tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-		tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+		tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle());
+		tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
 		tableLayoutPanel4.Controls.Add(label3, 0, 0);
 		tableLayoutPanel4.Controls.Add(label4, 0, 1);
 		tableLayoutPanel4.Controls.Add(label5, 0, 2);
 		tableLayoutPanel4.Controls.Add(dateTimePickerDataWystawienia, 1, 0);
 		tableLayoutPanel4.Controls.Add(dateTimePickerDataSprzedazy, 1, 1);
 		tableLayoutPanel4.Controls.Add(dateTimePickerDataWprowadzenia, 1, 2);
-		tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-		tableLayoutPanel4.Location = new System.Drawing.Point(3, 19);
+		tableLayoutPanel4.Dock = DockStyle.Fill;
+		tableLayoutPanel4.Location = new Point(3, 19);
 		tableLayoutPanel4.Name = "tableLayoutPanel4";
 		tableLayoutPanel4.RowCount = 4;
-		tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-		tableLayoutPanel4.Size = new System.Drawing.Size(256, 93);
+		tableLayoutPanel4.RowStyles.Add(new RowStyle());
+		tableLayoutPanel4.RowStyles.Add(new RowStyle());
+		tableLayoutPanel4.RowStyles.Add(new RowStyle());
+		tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+		tableLayoutPanel4.Size = new Size(256, 93);
 		tableLayoutPanel4.TabIndex = 0;
 		// 
 		// label3
 		// 
-		label3.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label3.Anchor = AnchorStyles.Right;
 		label3.AutoSize = true;
-		label3.Location = new System.Drawing.Point(15, 7);
+		label3.Location = new Point(15, 7);
 		label3.Name = "label3";
-		label3.Size = new System.Drawing.Size(98, 15);
+		label3.Size = new Size(98, 15);
 		label3.TabIndex = 0;
 		label3.Text = "Data wystawienia";
 		// 
 		// label4
 		// 
-		label4.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label4.Anchor = AnchorStyles.Right;
 		label4.AutoSize = true;
-		label4.Location = new System.Drawing.Point(28, 36);
+		label4.Location = new Point(28, 36);
 		label4.Name = "label4";
-		label4.Size = new System.Drawing.Size(85, 15);
+		label4.Size = new Size(85, 15);
 		label4.TabIndex = 1;
 		label4.Text = "Data sprzedaży";
 		// 
 		// label5
 		// 
-		label5.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label5.Anchor = AnchorStyles.Right;
 		label5.AutoSize = true;
-		label5.Location = new System.Drawing.Point(3, 65);
+		label5.Location = new Point(3, 65);
 		label5.Name = "label5";
-		label5.Size = new System.Drawing.Size(110, 15);
+		label5.Size = new Size(110, 15);
 		label5.TabIndex = 1;
 		label5.Text = "Data wprowadzenia";
 		// 
 		// dateTimePickerDataWystawienia
 		// 
-		dateTimePickerDataWystawienia.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-		dateTimePickerDataWystawienia.Location = new System.Drawing.Point(119, 3);
+		dateTimePickerDataWystawienia.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+		dateTimePickerDataWystawienia.Location = new Point(119, 3);
 		dateTimePickerDataWystawienia.Name = "dateTimePickerDataWystawienia";
-		dateTimePickerDataWystawienia.Size = new System.Drawing.Size(134, 23);
+		dateTimePickerDataWystawienia.Size = new Size(134, 23);
 		dateTimePickerDataWystawienia.TabIndex = 30;
 		// 
 		// dateTimePickerDataSprzedazy
 		// 
-		dateTimePickerDataSprzedazy.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-		dateTimePickerDataSprzedazy.Location = new System.Drawing.Point(119, 32);
+		dateTimePickerDataSprzedazy.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+		dateTimePickerDataSprzedazy.Location = new Point(119, 32);
 		dateTimePickerDataSprzedazy.Name = "dateTimePickerDataSprzedazy";
-		dateTimePickerDataSprzedazy.Size = new System.Drawing.Size(134, 23);
+		dateTimePickerDataSprzedazy.Size = new Size(134, 23);
 		dateTimePickerDataSprzedazy.TabIndex = 31;
 		// 
 		// dateTimePickerDataWprowadzenia
 		// 
-		dateTimePickerDataWprowadzenia.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-		dateTimePickerDataWprowadzenia.Location = new System.Drawing.Point(119, 61);
+		dateTimePickerDataWprowadzenia.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+		dateTimePickerDataWprowadzenia.Location = new Point(119, 61);
 		dateTimePickerDataWprowadzenia.Name = "dateTimePickerDataWprowadzenia";
-		dateTimePickerDataWprowadzenia.Size = new System.Drawing.Size(134, 23);
+		dateTimePickerDataWprowadzenia.Size = new Size(134, 23);
 		dateTimePickerDataWprowadzenia.TabIndex = 32;
 		// 
 		// groupBox7
 		// 
 		groupBox7.AutoSize = true;
 		groupBox7.Controls.Add(tableLayoutPanel3);
-		groupBox7.Dock = System.Windows.Forms.DockStyle.Fill;
-		groupBox7.Location = new System.Drawing.Point(718, 3);
+		groupBox7.Dock = DockStyle.Fill;
+		groupBox7.Location = new Point(718, 3);
 		groupBox7.Name = "groupBox7";
-		groupBox7.Size = new System.Drawing.Size(173, 115);
+		groupBox7.Size = new Size(173, 115);
 		groupBox7.TabIndex = 41;
 		groupBox7.TabStop = false;
 		groupBox7.Text = "Razem";
@@ -1202,103 +1224,103 @@ partial class FakturaEdytor
 		// tableLayoutPanel3
 		// 
 		tableLayoutPanel3.AutoSize = true;
-		tableLayoutPanel3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+		tableLayoutPanel3.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 		tableLayoutPanel3.ColumnCount = 2;
-		tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-		tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+		tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle());
+		tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
 		tableLayoutPanel3.Controls.Add(label16, 0, 0);
 		tableLayoutPanel3.Controls.Add(label17, 0, 1);
 		tableLayoutPanel3.Controls.Add(label18, 0, 2);
 		tableLayoutPanel3.Controls.Add(numericUpDownNetto, 1, 0);
 		tableLayoutPanel3.Controls.Add(numericUpDownVat, 1, 1);
 		tableLayoutPanel3.Controls.Add(numericUpDownBrutto, 1, 2);
-		tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-		tableLayoutPanel3.Location = new System.Drawing.Point(3, 19);
+		tableLayoutPanel3.Dock = DockStyle.Fill;
+		tableLayoutPanel3.Location = new Point(3, 19);
 		tableLayoutPanel3.Name = "tableLayoutPanel3";
 		tableLayoutPanel3.RowCount = 3;
-		tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-		tableLayoutPanel3.Size = new System.Drawing.Size(167, 93);
+		tableLayoutPanel3.RowStyles.Add(new RowStyle());
+		tableLayoutPanel3.RowStyles.Add(new RowStyle());
+		tableLayoutPanel3.RowStyles.Add(new RowStyle());
+		tableLayoutPanel3.Size = new Size(167, 93);
 		tableLayoutPanel3.TabIndex = 0;
 		// 
 		// label16
 		// 
-		label16.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label16.Anchor = AnchorStyles.Right;
 		label16.AutoSize = true;
-		label16.Location = new System.Drawing.Point(6, 8);
+		label16.Location = new Point(6, 8);
 		label16.Name = "label16";
-		label16.Size = new System.Drawing.Size(37, 15);
+		label16.Size = new Size(37, 15);
 		label16.TabIndex = 0;
 		label16.Text = "Netto";
 		// 
 		// label17
 		// 
-		label17.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label17.Anchor = AnchorStyles.Right;
 		label17.AutoSize = true;
-		label17.Location = new System.Drawing.Point(17, 39);
+		label17.Location = new Point(17, 39);
 		label17.Name = "label17";
-		label17.Size = new System.Drawing.Size(26, 15);
+		label17.Size = new Size(26, 15);
 		label17.TabIndex = 0;
 		label17.Text = "VAT";
 		// 
 		// label18
 		// 
-		label18.Anchor = System.Windows.Forms.AnchorStyles.Right;
+		label18.Anchor = AnchorStyles.Right;
 		label18.AutoSize = true;
-		label18.Location = new System.Drawing.Point(3, 70);
+		label18.Location = new Point(3, 70);
 		label18.Name = "label18";
-		label18.Size = new System.Drawing.Size(40, 15);
+		label18.Size = new Size(40, 15);
 		label18.TabIndex = 0;
 		label18.Text = "Brutto";
 		// 
 		// numericUpDownNetto
 		// 
-		numericUpDownNetto.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+		numericUpDownNetto.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		numericUpDownNetto.DecimalPlaces = 2;
-		numericUpDownNetto.Location = new System.Drawing.Point(49, 4);
-		numericUpDownNetto.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+		numericUpDownNetto.Location = new Point(49, 4);
+		numericUpDownNetto.Margin = new Padding(3, 4, 3, 4);
 		numericUpDownNetto.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
-		numericUpDownNetto.Minimum = new decimal(new int[] { 999999999, 0, 0, int.MinValue });
+		numericUpDownNetto.Minimum = new decimal(new int[] { 999999999, 0, 0, Int32.MinValue });
 		numericUpDownNetto.Name = "numericUpDownNetto";
-		numericUpDownNetto.Size = new System.Drawing.Size(115, 23);
+		numericUpDownNetto.Size = new Size(115, 23);
 		numericUpDownNetto.TabIndex = 50;
-		numericUpDownNetto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+		numericUpDownNetto.TextAlign = HorizontalAlignment.Right;
 		// 
 		// numericUpDownVat
 		// 
-		numericUpDownVat.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+		numericUpDownVat.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		numericUpDownVat.DecimalPlaces = 2;
-		numericUpDownVat.Location = new System.Drawing.Point(49, 35);
-		numericUpDownVat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+		numericUpDownVat.Location = new Point(49, 35);
+		numericUpDownVat.Margin = new Padding(3, 4, 3, 4);
 		numericUpDownVat.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
-		numericUpDownVat.Minimum = new decimal(new int[] { 999999999, 0, 0, int.MinValue });
+		numericUpDownVat.Minimum = new decimal(new int[] { 999999999, 0, 0, Int32.MinValue });
 		numericUpDownVat.Name = "numericUpDownVat";
-		numericUpDownVat.Size = new System.Drawing.Size(115, 23);
+		numericUpDownVat.Size = new Size(115, 23);
 		numericUpDownVat.TabIndex = 51;
-		numericUpDownVat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+		numericUpDownVat.TextAlign = HorizontalAlignment.Right;
 		// 
 		// numericUpDownBrutto
 		// 
-		numericUpDownBrutto.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+		numericUpDownBrutto.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		numericUpDownBrutto.DecimalPlaces = 2;
-		numericUpDownBrutto.Location = new System.Drawing.Point(49, 66);
-		numericUpDownBrutto.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+		numericUpDownBrutto.Location = new Point(49, 66);
+		numericUpDownBrutto.Margin = new Padding(3, 4, 3, 4);
 		numericUpDownBrutto.Maximum = new decimal(new int[] { 999999999, 0, 0, 0 });
-		numericUpDownBrutto.Minimum = new decimal(new int[] { 999999999, 0, 0, int.MinValue });
+		numericUpDownBrutto.Minimum = new decimal(new int[] { 999999999, 0, 0, Int32.MinValue });
 		numericUpDownBrutto.Name = "numericUpDownBrutto";
-		numericUpDownBrutto.Size = new System.Drawing.Size(115, 23);
+		numericUpDownBrutto.Size = new Size(115, 23);
 		numericUpDownBrutto.TabIndex = 52;
-		numericUpDownBrutto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+		numericUpDownBrutto.TextAlign = HorizontalAlignment.Right;
 		// 
 		// FakturaEdytor
 		// 
-		AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-		AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+		AutoScaleDimensions = new SizeF(7F, 15F);
+		AutoScaleMode = AutoScaleMode.Font;
 		Controls.Add(tableLayoutPanel);
-		MinimumSize = new System.Drawing.Size(900, 550);
+		MinimumSize = new Size(900, 550);
 		Name = "FakturaEdytor";
-		Size = new System.Drawing.Size(900, 550);
+		Size = new Size(900, 550);
 		((System.ComponentModel.ISupportInitialize)errorProvider).EndInit();
 		tableLayoutPanel.ResumeLayout(false);
 		tableLayoutPanel.PerformLayout();
@@ -1432,11 +1454,13 @@ partial class FakturaEdytor
 	private System.Windows.Forms.DateTimePickerFix dateTimePickerDataWprowadzenia;
 	private System.Windows.Forms.DateTimePickerFix dateTimePickerTerminPlatnosci;
 	private NumericUpDownDPI numericUpDownKurs;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.ComboBox comboBoxProceduraMarzy;
-        private System.Windows.Forms.CheckBox checkBoxReczneKwoty;
-        private System.Windows.Forms.TabPage tabPageDodatkowePodmioty;
-        private System.Windows.Forms.LinkLabel linkLabelUwagiPomoc;
+	private System.Windows.Forms.Label label23;
+	private System.Windows.Forms.ComboBox comboBoxProceduraMarzy;
+	private System.Windows.Forms.CheckBox checkBoxReczneKwoty;
+	private System.Windows.Forms.TabPage tabPageDodatkowePodmioty;
+	private System.Windows.Forms.LinkLabel linkLabelUwagiPomoc;
 	private System.Windows.Forms.LinkLabel linkLabelKSeFUrl;
 	private System.Windows.Forms.TextBox textBoxNazwaBanku;
+	private Label label24;
+	private System.Windows.Forms.DateTimePickerFix dateTimePickerDataKSeF;
 }
