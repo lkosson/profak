@@ -50,7 +50,6 @@ public class Generator
 		jpkpodmiot.Email = Wymagane(podmiot.EMail, "Nie podano adresu e-mail w danych urzędowych firmy.");
 		jpkpodmiot.Telefon = podmiot.Telefon;
 
-		var jpkwiersze = new List<JPKPKPIRWiersz>();
 		foreach (var faktura in faktury)
 		{
 			var jestTowar = faktura.Pozycje.Any(pozycja => pozycja.Towar != null && pozycja.Towar.Rodzaj == RodzajTowaru.Towar);
@@ -72,13 +71,19 @@ public class Generator
 			jpkwiersz.K_4B = nipnumer;
 			jpkwiersz.K_5A = faktura.CzySprzedaz ? faktura.NazwaNabywcy : faktura.NazwaSprzedawcy;
 			jpkwiersz.K_5B = faktura.CzySprzedaz ? faktura.DaneNabywcy : faktura.DaneSprzedawcy;
-			jpkwiersz.K_6 = String.IsNullOrEmpty(faktura.OpisZdarzenia) ? faktura.CzySprzedaz ? "Sprzedaż" : "Zakup" : faktura.OpisZdarzenia;
-			jpkwiersz.K_7 = faktura.CzySprzedaz ? faktura.RazemNetto : 0;
-			jpkwiersz.K_9 = jpkwiersz.K_7 + jpkwiersz.K_8;
-			jpkwiersz.K_10 = faktura.CzyZakup && jestTowar ? faktura.RazemNetto : 0;
-			jpkwiersz.K_13 = faktura.CzyZakup && !jestTowar ? faktura.RazemNetto : 0;
-			jpkwiersz.K_14 = jpkwiersz.K_12 ?? 0 + jpkwiersz.K_13 ?? 0;
-			jpkwiersze.Add(jpkwiersz);
+			jpkwiersz.K_6 = String.IsNullOrEmpty(faktura.OpisZdarzenia) ? ((faktura.CzySprzedaz ? "Sprzedaż" : "Zakup") + (jestTowar ? " towarów" : " usług")) : faktura.OpisZdarzenia;
+			if (faktura.CzySprzedaz)
+			{
+				jpkwiersz.K_7 = faktura.RazemNetto;
+				jpkwiersz.K_9 = jpkwiersz.K_7.GetValueOrDefault() + jpkwiersz.K_8.GetValueOrDefault();
+			}
+			if (faktura.CzyZakup)
+			{
+				if (jestTowar) jpkwiersz.K_10 = faktura.RazemNetto;
+				else jpkwiersz.K_13 = faktura.RazemNetto;
+				jpkwiersz.K_14 = jpkwiersz.K_12.GetValueOrDefault() + jpkwiersz.K_13.GetValueOrDefault();
+			}
+			jpk.PKPIRWiersz.Add(jpkwiersz);
 		}
 
 		jpk.PKPIRInfo = new JPKPKPIRInfo();
