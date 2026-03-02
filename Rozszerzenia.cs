@@ -12,5 +12,7 @@ static class Rozszerzenia
 		return (wejscie[..sep], wejscie[sep..].Replace("\r", " ").Replace("\n", " ").Replace("  ", " ").Trim());
 	}
 
+	public static string Polaczone(this (string linia1, string linia2) linie) => linie.linia1 + "\n" + linie.linia2;
+
 	public static decimal Zaokragl(this decimal wartosc, int miejsca = 2) => Decimal.Round(wartosc, miejsca, MidpointRounding.AwayFromZero);
 }

@@ -32,27 +32,31 @@ public class PKPiR : Wydruk
 			dto.Podmiot = podmiot.PelnaNazwa + "\r\n" + podmiot.AdresRejestrowy;
 
 			dto.LP = lp++;
+			dto.NumerKSeF = faktura.NumerKSeF;
 			dto.Numer = faktura.Numer;
 			dto.Data = faktura.DataSprzedazy;
 			var jestTowar = faktura.Pozycje.Any(pozycja => pozycja.Towar != null && pozycja.Towar.Rodzaj == RodzajTowaru.Towar);
 
 			if (faktura.CzySprzedaz)
 			{
+				dto.NIP = faktura.NIPNabywcy;
 				dto.Kontrahent = faktura.NazwaNabywcy;
-				dto.Adres = faktura.DaneNabywcy.JakoJednaLinia();
+				dto.Adres = faktura.DaneNabywcy.JakoDwieLinie().Polaczone();
 				dto.Opis = String.IsNullOrEmpty(faktura.OpisZdarzenia) ? jestTowar ? "Sprzedaż towarów" : "Sprzedaż usług" : faktura.OpisZdarzenia;
 				dto.PrzychodWartosc = faktura.RazemNetto;
 				dto.PrzychodRazem = faktura.RazemNetto;
 			}
 			else
 			{
+				dto.NIP = faktura.NIPSprzedawcy;
 				dto.Kontrahent = faktura.NazwaSprzedawcy;
-				dto.Adres = faktura.DaneSprzedawcy.JakoJednaLinia();
+				dto.Adres = faktura.DaneSprzedawcy.JakoDwieLinie().Polaczone();
 				dto.Opis = String.IsNullOrEmpty(faktura.OpisZdarzenia) ? jestTowar ? "Zakup towarów" : "Zakup usług" : faktura.OpisZdarzenia;
 				if (jestTowar) dto.KosztyZakup = faktura.Koszty;
 				else dto.KosztyPozostale = faktura.Koszty;
 				dto.KosztyRazem = faktura.Koszty;
 			}
+			dto.KosztyBR = "0,00";
 
 			dane.Add(dto);
 		}

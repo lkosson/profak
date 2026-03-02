@@ -7,7 +7,9 @@ public class PKPiRDTO
 
 	public int LP { get; set; }
 	public DateTime Data { get; set; }
+	public string? NumerKSeF { get; set; }
 	public string? Numer { get; set; }
+	public string? NIP { get; set; }
 	public string? Kontrahent { get; set; }
 	public string? Adres { get; set; }
 	public string? Opis { get; set; }
@@ -23,6 +25,7 @@ public class PKPiRDTO
 	public decimal KosztyPozostale { get; set; }
 	public decimal KosztyRazem { get; set; }
 	public decimal KosztyInne { get; set; }
+	public string? KosztyBR { get; set; }
 
 	public string? Uwagi { get; set; }
 }
