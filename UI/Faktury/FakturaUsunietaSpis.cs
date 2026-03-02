@@ -12,7 +12,7 @@ class FakturaUsunietaSpis : Spis<Faktura>
 		DodajKolumneData(nameof(Faktura.DataWystawienia), "Data wystawienia");
 		DodajKolumneData(nameof(Faktura.DataSprzedazy), "Data sprzedaży");
 		DodajKolumneData(nameof(Faktura.DataWprowadzenia), "Data wprowadzenia");
-		DodajKolumneData(nameof(Faktura.DataUsuniecia), "Data usunięcia", tooltip: faktura => faktura.DataUsuniecia?.ToString("yyyy-MM-dd HH:mm:ss"));
+		DodajKolumneData(nameof(Faktura.DataUsuniecia), "Data usunięcia", tooltip: faktura => faktura.DataUsuniecia?.ToString(Format.DataCzas));
 		DodajKolumne(nameof(Faktura.NazwaNabywcy), "Nabywca", szerokosc: 250);
 		DodajKolumne(nameof(Faktura.NIPNabywcy), "NIP nabywcy", szerokosc: 100);
 		DodajKolumne(nameof(Faktura.NazwaSkroconaNabywcy), "Kontahent", szerokosc: 0);

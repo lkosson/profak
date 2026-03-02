@@ -90,7 +90,7 @@ class FakturaSpis : Spis<Faktura>
 		DodajKolumneData(nameof(Faktura.TerminPlatnosci), "Termin płatności");
 		DodajKolumne(nameof(Faktura.DniPoTerminie), "Dni po terminie", szerokosc: 0);
 		DodajKolumneData(nameof(Faktura.DataWplywu), "Data zapłaty");
-		if (CzySprzedaz) DodajKolumneData(nameof(Faktura.DataWyslania), "Data wysłania", tooltip: faktura => faktura.DataWyslania?.ToString("yyyy-MM-dd HH:mm:ss"));
+		if (CzySprzedaz) DodajKolumneData(nameof(Faktura.DataWyslania), "Data wysłania", tooltip: faktura => faktura.DataWyslania?.ToString(Format.DataCzas));
 		DodajKolumne(nameof(Faktura.NumerPowiazanej), "Powiązana");
 		DodajKolumne(nameof(Faktura.NumerKSeF), "Numer KSeF", szerokosc: 0);
 		DodajKolumneBool(nameof(Faktura.CzyTP), "TP", szerokosc: 0);
