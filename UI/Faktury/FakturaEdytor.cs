@@ -270,6 +270,11 @@ partial class FakturaEdytor : FakturaEdytorBase
 		if (rekord.SposobPlatnosciRef.IsNull) UstawSposobPlatnosci(rekord, Kontekst.Baza.SposobyPlatnosci.FirstOrDefault(sposobPlatnosci => sposobPlatnosci.CzyDomyslny));
 		if (rekord.SprzedawcaRef.IsNull && rekord.CzySprzedaz) UstawSprzedawce(rekord, Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot && !kontrahent.CzyArchiwalny));
 		if (rekord.NabywcaRef.IsNull && rekord.CzyZakup) UstawNabywce(rekord, Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot && !kontrahent.CzyArchiwalny));
+		if (rekord.CzyZakup)
+		{
+			var domyslnaStawkaVat = Kontekst.Baza.StawkiVat.FirstOrDefault(vat => vat.CzyDomyslna);
+			if (domyslnaStawkaVat != null && domyslnaStawkaVat.Wartosc == 0 && domyslnaStawkaVat.Skrot != null && domyslnaStawkaVat.Skrot.Contains("zw", StringComparison.CurrentCultureIgnoreCase)) rekord.ProcentVatNaliczonego = 0;
+		}
 	}
 
 	protected override void RekordGotowy()
