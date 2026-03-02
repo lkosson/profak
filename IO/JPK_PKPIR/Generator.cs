@@ -24,7 +24,7 @@ public class Generator
 		var podmiot = baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot);
 		if (podmiot == null) throw new ApplicationException("Nie uzupełniono danych firmy.");
 		var faktury = baza.Faktury.Where(faktura => zaliczki.Contains(faktura.ZaliczkaPit))
-			.Include(faktura => faktura.Pozycje)
+			.Include(faktura => faktura.Pozycje).ThenInclude(pozycja => pozycja.Towar)
 			.Include(faktura => faktura.FakturaKorygowana)
 			.ToList();
 
@@ -53,6 +53,7 @@ public class Generator
 		var jpkwiersze = new List<JPKPKPIRWiersz>();
 		foreach (var faktura in faktury)
 		{
+			var jestTowar = faktura.Pozycje.Any(pozycja => pozycja.Towar != null && pozycja.Towar.Rodzaj == RodzajTowaru.Towar);
 			var nipnumer = faktura.NIPNabywcy;
 			var nipkraj = "PL";
 			if (nipnumer.Length > 2 && Char.IsLetter(nipnumer[0]) && Char.IsLetter(nipnumer[1]))
@@ -74,15 +75,17 @@ public class Generator
 			jpkwiersz.K_6 = String.IsNullOrEmpty(faktura.OpisZdarzenia) ? faktura.CzySprzedaz ? "Sprzedaż" : "Zakup" : faktura.OpisZdarzenia;
 			jpkwiersz.K_7 = faktura.CzySprzedaz ? faktura.RazemNetto : 0;
 			jpkwiersz.K_9 = jpkwiersz.K_7 + jpkwiersz.K_8;
-			jpkwiersz.K_10 = faktura.CzyZakup ? faktura.RazemNetto : 0;
+			jpkwiersz.K_10 = faktura.CzyZakup && jestTowar ? faktura.RazemNetto : 0;
+			jpkwiersz.K_13 = faktura.CzyZakup && !jestTowar ? faktura.RazemNetto : 0;
+			jpkwiersz.K_14 = jpkwiersz.K_12 ?? 0 + jpkwiersz.K_13 ?? 0;
 			jpkwiersze.Add(jpkwiersz);
 		}
 
 		jpk.PKPIRInfo = new JPKPKPIRInfo();
 		jpk.PKPIRInfo.P_1 = 0m;
 		jpk.PKPIRInfo.P_2 = 0m;
-		jpk.PKPIRInfo.P_3 = jpk.PKPIRWiersz.Sum(wiersz => wiersz.K_10 ?? 0);
-		jpk.PKPIRInfo.P_4 = jpk.PKPIRWiersz.Sum(wiersz => wiersz.K_7 ?? 0) - jpkwiersze.Sum(wiersz => wiersz.K_10 ?? 0);
+		jpk.PKPIRInfo.P_3 = jpk.PKPIRWiersz.Sum(wiersz => wiersz.K_10 ?? 0 + wiersz.K_14 ?? 0);
+		jpk.PKPIRInfo.P_4 = jpk.PKPIRWiersz.Sum(wiersz => wiersz.K_7 ?? 0) - jpk.PKPIRInfo.P_3;
 
 		jpk.PKPIRCtrl = new JPKPKPIRCtrl();
 		jpk.PKPIRCtrl.LiczbaWierszy = (ulong)jpk.PKPIRWiersz.Count;
