@@ -87,14 +87,9 @@ class ZapiszJakoXMLLokalneAkcja : ZapiszJakoXMLAkcja
 		else ZapiszWiele(kontekst, zaznaczoneRekordy);
 	}
 
-	private string Numer(Faktura faktura)
-	{
-		return String.IsNullOrEmpty(faktura.NumerKSeF) ? faktura.Numer.Replace('/', '-').Replace('\\', '-') : faktura.NumerKSeF;
-	}
-
 	private void ZapiszJeden(Kontekst kontekst, Faktura faktura)
 	{
-		var plik = WybierzPlik(Numer(faktura));
+		var plik = WybierzPlik(faktura.NumerKSeFJakoNazwaPliku);
 		if (plik == null) return;
 		var xml = faktura.XMLKSeF;
 		if (String.IsNullOrEmpty(xml) && faktura.CzySprzedaz) xml = IO.FA_3.Generator.ZbudujXML(kontekst.Baza, faktura);
@@ -113,7 +108,7 @@ class ZapiszJakoXMLLokalneAkcja : ZapiszJakoXMLAkcja
 				if (cancellationToken.IsCancellationRequested) break;
 				var xml = faktura.XMLKSeF;
 				if (String.IsNullOrEmpty(xml) && faktura.CzySprzedaz) xml = IO.FA_3.Generator.ZbudujXML(kontekst.Baza, faktura);
-				var plik = Path.Combine(katalog, Numer(faktura)) + ".xml";
+				var plik = Path.Combine(katalog, faktura.NumerKSeFJakoNazwaPliku) + ".xml";
 				ZapiszXml(plik, faktura, xml);
 			}
 		});
