@@ -64,7 +64,6 @@ partial class FakturaEdytor : FakturaEdytorBase
 
 		kontroler.Powiazanie(textBoxKSeFXML, faktura => faktura.XMLKSeFFmt);
 		kontroler.Powiazanie(textBoxNumerKSeF, faktura => faktura.NumerKSeF);
-		kontroler.Powiazanie(dateTimePickerDataKSeF, faktura => faktura.DataKSeF);
 
 		Wymagane(textBoxDaneNabywcy);
 		Wymagane(textBoxDaneSprzedawcy);
@@ -85,13 +84,11 @@ partial class FakturaEdytor : FakturaEdytorBase
 		dateTimePickerDataWprowadzenia.CustomFormat = Format.Data;
 		dateTimePickerDataWystawienia.CustomFormat = Format.Data;
 		dateTimePickerTerminPlatnosci.CustomFormat = Format.Data;
-		dateTimePickerDataKSeF.CustomFormat = Format.DataCzas;
 
 		dateTimePickerDataSprzedazy.Format = DateTimePickerFormat.Custom;
 		dateTimePickerDataWprowadzenia.Format = DateTimePickerFormat.Custom;
 		dateTimePickerDataWystawienia.Format = DateTimePickerFormat.Custom;
 		dateTimePickerTerminPlatnosci.Format = DateTimePickerFormat.Custom;
-		dateTimePickerDataKSeF.Format = DateTimePickerFormat.Custom;
 
 		Wyglad.UsunSkrotyZakladek(tabControl1);
 	}
@@ -303,6 +300,8 @@ partial class FakturaEdytor : FakturaEdytorBase
 		else if (Rekord.Rodzaj == RodzajFaktury.VatMarża) labelRodzaj.Text = "Vat marża";
 		else if (Rekord.Rodzaj == RodzajFaktury.KorektaVatMarży) labelRodzaj.Text = "Korekta vat marży";
 		else labelRodzaj.Text = Rekord.Rodzaj.ToString();
+
+		textBoxDataKSeF.Text = Rekord.DataKSeF == null ? "" : Rekord.DataKSeF.Value.ToString(Format.DataCzas);
 
 		if (String.IsNullOrWhiteSpace(Rekord.Numer) && Rekord.Numerator.HasValue)
 		{

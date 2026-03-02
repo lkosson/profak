@@ -85,7 +85,7 @@ partial class FakturaEdytor
 		label21 = new Label();
 		textBoxNumerKSeF = new TextBox();
 		label24 = new Label();
-		dateTimePickerDataKSeF = new DateTimePickerFix();
+		textBoxDataKSeF = new TextBox();
 		buttonDropDownKSeF = new ButtonDropDown();
 		contextMenuStripKSeF = new ContextMenuStrip(components);
 		toolStripMenuItemGenerujXML = new ToolStripMenuItem();
@@ -789,7 +789,7 @@ partial class FakturaEdytor
 		tableLayoutPanel8.Controls.Add(label21, 0, 0);
 		tableLayoutPanel8.Controls.Add(textBoxNumerKSeF, 1, 0);
 		tableLayoutPanel8.Controls.Add(label24, 3, 0);
-		tableLayoutPanel8.Controls.Add(dateTimePickerDataKSeF, 4, 0);
+		tableLayoutPanel8.Controls.Add(textBoxDataKSeF, 4, 0);
 		tableLayoutPanel8.Controls.Add(buttonDropDownKSeF, 5, 0);
 		tableLayoutPanel8.Dock = DockStyle.Fill;
 		tableLayoutPanel8.Location = new Point(0, 0);
@@ -842,12 +842,12 @@ partial class FakturaEdytor
 		// 
 		// dateTimePickerDataKSeF
 		// 
-		dateTimePickerDataKSeF.Anchor = AnchorStyles.Left;
-		dateTimePickerDataKSeF.Enabled = false;
-		dateTimePickerDataKSeF.Location = new Point(398, 4);
-		dateTimePickerDataKSeF.Name = "dateTimePickerDataKSeF";
-		dateTimePickerDataKSeF.Size = new Size(166, 23);
-		dateTimePickerDataKSeF.TabIndex = 1;
+		textBoxDataKSeF.Anchor = AnchorStyles.Left;
+		textBoxDataKSeF.ReadOnly = true;
+		textBoxDataKSeF.Location = new Point(398, 4);
+		textBoxDataKSeF.Name = "textBoxDataKSeF";
+		textBoxDataKSeF.Size = new Size(166, 23);
+		textBoxDataKSeF.TabIndex = 1;
 		// 
 		// buttonDropDownKSeF
 		// 
@@ -1498,7 +1498,7 @@ partial class FakturaEdytor
 	private System.Windows.Forms.LinkLabel linkLabelUwagiPomoc;
 	private System.Windows.Forms.TextBox textBoxNazwaBanku;
 	private Label label24;
-	private System.Windows.Forms.DateTimePickerFix dateTimePickerDataKSeF;
+	private TextBox textBoxDataKSeF;
 	private ButtonDropDown buttonDropDownKSeF;
 	private ContextMenuStrip contextMenuStripKSeF;
 	private ToolStripMenuItem toolStripMenuItemZapiszXML;
