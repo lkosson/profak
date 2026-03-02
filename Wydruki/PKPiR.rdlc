@@ -1073,7 +1073,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>Inne</Value>
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
                                 <FontSize>8pt</FontSize>
