@@ -32,7 +32,9 @@ public class EwidencjaPrzychodow : Wydruk
 			dto.Tytul = tytul;
 			dto.Podmiot = podmiot.PelnaNazwa + "\r\n" + podmiot.AdresRejestrowy;
 			dto.LP = lp++;
+			dto.NumerKSeF = faktura.NumerKSeF;
 			dto.NumerDowodu = faktura.Numer;
+			dto.NIP = faktura.NIPNabywcy;
 			dto.DataWpisu = faktura.DataWystawienia;
 			dto.DataPrzychodu = faktura.DataSprzedazy;
 

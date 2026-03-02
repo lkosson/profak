@@ -7,7 +7,9 @@ public class EwidencjaPrzychodowDTO
 	public int LP { get; set; }
 	public DateTime DataWpisu { get; set; }
 	public DateTime DataPrzychodu { get; set; }
+	public string? NumerKSeF { get; set; }
 	public string? NumerDowodu { get; set; }
+	public string? NIP { get; set; }
 	public decimal Przychod17 { get; set; }
 	public decimal Przychod15 { get; set; }
 	public decimal Przychod14 { get; set; }

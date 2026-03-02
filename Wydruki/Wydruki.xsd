@@ -78,7 +78,9 @@
       <xs:element minOccurs="1" maxOccurs="1" name="LP" type="xs:int" />
       <xs:element minOccurs="1" maxOccurs="1" name="DataWpisu" type="xs:dateTime" />
       <xs:element minOccurs="1" maxOccurs="1" name="DataPrzychodu" type="xs:dateTime" />
+      <xs:element minOccurs="0" maxOccurs="1" name="NumerKSeF" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="NumerDowodu" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="NIP" type="xs:string" />
       <xs:element minOccurs="1" maxOccurs="1" name="Przychod17" type="xs:decimal" />
       <xs:element minOccurs="1" maxOccurs="1" name="Przychod15" type="xs:decimal" />
       <xs:element minOccurs="1" maxOccurs="1" name="Przychod14" type="xs:decimal" />
