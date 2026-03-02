@@ -46,8 +46,8 @@ public class PKPiR : Wydruk
 				dto.Kontrahent = faktura.NazwaSprzedawcy;
 				dto.Adres = faktura.DaneSprzedawcy.JakoJednaLinia();
 				dto.Opis = String.IsNullOrEmpty(faktura.OpisZdarzenia) ? "Zakup usług" : faktura.OpisZdarzenia;
-				dto.KosztyPozostale = faktura.NettoJakoKoszty;
-				dto.KosztyRazem = faktura.NettoJakoKoszty;
+				dto.KosztyPozostale = faktura.Koszty;
+				dto.KosztyRazem = faktura.Koszty;
 			}
 
 			dane.Add(dto);
