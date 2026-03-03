@@ -30,6 +30,7 @@ class DodajJakoZakupAkcja : DodajRekordAkcja<Faktura, FakturaEdytor>
 		faktura.URLKSeF = api.ZbudujUrl(naglowek.XMLKSeF, faktura.NIPSprzedawcy, faktura.DataWystawienia);
 		kontekst.Baza.Zapisz(faktura);
 		IO.FA_3.Generator.PoprawPowiazaniaPoZapisie(kontekst.Baza, faktura);
+		naglowek.Id = faktura.Id;
 		return faktura;
 	}
 }
