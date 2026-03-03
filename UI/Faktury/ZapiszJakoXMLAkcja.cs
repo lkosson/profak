@@ -45,15 +45,17 @@ class ZapiszJakoXMLAkcja : AkcjaNaSpisie<Faktura>
 	{
 		var plik = WybierzPlik(naglowek.NumerKSeF);
 		if (plik == null) return;
-		var xml = "";
-		OknoPostepu.Uruchom(async cancellationToken =>
+		if (String.IsNullOrEmpty(naglowek.XMLKSeF))
 		{
-			using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
-			await api.UwierzytelnijAsync(podmiot.NIP, podmiot.TokenKSeF, cancellationToken);
-			xml = await api.PobierzFaktureAsync(naglowek.NumerKSeF, cancellationToken);
-		});
+			OknoPostepu.Uruchom(async cancellationToken =>
+			{
+				using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
+				await api.UwierzytelnijAsync(podmiot.NIP, podmiot.TokenKSeF, cancellationToken);
+				naglowek.XMLKSeF = await api.PobierzFaktureAsync(naglowek.NumerKSeF, cancellationToken);
+			});
+		}
 
-		ZapiszXml(plik, naglowek, xml);
+		ZapiszXml(plik, naglowek, naglowek.XMLKSeF);
 	}
 
 	private void ZapiszWiele(Kontrahent podmiot, IEnumerable<Faktura> naglowki)
@@ -68,9 +70,9 @@ class ZapiszJakoXMLAkcja : AkcjaNaSpisie<Faktura>
 			foreach (var naglowek in naglowki)
 			{
 				if (cancellationToken.IsCancellationRequested) break;
-				var xml = await api.PobierzFaktureAsync(naglowek.NumerKSeF, cancellationToken);
+				if (String.IsNullOrEmpty(naglowek.XMLKSeF)) naglowek.XMLKSeF = await api.PobierzFaktureAsync(naglowek.NumerKSeF, cancellationToken);
 				var plik = Path.Combine(katalog, naglowek.NumerKSeF) + ".xml";
-				ZapiszXml(plik, naglowek, xml);
+				ZapiszXml(plik, naglowek, naglowek.XMLKSeF);
 			}
 		});
 	}
