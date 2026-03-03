@@ -41,7 +41,7 @@ class GenerujPDFZKSeFAkcja : AkcjaNaSpisie<Faktura>
 		{
 			using var dialog = new FolderBrowserDialog();
 			dialog.AutoUpgradeEnabled = false;
-			dialog.Description = "Wybierz folder, do którego mają zostaæ zapisane pliki PDF.";
+			dialog.Description = "Wybierz folder, do którego mają zostać zapisane pliki PDF.";
 			if (dialog.ShowDialog() != DialogResult.OK) return;
 			var katalog = dialog.SelectedPath;
 			
