@@ -103,6 +103,7 @@ class Spisy
 	{
 		return Utworz(new KSeFSpis(true, parametry),
 			new ZapiszJakoXMLAkcja(),
+			new ZapiszJakoPDFZKSeFAkcja(spisKSeF: true),
 			new PrzeladujAkcja<Faktura>()
 		);
 	}
@@ -111,6 +112,7 @@ class Spisy
 	{
 		return Utworz(new KSeFSpis(false, parametry),
 			new DodajJakoZakupAkcja(),
+			new ZapiszJakoPDFZKSeFAkcja(spisKSeF: true),
 			new ZapiszJakoXMLAkcja(),
 			new PrzeladujAkcja<Faktura>()
 		);
