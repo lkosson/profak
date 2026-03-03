@@ -33,6 +33,7 @@ class KontrahentBuilder
 		builder.Property(e => e.FormaOpodatkowania);
 		builder.Property(e => e.TokenKSeF).HasDefaultValue("").IsRequired();
 		builder.Property(e => e.SrodowiskoKSeF).HasDefaultValue(SrodowiskoKSeF.Test).IsRequired();
+		builder.Property(e => e.CzyNDG).HasDefaultValue(false).IsRequired();
 
 		builder.Property(e => e.SposobPlatnosciId);
 		builder.Property(e => e.DomyslnaWalutaId);

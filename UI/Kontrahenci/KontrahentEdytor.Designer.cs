@@ -88,6 +88,7 @@ partial class KontrahentEdytor
 		textBoxNazwa = new TextBox();
 		label1 = new Label();
 		tableLayoutPanel2 = new TableLayoutPanel();
+		checkBoxNDG = new CheckBox();
 		((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
 		tabControl.SuspendLayout();
 		tabPage1.SuspendLayout();
@@ -114,7 +115,7 @@ partial class KontrahentEdytor
 		tabControl.Location = new Point(3, 32);
 		tabControl.Name = "tabControl";
 		tabControl.SelectedIndex = 0;
-		tabControl.Size = new Size(794, 458);
+		tabControl.Size = new Size(794, 476);
 		tabControl.TabIndex = 2;
 		// 
 		// tabPage1
@@ -123,7 +124,7 @@ partial class KontrahentEdytor
 		tabPage1.Location = new Point(4, 24);
 		tabPage1.Name = "tabPage1";
 		tabPage1.Padding = new Padding(3);
-		tabPage1.Size = new Size(786, 430);
+		tabPage1.Size = new Size(786, 448);
 		tabPage1.TabIndex = 0;
 		tabPage1.Text = "Dane podstawowe";
 		tabPage1.UseVisualStyleBackColor = true;
@@ -161,10 +162,11 @@ partial class KontrahentEdytor
 		tableLayoutPanel1.Controls.Add(label16, 0, 11);
 		tableLayoutPanel1.Controls.Add(buttonWaluta, 2, 11);
 		tableLayoutPanel1.Controls.Add(comboBoxWaluta, 1, 11);
+		tableLayoutPanel1.Controls.Add(checkBoxNDG, 1, 12);
 		tableLayoutPanel1.Dock = DockStyle.Fill;
 		tableLayoutPanel1.Location = new Point(3, 3);
 		tableLayoutPanel1.Name = "tableLayoutPanel1";
-		tableLayoutPanel1.RowCount = 13;
+		tableLayoutPanel1.RowCount = 14;
 		tableLayoutPanel1.RowStyles.Add(new RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new RowStyle());
@@ -177,8 +179,9 @@ partial class KontrahentEdytor
 		tableLayoutPanel1.RowStyles.Add(new RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new RowStyle());
-		tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 16F));
-		tableLayoutPanel1.Size = new Size(780, 424);
+		tableLayoutPanel1.RowStyles.Add(new RowStyle());
+		tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
+		tableLayoutPanel1.Size = new Size(780, 442);
 		tableLayoutPanel1.TabIndex = 0;
 		// 
 		// label2
@@ -785,8 +788,18 @@ partial class KontrahentEdytor
 		tableLayoutPanel2.RowStyles.Add(new RowStyle());
 		tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
 		tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-		tableLayoutPanel2.Size = new Size(800, 493);
+		tableLayoutPanel2.Size = new Size(800, 511);
 		tableLayoutPanel2.TabIndex = 3;
+		// 
+		// checkBoxNDG
+		// 
+		checkBoxNDG.AutoSize = true;
+		checkBoxNDG.Location = new Point(146, 410);
+		checkBoxNDG.Name = "checkBoxNDG";
+		checkBoxNDG.Size = new Size(158, 19);
+		checkBoxNDG.TabIndex = 17;
+		checkBoxNDG.Text = "Działalność nierejestrowa";
+		checkBoxNDG.UseVisualStyleBackColor = true;
 		// 
 		// KontrahentEdytor
 		// 
@@ -795,7 +808,7 @@ partial class KontrahentEdytor
 		Controls.Add(tableLayoutPanel2);
 		MinimumSize = new Size(800, 425);
 		Name = "KontrahentEdytor";
-		Size = new Size(800, 493);
+		Size = new Size(800, 511);
 		((System.ComponentModel.ISupportInitialize)errorProvider).EndInit();
 		tabControl.ResumeLayout(false);
 		tabPage1.ResumeLayout(false);
@@ -877,4 +890,5 @@ partial class KontrahentEdytor
 	private Label label16;
 	private ButtonDPI buttonWaluta;
 	private ComboBox comboBoxWaluta;
+	private CheckBox checkBoxNDG;
 }
