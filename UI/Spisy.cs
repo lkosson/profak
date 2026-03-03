@@ -81,6 +81,7 @@ class Spisy
 			new UsunFaktureAkcja(),
 			new DodajWplateAkcja(),
 			new WydrukFakturyAkcja(),
+			new GenerujPDFZKSeFAkcja(),
 			new ZapiszPlikiAkcja(),
 			new ZapiszJakoXMLLokalneAkcja(),
 			new WczytajJPK_FAAkcja(),
