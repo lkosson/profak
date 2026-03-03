@@ -3,9 +3,9 @@ using System.Diagnostics;
 
 namespace ProFak.UI;
 
-class GenerujPDFZKSeFAkcja : AkcjaNaSpisie<Faktura>
+class ZapiszJakoPDFZKSeFAkcja : AkcjaNaSpisie<Faktura>
 {
-	public override string Nazwa => "🖫 Generuj PDF (KSeF)";
+	public override string Nazwa => "🖫 Zapisz jako PDF KSeF";
 	public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) 
 		=> zaznaczoneRekordy.Any(e => !String.IsNullOrEmpty(e.XMLKSeF));
 
