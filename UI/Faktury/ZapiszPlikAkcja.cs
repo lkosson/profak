@@ -2,9 +2,9 @@
 
 namespace ProFak.UI;
 
-class ZapiszPlikAction : AkcjaNaSpisie<Plik>
+class ZapiszPlikAkcja : AkcjaNaSpisie<Plik>
 {
-	public override string Nazwa => "Zapisz plik [CTRL-S]";
+	public override string Nazwa => "🖫 Zapisz plik [CTRL-S]";
 	public override bool CzyDostepnaDlaRekordow(IEnumerable<Plik> zaznaczoneRekordy) => zaznaczoneRekordy.Any();
 	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.Control && klawisz == Keys.S;
 

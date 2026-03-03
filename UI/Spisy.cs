@@ -153,7 +153,7 @@ class Spisy
 		return Utworz(spis,
 			new DodajPlikAkcja(spis),
 			new PokazPlikAction(),
-			new ZapiszPlikAction(),
+			new ZapiszPlikAkcja(),
 			new UsunRekordAkcja<Plik>(),
 			new PrzeladujAkcja<Plik>()
 		);
