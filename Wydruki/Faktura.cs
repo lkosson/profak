@@ -39,8 +39,10 @@ public class Faktura : Wydruk
 
 			var fakturaDTO = new FakturaDTO();
 			if (faktura.Rodzaj == RodzajFaktury.Sprzedaż) fakturaDTO.Rodzaj = jestvat ? "Faktura VAT" : "Faktura";
+			if (faktura.Rodzaj == RodzajFaktury.Rachunek) fakturaDTO.Rodzaj = "Rachunek";
 			else if (faktura.Rodzaj == RodzajFaktury.Proforma) fakturaDTO.Rodzaj = "Faktura pro forma";
 			else if (faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży) fakturaDTO.Rodzaj = jestvat ? "Korekta faktury VAT" : "Korekta faktury";
+			else if (faktura.Rodzaj == RodzajFaktury.KorektaRachunku) fakturaDTO.Rodzaj = "Korekta rachunku";
 			else if (faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny) fakturaDTO.Rodzaj = "Dowód wewnętrzny";
 			else if (faktura.Rodzaj == RodzajFaktury.VatMarża) fakturaDTO.Rodzaj = "Faktura VAT marża";
 			else if (faktura.Rodzaj == RodzajFaktury.KorektaVatMarży) fakturaDTO.Rodzaj = "Korekta faktury VAT marża";

@@ -37,7 +37,9 @@ class FakturaSpis : Spis<Faktura>
 		|| Rodzaje.Contains(RodzajFaktury.KorektaSprzedaży)
 		|| Rodzaje.Contains(RodzajFaktury.Proforma)
 		|| Rodzaje.Contains(RodzajFaktury.VatMarża)
-		|| Rodzaje.Contains(RodzajFaktury.KorektaVatMarży);
+		|| Rodzaje.Contains(RodzajFaktury.KorektaVatMarży)
+		|| Rodzaje.Contains(RodzajFaktury.Rachunek)
+		|| Rodzaje.Contains(RodzajFaktury.KorektaRachunku);
 
 	public override string Podsumowanie
 	{

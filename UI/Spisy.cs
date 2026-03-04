@@ -38,6 +38,7 @@ class Spisy
 		return Utworz(new FakturaSprzedazySpis(parametry),
 			new FakturaSprzedazyAkcja(),
 			new FakturaVatMarzaAkcja(),
+			new RachunekAkcja(),
 			new FakturaPodobnaSprzedazAkcja(),
 			new KorektaSprzedazyAkcja(),
 			new EdytujRekordAkcja<Faktura, FakturaEdytor>(),

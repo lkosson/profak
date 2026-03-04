@@ -26,6 +26,8 @@ class DaneStartowe
 			baza.Zapisz(new Numerator { Przeznaczenie = PrzeznaczenieNumeratora.DowódWewnętrzny, Format = "DW/[Numer]/[Rok]" });
 			baza.Zapisz(new Numerator { Przeznaczenie = PrzeznaczenieNumeratora.VatMarża, Format = "FM/[Numer]/[Rok]" });
 			baza.Zapisz(new Numerator { Przeznaczenie = PrzeznaczenieNumeratora.KorektaVatMarży, Format = "FKM/[Numer]/[Rok]" });
+			baza.Zapisz(new Numerator { Przeznaczenie = PrzeznaczenieNumeratora.Rachunek, Format = "R/[Numer]/[Rok]" });
+			baza.Zapisz(new Numerator { Przeznaczenie = PrzeznaczenieNumeratora.KorektaRachunku, Format = "RK/[Numer]/[Rok]" });
 		}
 
 		if (!baza.SposobyPlatnosci.Any())

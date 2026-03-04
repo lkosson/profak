@@ -5,7 +5,7 @@ namespace ProFak.UI;
 class FakturaSprzedazySpis : FakturaSpis
 {
 	protected override bool CzyWidocznyNabywca => true;
-	protected override RodzajFaktury[] Rodzaje => [RodzajFaktury.Sprzedaż, RodzajFaktury.KorektaSprzedaży, RodzajFaktury.VatMarża, RodzajFaktury.KorektaVatMarży];
+	protected override RodzajFaktury[] Rodzaje => [RodzajFaktury.Sprzedaż, RodzajFaktury.KorektaSprzedaży, RodzajFaktury.VatMarża, RodzajFaktury.KorektaVatMarży, RodzajFaktury.Rachunek, RodzajFaktury.KorektaRachunku];
 
 	public FakturaSprzedazySpis()
 	{
