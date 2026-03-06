@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace ProFak.UI;
 
-class FakturaSpis : Spis<Faktura>
+class RachunekSpis : Spis<Faktura>
 {
 	private readonly DateTime? odDaty;
 	private readonly DateTime? doDaty;
@@ -33,11 +33,8 @@ class FakturaSpis : Spis<Faktura>
 	protected virtual bool CzyWidocznySprzedawca => false;
 	protected virtual bool CzyWidocznyNabywca => false;
 	protected virtual bool CzySprzedaz
-		=> Rodzaje.Contains(RodzajFaktury.Sprzedaż)
-		|| Rodzaje.Contains(RodzajFaktury.KorektaSprzedaży)
-		|| Rodzaje.Contains(RodzajFaktury.Proforma)
-		|| Rodzaje.Contains(RodzajFaktury.VatMarża)
-		|| Rodzaje.Contains(RodzajFaktury.KorektaVatMarży);
+		=>  Rodzaje.Contains(RodzajFaktury.Rachunek)
+		|| Rodzaje.Contains(RodzajFaktury.KorektaRachunku);
 
 	public override string Podsumowanie
 	{
@@ -54,7 +51,7 @@ class FakturaSpis : Spis<Faktura>
 		}
 	}
 
-	public FakturaSpis()
+	public RachunekSpis()
 	{
 		DodajKolumne(nameof(Faktura.Numer), "Numer");
 		DodajKolumne(nameof(Faktura.RodzajFmt), "Rodzaj", szerokosc: 0);
@@ -78,7 +75,6 @@ class FakturaSpis : Spis<Faktura>
 		DodajKolumneKwota(nameof(Faktura.RazemBrutto), "Brutto");
 		DodajKolumne(nameof(Faktura.WalutaFmt), "Waluta", szerokosc: 70);
 		DodajKolumneBool(nameof(Faktura.CzyZaplacona), "Zapł.", szerokosc: 50, tooltip: faktura => faktura.SumaWplat.ToString(Format.Kwota));
-		DodajKolumneBool(nameof(Faktura.CzyKSeF), "KSeF", szerokosc: 50, tooltip: faktura => faktura.NumerKSeF);
 		DodajKolumneBool(nameof(Faktura.CzyPliki), "Pliki", szerokosc: 50, tooltip: faktura => String.Join("\n", faktura.Pliki.Select(e => e.Nazwa)));
 		DodajKolumne(nameof(Faktura.PozycjeFmt), "Pozycje", szerokosc: 150);
 		DodajKolumne(nameof(Faktura.UwagiPubliczne), "Uwagi (publiczne)", szerokosc: 150);
@@ -92,18 +88,17 @@ class FakturaSpis : Spis<Faktura>
 		DodajKolumneData(nameof(Faktura.DataWplywu), "Data zapłaty");
 		if (CzySprzedaz) DodajKolumneData(nameof(Faktura.DataWyslania), "Data wysłania", tooltip: faktura => faktura.DataWyslania?.ToString(Format.DataCzas));
 		DodajKolumne(nameof(Faktura.NumerPowiazanej), "Powiązana");
-		DodajKolumne(nameof(Faktura.NumerKSeF), "Numer KSeF", szerokosc: 0);
-		DodajKolumneBool(nameof(Faktura.CzyTP), "TP", szerokosc: 0);
-		DodajKolumneBool(nameof(Faktura.CzyWDT), "WDT", szerokosc: 0);
+
 		DodajKolumneId();
 	}
 
-	public FakturaSpis(string[]? parametry)
+	public RachunekSpis(string[]? parametry)
 		: this()
 	{
 		if (parametry == null) return;
 		int? rok = null;
 		int? miesiac = null;
+		
 		foreach (var parametr in parametry)
 		{
 			if (parametr.StartsWith("R:")) rok = Int32.Parse(parametr[2..]);
@@ -142,10 +137,6 @@ class FakturaSpis : Spis<Faktura>
 		if (odDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy >= odDaty.Value);
 		if (doDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy < doDaty.Value);
 		if (TowarRef.IsNotNull) q = q.Where(faktura => faktura.Pozycje.Any(pozycja => pozycja.TowarId == TowarRef.Id));
-		if (DeklaracjaVatRef.IsNotNull) q = q.Where(faktura => faktura.DeklaracjaVatId == DeklaracjaVatRef.Id);
-		if (ZaliczkaPitRef.IsNotNull) q = q.Where(faktura => faktura.ZaliczkaPitId == ZaliczkaPitRef.Id);
-		if (CzyBezDeklaracjiVat) q = q.Where(faktura => faktura.DeklaracjaVatId == null);
-		if (CzyBezZaliczkiPit) q = q.Where(faktura => faktura.ZaliczkaPitId == null);
 		q = q.OrderBy(faktura => faktura.DataWystawienia).ThenBy(faktura => faktura.Id);
 		Rekordy = q.ToList();
 		if (doZaplaty) Rekordy = Rekordy.Where(faktura => !faktura.CzyZaplacona).ToList();
@@ -158,10 +149,7 @@ class FakturaSpis : Spis<Faktura>
 		if (rekord.DniPoTerminie > 0) styl.ForeColor = Color.FromArgb(160, 20, 20);
 		else if (!rekord.CzyZaplacona) styl.ForeColor = Color.FromArgb(240, 80, 40);
 		else if (rekord.FakturaKorygujacaRef.IsNotNull) styl.ForeColor = Color.FromArgb(120, 120, 120);
-		else if (rekord.Rodzaj == RodzajFaktury.KorektaSprzedaży) styl.ForeColor = Color.FromArgb(50, 60, 220);
-		else if (rekord.Rodzaj == RodzajFaktury.KorektaZakupu) styl.ForeColor = Color.FromArgb(50, 60, 220);
-		else if (rekord.Rodzaj == RodzajFaktury.KorektaVatMarży) styl.ForeColor = Color.FromArgb(50, 60, 220);
-		else if (rekord.Rodzaj == RodzajFaktury.DowódWewnętrzny) styl.ForeColor = Color.FromArgb(220, 60, 220);
+		else if (rekord.Rodzaj == RodzajFaktury.KorektaRachunku) styl.ForeColor = Color.FromArgb(50, 60, 220);
 	}
 
 	protected override Func<Faktura, IComparable>? KolumnaDlaSortowania(string kolumna)

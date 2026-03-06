@@ -88,7 +88,6 @@ partial class KontrahentEdytor
 		textBoxNazwa = new TextBox();
 		label1 = new Label();
 		tableLayoutPanel2 = new TableLayoutPanel();
-		checkBoxNDG = new CheckBox();
 		((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
 		tabControl.SuspendLayout();
 		tabPage1.SuspendLayout();
@@ -162,7 +161,6 @@ partial class KontrahentEdytor
 		tableLayoutPanel1.Controls.Add(label16, 0, 11);
 		tableLayoutPanel1.Controls.Add(buttonWaluta, 2, 11);
 		tableLayoutPanel1.Controls.Add(comboBoxWaluta, 1, 11);
-		tableLayoutPanel1.Controls.Add(checkBoxNDG, 1, 12);
 		tableLayoutPanel1.Dock = DockStyle.Fill;
 		tableLayoutPanel1.Location = new Point(3, 3);
 		tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -451,7 +449,7 @@ partial class KontrahentEdytor
 		tabPage2.Location = new Point(4, 24);
 		tabPage2.Name = "tabPage2";
 		tabPage2.Padding = new Padding(3);
-		tabPage2.Size = new Size(786, 430);
+		tabPage2.Size = new Size(786, 448);
 		tabPage2.TabIndex = 1;
 		tabPage2.Text = "Uwagi";
 		tabPage2.UseVisualStyleBackColor = true;
@@ -468,7 +466,7 @@ partial class KontrahentEdytor
 		tableLayoutPanel4.RowCount = 2;
 		tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
 		tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-		tableLayoutPanel4.Size = new Size(780, 424);
+		tableLayoutPanel4.Size = new Size(780, 442);
 		tableLayoutPanel4.TabIndex = 2;
 		// 
 		// groupBox1
@@ -477,7 +475,7 @@ partial class KontrahentEdytor
 		groupBox1.Dock = DockStyle.Fill;
 		groupBox1.Location = new Point(3, 3);
 		groupBox1.Name = "groupBox1";
-		groupBox1.Size = new Size(774, 206);
+		groupBox1.Size = new Size(774, 215);
 		groupBox1.TabIndex = 1;
 		groupBox1.TabStop = false;
 		groupBox1.Text = "Uwagi (wewnętrzne)";
@@ -489,16 +487,16 @@ partial class KontrahentEdytor
 		textBoxUwagiWewnetrzne.Location = new Point(3, 19);
 		textBoxUwagiWewnetrzne.Multiline = true;
 		textBoxUwagiWewnetrzne.Name = "textBoxUwagiWewnetrzne";
-		textBoxUwagiWewnetrzne.Size = new Size(768, 184);
+		textBoxUwagiWewnetrzne.Size = new Size(768, 193);
 		textBoxUwagiWewnetrzne.TabIndex = 0;
 		// 
 		// groupBox2
 		// 
 		groupBox2.Controls.Add(textBoxUwagiPubliczne);
 		groupBox2.Dock = DockStyle.Fill;
-		groupBox2.Location = new Point(3, 215);
+		groupBox2.Location = new Point(3, 224);
 		groupBox2.Name = "groupBox2";
-		groupBox2.Size = new Size(774, 206);
+		groupBox2.Size = new Size(774, 215);
 		groupBox2.TabIndex = 1;
 		groupBox2.TabStop = false;
 		groupBox2.Text = "Uwagi (drukowane na fakturze)";
@@ -510,7 +508,7 @@ partial class KontrahentEdytor
 		textBoxUwagiPubliczne.Location = new Point(3, 19);
 		textBoxUwagiPubliczne.Multiline = true;
 		textBoxUwagiPubliczne.Name = "textBoxUwagiPubliczne";
-		textBoxUwagiPubliczne.Size = new Size(768, 184);
+		textBoxUwagiPubliczne.Size = new Size(768, 193);
 		textBoxUwagiPubliczne.TabIndex = 0;
 		// 
 		// tabPageFakturySprzedazy
@@ -518,7 +516,7 @@ partial class KontrahentEdytor
 		tabPageFakturySprzedazy.Location = new Point(4, 24);
 		tabPageFakturySprzedazy.Name = "tabPageFakturySprzedazy";
 		tabPageFakturySprzedazy.Padding = new Padding(3);
-		tabPageFakturySprzedazy.Size = new Size(786, 430);
+		tabPageFakturySprzedazy.Size = new Size(786, 448);
 		tabPageFakturySprzedazy.TabIndex = 2;
 		tabPageFakturySprzedazy.Text = "Sprzedaż do";
 		tabPageFakturySprzedazy.UseVisualStyleBackColor = true;
@@ -528,7 +526,7 @@ partial class KontrahentEdytor
 		tabPageFakturyZakupu.Location = new Point(4, 24);
 		tabPageFakturyZakupu.Name = "tabPageFakturyZakupu";
 		tabPageFakturyZakupu.Padding = new Padding(3);
-		tabPageFakturyZakupu.Size = new Size(786, 430);
+		tabPageFakturyZakupu.Size = new Size(786, 448);
 		tabPageFakturyZakupu.TabIndex = 3;
 		tabPageFakturyZakupu.Text = "Zakup od";
 		tabPageFakturyZakupu.UseVisualStyleBackColor = true;
@@ -539,7 +537,7 @@ partial class KontrahentEdytor
 		tabPagePodatki.Location = new Point(4, 24);
 		tabPagePodatki.Name = "tabPagePodatki";
 		tabPagePodatki.Padding = new Padding(3);
-		tabPagePodatki.Size = new Size(786, 430);
+		tabPagePodatki.Size = new Size(786, 448);
 		tabPagePodatki.TabIndex = 4;
 		tabPagePodatki.Text = "Dane urzędowe";
 		tabPagePodatki.UseVisualStyleBackColor = true;
@@ -578,7 +576,7 @@ partial class KontrahentEdytor
 		tableLayoutPanel3.RowStyles.Add(new RowStyle());
 		tableLayoutPanel3.RowStyles.Add(new RowStyle());
 		tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-		tableLayoutPanel3.Size = new Size(780, 424);
+		tableLayoutPanel3.Size = new Size(780, 442);
 		tableLayoutPanel3.TabIndex = 0;
 		// 
 		// label10
@@ -791,16 +789,6 @@ partial class KontrahentEdytor
 		tableLayoutPanel2.Size = new Size(800, 511);
 		tableLayoutPanel2.TabIndex = 3;
 		// 
-		// checkBoxNDG
-		// 
-		checkBoxNDG.AutoSize = true;
-		checkBoxNDG.Location = new Point(146, 410);
-		checkBoxNDG.Name = "checkBoxNDG";
-		checkBoxNDG.Size = new Size(158, 19);
-		checkBoxNDG.TabIndex = 17;
-		checkBoxNDG.Text = "Działalność nierejestrowa";
-		checkBoxNDG.UseVisualStyleBackColor = true;
-		// 
 		// KontrahentEdytor
 		// 
 		AutoScaleDimensions = new SizeF(7F, 15F);
@@ -890,5 +878,4 @@ partial class KontrahentEdytor
 	private Label label16;
 	private ButtonDPI buttonWaluta;
 	private ComboBox comboBoxWaluta;
-	private CheckBox checkBoxNDG;
 }

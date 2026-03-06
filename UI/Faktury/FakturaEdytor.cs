@@ -304,6 +304,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 		else if (Rekord.Rodzaj == RodzajFaktury.DowódWewnętrzny) labelRodzaj.Text = "Dowód wewnętrzny";
 		else if (Rekord.Rodzaj == RodzajFaktury.VatMarża) labelRodzaj.Text = "Vat marża";
 		else if (Rekord.Rodzaj == RodzajFaktury.KorektaVatMarży) labelRodzaj.Text = "Korekta vat marży";
+		else if (Rekord.Rodzaj == RodzajFaktury.KorektaRachunku) labelRodzaj.Text = "Korekta rachunku";
 		else labelRodzaj.Text = Rekord.Rodzaj.ToString();
 
 		textBoxDataKSeF.Text = Rekord.DataKSeF == null ? "" : Rekord.DataKSeF.Value.ToString(Format.DataCzas);
@@ -357,6 +358,13 @@ partial class FakturaEdytor : FakturaEdytorBase
 
 			toolStripMenuItemGenerujXML.Enabled = false;
 			textBoxKSeFXML.ReadOnly = true;
+		}
+
+		if((Rekord.Rodzaj == RodzajFaktury.Rachunek || Rekord.Rodzaj == RodzajFaktury.KorektaRachunku)) // dla NDG
+		{
+			tabControl1.TabPages.Remove(tabPageKSeF);
+			tabControl1.TabPages.Remove(tabPagePodatki);
+
 		}
 	}
 

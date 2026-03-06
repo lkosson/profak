@@ -108,6 +108,7 @@ public class Faktura : Rekord<Faktura>
 		RodzajFaktury.VatMarża => PrzeznaczenieNumeratora.VatMarża,
 		RodzajFaktury.KorektaVatMarży => PrzeznaczenieNumeratora.KorektaVatMarży,
 		RodzajFaktury.Rachunek => PrzeznaczenieNumeratora.Rachunek,
+		RodzajFaktury.KorektaRachunku => PrzeznaczenieNumeratora.KorektaRachunku,
 		_ => null
 	};
 

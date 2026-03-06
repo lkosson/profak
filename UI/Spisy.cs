@@ -38,7 +38,6 @@ class Spisy
 		return Utworz(new FakturaSprzedazySpis(parametry),
 			new FakturaSprzedazyAkcja(),
 			new FakturaVatMarzaAkcja(),
-			new RachunekAkcja(),
 			new FakturaPodobnaSprzedazAkcja(),
 			new KorektaSprzedazyAkcja(),
 			new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
@@ -52,6 +51,23 @@ class Spisy
 			new ZapiszJakoXMLLokalneAkcja(),
 			new WczytajJPK_FAAkcja(),
 			new WczytajKSeFAkcja(),
+			new PrzeladujAkcja<Faktura>()
+		);
+	}
+
+	public static SpisZAkcjami<Faktura, RachunkiSprzedazySpis> RachunkiSprzedazy(string[]? parametry = null)
+	{
+		return Utworz(new RachunkiSprzedazySpis(parametry),
+			new RachunekAkcja(),
+			new FakturaPodobnaSprzedazAkcja(),
+			new KorektaRachunkuAkcja(),
+			new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
+			new UsunFaktureAkcja(),
+			new DodajWplateAkcja(),
+			new WydrukFakturyAkcja(),
+			new WydrukDuplikatuFakturyAkcja(),
+			new WyslijMailAkcja(),
+			new ZapiszPlikiAkcja(),
 			new PrzeladujAkcja<Faktura>()
 		);
 	}

@@ -586,11 +586,6 @@ namespace ProFak.DB.Migrations
                         .HasColumnType("INTEGER")
                         .HasDefaultValue(false);
 
-                    b.Property<bool>("CzyNDG")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasDefaultValue(false);
-
                     b.Property<bool>("CzyPodmiot")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")

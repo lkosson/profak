@@ -16,7 +16,6 @@ public class Kontrahent : Rekord<Kontrahent>
 	public bool CzyArchiwalny { get; set; }
 	public bool CzyPodmiot { get; set; }
 	public bool CzyTP { get; set; }
-	public bool CzyNDG { get; set; } = false;
 	public int? SposobPlatnosciId { get; set; }
 	public int? DomyslnaWalutaId { get; set; }
 
@@ -56,7 +55,8 @@ public enum FormaOpodatkowania
 {
 	Liniowy,
 	Skala,
-	Ryczałt
+	Ryczałt,
+	DziałalnośćNierejestrowana
 }
 
 public enum SrodowiskoKSeF

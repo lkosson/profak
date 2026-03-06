@@ -41,7 +41,6 @@ partial class KontrahentEdytor : KontrahentEdytorBase
 		kontroler.Powiazanie(comboBoxFormaOpodatkowania, kontrahent => kontrahent.FormaOpodatkowania);
 		kontroler.Powiazanie(textBoxTokenKSeF, kontrahent => kontrahent.TokenKSeF);
 		kontroler.Powiazanie(comboBoxSrodowiskoKSeF, kontrahent => kontrahent.SrodowiskoKSeF);
-		kontroler.Powiazanie(checkBoxNDG, kontrahent => kontrahent.CzyNDG);
 
 		Wymagane(textBoxNazwa);
 		Walidacja(textBoxNIP, WalidacjaNIP, true);
@@ -170,7 +169,6 @@ partial class KontrahentEdytor : KontrahentEdytorBase
 		else
 		{
 			tabControl.TabPages.Remove(tabPagePodatki);
-			checkBoxNDG.Visible = false;
 		}
 	}
 
