@@ -78,9 +78,6 @@
     <Compile Update="UI\Faktury\RachunkiSprzedazySpis.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="UI\Faktury\RachunekSpis.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Update="UI\Faktury\FakturaSpis.cs">
       <SubType>Component</SubType>
     </Compile>
