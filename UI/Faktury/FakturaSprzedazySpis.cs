@@ -5,7 +5,7 @@ namespace ProFak.UI;
 class FakturaSprzedazySpis : FakturaSpis
 {
 	protected override bool CzyWidocznyNabywca => true;
-	protected override RodzajFaktury[] Rodzaje => [RodzajFaktury.Sprzedaż, RodzajFaktury.KorektaSprzedaży, RodzajFaktury.VatMarża, RodzajFaktury.KorektaVatMarży, RodzajFaktury.Rachunek, RodzajFaktury.KorektaRachunku];
+	protected override RodzajFaktury[] Rodzaje => [RodzajFaktury.Sprzedaż, RodzajFaktury.KorektaSprzedaży, RodzajFaktury.VatMarża, RodzajFaktury.KorektaVatMarży];
 
 	public FakturaSprzedazySpis()
 	{
@@ -20,4 +20,5 @@ class FakturaSprzedazySpis : FakturaSpis
 class FakturaSprzedazyBezNabywcySpis : FakturaSprzedazySpis
 {
 	protected override bool CzyWidocznyNabywca => false;
+	protected override RodzajFaktury[] Rodzaje => [..base.Rodzaje, RodzajFaktury.Rachunek, RodzajFaktury.KorektaRachunku];
 }
