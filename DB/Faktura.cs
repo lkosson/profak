@@ -107,6 +107,8 @@ public class Faktura : Rekord<Faktura>
 		RodzajFaktury.DowódWewnętrzny => PrzeznaczenieNumeratora.DowódWewnętrzny,
 		RodzajFaktury.VatMarża => PrzeznaczenieNumeratora.VatMarża,
 		RodzajFaktury.KorektaVatMarży => PrzeznaczenieNumeratora.KorektaVatMarży,
+		RodzajFaktury.Rachunek => PrzeznaczenieNumeratora.Rachunek,
+		RodzajFaktury.KorektaRachunku => PrzeznaczenieNumeratora.KorektaRachunku,
 		_ => null
 	};
 
@@ -115,7 +117,9 @@ public class Faktura : Rekord<Faktura>
 		|| Rodzaj == RodzajFaktury.KorektaSprzedaży
 		|| Rodzaj == RodzajFaktury.Proforma
 		|| Rodzaj == RodzajFaktury.VatMarża
-		|| Rodzaj == RodzajFaktury.KorektaVatMarży;
+		|| Rodzaj == RodzajFaktury.KorektaVatMarży
+		|| Rodzaj == RodzajFaktury.Rachunek
+		|| Rodzaj == RodzajFaktury.KorektaRachunku;
 
 	public bool CzyZakup => !CzySprzedaz;
 
@@ -241,6 +245,7 @@ public class Faktura : Rekord<Faktura>
 		var korekta = new Faktura();
 		baza.Zapisz(korekta);
 		if (bazowa.Rodzaj == RodzajFaktury.Sprzedaż || bazowa.Rodzaj == RodzajFaktury.KorektaSprzedaży) korekta.Rodzaj = RodzajFaktury.KorektaSprzedaży;
+		else if (bazowa.Rodzaj == RodzajFaktury.Rachunek) korekta.Rodzaj = RodzajFaktury.KorektaRachunku;
 		else if (bazowa.Rodzaj == RodzajFaktury.Zakup || bazowa.Rodzaj == RodzajFaktury.KorektaZakupu) korekta.Rodzaj = RodzajFaktury.KorektaZakupu;
 		else if (bazowa.Rodzaj == RodzajFaktury.VatMarża || bazowa.Rodzaj == RodzajFaktury.KorektaVatMarży) korekta.Rodzaj = RodzajFaktury.KorektaVatMarży;
 		else throw new ApplicationException($"Nie można korygować faktury {bazowa.Rodzaj}.");
@@ -476,7 +481,9 @@ public enum RodzajFaktury
 	DowódWewnętrzny,
 	Usunięta,
 	VatMarża,
-	KorektaVatMarży
+	KorektaVatMarży,
+	Rachunek,
+	KorektaRachunku
 }
 
 public enum ProceduraMarży

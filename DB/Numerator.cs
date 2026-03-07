@@ -61,5 +61,7 @@ public enum PrzeznaczenieNumeratora
 	KorektaSprzedaży,
 	DowódWewnętrzny,
 	VatMarża,
-	KorektaVatMarży
+	KorektaVatMarży,
+	Rachunek,
+	KorektaRachunku
 }

@@ -114,7 +114,7 @@ partial class KontrahentEdytor
 		tabControl.Location = new Point(3, 32);
 		tabControl.Name = "tabControl";
 		tabControl.SelectedIndex = 0;
-		tabControl.Size = new Size(794, 458);
+		tabControl.Size = new Size(794, 476);
 		tabControl.TabIndex = 2;
 		// 
 		// tabPage1
@@ -123,7 +123,7 @@ partial class KontrahentEdytor
 		tabPage1.Location = new Point(4, 24);
 		tabPage1.Name = "tabPage1";
 		tabPage1.Padding = new Padding(3);
-		tabPage1.Size = new Size(786, 430);
+		tabPage1.Size = new Size(786, 448);
 		tabPage1.TabIndex = 0;
 		tabPage1.Text = "Dane podstawowe";
 		tabPage1.UseVisualStyleBackColor = true;
@@ -164,7 +164,7 @@ partial class KontrahentEdytor
 		tableLayoutPanel1.Dock = DockStyle.Fill;
 		tableLayoutPanel1.Location = new Point(3, 3);
 		tableLayoutPanel1.Name = "tableLayoutPanel1";
-		tableLayoutPanel1.RowCount = 13;
+		tableLayoutPanel1.RowCount = 14;
 		tableLayoutPanel1.RowStyles.Add(new RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new RowStyle());
@@ -177,8 +177,9 @@ partial class KontrahentEdytor
 		tableLayoutPanel1.RowStyles.Add(new RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new RowStyle());
-		tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 16F));
-		tableLayoutPanel1.Size = new Size(780, 424);
+		tableLayoutPanel1.RowStyles.Add(new RowStyle());
+		tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
+		tableLayoutPanel1.Size = new Size(780, 442);
 		tableLayoutPanel1.TabIndex = 0;
 		// 
 		// label2
@@ -448,7 +449,7 @@ partial class KontrahentEdytor
 		tabPage2.Location = new Point(4, 24);
 		tabPage2.Name = "tabPage2";
 		tabPage2.Padding = new Padding(3);
-		tabPage2.Size = new Size(786, 430);
+		tabPage2.Size = new Size(786, 448);
 		tabPage2.TabIndex = 1;
 		tabPage2.Text = "Uwagi";
 		tabPage2.UseVisualStyleBackColor = true;
@@ -465,7 +466,7 @@ partial class KontrahentEdytor
 		tableLayoutPanel4.RowCount = 2;
 		tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
 		tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-		tableLayoutPanel4.Size = new Size(780, 424);
+		tableLayoutPanel4.Size = new Size(780, 442);
 		tableLayoutPanel4.TabIndex = 2;
 		// 
 		// groupBox1
@@ -474,7 +475,7 @@ partial class KontrahentEdytor
 		groupBox1.Dock = DockStyle.Fill;
 		groupBox1.Location = new Point(3, 3);
 		groupBox1.Name = "groupBox1";
-		groupBox1.Size = new Size(774, 206);
+		groupBox1.Size = new Size(774, 215);
 		groupBox1.TabIndex = 1;
 		groupBox1.TabStop = false;
 		groupBox1.Text = "Uwagi (wewnętrzne)";
@@ -486,16 +487,16 @@ partial class KontrahentEdytor
 		textBoxUwagiWewnetrzne.Location = new Point(3, 19);
 		textBoxUwagiWewnetrzne.Multiline = true;
 		textBoxUwagiWewnetrzne.Name = "textBoxUwagiWewnetrzne";
-		textBoxUwagiWewnetrzne.Size = new Size(768, 184);
+		textBoxUwagiWewnetrzne.Size = new Size(768, 193);
 		textBoxUwagiWewnetrzne.TabIndex = 0;
 		// 
 		// groupBox2
 		// 
 		groupBox2.Controls.Add(textBoxUwagiPubliczne);
 		groupBox2.Dock = DockStyle.Fill;
-		groupBox2.Location = new Point(3, 215);
+		groupBox2.Location = new Point(3, 224);
 		groupBox2.Name = "groupBox2";
-		groupBox2.Size = new Size(774, 206);
+		groupBox2.Size = new Size(774, 215);
 		groupBox2.TabIndex = 1;
 		groupBox2.TabStop = false;
 		groupBox2.Text = "Uwagi (drukowane na fakturze)";
@@ -507,7 +508,7 @@ partial class KontrahentEdytor
 		textBoxUwagiPubliczne.Location = new Point(3, 19);
 		textBoxUwagiPubliczne.Multiline = true;
 		textBoxUwagiPubliczne.Name = "textBoxUwagiPubliczne";
-		textBoxUwagiPubliczne.Size = new Size(768, 184);
+		textBoxUwagiPubliczne.Size = new Size(768, 193);
 		textBoxUwagiPubliczne.TabIndex = 0;
 		// 
 		// tabPageFakturySprzedazy
@@ -515,7 +516,7 @@ partial class KontrahentEdytor
 		tabPageFakturySprzedazy.Location = new Point(4, 24);
 		tabPageFakturySprzedazy.Name = "tabPageFakturySprzedazy";
 		tabPageFakturySprzedazy.Padding = new Padding(3);
-		tabPageFakturySprzedazy.Size = new Size(786, 430);
+		tabPageFakturySprzedazy.Size = new Size(786, 448);
 		tabPageFakturySprzedazy.TabIndex = 2;
 		tabPageFakturySprzedazy.Text = "Sprzedaż do";
 		tabPageFakturySprzedazy.UseVisualStyleBackColor = true;
@@ -525,7 +526,7 @@ partial class KontrahentEdytor
 		tabPageFakturyZakupu.Location = new Point(4, 24);
 		tabPageFakturyZakupu.Name = "tabPageFakturyZakupu";
 		tabPageFakturyZakupu.Padding = new Padding(3);
-		tabPageFakturyZakupu.Size = new Size(786, 430);
+		tabPageFakturyZakupu.Size = new Size(786, 448);
 		tabPageFakturyZakupu.TabIndex = 3;
 		tabPageFakturyZakupu.Text = "Zakup od";
 		tabPageFakturyZakupu.UseVisualStyleBackColor = true;
@@ -536,7 +537,7 @@ partial class KontrahentEdytor
 		tabPagePodatki.Location = new Point(4, 24);
 		tabPagePodatki.Name = "tabPagePodatki";
 		tabPagePodatki.Padding = new Padding(3);
-		tabPagePodatki.Size = new Size(786, 430);
+		tabPagePodatki.Size = new Size(786, 448);
 		tabPagePodatki.TabIndex = 4;
 		tabPagePodatki.Text = "Dane urzędowe";
 		tabPagePodatki.UseVisualStyleBackColor = true;
@@ -575,7 +576,7 @@ partial class KontrahentEdytor
 		tableLayoutPanel3.RowStyles.Add(new RowStyle());
 		tableLayoutPanel3.RowStyles.Add(new RowStyle());
 		tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-		tableLayoutPanel3.Size = new Size(780, 424);
+		tableLayoutPanel3.Size = new Size(780, 442);
 		tableLayoutPanel3.TabIndex = 0;
 		// 
 		// label10
@@ -785,7 +786,7 @@ partial class KontrahentEdytor
 		tableLayoutPanel2.RowStyles.Add(new RowStyle());
 		tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
 		tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-		tableLayoutPanel2.Size = new Size(800, 493);
+		tableLayoutPanel2.Size = new Size(800, 511);
 		tableLayoutPanel2.TabIndex = 3;
 		// 
 		// KontrahentEdytor
@@ -795,7 +796,7 @@ partial class KontrahentEdytor
 		Controls.Add(tableLayoutPanel2);
 		MinimumSize = new Size(800, 425);
 		Name = "KontrahentEdytor";
-		Size = new Size(800, 493);
+		Size = new Size(800, 511);
 		((System.ComponentModel.ISupportInitialize)errorProvider).EndInit();
 		tabControl.ResumeLayout(false);
 		tabPage1.ResumeLayout(false);

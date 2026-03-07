@@ -65,6 +65,14 @@ public partial class GlowneOkno : Form
 		var fakturySprzedazyWedlugNabywcy = Wezel("Według nabywcy", "WedlugKontrahenta", [Ladowanie()]);
 		var fakturySprzedazyWedlugTowaru = Wezel("Według towaru", "WedlugTowaru", [Ladowanie()]);
 		var fakturySprzedazy = Wezel("Faktury sprzedaży", "FakturySprzedazy", [fakturySprzedazyWszystkie, fakturySprzedazyDoZaplaty, fakturySprzedazyZaplacone, fakturySprzedazyKSeF, fakturySprzedazyWedlugDaty, fakturySprzedazyWedlugNabywcy, fakturySprzedazyWedlugTowaru]);
+
+		var rachunkiSprzedzazyWszystkie = Wezel("Rachunki sprzedaży", "Wszystkie");
+		var rachunkiSprzedazyWedlugDaty = Wezel("Według daty", "WedlugDaty", [Ladowanie()]);
+		var rachunkiSprzedazyWedlugKontrahenta = Wezel("Według kontrahenta", "WedlugKontrahenta", [Ladowanie()]);
+		var rachunkiSprzedazyyDoZaplaty = Wezel("Do zapłaty", "DoZaplaty");
+		var rachunkiSprzedazyZaplacone = Wezel("Zapłacone", "Zaplacone");
+		var rachunkiSprzedazy = Wezel("Rachunki", "RachunkiSprzedazy", [rachunkiSprzedzazyWszystkie,rachunkiSprzedazyyDoZaplaty,rachunkiSprzedazyZaplacone, rachunkiSprzedazyWedlugDaty,rachunkiSprzedazyWedlugKontrahenta]);
+
 		var fakturyProformaWszystkie = Wezel("Wszystkie", "Wszystkie");
 		var fakturyProformaDoZaplaty = Wezel("Do zapłaty", "DoZaplaty");
 		var fakturyProformaZaplacone = Wezel("Zapłacone", "Zaplacone");
@@ -115,7 +123,7 @@ public partial class GlowneOkno : Form
 		var serwisowe = Wezel("Serwisowe", "Serwisowe", [numeracja, konfiguracja, bazaDanych, usunieteFaktury, polecenieSQL, bezposredniaEdycja, oProgramie]);
 #endif
 		menu.Nodes.Clear();
-		menu.Nodes.AddRange([faktury, podatki, kontrahenci, towary, slowniki, serwisowe]);
+		menu.Nodes.AddRange([faktury, rachunkiSprzedazy, podatki, kontrahenci, towary, slowniki, serwisowe]);
 	}
 
 	private void PokazMenuKontekstowe(TreeNode wezel)
@@ -283,6 +291,7 @@ public partial class GlowneOkno : Form
 		else if (pozycja.Name == "KSeFZakup") Wyswietl(Spisy.KSeFZakup(parametry), pozycja.Name);
 		else if (pozycja.Name == "KSeFSprzedaz") Wyswietl(Spisy.KSeFSprzedaz(parametry), pozycja.Name);
 		else if (pozycja.Name == "FakturySprzedazy") Wyswietl(Spisy.FakturySprzedazy(parametry), pozycja.Name);
+		else if (pozycja.Name == "RachunkiSprzedazy") Wyswietl(Spisy.RachunkiSprzedazy(parametry), pozycja.Name);
 		else if (pozycja.Name == "FakturyProforma") Wyswietl(Spisy.FakturyProforma(parametry), pozycja.Name);
 		else if (pozycja.Name == "Konfiguracja") KonfiguracjaEdytor.Wyswietl();
 		else if (pozycja.Name == "Numeratory") Wyswietl(Spisy.Numeratory(), pozycja.Name);
@@ -328,14 +337,17 @@ public partial class GlowneOkno : Form
 		{
 			if (e.Node.Name == "WedlugDaty" && e.Node.Parent?.Name == "FakturySprzedazy") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży);
 			else if (e.Node.Name == "WedlugDaty" && e.Node.Parent?.Name == "FakturyProforma") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Proforma);
+			else if (e.Node.Name == "WedlugDaty" && e.Node.Parent?.Name == "RachunkiSprzedazy") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Rachunek || faktura.Rodzaj == RodzajFaktury.KorektaRachunku);
 			else if (e.Node.Name == "WedlugDaty" && e.Node.Parent?.Name == "FakturyZakupu") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny);
 			else if (e.Node.Name == "WedlugDaty" && e.Node.Parent?.Name == "FakturyVatMarza") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży);
 			else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent?.Name == "FakturySprzedazy") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży, faktura => faktura.Nabywca!);
 			else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent?.Name == "FakturyProforma") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Proforma, faktura => faktura.Nabywca!);
+			else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent?.Name == "RachunkiSprzedazy") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Rachunek || faktura.Rodzaj == RodzajFaktury.KorektaRachunku, faktura => faktura.Nabywca!);
 			else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent?.Name == "FakturyZakupu") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny, faktura => faktura.Sprzedawca!);
 			else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent?.Name == "FakturyVatMarza") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży, faktura => faktura.Nabywca!);
 			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent?.Name == "FakturySprzedazy") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.Sprzedaż || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży);
 			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent?.Name == "FakturyProforma") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.Proforma);
+			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent?.Name == "RachunkiSprzedazy") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.Rachunek || pozycja.Faktura!.Rodzaj == RodzajFaktury.KorektaRachunku);
 			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent?.Name == "FakturyZakupu") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.Zakup || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaZakupu || pozycja.Faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny);
 			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent?.Name == "FakturyVatMarza") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.VatMarża || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaVatMarży);
 			else if (e.Node.Name == "DeklaracjeVat") WypelnijDeklaracjeVat(e.Node);

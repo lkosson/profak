@@ -55,7 +55,8 @@ public enum FormaOpodatkowania
 {
 	Liniowy,
 	Skala,
-	Ryczałt
+	Ryczałt,
+	DziałalnośćNierejestrowana
 }
 
 public enum SrodowiskoKSeF

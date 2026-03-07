@@ -55,6 +55,23 @@ class Spisy
 		);
 	}
 
+	public static SpisZAkcjami<Faktura, RachunkiSprzedazySpis> RachunkiSprzedazy(string[]? parametry = null)
+	{
+		return Utworz(new RachunkiSprzedazySpis(parametry),
+			new RachunekAkcja(),
+			new FakturaPodobnaSprzedazAkcja(),
+			new KorektaRachunkuAkcja(),
+			new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
+			new UsunFaktureAkcja(),
+			new DodajWplateAkcja(),
+			new WydrukFakturyAkcja(),
+			new WydrukDuplikatuFakturyAkcja(),
+			new WyslijMailAkcja(),
+			new ZapiszPlikiAkcja(),
+			new PrzeladujAkcja<Faktura>()
+		);
+	}
+
 	public static SpisZAkcjami<Faktura, FakturaProformaSpis> FakturyProforma(string[]? parametry = null)
 	{
 		return Utworz(new FakturaProformaSpis(parametry),
