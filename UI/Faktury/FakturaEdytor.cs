@@ -360,11 +360,10 @@ partial class FakturaEdytor : FakturaEdytorBase
 			textBoxKSeFXML.ReadOnly = true;
 		}
 
-		if((Rekord.Rodzaj == RodzajFaktury.Rachunek || Rekord.Rodzaj == RodzajFaktury.KorektaRachunku)) // dla NDG
+		if (Rekord.Rodzaj == RodzajFaktury.Rachunek || Rekord.Rodzaj == RodzajFaktury.KorektaRachunku)
 		{
 			tabControl1.TabPages.Remove(tabPageKSeF);
 			tabControl1.TabPages.Remove(tabPagePodatki);
-
 		}
 	}
 
