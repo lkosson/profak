@@ -66,7 +66,7 @@ public partial class GlowneOkno : Form
 		var fakturySprzedazyWedlugTowaru = Wezel("Według towaru", "WedlugTowaru", [Ladowanie()]);
 		var fakturySprzedazy = Wezel("Faktury sprzedaży", "FakturySprzedazy", [fakturySprzedazyWszystkie, fakturySprzedazyDoZaplaty, fakturySprzedazyZaplacone, fakturySprzedazyKSeF, fakturySprzedazyWedlugDaty, fakturySprzedazyWedlugNabywcy, fakturySprzedazyWedlugTowaru]);
 
-		var rachunkiSprzedzazyWszystkie = Wezel("Rachunki sprzedaży", "Wszystkie");
+		var rachunkiSprzedzazyWszystkie = Wezel("Wszystkie", "Wszystkie");
 		var rachunkiSprzedazyWedlugDaty = Wezel("Według daty", "WedlugDaty", [Ladowanie()]);
 		var rachunkiSprzedazyWedlugKontrahenta = Wezel("Według kontrahenta", "WedlugKontrahenta", [Ladowanie()]);
 		var rachunkiSprzedazyyDoZaplaty = Wezel("Do zapłaty", "DoZaplaty");
