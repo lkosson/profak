@@ -102,7 +102,7 @@ class PanelAkcji : Panel
 	{
 		foreach ((_, var adapter) in przyciski)
 		{
-			if (adapter.CzyKlawiszSkrotu(klawisz, modyfikatory))
+			if (adapter.CzyKlawiszSkrotu(klawisz, modyfikatory) && adapter.CzyDostepna)
 			{
 				adapter.Uruchom();
 				return true;
