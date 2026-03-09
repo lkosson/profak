@@ -254,7 +254,8 @@ public class API : IDisposable
 				invoiceHeader.ReferenceNumber = invoice.InvoiceNumber;
 				invoiceHeader.InvoicingDate = invoice.InvoicingDate.LocalDateTime;
 				invoiceHeader.AcquisitionTimestamp = invoice.AcquisitionDate.LocalDateTime;
-				invoiceHeader.PermanentStorageTimestamp = invoice.PermanentStorageDate.LocalDateTime;
+				if (pagedInvoiceResponse.PermanentStorageHwmDate.HasValue && invoice.PermanentStorageDate > pagedInvoiceResponse.PermanentStorageHwmDate.Value) invoiceHeader.PermanentStorageTimestamp = pagedInvoiceResponse.PermanentStorageHwmDate.Value.LocalDateTime;
+				else invoiceHeader.PermanentStorageTimestamp = invoice.PermanentStorageDate.LocalDateTime;
 				invoiceHeader.IssuedByNIP = invoice.Seller.Nip;
 				invoiceHeader.IssuedByName = invoice.Seller.Name;
 				invoiceHeader.IssuedToNIP = invoice.Buyer.Identifier.Value;
