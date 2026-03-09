@@ -80,7 +80,7 @@ class ZapiszJakoXMLAkcja : AkcjaNaSpisie<Faktura>
 
 class ZapiszJakoXMLLokalneAkcja : ZapiszJakoXMLAkcja
 {
-	public override string Nazwa => "🖫 Zapisz KSeF XML [CTRL-S]";
+	public override string Nazwa => "🖫 Zapisz XML KSeF [CTRL-S]";
 	public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) => zaznaczoneRekordy.Count(e => e.CzySprzedaz || !String.IsNullOrEmpty(e.XMLKSeF)) >= 1;
 
 	public override void Uruchom(Kontekst kontekst, ref IEnumerable<Faktura> zaznaczoneRekordy)
