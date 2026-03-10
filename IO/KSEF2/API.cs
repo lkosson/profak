@@ -241,7 +241,13 @@ public class API : IDisposable
 			if (cancellationToken.IsCancellationRequested) break;
 			var query = new InvoiceQueryFilters
 			{
-				DateRange = new DateRange { DateType = przyrostowo ? DateType.PermanentStorage : DateType.Issue, From = DateTime.SpecifyKind(dateFrom, DateTimeKind.Local), To = DateTime.SpecifyKind(dateTo, DateTimeKind.Local) },
+				DateRange = new DateRange
+				{
+					DateType = przyrostowo ? DateType.PermanentStorage : DateType.Issue,
+					From = DateTime.SpecifyKind(dateFrom, DateTimeKind.Local),
+					To = DateTime.SpecifyKind(dateTo, DateTimeKind.Local),
+					RestrictToPermanentStorageHwmDate = przyrostowo ? true : null
+				},
 				SubjectType = sprzedaz ? InvoiceSubjectType.Subject1 : InvoiceSubjectType.Subject2
 			};
 
