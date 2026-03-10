@@ -197,19 +197,19 @@ public class Generator
 		jpk.Deklaracja.PozycjeSzczegolowe.P_23 = LiczbaLubNull(deklaracja.NettoWNT);
 		jpk.Deklaracja.PozycjeSzczegolowe.P_24 = LiczbaLubNull(deklaracja.NaleznyWNT);
 		jpk.Deklaracja.PozycjeSzczegolowe.P_37 = LiczbaLubNull(deklaracja.NettoRazem);
-		jpk.Deklaracja.PozycjeSzczegolowe.P_38 = (long)deklaracja.NaleznyRazem.Zaokragl();
+		jpk.Deklaracja.PozycjeSzczegolowe.P_38 = (long)deklaracja.NaleznyRazem.Zaokragl(miejsca: 0);
 		jpk.Deklaracja.PozycjeSzczegolowe.P_39 = LiczbaLubNull(deklaracja.NaliczonyPrzeniesiony);
 		jpk.Deklaracja.PozycjeSzczegolowe.P_40 = LiczbaLubNull(deklaracja.NettoSrodkiTrwale);
 		jpk.Deklaracja.PozycjeSzczegolowe.P_41 = LiczbaLubNull(deklaracja.NaliczonySrodkiTrwale);
 		jpk.Deklaracja.PozycjeSzczegolowe.P_42 = LiczbaLubNull(deklaracja.NettoPozostale);
 		jpk.Deklaracja.PozycjeSzczegolowe.P_43 = LiczbaLubNull(deklaracja.NaliczonyPozostale);
 		jpk.Deklaracja.PozycjeSzczegolowe.P_48 = LiczbaLubNull(deklaracja.NaliczonyRazem);
-		jpk.Deklaracja.PozycjeSzczegolowe.P_51 = (long)deklaracja.DoWplaty.Zaokragl();
+		jpk.Deklaracja.PozycjeSzczegolowe.P_51 = (long)deklaracja.DoWplaty.Zaokragl(miejsca: 0);
 		jpk.Deklaracja.PozycjeSzczegolowe.P_62 = LiczbaLubNull(deklaracja.DoPrzeniesienia);
 
 		return jpk;
 	}
 
 	private static string Wymagane(string wartosc, string komunikat) => String.IsNullOrWhiteSpace(wartosc) ? throw new ApplicationException(komunikat) : wartosc;
-	private static long? LiczbaLubNull(decimal wartosc) => wartosc > 0 ? (long)wartosc.Zaokragl() : null;
+	private static long? LiczbaLubNull(decimal wartosc) => wartosc > 0 ? (long)wartosc.Zaokragl(miejsca: 0) : null;
 }
