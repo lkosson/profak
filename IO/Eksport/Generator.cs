@@ -70,27 +70,36 @@ public class Generator
 			zawartosc.PlikId = null;
 		}
 
-		baza.Usun<DeklaracjaVat>();
+		var fakturyDoOdpiecia = baza.Faktury.Where(faktura => faktura.FakturaKorygowanaId != null || faktura.FakturaKorygujacaId != null).ToList();
+		foreach (var faktura in fakturyDoOdpiecia)
+		{
+			faktura.FakturaKorygowana = null;
+			faktura.FakturaKorygujaca = null;
+			faktura.FakturaKorygowanaId = null;
+			faktura.FakturaKorygujacaId = null;
+		}
+		baza.Zapisz(fakturyDoOdpiecia);
+		baza.Usun<Zawartosc>();
+		baza.Usun<Wplata>();
+		baza.Usun<PozycjaFaktury>();
+		baza.Usun<Plik>();
 		baza.Usun<DodatkowyPodmiot>();
 		baza.Usun<Faktura>();
-		baza.Usun<JednostkaMiary>();
-		baza.Usun<KolumnaSpisu>();
-		baza.Usun<Konfiguracja>();
-		baza.Usun<Kontrahent>();
-		baza.Usun<Numerator>();
-		baza.Usun<Plik>();
-		baza.Usun<PozycjaFaktury>();
-		baza.Usun<SkladkaZus>();
-		baza.Usun<SposobPlatnosci>();
-		baza.Usun<StanMenu>();
-		baza.Usun<StanNumeratora>();
-		baza.Usun<StawkaVat>();
 		baza.Usun<Towar>();
-		baza.Usun<UrzadSkarbowy>();
-		baza.Usun<Waluta>();
-		baza.Usun<Wplata>();
+		baza.Usun<Kontrahent>();
 		baza.Usun<ZaliczkaPit>();
-		baza.Usun<Zawartosc>();
+		baza.Usun<Waluta>();
+		baza.Usun<UrzadSkarbowy>();
+		baza.Usun<StawkaVat>();
+		baza.Usun<StanNumeratora>();
+		baza.Usun<StanMenu>();
+		baza.Usun<SposobPlatnosci>();
+		baza.Usun<SkladkaZus>();
+		baza.Usun<Numerator>();
+		baza.Usun<Konfiguracja>();
+		baza.Usun<KolumnaSpisu>();
+		baza.Usun<JednostkaMiary>();
+		baza.Usun<DeklaracjaVat>();
 
 		baza.Dodaj(dane.DeklaracjeVat);
 		baza.Dodaj(dane.JednostkiMiar);
