@@ -199,6 +199,17 @@ public class Baza : DbContext
 		DB.Model.ProFakModelBuilder.Configure(modelBuilder);
 	}
 
+	public void Dodaj<TRekord>(IEnumerable<TRekord> rekordy)
+		where TRekord : Rekord<TRekord>
+	{
+		var set = Set<TRekord>();
+		foreach (var rekord in rekordy)
+		{
+			set.Add(rekord);
+		}
+		ZapiszZmiany();
+	}
+
 	public void Zapisz<TRekord>(TRekord rekord)
 		where TRekord : Rekord<TRekord>
 		=> Zapisz(new[] { rekord });
