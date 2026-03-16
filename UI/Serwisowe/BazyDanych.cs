@@ -141,4 +141,24 @@ partial class BazyDanych : UserControl, IKontrolkaZKontekstem
 		MessageBox.Show("Baza danych została odtworzona.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		Wypelnij();
 	}
+
+	private void buttonZapiszJSON_Click(object sender, EventArgs e)
+	{
+		saveFileDialogJSON.FileName = $"profak-{DateTime.Now:yyyyMMdd}.json";
+		if (saveFileDialogJSON.ShowDialog() != DialogResult.OK) return;
+		using var nowyKontekst = new Kontekst(Kontekst);
+		var json = IO.Eksport.Generator.Zbuduj(nowyKontekst.Baza);
+		File.WriteAllText(saveFileDialogJSON.FileName, json);
+		MessageBox.Show("Dane programu zostały zapisane.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+	}
+
+	private void buttonWczytajJSON_Click(object sender, EventArgs e)
+	{
+		if (openFileDialogJSON.ShowDialog() != DialogResult.OK) return;
+		using var nowyKontekst = new Kontekst(Kontekst);
+		var json = File.ReadAllText(openFileDialogJSON.FileName);
+		if (MessageBox.Show("Dotychczasowe dane zostaną nadpisane. Czy na pewno chcesz kontynuować?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
+		IO.Eksport.Generator.Wczytaj(nowyKontekst.Baza, json);
+		MessageBox.Show("Dane programu zostały wczytane.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+	}
 }
