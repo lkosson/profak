@@ -158,7 +158,9 @@ partial class BazyDanych : UserControl, IKontrolkaZKontekstem
 		using var nowyKontekst = new Kontekst(Kontekst);
 		var json = File.ReadAllText(openFileDialogJSON.FileName);
 		if (MessageBox.Show("Dotychczasowe dane zostaną nadpisane. Czy na pewno chcesz kontynuować?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
+		using var tx = nowyKontekst.Transakcja();
 		IO.Eksport.Generator.Wczytaj(nowyKontekst.Baza, json);
+		tx.Zatwierdz();
 		MessageBox.Show("Dane programu zostały wczytane.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
 	}
 }
