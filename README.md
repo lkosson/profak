@@ -28,6 +28,14 @@ ProFak to prosty, darmowy program do fakturowania; skierowany przede wszystkim d
  * Ewidencja środków trwałych i amortyzacja
  * Obsługa kadr i umów cywilnoprawnych
 
+## Instalacja
+
+Aby zainstalować program, pobierz plik `ProFak.msi` ze [strony z najnowszą wersją](https://github.com/lkosson/profak/releases/latest/) i uruchom go.
+
+Możesz też pobrać paczkę `ProFak.zip` i rozpakować ją w dowolnym miejscu. To rozwiązanie jest polecane jeśli chcesz trzymać program na pamięci przenośnej lub dysku sieciowym.
+
+Podczas pierwszego uruchomienia programu zostanie wyświetlone okno, w którym można wybrać miejsce, gdzie ma się znajdować baza danych. Jeśli nie wiesz co wybrać, pozostaw wybraną wartość domyślną.
+
 ## Wymagania techniczne
 
  * Wymagany Windows 7 lub nowszy, 1GB RAM, 200MB miejsca na dysku
