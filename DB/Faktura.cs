@@ -382,6 +382,14 @@ public class Faktura : Rekord<Faktura>
 
 		if (sposobPlatnosci != null) nowaFaktura.TerminPlatnosci = nowaFaktura.DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
 
+		var dodatkowePodmioty = baza.DodatkowePodmioty.Where(dodatkowyPodmiot => dodatkowyPodmiot.FakturaId == Id).ToList();
+		foreach (var dodatkowyPodmiot in dodatkowePodmioty)
+		{
+			dodatkowyPodmiot.Id = 0;
+			dodatkowyPodmiot.FakturaRef = nowaFaktura;
+		}
+		baza.Zapisz(dodatkowePodmioty);
+
 		var starePozycje = baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == Id).ToList();
 		var nowePozycje = new List<PozycjaFaktury>();
 		foreach (var staraPozycja in starePozycje)
