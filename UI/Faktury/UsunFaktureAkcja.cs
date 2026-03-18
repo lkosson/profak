@@ -18,17 +18,28 @@ class UsunFaktureAkcja : UsunRekordAkcja<Faktura>
 			if (przeznaczenie == null) continue;
 			var numerator = kontekst.Baza.Numeratory.FirstOrDefault(numerator => numerator.Przeznaczenie == przeznaczenie.Value);
 			if (numerator == null) continue;
-			var szablon = Numerator.PrzygotujWzorzec(numerator.Format, faktura.Podstawienie);
-			var parametry = String.Format(szablon, "");
+			var parametry = numerator.GenerujGrupe(faktura.Podstawienie);
 			var stanNumeratora = kontekst.Baza.StanyNumeratorow.FirstOrDefault(stan => stan.NumeratorId == numerator.Id && stan.Parametry == parametry);
 			if (stanNumeratora == null) continue;
 			var cofniety = false;
-			while (stanNumeratora.OstatniaWartosc > 0)
+			if (String.IsNullOrEmpty(numerator.Grupa) || numerator.Grupa == numerator.Format)
 			{
-				var testowanyNumer = String.Format(szablon, stanNumeratora.OstatniaWartosc);
-				if (numeryFaktur.Contains(testowanyNumer) && !usuwaneFaktury.Contains(testowanyNumer)) break;
-				stanNumeratora.OstatniaWartosc--;
-				cofniety = true;
+				while (stanNumeratora.OstatniaWartosc > 0)
+				{
+					var testowanyNumer = numerator.GenerujNumer(faktura.Podstawienie, stanNumeratora.OstatniaWartosc);
+					if (numeryFaktur.Contains(testowanyNumer) && !usuwaneFaktury.Contains(testowanyNumer)) break;
+					stanNumeratora.OstatniaWartosc--;
+					cofniety = true;
+				}
+			}
+			else
+			{
+				var testowanyNumer = numerator.GenerujNumer(faktura.Podstawienie, stanNumeratora.OstatniaWartosc);
+				if (usuwaneFaktury.Contains(testowanyNumer))
+				{
+					stanNumeratora.OstatniaWartosc--;
+					cofniety = true;
+				}
 			}
 			if (cofniety) kontekst.Baza.Zapisz(stanNumeratora);
 		}

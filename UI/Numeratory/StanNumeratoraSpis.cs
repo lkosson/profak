@@ -10,7 +10,7 @@ class StanNumeratoraSpis : Spis<StanNumeratora>
 
 	public StanNumeratoraSpis()
 	{
-		DodajKolumne(nameof(StanNumeratora.Parametry), "Parametry", rozciagnij: true);
+		DodajKolumne(nameof(StanNumeratora.Parametry), "Grupa numeracji", rozciagnij: true);
 		DodajKolumne(nameof(StanNumeratora.OstatniaWartosc), "Ostatnia wartość");
 		DodajKolumneId();
 	}

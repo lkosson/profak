@@ -13,7 +13,8 @@ partial class NumeratorEdytor : NumeratorEdytorBase
 		kontroler.Slownik<PrzeznaczenieNumeratora>(comboBoxPrzeznaczenie);
 
 		kontroler.Powiazanie(comboBoxPrzeznaczenie, numerator => numerator.Przeznaczenie);
-		kontroler.Powiazanie(comboBoxFormat, numerator => numerator.Format);
+		kontroler.Powiazanie(comboBoxFormat, numerator => numerator.Format, delegate { textBoxGrupa.PlaceholderText = comboBoxFormat.Text; PrzeliczPrzyklad(); });
+		kontroler.Powiazanie(textBoxGrupa, numerator => numerator.Grupa!, PrzeliczPrzyklad);
 
 		Wymagane(comboBoxPrzeznaczenie);
 		Wymagane(comboBoxFormat);
@@ -28,17 +29,22 @@ partial class NumeratorEdytor : NumeratorEdytorBase
 		stanyNumeratora.Spis.Kontekst = Kontekst;
 	}
 
-	private void comboBoxFormat_TextChanged(object? sender, EventArgs e)
+	private void PrzeliczPrzyklad()
 	{
 		var faktura = new Faktura { DataWystawienia = DateTime.Now.Date };
 		try
 		{
-			textBoxPrzyklad.Text = String.Format(Numerator.PrzygotujWzorzec(comboBoxFormat.Text, faktura.Podstawienie), 123);
+			textBoxPrzyklad.Text = Rekord.NadajNumer(Kontekst.Baza, faktura.Podstawienie, zwiekszLicznik: false);
 		}
 		catch (ApplicationException ae)
 		{
 			textBoxPrzyklad.Text = ae.Message;
 		}
+	}
+
+	private void linkLabelGrupa_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+	{
+		MessageBox.Show("Zaawansowany parametr określający kiedy numeracja ma ponownie zaczynać się od 1.\n\nPozostaw to pole puste, by numeracja była restartowana według roku, miesiąca lub dnia zgodnie z wybranym formatem numeru.\n\nJeśli chcesz, by numeracja była resetowana rocznie, ale w numerze faktury występował także numer miesiąca, wprowadź tu wyrażenie zawierające [Rok], ale nie [Miesiac].", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
 	}
 }
 

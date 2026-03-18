@@ -7,6 +7,7 @@ public class Numerator : Rekord<Numerator>
 {
 	public PrzeznaczenieNumeratora Przeznaczenie { get; set; } = PrzeznaczenieNumeratora.Faktura;
 	public string Format { get; set; } = "[Numer]";
+	public string? Grupa { get; set; }
 
 	public string PrzeznaczenieFmt => Format(Przeznaczenie);
 
@@ -15,21 +16,29 @@ public class Numerator : Rekord<Numerator>
 	public override bool CzyPasuje(string fraza)
 		=> base.CzyPasuje(fraza)
 		|| CzyPasuje(Przeznaczenie, fraza)
-		|| CzyPasuje(Format, fraza);
+		|| CzyPasuje(Format, fraza)
+		|| CzyPasuje(Grupa, fraza);
 
 	public static string NadajNumer(Baza baza, PrzeznaczenieNumeratora przeznaczenie, Func<string, IFormattable?> podstawienie, bool zwiekszLicznik = true)
 	{
 		baza.Zablokuj<Numerator>();
 		var numerator = baza.Numeratory.FirstOrDefault(numerator => numerator.Przeznaczenie == przeznaczenie);
 		if (numerator == null) throw new ApplicationException($"Brak definicji numeratora \"{przeznaczenie}\" - dodaj pozycję w spisie \"Serwisowe\" - \"Numeracja\".");
-		var szablon = PrzygotujWzorzec(numerator.Format, podstawienie);
-		var parametry = String.Format(szablon, "");
+		return numerator.NadajNumer(baza, podstawienie, zwiekszLicznik);
+	}
 
-		var stanNumeratora = baza.StanyNumeratorow.FirstOrDefault(stan => stan.NumeratorId == numerator.Id && stan.Parametry == parametry);
-		if (stanNumeratora == null) stanNumeratora = new StanNumeratora { NumeratorRef = numerator, Parametry = parametry, OstatniaWartosc = 0 };
+	public string GenerujGrupe(Func<string, IFormattable?> podstawienie) => Podstaw(String.IsNullOrEmpty(Grupa) ? Format : Grupa, podstawienie, default);
+	public string GenerujNumer(Func<string, IFormattable?> podstawienie, int licznik) => Podstaw(Format, podstawienie, licznik);
+
+	public string NadajNumer(Baza baza, Func<string, IFormattable?> podstawienie, bool zwiekszLicznik = true)
+	{
+		var parametry = GenerujGrupe(podstawienie);
+
+		var stanNumeratora = baza.StanyNumeratorow.FirstOrDefault(stan => stan.NumeratorId == Id && stan.Parametry == parametry);
+		if (stanNumeratora == null) stanNumeratora = new StanNumeratora { NumeratorRef = this, Parametry = parametry, OstatniaWartosc = 0 };
 
 		var licznik = stanNumeratora.OstatniaWartosc + 1;
-		var numer = String.Format(szablon, licznik);
+		var numer = GenerujNumer(podstawienie, licznik);
 		if (zwiekszLicznik)
 		{
 			stanNumeratora.OstatniaWartosc = licznik;
@@ -39,13 +48,13 @@ public class Numerator : Rekord<Numerator>
 		return numer;
 	}
 
-	public static string PrzygotujWzorzec(string format, Func<string, IFormattable?> podstawienie)
+	private static string Podstaw(string format, Func<string, IFormattable?> podstawienie, int? numer)
 	{
 		return Regex.Replace(format, @"\[(?<nazwa>\w+)(:(?<format>[^\]]+))?\]", fragment =>
 		{
 			var nazwa = fragment.Groups["nazwa"].Value;
 			var format = fragment.Groups["format"]?.Value;
-			if (String.Equals(nazwa, "numer", StringComparison.CurrentCultureIgnoreCase)) return "{0" + (String.IsNullOrEmpty(format) ? "" : ":" + format) + "}";
+			if (String.Equals(nazwa, "numer", StringComparison.CurrentCultureIgnoreCase)) return numer is null ? "" : numer.Value.ToString(format);
 			var wartosc = podstawienie(nazwa);
 			if (wartosc == null) throw new ApplicationException($"Nieznane wyrażenie numeratora \"{nazwa}\".");
 			var tekst = String.IsNullOrWhiteSpace(format) ? wartosc.ToString() ?? "" : wartosc.ToString(format, CultureInfo.CurrentCulture);

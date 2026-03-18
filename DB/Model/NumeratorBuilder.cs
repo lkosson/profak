@@ -14,5 +14,6 @@ class NumeratorBuilder
 		builder.Property(e => e.Id).ValueGeneratedOnAdd().IsRequired();
 		builder.Property(e => e.Przeznaczenie).IsRequired();
 		builder.Property(e => e.Format).HasDefaultValue("").IsRequired();
+		builder.Property(e => e.Grupa);
 	}
 }
