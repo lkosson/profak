@@ -278,6 +278,14 @@ public class Faktura : Rekord<Faktura>
 
 		bazowa.FakturaKorygujacaRef = korekta;
 
+		var dodatkowePodmioty = baza.DodatkowePodmioty.Where(dodatkowyPodmiot => dodatkowyPodmiot.FakturaId == Id).ToList();
+		foreach (var dodatkowyPodmiot in dodatkowePodmioty)
+		{
+			dodatkowyPodmiot.Id = 0;
+			dodatkowyPodmiot.FakturaRef = korekta;
+		}
+		baza.Zapisz(dodatkowePodmioty);
+
 		var starePozycje = baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == bazowa.Id).ToList();
 		var nowePozycje = new List<PozycjaFaktury>();
 		foreach (var staraPozycja in starePozycje)
