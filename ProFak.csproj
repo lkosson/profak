@@ -6,7 +6,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <Authors>Łukasz Kosson</Authors>
     <ApplicationIcon>ikona.ico</ApplicationIcon>
-    <Version>1.16.2</Version>
+    <Version>1.17.0</Version>
     <PublishDir>bin\Publish</PublishDir>
   </PropertyGroup>
 
