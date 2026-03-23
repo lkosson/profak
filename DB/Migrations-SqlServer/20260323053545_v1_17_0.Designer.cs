@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProFak.DB;
 
@@ -11,9 +12,11 @@ using ProFak.DB;
 namespace ProFak.DB.MigrationsSqlServer
 {
     [DbContext(typeof(BazaSqlServer))]
-    partial class BazaSqlServerModelSnapshot : ModelSnapshot
+    [Migration("20260323053545_v1_17_0")]
+    partial class v1_17_0
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
