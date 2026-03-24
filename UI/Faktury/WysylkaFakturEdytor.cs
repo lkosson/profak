@@ -189,7 +189,7 @@ partial class WysylkaFakturEdytor : UserControl
 		wiadomosc.Body = tresc;
 		wiadomosc.IsBodyHtml = false;
 		wiadomosc.To.Add(adresat);
-		wiadomosc.Attachments.Add(new Attachment(new MemoryStream(pdf), nazwa.Replace('/', '-').Replace(':', '-'), "application/pdf"));
+		wiadomosc.Attachments.Add(new Attachment(new MemoryStream(pdf), nazwa.Replace('/', '-').Replace(':', '-') + ".pdf", "application/pdf"));
 		await smtp.SendMailAsync(wiadomosc, cancellationToken);
 	}
 
