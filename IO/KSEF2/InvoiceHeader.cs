@@ -1,4 +1,6 @@
-﻿namespace ProFak.IO.KSEF2;
+﻿using KSeF.Client.Core.Models.Invoices;
+
+namespace ProFak.IO.KSEF2;
 
 public class InvoiceHeader
 {
@@ -16,4 +18,27 @@ public class InvoiceHeader
 	public decimal Vat { get; set; }
 	public string Currency { get; set; } = "";
 	public string Type { get; set; } = "";
+
+	public InvoiceHeader()
+	{
+	}
+
+	public InvoiceHeader(InvoiceSummary summary, DateTimeOffset? hwm)
+	{
+		KsefReferenceNumber = summary.KsefNumber;
+		ReferenceNumber = summary.InvoiceNumber;
+		InvoicingDate = summary.InvoicingDate.LocalDateTime;
+		AcquisitionTimestamp = summary.AcquisitionDate.LocalDateTime;
+		if (hwm.HasValue && summary.PermanentStorageDate > hwm.Value) PermanentStorageTimestamp = hwm.Value.LocalDateTime;
+		else PermanentStorageTimestamp = summary.PermanentStorageDate.LocalDateTime;
+		IssuedByNIP = summary.Seller.Nip;
+		IssuedByName = summary.Seller.Name;
+		IssuedToNIP = summary.Buyer.Identifier.Value;
+		IssuedToName = summary.Buyer.Name;
+		Net = summary.NetAmount;
+		Gross = summary.GrossAmount;
+		Vat = summary.VatAmount;
+		Currency = summary.Currency;
+		Type = summary.InvoiceType.ToString();
+	}
 }

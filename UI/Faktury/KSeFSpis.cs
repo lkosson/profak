@@ -101,6 +101,7 @@ class KSeFSpis : Spis<Faktura>
 				using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
 				await api.UwierzytelnijAsync(podmiot.NIP, podmiot.TokenKSeF, cancellationToken);
 				var naglowki = new List<InvoiceHeader>();
+				/*
 				while (odDaty < doDaty)
 				{
 					if (cancellationToken.IsCancellationRequested) break;
@@ -112,6 +113,15 @@ class KSeFSpis : Spis<Faktura>
 				}
 
 				rekordy = naglowki.Select(api.WczytajNaglowek).ToList();
+				*/
+
+				var fakturyKSeF = await api.PobierzFakturyZbiorczoAsync(przyrostowo, sprzedaz, odDaty, doDaty, cancellationToken);
+				foreach (var (naglowek, xml) in fakturyKSeF)
+				{
+					var rekord = api.WczytajNaglowek(naglowek);
+					rekord.XMLKSeF = xml;
+					rekordy.Add(rekord);
+				}
 				var i = 1;
 				foreach (var rekord in rekordy)
 				{

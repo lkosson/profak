@@ -13,8 +13,11 @@ using KSeF.Client.DI;
 using KSeF.Client.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using ProFak.DB;
+using System.IO.Compression;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ProFak.IO.KSEF2;
 
@@ -255,28 +258,80 @@ public class API : IDisposable
 
 			foreach (var invoice in pagedInvoiceResponse.Invoices)
 			{
-				var invoiceHeader = new InvoiceHeader();
-				invoiceHeader.KsefReferenceNumber = invoice.KsefNumber;
-				invoiceHeader.ReferenceNumber = invoice.InvoiceNumber;
-				invoiceHeader.InvoicingDate = invoice.InvoicingDate.LocalDateTime;
-				invoiceHeader.AcquisitionTimestamp = invoice.AcquisitionDate.LocalDateTime;
-				if (pagedInvoiceResponse.PermanentStorageHwmDate.HasValue && invoice.PermanentStorageDate > pagedInvoiceResponse.PermanentStorageHwmDate.Value) invoiceHeader.PermanentStorageTimestamp = pagedInvoiceResponse.PermanentStorageHwmDate.Value.LocalDateTime;
-				else invoiceHeader.PermanentStorageTimestamp = invoice.PermanentStorageDate.LocalDateTime;
-				invoiceHeader.IssuedByNIP = invoice.Seller.Nip;
-				invoiceHeader.IssuedByName = invoice.Seller.Name;
-				invoiceHeader.IssuedToNIP = invoice.Buyer.Identifier.Value;
-				invoiceHeader.IssuedToName = invoice.Buyer.Name;
-				invoiceHeader.Net = (decimal)invoice.NetAmount;
-				invoiceHeader.Gross = (decimal)invoice.GrossAmount;
-				invoiceHeader.Vat = (decimal)invoice.VatAmount;
-				invoiceHeader.Currency = invoice.Currency;
-				invoiceHeader.Type = invoice.InvoiceType.ToString();
-				invoices.Add(invoiceHeader);
+				invoices.Add(new InvoiceHeader(invoice, pagedInvoiceResponse.PermanentStorageHwmDate));
 			}
 			pageOffset++;
 			if (pageOffset == 100) break;
 			if (pagedInvoiceResponse.Invoices.Count < pageSize) break;
 		}
+		return invoices;
+	}
+
+	public async Task<IReadOnlyCollection<(InvoiceHeader naglowek, string xml)>> PobierzFakturyZbiorczoAsync(bool przyrostowo, bool sprzedaz, DateTime dateFrom, DateTime dateTo, CancellationToken cancellationToken)
+	{
+		await cryptographyService.WarmupAsync(cancellationToken);
+		var encryptionData = cryptographyService.GetEncryptionData();
+		var filter = new InvoiceQueryFilters
+		{
+			DateRange = new DateRange
+			{
+				DateType = przyrostowo ? DateType.PermanentStorage : DateType.Issue,
+				From = DateTime.SpecifyKind(dateFrom, DateTimeKind.Local),
+				To = DateTime.SpecifyKind(dateTo, DateTimeKind.Local),
+				RestrictToPermanentStorageHwmDate = przyrostowo ? true : null
+			},
+			SubjectType = sprzedaz ? InvoiceSubjectType.Subject1 : InvoiceSubjectType.Subject2
+		};
+		var query = new InvoiceExportRequest
+		{
+			Filters = filter,
+			Encryption = encryptionData.EncryptionInfo
+		};
+
+		var exportInitResponse = await UruchomUwzgledniajacLimitAsync(() => ksefClient.ExportInvoicesAsync(query, accessToken.Token, cancellationToken: cancellationToken), cancellationToken);
+
+		var referenceNumber = exportInitResponse.ReferenceNumber;
+
+		var exportStatusResponse = await CzekajNaWynikAsync(() => ksefClient.GetInvoiceExportStatusAsync(referenceNumber, accessToken.Token, cancellationToken: cancellationToken),
+			status => status.Status.Code >= 400 ? throw new ApplicationException($"Wystąpił błąd podczas oczekiwania na przygotowanie paczki faktur: {status.Status.Description} - {String.Join(", ", status.Status.Details)}") : status.Status.Code == 200,
+			cancellationToken);
+
+		using var zipStream = new MemoryStream();
+		using HttpClient httpClient = new HttpClient();
+		foreach (var exportPart in exportStatusResponse.Package.Parts)
+		{
+			using var partReqeust = new HttpRequestMessage(new HttpMethod(exportPart.Method ?? HttpMethod.Get.Method), exportPart.Url);
+			using var partResponse = await httpClient.SendAsync(partReqeust, HttpCompletionOption.ResponseContentRead, cancellationToken);
+			partResponse.EnsureSuccessStatusCode();
+
+			var encryptedPart = await partResponse.Content.ReadAsByteArrayAsync();
+			var decryptedPart = cryptographyService.DecryptBytesWithAES256(encryptedPart, encryptionData.CipherKey, encryptionData.CipherIv);
+			await zipStream.WriteAsync(decryptedPart, cancellationToken);
+		}
+
+		var deserializerOpts = new JsonSerializerOptions { PropertyNameCaseInsensitive = true, Converters = { new JsonStringEnumConverter(namingPolicy: null, allowIntegerValues: false) } };
+		var xmls = new Dictionary<string, string>();
+		InvoicePackageMetadata? packageMetadata = null;
+		using var zip = new ZipArchive(zipStream, ZipArchiveMode.Read);
+		foreach (var zipEntry in zip.Entries)
+		{
+			var zipEntryStream = zipEntry.Open();
+			using var streamReader = new StreamReader(zipEntryStream, Encoding.UTF8);
+			var zipEntryContent = await streamReader.ReadToEndAsync();
+			if (zipEntry.Name == "_metadata.json") packageMetadata = JsonSerializer.Deserialize<InvoicePackageMetadata>(zipEntryContent, deserializerOpts);
+			else xmls[zipEntry.Name] = zipEntryContent;
+		}
+
+		if (packageMetadata == null) throw new ApplicationException("Brak metadanych w odebranej paczce faktur.");
+
+		var invoices = new List<(InvoiceHeader naglowek, string xml)>();
+		foreach (var invoice in packageMetadata.Invoices)
+		{
+			var header = new InvoiceHeader(invoice, exportStatusResponse.Package.PermanentStorageHwmDate);
+			if (!xmls.TryGetValue(invoice.KsefNumber + ".xml", out var xml)) throw new ApplicationException($"Brak faktury {invoice.KsefNumber} w odebranej paczce.");
+			invoices.Add((header, xml));
+		}
+
 		return invoices;
 	}
 
