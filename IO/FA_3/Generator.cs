@@ -349,6 +349,8 @@ public class Generator
 	private static DBFaktura Zbuduj(KSEFFaktura ksefFaktura)
 	{
 		var dbFaktura = new DBFaktura();
+		dbFaktura.Pozycje = [];
+		dbFaktura.Wplaty = [];
 		dbFaktura.Numer = ksefFaktura.Fa.P_2;
 		dbFaktura.Rodzaj = ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.VAT || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ROZ || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.UPR ? DB.RodzajFaktury.Zakup
 			: ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ROZ ? DB.RodzajFaktury.KorektaZakupu
@@ -416,9 +418,9 @@ public class Generator
 
 			if (ksefFaktura.Fa.Platnosc.Zaplacono == TWybor1.Item1 && String.IsNullOrEmpty(dbFaktura.OpisSposobuPlatnosci)) dbFaktura.OpisSposobuPlatnosci = "Zapłacono";
 
-			if (ksefFaktura.Fa.Platnosc.DataZaplaty.HasValue) dbFaktura.Wplaty = [new Wplata { Data = ksefFaktura.Fa.Platnosc.DataZaplaty.Value, Kwota = ksefFaktura.Fa.P_15 }];
+			if (ksefFaktura.Fa.Platnosc.DataZaplaty.HasValue) dbFaktura.Wplaty.Add(new Wplata { Data = ksefFaktura.Fa.Platnosc.DataZaplaty.Value, Kwota = ksefFaktura.Fa.P_15 });
 		}
-		dbFaktura.Pozycje = new List<PozycjaFaktury>();
+
 		foreach (var pozycja in ksefFaktura.Fa.FaWiersz)
 		{
 			var dbPozycja = new PozycjaFaktury();
@@ -580,21 +582,13 @@ public class Generator
 		{
 			foreach (var obciazenie in ksefFaktura.Fa.Rozliczenie.Obciazenia)
 			{
-				if (obciazenie.Kwota != 0)
-				{
-					uwagi.AppendLine($"Obciążenie - {obciazenie.Powod}: {obciazenie.Kwota:0.00} {ksefFaktura.Fa.KodWaluty}");
-					dbFaktura.RazemBrutto += obciazenie.Kwota;
-					dbFaktura.CzyWartosciReczne = true;
-				}
+				if (obciazenie.Kwota == 0) continue;
+				dbFaktura.Wplaty.Add(new Wplata { Data = dbFaktura.DataWystawienia, Kwota = -obciazenie.Kwota, Uwagi = obciazenie.Powod, CzyRozliczenie = true });
 			}
 			foreach (var odliczenie in ksefFaktura.Fa.Rozliczenie.Odliczenia)
 			{
-				if (odliczenie.Kwota != 0)
-				{
-					uwagi.AppendLine($"Odliczenie - {odliczenie.Powod}: {odliczenie.Kwota:0.00} {ksefFaktura.Fa.KodWaluty}");
-					dbFaktura.RazemBrutto -= odliczenie.Kwota;
-					dbFaktura.CzyWartosciReczne = true;
-				}
+				if (odliczenie.Kwota == 0) continue;
+				dbFaktura.Wplaty.Add(new Wplata { Data = dbFaktura.DataWystawienia, Kwota = odliczenie.Kwota, Uwagi = odliczenie.Powod, CzyRozliczenie = true });
 			}
 
 			if (ksefFaktura.Fa.Rozliczenie.DoZaplatyValueSpecified && ksefFaktura.Fa.Rozliczenie.DoZaplatyValue != dbFaktura.RazemBrutto) uwagi.AppendLine($"Do zapłaty: {ksefFaktura.Fa.Rozliczenie.DoZaplatyValue:0.00} {ksefFaktura.Fa.KodWaluty}");
