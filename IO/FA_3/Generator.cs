@@ -121,15 +121,18 @@ public class Generator
 			: throw new ApplicationException("Nieobsługiwany rodzaj faktury: " + dbFaktura.RodzajFmt);
 		if (dbFaktura.CzyTP) { ksefFaktura.Fa.TP = TWybor1.Item1; }
 		ksefFaktura.Fa.Platnosc = new FakturaFaPlatnosc();
-		if (dbFaktura.PozostaloDoZaplaty == 0 && dbFaktura.Wplaty.Count > 0)
+		var wplaty = dbFaktura.Wplaty.Where(e => !e.CzyRozliczenie).ToList();
+		var obciazenia = dbFaktura.Wplaty.Where(e => e.CzyRozliczenie && e.Kwota < 0).ToList();
+		var odliczenia = dbFaktura.Wplaty.Where(e => e.CzyRozliczenie && e.Kwota > 0).ToList();
+		if (dbFaktura.PozostaloDoZaplaty == 0 && wplaty.Count > 0)
 		{
 			ksefFaktura.Fa.Platnosc.Zaplacono = TWybor1.Item1;
-			ksefFaktura.Fa.Platnosc.DataZaplaty = dbFaktura.Wplaty.Last().Data;
+			ksefFaktura.Fa.Platnosc.DataZaplaty = wplaty.Last().Data;
 		}
-		else if (dbFaktura.PozostaloDoZaplaty < dbFaktura.RazemBrutto)
+		else if (dbFaktura.PozostaloDoZaplaty < dbFaktura.RazemBrutto + obciazenia.Sum(e => e.Kwota) - odliczenia.Sum(e => e.Kwota))
 		{
 			ksefFaktura.Fa.Platnosc.ZnacznikZaplatyCzesciowej = TWybor1_2.Item1;
-			foreach (var wplata in dbFaktura.Wplaty)
+			foreach (var wplata in wplaty)
 				ksefFaktura.Fa.Platnosc.ZaplataCzesciowa.Add(new FakturaFaPlatnoscZaplataCzesciowa { KwotaZaplatyCzesciowej = wplata.Kwota, DataZaplatyCzesciowej = wplata.Data });
 		}
 		if (dbFaktura.PozostaloDoZaplaty > 0) ksefFaktura.Fa.Platnosc.TerminPlatnosci.Add(new FakturaFaPlatnoscTerminPlatnosci { Termin = dbFaktura.TerminPlatnosci });
@@ -144,6 +147,35 @@ public class Generator
 			if (!String.IsNullOrEmpty(dbFaktura.NazwaBanku)) ksefRachunek.NazwaBanku = dbFaktura.NazwaBanku;
 			ksefFaktura.Fa.Platnosc.RachunekBankowy.Add(ksefRachunek);
 		}
+
+		if (obciazenia.Count != 0)
+		{
+			ksefFaktura.Fa.Rozliczenie ??= new FakturaFaRozliczenie();
+			ksefFaktura.Fa.Rozliczenie.SumaObciazenValueSpecified = true;
+			foreach (var obciazenie in obciazenia)
+			{
+				ksefFaktura.Fa.Rozliczenie.Obciazenia.Add(new FakturaFaRozliczenieObciazenia { Kwota = -obciazenie.Kwota, Powod = obciazenie.Uwagi });
+				ksefFaktura.Fa.Rozliczenie.SumaObciazenValue += -obciazenie.Kwota;
+			}
+		}
+		if (odliczenia.Count != 0)
+		{
+			ksefFaktura.Fa.Rozliczenie ??= new FakturaFaRozliczenie();
+			ksefFaktura.Fa.Rozliczenie.SumaOdliczenValueSpecified = true;
+			foreach (var odliczenie in odliczenia)
+			{
+				ksefFaktura.Fa.Rozliczenie.Odliczenia.Add(new FakturaFaRozliczenieOdliczenia {Kwota = odliczenie.Kwota, Powod = odliczenie.Uwagi });
+				ksefFaktura.Fa.Rozliczenie.SumaOdliczenValue += odliczenie.Kwota;
+			}
+		}
+
+		if (ksefFaktura.Fa.Rozliczenie != null)
+		{
+			var doZaplaty = ksefFaktura.Fa.P_15 + ksefFaktura.Fa.Rozliczenie.SumaObciazenValue - ksefFaktura.Fa.Rozliczenie.SumaOdliczenValue;
+			if (doZaplaty > 0) ksefFaktura.Fa.Rozliczenie.DoZaplaty = doZaplaty;
+			if (doZaplaty < 0) ksefFaktura.Fa.Rozliczenie.DoRozliczenia = -doZaplaty;
+		}
+
 		if (dbFaktura.FakturaKorygowana != null && dbFaktura.FakturaPierwotna != null)
 		{
 			ksefFaktura.Fa.TypKorekty = TTypKorekty.Item2;
