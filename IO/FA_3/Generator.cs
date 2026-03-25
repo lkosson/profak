@@ -441,6 +441,18 @@ public class Generator
 				dbPozycja.CenaBrutto = pozycja.P_9B.Value;
 				dbPozycja.WartoscBrutto = pozycja.P_11A.Value;
 			}
+			else if (pozycja.P_9B.HasValue)
+			{
+				dbPozycja.CzyWedlugCenBrutto = true;
+				dbPozycja.CenaBrutto = pozycja.P_9B.Value;
+				dbPozycja.WartoscBrutto = dbPozycja.CenaBrutto * dbPozycja.Ilosc;
+			}
+			else if (pozycja.P_11A.HasValue && dbPozycja.Ilosc != 0)
+			{
+				dbPozycja.CzyWedlugCenBrutto = true;
+				dbPozycja.WartoscBrutto = pozycja.P_11A.Value;
+				dbPozycja.CenaBrutto = dbPozycja.WartoscBrutto / dbPozycja.Ilosc;
+			}
 			else
 			{
 				dbPozycja.CenaNetto = pozycja.P_9A.GetValueOrDefault();
