@@ -20,12 +20,20 @@ class WczytajKSeFAkcja : AkcjaNaSpisie<Faktura>
 
 		var rekordy = new List<Faktura>();
 		var pliki = dialog.FileNames;
+		var pominOkno = false;
+		if (pliki.Length > 1)
+		{
+			var odp = MessageBox.Show("Wybrano więcej niż jeden plik do importu. Czy wczytać faktury w ciemno, bez wyświetlania formularza edycji dla każdej z nich?", "ProFak", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+			if (odp == DialogResult.Cancel) return;
+			if (odp == DialogResult.Yes) pominOkno = true;
+		}
+
 		for (var i = 0; i < pliki.Length; i++)
 		{
 			var plik = pliki[i];
 			using var nowyKontekst = new Kontekst(kontekst);
 			using var transakcja = nowyKontekst.Transakcja();
-			var faktura = DodajFakture(nowyKontekst, plik);
+			var faktura = DodajFakture(nowyKontekst, plik, pominOkno);
 			if (faktura == null)
 			{
 				if (i < pliki.Length - 1 && MessageBox.Show("Kontynuować dodawanie faktur ze wskazanych plików?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
@@ -38,7 +46,7 @@ class WczytajKSeFAkcja : AkcjaNaSpisie<Faktura>
 		zaznaczoneRekordy = rekordy;
 	}
 
-	private Faktura? DodajFakture(Kontekst kontekst, string plik)
+	private Faktura? DodajFakture(Kontekst kontekst, string plik, bool pominOkno)
 	{
 		var xml = File.ReadAllText(plik);
 		var faktura = IO.FA_3.Generator.ZbudujDB(kontekst.Baza, xml);
@@ -53,12 +61,15 @@ class WczytajKSeFAkcja : AkcjaNaSpisie<Faktura>
 		}
 		kontekst.Baza.Zapisz(faktura);
 
-		kontekst.Dodaj(faktura);
-		using var edytor = new FakturaEdytor();
-		using var okno = new Dialog("Nowa pozycja", edytor, kontekst);
-		edytor.Przygotuj(kontekst, faktura);
-		if (okno.ShowDialog() != DialogResult.OK) return null;
-		edytor.KoniecEdycji();
+		if (!pominOkno)
+		{
+			kontekst.Dodaj(faktura);
+			using var edytor = new FakturaEdytor();
+			using var okno = new Dialog("Nowa pozycja", edytor, kontekst);
+			edytor.Przygotuj(kontekst, faktura);
+			if (okno.ShowDialog() != DialogResult.OK) return null;
+			edytor.KoniecEdycji();
+		}
 		kontekst.Baza.Zapisz(faktura);
 		return faktura;
 	}
