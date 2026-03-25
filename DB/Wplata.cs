@@ -6,6 +6,7 @@ public class Wplata : Rekord<Wplata>
 	public DateTime Data { get; set; } = DateTime.Now.Date;
 	public decimal Kwota { get; set; }
 	public string Uwagi { get; set; } = "";
+	public bool CzyRozliczenie { get; set; }
 
 	public Ref<Faktura> FakturaRef { get => FakturaId; set => FakturaId = value; }
 

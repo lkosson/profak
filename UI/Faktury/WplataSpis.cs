@@ -13,6 +13,7 @@ class WplataSpis : Spis<Wplata>
 		DodajKolumne(nameof(Wplata.Data), "Data");
 		DodajKolumneKwota(nameof(Wplata.Kwota), "Kwota");
 		DodajKolumne(nameof(Wplata.Uwagi), "Uwagi");
+		DodajKolumneBool(nameof(Wplata.CzyRozliczenie), "Rozliczenie");
 		DodajKolumneId();
 	}
 

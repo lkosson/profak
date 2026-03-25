@@ -16,6 +16,7 @@ class WplataBuilder
 		builder.Property(e => e.Data).IsRequired();
 		builder.Property(e => e.Kwota).HasDefaultValue(0).IsRequired();
 		builder.Property(e => e.Uwagi).HasDefaultValue("").IsRequired();
+		builder.Property(e => e.CzyRozliczenie).HasDefaultValue(false).IsRequired();
 
 		builder.Ignore(e => e.FakturaRef);
 
