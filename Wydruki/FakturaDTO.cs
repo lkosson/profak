@@ -21,6 +21,7 @@ public class FakturaDTO
 	public string? Slownie { get; set; }
 	public string? TerminPlatnosci { get; set; }
 	public string? FormaPlatnosci { get; set; }
+	public string? Rozliczenia { get; set; }
 	public string? DoZaplaty { get; set; }
 	public string? DoZwrotu { get; set; }
 	public string? ProceduraMarzy { get; set; }

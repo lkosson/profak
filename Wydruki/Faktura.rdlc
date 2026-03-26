@@ -77,6 +77,10 @@
           <DataField>FormaPlatnosci</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Rozliczenia">
+          <DataField>Rozliczenia</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="DoZaplaty">
           <DataField>DoZaplaty</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -194,7 +198,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>16.62673cm</Height>
+                  <Height>17.07673cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -582,6 +586,40 @@
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
+                                  <TablixRow>
+                                    <Height>0.45cm</Height>
+                                    <TablixCells>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox9">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>=Fields!Rozliczenia.Value</Value>
+                                                    <MarkupType>HTML</MarkupType>
+                                                    <Style>
+                                                      <FontFamily>Calibri</FontFamily>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox8</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Color>LightGrey</Color>
+                                                <Style>None</Style>
+                                              </Border>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                    </TablixCells>
+                                  </TablixRow>
                                   <TablixRow>
                                     <Height>0.45cm</Height>
                                     <TablixCells>
@@ -1109,6 +1147,11 @@
                                 <TablixMembers>
                                   <TablixMember>
                                     <Visibility>
+                                      <Hidden>=Fields!Rozliczenia.Value = ""</Hidden>
+                                    </Visibility>
+                                  </TablixMember>
+                                  <TablixMember>
+                                    <Visibility>
                                       <Hidden>=Fields!DoZaplaty.Value = ""</Hidden>
                                     </Visibility>
                                   </TablixMember>
@@ -1162,7 +1205,7 @@
                               </TablixRowHierarchy>
                               <Top>6.72006cm</Top>
                               <Left>0.00003cm</Left>
-                              <Height>9.75667cm</Height>
+                              <Height>10.20667cm</Height>
                               <Width>17.94354cm</Width>
                               <ZIndex>6</ZIndex>
                               <Style>
@@ -1205,7 +1248,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DSFaktury</DataSetName>
-            <Height>16.62673cm</Height>
+            <Height>17.07673cm</Height>
             <Width>17.94357cm</Width>
             <Style>
               <Border>
@@ -1214,7 +1257,7 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>6.54596in</Height>
+        <Height>6.72312in</Height>
         <Style />
       </Body>
       <Width>17.94357cm</Width>

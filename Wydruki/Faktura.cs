@@ -110,6 +110,14 @@ public class Faktura : Wydruk
 				fakturaDTO.NazwaBanku = faktura.NazwaBanku;
 			}
 
+			fakturaDTO.Rozliczenia = "";
+			foreach (var wplata in wplaty.OrderBy(e => e.Data).ThenBy(e => e.Id))
+			{
+				if (!String.IsNullOrEmpty(fakturaDTO.Rozliczenia)) fakturaDTO.Rozliczenia += "<br/>";
+				if (wplata.CzyRozliczenie) fakturaDTO.Rozliczenia += "<b>" + wplata.Uwagi + ":</b> " + wplata.Kwota.ToString(UI.Format.Kwota) + " " + walutaSkrot;
+				else fakturaDTO.Rozliczenia += "<b>Zapłacono " + wplata.Data.ToString(UI.Format.Data) + ":</b> " + wplata.Kwota.ToString(UI.Format.Kwota) + " " + walutaSkrot;
+			}
+
 			fakturaDTO.NumerKSeF = faktura.NumerKSeF;
 			fakturaDTO.Uwagi = faktura.UwagiPubliczne;
 			fakturaDTO.KodKSeF = "";

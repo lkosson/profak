@@ -18,6 +18,7 @@
       <xs:element minOccurs="0" maxOccurs="1" name="Slownie" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="TerminPlatnosci" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="FormaPlatnosci" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="Rozliczenia" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="DoZaplaty" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="DoZwrotu" type="xs:string" />
       <xs:element minOccurs="0" maxOccurs="1" name="ProceduraMarzy" type="xs:string" />
