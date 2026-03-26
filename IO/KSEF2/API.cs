@@ -246,7 +246,7 @@ public class API : IDisposable
 			{
 				DateRange = new DateRange
 				{
-					DateType = przyrostowo ? DateType.PermanentStorage : DateType.Issue,
+					DateType = DateType.PermanentStorage,
 					From = DateTime.SpecifyKind(dateFrom, DateTimeKind.Local),
 					To = DateTime.SpecifyKind(dateTo, DateTimeKind.Local),
 					RestrictToPermanentStorageHwmDate = przyrostowo ? true : null
@@ -275,7 +275,7 @@ public class API : IDisposable
 		{
 			DateRange = new DateRange
 			{
-				DateType = przyrostowo ? DateType.PermanentStorage : DateType.Issue,
+				DateType = DateType.PermanentStorage,
 				From = DateTime.SpecifyKind(dateFrom, DateTimeKind.Local),
 				To = DateTime.SpecifyKind(dateTo, DateTimeKind.Local),
 				RestrictToPermanentStorageHwmDate = przyrostowo ? true : null
