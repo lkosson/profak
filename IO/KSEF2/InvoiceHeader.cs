@@ -7,6 +7,7 @@ public class InvoiceHeader
 	public string ReferenceNumber { get; set; } = "";
 	public string KsefReferenceNumber { get; set; } = "";
 	public DateTime InvoicingDate { get; set; }
+	public DateTime IssueDate { get; set; }
 	public DateTime AcquisitionTimestamp { get; set; }
 	public DateTime PermanentStorageTimestamp { get; set; }
 	public string IssuedByName { get; set; } = "";
@@ -28,6 +29,7 @@ public class InvoiceHeader
 		KsefReferenceNumber = summary.KsefNumber;
 		ReferenceNumber = summary.InvoiceNumber;
 		InvoicingDate = summary.InvoicingDate.LocalDateTime;
+		IssueDate = summary.IssueDate.LocalDateTime;
 		AcquisitionTimestamp = summary.AcquisitionDate.LocalDateTime;
 		if (hwm.HasValue && summary.PermanentStorageDate > hwm.Value) PermanentStorageTimestamp = hwm.Value.LocalDateTime;
 		else PermanentStorageTimestamp = summary.PermanentStorageDate.LocalDateTime;

@@ -33,7 +33,8 @@ class KSeFSpis : Spis<Faktura>
 		DodajKolumne(nameof(Faktura.Numer), "Numer");
 		DodajKolumne(nameof(Faktura.RodzajFmt), "Rodzaj");
 		DodajKolumneData(nameof(Faktura.DataSprzedazy), "Data sprzedaży");
-		DodajKolumneData(nameof(Faktura.DataKSeF), "Data wystawienia", tooltip: faktura => faktura.DataKSeF?.ToString(Format.DataCzas));
+		DodajKolumneData(nameof(Faktura.DataWystawienia), "Data wystawienia");
+		DodajKolumneData(nameof(Faktura.DataKSeF), "Data KSeF", format: Format.DataCzas);
 		kolumnaNazwaNabywcy = DodajKolumne(nameof(Faktura.NazwaNabywcy), "Nabywca", rozciagnij: true);
 		kolumnaNIPNabywcy = DodajKolumne(nameof(Faktura.NIPNabywcy), "NIP nabywcy", szerokosc: 120);
 		kolumnaNazwaSprzedawcy = DodajKolumne(nameof(Faktura.NazwaSprzedawcy), "Sprzedawca", rozciagnij: true);

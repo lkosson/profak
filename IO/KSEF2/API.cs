@@ -401,7 +401,7 @@ public class API : IDisposable
 		dbFaktura.RazemBrutto = invoiceHeader.Gross;
 		dbFaktura.Rodzaj = invoiceHeader.Type == "Vat" ? DB.RodzajFaktury.Zakup : DB.RodzajFaktury.KorektaZakupu;
 		dbFaktura.DataSprzedazy = invoiceHeader.InvoicingDate;
-		dbFaktura.DataWystawienia = invoiceHeader.AcquisitionTimestamp;
+		dbFaktura.DataWystawienia = invoiceHeader.IssueDate;
 		dbFaktura.DataKSeF = invoiceHeader.PermanentStorageTimestamp;
 		dbFaktura.Waluta = new Waluta { Skrot = invoiceHeader.Currency };
 		return dbFaktura;
