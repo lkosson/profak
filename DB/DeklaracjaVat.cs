@@ -149,24 +149,24 @@ public class DeklaracjaVat : Rekord<DeklaracjaVat>
 			}
 		}
 
-		NettoZW = NettoZW.Zaokragl();
-		Netto0 = Netto0.Zaokragl();
-		Netto5 = Netto5.Zaokragl();
-		Netto8 = Netto8.Zaokragl();
-		Netto23 = Netto23.Zaokragl();
-		NettoWDT = NettoWDT.Zaokragl();
-		NettoWNT = NettoWNT.Zaokragl();
+		NettoZW = NettoZW.Zaokragl(miejsca: 0);
+		Netto0 = Netto0.Zaokragl(miejsca: 0);
+		Netto5 = Netto5.Zaokragl(miejsca: 0);
+		Netto8 = Netto8.Zaokragl(miejsca: 0);
+		Netto23 = Netto23.Zaokragl(miejsca: 0);
+		NettoWDT = NettoWDT.Zaokragl(miejsca: 0);
+		NettoWNT = NettoWNT.Zaokragl(miejsca: 0);
 
-		Nalezny5 = Nalezny5.Zaokragl();
-		Nalezny8 = Nalezny8.Zaokragl();
-		Nalezny23 = Nalezny23.Zaokragl();
-		NaleznyWNT = NaleznyWNT.Zaokragl();
+		Nalezny5 = Nalezny5.Zaokragl(miejsca: 0);
+		Nalezny8 = Nalezny8.Zaokragl(miejsca: 0);
+		Nalezny23 = Nalezny23.Zaokragl(miejsca: 0);
+		NaleznyWNT = NaleznyWNT.Zaokragl(miejsca: 0);
 
-		NettoSrodkiTrwale = NettoSrodkiTrwale.Zaokragl();
-		NettoPozostale = NettoPozostale.Zaokragl();
+		NettoSrodkiTrwale = NettoSrodkiTrwale.Zaokragl(miejsca: 0);
+		NettoPozostale = NettoPozostale.Zaokragl(miejsca: 0);
 
-		NaliczonyPrzeniesiony = NaliczonyPrzeniesiony.Zaokragl();
-		NaliczonySrodkiTrwale = NaliczonySrodkiTrwale.Zaokragl();
-		NaliczonyPozostale = NaliczonyPozostale.Zaokragl();
+		NaliczonyPrzeniesiony = NaliczonyPrzeniesiony.Zaokragl(miejsca: 0);
+		NaliczonySrodkiTrwale = NaliczonySrodkiTrwale.Zaokragl(miejsca: 0);
+		NaliczonyPozostale = NaliczonyPozostale.Zaokragl(miejsca: 0);
 	}
 }
