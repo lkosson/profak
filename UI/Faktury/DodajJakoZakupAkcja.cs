@@ -9,10 +9,13 @@ class DodajJakoZakupAkcja : DodajRekordAkcja<Faktura, FakturaEdytor>
 	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.None && klawisz == Keys.Insert;
 	public override bool PrzeladujPoZakonczeniu => false;
 
-	protected override Faktura UtworzRekord(Kontekst kontekst, IEnumerable<Faktura> zaznaczoneRekordy)
+	protected override Faktura? UtworzRekord(Kontekst kontekst, IEnumerable<Faktura> zaznaczoneRekordy)
 	{
 		var podmiot = kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
 		var naglowek = zaznaczoneRekordy.Single();
+		var istniejaca = kontekst.Baza.Faktury.FirstOrDefault(e => e.NumerKSeF == naglowek.NumerKSeF && e.Rodzaj != RodzajFaktury.Usunięta);
+		if (istniejaca != null && MessageBox.Show($"Faktura {istniejaca.Numer} ({istniejaca.NumerKSeF}) już istnieje w bazie. Czy mimo to chcesz ją dodać ponownie?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
+			return null;
 		if (String.IsNullOrEmpty(naglowek.XMLKSeF))
 		{
 			OknoPostepu.Uruchom(async cancellationToken =>
