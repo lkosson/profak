@@ -296,6 +296,8 @@ public class API : IDisposable
 			status => status.Status.Code >= 400 ? throw new ApplicationException($"Wystąpił błąd podczas oczekiwania na przygotowanie paczki faktur: {status.Status.Description} - {String.Join(", ", status.Status.Details)}") : status.Status.Code == 200,
 			cancellationToken);
 
+		if (exportStatusResponse.Package.InvoiceCount == 0) return [];
+
 		using var zipStream = new MemoryStream();
 		using HttpClient httpClient = new HttpClient();
 		foreach (var exportPart in exportStatusResponse.Package.Parts)
