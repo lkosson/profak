@@ -24,7 +24,9 @@ public class ZaliczkaPit : Rekord<ZaliczkaPit>
 		var zmienioneFaktury = new List<Faktura>();
 
 		var faktury = baza.Faktury
-			.Where(faktura => faktura.DataSprzedazy < Miesiac.Date.AddMonths(1) && (faktura.ZaliczkaPitId == null || faktura.ZaliczkaPitId == Id))
+			.Where(faktura => faktura.DataSprzedazy < Miesiac.Date.AddMonths(1) 
+				&& faktura.Rodzaj != RodzajFaktury.Usunięta
+				&& (faktura.ZaliczkaPitId == null || faktura.ZaliczkaPitId == Id))
 			.ToList();
 
 		foreach (var faktura in faktury)

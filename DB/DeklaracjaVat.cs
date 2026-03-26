@@ -68,7 +68,9 @@ public class DeklaracjaVat : Rekord<DeklaracjaVat>
 		var zmienioneFaktury = new List<Faktura>();
 
 		var faktury = baza.Faktury
-			.Where(faktura => faktura.DataSprzedazy < Miesiac.Date.AddMonths(1) && (faktura.DeklaracjaVatId == null || faktura.DeklaracjaVatId == Id))
+			.Where(faktura => faktura.DataSprzedazy < Miesiac.Date.AddMonths(1) 
+				&& faktura.Rodzaj != RodzajFaktury.Usunięta 
+				&& (faktura.DeklaracjaVatId == null || faktura.DeklaracjaVatId == Id))
 			.ToList();
 
 		foreach (var faktura in faktury)
