@@ -54,7 +54,7 @@ class WczytajKSeFAkcja : AkcjaNaSpisie<Faktura>
 		var numerKsef = Path.GetFileNameWithoutExtension(plik);
 		if (Regex.IsMatch(numerKsef, @"\d{10}-\d{8}-[0-9A-Fa-f]{12}-[0-9A-Fa-f]{2}"))
 		{
-			var istniejaca = kontekst.Baza.Faktury.FirstOrDefault(e => e.NumerKSeF == numerKsef);
+			var istniejaca = kontekst.Baza.Faktury.FirstOrDefault(e => e.NumerKSeF == numerKsef && e.Rodzaj != RodzajFaktury.Usunięta);
 			if (istniejaca != null && MessageBox.Show($"Faktura {istniejaca.Numer} ({istniejaca.NumerKSeF}) już istnieje w bazie. Czy mimo to chcesz ją dodać ponownie?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) != DialogResult.Yes) 
 				return null;
 			faktura.NumerKSeF = numerKsef;

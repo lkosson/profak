@@ -97,7 +97,7 @@ class KSeFSpis : Spis<Faktura>
 						.FirstOrDefault();
 					if (ostatnia != null && ostatnia.DataKSeF.HasValue) odDaty = ostatnia.DataKSeF.Value;
 				}
-				var istniejace = Kontekst.Baza.Faktury.Where(e => !String.IsNullOrEmpty(e.NumerKSeF)).Select(e => e.NumerKSeF).ToHashSet();
+				var istniejace = Kontekst.Baza.Faktury.Where(e => !String.IsNullOrEmpty(e.NumerKSeF) && e.Rodzaj != RodzajFaktury.Usunięta).Select(e => e.NumerKSeF).ToHashSet();
 				using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
 				await api.UwierzytelnijAsync(podmiot.NIP, podmiot.TokenKSeF, cancellationToken);
 				var naglowki = new List<InvoiceHeader>();
