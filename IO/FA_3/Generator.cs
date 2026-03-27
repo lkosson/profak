@@ -500,6 +500,9 @@ public class Generator
 			else if (pozycja.P_12 == TStawkaPodatku.Item5) dbPozycja.StawkaVat = new StawkaVat { Wartosc = 5, Skrot = "5" };
 			else if (pozycja.P_12 == TStawkaPodatku.Item4) dbPozycja.StawkaVat = new StawkaVat { Wartosc = 4, Skrot = "4" };
 			else if (pozycja.P_12 == TStawkaPodatku.Item3) dbPozycja.StawkaVat = new StawkaVat { Wartosc = 3, Skrot = "3" };
+			else if (pozycja.P_12 == TStawkaPodatku.Item0_KR || pozycja.P_12 == TStawkaPodatku.Item0_WDT || pozycja.P_12 == TStawkaPodatku.Item0_EX) dbPozycja.StawkaVat = new StawkaVat { Wartosc = 0, Skrot = "0" };
+			else if (pozycja.P_12 == TStawkaPodatku.zw) dbPozycja.StawkaVat = new StawkaVat { Wartosc = 0, Skrot = "ZW" };
+			else if (pozycja.P_12 == TStawkaPodatku.np_I || pozycja.P_12 == TStawkaPodatku.np_II) dbPozycja.StawkaVat = new StawkaVat { Wartosc = 0, Skrot = "NP" };
 			else dbPozycja.StawkaVat = new StawkaVat { Wartosc = 23, Skrot = "23" };
 			if (dbPozycja.CzyWedlugCenBrutto)
 			{
@@ -537,6 +540,38 @@ public class Generator
 		if (dbFaktura.RazemBrutto != ksefFaktura.Fa.P_15)
 		{
 			dbFaktura.RazemBrutto = ksefFaktura.Fa.P_15;
+			dbFaktura.CzyWartosciReczne = true;
+		}
+
+		var razemNetto = ksefFaktura.Fa.P_13_1Value
+			+ ksefFaktura.Fa.P_13_2Value
+			+ ksefFaktura.Fa.P_13_3Value
+			+ ksefFaktura.Fa.P_13_4Value
+			+ ksefFaktura.Fa.P_13_5Value
+			+ ksefFaktura.Fa.P_13_6_1Value
+			+ ksefFaktura.Fa.P_13_6_2Value
+			+ ksefFaktura.Fa.P_13_6_3Value
+			+ ksefFaktura.Fa.P_13_7Value
+			+ ksefFaktura.Fa.P_13_8Value
+			+ ksefFaktura.Fa.P_13_9Value
+			+ ksefFaktura.Fa.P_13_10Value
+			+ ksefFaktura.Fa.P_13_11Value;
+
+		if (dbFaktura.RazemNetto != razemNetto)
+		{
+			dbFaktura.RazemNetto = razemNetto;
+			dbFaktura.CzyWartosciReczne = true;
+		}
+
+		var razemVat = ksefFaktura.Fa.P_14_1Value
+			+ ksefFaktura.Fa.P_14_2Value
+			+ ksefFaktura.Fa.P_14_3Value
+			+ ksefFaktura.Fa.P_14_4Value
+			+ ksefFaktura.Fa.P_14_5Value;
+
+		if (dbFaktura.RazemVat != razemVat)
+		{
+			dbFaktura.RazemVat = razemVat;
 			dbFaktura.CzyWartosciReczne = true;
 		}
 
@@ -792,7 +827,8 @@ public class Generator
 			// Zawsze ustawione przez Zbuduj:
 			ArgumentNullException.ThrowIfNull(pozycja.StawkaVat);
 			ArgumentNullException.ThrowIfNull(pozycja.JednostkaMiary);
-			var stawkaVat = baza.StawkiVat.FirstOrDefault(stawkaVat => stawkaVat.Wartosc == pozycja.StawkaVat.Wartosc);
+			var stawkaVat = baza.StawkiVat.FirstOrDefault(stawkaVat => stawkaVat.Skrot == pozycja.StawkaVat.Skrot);
+			if (stawkaVat == null) stawkaVat = baza.StawkiVat.FirstOrDefault(stawkaVat => stawkaVat.Wartosc == pozycja.StawkaVat.Wartosc);
 			if (stawkaVat == null) baza.Zapisz(stawkaVat = pozycja.StawkaVat);
 			pozycja.StawkaVatRef = stawkaVat;
 			pozycja.StawkaVat = null;
