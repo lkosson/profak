@@ -9,6 +9,7 @@ class ZapiszJakoPDFZKSeFAkcja(bool spisKSeF = false) : AkcjaNaSpisie<Faktura>
 	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.Control && klawisz == Keys.P;
 	public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) 
 		=> zaznaczoneRekordy.Any(e => !String.IsNullOrEmpty(e.NumerKSeF));
+	public override bool PrzeladujPoZakonczeniu => false;
 
 	public override void Uruchom(Kontekst kontekst, ref IEnumerable<Faktura> zaznaczoneRekordy)
 	{
