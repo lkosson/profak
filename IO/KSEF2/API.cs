@@ -387,7 +387,7 @@ public class API : IDisposable
 		}
 	}
 
-	public Faktura WczytajNaglowek(InvoiceHeader invoiceHeader)
+	public Faktura WczytajNaglowek(InvoiceHeader invoiceHeader, bool czySprzedaz)
 	{
 		var dbFaktura = new Faktura();
 		dbFaktura.Numer = invoiceHeader.ReferenceNumber;
@@ -399,7 +399,16 @@ public class API : IDisposable
 		dbFaktura.RazemNetto = invoiceHeader.Net;
 		dbFaktura.RazemVat = invoiceHeader.Vat;
 		dbFaktura.RazemBrutto = invoiceHeader.Gross;
-		dbFaktura.Rodzaj = invoiceHeader.Type == "Vat" ? DB.RodzajFaktury.Zakup : DB.RodzajFaktury.KorektaZakupu;
+		dbFaktura.Rodzaj = invoiceHeader.Type switch
+		{
+			"Vat" => czySprzedaz ? RodzajFaktury.Sprzedaż : RodzajFaktury.Zakup,
+			"Kor" => czySprzedaz ? RodzajFaktury.KorektaSprzedaży : RodzajFaktury.KorektaZakupu,
+			"Zal" => RodzajFaktury.Zaliczka,
+			"KorZal" => RodzajFaktury.KorektaZaliczki,
+			"Roz" => RodzajFaktury.Rozliczenie,
+			"KorRoz" => RodzajFaktury.KorektaRozliczenia,
+			_ => RodzajFaktury.Zakup
+		};
 		dbFaktura.DataSprzedazy = invoiceHeader.InvoicingDate;
 		dbFaktura.DataWystawienia = invoiceHeader.IssueDate;
 		dbFaktura.DataKSeF = invoiceHeader.PermanentStorageTimestamp;

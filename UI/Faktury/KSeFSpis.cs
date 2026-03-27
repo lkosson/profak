@@ -119,14 +119,13 @@ class KSeFSpis : Spis<Faktura>
 				var fakturyKSeF = await api.PobierzFakturyZbiorczoAsync(przyrostowo, sprzedaz, odDaty, doDaty, cancellationToken);
 				foreach (var (naglowek, xml) in fakturyKSeF)
 				{
-					var rekord = api.WczytajNaglowek(naglowek);
+					var rekord = api.WczytajNaglowek(naglowek, sprzedaz);
 					rekord.XMLKSeF = xml;
 					rekordy.Add(rekord);
 				}
 				var i = 1;
 				foreach (var rekord in rekordy)
 				{
-					if (sprzedaz) rekord.Rodzaj = rekord.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaSprzedaży : RodzajFaktury.Sprzedaż;
 					rekord.Id = istniejace.Contains(rekord.NumerKSeF) ? i : -i;
 					i++;
 				}

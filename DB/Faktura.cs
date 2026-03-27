@@ -499,7 +499,11 @@ public enum RodzajFaktury
 	VatMarża,
 	KorektaVatMarży,
 	Rachunek,
-	KorektaRachunku
+	KorektaRachunku,
+	Zaliczka,
+	KorektaZaliczki,
+	Rozliczenie,
+	KorektaRozliczenia
 }
 
 public enum ProceduraMarży
