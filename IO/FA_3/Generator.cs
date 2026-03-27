@@ -510,16 +510,16 @@ public class Generator
 				dbPozycja.CenaVat = (dbPozycja.CenaBrutto - dbPozycja.CenaNetto).Zaokragl();
 				dbPozycja.WartoscNetto = (dbPozycja.WartoscBrutto * 100m / (100 + dbPozycja.StawkaVat.Wartosc)).Zaokragl();
 				dbPozycja.WartoscVat = (dbPozycja.WartoscBrutto - dbPozycja.WartoscNetto).Zaokragl();
-				var wartoscBrutto = (dbPozycja.Ilosc * dbPozycja.CenaBrutto).Zaokragl();
+				var wartoscBrutto = (dbPozycja.Ilosc * (dbPozycja.CenaBrutto - dbPozycja.RabatCena)).Zaokragl();
 				if (wartoscBrutto != dbPozycja.WartoscBrutto) dbPozycja.CzyWartosciReczne = true;
 			}
 			else
 			{
-				dbPozycja.CenaVat = (dbPozycja.CenaNetto * dbPozycja.StawkaVat.Wartosc / 100).Zaokragl();
-				dbPozycja.CenaBrutto = (dbPozycja.CenaNetto + dbPozycja.CenaVat).Zaokragl();
+				dbPozycja.CenaVat = ((dbPozycja.CenaNetto - dbPozycja.RabatCena) * dbPozycja.StawkaVat.Wartosc / 100).Zaokragl();
+				dbPozycja.CenaBrutto = ((dbPozycja.CenaNetto - dbPozycja.RabatCena) + dbPozycja.CenaVat).Zaokragl();
 				dbPozycja.WartoscVat = (dbPozycja.WartoscNetto * dbPozycja.StawkaVat.Wartosc / 100).Zaokragl();
 				dbPozycja.WartoscBrutto = (dbPozycja.WartoscNetto + dbPozycja.WartoscVat).Zaokragl();
-				var wartoscNetto = (dbPozycja.Ilosc * dbPozycja.CenaNetto).Zaokragl();
+				var wartoscNetto = (dbPozycja.Ilosc * (dbPozycja.CenaNetto - dbPozycja.RabatCena)).Zaokragl();
 				if (wartoscNetto != dbPozycja.WartoscNetto) dbPozycja.CzyWartosciReczne = true;
 			}
 			if (pozycja.StanPrzed == TWybor1.Item1)
