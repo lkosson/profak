@@ -352,10 +352,12 @@ public class Generator
 		dbFaktura.Pozycje = [];
 		dbFaktura.Wplaty = [];
 		dbFaktura.Numer = ksefFaktura.Fa.P_2;
-		dbFaktura.Rodzaj = ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.VAT || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ROZ || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.UPR ? DB.RodzajFaktury.Zakup
-			: ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ROZ ? DB.RodzajFaktury.KorektaZakupu
-			: ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ZAL || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ZAL ? throw new ApplicationException("Faktury zaliczkowe nie są obsługiwane")
-			: throw new ApplicationException($"Nieobsługiwany rodzaj faktury: {ksefFaktura.Fa.RodzajFaktury}.");
+		dbFaktura.Rodzaj = ksefFaktura.Fa.RodzajFaktury switch
+		{
+			TRodzajFaktury.VAT or TRodzajFaktury.ROZ or TRodzajFaktury.UPR or TRodzajFaktury.ZAL => RodzajFaktury.Zakup,
+			TRodzajFaktury.KOR or TRodzajFaktury.KOR_ROZ or TRodzajFaktury.KOR_ZAL => RodzajFaktury.KorektaZakupu,
+			_ => throw new ApplicationException($"Nieobsługiwany rodzaj faktury: {ksefFaktura.Fa.RodzajFaktury}.")
+		};
 		dbFaktura.DataWystawienia = ksefFaktura.Fa.P_1;
 		if (ksefFaktura.Fa.P_6.HasValue) dbFaktura.DataSprzedazy = ksefFaktura.Fa.P_6.Value;
 		else dbFaktura.DataSprzedazy = dbFaktura.DataWystawienia;
@@ -419,6 +421,35 @@ public class Generator
 			if (ksefFaktura.Fa.Platnosc.Zaplacono == TWybor1.Item1 && String.IsNullOrEmpty(dbFaktura.OpisSposobuPlatnosci)) dbFaktura.OpisSposobuPlatnosci = "Zapłacono";
 
 			if (ksefFaktura.Fa.Platnosc.DataZaplaty.HasValue) dbFaktura.Wplaty.Add(new Wplata { Data = ksefFaktura.Fa.Platnosc.DataZaplaty.Value, Kwota = ksefFaktura.Fa.P_15 });
+		}
+
+		if ((ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ZAL || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ZAL) && !ksefFaktura.Fa.FaWierszSpecified)
+		{
+			foreach (var wierszZamowienia in ksefFaktura.Fa.Zamowienie.ZamowienieWiersz)
+			{
+				var wierszFaktury = new FakturaFaFaWiersz();
+				wierszFaktury.NrWierszaFa = wierszZamowienia.NrWierszaZam;
+				wierszFaktury.UU_ID = wierszZamowienia.UU_IDZ;
+				wierszFaktury.P_7 = wierszZamowienia.P_7Z;
+				wierszFaktury.Indeks = wierszZamowienia.IndeksZ;
+				wierszFaktury.GTIN = wierszZamowienia.GTINZ;
+				wierszFaktury.PKWiU = wierszZamowienia.PKWiUZ;
+				wierszFaktury.CN = wierszZamowienia.CNZ;
+				wierszFaktury.PKOB = wierszZamowienia.PKOBZ;
+				wierszFaktury.P_8A = wierszZamowienia.P_8AZ;
+				wierszFaktury.P_8B = wierszZamowienia.P_8BZ;
+				wierszFaktury.P_9A = wierszZamowienia.P_9AZ;
+				wierszFaktury.P_11 = wierszZamowienia.P_11NettoZ;
+				wierszFaktury.P_11Vat = wierszZamowienia.P_11VatZ;
+				wierszFaktury.P_12 = wierszZamowienia.P_12Z;
+				wierszFaktury.P_12_XII = wierszZamowienia.P_12Z_XII;
+				wierszFaktury.P_12_Zal_15 = wierszZamowienia.P_12Z_Zal_15;
+				wierszFaktury.GTU = wierszZamowienia.GTUZ;
+				wierszFaktury.Procedura = (TOznaczenieProcedury?)(int?)wierszZamowienia.ProceduraZ;
+				wierszFaktury.KwotaAkcyzy = wierszZamowienia.KwotaAkcyzyZ;
+				wierszFaktury.StanPrzed = wierszZamowienia.StanPrzedZ;
+				ksefFaktura.Fa.FaWiersz.Add(wierszFaktury);
+			}
 		}
 
 		foreach (var pozycja in ksefFaktura.Fa.FaWiersz)
@@ -513,6 +544,7 @@ public class Generator
 
 		if (ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.UPR) uwagi.AppendLine("Faktura uproszczona");
 		else if (ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ROZ || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ROZ) uwagi.AppendLine("Faktura rozliczająca");
+		else if (ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ZAL || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ZAL) uwagi.AppendLine("Faktura zaliczkowa");
 
 		foreach (var opis in ksefFaktura.Fa.DodatkowyOpis)
 		{
