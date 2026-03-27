@@ -52,7 +52,7 @@ class KSeFSpis : Spis<Faktura>
 	{
 		this.sprzedaz = sprzedaz;
 		if (parametry == null) return;
-		odDaty = DateTime.Now.Date.AddMonths(-12);
+		odDaty = new DateTime(2026, 2, 1);
 		foreach (var parametr in parametry)
 		{
 			if (parametr == "Przyrostowo") przyrostowo = true;
