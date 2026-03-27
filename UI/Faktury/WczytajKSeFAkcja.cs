@@ -69,8 +69,9 @@ class WczytajKSeFAkcja : AkcjaNaSpisie<Faktura>
 			edytor.Przygotuj(kontekst, faktura);
 			if (okno.ShowDialog() != DialogResult.OK) return null;
 			edytor.KoniecEdycji();
+			kontekst.Baza.Zapisz(faktura);
 		}
-		kontekst.Baza.Zapisz(faktura);
+
 		return faktura;
 	}
 }
