@@ -27,6 +27,7 @@ public class PKPiR : Wydruk
 		int lp = 1;
 		foreach (var faktura in faktury)
 		{
+			if (faktura.CzyZakup && faktura.ProcentKosztow == 0) continue;
 			var dto = new PKPiRDTO();
 			dto.Tytul = tytul;
 			dto.Podmiot = podmiot.PelnaNazwa + "\r\n" + podmiot.AdresRejestrowy;

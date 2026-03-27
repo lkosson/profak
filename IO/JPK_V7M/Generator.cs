@@ -112,6 +112,7 @@ public class Generator
 			}
 			if (faktura.CzyZakup)
 			{
+				if (faktura.ProcentVatNaliczonego == 0) continue;
 				var nipnumer = faktura.NIPSprzedawcy;
 				var nipkraj = "PL";
 				if (nipnumer.Length > 2 && Char.IsLetter(nipnumer[0]) && Char.IsLetter(nipnumer[1]))
