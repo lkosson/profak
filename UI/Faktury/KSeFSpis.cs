@@ -101,28 +101,23 @@ class KSeFSpis : Spis<Faktura>
 				var istniejace = Kontekst.Baza.Faktury.Where(e => !String.IsNullOrEmpty(e.NumerKSeF) && e.Rodzaj != RodzajFaktury.Usunięta).Select(e => e.NumerKSeF).ToHashSet();
 				using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
 				await api.UwierzytelnijAsync(podmiot.NIP, podmiot.TokenKSeF, cancellationToken);
-				var naglowki = new List<InvoiceHeader>();
-				/*
+
 				while (odDaty < doDaty)
 				{
 					if (cancellationToken.IsCancellationRequested) break;
 					var koniecFragmentu = odDaty.AddMonths(3);
 					if (koniecFragmentu > doDaty) koniecFragmentu = doDaty;
-					var fragment = await api.PobierzFakturyAsync(przyrostowo, sprzedaz, odDaty, koniecFragmentu, cancellationToken);
-					naglowki.AddRange(fragment);
+					//var fragment = await api.PobierzFakturyAsync(przyrostowo, sprzedaz, odDaty, koniecFragmentu, cancellationToken);
+					var fragment = await api.PobierzFakturyZbiorczoAsync(przyrostowo, sprzedaz, odDaty, koniecFragmentu, cancellationToken);
 					odDaty = koniecFragmentu;
+					foreach (var (naglowek, xml) in fragment)
+					{
+						var rekord = api.WczytajNaglowek(naglowek, sprzedaz);
+						rekord.XMLKSeF = xml;
+						rekordy.Add(rekord);
+					}
 				}
 
-				rekordy = naglowki.Select(api.WczytajNaglowek).ToList();
-				*/
-
-				var fakturyKSeF = await api.PobierzFakturyZbiorczoAsync(przyrostowo, sprzedaz, odDaty, doDaty, cancellationToken);
-				foreach (var (naglowek, xml) in fakturyKSeF)
-				{
-					var rekord = api.WczytajNaglowek(naglowek, sprzedaz);
-					rekord.XMLKSeF = xml;
-					rekordy.Add(rekord);
-				}
 				var i = 1;
 				foreach (var rekord in rekordy)
 				{
