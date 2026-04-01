@@ -152,7 +152,7 @@ partial class PozycjaFakturyEdytor : PozycjaFakturyEdytorBase
 
 	private void UstawTowar(Towar? towar)
 	{
-		if (towar == null || Rekord.TowarRef == towar.Ref) return;
+		if (towar == null || Rekord.TowarRef == towar.Ref || trwaPrzeliczanieCen) return;
 		Rekord.UstawTowar(towar);
 		KonfigurujPoleIlosci();
 		KonfigurujCeny();
