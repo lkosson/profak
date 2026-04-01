@@ -155,6 +155,7 @@ partial class KontrahentEdytor : KontrahentEdytorBase
 	{
 		base.RekordGotowy();
 		checkBoxTP.Visible = !Rekord.CzyPodmiot;
+		checkBoxImportKSeF.Visible = !Rekord.CzyPodmiot;
 		labelSposobPlatnosci.Visible = comboBoxSposobPlatnosci.Visible = buttonSposobPlatnosci.Visible = !Rekord.CzyPodmiot;
 
 		fakturySprzedazy.Spis.KontrahentRef = Rekord;
