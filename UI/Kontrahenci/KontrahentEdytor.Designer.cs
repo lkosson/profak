@@ -88,6 +88,7 @@ partial class KontrahentEdytor
 		textBoxNazwa = new TextBox();
 		label1 = new Label();
 		tableLayoutPanel2 = new TableLayoutPanel();
+		checkBoxImportKSeF = new CheckBox();
 		((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
 		tabControl.SuspendLayout();
 		tabPage1.SuspendLayout();
@@ -114,7 +115,7 @@ partial class KontrahentEdytor
 		tabControl.Location = new Point(3, 32);
 		tabControl.Name = "tabControl";
 		tabControl.SelectedIndex = 0;
-		tabControl.Size = new Size(794, 476);
+		tabControl.Size = new Size(794, 492);
 		tabControl.TabIndex = 2;
 		// 
 		// tabPage1
@@ -123,7 +124,7 @@ partial class KontrahentEdytor
 		tabPage1.Location = new Point(4, 24);
 		tabPage1.Name = "tabPage1";
 		tabPage1.Padding = new Padding(3);
-		tabPage1.Size = new Size(786, 448);
+		tabPage1.Size = new Size(786, 464);
 		tabPage1.TabIndex = 0;
 		tabPage1.Text = "Dane podstawowe";
 		tabPage1.UseVisualStyleBackColor = true;
@@ -158,13 +159,15 @@ partial class KontrahentEdytor
 		tableLayoutPanel1.Controls.Add(comboBoxSposobPlatnosci, 1, 9);
 		tableLayoutPanel1.Controls.Add(buttonSposobPlatnosci, 3, 9);
 		tableLayoutPanel1.Controls.Add(textBoxNazwaBanku, 2, 6);
-		tableLayoutPanel1.Controls.Add(label16, 0, 11);
-		tableLayoutPanel1.Controls.Add(buttonWaluta, 2, 11);
-		tableLayoutPanel1.Controls.Add(comboBoxWaluta, 1, 11);
+		tableLayoutPanel1.Controls.Add(label16, 0, 12);
+		tableLayoutPanel1.Controls.Add(buttonWaluta, 2, 12);
+		tableLayoutPanel1.Controls.Add(comboBoxWaluta, 1, 12);
+		tableLayoutPanel1.Controls.Add(checkBoxImportKSeF, 1, 11);
 		tableLayoutPanel1.Dock = DockStyle.Fill;
 		tableLayoutPanel1.Location = new Point(3, 3);
 		tableLayoutPanel1.Name = "tableLayoutPanel1";
-		tableLayoutPanel1.RowCount = 14;
+		tableLayoutPanel1.RowCount = 15;
+		tableLayoutPanel1.RowStyles.Add(new RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new RowStyle());
@@ -179,7 +182,7 @@ partial class KontrahentEdytor
 		tableLayoutPanel1.RowStyles.Add(new RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new RowStyle());
 		tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 10F));
-		tableLayoutPanel1.Size = new Size(780, 442);
+		tableLayoutPanel1.Size = new Size(780, 458);
 		tableLayoutPanel1.TabIndex = 0;
 		// 
 		// label2
@@ -293,9 +296,9 @@ partial class KontrahentEdytor
 		// 
 		label6.Anchor = AnchorStyles.Right;
 		label6.AutoSize = true;
-		label6.Location = new Point(94, 209);
+		label6.Location = new Point(95, 209);
 		label6.Name = "label6";
-		label6.Size = new Size(46, 15);
+		label6.Size = new Size(45, 15);
 		label6.TabIndex = 2;
 		label6.Text = "Telefon";
 		// 
@@ -417,7 +420,7 @@ partial class KontrahentEdytor
 		// 
 		label16.Anchor = AnchorStyles.Right;
 		label16.AutoSize = true;
-		label16.Location = new Point(42, 384);
+		label16.Location = new Point(42, 409);
 		label16.Name = "label16";
 		label16.Size = new Size(98, 15);
 		label16.TabIndex = 14;
@@ -426,7 +429,7 @@ partial class KontrahentEdytor
 		// buttonWaluta
 		// 
 		buttonWaluta.AutoSize = true;
-		buttonWaluta.Location = new Point(415, 379);
+		buttonWaluta.Location = new Point(415, 404);
 		buttonWaluta.Name = "buttonWaluta";
 		buttonWaluta.Size = new Size(26, 25);
 		buttonWaluta.TabIndex = 16;
@@ -438,7 +441,7 @@ partial class KontrahentEdytor
 		comboBoxWaluta.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		comboBoxWaluta.DropDownStyle = ComboBoxStyle.DropDownList;
 		comboBoxWaluta.FormattingEnabled = true;
-		comboBoxWaluta.Location = new Point(146, 380);
+		comboBoxWaluta.Location = new Point(146, 405);
 		comboBoxWaluta.Name = "comboBoxWaluta";
 		comboBoxWaluta.Size = new Size(263, 23);
 		comboBoxWaluta.TabIndex = 15;
@@ -692,9 +695,9 @@ partial class KontrahentEdytor
 		// 
 		label15.Anchor = AnchorStyles.Right;
 		label15.AutoSize = true;
-		label15.Location = new Point(70, 155);
+		label15.Location = new Point(71, 155);
 		label15.Name = "label15";
-		label15.Size = new Size(67, 15);
+		label15.Size = new Size(66, 15);
 		label15.TabIndex = 0;
 		label15.Text = "Token KSeF";
 		// 
@@ -786,8 +789,19 @@ partial class KontrahentEdytor
 		tableLayoutPanel2.RowStyles.Add(new RowStyle());
 		tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
 		tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-		tableLayoutPanel2.Size = new Size(800, 511);
+		tableLayoutPanel2.Size = new Size(800, 527);
 		tableLayoutPanel2.TabIndex = 3;
+		// 
+		// checkBoxImportKSeF
+		// 
+		checkBoxImportKSeF.AutoSize = true;
+		tableLayoutPanel1.SetColumnSpan(checkBoxImportKSeF, 2);
+		checkBoxImportKSeF.Location = new Point(146, 379);
+		checkBoxImportKSeF.Name = "checkBoxImportKSeF";
+		checkBoxImportKSeF.Size = new Size(343, 19);
+		checkBoxImportKSeF.TabIndex = 13;
+		checkBoxImportKSeF.Text = "Pobrany z KSeF (ukryty przy ręcznym wprowadzaniu faktury)";
+		checkBoxImportKSeF.UseVisualStyleBackColor = true;
 		// 
 		// KontrahentEdytor
 		// 
@@ -796,7 +810,7 @@ partial class KontrahentEdytor
 		Controls.Add(tableLayoutPanel2);
 		MinimumSize = new Size(800, 425);
 		Name = "KontrahentEdytor";
-		Size = new Size(800, 511);
+		Size = new Size(800, 527);
 		((System.ComponentModel.ISupportInitialize)errorProvider).EndInit();
 		tabControl.ResumeLayout(false);
 		tabPage1.ResumeLayout(false);
@@ -878,4 +892,5 @@ partial class KontrahentEdytor
 	private Label label16;
 	private ButtonDPI buttonWaluta;
 	private ComboBox comboBoxWaluta;
+	private CheckBox checkBoxImportKSeF;
 }

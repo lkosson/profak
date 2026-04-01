@@ -10,6 +10,8 @@ class KontrahentSpis : Spis<Kontrahent>
 		DodajKolumne(nameof(Kontrahent.PelnaNazwa), "Pełna nazwa", rozciagnij: true);
 		DodajKolumne(nameof(Kontrahent.NIP), "NIP");
 		DodajKolumne(nameof(Kontrahent.AdresRejestrowyFmt), "Adres", szerokosc: 300);
+		DodajKolumneBool(nameof(Kontrahent.CzyArchiwalny), "Arch.", szerokosc: 50);
+		DodajKolumneBool(nameof(Kontrahent.CzyImportKSeF), "KSeF", szerokosc: 50);
 		DodajKolumneId();
 	}
 
@@ -23,5 +25,6 @@ class KontrahentSpis : Spis<Kontrahent>
 		base.UstawStylWiersza(rekord, kolumna, styl);
 		if (rekord.CzyPodmiot) styl.Font = new Font(styl.Font!, FontStyle.Bold);
 		else if (rekord.CzyArchiwalny) styl.ForeColor = Color.Gray;
+		else if (rekord.CzyImportKSeF) styl.ForeColor = Color.LightSkyBlue;
 	}
 }

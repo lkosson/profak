@@ -16,6 +16,7 @@ public class Kontrahent : Rekord<Kontrahent>
 	public bool CzyArchiwalny { get; set; }
 	public bool CzyPodmiot { get; set; }
 	public bool CzyTP { get; set; }
+	public bool CzyImportKSeF { get; set; }
 	public int? SposobPlatnosciId { get; set; }
 	public int? DomyslnaWalutaId { get; set; }
 
@@ -48,6 +49,7 @@ public class Kontrahent : Rekord<Kontrahent>
 		|| CzyPasuje(EMail, fraza)
 		|| CzyPasuje(UwagiWewnetrzne, fraza)
 		|| CzyPasuje(CzyArchiwalny ? "Archiwalny" : "", fraza)
+		|| CzyPasuje(CzyImportKSeF ? "KSeF" : "", fraza)
 		|| CzyPasuje(CzyPodmiot ? "Podmiot" : "", fraza);
 }
 

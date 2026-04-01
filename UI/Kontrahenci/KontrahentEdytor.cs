@@ -30,6 +30,7 @@ partial class KontrahentEdytor : KontrahentEdytorBase
 		kontroler.Powiazanie(textBoxUwagiPubliczne, kontrahent => kontrahent.UwagiPubliczne);
 		kontroler.Powiazanie(textBoxUwagiWewnetrzne, kontrahent => kontrahent.UwagiWewnetrzne);
 		kontroler.Powiazanie(comboBoxStan, kontrahent => kontrahent.CzyArchiwalny);
+		kontroler.Powiazanie(checkBoxImportKSeF, kontrahent => kontrahent.CzyImportKSeF);
 		kontroler.Powiazanie(checkBoxTP, kontrahent => kontrahent.CzyTP);
 		kontroler.Powiazanie(comboBoxSposobPlatnosci, kontrahent => kontrahent.SposobPlatnosciRef);
 		kontroler.Powiazanie(comboBoxWaluta, kontrahent => kontrahent.DomyslnaWalutaRef);

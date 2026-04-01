@@ -26,6 +26,7 @@ class KontrahentBuilder
 		builder.Property(e => e.CzyArchiwalny).HasDefaultValue(false).IsRequired();
 		builder.Property(e => e.CzyPodmiot).HasDefaultValue(false).IsRequired();
 		builder.Property(e => e.CzyTP).HasDefaultValue(false).IsRequired();
+		builder.Property(e => e.CzyImportKSeF).HasDefaultValue(false).IsRequired();
 		builder.Property(e => e.KodUrzedu).HasDefaultValue("").IsRequired();
 		builder.Property(e => e.OsobaFizycznaImie).HasDefaultValue("").IsRequired();
 		builder.Property(e => e.OsobaFizycznaNazwisko).HasDefaultValue("").IsRequired();

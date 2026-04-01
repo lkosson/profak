@@ -773,6 +773,7 @@ public class Generator
 		var nipPL = $"PL{nip}";
 		var kontrahentDb = baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.NIP.Replace("-", "") == nip || kontrahent.NIP.Replace("-", "") == nipPL);
 		if (kontrahentDb != null) return kontrahentDb;
+		kontrahent.CzyImportKSeF = true;
 		baza.Zapisz(kontrahent);
 		return kontrahent;
 	}
