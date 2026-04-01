@@ -186,7 +186,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 
 		slownikNabywcaNIP = new Slownik<Kontrahent>(
 			Kontekst, comboBoxNIPNabywcy, buttonNabywca,
-			Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == !CzySprzedaz).OrderBy(kontrahent => kontrahent.NIP).ToList,
+			Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && !kontrahent.CzyImportKSeF && kontrahent.CzyPodmiot == !CzySprzedaz).OrderBy(kontrahent => kontrahent.NIP).ToList,
 			kontrahent => kontrahent.NIP,
 			kontrahent => { if (UstawNabywce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
 			Spisy.Kontrahenci);
@@ -194,7 +194,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 
 		slownikNabywcaNazwa = new Slownik<Kontrahent>(
 			Kontekst, comboBoxNazwaNabywcy, null,
-			Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == !CzySprzedaz).OrderBy(kontrahent => kontrahent.Nazwa).ToList,
+			Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && !kontrahent.CzyImportKSeF && kontrahent.CzyPodmiot == !CzySprzedaz).OrderBy(kontrahent => kontrahent.Nazwa).ToList,
 			kontrahent => kontrahent.PelnaNazwaLubNazwa,
 			kontrahent => { if (UstawNabywce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
 			Spisy.Kontrahenci);
@@ -202,7 +202,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 
 		slownikSprzedawcaNazwa = new Slownik<Kontrahent>(
 			Kontekst, comboBoxNIPSprzedawcy, buttonSprzedawca,
-			Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == CzySprzedaz).OrderBy(kontrahent => kontrahent.NIP).ToList,
+			Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && !kontrahent.CzyImportKSeF && kontrahent.CzyPodmiot == CzySprzedaz).OrderBy(kontrahent => kontrahent.NIP).ToList,
 			kontrahent => kontrahent.NIP,
 			kontrahent => { if (UstawSprzedawce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
 			Spisy.Kontrahenci);
@@ -210,7 +210,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 
 		slownikSprzedawcaNIP = new Slownik<Kontrahent>(
 			Kontekst, comboBoxNazwaSprzedawcy, null,
-			Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && kontrahent.CzyPodmiot == CzySprzedaz).OrderBy(kontrahent => kontrahent.Nazwa).ToList,
+			Kontekst.Baza.Kontrahenci.Where(kontrahent => !kontrahent.CzyArchiwalny && !kontrahent.CzyImportKSeF && kontrahent.CzyPodmiot == CzySprzedaz).OrderBy(kontrahent => kontrahent.Nazwa).ToList,
 			kontrahent => kontrahent.PelnaNazwaLubNazwa,
 			kontrahent => { if (UstawSprzedawce(Rekord, kontrahent)) kontroler.AktualizujKontrolki(); },
 			Spisy.Kontrahenci);
