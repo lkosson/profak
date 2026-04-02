@@ -36,6 +36,7 @@ class Slownik<T>
 			if (comboBox.AutoCompleteSource != AutoCompleteSource.ListItems) comboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
 		}
 		WypelnijListe();
+		comboBox.SelectedIndex = -1;
 		comboBox.SelectedIndexChanged += comboBox_SelectedIndexChanged;
 		comboBox.HandleCreated += ComboBox_HandleCreated;
 		comboBox.KeyDown += ComboBox_KeyDown;

@@ -50,7 +50,7 @@ partial class PozycjaFakturyEdytor
 		numericUpDownWartoscBrutto = new NumericUpDownDPI();
 		tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 		label1 = new System.Windows.Forms.Label();
-		comboBoxTowar = new System.Windows.Forms.ComboBox();
+		comboBoxTowar = new ComboBoxFix();
 		buttonTowar = new ButtonDPI();
 		numericUpDownIlosc = new NumericUpDownDPI();
 		comboBoxJM = new System.Windows.Forms.ComboBox();
