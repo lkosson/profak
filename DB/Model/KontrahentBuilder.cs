@@ -17,6 +17,7 @@ class KontrahentBuilder
 		builder.Property(e => e.NIP).HasDefaultValue("").IsRequired();
 		builder.Property(e => e.AdresRejestrowy).HasDefaultValue("").IsRequired();
 		builder.Property(e => e.AdresKorespondencyjny).HasDefaultValue("").IsRequired();
+		builder.Property(e => e.Kraj).HasDefaultValue("").IsRequired();
 		builder.Property(e => e.RachunekBankowy).HasDefaultValue("").IsRequired();
 		builder.Property(e => e.NazwaBanku).HasDefaultValue("").IsRequired();
 		builder.Property(e => e.Telefon).HasDefaultValue("").IsRequired();

@@ -423,7 +423,7 @@ public class Faktura : Rekord<Faktura>
 		SprzedawcaRef = kontrahent;
 		NIPSprzedawcy = kontrahent.NIP;
 		NazwaSprzedawcy = kontrahent.PelnaNazwaLubNazwa;
-		DaneSprzedawcy = kontrahent.AdresRejestrowy;
+		DaneSprzedawcy = kontrahent.AdresRejestrowyZKrajem;
 		RachunekBankowy = kontrahent.RachunekBankowy;
 		NazwaBanku = kontrahent.NazwaBanku;
 		if (CzySprzedaz)
@@ -442,7 +442,7 @@ public class Faktura : Rekord<Faktura>
 		NabywcaRef = kontrahent;
 		NIPNabywcy = kontrahent.NIP;
 		NazwaNabywcy = kontrahent.PelnaNazwaLubNazwa;
-		DaneNabywcy = kontrahent.AdresRejestrowy;
+		DaneNabywcy = kontrahent.AdresRejestrowyZKrajem;
 		CzyTP = kontrahent.CzyTP;
 		if (CzySprzedaz)
 		{
