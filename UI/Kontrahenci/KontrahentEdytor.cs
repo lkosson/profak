@@ -24,6 +24,7 @@ partial class KontrahentEdytor : KontrahentEdytorBase
 		kontroler.Powiazanie(textBoxAdresRejestrowy, kontrahent => kontrahent.AdresRejestrowy);
 		kontroler.Powiazanie(textBoxAdresKorespondencyjny, kontrahent => kontrahent.AdresKorespondencyjny);
 		kontroler.Powiazanie(textBoxKraj, kontrahent => kontrahent.Kraj);
+		kontroler.Powiazanie(textBoxKodKraju, kontrahent => kontrahent.KodKraju);
 		kontroler.Powiazanie(textBoxTelefon, kontrahent => kontrahent.Telefon);
 		kontroler.Powiazanie(textBoxEMail, kontrahent => kontrahent.EMail);
 		kontroler.Powiazanie(textBoxRachunekBankowy, kontrahent => kontrahent.RachunekBankowy);

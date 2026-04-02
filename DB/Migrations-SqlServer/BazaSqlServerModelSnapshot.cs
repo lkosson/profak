@@ -639,6 +639,12 @@ namespace ProFak.DB.MigrationsSqlServer
                         .HasColumnType("nvarchar(max)")
                         .HasDefaultValue("");
 
+                    b.Property<string>("KodKraju")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("PL");
+
                     b.Property<string>("NIP")
                         .IsRequired()
                         .ValueGeneratedOnAdd()

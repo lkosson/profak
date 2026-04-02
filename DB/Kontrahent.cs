@@ -8,6 +8,7 @@ public class Kontrahent : Rekord<Kontrahent>
 	public string AdresRejestrowy { get; set; } = "";
 	public string AdresKorespondencyjny { get; set; } = "";
 	public string Kraj { get; set; } = "";
+	public string KodKraju { get; set; } = "PL";
 	public string RachunekBankowy { get; set; } = "";
 	public string NazwaBanku { get; set; } = "";
 	public string Telefon { get; set; } = "";
@@ -47,6 +48,7 @@ public class Kontrahent : Rekord<Kontrahent>
 		|| CzyPasuje(AdresRejestrowy, fraza)
 		|| CzyPasuje(AdresKorespondencyjny, fraza)
 		|| CzyPasuje(Kraj, fraza)
+		|| CzyPasuje(KodKraju, fraza)
 		|| CzyPasuje(RachunekBankowy, fraza)
 		|| CzyPasuje(Telefon, fraza)
 		|| CzyPasuje(EMail, fraza)

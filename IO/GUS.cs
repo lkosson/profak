@@ -60,6 +60,7 @@ public class GUS
 		kontrahent.AdresRejestrowy = ulica?.Replace("&#8209;", "") + "\r\n" + kodpocztowy + " " + miejscowosc;
 		kontrahent.AdresKorespondencyjny = kontrahent.AdresRejestrowy;
 		kontrahent.Kraj = "Polska";
+		kontrahent.KodKraju = "PL";
 	}
 
 	private static string DekodujGUS(string wejscie)
