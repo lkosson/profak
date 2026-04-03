@@ -19,6 +19,7 @@ class Wyglad
 	public static int SzerokoscMenu { get; set; }
 	public static int? RozmiarCzcionki { get; set; }
 	public static string? NazwaCzcionki { get; set; }
+	public static int WysokoscWiersza { get; set; }
 
 	public static string NazwaAkcji(AdapterAkcji adapter)
 	{
@@ -116,5 +117,7 @@ class Wyglad
 		RozmiarCzcionki = konfiguracja.RozmiarCzcionki == 0 ? null : konfiguracja.RozmiarCzcionki;
 		NazwaCzcionki = konfiguracja.NazwaCzcionki;
 		UstawCzcionke();
+		if (konfiguracja.Wersja < 2) return;
+		WysokoscWiersza = konfiguracja.WysokoscWiersza;
 	}
 }

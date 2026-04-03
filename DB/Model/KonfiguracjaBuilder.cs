@@ -32,5 +32,7 @@ class KonfiguracjaBuilder
 		builder.Property(e => e.SzerokoscMenu);
 		builder.Property(e => e.RozmiarCzcionki);
 		builder.Property(e => e.NazwaCzcionki).HasDefaultValue("").IsRequired();
+
+		builder.Property(e => e.WysokoscWiersza);
 	}
 }

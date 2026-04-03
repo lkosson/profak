@@ -31,6 +31,8 @@ partial class KonfiguracjaEdytor : KonfiguracjaEdytorBase
 		kontroler.Powiazanie(textBoxRozmiarCzcionki, konfiguracja => konfiguracja.RozmiarCzcionki == 0 ? "" : konfiguracja.RozmiarCzcionki.ToString(), (konfiguracja, wartosc) => konfiguracja.RozmiarCzcionki = Int32.TryParse(wartosc, out var rozmiar) ? rozmiar : 0);
 		kontroler.Powiazanie(textBoxNazwaCzcionki, konfiguracja => konfiguracja.NazwaCzcionki);
 
+		kontroler.Powiazanie(numericUpDownWysokoscWierszy, konfiguracja => konfiguracja.WysokoscWiersza);
+
 		textBoxRozmiarCzcionki.PlaceholderText = DefaultFont.Size.ToString();
 		textBoxNazwaCzcionki.PlaceholderText = DefaultFont.FontFamily.Name;
 	}

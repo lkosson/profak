@@ -27,6 +27,9 @@ public class Konfiguracja : Rekord<Konfiguracja>
 	public int RozmiarCzcionki { get; set; }
 	public string NazwaCzcionki { get; set; } = "";
 
+	// Wersja 2
+	public int WysokoscWiersza { get; set; }
+
 	public bool CzyDomyslna => SMTPSerwer == Domyslna.SMTPSerwer || String.IsNullOrEmpty(SMTPSerwer);
 
 	public override bool CzyPasuje(string fraza) => false;
@@ -58,6 +61,11 @@ public class Konfiguracja : Rekord<Konfiguracja>
 			RozmiarCzcionki = 0;
 			NazwaCzcionki = "";
 			Wersja = 1;
+		}
+		if (Wersja < 2)
+		{
+			WysokoscWiersza = 23; // DataGridView.DefaultColumnHeadersHeight
+			Wersja = 2;
 		}
 	}
 
