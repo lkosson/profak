@@ -29,6 +29,9 @@ public class Konfiguracja : Rekord<Konfiguracja>
 
 	// Wersja 2
 	public int WysokoscWiersza { get; set; }
+	public string FormatDaty { get; set; } = "";
+	public string FormatCzasu { get; set; } = "";
+	public string FormatKwoty { get; set; } = "";
 
 	public bool CzyDomyslna => SMTPSerwer == Domyslna.SMTPSerwer || String.IsNullOrEmpty(SMTPSerwer);
 
@@ -65,6 +68,9 @@ public class Konfiguracja : Rekord<Konfiguracja>
 		if (Wersja < 2)
 		{
 			WysokoscWiersza = 23; // DataGridView.DefaultColumnHeadersHeight
+			FormatDaty = "yyyy-MM-dd";
+			FormatCzasu = "yyyy-MM-dd HH:mm:ss";
+			FormatKwoty = "#,##0.00";
 			Wersja = 2;
 		}
 	}

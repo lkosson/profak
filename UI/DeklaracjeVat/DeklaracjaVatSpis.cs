@@ -14,9 +14,9 @@ class DeklaracjaVatSpis : Spis<DeklaracjaVat>
 			var podsumowanie = base.Podsumowanie;
 			if (WybraneRekordy.Count() > 1)
 			{
-				podsumowanie += $"\nRazem do wpłaty: <{WybraneRekordy.Sum(deklaracjaVat => deklaracjaVat.DoWplaty).ToString(Format.Kwota)}>";
-				podsumowanie += $"\nRazem należny: <{WybraneRekordy.Sum(deklaracjaVat => deklaracjaVat.NaleznyRazem).ToString(Format.Kwota)}>";
-				podsumowanie += $"\nRazem naliczony: <{WybraneRekordy.Sum(deklaracjaVat => deklaracjaVat.NaliczonyRazem).ToString(Format.Kwota)}>";
+				podsumowanie += $"\nRazem do wpłaty: <{WybraneRekordy.Sum(deklaracjaVat => deklaracjaVat.DoWplaty).ToString(Wyglad.FormatKwoty)}>";
+				podsumowanie += $"\nRazem należny: <{WybraneRekordy.Sum(deklaracjaVat => deklaracjaVat.NaleznyRazem).ToString(Wyglad.FormatKwoty)}>";
+				podsumowanie += $"\nRazem naliczony: <{WybraneRekordy.Sum(deklaracjaVat => deklaracjaVat.NaliczonyRazem).ToString(Wyglad.FormatKwoty)}>";
 			}
 			return podsumowanie;
 		}
@@ -25,10 +25,10 @@ class DeklaracjaVatSpis : Spis<DeklaracjaVat>
 	public DeklaracjaVatSpis()
 	{
 		DodajKolumne(nameof(DeklaracjaVat.MiesiacFmt), "Miesiąc");
-		DodajKolumneKwota(nameof(DeklaracjaVat.NettoRazem), "Podstawa", format: Format.KwotaBezGroszy);
-		DodajKolumneKwota(nameof(DeklaracjaVat.NaleznyRazem), "Należny", format: Format.KwotaBezGroszy);
-		DodajKolumneKwota(nameof(DeklaracjaVat.NaliczonyRazem), "Naliczony", format: Format.KwotaBezGroszy);
-		DodajKolumneKwota(nameof(DeklaracjaVat.DoWplaty), "Do wpłaty", format: Format.KwotaBezGroszy);
+		DodajKolumneKwota(nameof(DeklaracjaVat.NettoRazem), "Podstawa", format: Wyglad.FormatKwoty);
+		DodajKolumneKwota(nameof(DeklaracjaVat.NaleznyRazem), "Należny", format: Wyglad.FormatKwoty);
+		DodajKolumneKwota(nameof(DeklaracjaVat.NaliczonyRazem), "Naliczony", format: Wyglad.FormatKwoty);
+		DodajKolumneKwota(nameof(DeklaracjaVat.DoWplaty), "Do wpłaty", format: Wyglad.FormatKwoty);
 		DodajKolumneId();
 	}
 

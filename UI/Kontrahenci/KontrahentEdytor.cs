@@ -54,7 +54,7 @@ partial class KontrahentEdytor : KontrahentEdytorBase
 		tabPageFakturySprzedazy.Controls.Add(fakturySprzedazy);
 		tabPageFakturyZakupu.Controls.Add(fakturyZakupu);
 
-		dateTimePickerOsobaFizycznaDataUrodzenia.CustomFormat = Format.Data;
+		dateTimePickerOsobaFizycznaDataUrodzenia.CustomFormat = Wyglad.FormatDaty;
 		dateTimePickerOsobaFizycznaDataUrodzenia.Format = DateTimePickerFormat.Custom;
 	}
 

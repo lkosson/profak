@@ -20,9 +20,9 @@ class KSeFSpis : Spis<Faktura>
 			var podsumowanie = base.Podsumowanie;
 			if (WybraneRekordy.Count() > 1)
 			{
-				podsumowanie += $"\nRazem netto: <{WybraneRekordy.Sum(faktura => faktura.RazemNetto).ToString(Format.Kwota)}>";
-				podsumowanie += $"\nRazem VAT: <{WybraneRekordy.Sum(faktura => faktura.RazemVat).ToString(Format.Kwota)}>";
-				podsumowanie += $"\nRazem brutto: <{WybraneRekordy.Sum(faktura => faktura.RazemBrutto).ToString(Format.Kwota)}>";
+				podsumowanie += $"\nRazem netto: <{WybraneRekordy.Sum(faktura => faktura.RazemNetto).ToString(Wyglad.FormatKwoty)}>";
+				podsumowanie += $"\nRazem VAT: <{WybraneRekordy.Sum(faktura => faktura.RazemVat).ToString(Wyglad.FormatKwoty)}>";
+				podsumowanie += $"\nRazem brutto: <{WybraneRekordy.Sum(faktura => faktura.RazemBrutto).ToString(Wyglad.FormatKwoty)}>";
 			}
 			return podsumowanie;
 		}
@@ -34,7 +34,7 @@ class KSeFSpis : Spis<Faktura>
 		DodajKolumne(nameof(Faktura.RodzajFmt), "Rodzaj");
 		DodajKolumneData(nameof(Faktura.DataSprzedazy), "Data sprzedaży");
 		DodajKolumneData(nameof(Faktura.DataWystawienia), "Data wystawienia");
-		DodajKolumneData(nameof(Faktura.DataKSeF), "Data KSeF", format: Format.DataCzas);
+		DodajKolumneData(nameof(Faktura.DataKSeF), "Data KSeF", format: Wyglad.FormatCzasu);
 		kolumnaNazwaNabywcy = DodajKolumne(nameof(Faktura.NazwaNabywcy), "Nabywca", rozciagnij: true);
 		kolumnaNIPNabywcy = DodajKolumne(nameof(Faktura.NIPNabywcy), "NIP nabywcy", szerokosc: 120);
 		kolumnaNazwaSprzedawcy = DodajKolumne(nameof(Faktura.NazwaSprzedawcy), "Sprzedawca", rozciagnij: true);

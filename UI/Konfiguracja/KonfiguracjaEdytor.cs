@@ -32,9 +32,45 @@ partial class KonfiguracjaEdytor : KonfiguracjaEdytorBase
 		kontroler.Powiazanie(textBoxNazwaCzcionki, konfiguracja => konfiguracja.NazwaCzcionki);
 
 		kontroler.Powiazanie(numericUpDownWysokoscWierszy, konfiguracja => konfiguracja.WysokoscWiersza);
+		kontroler.Powiazanie(comboBoxFormatDaty, konfiguracja => konfiguracja.FormatDaty, PrzeliczPrzykladDaty);
+		kontroler.Powiazanie(comboBoxFormatCzasu, konfiguracja => konfiguracja.FormatCzasu, PrzeliczPrzykladCzasu);
+		kontroler.Powiazanie(comboBoxFormatKwoty, konfiguracja => konfiguracja.FormatKwoty, PrzeliczPrzykladKwoty);
 
 		textBoxRozmiarCzcionki.PlaceholderText = DefaultFont.Size.ToString();
 		textBoxNazwaCzcionki.PlaceholderText = DefaultFont.FontFamily.Name;
+	}
+
+	private void PrzeliczPrzykladDaty()
+	{
+		try
+		{
+			textBoxPrzykladDaty.Text = DateTime.Now.ToString(Rekord.FormatDaty);
+		}
+		catch (FormatException)
+		{
+		}
+	}
+
+	private void PrzeliczPrzykladCzasu()
+	{
+		try
+		{
+			textBoxPrzykladCzasu.Text = DateTime.Now.ToString(Rekord.FormatCzasu);
+		}
+		catch (FormatException)
+		{
+		}
+	}
+
+	private void PrzeliczPrzykladKwoty()
+	{
+		try
+		{
+			textBoxPrzykladKwoty.Text = 1234567.89m.ToString(Rekord.FormatKwoty);
+		}
+		catch (FormatException)
+		{
+		}
 	}
 
 	public static void Wyswietl()
@@ -90,6 +126,52 @@ partial class KonfiguracjaEdytor : KonfiguracjaEdytorBase
 [WALUTA] - kod waluty faktury
 [UWAGI] - uwagi do faktury (publiczne)
 [RACHUNEK] - numer rachunku wskazany na fakturze", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+	}
+
+	private void linkLabelFormatDaty_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+	{
+		MessageBox.Show(@"Lista dostępnych pól:
+
+d - dzień miesiąca, od 1 do 31
+dd - dzień miesiąca z wiodącym zerem, od 01 do 31
+ddd - skrócony dzień tygodnia, np. pon
+dddd - dzień tygodnia, np. poniedziałek
+
+M - miesiąc, od 1 do 12
+MM - miesiąc z wiodącym zerem, od 01 do 12
+MMM - skrócona nazwa miesiąca, np. Mar
+MMMM - nazwa miesiąca, np. Marzec
+
+y - rok, od 1 do 99
+yy - rok z wiodącym zerem, od 01 do 99
+yyyy - pełny rok, np. 2026", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+	}
+
+	private void linkLabelFormatCzasu_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+	{
+		MessageBox.Show(@"Lista dostępnych pól jak dla formatu daty oraz:
+
+h - godzina, od 1 do 12
+H - godzina, od 0 do 23
+hh - godzina z wiodącym zerem, od 01 do 12
+HH - godzina z wiodącym zerem, od 00 do 23
+tt - znacznik am/pm
+
+m - minuta, od 0 do 59
+mm - minuta z wiodącym zerem, od 00 do 59
+
+s - sekunda, od 0 do 59
+ss - sekunda z wiodącym zerem, od 00 do 59", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+	}
+
+	private void linkLabelFormatKwoty_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+	{
+		MessageBox.Show(@"Znaczenie symboli:
+
+0 - cyfra dziesiętna, wystąpienie obowiązkowe
+# - cyfra dziesiętna, tylko jeśli niezerowa
+, - separator tysięcy
+. - seperator części dziesiętnej", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
 	}
 }
 

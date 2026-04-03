@@ -80,10 +80,10 @@ partial class FakturaEdytor : FakturaEdytorBase
 		tabPageDodatkowePodmioty.Controls.Add(dodatkowePodmioty = Spisy.DodatkowePodmioty());
 		pozycjeFaktury.Spis.RekordyZmienione += pozycjeFakturySpis_RekordyZmienione;
 
-		dateTimePickerDataSprzedazy.CustomFormat = Format.Data;
-		dateTimePickerDataWprowadzenia.CustomFormat = Format.Data;
-		dateTimePickerDataWystawienia.CustomFormat = Format.Data;
-		dateTimePickerTerminPlatnosci.CustomFormat = Format.Data;
+		dateTimePickerDataSprzedazy.CustomFormat = Wyglad.FormatDaty;
+		dateTimePickerDataWprowadzenia.CustomFormat = Wyglad.FormatDaty;
+		dateTimePickerDataWystawienia.CustomFormat = Wyglad.FormatDaty;
+		dateTimePickerTerminPlatnosci.CustomFormat = Wyglad.FormatDaty;
 
 		dateTimePickerDataSprzedazy.Format = DateTimePickerFormat.Custom;
 		dateTimePickerDataWprowadzenia.Format = DateTimePickerFormat.Custom;
@@ -307,7 +307,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 		else if (Rekord.Rodzaj == RodzajFaktury.KorektaRachunku) labelRodzaj.Text = "Korekta rachunku";
 		else labelRodzaj.Text = Rekord.Rodzaj.ToString();
 
-		textBoxDataKSeF.Text = Rekord.DataKSeF == null ? "" : Rekord.DataKSeF.Value.ToString(Format.DataCzas);
+		textBoxDataKSeF.Text = Rekord.DataKSeF == null ? "" : Rekord.DataKSeF.Value.ToString(Wyglad.FormatCzasu);
 
 		if (String.IsNullOrWhiteSpace(Rekord.Numer) && Rekord.Numerator.HasValue)
 		{

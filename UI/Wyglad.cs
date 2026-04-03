@@ -20,6 +20,9 @@ class Wyglad
 	public static int? RozmiarCzcionki { get; set; }
 	public static string? NazwaCzcionki { get; set; }
 	public static int WysokoscWiersza { get; set; }
+	public static string FormatDaty { get; set; } = default!;
+	public static string FormatCzasu { get; set; } = default!;
+	public static string FormatKwoty { get; set; } = default!;
 
 	public static string NazwaAkcji(AdapterAkcji adapter)
 	{
@@ -119,5 +122,8 @@ class Wyglad
 		UstawCzcionke();
 		if (konfiguracja.Wersja < 2) return;
 		WysokoscWiersza = konfiguracja.WysokoscWiersza;
+		FormatDaty = konfiguracja.FormatDaty;
+		FormatCzasu = konfiguracja.FormatCzasu;
+		FormatKwoty = konfiguracja.FormatKwoty;
 	}
 }

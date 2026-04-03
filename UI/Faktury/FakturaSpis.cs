@@ -46,9 +46,9 @@ class FakturaSpis : Spis<Faktura>
 			var podsumowanie = base.Podsumowanie;
 			if (WybraneRekordy.Count() > 1)
 			{
-				podsumowanie += $"\nRazem netto: <{WybraneRekordy.Sum(faktura => faktura.RazemNetto).ToString(Format.Kwota)}>";
-				podsumowanie += $"\nRazem VAT: <{WybraneRekordy.Sum(faktura => faktura.RazemVat).ToString(Format.Kwota)}>";
-				podsumowanie += $"\nRazem brutto: <{WybraneRekordy.Sum(faktura => faktura.RazemBrutto).ToString(Format.Kwota)}>";
+				podsumowanie += $"\nRazem netto: <{WybraneRekordy.Sum(faktura => faktura.RazemNetto).ToString(Wyglad.FormatKwoty)}>";
+				podsumowanie += $"\nRazem VAT: <{WybraneRekordy.Sum(faktura => faktura.RazemVat).ToString(Wyglad.FormatKwoty)}>";
+				podsumowanie += $"\nRazem brutto: <{WybraneRekordy.Sum(faktura => faktura.RazemBrutto).ToString(Wyglad.FormatKwoty)}>";
 			}
 			return podsumowanie;
 		}
@@ -77,7 +77,7 @@ class FakturaSpis : Spis<Faktura>
 		DodajKolumneKwota(nameof(Faktura.RazemVat), "VAT");
 		DodajKolumneKwota(nameof(Faktura.RazemBrutto), "Brutto");
 		DodajKolumne(nameof(Faktura.WalutaFmt), "Waluta", szerokosc: 70);
-		DodajKolumneBool(nameof(Faktura.CzyZaplacona), "Zapł.", szerokosc: 50, tooltip: faktura => faktura.SumaWplat.ToString(Format.Kwota));
+		DodajKolumneBool(nameof(Faktura.CzyZaplacona), "Zapł.", szerokosc: 50, tooltip: faktura => faktura.SumaWplat.ToString(Wyglad.FormatKwoty));
 		DodajKolumneBool(nameof(Faktura.CzyKSeF), "KSeF", szerokosc: 50, tooltip: faktura => faktura.NumerKSeF);
 		DodajKolumneBool(nameof(Faktura.CzyPliki), "Pliki", szerokosc: 50, tooltip: faktura => String.Join("\n", faktura.Pliki.Select(e => e.Nazwa)));
 		DodajKolumne(nameof(Faktura.PozycjeFmt), "Pozycje", szerokosc: 150);
@@ -90,7 +90,7 @@ class FakturaSpis : Spis<Faktura>
 		DodajKolumneData(nameof(Faktura.TerminPlatnosci), "Termin płatności");
 		DodajKolumne(nameof(Faktura.DniPoTerminie), "Dni po terminie", szerokosc: 0);
 		DodajKolumneData(nameof(Faktura.DataWplywu), "Data zapłaty");
-		if (CzySprzedaz) DodajKolumneData(nameof(Faktura.DataWyslania), "Data wysłania", tooltip: faktura => faktura.DataWyslania?.ToString(Format.DataCzas));
+		if (CzySprzedaz) DodajKolumneData(nameof(Faktura.DataWyslania), "Data wysłania", tooltip: faktura => faktura.DataWyslania?.ToString(Wyglad.FormatCzasu));
 		DodajKolumne(nameof(Faktura.NumerPowiazanej), "Powiązana");
 		DodajKolumne(nameof(Faktura.NumerKSeF), "Numer KSeF", szerokosc: 0);
 		DodajKolumneBool(nameof(Faktura.CzyTP), "TP", szerokosc: 0);

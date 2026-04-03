@@ -84,7 +84,7 @@ class DwieKolumny : TableLayoutPanel
 		var dateTimePicker = new DateTimePicker();
 		dateTimePicker.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		dateTimePicker.Width = 200 * dateTimePicker.DeviceDpi / 96;
-		dateTimePicker.CustomFormat = Format.Data;
+		dateTimePicker.CustomFormat = Wyglad.FormatDaty;
 		dateTimePicker.Format = DateTimePickerFormat.Custom;
 		DodajWiersz(dateTimePicker, etykieta);
 		return dateTimePicker;

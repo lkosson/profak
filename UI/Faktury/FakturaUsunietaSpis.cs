@@ -12,7 +12,7 @@ class FakturaUsunietaSpis : Spis<Faktura>
 		DodajKolumneData(nameof(Faktura.DataWystawienia), "Data wystawienia");
 		DodajKolumneData(nameof(Faktura.DataSprzedazy), "Data sprzedaży");
 		DodajKolumneData(nameof(Faktura.DataWprowadzenia), "Data wprowadzenia");
-		DodajKolumneData(nameof(Faktura.DataUsuniecia), "Data usunięcia", tooltip: faktura => faktura.DataUsuniecia?.ToString(Format.DataCzas));
+		DodajKolumneData(nameof(Faktura.DataUsuniecia), "Data usunięcia", tooltip: faktura => faktura.DataUsuniecia?.ToString(Wyglad.FormatCzasu));
 		DodajKolumne(nameof(Faktura.NazwaNabywcy), "Nabywca", szerokosc: 250);
 		DodajKolumne(nameof(Faktura.NIPNabywcy), "NIP nabywcy", szerokosc: 100);
 		DodajKolumne(nameof(Faktura.NazwaSkroconaNabywcy), "Kontahent", szerokosc: 0);
@@ -23,7 +23,7 @@ class FakturaUsunietaSpis : Spis<Faktura>
 		DodajKolumneKwota(nameof(Faktura.RazemVat), "VAT");
 		DodajKolumneKwota(nameof(Faktura.RazemBrutto), "Brutto");
 		DodajKolumne(nameof(Faktura.WalutaFmt), "Waluta", szerokosc: 70);
-		DodajKolumneBool(nameof(Faktura.CzyZaplacona), "Zapł.", szerokosc: 50, tooltip: faktura => faktura.SumaWplat.ToString(Format.Kwota));
+		DodajKolumneBool(nameof(Faktura.CzyZaplacona), "Zapł.", szerokosc: 50, tooltip: faktura => faktura.SumaWplat.ToString(Wyglad.FormatKwoty));
 		DodajKolumneBool(nameof(Faktura.CzyKSeF), "KSeF", szerokosc: 50, tooltip: faktura => faktura.NumerKSeF);
 		DodajKolumneBool(nameof(Faktura.CzyPliki), "Pliki", szerokosc: 50, tooltip: faktura => String.Join("\n", faktura.Pliki.Select(e => e.Nazwa)));
 		DodajKolumne(nameof(Faktura.PozycjeFmt), "Pozycje", szerokosc: 150);
