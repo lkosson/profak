@@ -66,7 +66,6 @@ partial class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
 		siatkaObliczenia.DodajWiersz([Kontrolki.Label("WDT"), numericUpDownNettoWDT]);
 		siatkaObliczenia.DodajWiersz([Kontrolki.Label("WNT"), numericUpDownNettoWNT, numericUpDownNaleznyWNT, null, Kontrolki.Label("Do wpłaty"), null, numericUpDownDoWplaty]);
 		siatkaObliczenia.DodajWiersz([Kontrolki.Label("Razem"), numericUpDownNettoRazem, numericUpDownNaleznyRazem, null, Kontrolki.Label("Do przeniesienia"), null, numericUpDownDoPrzeniesienia]);
-		siatkaObliczenia.Dock = DockStyle.Fill;
 
 		var dodajSprzedazDoDeklaracji = new DynamicznaAkcja<Faktura>("➕ Dodaj do deklaracji [INS]", kontekst =>
 		{
@@ -88,7 +87,6 @@ partial class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
 			Przelicz();
 		}, Keys.Insert, Keys.None);
 
-
 		var usunZDeklaracji = new DynamicznaAkcja<Faktura>("❌ Usuń z deklaracji [DEL]", (kontekst, rekordy) =>
 		{
 			foreach (var rekord in rekordy)
@@ -103,7 +101,6 @@ partial class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
 		fakturyZakupu = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis(), new AkcjaNaSpisie<Faktura>[] { dodajZakupDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new PrzeladujAkcja<Faktura>() });
 
 		var zakladki = new Zakladki();
-		zakladki.Dock = DockStyle.Fill;
 		zakladki.Dodaj("Obliczenia", siatkaObliczenia);
 		zakladki.Dodaj("Sprzedaż", fakturySprzedazy);
 		zakladki.Dodaj("Zakup", fakturyZakupu);
@@ -113,8 +110,13 @@ partial class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
 		siatkaUklad.DodajWiersz([(zakladki, 4)]);
 		siatkaUklad.Dock = DockStyle.Fill;
 
+		SuspendLayout();
 		Controls.Add(siatkaUklad);
+		AutoScaleMode = AutoScaleMode.Font;
+		AutoScaleDimensions = new SizeF(7, 15);
 		MinimumSize = Size = new Size(800, 425);
+		//MinimumSize = Size = new Size(Wyglad.PrzeskalujRozmiar(800), Wyglad.PrzeskalujRozmiar(425));
+		ResumeLayout(true);
 	}
 
 	protected override void RekordGotowy()
