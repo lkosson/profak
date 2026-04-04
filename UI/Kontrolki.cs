@@ -15,6 +15,34 @@ class Kontrolki
 		return label;
 	}
 
+	public static Button Button(string tekst, Action? akcja = null)
+	{
+		var button = new ButtonDPI();
+		button.Text = tekst;
+		button.AutoSize = true;
+		button.UseVisualStyleBackColor = true;
+		button.Anchor = AnchorStyles.Left;
+		if (akcja != null) button.Click += BezpiecznaAkcja(akcja);
+		return button;
+	}
+
+	private static EventHandler BezpiecznaAkcja(Action akcja)
+	{
+		void Uruchom(object? sender, EventArgs e)
+		{
+			try
+			{
+				akcja();
+			}
+			catch (Exception exc)
+			{
+				OknoBledu.Pokaz(exc);
+			}
+		}
+
+		return Uruchom;
+	}
+
 	public static TextBox TextBox()
 	{
 		var textBox = new TextBox();
