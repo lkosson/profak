@@ -25,9 +25,17 @@ abstract class EdytorDwieKolumny<TRekord> : Edytor<TRekord>
 		dwieKolumny.DodajWiersz(kontrolka, etykieta);
 	}
 
-	public TextBox DodajTextBox(Expression<Func<TRekord, string>> wlasciwosc, string etykieta, bool wymagane = false, int linie = 1)
+	public TextBox DodajTextBox(Expression<Func<TRekord, string>> wlasciwosc, string etykieta, bool wymagane = false)
 	{
-		var textbox = dwieKolumny.DodajTextBox(etykieta, linie);
+		var textbox = dwieKolumny.DodajTextBox(etykieta);
+		kontroler.Powiazanie(textbox, wlasciwosc);
+		if (wymagane) Wymagane(textbox);
+		return textbox;
+	}
+
+	public TextBox DodajTextArea(Expression<Func<TRekord, string>> wlasciwosc, string etykieta, bool wymagane = false, int linie = 1)
+	{
+		var textbox = dwieKolumny.DodajTextArea(etykieta, linie);
 		kontroler.Powiazanie(textbox, wlasciwosc);
 		if (wymagane) Wymagane(textbox);
 		return textbox;
@@ -61,10 +69,10 @@ abstract class EdytorDwieKolumny<TRekord> : Edytor<TRekord>
 		return dateTimePicker;
 	}
 
-	public ComboBox DodajComboBox<TEnum>(Expression<Func<TRekord, TEnum>> wlasciwosc, string etykieta, bool wymagane = false)
+	public ComboBox DodajDropDownList<TEnum>(Expression<Func<TRekord, TEnum>> wlasciwosc, string etykieta, bool wymagane = false)
 		where TEnum : struct, Enum
 	{
-		var comboBox = dwieKolumny.DodajComboBox(etykieta);
+		var comboBox = dwieKolumny.DodajDropDownList(etykieta);
 		kontroler.Slownik<TEnum>(comboBox);
 		kontroler.Powiazanie(comboBox, wlasciwosc);
 		if (wymagane) Wymagane(comboBox);

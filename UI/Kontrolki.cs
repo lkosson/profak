@@ -1,0 +1,84 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ProFak.UI;
+
+class Kontrolki
+{
+	public static Label Label(string tekst)
+	{
+		var label = new Label();
+		label.Anchor = AnchorStyles.Right;
+		label.AutoSize = true;
+		label.Text = tekst;
+		return label;
+	}
+
+	public static TextBox TextBox()
+	{
+		var textBox = new TextBox();
+		textBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+		textBox.Width = 200 * textBox.DeviceDpi / 96;
+		return textBox;
+	}
+
+	public static TextBox TextArea(int linie)
+	{
+		var textBox = TextBox();
+		if (linie > 1)
+		{
+			textBox.AcceptsReturn = true;
+			textBox.Multiline = true;
+			textBox.Height += (textBox.Height - 8) * (linie - 1);
+		}
+		return textBox;
+	}
+
+	public static CheckBox CheckBox()
+	{
+		var checkBox = new CheckBox();
+		checkBox.Anchor = AnchorStyles.Left;
+		checkBox.Size = checkBox.GetPreferredSize(default);
+		return checkBox;
+	}
+
+	public static NumericUpDown NumericUpDown(int poPrzecinku = 2)
+	{
+		var numericUpDown = new NumericUpDownDPI();
+		numericUpDown.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+		numericUpDown.TextAlign = HorizontalAlignment.Right;
+		numericUpDown.DecimalPlaces = poPrzecinku;
+		numericUpDown.Minimum = -999999999;
+		numericUpDown.Maximum = 999999999;
+		return numericUpDown;
+	}
+
+	public static DateTimePicker DatePicker()
+	{
+		var dateTimePicker = new DateTimePickerFix();
+		dateTimePicker.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+		dateTimePicker.Width = 200 * dateTimePicker.DeviceDpi / 96;
+		dateTimePicker.CustomFormat = Wyglad.FormatDaty;
+		dateTimePicker.Format = DateTimePickerFormat.Custom;
+		return dateTimePicker;
+	}
+
+	public static ComboBox DropDownList()
+	{
+		var comboBox = new ComboBoxFix();
+		comboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+		comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+		comboBox.Width = 200 * comboBox.DeviceDpi / 96;
+		return comboBox;
+	}
+
+	public static ComboBox SuggestBox()
+	{
+		var comboBox = new ComboBoxFix();
+		comboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+		comboBox.DropDownStyle = ComboBoxStyle.DropDown;
+		comboBox.Width = 200 * comboBox.DeviceDpi / 96;
+		return comboBox;
+	}
+}

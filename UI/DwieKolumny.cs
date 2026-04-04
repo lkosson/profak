@@ -29,10 +29,7 @@ class DwieKolumny : TableLayoutPanel
 
 		if (!String.IsNullOrEmpty(etykieta))
 		{
-			var label = new Label();
-			label.Anchor = AnchorStyles.Right;
-			label.AutoSize = true;
-			label.Text = etykieta;
+			var label = Kontrolki.Label(etykieta);
 			Controls.Add(label, 0, RowCount - 1);
 			szerokoscEtykiet = Math.Max(szerokoscEtykiet, label.GetPreferredSize(default).Width);
 		}
@@ -43,56 +40,45 @@ class DwieKolumny : TableLayoutPanel
 		if (Width < minimalnaSzerokosc) Width = minimalnaSzerokosc;
 	}
 
-	public TextBox DodajTextBox(string etykieta, int linie = 1)
+	public TextBox DodajTextBox(string etykieta)
 	{
-		var textBox = new TextBox();
-		textBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-		textBox.Width = 200 * textBox.DeviceDpi / 96;
-		if (linie > 1)
-		{
-			textBox.AcceptsReturn = true;
-			textBox.Multiline = true;
-			textBox.Height += (textBox.Height - 8) * (linie - 1);
-		}
+		var textBox = Kontrolki.TextBox();
 		DodajWiersz(textBox, etykieta);
 		return textBox;
 	}
 
+	public TextBox DodajTextArea(string etykieta, int linie)
+	{
+		var textArea = Kontrolki.TextArea(linie);
+		DodajWiersz(textArea, etykieta);
+		return textArea;
+	}
+
 	public CheckBox DodajCheckBox(string etykieta)
 	{
-		var checkBox = new CheckBox();
-		checkBox.Anchor = AnchorStyles.Left;
+		var checkBox = Kontrolki.CheckBox();
 		checkBox.Text = etykieta;
-		checkBox.Size = checkBox.GetPreferredSize(default);
 		DodajWiersz(checkBox, null);
 		return checkBox;
 	}
 
-	public NumericUpDown DodajNumericUpDown(string etykieta, int poprzecinku = 2)
+	public NumericUpDown DodajNumericUpDown(string etykieta, int poPrzecinku = 2)
 	{
-		var numericUpDown = new NumericUpDown();
-		numericUpDown.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-		numericUpDown.TextAlign = HorizontalAlignment.Right;
-		numericUpDown.DecimalPlaces = poprzecinku;
-		numericUpDown.Maximum = 999999999;
+		var numericUpDown = Kontrolki.NumericUpDown(poPrzecinku);
 		DodajWiersz(numericUpDown, etykieta);
 		return numericUpDown;
 	}
 
 	public DateTimePicker DodajDatePicker(string etykieta)
 	{
-		var dateTimePicker = new DateTimePicker();
-		dateTimePicker.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-		dateTimePicker.Width = 200 * dateTimePicker.DeviceDpi / 96;
-		dateTimePicker.CustomFormat = Wyglad.FormatDaty;
-		dateTimePicker.Format = DateTimePickerFormat.Custom;
+		var dateTimePicker = Kontrolki.DatePicker();
 		DodajWiersz(dateTimePicker, etykieta);
 		return dateTimePicker;
 	}
 
-	public ComboBox DodajComboBox(string etykieta)
+	public ComboBox DodajDropDownList(string etykieta)
 	{
-		var comboBox = new ComboBox();
+		var comboBox = Kontrolki.DropDownList();
 		comboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		comboBox.Width = 200 * comboBox.DeviceDpi / 96;
 		DodajWiersz(comboBox, etykieta);
