@@ -10,8 +10,30 @@ partial class DeklaracjaVatEdytor : DeklaracjaVatEdytorBase
 	public DeklaracjaVatEdytor()
 	{
 		InitializeComponent();
-
 		kontroler.Powiazanie(dateTimePickerMiesiac, deklaracja => deklaracja.Miesiac);
+
+		var numericUpDownNettoZW = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNetto0 = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNetto5 = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNetto8 = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNetto23 = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNettoWDT = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNettoWNT = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNalezny5 = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNalezny8 = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNalezny23 = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNaleznyWNT = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNettoSrodkiTrwale = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNettoPozostale = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNaliczonyPrzeniesiony = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNaliczonySrodkiTrwale = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNaliczonyPozostale = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNettoRazem = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNaleznyRazem = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNaliczonyRazem = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownDoWplaty = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownDoPrzeniesienia = Kontrolki.NumericUpDown(poPrzecinku: 0);
+
 		kontroler.Powiazanie(numericUpDownNettoZW, deklaracja => deklaracja.NettoZW);
 		kontroler.Powiazanie(numericUpDownNetto0, deklaracja => deklaracja.Netto0);
 		kontroler.Powiazanie(numericUpDownNetto5, deklaracja => deklaracja.Netto5);
@@ -33,6 +55,18 @@ partial class DeklaracjaVatEdytor : DeklaracjaVatEdytorBase
 		kontroler.Powiazanie(numericUpDownNaliczonyRazem, deklaracja => deklaracja.NaliczonyRazem);
 		kontroler.Powiazanie(numericUpDownDoWplaty, deklaracja => deklaracja.DoWplaty);
 		kontroler.Powiazanie(numericUpDownDoPrzeniesienia, deklaracja => deklaracja.DoPrzeniesienia);
+
+		var siatkaObliczenia = new Siatka([0, -1, -1, 20, 0, -1, -1], []);
+		siatkaObliczenia.DodajWiersz([null, "Podstawa", "Podatek należny", null, null, "Wartość netto", "Podatek naliczony"]);
+		siatkaObliczenia.DodajWiersz([Kontrolki.Label("Zwolnione"), numericUpDownNettoZW, null, null, Kontrolki.Label("Z przeniesienia"), null, numericUpDownNaliczonyPrzeniesiony]);
+		siatkaObliczenia.DodajWiersz([Kontrolki.Label("0%"), numericUpDownNetto0, null, null, Kontrolki.Label("Środki trwałe"), numericUpDownNettoSrodkiTrwale, numericUpDownNaliczonySrodkiTrwale]);
+		siatkaObliczenia.DodajWiersz([Kontrolki.Label("5%"), numericUpDownNetto5, numericUpDownNalezny5, null, Kontrolki.Label("Pozostałe"), numericUpDownNettoPozostale, numericUpDownNaliczonyPozostale]);
+		siatkaObliczenia.DodajWiersz([Kontrolki.Label("8%"), numericUpDownNetto8, numericUpDownNalezny8, null, Kontrolki.Label("Razem"), null, numericUpDownNaliczonyRazem]);
+		siatkaObliczenia.DodajWiersz([Kontrolki.Label("23%"), numericUpDownNetto23, numericUpDownNalezny23]);
+		siatkaObliczenia.DodajWiersz([Kontrolki.Label("WDT"), numericUpDownNettoWDT]);
+		siatkaObliczenia.DodajWiersz([Kontrolki.Label("WNT"), numericUpDownNettoWNT, numericUpDownNaleznyWNT, null, Kontrolki.Label("Do wpłaty"), null, numericUpDownDoWplaty]);
+		siatkaObliczenia.DodajWiersz([Kontrolki.Label("Razem"), numericUpDownNettoRazem, numericUpDownNaleznyRazem, null, Kontrolki.Label("Do przeniesienia"), null, numericUpDownDoPrzeniesienia]);
+		siatkaObliczenia.Dock = DockStyle.Fill;
 
 		var dodajSprzedazDoDeklaracji = new DynamicznaAkcja<Faktura>("➕ Dodaj do deklaracji [INS]", kontekst =>
 		{
@@ -68,6 +102,7 @@ partial class DeklaracjaVatEdytor : DeklaracjaVatEdytorBase
 		fakturySprzedazy = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazySpis(), new AkcjaNaSpisie<Faktura>[] { dodajSprzedazDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new WydrukFakturyAkcja(), new PrzeladujAkcja<Faktura>() });
 		fakturyZakupu = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis(), new AkcjaNaSpisie<Faktura>[] { dodajZakupDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new PrzeladujAkcja<Faktura>() });
 
+		tabPageObliczenia.Controls.Add(siatkaObliczenia);
 		tabPageFakturySprzedazy.Controls.Add(fakturySprzedazy);
 		tabPageFakturyZakupu.Controls.Add(fakturyZakupu);
 	}
