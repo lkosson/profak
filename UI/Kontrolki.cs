@@ -10,6 +10,7 @@ class Kontrolki
 	{
 		var label = new Label();
 		label.Anchor = AnchorStyles.Right;
+		label.TextAlign = ContentAlignment.MiddleRight;
 		label.AutoSize = true;
 		label.Text = tekst;
 		return label;

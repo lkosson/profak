@@ -15,5 +15,7 @@ class Zakladki : TabControl
 		tabPage.Controls.Add(zawartosc);
 		zawartosc.Dock = DockStyle.Fill;
 		TabPages.Add(tabPage);
+		if (Width < zawartosc.Width) Width = zawartosc.Width;
+		if (Height < zawartosc.Height + 30) Height = zawartosc.Height + 30;
 	}
 }

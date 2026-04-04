@@ -64,6 +64,7 @@ class Siatka : TableLayoutPanel
 			Controls.Add(kontrolka, kolumna, wiersz);
 			SetColumnSpan(kontrolka, kolumny);
 			kolumna += kolumny;
+			kontrolka.Dock = DockStyle.Fill;
 
 			var szerokosc = kontrolka.GetPreferredSize(default).Width;
 			szerokoscKontrolek += Math.Max(Padding.Left, kontrolka.Margin.Left) + szerokosc + Math.Max(Padding.Right, kontrolka.Margin.Right);
