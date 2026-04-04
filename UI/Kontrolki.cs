@@ -82,12 +82,12 @@ class Kontrolki
 		return numericUpDown;
 	}
 
-	public static DateTimePicker DatePicker()
+	public static DateTimePicker DatePicker(bool tylkoMiesiac = false)
 	{
 		var dateTimePicker = new DateTimePickerFix();
 		dateTimePicker.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		dateTimePicker.Width = 200 * dateTimePicker.DeviceDpi / 96;
-		dateTimePicker.CustomFormat = Wyglad.FormatDaty;
+		dateTimePicker.CustomFormat = tylkoMiesiac ? "MM-yyyy" : Wyglad.FormatDaty;
 		dateTimePicker.Format = DateTimePickerFormat.Custom;
 		return dateTimePicker;
 	}

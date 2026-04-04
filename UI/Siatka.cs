@@ -19,7 +19,6 @@ class Siatka : TableLayoutPanel
 		}
 
 		ColumnCount = ColumnStyles.Count;
-		RowCount = RowStyles.Count;
 		Height = 0;
 		Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
 	}
@@ -63,6 +62,7 @@ class Siatka : TableLayoutPanel
 			}
 
 			Controls.Add(kontrolka, kolumna, wiersz);
+			SetColumnSpan(kontrolka, kolumny);
 			kolumna += kolumny;
 
 			var szerokosc = kontrolka.GetPreferredSize(default).Width;

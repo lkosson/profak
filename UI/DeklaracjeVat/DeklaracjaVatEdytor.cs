@@ -2,15 +2,14 @@
 
 namespace ProFak.UI;
 
-partial class DeklaracjaVatEdytor : DeklaracjaVatEdytorBase
+partial class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
 {
 	private readonly SpisZAkcjami<Faktura, FakturaSprzedazySpis> fakturySprzedazy;
 	private readonly SpisZAkcjami<Faktura, FakturaZakupuSpis> fakturyZakupu;
 
 	public DeklaracjaVatEdytor()
 	{
-		InitializeComponent();
-		kontroler.Powiazanie(dateTimePickerMiesiac, deklaracja => deklaracja.Miesiac);
+		var dateTimePickerMiesiac = Kontrolki.DatePicker(tylkoMiesiac: true);
 
 		var numericUpDownNettoZW = Kontrolki.NumericUpDown(poPrzecinku: 0);
 		var numericUpDownNetto0 = Kontrolki.NumericUpDown(poPrzecinku: 0);
@@ -34,6 +33,7 @@ partial class DeklaracjaVatEdytor : DeklaracjaVatEdytorBase
 		var numericUpDownDoWplaty = Kontrolki.NumericUpDown(poPrzecinku: 0);
 		var numericUpDownDoPrzeniesienia = Kontrolki.NumericUpDown(poPrzecinku: 0);
 
+		kontroler.Powiazanie(dateTimePickerMiesiac, deklaracja => deklaracja.Miesiac);
 		kontroler.Powiazanie(numericUpDownNettoZW, deklaracja => deklaracja.NettoZW);
 		kontroler.Powiazanie(numericUpDownNetto0, deklaracja => deklaracja.Netto0);
 		kontroler.Powiazanie(numericUpDownNetto5, deklaracja => deklaracja.Netto5);
@@ -102,9 +102,19 @@ partial class DeklaracjaVatEdytor : DeklaracjaVatEdytorBase
 		fakturySprzedazy = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazySpis(), new AkcjaNaSpisie<Faktura>[] { dodajSprzedazDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new WydrukFakturyAkcja(), new PrzeladujAkcja<Faktura>() });
 		fakturyZakupu = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis(), new AkcjaNaSpisie<Faktura>[] { dodajZakupDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new PrzeladujAkcja<Faktura>() });
 
-		tabPageObliczenia.Controls.Add(siatkaObliczenia);
-		tabPageFakturySprzedazy.Controls.Add(fakturySprzedazy);
-		tabPageFakturyZakupu.Controls.Add(fakturyZakupu);
+		var zakladki = new Zakladki();
+		zakladki.Dock = DockStyle.Fill;
+		zakladki.Dodaj("Obliczenia", siatkaObliczenia);
+		zakladki.Dodaj("Sprzedaż", fakturySprzedazy);
+		zakladki.Dodaj("Zakup", fakturyZakupu);
+
+		var siatkaUklad = new Siatka([0, 0, 0, -1], [0, -1]);
+		siatkaUklad.DodajWiersz([Kontrolki.Label("Miesiąc"), dateTimePickerMiesiac, Kontrolki.Button("Przelicz", delegate { WybierzFaktury(); Przelicz(); })]);
+		siatkaUklad.DodajWiersz([(zakladki, 4)]);
+		siatkaUklad.Dock = DockStyle.Fill;
+
+		Controls.Add(siatkaUklad);
+		MinimumSize = Size = new Size(800, 425);
 	}
 
 	protected override void RekordGotowy()
@@ -115,19 +125,6 @@ partial class DeklaracjaVatEdytor : DeklaracjaVatEdytorBase
 		fakturySprzedazy.Spis.Kontekst = Kontekst;
 		fakturyZakupu.Spis.DeklaracjaVatRef = Rekord;
 		fakturyZakupu.Spis.Kontekst = Kontekst;
-	}
-
-	private void buttonPrzelicz_Click(object? sender, EventArgs e)
-	{
-		try
-		{
-			WybierzFaktury();
-			Przelicz();
-		}
-		catch (Exception exc)
-		{
-			OknoBledu.Pokaz(exc);
-		}
 	}
 
 	private void WybierzFaktury()
@@ -142,8 +139,4 @@ partial class DeklaracjaVatEdytor : DeklaracjaVatEdytorBase
 		Rekord.Przelicz(Kontekst.Baza);
 		kontroler.AktualizujKontrolki();
 	}
-}
-
-class DeklaracjaVatEdytorBase : Edytor<DeklaracjaVat>
-{
 }
