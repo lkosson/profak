@@ -10,7 +10,11 @@ class ButtonDPI : Button
 	{
 		base.OnCreateControl();
 		Height = 23 * DeviceDpi / 96;
-		if (Text == "..." || Text == "➕") Width = Height;
+		if (Text == "..." || Text == "➕")
+		{
+			AutoSize = false;
+			Width = Height + 3;
+		}
 		if (Text == "➕" && !Wyglad.IkonyAkcji) Text = "+";
 	}
 }

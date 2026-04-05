@@ -110,6 +110,11 @@ class Edytor<TRekord> : UserControl
 		};
 	}
 
+	protected void Dymek(Control kontrolka, string tresc)
+	{
+		toolTip.SetToolTip(kontrolka, tresc);
+	}
+
 	private void TextBox_Wymagane_Validating(object? sender, CancelEventArgs e)
 	{
 		if (ModifierKeys == Keys.Shift) return;
