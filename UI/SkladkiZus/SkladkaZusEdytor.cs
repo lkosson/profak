@@ -6,10 +6,20 @@ partial class SkladkaZusEdytor : SkladkaZusEdytorBase
 {
 	public SkladkaZusEdytor()
 	{
-		InitializeComponent();
+		var dateTimePickerMiesiac = Kontrolki.DatePicker(tylkoMiesiac: true);
+		var numericUpDownPodstawaSpoleczne = Kontrolki.NumericUpDown();
+		var numericUpDownPodstawaZdrowotne = Kontrolki.NumericUpDown();
+		var numericUpDownSkladkaEmerytalna = Kontrolki.NumericUpDown();
+		var numericUpDownSkladkaRentowa = Kontrolki.NumericUpDown();
+		var numericUpDownSkladkaWypadkowa = Kontrolki.NumericUpDown();
+		var numericUpDownSkladkaSpoleczna = Kontrolki.NumericUpDown();
+		var numericUpDownSkladkaZdrowotna = Kontrolki.NumericUpDown();
+		var numericUpDownRozliczenieRoczneSkladkiZdrowotnej = Kontrolki.NumericUpDown();
+		var numericUpDownFunduszPracy = Kontrolki.NumericUpDown();
+		var numericUpDownSumaSkladek = Kontrolki.NumericUpDown();
+		var numericUpDownOdliczenieOdDochodu = Kontrolki.NumericUpDown();
 
 		kontroler.Powiazanie(dateTimePickerMiesiac, skladka => skladka.Miesiac);
-
 		kontroler.Powiazanie(numericUpDownPodstawaSpoleczne, skladka => skladka.PodstawaSpoleczne);
 		kontroler.Powiazanie(numericUpDownPodstawaZdrowotne, skladka => skladka.PodstawaZdrowotne);
 		kontroler.Powiazanie(numericUpDownSkladkaEmerytalna, skladka => skladka.SkladkaEmerytalna);
@@ -21,18 +31,26 @@ partial class SkladkaZusEdytor : SkladkaZusEdytorBase
 		kontroler.Powiazanie(numericUpDownFunduszPracy, skladka => skladka.SkladkaFunduszPracy);
 		kontroler.Powiazanie(numericUpDownSumaSkladek, skladka => skladka.SumaSkladek);
 		kontroler.Powiazanie(numericUpDownOdliczenieOdDochodu, skladka => skladka.OdliczenieOdDochodu);
-	}
 
-	private void buttonPrzelicz_Click(object? sender, EventArgs e)
-	{
-		try
-		{
-			Przelicz();
-		}
-		catch (Exception exc)
-		{
-			OknoBledu.Pokaz(exc);
-		}
+		var obliczenia = new DwieKolumny();
+		obliczenia.DodajWiersz(numericUpDownPodstawaSpoleczne, "Składka społeczna - podstawa");
+		obliczenia.DodajWiersz(numericUpDownPodstawaZdrowotne, "Składka zdrowotna - podstawa");
+		obliczenia.DodajWiersz(numericUpDownSkladkaEmerytalna, "Składka emerytalna");
+		obliczenia.DodajWiersz(numericUpDownSkladkaRentowa, "Składka rentowa");
+		obliczenia.DodajWiersz(numericUpDownSkladkaWypadkowa, "Składka wypadkowa");
+		obliczenia.DodajWiersz(numericUpDownSkladkaSpoleczna, "Składka społeczna - razem");
+		obliczenia.DodajWiersz(numericUpDownSkladkaZdrowotna, "Składka zdrowotna");
+		obliczenia.DodajWiersz(numericUpDownRozliczenieRoczneSkladkiZdrowotnej, "Składka zdrowotna - rozliczenie roczne");
+		obliczenia.DodajWiersz(numericUpDownFunduszPracy, "Fundusz pracy");
+		obliczenia.DodajWiersz(numericUpDownSumaSkladek, "Odliczenie od dochodu");
+		obliczenia.DodajWiersz(numericUpDownOdliczenieOdDochodu, "Składki razem");
+
+		var siatka = new Siatka([0, 0, 0, -1], [0, -1]);
+
+		siatka.DodajWiersz([Kontrolki.Label("Miesiąc"), dateTimePickerMiesiac, Kontrolki.Button("Przelicz", Przelicz)]);
+		siatka.DodajWiersz([(obliczenia, 4)]);
+
+		UstawZawartosc(siatka, new Size(400, 375));
 	}
 
 	private void Przelicz()
