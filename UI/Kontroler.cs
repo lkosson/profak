@@ -91,7 +91,7 @@ class Kontroler<TModel>
 
 	public void Powiazanie(ComboBox comboBox, Func<TModel, int> pobierzWartosc, Action<TModel, int>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
-		comboBox.TextChanged += delegate { AktualizujModel(comboBox, ustawWartosc, comboBox => comboBox.SelectedIndex); wartoscZmieniona?.Invoke(); };
+		comboBox.SelectedIndexChanged += delegate { AktualizujModel(comboBox, ustawWartosc, comboBox => comboBox.SelectedIndex); wartoscZmieniona?.Invoke(); };
 		DodajPowiazanie(comboBox, pobierzWartosc, (comboBox, wartosc) => { comboBox.SelectedIndex = wartosc; });
 	}
 
