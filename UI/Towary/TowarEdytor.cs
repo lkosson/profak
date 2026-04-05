@@ -3,7 +3,7 @@ using System.Data;
 
 namespace ProFak.UI;
 
-partial class TowarEdytor : TowarEdytorBase
+class TowarEdytor : Edytor<Towar>
 {
 	private readonly ComboBox comboBoxStawkaVat;
 	private readonly ComboBox comboBoxJednostkaMiary;
@@ -141,8 +141,4 @@ partial class TowarEdytor : TowarEdytorBase
 			numericUpDownCenaBrutto.Value = cenaBrutto;
 		}
 	}
-}
-
-class TowarEdytorBase : Edytor<Towar>
-{
 }

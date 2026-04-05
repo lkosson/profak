@@ -2,7 +2,7 @@
 
 namespace ProFak.UI;
 
-partial class NumeratorEdytor : Edytor<Numerator>
+class NumeratorEdytor : Edytor<Numerator>
 {
 	private readonly TextBox textBoxPrzyklad;
 	private readonly SpisZAkcjami<StanNumeratora, StanNumeratoraSpis> stanyNumeratora;

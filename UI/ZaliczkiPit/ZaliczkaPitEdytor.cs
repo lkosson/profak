@@ -2,7 +2,7 @@
 
 namespace ProFak.UI;
 
-partial class ZaliczkaPitEdytor : ZaliczkaPitEdytorBase
+class ZaliczkaPitEdytor : Edytor<ZaliczkaPit>
 {
 	private readonly SpisZAkcjami<Faktura, FakturaSprzedazySpis> fakturySprzedazy;
 	private readonly SpisZAkcjami<Faktura, FakturaZakupuSpis> fakturyZakupu;
@@ -116,8 +116,4 @@ partial class ZaliczkaPitEdytor : ZaliczkaPitEdytorBase
 		Rekord.Przelicz(Kontekst.Baza);
 		kontroler.AktualizujKontrolki();
 	}
-}
-
-class ZaliczkaPitEdytorBase : Edytor<ZaliczkaPit>
-{
 }

@@ -2,7 +2,7 @@
 
 namespace ProFak.UI;
 
-partial class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
+class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
 {
 	private readonly SpisZAkcjami<Faktura, FakturaSprzedazySpis> fakturySprzedazy;
 	private readonly SpisZAkcjami<Faktura, FakturaZakupuSpis> fakturyZakupu;

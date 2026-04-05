@@ -2,7 +2,7 @@
 
 namespace ProFak.UI;
 
-partial class SkladkaZusEdytor : SkladkaZusEdytorBase
+class SkladkaZusEdytor : Edytor<SkladkaZus>
 {
 	public SkladkaZusEdytor()
 	{
@@ -58,8 +58,4 @@ partial class SkladkaZusEdytor : SkladkaZusEdytorBase
 		Rekord.Przelicz(Kontekst.Baza);
 		kontroler.AktualizujKontrolki();
 	}
-}
-
-class SkladkaZusEdytorBase : Edytor<SkladkaZus>
-{
 }
