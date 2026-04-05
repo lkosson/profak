@@ -108,15 +108,8 @@ partial class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
 		var siatkaUklad = new Siatka([0, 0, 0, -1], [0, -1]);
 		siatkaUklad.DodajWiersz([Kontrolki.Label("Miesiąc"), dateTimePickerMiesiac, Kontrolki.Button("Przelicz", delegate { WybierzFaktury(); Przelicz(); })]);
 		siatkaUklad.DodajWiersz([(zakladki, 4)]);
-		siatkaUklad.Dock = DockStyle.Fill;
 
-		SuspendLayout();
-		Controls.Add(siatkaUklad);
-		AutoScaleMode = AutoScaleMode.Font;
-		AutoScaleDimensions = new SizeF(7, 15);
-		MinimumSize = Size = new Size(800, 425);
-		//MinimumSize = Size = new Size(Wyglad.PrzeskalujRozmiar(800), Wyglad.PrzeskalujRozmiar(425));
-		ResumeLayout(true);
+		UstawZawartosc(siatkaUklad, new Size(800, 425));
 	}
 
 	protected override void RekordGotowy()

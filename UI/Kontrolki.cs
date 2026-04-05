@@ -16,6 +16,17 @@ class Kontrolki
 		return label;
 	}
 
+	public static LinkLabel Link(string tekst, Action? akcja = null)
+	{
+		var label = new LinkLabel();
+		label.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+		label.TextAlign = ContentAlignment.MiddleLeft;
+		label.AutoSize = true;
+		label.Text = tekst;
+		if (akcja != null) label.LinkClicked += BezpiecznaAkcja(akcja).Invoke;
+		return label;
+	}
+
 	public static Button Button(string tekst, Action? akcja = null)
 	{
 		var button = new ButtonDPI();
@@ -102,12 +113,13 @@ class Kontrolki
 		return comboBox;
 	}
 
-	public static ComboBox SuggestBox()
+	public static ComboBox SuggestBox(string[]? wartosci = null)
 	{
 		var comboBox = new ComboBoxFix();
 		comboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		comboBox.DropDownStyle = ComboBoxStyle.DropDown;
 		comboBox.Width = 200 * comboBox.DeviceDpi / 96;
+		if (wartosci != null) comboBox.Items.AddRange(wartosci);
 		return comboBox;
 	}
 }

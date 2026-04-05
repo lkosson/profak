@@ -22,6 +22,18 @@ class Edytor<TRekord> : UserControl
 		toolTip = new ToolTip(container);
 	}
 
+	protected void UstawZawartosc(Control zawartosc, Size wymiary)
+	{
+		SuspendLayout();
+		zawartosc.Dock = DockStyle.Fill;
+		Controls.Add(zawartosc);
+		AutoScaleMode = AutoScaleMode.Font;
+		AutoScaleDimensions = new SizeF(7, 15);
+		MinimumSize = Size = wymiary;
+		//MinimumSize = Size = new Size(Wyglad.PrzeskalujRozmiar(800), Wyglad.PrzeskalujRozmiar(425));
+		ResumeLayout(true);
+	}
+
 	public void Przygotuj(Kontekst kontekst, TRekord rekord)
 	{
 		Kontekst = kontekst;
