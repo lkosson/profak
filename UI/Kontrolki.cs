@@ -27,6 +27,22 @@ class Kontrolki
 		return label;
 	}
 
+	public static Label Text(string tekst)
+	{
+		var label = new Label();
+		label.Anchor = AnchorStyles.Left;
+		label.TextAlign = ContentAlignment.MiddleLeft;
+		label.AutoSize = true;
+		label.Text = tekst;
+		return label;
+	}
+
+	public static LinkLabel LinkPomoc(string tresc)
+	{
+		void Pomoc() => MessageBox.Show(tresc, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		return Link("[?]", Pomoc);
+	}
+
 	public static Button Button(string tekst, Action? akcja = null)
 	{
 		var button = new ButtonDPI();
@@ -55,11 +71,12 @@ class Kontrolki
 		return Uruchom;
 	}
 
-	public static TextBox TextBox()
+	public static TextBox TextBox(bool haslo = false)
 	{
 		var textBox = new TextBox();
 		textBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		textBox.Width = 200 * textBox.DeviceDpi / 96;
+		if (haslo) textBox.UseSystemPasswordChar = true;
 		return textBox;
 	}
 
@@ -75,10 +92,11 @@ class Kontrolki
 		return textBox;
 	}
 
-	public static CheckBox CheckBox()
+	public static CheckBox CheckBox(string? etykieta = null)
 	{
 		var checkBox = new CheckBox();
 		checkBox.Anchor = AnchorStyles.Left;
+		if (!String.IsNullOrEmpty(etykieta)) checkBox.Text = etykieta;
 		checkBox.Size = checkBox.GetPreferredSize(default);
 		return checkBox;
 	}

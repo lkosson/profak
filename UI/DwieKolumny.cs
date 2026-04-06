@@ -56,8 +56,7 @@ class DwieKolumny : TableLayoutPanel
 
 	public CheckBox DodajCheckBox(string etykieta)
 	{
-		var checkBox = Kontrolki.CheckBox();
-		checkBox.Text = etykieta;
+		var checkBox = Kontrolki.CheckBox(etykieta);
 		DodajWiersz(checkBox, null);
 		return checkBox;
 	}
