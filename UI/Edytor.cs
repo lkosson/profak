@@ -22,9 +22,10 @@ class Edytor<TRekord> : UserControl
 		toolTip = new ToolTip(container);
 	}
 
-	protected void UstawZawartosc(Control zawartosc, Size wymiary)
+	protected void UstawZawartosc(Control zawartosc, Size wymiary = default)
 	{
 		SuspendLayout();
+		if (wymiary == default) wymiary = zawartosc.GetPreferredSize(default);
 		zawartosc.Dock = DockStyle.Fill;
 		Controls.Add(zawartosc);
 		AutoScaleMode = AutoScaleMode.Font;

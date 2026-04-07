@@ -56,16 +56,16 @@ class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
 		kontroler.Powiazanie(numericUpDownDoWplaty, deklaracja => deklaracja.DoWplaty);
 		kontroler.Powiazanie(numericUpDownDoPrzeniesienia, deklaracja => deklaracja.DoPrzeniesienia);
 
-		var siatkaObliczenia = new Siatka([0, -1, -1, 20, 0, -1, -1], []);
-		siatkaObliczenia.DodajWiersz([null, "Podstawa", "Podatek należny", null, null, "Wartość netto", "Podatek naliczony"]);
-		siatkaObliczenia.DodajWiersz([Kontrolki.Label("Zwolnione"), numericUpDownNettoZW, null, null, Kontrolki.Label("Z przeniesienia"), null, numericUpDownNaliczonyPrzeniesiony]);
-		siatkaObliczenia.DodajWiersz([Kontrolki.Label("0%"), numericUpDownNetto0, null, null, Kontrolki.Label("Środki trwałe"), numericUpDownNettoSrodkiTrwale, numericUpDownNaliczonySrodkiTrwale]);
-		siatkaObliczenia.DodajWiersz([Kontrolki.Label("5%"), numericUpDownNetto5, numericUpDownNalezny5, null, Kontrolki.Label("Pozostałe"), numericUpDownNettoPozostale, numericUpDownNaliczonyPozostale]);
-		siatkaObliczenia.DodajWiersz([Kontrolki.Label("8%"), numericUpDownNetto8, numericUpDownNalezny8, null, Kontrolki.Label("Razem"), null, numericUpDownNaliczonyRazem]);
-		siatkaObliczenia.DodajWiersz([Kontrolki.Label("23%"), numericUpDownNetto23, numericUpDownNalezny23]);
-		siatkaObliczenia.DodajWiersz([Kontrolki.Label("WDT"), numericUpDownNettoWDT]);
-		siatkaObliczenia.DodajWiersz([Kontrolki.Label("WNT"), numericUpDownNettoWNT, numericUpDownNaleznyWNT, null, Kontrolki.Label("Do wpłaty"), null, numericUpDownDoWplaty]);
-		siatkaObliczenia.DodajWiersz([Kontrolki.Label("Razem"), numericUpDownNettoRazem, numericUpDownNaleznyRazem, null, Kontrolki.Label("Do przeniesienia"), null, numericUpDownDoPrzeniesienia]);
+		var obliczenia = new Siatka([0, -1, -1, 20, 0, -1, -1], []);
+		obliczenia.DodajWiersz([null, "Podstawa", "Podatek należny", null, null, "Wartość netto", "Podatek naliczony"]);
+		obliczenia.DodajWiersz([Kontrolki.Label("Zwolnione"), numericUpDownNettoZW, null, null, Kontrolki.Label("Z przeniesienia"), null, numericUpDownNaliczonyPrzeniesiony]);
+		obliczenia.DodajWiersz([Kontrolki.Label("0%"), numericUpDownNetto0, null, null, Kontrolki.Label("Środki trwałe"), numericUpDownNettoSrodkiTrwale, numericUpDownNaliczonySrodkiTrwale]);
+		obliczenia.DodajWiersz([Kontrolki.Label("5%"), numericUpDownNetto5, numericUpDownNalezny5, null, Kontrolki.Label("Pozostałe"), numericUpDownNettoPozostale, numericUpDownNaliczonyPozostale]);
+		obliczenia.DodajWiersz([Kontrolki.Label("8%"), numericUpDownNetto8, numericUpDownNalezny8, null, Kontrolki.Label("Razem"), null, numericUpDownNaliczonyRazem]);
+		obliczenia.DodajWiersz([Kontrolki.Label("23%"), numericUpDownNetto23, numericUpDownNalezny23]);
+		obliczenia.DodajWiersz([Kontrolki.Label("WDT"), numericUpDownNettoWDT]);
+		obliczenia.DodajWiersz([Kontrolki.Label("WNT"), numericUpDownNettoWNT, numericUpDownNaleznyWNT, null, Kontrolki.Label("Do wpłaty"), null, numericUpDownDoWplaty]);
+		obliczenia.DodajWiersz([Kontrolki.Label("Razem"), numericUpDownNettoRazem, numericUpDownNaleznyRazem, null, Kontrolki.Label("Do przeniesienia"), null, numericUpDownDoPrzeniesienia]);
 
 		var dodajSprzedazDoDeklaracji = new DynamicznaAkcja<Faktura>("➕ Dodaj do deklaracji [INS]", kontekst =>
 		{
@@ -101,15 +101,16 @@ class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
 		fakturyZakupu = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis(), new AkcjaNaSpisie<Faktura>[] { dodajZakupDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new PrzeladujAkcja<Faktura>() });
 
 		var zakladki = new Zakladki();
-		zakladki.Dodaj("Obliczenia", siatkaObliczenia);
+		zakladki.Dodaj("Obliczenia", obliczenia);
 		zakladki.Dodaj("Sprzedaż", fakturySprzedazy);
 		zakladki.Dodaj("Zakup", fakturyZakupu);
 
-		var siatkaUklad = new Siatka([0, 0, 0, -1], [0, -1]);
-		siatkaUklad.DodajWiersz([Kontrolki.Label("Miesiąc"), dateTimePickerMiesiac, Kontrolki.Button("Przelicz", delegate { WybierzFaktury(); Przelicz(); })]);
-		siatkaUklad.DodajWiersz([(zakladki, 4)]);
+		var uklad = new Pionowo([
+			new Poziomo([Kontrolki.Label("Miesiąc"), dateTimePickerMiesiac, Kontrolki.Button("Przelicz", delegate { WybierzFaktury(); Przelicz(); })]),
+			zakladki
+			]);
 
-		UstawZawartosc(siatkaUklad, new Size(800, 425));
+		UstawZawartosc(uklad);
 	}
 
 	protected override void RekordGotowy()

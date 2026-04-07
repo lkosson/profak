@@ -45,12 +45,12 @@ class SkladkaZusEdytor : Edytor<SkladkaZus>
 		obliczenia.DodajWiersz(numericUpDownSumaSkladek, "Odliczenie od dochodu");
 		obliczenia.DodajWiersz(numericUpDownOdliczenieOdDochodu, "Składki razem");
 
-		var siatka = new Siatka([0, 0, 0, -1], [0, -1]);
+		var uklad = new Pionowo([
+			new Poziomo([Kontrolki.Label("Miesiąc"), dateTimePickerMiesiac, Kontrolki.Button("Przelicz", Przelicz)]),
+			obliczenia
+			]);
 
-		siatka.DodajWiersz([Kontrolki.Label("Miesiąc"), dateTimePickerMiesiac, Kontrolki.Button("Przelicz", Przelicz)]);
-		siatka.DodajWiersz([(obliczenia, 4)]);
-
-		UstawZawartosc(siatka, new Size(400, 375));
+		UstawZawartosc(uklad);
 	}
 
 	private void Przelicz()

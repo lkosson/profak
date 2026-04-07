@@ -74,11 +74,12 @@ class ZaliczkaPitEdytor : Edytor<ZaliczkaPit>
 		zakladki.Dodaj("Sprzedaż", fakturySprzedazy);
 		zakladki.Dodaj("Zakup", fakturyZakupu);
 
-		var uklad = new Siatka([0, 0, 0, -1], [0, -1]);
-		uklad.DodajWiersz([Kontrolki.Label("Miesiąc"), dateTimePickerMiesiac, Kontrolki.Button("Przelicz", delegate { WybierzFaktury(); Przelicz(); })]);
-		uklad.DodajWiersz([(zakladki, 4)]);
+		var uklad = new Pionowo([
+			new Poziomo([Kontrolki.Label("Miesiąc"), dateTimePickerMiesiac, Kontrolki.Button("Przelicz", delegate { WybierzFaktury(); Przelicz(); })]),
+			zakladki
+			]);
 
-		UstawZawartosc(uklad, new Size(800, 425));
+		UstawZawartosc(uklad);
 	}
 
 	protected override void RekordGotowy()
