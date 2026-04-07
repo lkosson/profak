@@ -50,6 +50,7 @@ class Kontrolki
 		button.AutoSize = true;
 		button.UseVisualStyleBackColor = true;
 		button.Anchor = AnchorStyles.Left;
+		button.PoprawWymiary();
 		if (akcja != null) button.Click += BezpiecznaAkcja(akcja);
 		return button;
 	}
@@ -101,7 +102,7 @@ class Kontrolki
 		return checkBox;
 	}
 
-	public static NumericUpDown NumericUpDown(int poPrzecinku = 2)
+	public static NumericUpDown NumericUpDown(int poPrzecinku = 2, int szerokosc = -1)
 	{
 		var numericUpDown = new NumericUpDownDPI();
 		numericUpDown.Anchor = AnchorStyles.Left | AnchorStyles.Right;
@@ -109,6 +110,7 @@ class Kontrolki
 		numericUpDown.DecimalPlaces = poPrzecinku;
 		numericUpDown.Minimum = -999999999;
 		numericUpDown.Maximum = 999999999;
+		if (szerokosc > 0) numericUpDown.Width = szerokosc;
 		return numericUpDown;
 	}
 

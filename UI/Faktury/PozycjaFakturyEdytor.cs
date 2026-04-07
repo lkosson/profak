@@ -34,7 +34,7 @@ partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 		comboBoxTowar = Kontrolki.SuggestBox();
 		buttonTowar = Kontrolki.Button("...");
 		var buttonNowyTowar = Kontrolki.Button("➕", NowyTowar);
-		numericUpDownIlosc = Kontrolki.NumericUpDown(poPrzecinku: 4);
+		numericUpDownIlosc = Kontrolki.NumericUpDown(poPrzecinku: 4, szerokosc: 50);
 		numericUpDownCenaNetto = Kontrolki.NumericUpDown(poPrzecinku: 2);
 		numericUpDownCenaVat = Kontrolki.NumericUpDown(poPrzecinku: 2);
 		numericUpDownCenaBrutto = Kontrolki.NumericUpDown(poPrzecinku: 2);
@@ -49,9 +49,9 @@ partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 		comboBoxJM = Kontrolki.DropDownList();
 		var comboBoxGTU = Kontrolki.DropDownList();
 		var comboBoxStawkaRyczaltu = Kontrolki.DropDownList();
-		numericUpDownRabatProcent = Kontrolki.NumericUpDown(poPrzecinku: 2);
-		numericUpDownRabatCena = Kontrolki.NumericUpDown(poPrzecinku: 2);
-		numericUpDownRabatWartosc = Kontrolki.NumericUpDown(poPrzecinku: 2);
+		numericUpDownRabatProcent = Kontrolki.NumericUpDown(poPrzecinku: 2, szerokosc: 90);
+		numericUpDownRabatCena = Kontrolki.NumericUpDown(poPrzecinku: 2, szerokosc: 90);
+		numericUpDownRabatWartosc = Kontrolki.NumericUpDown(poPrzecinku: 2, szerokosc: 90);
 
 		kontroler.Slownik<decimal?>(comboBoxStawkaRyczaltu, null, 17m, 15m, 14m, 12.5m, 12m, 10m, 8.5m, 5.5m, 3m, 2m);
 		kontroler.Slownik(comboBoxGTU, "-", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13");
@@ -104,9 +104,9 @@ partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 		rabaty.DodajWiersz(numericUpDownRabatCena, "Od ceny jedn.");
 		rabaty.DodajWiersz(numericUpDownRabatWartosc, "Od wartości");
 
-		comboBoxStawkaVat.Width = 70;
-		comboBoxGTU.Width = 70;
-		comboBoxStawkaRyczaltu.Width = 70;
+		comboBoxStawkaVat.Width = 40;
+		comboBoxGTU.Width = 40;
+		comboBoxStawkaRyczaltu.Width = 40;
 
 		var podatki = new Siatka([0, -1, 0], []);
 		podatki.DodajWiersz("Stawka Vat", [comboBoxStawkaVat, buttonStawkaVat]);
@@ -114,8 +114,8 @@ partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 		podatki.DodajWiersz("Stawka ryczałtu", [(comboBoxStawkaRyczaltu, 2)]);
 		podatki.DodajWiersz([(labelCenaZakupu = Kontrolki.Label("Cena zakupu"), 1), (numericUpDownCenaZakupu, 2)]);
 
-		var uklad = new Siatka([-1, -1, -1, -1], [0, 0]);
-		uklad.DodajWiersz([(naglowek, 4)]);
+		var uklad = new Siatka([0, 0, 0, 0, -1], [0, 0]);
+		uklad.DodajWiersz([(naglowek, 5)]);
 		uklad.DodajWiersz([
 			new Grupa("Cena jednostkowa", ceny),
 			new Grupa("Łączna wartość", wartosci),
