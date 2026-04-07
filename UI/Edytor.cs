@@ -28,10 +28,9 @@ class Edytor<TRekord> : UserControl
 		if (wymiary == default) wymiary = zawartosc.Size;
 		zawartosc.Dock = DockStyle.Fill;
 		Controls.Add(zawartosc);
-		AutoScaleMode = AutoScaleMode.Font;
-		AutoScaleDimensions = new SizeF(7, 15);
+		//AutoScaleMode = AutoScaleMode.Font;
+		//AutoScaleDimensions = new SizeF(7, 15);
 		MinimumSize = Size = wymiary;
-		//MinimumSize = Size = new Size(Wyglad.PrzeskalujRozmiar(800), Wyglad.PrzeskalujRozmiar(425));
 		ResumeLayout(true);
 	}
 

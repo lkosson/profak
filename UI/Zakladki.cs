@@ -16,7 +16,7 @@ class Zakladki : TabControl
 		zawartosc.Dock = DockStyle.Fill;
 		//var zakladka = GetTabRect(TabPages.Count - 1);
 		wysokosc += tabPage.Padding.Top + tabPage.Padding.Bottom;
-		wysokosc += 31; //zakladka.Height;
+		wysokosc += 31 * DeviceDpi / 96; //zakladka.Height;
 		//if (szerokosc < zakladka.Width) szerokosc = zakladka.Width;
 		if (Width < szerokosc) Width = szerokosc;
 		if (Height < wysokosc) Height = wysokosc;
