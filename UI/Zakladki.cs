@@ -4,7 +4,7 @@ class Zakladki : TabControl
 {
 	public void Dodaj(string etykieta, Control zawartosc)
 	{
-		var wymiary = zawartosc.GetPreferredSize(default);
+		var wymiary = zawartosc.Size;
 		var szerokosc = wymiary.Width;
 		var wysokosc = wymiary.Height;
 		var tabPage = new TabPage();
@@ -16,7 +16,7 @@ class Zakladki : TabControl
 		zawartosc.Dock = DockStyle.Fill;
 		//var zakladka = GetTabRect(TabPages.Count - 1);
 		wysokosc += tabPage.Padding.Top + tabPage.Padding.Bottom;
-		wysokosc += 25; //zakladka.Height;
+		wysokosc += 31; //zakladka.Height;
 		//if (szerokosc < zakladka.Width) szerokosc = zakladka.Width;
 		if (Width < szerokosc) Width = szerokosc;
 		if (Height < wysokosc) Height = wysokosc;

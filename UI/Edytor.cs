@@ -25,7 +25,7 @@ class Edytor<TRekord> : UserControl
 	protected void UstawZawartosc(Control zawartosc, Size wymiary = default)
 	{
 		SuspendLayout();
-		if (wymiary == default) wymiary = zawartosc.GetPreferredSize(default);
+		if (wymiary == default) wymiary = zawartosc.Size;
 		zawartosc.Dock = DockStyle.Fill;
 		Controls.Add(zawartosc);
 		AutoScaleMode = AutoScaleMode.Font;
@@ -114,6 +114,21 @@ class Edytor<TRekord> : UserControl
 	protected void Dymek(Control kontrolka, string tresc)
 	{
 		toolTip.SetToolTip(kontrolka, tresc);
+	}
+
+	protected void PodswietlStrukture()
+	{
+		var kolory = new[] { Color.Transparent, Color.Brown, Color.Red, Color.Orange, Color.Yellow, Color.GreenYellow, Color.DarkGreen, Color.Blue, Color.Violet };
+		var i = 0;
+
+		void Podswietl(Control kontrolka, int poziom)
+		{
+			kontrolka.BackColor = kolory[poziom];
+			foreach (Control podkontrolka in kontrolka.Controls)
+				Podswietl(podkontrolka, poziom + 1);
+		}
+
+		Podswietl(this, 0);
 	}
 
 	private void TextBox_Wymagane_Validating(object? sender, CancelEventArgs e)

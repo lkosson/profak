@@ -31,7 +31,7 @@ class DwieKolumny : TableLayoutPanel
 		{
 			var label = Kontrolki.Label(etykieta);
 			Controls.Add(label, 0, RowCount - 1);
-			szerokoscEtykiet = Math.Max(szerokoscEtykiet, label.GetPreferredSize(default).Width);
+			szerokoscEtykiet = Math.Max(szerokoscEtykiet, label.Width);
 		}
 
 		if (pelnaSzerokosc)

@@ -5,8 +5,9 @@ class Grupa : GroupBox
 	public Grupa(string opis, Control zawartosc)
 	{
 		Text = opis;
-		Size = zawartosc.GetPreferredSize(default);
 		Controls.Add(zawartosc);
-		zawartosc.Dock = DockStyle.Fill;
+		zawartosc.Location = new Point(3, 19);
+		Size = zawartosc.Size + new Size(3, 3);
+		zawartosc.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
 	}
 }

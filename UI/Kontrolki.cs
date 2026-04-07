@@ -95,9 +95,9 @@ class Kontrolki
 	public static CheckBox CheckBox(string? etykieta = null)
 	{
 		var checkBox = new CheckBox();
+		checkBox.AutoSize = true;
 		checkBox.Anchor = AnchorStyles.Left;
 		if (!String.IsNullOrEmpty(etykieta)) checkBox.Text = etykieta;
-		checkBox.Size = checkBox.GetPreferredSize(default);
 		return checkBox;
 	}
 

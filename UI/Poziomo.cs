@@ -17,5 +17,7 @@ class Poziomo : FlowLayoutPanel
 			Controls.Add(kontrolka);
 			kontrolka.Anchor = AnchorStyles.Left;
 		}
+
+		Size = PreferredSize;
 	}
 }
