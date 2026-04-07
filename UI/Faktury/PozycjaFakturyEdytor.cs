@@ -104,6 +104,10 @@ partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 		rabaty.DodajWiersz(numericUpDownRabatCena, "Od ceny jedn.");
 		rabaty.DodajWiersz(numericUpDownRabatWartosc, "Od wartości");
 
+		comboBoxStawkaVat.Width = 70;
+		comboBoxGTU.Width = 70;
+		comboBoxStawkaRyczaltu.Width = 70;
+
 		var podatki = new Siatka([0, -1, 0], []);
 		podatki.DodajWiersz("Stawka Vat", [comboBoxStawkaVat, buttonStawkaVat]);
 		podatki.DodajWiersz("GTU", [(comboBoxGTU, 2)]);
@@ -119,7 +123,6 @@ partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 			new Grupa("Podatki", podatki),
 			]);
 
-		// Size = new Size(775, 183);
 		UstawZawartosc(uklad);
 	}
 
