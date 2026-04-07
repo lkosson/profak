@@ -19,7 +19,7 @@ class DwieKolumny : TableLayoutPanel
 		base.OnCreateControl();
 	}
 
-	public void DodajWiersz(Control kontrolka, string? etykieta)
+	public void DodajWiersz(Control kontrolka, string? etykieta, bool pelnaSzerokosc = false)
 	{
 		szerokoscKontrolek = Math.Max(szerokoscKontrolek, kontrolka.Width);
 		Height += kontrolka.Height + kontrolka.Margin.Top + kontrolka.Margin.Bottom;
@@ -34,7 +34,15 @@ class DwieKolumny : TableLayoutPanel
 			szerokoscEtykiet = Math.Max(szerokoscEtykiet, label.GetPreferredSize(default).Width);
 		}
 
-		Controls.Add(kontrolka, 1, RowCount - 1);
+		if (pelnaSzerokosc)
+		{
+			Controls.Add(kontrolka, 0, RowCount - 1);
+			SetColumnSpan(kontrolka, 2);
+		}
+		else
+		{
+			Controls.Add(kontrolka, 1, RowCount - 1);
+		}
 
 		var minimalnaSzerokosc = szerokoscEtykiet + szerokoscKontrolek + Margin.Left + Margin.Right + Padding.Left + Padding.Right;
 		if (Width < minimalnaSzerokosc) Width = minimalnaSzerokosc;
@@ -54,10 +62,10 @@ class DwieKolumny : TableLayoutPanel
 		return textArea;
 	}
 
-	public CheckBox DodajCheckBox(string etykieta)
+	public CheckBox DodajCheckBox(string etykieta, bool pelnaSzerokosc = false)
 	{
 		var checkBox = Kontrolki.CheckBox(etykieta);
-		DodajWiersz(checkBox, null);
+		DodajWiersz(checkBox, null, pelnaSzerokosc);
 		return checkBox;
 	}
 

@@ -72,6 +72,9 @@
     <Compile Update="UI\Pionowo.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="UI\Grupa.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="UI\Siatka.cs">
       <SubType>Component</SubType>
     </Compile>
