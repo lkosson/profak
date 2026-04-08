@@ -2,9 +2,6 @@
 
 class DwieKolumny : TableLayoutPanel
 {
-	private int szerokoscEtykiet;
-	private int szerokoscKontrolek;
-
 	public DwieKolumny()
 	{
 		ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
@@ -21,9 +18,6 @@ class DwieKolumny : TableLayoutPanel
 
 	public void DodajWiersz(Control kontrolka, string? etykieta, bool pelnaSzerokosc = false)
 	{
-		//szerokoscKontrolek = Math.Max(szerokoscKontrolek, kontrolka.Width);
-		//Height += kontrolka.Height + kontrolka.Margin.Top + kontrolka.Margin.Bottom;
-
 		RowCount++;
 		RowStyles.Add(new RowStyle());
 
@@ -44,8 +38,6 @@ class DwieKolumny : TableLayoutPanel
 			Controls.Add(kontrolka, 1, RowCount - 1);
 		}
 
-		//var minimalnaSzerokosc = szerokoscEtykiet + szerokoscKontrolek + Margin.Left + Margin.Right + Padding.Left + Padding.Right;
-		//if (Width < minimalnaSzerokosc) Width = minimalnaSzerokosc;
 		Size = GetPreferredSize(default);
 	}
 

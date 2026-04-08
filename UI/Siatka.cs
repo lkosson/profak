@@ -50,8 +50,6 @@ class Siatka : TableLayoutPanel
 
 		var kolumna = 0;
 		var wiersz = RowCount - 1;
-		//var szerokoscKontrolek = 0;
-		//var wysokoscKontrolek = 0;
 
 		foreach (var (kontrolka, kolumny) in kontrolki)
 		{
@@ -65,14 +63,8 @@ class Siatka : TableLayoutPanel
 			SetColumnSpan(kontrolka, kolumny);
 			kolumna += kolumny;
 			kontrolka.Dock = DockStyle.Fill;
-
-			//szerokoscKontrolek += Math.Max(Padding.Left, kontrolka.Margin.Left) + kontrolka.Width + Math.Max(Padding.Right, kontrolka.Margin.Right);
-			//wysokoscKontrolek = Math.Max(wysokoscKontrolek, kontrolka.Height);
 		}
 
-		//szerokoscKontrolek += Margin.Left + Margin.Right;
-		//if (Width < szerokoscKontrolek) Width = szerokoscKontrolek;
-		//Height += wysokoscKontrolek;
 		Size = GetPreferredSize(default);
 	}
 

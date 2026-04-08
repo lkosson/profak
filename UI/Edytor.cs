@@ -118,7 +118,6 @@ class Edytor<TRekord> : UserControl
 	protected void PodswietlStrukture()
 	{
 		var kolory = new[] { Color.Transparent, Color.Brown, Color.Red, Color.Orange, Color.Yellow, Color.GreenYellow, Color.DarkGreen, Color.Blue, Color.Violet };
-		var i = 0;
 
 		void Podswietl(Control kontrolka, int poziom)
 		{
