@@ -86,12 +86,13 @@ class Kontrolki
 		return Uruchom;
 	}
 
-	public static TextBox TextBox(bool haslo = false)
+	public static TextBox TextBox(bool haslo = false, string? podpowiedz = null, int szerokosc = 200)
 	{
 		var textBox = new TextBox();
 		textBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-		textBox.Width = 200 * textBox.DeviceDpi / 96;
+		textBox.Width = szerokosc * textBox.DeviceDpi / 96;
 		if (haslo) textBox.UseSystemPasswordChar = true;
+		if (!String.IsNullOrEmpty(podpowiedz)) textBox.PlaceholderText = podpowiedz;
 		return textBox;
 	}
 
@@ -113,7 +114,7 @@ class Kontrolki
 		return checkBox;
 	}
 
-	public static NumericUpDown NumericUpDown(int poPrzecinku = 2, int szerokosc = -1)
+	public static NumericUpDown NumericUpDown(int poPrzecinku = 2, int szerokosc = 100)
 	{
 		var numericUpDown = new NumericUpDownDPI();
 		numericUpDown.Anchor = AnchorStyles.Left | AnchorStyles.Right;
@@ -121,26 +122,26 @@ class Kontrolki
 		numericUpDown.DecimalPlaces = poPrzecinku;
 		numericUpDown.Minimum = -999999999;
 		numericUpDown.Maximum = 999999999;
-		if (szerokosc > 0) numericUpDown.Width = szerokosc;
+		numericUpDown.Width = szerokosc * numericUpDown.DeviceDpi / 96;
 		return numericUpDown;
 	}
 
-	public static DateTimePicker DatePicker(bool tylkoMiesiac = false)
+	public static DateTimePicker DatePicker(bool tylkoMiesiac = false, int szerokosc = 160)
 	{
 		var dateTimePicker = new DateTimePickerFix();
 		dateTimePicker.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-		dateTimePicker.Width = 200 * dateTimePicker.DeviceDpi / 96;
+		dateTimePicker.Width = szerokosc * dateTimePicker.DeviceDpi / 96;
 		dateTimePicker.CustomFormat = tylkoMiesiac ? "MM-yyyy" : Wyglad.FormatDaty;
 		dateTimePicker.Format = DateTimePickerFormat.Custom;
 		return dateTimePicker;
 	}
 
-	public static ComboBox DropDownList()
+	public static ComboBox DropDownList(int szerokosc = 200)
 	{
 		var comboBox = new ComboBoxFix();
 		comboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-		comboBox.Width = 200 * comboBox.DeviceDpi / 96;
+		comboBox.Width = szerokosc * comboBox.DeviceDpi / 96;
 		return comboBox;
 	}
 

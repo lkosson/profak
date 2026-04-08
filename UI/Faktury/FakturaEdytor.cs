@@ -86,7 +86,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 		comboBoxNIPNabywcy = Kontrolki.SuggestBox();
 		comboBoxNazwaSprzedawcy = Kontrolki.SuggestBox();
 		comboBoxNazwaNabywcy = Kontrolki.SuggestBox();
-		comboBoxWaluta = Kontrolki.DropDownList();
+		comboBoxWaluta = Kontrolki.DropDownList(szerokosc: 70);
 		buttonWaluta = Kontrolki.Button("...");
 		numericUpDownNetto = Kontrolki.NumericUpDown();
 		numericUpDownVat = Kontrolki.NumericUpDown();
@@ -100,18 +100,18 @@ partial class FakturaEdytor : FakturaEdytorBase
 		checkBoxWDT = Kontrolki.CheckBox("WDT");
 		checkBoxWNT = Kontrolki.CheckBox("WNT");
 		textBoxOpisZdarzenia = Kontrolki.TextBox();
-		textBoxNumerKSeF = Kontrolki.TextBox();
+		textBoxNumerKSeF = Kontrolki.TextBox(szerokosc: 220);
+		textBoxDataKSeF = Kontrolki.TextBox();
 		textBoxKSeFXML = Kontrolki.TextArea();
 		dateTimePickerDataWystawienia = Kontrolki.DatePicker();
 		dateTimePickerDataSprzedazy = Kontrolki.DatePicker();
 		dateTimePickerDataWprowadzenia = Kontrolki.DatePicker();
 		dateTimePickerTerminPlatnosci = Kontrolki.DatePicker();
-		numericUpDownKurs = Kontrolki.NumericUpDown(poPrzecinku: 4);
+		numericUpDownKurs = Kontrolki.NumericUpDown(poPrzecinku: 4, szerokosc: 70);
 		comboBoxProceduraMarzy = Kontrolki.DropDownList();
 		checkBoxReczneKwoty = Kontrolki.CheckBox("Kwota \"razem\" ustawiona ręcznie");
 		linkLabelUwagiPomoc = Kontrolki.LinkPomoc(PomocUwagiPubliczne);
-		textBoxNazwaBanku = Kontrolki.TextBox();
-		textBoxDataKSeF = Kontrolki.TextBox();
+		textBoxNazwaBanku = Kontrolki.TextBox(podpowiedz: "Nazwa banku", szerokosc: 120);
 		menuKSeFGenerujXML = Kontrolki.PopupMenuItem("Generuj XML", GenerujXML);
 		menuKSeFZapiszXML = Kontrolki.PopupMenuItem("Zapisz XML", ZapiszXML);
 		menuKSeFZapiszWizualizacje = Kontrolki.PopupMenuItem("Zapisz PDF z wizualizacją", ZapiszWizualizacje);
@@ -197,7 +197,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 		daty.DodajWiersz(dateTimePickerDataSprzedazy, "Data sprzedaży");
 		daty.DodajWiersz(dateTimePickerDataWprowadzenia, "Data wprowadzenia");
 
-		var platnosc = new Siatka([0, -1, -1, 0], []);
+		var platnosc = new Siatka([0, -1, 0, 0], []);
 		platnosc.DodajWiersz("Sposób płatności", [(comboBoxSposobPlatnosci, 2), (buttonSposobPlatnosci, 1)]);
 		platnosc.DodajWiersz("Termin płatności", [(dateTimePickerTerminPlatnosci, 3)]);
 		platnosc.DodajWiersz("Numer rachunku", [(textBoxRachunekBankowy, 1), (textBoxNazwaBanku, 2)]);
@@ -219,26 +219,33 @@ partial class FakturaEdytor : FakturaEdytorBase
 		pliki = Spisy.Pliki();
 		dodatkowePodmioty = Spisy.DodatkowePodmioty();
 
-		var uwagi = new Siatka([-1, -1], []);
+		Grupa gruppaUwagiPubliczne;
+		linkLabelUwagiPomoc.Anchor = AnchorStyles.Bottom;
+		var uwagi = new Siatka([-1, -1], [-1]);
 		uwagi.DodajWiersz([
-			new Grupa("Uwagi (drukowane na fakturze)", textBoxUwagiPubliczne),
+			gruppaUwagiPubliczne = new Grupa("Uwagi (drukowane na fakturze)", textBoxUwagiPubliczne),
 			new Grupa("Uwagi (wewnętrzne)", textBoxUwagiWewnetrzne)
 			]);
-		textBoxUwagiWewnetrzne.Controls.Add(linkLabelUwagiPomoc);
-		linkLabelUwagiPomoc.Location = new (textBoxUwagiPubliczne.Width - 10, textBoxUwagiPubliczne.Height - 20);
-		linkLabelUwagiPomoc.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
 
-		var podatki = new Siatka([-1, -1, 20, -1], []);
+		gruppaUwagiPubliczne.Controls.Add(linkLabelUwagiPomoc);
+		linkLabelUwagiPomoc.Location = new Point(textBoxUwagiPubliczne.Width - 20, textBoxUwagiPubliczne.Height);
+		linkLabelUwagiPomoc.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+		linkLabelUwagiPomoc.BringToFront();
+
+		var podatki = new Siatka([0, 0, 20, 0, -1], []);
 		podatki.DodajWiersz("Udział w kosztach", [comboBoxProcentKosztow, null, checkBoxWDT]);
 		podatki.DodajWiersz("Udział w VA naliczonym", [comboBoxProcentVat, null, checkBoxWNT]);
 		podatki.DodajWiersz("Opis zdarzenia na PKPiR", [textBoxOpisZdarzenia, null, checkBoxTP]);
 		podatki.DodajWiersz("Procedura marży", [comboBoxProceduraMarzy, null, checkBoxZakupSrodkowTrwalych]);
 		podatki.DodajWiersz([null, null, null, checkBoxReczneKwoty]);
 
-		var ksef = new Siatka([0, 0, 20, 0, 0, 0, -1], []);
+		textBoxDataKSeF.ReadOnly = true;
+		buttonDropDownKSeF.Width = 120;
+		var ksef = new Siatka([0, 0, 20, 0, 0, 0, -1], [0, -1]);
 		ksef.DodajWiersz("Numer KSeF", [textBoxNumerKSeF, null, Kontrolki.Label("Data KSeF"), textBoxDataKSeF, buttonDropDownKSeF]);
 		ksef.DodajWiersz([(textBoxKSeFXML, 7)]);
 
+		pozycjeFaktury.Height = 200;
 		zakladki = new Zakladki();
 		zakladki.Dodaj("Pozycje", pozycjeFaktury);
 		zakladki.Dodaj("Wpłaty", wplaty);
