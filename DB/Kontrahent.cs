@@ -7,6 +7,8 @@ public class Kontrahent : Rekord<Kontrahent>
 	public string NIP { get; set; } = "";
 	public string AdresRejestrowy { get; set; } = "";
 	public string AdresKorespondencyjny { get; set; } = "";
+	public string Kraj { get; set; } = "";
+	public string KodKraju { get; set; } = "PL";
 	public string RachunekBankowy { get; set; } = "";
 	public string NazwaBanku { get; set; } = "";
 	public string Telefon { get; set; } = "";
@@ -35,6 +37,7 @@ public class Kontrahent : Rekord<Kontrahent>
 	public Waluta? DomyslnaWaluta { get; set; }
 
 	public string AdresRejestrowyFmt => AdresRejestrowy.JakoJednaLinia();
+	public string AdresRejestrowyZKrajem => String.IsNullOrWhiteSpace(Kraj) ? AdresRejestrowy : (AdresRejestrowy + "\r\n" + Kraj).Trim();
 	public string PelnaNazwaLubNazwa => String.IsNullOrEmpty(PelnaNazwa) ? Nazwa : PelnaNazwa;
 
 	public override bool CzyPasuje(string fraza)
@@ -44,6 +47,8 @@ public class Kontrahent : Rekord<Kontrahent>
 		|| CzyPasuje(NIP, fraza)
 		|| CzyPasuje(AdresRejestrowy, fraza)
 		|| CzyPasuje(AdresKorespondencyjny, fraza)
+		|| CzyPasuje(Kraj, fraza)
+		|| CzyPasuje(KodKraju, fraza)
 		|| CzyPasuje(RachunekBankowy, fraza)
 		|| CzyPasuje(Telefon, fraza)
 		|| CzyPasuje(EMail, fraza)

@@ -640,6 +640,18 @@ namespace ProFak.DB.Migrations
                         .HasColumnType("TEXT")
                         .HasDefaultValue("");
 
+                    b.Property<string>("Kraj")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("");
+
+                    b.Property<string>("KodKraju")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("PL");
+
                     b.Property<string>("NIP")
                         .IsRequired()
                         .ValueGeneratedOnAdd()

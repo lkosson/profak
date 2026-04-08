@@ -38,6 +38,8 @@ partial class KontrahentEdytor
 		textBoxNIP = new TextBox();
 		textBoxAdresRejestrowy = new TextBox();
 		textBoxAdresKorespondencyjny = new TextBox();
+		textBoxKraj = new TextBox();
+		textBoxKodKraju = new TextBox();
 		textBoxTelefon = new TextBox();
 		textBoxEMail = new TextBox();
 		textBoxRachunekBankowy = new TextBox();
@@ -46,6 +48,8 @@ partial class KontrahentEdytor
 		label6 = new Label();
 		label7 = new Label();
 		label8 = new Label();
+		label17 = new Label();
+		label18 = new Label();
 		comboBoxStan = new ComboBox();
 		label9 = new Label();
 		checkBoxTP = new CheckBox();
@@ -142,27 +146,31 @@ partial class KontrahentEdytor
 		tableLayoutPanel1.Controls.Add(textBoxNIP, 1, 1);
 		tableLayoutPanel1.Controls.Add(textBoxAdresRejestrowy, 1, 2);
 		tableLayoutPanel1.Controls.Add(textBoxAdresKorespondencyjny, 1, 3);
-		tableLayoutPanel1.Controls.Add(textBoxTelefon, 1, 4);
-		tableLayoutPanel1.Controls.Add(textBoxEMail, 1, 5);
-		tableLayoutPanel1.Controls.Add(textBoxRachunekBankowy, 1, 6);
+		tableLayoutPanel1.Controls.Add(textBoxKraj, 1, 4);
+		tableLayoutPanel1.Controls.Add(textBoxKodKraju, 1, 5);
+		tableLayoutPanel1.Controls.Add(textBoxTelefon, 1, 6);
+		tableLayoutPanel1.Controls.Add(textBoxEMail, 1, 7);
+		tableLayoutPanel1.Controls.Add(textBoxRachunekBankowy, 1, 8);
 		tableLayoutPanel1.Controls.Add(label4, 0, 2);
 		tableLayoutPanel1.Controls.Add(label5, 0, 3);
-		tableLayoutPanel1.Controls.Add(label6, 0, 4);
-		tableLayoutPanel1.Controls.Add(label7, 0, 5);
-		tableLayoutPanel1.Controls.Add(label8, 0, 6);
-		tableLayoutPanel1.Controls.Add(comboBoxStan, 1, 7);
-		tableLayoutPanel1.Controls.Add(label9, 0, 7);
-		tableLayoutPanel1.Controls.Add(checkBoxTP, 1, 10);
-		tableLayoutPanel1.Controls.Add(buttonSprawdzMF, 3, 6);
+		tableLayoutPanel1.Controls.Add(label17, 0, 4);
+		tableLayoutPanel1.Controls.Add(label18, 0, 5);
+		tableLayoutPanel1.Controls.Add(label6, 0, 6);
+		tableLayoutPanel1.Controls.Add(label7, 0, 7);
+		tableLayoutPanel1.Controls.Add(label8, 0, 8);
+		tableLayoutPanel1.Controls.Add(comboBoxStan, 1, 9);
+		tableLayoutPanel1.Controls.Add(label9, 0, 9);
+		tableLayoutPanel1.Controls.Add(checkBoxTP, 1, 12);
+		tableLayoutPanel1.Controls.Add(buttonSprawdzMF, 3, 8);
 		tableLayoutPanel1.Controls.Add(buttonPobierzGUS, 3, 1);
-		tableLayoutPanel1.Controls.Add(labelSposobPlatnosci, 0, 9);
-		tableLayoutPanel1.Controls.Add(comboBoxSposobPlatnosci, 1, 9);
-		tableLayoutPanel1.Controls.Add(buttonSposobPlatnosci, 3, 9);
-		tableLayoutPanel1.Controls.Add(textBoxNazwaBanku, 2, 6);
-		tableLayoutPanel1.Controls.Add(label16, 0, 12);
-		tableLayoutPanel1.Controls.Add(buttonWaluta, 2, 12);
-		tableLayoutPanel1.Controls.Add(comboBoxWaluta, 1, 12);
-		tableLayoutPanel1.Controls.Add(checkBoxImportKSeF, 1, 11);
+		tableLayoutPanel1.Controls.Add(labelSposobPlatnosci, 0, 11);
+		tableLayoutPanel1.Controls.Add(comboBoxSposobPlatnosci, 1, 11);
+		tableLayoutPanel1.Controls.Add(buttonSposobPlatnosci, 3, 11);
+		tableLayoutPanel1.Controls.Add(textBoxNazwaBanku, 2, 8);
+		tableLayoutPanel1.Controls.Add(label16, 0, 14);
+		tableLayoutPanel1.Controls.Add(buttonWaluta, 2, 14);
+		tableLayoutPanel1.Controls.Add(comboBoxWaluta, 1, 14);
+		tableLayoutPanel1.Controls.Add(checkBoxImportKSeF, 1, 13);
 		tableLayoutPanel1.Dock = DockStyle.Fill;
 		tableLayoutPanel1.Location = new Point(3, 3);
 		tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -248,29 +256,48 @@ partial class KontrahentEdytor
 		// 
 		// textBoxTelefon
 		// 
+		textBoxKraj.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+		tableLayoutPanel1.SetColumnSpan(textBoxKraj, 3);
+		textBoxKraj.Location = new Point(146, 205);
+		textBoxKraj.Name = "textBoxKraj";
+		textBoxKraj.Size = new Size(631, 23);
+		textBoxKraj.TabIndex = 5;
+		// 
+		// textBoxKodKraju
+		// 
+		textBoxKodKraju.Anchor = AnchorStyles.Left;
+		textBoxKodKraju.CharacterCasing = CharacterCasing.Upper;
+		textBoxKodKraju.Location = new Point(146, 234);
+		textBoxKodKraju.MaxLength = 2;
+		textBoxKodKraju.Name = "textBoxKodKraju";
+		textBoxKodKraju.Size = new Size(50, 23);
+		textBoxKodKraju.TabIndex = 6;
+		// 
+		// textBoxTelefon
+		// 
 		textBoxTelefon.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		tableLayoutPanel1.SetColumnSpan(textBoxTelefon, 3);
-		textBoxTelefon.Location = new Point(146, 205);
+		textBoxTelefon.Location = new Point(146, 263);
 		textBoxTelefon.Name = "textBoxTelefon";
 		textBoxTelefon.Size = new Size(631, 23);
-		textBoxTelefon.TabIndex = 5;
+		textBoxTelefon.TabIndex = 7;
 		// 
 		// textBoxEMail
 		// 
 		textBoxEMail.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		tableLayoutPanel1.SetColumnSpan(textBoxEMail, 3);
-		textBoxEMail.Location = new Point(146, 234);
+		textBoxEMail.Location = new Point(146, 292);
 		textBoxEMail.Name = "textBoxEMail";
 		textBoxEMail.Size = new Size(631, 23);
-		textBoxEMail.TabIndex = 6;
+		textBoxEMail.TabIndex = 8;
 		// 
 		// textBoxRachunekBankowy
 		// 
 		textBoxRachunekBankowy.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-		textBoxRachunekBankowy.Location = new Point(146, 264);
+		textBoxRachunekBankowy.Location = new Point(146, 322);
 		textBoxRachunekBankowy.Name = "textBoxRachunekBankowy";
 		textBoxRachunekBankowy.Size = new Size(263, 23);
-		textBoxRachunekBankowy.TabIndex = 7;
+		textBoxRachunekBankowy.TabIndex = 9;
 		// 
 		// label4
 		// 
@@ -294,9 +321,29 @@ partial class KontrahentEdytor
 		// 
 		// label6
 		// 
+		label17.Anchor = AnchorStyles.Right;
+		label17.AutoSize = true;
+		label17.Location = new Point(110, 209);
+		label17.Name = "label17";
+		label17.Size = new Size(30, 15);
+		label17.TabIndex = 2;
+		label17.Text = "Kraj";
+		// 
+		// label18
+		// 
+		label18.Anchor = AnchorStyles.Right;
+		label18.AutoSize = true;
+		label18.Location = new Point(83, 238);
+		label18.Name = "label18";
+		label18.Size = new Size(57, 15);
+		label18.TabIndex = 2;
+		label18.Text = "Kod kraju";
+		// 
+		// label6
+		// 
 		label6.Anchor = AnchorStyles.Right;
 		label6.AutoSize = true;
-		label6.Location = new Point(95, 209);
+		label6.Location = new Point(95, 267);
 		label6.Name = "label6";
 		label6.Size = new Size(45, 15);
 		label6.TabIndex = 2;
@@ -306,7 +353,7 @@ partial class KontrahentEdytor
 		// 
 		label7.Anchor = AnchorStyles.Right;
 		label7.AutoSize = true;
-		label7.Location = new Point(99, 238);
+		label7.Location = new Point(99, 296);
 		label7.Name = "label7";
 		label7.Size = new Size(41, 15);
 		label7.TabIndex = 2;
@@ -316,7 +363,7 @@ partial class KontrahentEdytor
 		// 
 		label8.Anchor = AnchorStyles.Right;
 		label8.AutoSize = true;
-		label8.Location = new Point(30, 268);
+		label8.Location = new Point(30, 326);
 		label8.Name = "label8";
 		label8.Size = new Size(110, 15);
 		label8.TabIndex = 2;
@@ -328,16 +375,16 @@ partial class KontrahentEdytor
 		tableLayoutPanel1.SetColumnSpan(comboBoxStan, 3);
 		comboBoxStan.DropDownStyle = ComboBoxStyle.DropDownList;
 		comboBoxStan.FormattingEnabled = true;
-		comboBoxStan.Location = new Point(146, 294);
+		comboBoxStan.Location = new Point(146, 352);
 		comboBoxStan.Name = "comboBoxStan";
 		comboBoxStan.Size = new Size(631, 23);
-		comboBoxStan.TabIndex = 10;
+		comboBoxStan.TabIndex = 12;
 		// 
 		// label9
 		// 
 		label9.Anchor = AnchorStyles.Right;
 		label9.AutoSize = true;
-		label9.Location = new Point(110, 298);
+		label9.Location = new Point(110, 356);
 		label9.Name = "label9";
 		label9.Size = new Size(30, 15);
 		label9.TabIndex = 2;
@@ -346,20 +393,20 @@ partial class KontrahentEdytor
 		// checkBoxTP
 		// 
 		checkBoxTP.AutoSize = true;
-		checkBoxTP.Location = new Point(146, 354);
+		checkBoxTP.Location = new Point(146, 412);
 		checkBoxTP.Name = "checkBoxTP";
 		checkBoxTP.Size = new Size(131, 19);
-		checkBoxTP.TabIndex = 13;
+		checkBoxTP.TabIndex = 15;
 		checkBoxTP.Text = "Podmiot powiązany";
 		checkBoxTP.UseVisualStyleBackColor = true;
 		// 
 		// buttonSprawdzMF
 		// 
 		buttonSprawdzMF.AutoSize = true;
-		buttonSprawdzMF.Location = new Point(617, 263);
+		buttonSprawdzMF.Location = new Point(617, 321);
 		buttonSprawdzMF.Name = "buttonSprawdzMF";
 		buttonSprawdzMF.Size = new Size(160, 25);
-		buttonSprawdzMF.TabIndex = 9;
+		buttonSprawdzMF.TabIndex = 11;
 		buttonSprawdzMF.Text = "Sprawdź na białej liście VAT";
 		buttonSprawdzMF.UseVisualStyleBackColor = true;
 		buttonSprawdzMF.Click += buttonSprawdzMF_Click;
@@ -379,7 +426,7 @@ partial class KontrahentEdytor
 		// 
 		labelSposobPlatnosci.Anchor = AnchorStyles.Right;
 		labelSposobPlatnosci.AutoSize = true;
-		labelSposobPlatnosci.Location = new Point(43, 328);
+		labelSposobPlatnosci.Location = new Point(43, 386);
 		labelSposobPlatnosci.Name = "labelSposobPlatnosci";
 		labelSposobPlatnosci.Size = new Size(97, 15);
 		labelSposobPlatnosci.TabIndex = 2;
@@ -391,18 +438,18 @@ partial class KontrahentEdytor
 		tableLayoutPanel1.SetColumnSpan(comboBoxSposobPlatnosci, 2);
 		comboBoxSposobPlatnosci.DropDownStyle = ComboBoxStyle.DropDownList;
 		comboBoxSposobPlatnosci.FormattingEnabled = true;
-		comboBoxSposobPlatnosci.Location = new Point(146, 324);
+		comboBoxSposobPlatnosci.Location = new Point(146, 382);
 		comboBoxSposobPlatnosci.Name = "comboBoxSposobPlatnosci";
 		comboBoxSposobPlatnosci.Size = new Size(465, 23);
-		comboBoxSposobPlatnosci.TabIndex = 11;
+		comboBoxSposobPlatnosci.TabIndex = 13;
 		// 
 		// buttonSposobPlatnosci
 		// 
 		buttonSposobPlatnosci.AutoSize = true;
-		buttonSposobPlatnosci.Location = new Point(617, 323);
+		buttonSposobPlatnosci.Location = new Point(617, 381);
 		buttonSposobPlatnosci.Name = "buttonSposobPlatnosci";
 		buttonSposobPlatnosci.Size = new Size(26, 25);
-		buttonSposobPlatnosci.TabIndex = 12;
+		buttonSposobPlatnosci.TabIndex = 14;
 		buttonSposobPlatnosci.Text = "...";
 		buttonSposobPlatnosci.UseVisualStyleBackColor = true;
 		buttonSposobPlatnosci.Click += buttonSprawdzMF_Click;
@@ -410,7 +457,7 @@ partial class KontrahentEdytor
 		// textBoxNazwaBanku
 		// 
 		textBoxNazwaBanku.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-		textBoxNazwaBanku.Location = new Point(415, 264);
+		textBoxNazwaBanku.Location = new Point(415, 322);
 		textBoxNazwaBanku.Name = "textBoxNazwaBanku";
 		textBoxNazwaBanku.PlaceholderText = "Nazwa banku";
 		textBoxNazwaBanku.Size = new Size(196, 23);
@@ -420,7 +467,7 @@ partial class KontrahentEdytor
 		// 
 		label16.Anchor = AnchorStyles.Right;
 		label16.AutoSize = true;
-		label16.Location = new Point(42, 409);
+		label16.Location = new Point(42, 467);
 		label16.Name = "label16";
 		label16.Size = new Size(98, 15);
 		label16.TabIndex = 14;
@@ -429,7 +476,7 @@ partial class KontrahentEdytor
 		// buttonWaluta
 		// 
 		buttonWaluta.AutoSize = true;
-		buttonWaluta.Location = new Point(415, 404);
+		buttonWaluta.Location = new Point(415, 462);
 		buttonWaluta.Name = "buttonWaluta";
 		buttonWaluta.Size = new Size(26, 25);
 		buttonWaluta.TabIndex = 16;
@@ -441,10 +488,10 @@ partial class KontrahentEdytor
 		comboBoxWaluta.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		comboBoxWaluta.DropDownStyle = ComboBoxStyle.DropDownList;
 		comboBoxWaluta.FormattingEnabled = true;
-		comboBoxWaluta.Location = new Point(146, 405);
+		comboBoxWaluta.Location = new Point(146, 463);
 		comboBoxWaluta.Name = "comboBoxWaluta";
 		comboBoxWaluta.Size = new Size(263, 23);
-		comboBoxWaluta.TabIndex = 15;
+		comboBoxWaluta.TabIndex = 17;
 		// 
 		// tabPage2
 		// 
@@ -796,10 +843,10 @@ partial class KontrahentEdytor
 		// 
 		checkBoxImportKSeF.AutoSize = true;
 		tableLayoutPanel1.SetColumnSpan(checkBoxImportKSeF, 2);
-		checkBoxImportKSeF.Location = new Point(146, 379);
+		checkBoxImportKSeF.Location = new Point(146, 437);
 		checkBoxImportKSeF.Name = "checkBoxImportKSeF";
 		checkBoxImportKSeF.Size = new Size(343, 19);
-		checkBoxImportKSeF.TabIndex = 13;
+		checkBoxImportKSeF.TabIndex = 16;
 		checkBoxImportKSeF.Text = "Pobrany z KSeF (ukryty przy ręcznym wprowadzaniu faktury)";
 		checkBoxImportKSeF.UseVisualStyleBackColor = true;
 		// 
@@ -846,6 +893,8 @@ partial class KontrahentEdytor
 	private System.Windows.Forms.TextBox textBoxNIP;
 	private System.Windows.Forms.TextBox textBoxAdresRejestrowy;
 	private System.Windows.Forms.TextBox textBoxAdresKorespondencyjny;
+	private System.Windows.Forms.TextBox textBoxKraj;
+	private System.Windows.Forms.TextBox textBoxKodKraju;
 	private System.Windows.Forms.TextBox textBoxTelefon;
 	private System.Windows.Forms.TextBox textBoxEMail;
 	private System.Windows.Forms.TextBox textBoxRachunekBankowy;
@@ -854,6 +903,8 @@ partial class KontrahentEdytor
 	private System.Windows.Forms.Label label6;
 	private System.Windows.Forms.Label label7;
 	private System.Windows.Forms.Label label8;
+	private System.Windows.Forms.Label label17;
+	private System.Windows.Forms.Label label18;
 	private System.Windows.Forms.TextBox textBoxUwagiWewnetrzne;
 	private System.Windows.Forms.ComboBox comboBoxStan;
 	private System.Windows.Forms.Label label9;
