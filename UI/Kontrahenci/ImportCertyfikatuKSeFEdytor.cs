@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 
-namespace ProFak.UI.Kontrahenci;
+namespace ProFak.UI;
 
 partial class ImportCertyfikatuKSeFEdytor : UserControl
 {

@@ -1,4 +1,4 @@
-﻿namespace ProFak.UI.Kontrahenci;
+﻿namespace ProFak.UI;
 
 partial class DostepKSeFEdytor
 {

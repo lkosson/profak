@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 
-namespace ProFak.UI.Kontrahenci;
+namespace ProFak.UI;
 
 partial class DostepKSeFEdytor : UserControl
 {

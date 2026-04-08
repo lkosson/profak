@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProFak.DB;
-using ProFak.UI.Faktury;
 
 namespace ProFak.UI;
 

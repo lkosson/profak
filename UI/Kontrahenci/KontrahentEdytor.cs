@@ -1,5 +1,4 @@
 ﻿using ProFak.DB;
-using ProFak.UI.Kontrahenci;
 using System.Data;
 using System.Text.RegularExpressions;
 
