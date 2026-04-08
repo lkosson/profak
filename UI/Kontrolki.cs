@@ -46,7 +46,7 @@ class Kontrolki
 	public static Button Button(string tekst, Action? akcja = null)
 	{
 		var button = new ButtonDPI();
-		button.Text = tekst;
+		button.Text = Wyglad.IkonyAkcji ? tekst : Wyglad.NazwaBezIkony(tekst);
 		button.AutoSize = true;
 		button.UseVisualStyleBackColor = true;
 		button.Anchor = AnchorStyles.Left;
@@ -86,31 +86,35 @@ class Kontrolki
 		return Uruchom;
 	}
 
-	public static TextBox TextBox(bool haslo = false, string? podpowiedz = null, int szerokosc = 200)
+	public static TextBox TextBox(bool haslo = false, string? podpowiedz = null, int szerokosc = 200, Action? zmienionaWartosc = null)
 	{
 		var textBox = new TextBox();
 		textBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		textBox.Width = szerokosc * textBox.DeviceDpi / 96;
 		if (haslo) textBox.UseSystemPasswordChar = true;
 		if (!String.IsNullOrEmpty(podpowiedz)) textBox.PlaceholderText = podpowiedz;
+		if (zmienionaWartosc != null) textBox.TextChanged += BezpiecznaAkcja(zmienionaWartosc);
 		return textBox;
 	}
 
-	public static TextBox TextArea(int linie = -1)
+	public static TextBox TextArea(int linie = -1, Action? zmienionaWartosc = null)
 	{
 		var textBox = TextBox();
 		textBox.AcceptsReturn = true;
 		textBox.Multiline = true;
 		if (linie > 1) textBox.Height += (textBox.Height - 8) * (linie - 1);
+		if (zmienionaWartosc != null) textBox.TextChanged += BezpiecznaAkcja(zmienionaWartosc);
 		return textBox;
 	}
 
-	public static CheckBox CheckBox(string? etykieta = null)
+	public static CheckBox CheckBox(string? etykieta = null, Action? zmienionaWartosc = null)
 	{
 		var checkBox = new CheckBox();
 		checkBox.AutoSize = true;
 		checkBox.Anchor = AnchorStyles.Left;
+		checkBox.UseVisualStyleBackColor = true;
 		if (!String.IsNullOrEmpty(etykieta)) checkBox.Text = etykieta;
+		if (zmienionaWartosc != null) checkBox.CheckedChanged += BezpiecznaAkcja(zmienionaWartosc);
 		return checkBox;
 	}
 
@@ -136,12 +140,13 @@ class Kontrolki
 		return dateTimePicker;
 	}
 
-	public static ComboBox DropDownList(int szerokosc = 200)
+	public static ComboBox DropDownList(int szerokosc = 200, Action? zmienionaWartosc = null)
 	{
 		var comboBox = new ComboBoxFix();
 		comboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 		comboBox.Width = szerokosc * comboBox.DeviceDpi / 96;
+		if (zmienionaWartosc != null) comboBox.SelectedIndexChanged += BezpiecznaAkcja(zmienionaWartosc);
 		return comboBox;
 	}
 

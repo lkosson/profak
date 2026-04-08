@@ -3,21 +3,15 @@ using System.ComponentModel;
 
 namespace ProFak.UI;
 
-class Edytor<TRekord> : UserControl
-	where TRekord : Rekord<TRekord>
+class Edytor : UserControl
 {
-	protected readonly Kontroler<TRekord> kontroler;
 	private readonly Container container;
 	protected readonly ErrorProvider errorProvider;
 	protected readonly ToolTip toolTip;
 
-	public TRekord Rekord { get => kontroler.Model; private set => kontroler.Model = value; }
-	public Kontekst Kontekst { get; private set; } = default!;
-
 	public Edytor()
 	{
 		container = new Container();
-		kontroler = new Kontroler<TRekord>();
 		errorProvider = new ErrorProvider(container);
 		toolTip = new ToolTip(container);
 	}
@@ -28,35 +22,8 @@ class Edytor<TRekord> : UserControl
 		if (wymiary == default) wymiary = zawartosc.Size;
 		zawartosc.Dock = DockStyle.Fill;
 		Controls.Add(zawartosc);
-		//AutoScaleMode = AutoScaleMode.Font;
-		//AutoScaleDimensions = new SizeF(7, 15);
 		MinimumSize = Size = wymiary;
 		ResumeLayout(true);
-	}
-
-	public void Przygotuj(Kontekst kontekst, TRekord rekord)
-	{
-		Kontekst = kontekst;
-		KontekstGotowy();
-		PrzygotujRekord(rekord);
-		Rekord = rekord;
-		RekordGotowy();
-	}
-
-	protected virtual void PrzygotujRekord(TRekord rekord)
-	{
-	}
-
-	protected virtual void KontekstGotowy()
-	{
-	}
-
-	protected virtual void RekordGotowy()
-	{
-	}
-
-	public virtual void KoniecEdycji()
-	{
 	}
 
 	public void Wymagane(TextBox textBox)
@@ -162,6 +129,51 @@ class Edytor<TRekord> : UserControl
 		}
 	}
 
+	protected override void Dispose(bool disposing)
+	{
+		if (disposing) container.Dispose();
+		base.Dispose(disposing);
+	}
+}
+
+class Edytor<TRekord> : Edytor
+	where TRekord : Rekord<TRekord>
+{
+	protected readonly Kontroler<TRekord> kontroler;
+
+	public TRekord Rekord { get => kontroler.Model; private set => kontroler.Model = value; }
+	public Kontekst Kontekst { get; private set; } = default!;
+
+	public Edytor()
+	{
+		kontroler = new Kontroler<TRekord>();
+	}
+
+	public void Przygotuj(Kontekst kontekst, TRekord rekord)
+	{
+		Kontekst = kontekst;
+		KontekstGotowy();
+		PrzygotujRekord(rekord);
+		Rekord = rekord;
+		RekordGotowy();
+	}
+
+	protected virtual void PrzygotujRekord(TRekord rekord)
+	{
+	}
+
+	protected virtual void KontekstGotowy()
+	{
+	}
+
+	protected virtual void RekordGotowy()
+	{
+	}
+
+	public virtual void KoniecEdycji()
+	{
+	}
+
 	protected override void OnParentChanged(EventArgs e)
 	{
 		base.OnParentChanged(e);
@@ -183,11 +195,5 @@ class Edytor<TRekord> : UserControl
 				e.Cancel = true;
 			}
 		}
-	}
-
-	protected override void Dispose(bool disposing)
-	{
-		if (disposing) container.Dispose();
-		base.Dispose(disposing);
 	}
 }
