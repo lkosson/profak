@@ -55,6 +55,20 @@ class Kontrolki
 		return button;
 	}
 
+	public static Button ButtonMenu(string tekst, ToolStripMenuItem[] pozycje)
+	{
+		var menu = new ContextMenuStrip();
+		menu.Items.AddRange(pozycje);
+		var button = new ButtonDropDown();
+		button.Text = tekst + "    ";
+		button.AutoSize = true;
+		button.UseVisualStyleBackColor = true;
+		button.Anchor = AnchorStyles.Left;
+		button.OpenMenuOnClick = true;
+		button.Menu = menu;
+		return button;
+	}
+
 	private static EventHandler BezpiecznaAkcja(Action akcja)
 	{
 		void Uruchom(object? sender, EventArgs e)
@@ -81,15 +95,12 @@ class Kontrolki
 		return textBox;
 	}
 
-	public static TextBox TextArea(int linie)
+	public static TextBox TextArea(int linie = -1)
 	{
 		var textBox = TextBox();
-		if (linie > 1)
-		{
-			textBox.AcceptsReturn = true;
-			textBox.Multiline = true;
-			textBox.Height += (textBox.Height - 8) * (linie - 1);
-		}
+		textBox.AcceptsReturn = true;
+		textBox.Multiline = true;
+		if (linie > 1) textBox.Height += (textBox.Height - 8) * (linie - 1);
 		return textBox;
 	}
 
@@ -141,5 +152,13 @@ class Kontrolki
 		comboBox.Width = 200 * comboBox.DeviceDpi / 96;
 		if (wartosci != null) comboBox.Items.AddRange(wartosci);
 		return comboBox;
+	}
+
+	public static ToolStripMenuItem PopupMenuItem(string etykieta, Action akcja)
+	{
+		var pozycja = new ToolStripMenuItem();
+		pozycja.Text = etykieta;
+		pozycja.Click += BezpiecznaAkcja(akcja);
+		return pozycja;
 	}
 }
