@@ -119,6 +119,15 @@ class Kontrolki
 		return checkBox;
 	}
 
+	public static RadioButton RadioButton(string? etykieta = null)
+	{
+		var radioButton = new RadioButton();
+		radioButton.AutoSize = true;
+		radioButton.UseVisualStyleBackColor = true;
+		if (!String.IsNullOrEmpty(etykieta)) radioButton.Text = etykieta;
+		return radioButton;
+	}
+
 	public static NumericUpDown NumericUpDown(int poPrzecinku = 2, int szerokosc = 100, Action? zmienionaWartosc = null)
 	{
 		var numericUpDown = new NumericUpDownDPI();

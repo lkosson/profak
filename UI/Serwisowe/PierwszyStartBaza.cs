@@ -3,19 +3,77 @@ using System.ComponentModel;
 
 namespace ProFak.UI;
 
-public partial class PierwszyStartBaza : Form
+class PierwszyStartBaza : Form
 {
 	private const string ZnacznikPierwszegoUruchomienia = "pierwsze-uruchomienie.txt";
 	private const string BazaDemo = "(demo)";
 	private string? bazaZrodlowa;
 	private string? bazaDocelowa;
 
+	private readonly RadioButton radioButtonNowaPrywatnaBaza;
+	private readonly RadioButton radioButtonNowaPublicznaBaza;
+	private readonly RadioButton radioButtonNowaLokalnaBaza;
+	private readonly RadioButton radioButtonZewnetrznaBaza;
+	private readonly RadioButton radioButtonBazaDemo;
+	private readonly RadioButton radioButtonOdtworzKopie;
+	private readonly Button buttonDalej;
+	private readonly ProgressBar progressBar;
+	private readonly Label labelStatus;
+	private readonly BackgroundWorker backgroundWorker;
+
 	public PierwszyStartBaza()
 	{
-		InitializeComponent();
+		Text = "ProFak - Pierwsze uruchomienie";
+
+		var labelNaglowek1 = Kontrolki.Text("Wygląda na to, że program jeszcze nie był uruchamiany na tym komputerze. Przed rozpoczęciem pracy konieczne jest przygotowanie bazy danych.");
+		var labelNaglowek2 = Kontrolki.Text("Zaznacz jeden z poniższych punktów i kliknij \"Dalej\". Jeśli nie wiesz co wybrać i chcesz po prostu zacząć korzystać z programu, zostaw domyślny wybór bez zmian i kliknij \"Dalej\".");
+		radioButtonNowaPrywatnaBaza = Kontrolki.RadioButton("Utwórz nową, pustą bazę danych, dostępną tylko dla bieżącego użytkownika komputera.");
+		radioButtonNowaPublicznaBaza = Kontrolki.RadioButton("Utwórz nową, pustą bazę danych, dostępną dla wszystkich użytkowników tego komputera.");
+		radioButtonNowaLokalnaBaza = Kontrolki.RadioButton("Utwórz nową, pustą bazę danych w katalogu w którym został uruchomiony program.");
+		radioButtonZewnetrznaBaza = Kontrolki.RadioButton("Uruchom program korzystając z zewnętrznej bazy danych we wskazanym katalogu.");
+		radioButtonBazaDemo = Kontrolki.RadioButton("Uruchom program w trybie demonstracyjnym z przykładowymi danymi, w tymczasowej bazie danych.");
+		radioButtonOdtworzKopie = Kontrolki.RadioButton("Odtwórz bazę danych ze wskazanego pliku z kopią zapasową.");
+		buttonDalej = Kontrolki.Button("Dalej", Dalej);
+		progressBar = new ProgressBar();
+		labelStatus = Kontrolki.Label("");
+		backgroundWorker = new BackgroundWorker();
+
 		radioButtonNowaPrywatnaBaza.Enabled = CzySciezkaDostepna(DB.Baza.PrywatnaSciezka);
 		radioButtonNowaPublicznaBaza.Enabled = CzySciezkaDostepna(DB.Baza.PublicznaSciezka);
 		radioButtonNowaLokalnaBaza.Enabled = CzySciezkaDostepna(DB.Baza.LokalnaSciezka);
+		labelNaglowek1.Margin = new Padding(3);
+		labelNaglowek2.Margin = new Padding(3);
+		progressBar.Style = ProgressBarStyle.Marquee;
+		progressBar.Visible = false;
+		backgroundWorker.WorkerReportsProgress = true;
+		backgroundWorker.DoWork += backgroundWorker_DoWork;
+		backgroundWorker.ProgressChanged += backgroundWorker_ProgressChanged;
+		backgroundWorker.RunWorkerCompleted += backgroundWorker_RunWorkerCompleted;
+
+		if (radioButtonNowaPrywatnaBaza.Enabled) radioButtonNowaPrywatnaBaza.Checked = true;
+		else if (radioButtonNowaPublicznaBaza.Enabled) radioButtonNowaPublicznaBaza.Checked = true;
+		else if (radioButtonNowaLokalnaBaza.Enabled) radioButtonNowaLokalnaBaza.Checked = true;
+		else radioButtonBazaDemo.Checked = true;
+
+		var uklad = new Pionowo([
+			labelNaglowek1,
+			labelNaglowek2,
+			radioButtonNowaPrywatnaBaza,
+			radioButtonNowaPublicznaBaza,
+			radioButtonNowaLokalnaBaza,
+			radioButtonZewnetrznaBaza,
+			radioButtonBazaDemo,
+			radioButtonOdtworzKopie,
+			new Poziomo([buttonDalej, progressBar, labelStatus])
+			]);
+		uklad.Padding = new Padding(10);
+
+		AcceptButton = buttonDalej;
+		SuspendLayout();
+		Controls.Add(uklad);
+		uklad.Dock = DockStyle.Fill;
+		ClientSize = new Size(585, 275);
+		ResumeLayout();
 	}
 
 	private bool CzySciezkaDostepna(string sciezka)
@@ -40,7 +98,7 @@ public partial class PierwszyStartBaza : Form
 		}
 	}
 
-	private void buttonDalej_Click(object? sender, EventArgs e)
+	private void Dalej()
 	{
 		if (radioButtonNowaPrywatnaBaza.Checked)
 		{
@@ -59,8 +117,12 @@ public partial class PierwszyStartBaza : Form
 		}
 		else if (radioButtonZewnetrznaBaza.Checked)
 		{
-			if (openFileDialogBaza.ShowDialog() != DialogResult.OK) return;
-			bazaZrodlowa = openFileDialogBaza.FileName;
+			using var dialog = new OpenFileDialog();
+			dialog.FileName = "profak.sqlite3";
+			dialog.Filter = "Baza danych ProFak (profak.sqlite3)|profak.sqlite3|Wszystkie pliki (*.*)|*.*";
+			dialog.RestoreDirectory = true;
+			if (dialog.ShowDialog() != DialogResult.OK) return;
+			bazaZrodlowa = dialog.FileName;
 			bazaDocelowa = null;
 		}
 		else if (radioButtonBazaDemo.Checked)
@@ -70,8 +132,11 @@ public partial class PierwszyStartBaza : Form
 		}
 		else if (radioButtonOdtworzKopie.Checked)
 		{
-			if (openFileDialogBackup.ShowDialog() != DialogResult.OK) return;
-			bazaZrodlowa = openFileDialogBackup.FileName;
+			using var dialog = new OpenFileDialog();
+			dialog.Filter = "Kopia zapasowa programu ProFak (*.probak)|*.probak|Wszystkie pliki (*.*)|*.*";
+			dialog.RestoreDirectory = true;
+			if (dialog.ShowDialog() != DialogResult.OK) return;
+			bazaZrodlowa = dialog.FileName;
 			bazaDocelowa = DB.Baza.PrywatnaSciezka;
 		}
 		else return;
