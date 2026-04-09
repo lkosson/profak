@@ -82,16 +82,37 @@ public class Generator
 		ksefFaktura.Podmiot1.DaneKontaktowe.Add(new FakturaPodmiot1DaneKontaktowe { Email = String.IsNullOrWhiteSpace(dbFaktura.Sprzedawca.EMail) ? null : dbFaktura.Sprzedawca.EMail, Telefon = String.IsNullOrWhiteSpace(dbFaktura.Sprzedawca.Telefon) ? null : dbFaktura.Sprzedawca.Telefon });
 		ksefFaktura.Podmiot2 = new FakturaPodmiot2();
 		ksefFaktura.Podmiot2.DaneIdentyfikacyjne = new TPodmiot2();
-		if (String.IsNullOrEmpty(dbFaktura.NIPNabywcy))
+		ksefFaktura.Podmiot2.Adres = ZbudujAdres<TAdres>(dbFaktura.DaneNabywcy);
+		var nipNabywcy = (dbFaktura.NIPNabywcy ?? "").Replace("-", "").Trim().ToUpper();
+		if (String.IsNullOrEmpty(nipNabywcy))
 		{
 			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.BrakID = TWybor1.Item1;
 		}
+		else if (Regex.IsMatch(nipNabywcy, @"^\d{10}$"))
+		{
+			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP = nipNabywcy;
+		}
+		else if (Regex.IsMatch(nipNabywcy, @"^(PL)?\d{10}$"))
+		{
+			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP = nipNabywcy.Substring(2);
+		}
+		else if (Regex.IsMatch(nipNabywcy, @"^\w\w") && Enum.TryParse<TKodyKrajowUE>(nipNabywcy[0..2], out var kodUE))
+		{
+			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.KodUE = kodUE;
+			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NrVatUE = nipNabywcy.Substring(2);
+			if (Enum.TryParse<TKodKraju>(nipNabywcy[0..2], out var kodKraju)) ksefFaktura.Podmiot2.Adres.KodKraju = kodKraju;
+		}
+		else if (Regex.IsMatch(nipNabywcy, @"^\w\w") && Enum.TryParse<TKodKraju>(nipNabywcy[0..2], out var kodKraju))
+		{
+			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.KodKraju = kodKraju;
+			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NrID = nipNabywcy.Substring(2);
+			ksefFaktura.Podmiot2.Adres.KodKraju = kodKraju;
+		}
 		else
 		{
-			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP = dbFaktura.NIPNabywcy.Replace("-", "");
+			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NrID = nipNabywcy;
 		}
 		ksefFaktura.Podmiot2.DaneIdentyfikacyjne.Nazwa = dbFaktura.NazwaNabywcy;
-		ksefFaktura.Podmiot2.Adres = ZbudujAdres<TAdres>(dbFaktura.DaneNabywcy);
 		ksefFaktura.Podmiot2.GV = FakturaPodmiot2GV.Item2;
 		ksefFaktura.Podmiot2.JST = FakturaPodmiot2JST.Item2;
 		ksefFaktura.Fa = new FakturaFa();
@@ -386,7 +407,9 @@ public class Generator
 			if (ksefFaktura.Podmiot2.DaneIdentyfikacyjne != null)
 			{
 				dbFaktura.Nabywca.Nazwa = dbFaktura.Nabywca.PelnaNazwa = dbFaktura.NazwaNabywcy = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.Nazwa;
-				dbFaktura.Nabywca.NIP = dbFaktura.NIPNabywcy = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP;
+				if (!String.IsNullOrEmpty(ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP)) dbFaktura.Nabywca.NIP = dbFaktura.NIPNabywcy = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP;
+				else if (!String.IsNullOrEmpty(ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NrVatUE)) dbFaktura.Nabywca.NIP = dbFaktura.NIPNabywcy = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.KodUE + ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NrVatUE;
+				else if (!String.IsNullOrEmpty(ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NrID)) dbFaktura.Nabywca.NIP = dbFaktura.NIPNabywcy = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.KodKraju + ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NrID;
 			}
 
 			if (ksefFaktura.Podmiot2.Adres != null) dbFaktura.Nabywca.AdresRejestrowy = dbFaktura.DaneNabywcy = ksefFaktura.Podmiot2.Adres.AdresL1 + "\r\n" + ksefFaktura.Podmiot2.Adres.AdresL2;

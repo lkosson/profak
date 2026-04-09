@@ -67,7 +67,7 @@ partial class KontrahentEdytor : KontrahentEdytorBase
 
 		if (innyKontrahent != null) return "Istnieje już kontrahent z takim samym NIPem.";
 
-		if (!Regex.IsMatch(nip, @"^(\w\w)?\d{10}$")) return "NIP ma nieprawidłowy format.";
+		if (!Regex.IsMatch(nip, @"^(\w\w)?\d+$")) return "NIP ma nieprawidłowy format.";
 		if (nip.Length == 12)
 		{
 			if (nip.StartsWith("PL")) nip = nip.Substring(2);
