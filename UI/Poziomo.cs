@@ -7,6 +7,7 @@ class Poziomo : FlowLayoutPanel
 		FlowDirection = FlowDirection.LeftToRight;
 		WrapContents = false;
 		AutoSize = true;
+		Margin = new Padding(0);
 	}
 
 	public Poziomo(Control[] kontrolki)
