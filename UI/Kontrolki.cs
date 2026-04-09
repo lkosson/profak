@@ -27,14 +27,14 @@ class Kontrolki
 		return label;
 	}
 
-	public static Label Text(string tekst, bool pogrubiony = false)
+	public static Label Text(string tekst, bool pogrubiony = false, int rozmiar = 9)
 	{
 		var label = new Label();
 		label.Anchor = AnchorStyles.Left;
 		label.TextAlign = ContentAlignment.MiddleLeft;
 		label.AutoSize = true;
 		label.Text = tekst;
-		if (pogrubiony) label.Font = new Font(label.Font, FontStyle.Bold);
+		label.Font = new Font(label.Font.FontFamily, rozmiar, pogrubiony ? FontStyle.Bold : FontStyle.Regular);
 		return label;
 	}
 
