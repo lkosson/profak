@@ -6,7 +6,7 @@ using System.Net.Mail;
 
 namespace ProFak.UI;
 
-partial class WysylkaFakturEdytor : Edytor
+class WysylkaFakturEdytor : Edytor
 {
 	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public IEnumerable<Faktura> Faktury { get; set; } = [];
