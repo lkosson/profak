@@ -4,17 +4,37 @@ using System.Runtime.CompilerServices;
 
 namespace ProFak.UI;
 
-partial class EkranSQL : UserControl, IKontrolkaZKontekstem
+class EkranSQL : Edytor, IKontrolkaZKontekstem
 {
 	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Kontekst Kontekst { get; set; } = default!;
 
+	private readonly TextBox textBoxSQL;
+	private readonly Button buttonUruchom;
+	private readonly TextBox textBoxStatus;
+	private readonly DataGridView dataGridViewWynik;
+
 	public EkranSQL()
 	{
-		InitializeComponent();
+		textBoxSQL = Kontrolki.TextArea(linie: 5);
+		buttonUruchom = Kontrolki.Button("Uruchom [F5]", akcja: Uruchom);
+		textBoxStatus = Kontrolki.TextBox();
+		dataGridViewWynik = new DataGridView();
+
+		textBoxStatus.ReadOnly = true;
+		textBoxSQL.KeyDown += textBoxSQL_KeyDown;
+
+		var polecenie = new Siatka([-1, 0], []);
+		polecenie.DodajWiersz([textBoxSQL, new Pionowo([buttonUruchom, textBoxStatus])]);
+
+		var uklad = new Siatka([-1], [0, -1]);
+		uklad.DodajWiersz([new Grupa("Polecenie", polecenie)]);
+		uklad.DodajWiersz([new Grupa("Wynik", dataGridViewWynik)]);
+
+		UstawZawartosc(uklad);
 	}
 
-	private void buttonUruchom_Click(object? sender, EventArgs e)
+	private void Uruchom()
 	{
 		try
 		{
@@ -44,6 +64,6 @@ partial class EkranSQL : UserControl, IKontrolkaZKontekstem
 
 	private void textBoxSQL_KeyDown(object? sender, KeyEventArgs e)
 	{
-		if (e.KeyCode == Keys.F5) buttonUruchom_Click(sender, e);
+		if (e.KeyCode == Keys.F5) Uruchom();
 	}
 }
