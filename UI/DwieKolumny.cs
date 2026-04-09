@@ -16,7 +16,7 @@ class DwieKolumny : TableLayoutPanel
 		base.OnCreateControl();
 	}
 
-	public void DodajWiersz(Control kontrolka, string? etykieta, bool pelnaSzerokosc = false)
+	public void DodajWiersz(Control kontrolka, string? etykieta = null, bool pelnaSzerokosc = false)
 	{
 		RowCount++;
 		RowStyles.Add(new RowStyle());

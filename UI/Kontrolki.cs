@@ -119,7 +119,7 @@ class Kontrolki
 		return checkBox;
 	}
 
-	public static NumericUpDown NumericUpDown(int poPrzecinku = 2, int szerokosc = 100)
+	public static NumericUpDown NumericUpDown(int poPrzecinku = 2, int szerokosc = 100, Action? zmienionaWartosc = null)
 	{
 		var numericUpDown = new NumericUpDownDPI();
 		numericUpDown.Anchor = AnchorStyles.Left | AnchorStyles.Right;
@@ -128,6 +128,7 @@ class Kontrolki
 		numericUpDown.Minimum = -999999999;
 		numericUpDown.Maximum = 999999999;
 		numericUpDown.Width = szerokosc * numericUpDown.DeviceDpi / 96;
+		if (zmienionaWartosc != null) numericUpDown.ValueChanged += BezpiecznaAkcja(zmienionaWartosc);
 		return numericUpDown;
 	}
 
@@ -167,5 +168,14 @@ class Kontrolki
 		pozycja.Text = etykieta;
 		pozycja.Click += BezpiecznaAkcja(akcja);
 		return pozycja;
+	}
+
+	public static ListBox ListBox(Action? zmienionaWartosc = null)
+	{
+		var listBox= new ListBox();
+		listBox.FormattingEnabled = true;
+		listBox.ItemHeight = 15;
+		if (zmienionaWartosc != null) listBox.SelectedIndexChanged += BezpiecznaAkcja(zmienionaWartosc);
+		return listBox;
 	}
 }
