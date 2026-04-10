@@ -268,8 +268,11 @@ public class Generator
 			var ksefWiersz = new FakturaFaFaWiersz();
 			ksefWiersz.NrWierszaFa = (ulong)dbPozycja.LP;
 			//ksefWiersz.UU_ID = dbPozycja.Id.ToString();
-			ksefWiersz.P_7 = dbPozycja.Opis;
+			var opis = dbPozycja.Opis;
+			opis = Regex.Replace(opis, @"PKWIU[: ]+(?<numer>[\d\.]+)", m => { ksefWiersz.PKWiU = m.Groups["numer"].Value; return ""; }, RegexOptions.IgnoreCase);
+			ksefWiersz.P_7 = opis.Trim();
 			//ksefWiersz.Indeks = dbPozycja.Towar == null ? ksefWiersz.UU_ID : dbPozycja.Towar.Id.ToString();
+
 			ksefWiersz.P_8A = dbPozycja.JednostkaMiary?.Nazwa ?? "szt";
 			ksefWiersz.P_8B = Math.Abs(dbPozycja.Ilosc);
 			if (dbPozycja.RabatRazem != 0 && ksefWiersz.P_8B != 0) ksefWiersz.P_10 = Math.Min(dbPozycja.CzyWedlugCenBrutto ? dbPozycja.CenaBrutto : dbPozycja.CenaNetto, -dbPozycja.RabatRazem / ksefWiersz.P_8B.Value).Zaokragl();
@@ -481,6 +484,7 @@ public class Generator
 			if (pozycja.NrWierszaFa > 100 && (int)pozycja.NrWierszaFa > ksefFaktura.Fa.FaWiersz.Count) dbPozycja.LP = dbFaktura.Pozycje.Count + 1;
 			else dbPozycja.LP = (int)pozycja.NrWierszaFa;
 			dbPozycja.Opis = pozycja.P_7 ?? "";
+			if (!String.IsNullOrEmpty(pozycja.PKWiU)) dbPozycja.Opis += "  PKWiU: " + pozycja.PKWiU;
 			dbPozycja.Ilosc = pozycja.P_8B ?? 1;
 			dbPozycja.RabatCena = pozycja.P_10Value;
 			if (ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.UPR && dbPozycja.LP == 1)
