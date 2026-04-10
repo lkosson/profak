@@ -120,6 +120,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 		buttonDropDownKSeF = Kontrolki.ButtonMenu("e-Faktura", [menuKSeFGenerujXML, menuKSeFZapiszXML, menuKSeFZapiszWizualizacje, menuKSeFKopiujOdnosnik, menuKSeFOtworzOdnosnik]);
 
 		textBoxKSeFXML.Font = new Font("Consolas", 9);
+		textBoxKSeFXML.ScrollBars = ScrollBars.Both;
 
 		kontroler.Slownik<ProceduraMarży>(comboBoxProceduraMarzy);
 
