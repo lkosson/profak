@@ -99,7 +99,7 @@ partial class KonfiguracjaEdytor : Edytor<Konfiguracja>
 		siatkaWyglad.DodajWiersz([(checkBoxPrzywrocUstawieniaSpisow, 7)]);
 		siatkaWyglad.DodajWiersz([(checkBoxPrzywrocUstawieniaMenu, 7)]);
 		siatkaWyglad.DodajWiersz("Szerokość menu głównego", [numericUpDownSzerokoscMenu]);
-		siatkaWyglad.DodajWiersz("Czcionka", [textBoxNazwaCzcionki, null, textBoxRozmiarCzcionki, Kontrolki.Button("...", WybierzCzcionke)]);
+		siatkaWyglad.DodajWiersz("Czcionka", [textBoxNazwaCzcionki, null, textBoxRozmiarCzcionki, Kontrolki.ButtonSlownik(WybierzCzcionke)]);
 		siatkaWyglad.DodajWiersz("Wysokość wierszy spisu", [numericUpDownWysokoscWierszy]);
 
 		siatkaWyglad.DodajWiersz("Format daty", [(comboBoxFormatDaty, 1), (Kontrolki.LinkPomoc(PomocFormatDaty), 1), (textBoxPrzykladDaty, 3)]);

@@ -18,11 +18,11 @@ class TowarEdytor : Edytor<Towar>
 		var comboBoxRodzaj = Kontrolki.DropDownList();
 		var comboBoxSposobLiczenia = Kontrolki.DropDownList();
 		comboBoxStawkaVat = Kontrolki.DropDownList();
-		buttonStawkaVat = Kontrolki.Button("...");
+		buttonStawkaVat = Kontrolki.ButtonSlownik();
 		numericUpDownCenaNetto = Kontrolki.NumericUpDown();
 		numericUpDownCenaBrutto = Kontrolki.NumericUpDown();
 		comboBoxJednostkaMiary = Kontrolki.DropDownList();
-		buttonJednostkaMiary = Kontrolki.Button("...");
+		buttonJednostkaMiary = Kontrolki.ButtonSlownik();
 		var comboBoxWidocznosc = Kontrolki.DropDownList();
 		var comboBoxGTU = Kontrolki.DropDownList();
 		var comboBoxStawkaRyczaltu = Kontrolki.DropDownList();

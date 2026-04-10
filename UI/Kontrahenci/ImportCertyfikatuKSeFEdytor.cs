@@ -18,20 +18,20 @@ class ImportCertyfikatuKSeFEdytor : Edytor
 	public string NIP { get; set; } = "";
 
 	private readonly LinkLabel linkLabelAplikacjaPodatnika;
-	private readonly TextBox textBoxCertyfikat = Kontrolki.TextBox();
-	private readonly TextBox textBoxKlucz = Kontrolki.TextBox();
-	private readonly TextBox textBoxHaslo = Kontrolki.TextBox();
-	private readonly Button buttonCertyfikat = Kontrolki.Button("...");
-	private readonly Button buttonKlucz = Kontrolki.Button("...");
-	private readonly Button buttonZapisz = Kontrolki.Button("Zapisz");
+	private readonly TextBox textBoxCertyfikat;
+	private readonly TextBox textBoxKlucz;
+	private readonly TextBox textBoxHaslo;
+	private readonly Button buttonCertyfikat;
+	private readonly Button buttonKlucz;
+	private readonly Button buttonZapisz;
 
 	public ImportCertyfikatuKSeFEdytor()
 	{
 		textBoxCertyfikat = Kontrolki.TextBox();
 		textBoxKlucz = Kontrolki.TextBox();
 		textBoxHaslo = Kontrolki.TextBox();
-		buttonCertyfikat = Kontrolki.Button("...", WybierzCertyfikat);
-		buttonKlucz = Kontrolki.Button("...", WybierzKlucz);
+		buttonCertyfikat = Kontrolki.ButtonSlownik(WybierzCertyfikat);
+		buttonKlucz = Kontrolki.ButtonSlownik(WybierzKlucz);
 		buttonZapisz = Kontrolki.Button("Zapisz", Zapisz);
 		linkLabelAplikacjaPodatnika = Kontrolki.Link("Aplikacja podatnika", AplikacjaPodatnika);
 

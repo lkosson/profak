@@ -32,8 +32,8 @@ partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 	{
 		var numericUpDownLP = Kontrolki.NumericUpDown(poPrzecinku: 0);
 		comboBoxTowar = Kontrolki.SuggestBox();
-		buttonTowar = Kontrolki.Button("...");
-		var buttonNowyTowar = Kontrolki.Button("➕", NowyTowar);
+		buttonTowar = Kontrolki.ButtonSlownik();
+		var buttonNowyTowar = Kontrolki.ButtonDodaj(NowyTowar);
 		numericUpDownIlosc = Kontrolki.NumericUpDown(poPrzecinku: 4, szerokosc: 50);
 		numericUpDownCenaNetto = Kontrolki.NumericUpDown(poPrzecinku: 2);
 		numericUpDownCenaVat = Kontrolki.NumericUpDown(poPrzecinku: 2);
@@ -45,7 +45,7 @@ partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 		checkBoxWedlugBrutto = Kontrolki.CheckBox("Według ceny brutto");
 		checkBoxRecznie = Kontrolki.CheckBox("Ustaw kwoty ręcznie");
 		comboBoxStawkaVat = Kontrolki.DropDownList();
-		buttonStawkaVat = Kontrolki.Button("...");
+		buttonStawkaVat = Kontrolki.ButtonSlownik();
 		comboBoxJM = Kontrolki.DropDownList();
 		var comboBoxGTU = Kontrolki.DropDownList();
 		var comboBoxStawkaRyczaltu = Kontrolki.DropDownList();

@@ -77,17 +77,17 @@ partial class FakturaEdytor : FakturaEdytorBase
 		textBoxDaneNabywcy = Kontrolki.TextArea(3);
 		textBoxRachunekBankowy = Kontrolki.TextBox();
 		comboBoxSposobPlatnosci = Kontrolki.SuggestBox();
-		buttonSprzedawca = Kontrolki.Button("...");
-		buttonNowySprzedawca = Kontrolki.Button("➕");
-		buttonNabywca = Kontrolki.Button("...");
-		buttonNowyNabywca = Kontrolki.Button("➕");
-		buttonSposobPlatnosci = Kontrolki.Button("...");
+		buttonSprzedawca = Kontrolki.ButtonSlownik();
+		buttonNowySprzedawca = Kontrolki.ButtonDodaj(NowySprzedawca);
+		buttonNabywca = Kontrolki.ButtonSlownik();
+		buttonNowyNabywca = Kontrolki.ButtonDodaj(NowyNabywca)
+		buttonSposobPlatnosci = Kontrolki.ButtonSlownik();
 		comboBoxNIPSprzedawcy = Kontrolki.SuggestBox();
 		comboBoxNIPNabywcy = Kontrolki.SuggestBox();
 		comboBoxNazwaSprzedawcy = Kontrolki.SuggestBox();
 		comboBoxNazwaNabywcy = Kontrolki.SuggestBox();
 		comboBoxWaluta = Kontrolki.DropDownList(szerokosc: 70);
-		buttonWaluta = Kontrolki.Button("...");
+		buttonWaluta = Kontrolki.ButtonSlownik();
 		numericUpDownNetto = Kontrolki.NumericUpDown();
 		numericUpDownVat = Kontrolki.NumericUpDown();
 		numericUpDownBrutto = Kontrolki.NumericUpDown();
@@ -494,7 +494,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 		}
 	}
 
-	private void buttonNowySprzedawca_Click(object? sender, EventArgs e)
+	private void NowySprzedawca()
 	{
 		var kontrahent = new Kontrahent { Nazwa = comboBoxNazwaSprzedawcy.Text, NIP = comboBoxNIPSprzedawcy.Text, AdresRejestrowy = textBoxDaneSprzedawcy.Text };
 		if (!EdytorNowegoKontrahenta(kontrahent)) return;
@@ -504,7 +504,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 		kontroler.AktualizujKontrolki();
 	}
 
-	private void buttonNowyNabywca_Click(object? sender, EventArgs e)
+	private void NowyNabywca()
 	{
 		var kontrahent = new Kontrahent { Nazwa = comboBoxNazwaNabywcy.Text, NIP = comboBoxNIPNabywcy.Text, AdresRejestrowy = textBoxDaneNabywcy.Text };
 		if (!EdytorNowegoKontrahenta(kontrahent)) return;

@@ -56,6 +56,16 @@ class Kontrolki
 		return button;
 	}
 
+	public static Button ButtonSlownik(Action? akcja = null)
+	{
+		return Button("...", akcja: akcja);
+	}
+
+	public static Button ButtonDodaj(Action akcja)
+	{
+		return Button("➕", akcja: akcja);
+	}
+
 	public static Button ButtonMenu(string tekst, ToolStripMenuItem[] pozycje)
 	{
 		var menu = new ContextMenuStrip();
