@@ -449,7 +449,10 @@ public class Generator
 			if (ksefFaktura.Fa.Platnosc.DataZaplaty.HasValue) dbFaktura.Wplaty.Add(new Wplata { Data = ksefFaktura.Fa.Platnosc.DataZaplaty.Value, Kwota = ksefFaktura.Fa.P_15 });
 		}
 
-		if ((ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ZAL || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ZAL) && !ksefFaktura.Fa.FaWierszSpecified)
+		if ((ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ZAL || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ZAL)
+			&& !ksefFaktura.Fa.FaWierszSpecified
+			&& ksefFaktura.Fa.Zamowienie != null
+			&& ksefFaktura.Fa.Zamowienie.ZamowienieWiersz.Count > 0)
 		{
 			foreach (var wierszZamowienia in ksefFaktura.Fa.Zamowienie.ZamowienieWiersz)
 			{
