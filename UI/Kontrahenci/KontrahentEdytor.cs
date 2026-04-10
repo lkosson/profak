@@ -4,14 +4,85 @@ using System.Text.RegularExpressions;
 
 namespace ProFak.UI;
 
-partial class KontrahentEdytor : KontrahentEdytorBase
+partial class KontrahentEdytor : Edytor<Kontrahent>
 {
 	private readonly SpisZAkcjami<Faktura, FakturaSprzedazySpis> fakturySprzedazy;
 	private readonly SpisZAkcjami<Faktura, FakturaZakupuSpis> fakturyZakupu;
 
+	private readonly TextBox textBoxNazwa;
+	private readonly TextBox textBoxPelnaNazwa;
+	private readonly TextBox textBoxNIP;
+	private readonly TextBox textBoxAdresRejestrowy;
+	private readonly TextBox textBoxAdresKorespondencyjny;
+	private readonly TextBox textBoxTelefon;
+	private readonly TextBox textBoxEMail;
+	private readonly TextBox textBoxRachunekBankowy;
+	private readonly TextBox textBoxUwagiWewnetrzne;
+	private readonly ComboBox comboBoxStan;
+	private readonly CheckBox checkBoxTP;
+	private readonly ComboBox comboBoxKodUrzedu;
+	private readonly TextBox textBoxOsobaFizycznaImie;
+	private readonly TextBox textBoxOsobaFizycznaNazwisko;
+	private readonly Button buttonUrzadSkarbowy;
+	private readonly ComboBox comboBoxFormaOpodatkowania;
+	private readonly Button buttonSprawdzMF;
+	private readonly Button buttonPobierzGUS;
+	private readonly TextBox textBoxTokenKSeF;
+	private readonly ComboBox comboBoxSrodowiskoKSeF;
+	private readonly Button buttonKSeFAuth;
+	private readonly DateTimePicker dateTimePickerOsobaFizycznaDataUrodzenia;
+	private readonly Label labelSposobPlatnosci;
+	private readonly ComboBox comboBoxSposobPlatnosci;
+	private readonly Button buttonSposobPlatnosci;
+	private readonly TextBox textBoxUwagiPubliczne;
+	private readonly Button buttonCertyfikatKSeF;
+	private readonly TextBox textBoxNazwaBanku;
+	private readonly Button buttonWaluta;
+	private readonly ComboBox comboBoxWaluta;
+	private readonly CheckBox checkBoxImportKSeF;
+	private readonly TabPage tabPageFakturySprzedazy;
+	private readonly TabPage tabPageFakturyZakupu;
+	private readonly TabPage tabPagePodatki;
+	private readonly Zakladki zakladki;
+
 	public KontrahentEdytor()
 	{
-		InitializeComponent();
+		textBoxNazwa = Kontrolki.TextBox(zmienionaWartosc: ZmienionaNazwa);
+		textBoxPelnaNazwa = Kontrolki.TextBox();
+		textBoxNIP = Kontrolki.TextBox();
+		buttonPobierzGUS = Kontrolki.Button("Pobierz dane z GUS", akcja: PobierzGUS);
+		textBoxAdresRejestrowy = Kontrolki.TextArea(linie: 3, zmienionaWartosc: ZmienionyAdresRejestrowy);
+		textBoxAdresKorespondencyjny = Kontrolki.TextArea(linie: 3);
+		textBoxTelefon = Kontrolki.TextBox();
+		textBoxEMail = Kontrolki.TextBox();
+		textBoxRachunekBankowy = Kontrolki.TextBox();
+		textBoxNazwaBanku = Kontrolki.TextBox(podpowiedz: "Nazwa banku");
+		buttonSprawdzMF = Kontrolki.Button("Sprawdź na białej liście VAT", akcja: SprawdzMF);
+		comboBoxStan = Kontrolki.DropDownList();
+		labelSposobPlatnosci = Kontrolki.Label("Sposób płatności");
+		comboBoxSposobPlatnosci = Kontrolki.DropDownList();
+		buttonSposobPlatnosci = Kontrolki.ButtonSlownik();
+		checkBoxTP = Kontrolki.CheckBox("Podmiot powiązany");
+		checkBoxImportKSeF = Kontrolki.CheckBox("Pobrany z KSeF (ukryty przy ręcznym wprowadzaniu faktury)");
+		comboBoxWaluta = Kontrolki.SuggestBox();
+		buttonWaluta = Kontrolki.ButtonSlownik();
+
+		textBoxUwagiWewnetrzne = Kontrolki.TextArea();
+		textBoxUwagiPubliczne = Kontrolki.TextArea();
+
+		comboBoxKodUrzedu = Kontrolki.SuggestBox();
+		textBoxOsobaFizycznaImie = Kontrolki.TextBox();
+		textBoxOsobaFizycznaNazwisko = Kontrolki.TextBox();
+		buttonUrzadSkarbowy = Kontrolki.ButtonSlownik();
+		comboBoxFormaOpodatkowania = Kontrolki.DropDownList();
+		textBoxTokenKSeF = Kontrolki.TextBox();
+		comboBoxSrodowiskoKSeF = Kontrolki.DropDownList();
+		buttonKSeFAuth = Kontrolki.Button("Uzyskaj dostęp", akcja: KSeFAuth);
+		dateTimePickerOsobaFizycznaDataUrodzenia = Kontrolki.DatePicker();
+		buttonCertyfikatKSeF = Kontrolki.Button("Importuj certyfikat", akcja: CertyfikatKSeF);
+
+		fakturySprzedazy = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazyBezNabywcySpis(), new AkcjaNaSpisie<Faktura>[] { new EdytujRekordAkcja<Faktura, FakturaEdytor>(), new WydrukFakturyAkcja(), new PrzeladujAkcja<Faktura>() });
+		fakturyZakupu = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuBezSprzedawcySpis(), new AkcjaNaSpisie<Faktura>[] { new EdytujRekordAkcja<Faktura, FakturaEdytor>(), new PrzeladujAkcja<Faktura>() });
 
 		kontroler.Slownik(comboBoxStan, "archiwalny", "aktywny");
 		kontroler.Slownik<FormaOpodatkowania>(comboBoxFormaOpodatkowania, dopuscPuste: true);
@@ -47,14 +118,48 @@ partial class KontrahentEdytor : KontrahentEdytorBase
 		Walidacja(textBoxNazwa, WalidacjaNazwy, true);
 		Walidacja(textBoxPelnaNazwa, WalidacjaPelnejNazwy, true);
 
-		fakturySprzedazy = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazyBezNabywcySpis(), new AkcjaNaSpisie<Faktura>[] { new EdytujRekordAkcja<Faktura, FakturaEdytor>(), new WydrukFakturyAkcja(), new PrzeladujAkcja<Faktura>() });
-		fakturyZakupu = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuBezSprzedawcySpis(), new AkcjaNaSpisie<Faktura>[] { new EdytujRekordAkcja<Faktura, FakturaEdytor>(), new PrzeladujAkcja<Faktura>() });
+		var danePodstawowe = new Siatka([0, -1, 0, 0], []);
+		danePodstawowe.DodajWiersz("Pełna nazwa", [(textBoxPelnaNazwa, 3)]);
+		danePodstawowe.DodajWiersz("NIP", [(textBoxNIP, 2), (buttonPobierzGUS, 1)]);
+		danePodstawowe.DodajWiersz("Adres rejestrowy", [(textBoxAdresRejestrowy, 3)]);
+		danePodstawowe.DodajWiersz("Adres korespondencyjny", [(textBoxAdresKorespondencyjny, 3)]);
+		danePodstawowe.DodajWiersz("Telefon", [(textBoxTelefon, 3)]);
+		danePodstawowe.DodajWiersz("E-Mail", [(textBoxEMail, 3)]);
+		danePodstawowe.DodajWiersz("Rachunek bankowy", [textBoxRachunekBankowy, textBoxNazwaBanku, buttonSprawdzMF]);
+		danePodstawowe.DodajWiersz("Stan", [(comboBoxStan, 3)]);
+		danePodstawowe.DodajWiersz([(labelSposobPlatnosci, 1), (comboBoxSposobPlatnosci, 2), (new Poziomo([buttonSposobPlatnosci]), 1)]);
+		danePodstawowe.DodajWiersz([(null, 1), (checkBoxTP, 3)]);
+		danePodstawowe.DodajWiersz([(null, 1), (checkBoxImportKSeF, 3)]);
+		danePodstawowe.DodajWiersz("Domyślna waluta", [comboBoxWaluta, new Poziomo([buttonWaluta])]);
 
-		tabPageFakturySprzedazy.Controls.Add(fakturySprzedazy);
-		tabPageFakturyZakupu.Controls.Add(fakturyZakupu);
+		var uwagi = new Siatka([-1], [-1, -1]);
+		uwagi.DodajWiersz([
+			new Grupa("Uwagi (wewnętrzne)", textBoxUwagiWewnetrzne),
+			new Grupa("Uwagi (drukowane na fakturze)", textBoxUwagiPubliczne)
+			]);
 
-		dateTimePickerOsobaFizycznaDataUrodzenia.CustomFormat = Wyglad.FormatDaty;
-		dateTimePickerOsobaFizycznaDataUrodzenia.Format = DateTimePickerFormat.Custom;
+		comboBoxSrodowiskoKSeF.Width = 80;
+		dateTimePickerOsobaFizycznaDataUrodzenia.ShowCheckBox = true;
+		var daneUrzedowe = new Siatka([0, 0, -1, 0, 0], []);
+		daneUrzedowe.DodajWiersz("Kod urzędu skarbowego", [(comboBoxKodUrzedu, 3), (buttonUrzadSkarbowy, 1)]);
+		daneUrzedowe.DodajWiersz("Pierwsze imię", [(textBoxOsobaFizycznaImie, 4)]);
+		daneUrzedowe.DodajWiersz("Nazwisko", [(textBoxOsobaFizycznaNazwisko, 4)]);
+		daneUrzedowe.DodajWiersz("Data urodzenia", [(dateTimePickerOsobaFizycznaDataUrodzenia, 4)]);
+		daneUrzedowe.DodajWiersz("Forma opodatkowania", [(comboBoxFormaOpodatkowania, 4)]);
+		daneUrzedowe.DodajWiersz("Token KSeF", [(comboBoxSrodowiskoKSeF, 1), (textBoxTokenKSeF, 1), (new Poziomo([buttonKSeFAuth, buttonCertyfikatKSeF]), 2)]);
+
+		zakladki = new Zakladki();
+		zakladki.Dodaj("Dane podstawowe", danePodstawowe);
+		zakladki.Dodaj("Uwagi", uwagi);
+		tabPageFakturySprzedazy = zakladki.Dodaj("Sprzedaż do", fakturySprzedazy);
+		tabPageFakturyZakupu = zakladki.Dodaj("Zakup od", fakturyZakupu);
+		tabPagePodatki = zakladki.Dodaj("Dane urzędowe", daneUrzedowe);
+
+		var uklad = new Siatka([0, -1], [0, -1]);
+		uklad.DodajWiersz("Nazwa", [textBoxNazwa]);
+		uklad.DodajWiersz([(zakladki, 2)]);
+
+		UstawZawartosc(uklad);
 	}
 
 	private string? WalidacjaNIP(string nip)
@@ -109,12 +214,12 @@ partial class KontrahentEdytor : KontrahentEdytorBase
 		return null;
 	}
 
-	private void textBoxNazwa_TextChanged(object? sender, EventArgs e)
+	private void ZmienionaNazwa()
 	{
 		textBoxPelnaNazwa.PlaceholderText = textBoxNazwa.Text;
 	}
 
-	private void textBoxAdresRejestrowy_TextChanged(object? sender, EventArgs e)
+	private void ZmienionyAdresRejestrowy()
 	{
 		textBoxAdresKorespondencyjny.PlaceholderText = textBoxAdresRejestrowy.Text;
 	}
@@ -164,12 +269,12 @@ partial class KontrahentEdytor : KontrahentEdytorBase
 
 		if (Rekord.CzyPodmiot)
 		{
-			tabControl.TabPages.Remove(tabPageFakturySprzedazy);
-			tabControl.TabPages.Remove(tabPageFakturyZakupu);
+			zakladki.TabPages.Remove(tabPageFakturySprzedazy);
+			zakladki.TabPages.Remove(tabPageFakturyZakupu);
 		}
 		else
 		{
-			tabControl.TabPages.Remove(tabPagePodatki);
+			zakladki.TabPages.Remove(tabPagePodatki);
 		}
 	}
 
@@ -180,42 +285,28 @@ partial class KontrahentEdytor : KontrahentEdytorBase
 		if (String.IsNullOrEmpty(Rekord.AdresKorespondencyjny)) Rekord.AdresKorespondencyjny = Rekord.AdresRejestrowy;
 	}
 
-	private void buttonSprawdzMF_Click(object? sender, EventArgs e)
+	private void SprawdzMF()
 	{
 		var wynik = "";
-		try
+		OknoPostepu.Uruchom(async cancellationToken =>
 		{
-			OknoPostepu.Uruchom(async cancellationToken =>
-			{
-				wynik = await IO.MF.SprawdzBialaListeVAT(Rekord.NIP, Rekord.RachunekBankowy.Replace(" ", ""), cancellationToken);
-			});
+			wynik = await IO.MF.SprawdzBialaListeVAT(Rekord.NIP, Rekord.RachunekBankowy.Replace(" ", ""), cancellationToken);
+		});
 
-			MessageBox.Show($"Rachunek znajduje się na białej liście VAT, RequestId: {wynik}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
-		}
-		catch (Exception exc)
-		{
-			OknoBledu.Pokaz(exc);
-		}
+		MessageBox.Show($"Rachunek znajduje się na białej liście VAT, RequestId: {wynik}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
 	}
 
-	private void buttonPobierzGUS_Click(object? sender, EventArgs e)
+	private void PobierzGUS()
 	{
-		try
+		OknoPostepu.Uruchom(async cancellationToken =>
 		{
-			OknoPostepu.Uruchom(async cancellationToken =>
-			{
-				await IO.GUS.PobierzGUS(Rekord, cancellationToken);
-			});
+			await IO.GUS.PobierzGUS(Rekord, cancellationToken);
+		});
 
-			kontroler.AktualizujKontrolki();
-		}
-		catch (Exception exc)
-		{
-			OknoBledu.Pokaz(exc);
-		}
+		kontroler.AktualizujKontrolki();
 	}
 
-	private void buttonKSeFAuth_Click(object? sender, EventArgs e)
+	private void KSeFAuth()
 	{
 		var nip = Rekord.NIP;
 		string? token = null;
@@ -249,7 +340,7 @@ partial class KontrahentEdytor : KontrahentEdytorBase
 		kontroler.AktualizujKontrolki();
 	}
 
-	private void buttonCertyfikatKSeF_Click(object? sender, EventArgs e)
+	private void CertyfikatKSeF()
 	{
 		using var nowyKontekst = new Kontekst(Kontekst);
 		using var edytor = new ImportCertyfikatuKSeFEdytor();
@@ -261,8 +352,4 @@ partial class KontrahentEdytor : KontrahentEdytorBase
 		if (!String.IsNullOrEmpty(edytor.Certyfikat)) Rekord.TokenKSeF = edytor.Certyfikat;
 		kontroler.AktualizujKontrolki();
 	}
-}
-
-class KontrahentEdytorBase : Edytor<Kontrahent>
-{
 }

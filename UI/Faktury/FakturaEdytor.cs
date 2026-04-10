@@ -80,7 +80,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 		buttonSprzedawca = Kontrolki.ButtonSlownik();
 		buttonNowySprzedawca = Kontrolki.ButtonDodaj(NowySprzedawca);
 		buttonNabywca = Kontrolki.ButtonSlownik();
-		buttonNowyNabywca = Kontrolki.ButtonDodaj(NowyNabywca)
+		buttonNowyNabywca = Kontrolki.ButtonDodaj(NowyNabywca);
 		buttonSposobPlatnosci = Kontrolki.ButtonSlownik();
 		comboBoxNIPSprzedawcy = Kontrolki.SuggestBox();
 		comboBoxNIPNabywcy = Kontrolki.SuggestBox();
