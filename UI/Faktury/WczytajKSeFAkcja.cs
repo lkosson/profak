@@ -49,7 +49,16 @@ class WczytajKSeFAkcja : AkcjaNaSpisie<Faktura>
 	private Faktura? DodajFakture(Kontekst kontekst, string plik, bool pominOkno)
 	{
 		var xml = File.ReadAllText(plik);
-		var faktura = IO.FA_3.Generator.ZbudujDB(kontekst.Baza, xml);
+		Faktura faktura;
+		try
+		{
+			faktura = IO.FA_3.Generator.ZbudujDB(kontekst.Baza, xml);
+		}
+		catch (Exception exc)
+		{
+			MessageBox.Show($"Wczytanie faktury z pliku {plik} nie powiodło się ({exc.Message}).", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			return null;
+		}
 		faktura.DataKSeF = DateTime.Now;
 		var numerKsef = Path.GetFileNameWithoutExtension(plik);
 		if (Regex.IsMatch(numerKsef, @"\d{10}-\d{8}-[0-9A-Fa-f]{12}-[0-9A-Fa-f]{2}"))
