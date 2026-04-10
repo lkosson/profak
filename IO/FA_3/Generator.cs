@@ -132,11 +132,18 @@ public class Generator
 		ksefFaktura.Fa.Adnotacje.NoweSrodkiTransportu.P_22N = TWybor1.Item1;
 		ksefFaktura.Fa.Adnotacje.P_23 = TWybor1_2.Item2;
 		ksefFaktura.Fa.Adnotacje.PMarzy = new FakturaFaAdnotacjePMarzy();
-		if (dbFaktura.Rodzaj != RodzajFaktury.VatMarża && dbFaktura.Rodzaj != RodzajFaktury.KorektaVatMarży) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzyN = TWybor1.Item1;
-		else if (dbFaktura.ProceduraMarzy == ProceduraMarży.TowaryUżywane) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_1 = TWybor1.Item1;
-		else if (dbFaktura.ProceduraMarzy == ProceduraMarży.DziełaSztuki) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_2 = TWybor1.Item1;
-		else if (dbFaktura.ProceduraMarzy == ProceduraMarży.BiuraPodróży) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_2 = TWybor1.Item1;
-		else if (dbFaktura.ProceduraMarzy == ProceduraMarży.PrzedmiotyKolekcjonerskie) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_3 = TWybor1.Item1;
+		if (dbFaktura.Rodzaj == RodzajFaktury.VatMarża || dbFaktura.Rodzaj == RodzajFaktury.KorektaVatMarży)
+		{
+			ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy = TWybor1.Item1;
+			if (dbFaktura.ProceduraMarzy == ProceduraMarży.TowaryUżywane) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_1 = TWybor1.Item1;
+			else if (dbFaktura.ProceduraMarzy == ProceduraMarży.DziełaSztuki) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_2 = TWybor1.Item1;
+			else if (dbFaktura.ProceduraMarzy == ProceduraMarży.BiuraPodróży) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_2 = TWybor1.Item1;
+			else if (dbFaktura.ProceduraMarzy == ProceduraMarży.PrzedmiotyKolekcjonerskie) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_3 = TWybor1.Item1;
+		}
+		else
+		{
+			ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzyN = TWybor1.Item1;
+		}
 		ksefFaktura.Fa.RodzajFaktury = dbFaktura.Rodzaj == RodzajFaktury.Sprzedaż || dbFaktura.Rodzaj == RodzajFaktury.VatMarża ? TRodzajFaktury.VAT
 			: dbFaktura.Rodzaj == DB.RodzajFaktury.KorektaSprzedaży || dbFaktura.Rodzaj == RodzajFaktury.KorektaVatMarży ? TRodzajFaktury.KOR
 			: throw new ApplicationException("Nieobsługiwany rodzaj faktury: " + dbFaktura.RodzajFmt);
