@@ -51,19 +51,26 @@ class Kontrolki
 		button.AutoSize = true;
 		button.UseVisualStyleBackColor = true;
 		button.Anchor = AnchorStyles.Left;
-		button.PoprawWymiary();
 		if (akcja != null) button.Click += BezpiecznaAkcja(akcja);
 		return button;
 	}
 
 	public static Button ButtonSlownik(Action? akcja = null)
 	{
-		return Button("...", akcja: akcja);
+		var button = Button("...", akcja: akcja);
+		button.AutoSize = false;
+		button.Width = 25 * button.DeviceDpi / 96;
+		button.Height = 25; // tutaj bez DPI
+		return button;
 	}
 
 	public static Button ButtonDodaj(Action akcja)
 	{
-		return Button("➕", akcja: akcja);
+		var button = Button(Wyglad.IkonyAkcji ? "➕" : "+", akcja: akcja);
+		button.AutoSize = false;
+		button.Width = 25 * button.DeviceDpi / 96;
+		button.Height = 25; // tutaj bez DPI
+		return button;
 	}
 
 	public static Button ButtonMenu(string tekst, ToolStripMenuItem[] pozycje)
