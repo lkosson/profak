@@ -61,7 +61,7 @@ class TowarEdytor : Edytor<Towar>
 		siatka.DodajWiersz("GTU", [(comboBoxGTU, 2)]);
 		siatka.DodajWiersz("Stawka ryczałtu", [(comboBoxStawkaRyczaltu, 2)]);
 
-		UstawZawartosc(siatka, new Size(450, 300));
+		UstawZawartosc(siatka);
 	}
 
 	protected override void KontekstGotowy()

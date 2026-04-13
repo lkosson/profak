@@ -100,15 +100,20 @@ class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
 		fakturySprzedazy = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazySpis(), new AkcjaNaSpisie<Faktura>[] { dodajSprzedazDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new WydrukFakturyAkcja(), new PrzeladujAkcja<Faktura>() });
 		fakturyZakupu = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis(), new AkcjaNaSpisie<Faktura>[] { dodajZakupDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new PrzeladujAkcja<Faktura>() });
 
+		var naglowek = new Poziomo([
+			Kontrolki.Label("Miesiąc"),
+			dateTimePickerMiesiac,
+			Kontrolki.Button("Przelicz", delegate { WybierzFaktury(); Przelicz(); })
+			]);
+
 		var zakladki = new Zakladki();
 		zakladki.Dodaj("Obliczenia", obliczenia);
 		zakladki.Dodaj("Sprzedaż", fakturySprzedazy);
 		zakladki.Dodaj("Zakup", fakturyZakupu);
 
-		var uklad = new Pionowo([
-			new Poziomo([Kontrolki.Label("Miesiąc"), dateTimePickerMiesiac, Kontrolki.Button("Przelicz", delegate { WybierzFaktury(); Przelicz(); })]),
-			zakladki
-			]);
+		var uklad = new Siatka([-1], [0, -1]);
+		uklad.DodajWiersz([naglowek]);
+		uklad.DodajWiersz([zakladki]);
 
 		UstawZawartosc(uklad);
 	}
