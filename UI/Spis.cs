@@ -16,7 +16,7 @@ class Spis : DataGridView
 		AllowUserToOrderColumns = true;
 		RowHeadersVisible = true;
 		RowHeadersWidth = 16;
-		ColumnHeadersHeight = Wyglad.PrzeskalujRozmiar(Wyglad.WysokoscWiersza);
+		ColumnHeadersHeight = Wyglad.PrzeskalujRozmiar(Wyglad.WysokoscWiersza) * DeviceDpi / 96;
 		RowTemplate.Height = ColumnHeadersHeight;
 		ShowCellToolTips = true;
 		EnableHeadersVisualStyles = false;

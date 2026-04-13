@@ -6,14 +6,14 @@ class Siatka : TableLayoutPanel
 	{
 		foreach (var szerokosc in szerokosci)
 		{
-			if (szerokosc > 0) ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, szerokosc));
+			if (szerokosc > 0) ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, szerokosc * DeviceDpi / 96));
 			else if (szerokosc < 0) ColumnStyles.Add(new ColumnStyle(SizeType.Percent, -szerokosc));
 			else ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
 		}
 
 		foreach (var wysokosc in wysokosci)
 		{
-			if (wysokosc > 0) RowStyles.Add(new RowStyle(SizeType.Absolute, wysokosc));
+			if (wysokosc > 0) RowStyles.Add(new RowStyle(SizeType.Absolute, wysokosc * DeviceDpi / 96));
 			else if (wysokosc < 0) RowStyles.Add(new RowStyle(SizeType.Percent, -wysokosc));
 			else RowStyles.Add(new RowStyle(SizeType.AutoSize));
 		}
@@ -62,7 +62,8 @@ class Siatka : TableLayoutPanel
 			Controls.Add(kontrolka, kolumna, wiersz);
 			SetColumnSpan(kontrolka, kolumny);
 			kolumna += kolumny;
-			kontrolka.Dock = DockStyle.Fill;
+			if (kontrolka is NumericUpDown or ComboBox) kontrolka.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+			else kontrolka.Dock = DockStyle.Fill;
 		}
 
 		Size = GetPreferredSize(default);
