@@ -7,6 +7,7 @@ static class Rozszerzenia
 	public static (string linia1, string linia2) JakoDwieLinie(this string wejscie)
 	{
 		if (String.IsNullOrWhiteSpace(wejscie)) return ("", "");
+		wejscie = wejscie.Trim('\r', '\n', '\t', ' ');
 		var sep = wejscie.IndexOfAny(new[] { '\r', '\n' });
 		if (sep < 0) return (wejscie, "");
 		return (wejscie[..sep], wejscie[sep..].Replace("\r", " ").Replace("\n", " ").Replace("  ", " ").Trim());

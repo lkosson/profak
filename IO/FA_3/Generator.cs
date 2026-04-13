@@ -82,16 +82,37 @@ public class Generator
 		ksefFaktura.Podmiot1.DaneKontaktowe.Add(new FakturaPodmiot1DaneKontaktowe { Email = String.IsNullOrWhiteSpace(dbFaktura.Sprzedawca.EMail) ? null : dbFaktura.Sprzedawca.EMail, Telefon = String.IsNullOrWhiteSpace(dbFaktura.Sprzedawca.Telefon) ? null : dbFaktura.Sprzedawca.Telefon });
 		ksefFaktura.Podmiot2 = new FakturaPodmiot2();
 		ksefFaktura.Podmiot2.DaneIdentyfikacyjne = new TPodmiot2();
-		if (String.IsNullOrEmpty(dbFaktura.NIPNabywcy))
+		ksefFaktura.Podmiot2.Adres = ZbudujAdres<TAdres>(dbFaktura.DaneNabywcy);
+		var nipNabywcy = (dbFaktura.NIPNabywcy ?? "").Replace("-", "").Trim().ToUpper();
+		if (String.IsNullOrEmpty(nipNabywcy))
 		{
 			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.BrakID = TWybor1.Item1;
 		}
+		else if (Regex.IsMatch(nipNabywcy, @"^\d{10}$"))
+		{
+			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP = nipNabywcy;
+		}
+		else if (Regex.IsMatch(nipNabywcy, @"^(PL)?\d{10}$"))
+		{
+			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP = nipNabywcy.Substring(2);
+		}
+		else if (Regex.IsMatch(nipNabywcy, @"^\w\w") && Enum.TryParse<TKodyKrajowUE>(nipNabywcy[0..2], out var kodUE))
+		{
+			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.KodUE = kodUE;
+			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NrVatUE = nipNabywcy.Substring(2);
+			if (Enum.TryParse<TKodKraju>(nipNabywcy[0..2], out var kodKraju)) ksefFaktura.Podmiot2.Adres.KodKraju = kodKraju;
+		}
+		else if (Regex.IsMatch(nipNabywcy, @"^\w\w") && Enum.TryParse<TKodKraju>(nipNabywcy[0..2], out var kodKraju))
+		{
+			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.KodKraju = kodKraju;
+			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NrID = nipNabywcy.Substring(2);
+			ksefFaktura.Podmiot2.Adres.KodKraju = kodKraju;
+		}
 		else
 		{
-			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP = dbFaktura.NIPNabywcy.Replace("-", "");
+			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NrID = nipNabywcy;
 		}
 		ksefFaktura.Podmiot2.DaneIdentyfikacyjne.Nazwa = dbFaktura.NazwaNabywcy;
-		ksefFaktura.Podmiot2.Adres = ZbudujAdres<TAdres>(dbFaktura.DaneNabywcy);
 		ksefFaktura.Podmiot2.GV = FakturaPodmiot2GV.Item2;
 		ksefFaktura.Podmiot2.JST = FakturaPodmiot2JST.Item2;
 		ksefFaktura.Fa = new FakturaFa();
@@ -111,11 +132,18 @@ public class Generator
 		ksefFaktura.Fa.Adnotacje.NoweSrodkiTransportu.P_22N = TWybor1.Item1;
 		ksefFaktura.Fa.Adnotacje.P_23 = TWybor1_2.Item2;
 		ksefFaktura.Fa.Adnotacje.PMarzy = new FakturaFaAdnotacjePMarzy();
-		if (dbFaktura.Rodzaj != RodzajFaktury.VatMarża && dbFaktura.Rodzaj != RodzajFaktury.KorektaVatMarży) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzyN = TWybor1.Item1;
-		else if (dbFaktura.ProceduraMarzy == ProceduraMarży.TowaryUżywane) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_1 = TWybor1.Item1;
-		else if (dbFaktura.ProceduraMarzy == ProceduraMarży.DziełaSztuki) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_2 = TWybor1.Item1;
-		else if (dbFaktura.ProceduraMarzy == ProceduraMarży.BiuraPodróży) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_2 = TWybor1.Item1;
-		else if (dbFaktura.ProceduraMarzy == ProceduraMarży.PrzedmiotyKolekcjonerskie) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_3 = TWybor1.Item1;
+		if (dbFaktura.Rodzaj == RodzajFaktury.VatMarża || dbFaktura.Rodzaj == RodzajFaktury.KorektaVatMarży)
+		{
+			ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy = TWybor1.Item1;
+			if (dbFaktura.ProceduraMarzy == ProceduraMarży.TowaryUżywane) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_1 = TWybor1.Item1;
+			else if (dbFaktura.ProceduraMarzy == ProceduraMarży.DziełaSztuki) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_2 = TWybor1.Item1;
+			else if (dbFaktura.ProceduraMarzy == ProceduraMarży.BiuraPodróży) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_2 = TWybor1.Item1;
+			else if (dbFaktura.ProceduraMarzy == ProceduraMarży.PrzedmiotyKolekcjonerskie) ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzy_3_3 = TWybor1.Item1;
+		}
+		else
+		{
+			ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzyN = TWybor1.Item1;
+		}
 		ksefFaktura.Fa.RodzajFaktury = dbFaktura.Rodzaj == RodzajFaktury.Sprzedaż || dbFaktura.Rodzaj == RodzajFaktury.VatMarża ? TRodzajFaktury.VAT
 			: dbFaktura.Rodzaj == DB.RodzajFaktury.KorektaSprzedaży || dbFaktura.Rodzaj == RodzajFaktury.KorektaVatMarży ? TRodzajFaktury.KOR
 			: throw new ApplicationException("Nieobsługiwany rodzaj faktury: " + dbFaktura.RodzajFmt);
@@ -247,8 +275,11 @@ public class Generator
 			var ksefWiersz = new FakturaFaFaWiersz();
 			ksefWiersz.NrWierszaFa = (ulong)dbPozycja.LP;
 			//ksefWiersz.UU_ID = dbPozycja.Id.ToString();
-			ksefWiersz.P_7 = dbPozycja.Opis;
+			var opis = dbPozycja.Opis;
+			opis = Regex.Replace(opis, @"PKWIU[: ]+(?<numer>[\d\.]+)", m => { ksefWiersz.PKWiU = m.Groups["numer"].Value; return ""; }, RegexOptions.IgnoreCase);
+			ksefWiersz.P_7 = opis.Trim();
 			//ksefWiersz.Indeks = dbPozycja.Towar == null ? ksefWiersz.UU_ID : dbPozycja.Towar.Id.ToString();
+
 			ksefWiersz.P_8A = dbPozycja.JednostkaMiary?.Nazwa ?? "szt";
 			ksefWiersz.P_8B = Math.Abs(dbPozycja.Ilosc);
 			if (dbPozycja.RabatRazem != 0 && ksefWiersz.P_8B != 0) ksefWiersz.P_10 = Math.Min(dbPozycja.CzyWedlugCenBrutto ? dbPozycja.CenaBrutto : dbPozycja.CenaNetto, -dbPozycja.RabatRazem / ksefWiersz.P_8B.Value).Zaokragl();
@@ -386,7 +417,9 @@ public class Generator
 			if (ksefFaktura.Podmiot2.DaneIdentyfikacyjne != null)
 			{
 				dbFaktura.Nabywca.Nazwa = dbFaktura.Nabywca.PelnaNazwa = dbFaktura.NazwaNabywcy = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.Nazwa;
-				dbFaktura.Nabywca.NIP = dbFaktura.NIPNabywcy = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP;
+				if (!String.IsNullOrEmpty(ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP)) dbFaktura.Nabywca.NIP = dbFaktura.NIPNabywcy = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP;
+				else if (!String.IsNullOrEmpty(ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NrVatUE)) dbFaktura.Nabywca.NIP = dbFaktura.NIPNabywcy = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.KodUE + ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NrVatUE;
+				else if (!String.IsNullOrEmpty(ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NrID)) dbFaktura.Nabywca.NIP = dbFaktura.NIPNabywcy = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.KodKraju + ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NrID;
 			}
 
 			if (ksefFaktura.Podmiot2.Adres != null) dbFaktura.Nabywca.AdresRejestrowy = dbFaktura.DaneNabywcy = ksefFaktura.Podmiot2.Adres.AdresL1 + "\r\n" + ksefFaktura.Podmiot2.Adres.AdresL2;
@@ -423,7 +456,10 @@ public class Generator
 			if (ksefFaktura.Fa.Platnosc.DataZaplaty.HasValue) dbFaktura.Wplaty.Add(new Wplata { Data = ksefFaktura.Fa.Platnosc.DataZaplaty.Value, Kwota = ksefFaktura.Fa.P_15 });
 		}
 
-		if ((ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ZAL || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ZAL) && !ksefFaktura.Fa.FaWierszSpecified)
+		if ((ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ZAL || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ZAL)
+			&& !ksefFaktura.Fa.FaWierszSpecified
+			&& ksefFaktura.Fa.Zamowienie != null
+			&& ksefFaktura.Fa.Zamowienie.ZamowienieWiersz.Count > 0)
 		{
 			foreach (var wierszZamowienia in ksefFaktura.Fa.Zamowienie.ZamowienieWiersz)
 			{
@@ -458,6 +494,7 @@ public class Generator
 			if (pozycja.NrWierszaFa > 100 && (int)pozycja.NrWierszaFa > ksefFaktura.Fa.FaWiersz.Count) dbPozycja.LP = dbFaktura.Pozycje.Count + 1;
 			else dbPozycja.LP = (int)pozycja.NrWierszaFa;
 			dbPozycja.Opis = pozycja.P_7 ?? "";
+			if (!String.IsNullOrEmpty(pozycja.PKWiU)) dbPozycja.Opis += "  PKWiU: " + pozycja.PKWiU;
 			dbPozycja.Ilosc = pozycja.P_8B ?? 1;
 			dbPozycja.RabatCena = pozycja.P_10Value;
 			if (ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.UPR && dbPozycja.LP == 1)
