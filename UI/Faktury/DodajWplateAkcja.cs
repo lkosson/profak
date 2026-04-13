@@ -15,7 +15,7 @@ class DodajWplateAkcja : AkcjaNaSpisie<Faktura>
 		using var nowyKontekst = new Kontekst(kontekst);
 		using var transakcja = nowyKontekst.Transakcja();
 		var wplata = new Wplata { Data = DateTime.Now.Date };
-		Button buttonQR = null;
+		Button? buttonQR = null;
 		if (zaznaczoneRekordy.Count() == 1)
 		{
 			var faktura = zaznaczoneRekordy.Single();
@@ -26,9 +26,9 @@ class DodajWplateAkcja : AkcjaNaSpisie<Faktura>
 
 			if (faktura.CzyZakup && !String.IsNullOrEmpty(faktura.RachunekBankowy) && !String.IsNullOrEmpty(faktura.NIPSprzedawcy))
 			{
-				buttonQR = new Button();
-				buttonQR.AutoSize = false;
-				buttonQR.Height = 25;
+				buttonQR = new ButtonDPI();
+				buttonQR.AutoSize = true;
+				buttonQR.Margin = new Padding(3 * buttonQR.DeviceDpi / 96);
 				buttonQR.Text = "Kod QR";
 				buttonQR.Click += delegate
 				{
