@@ -19,6 +19,9 @@ public static class Program
 			Application.SetCompatibleTextRenderingDefault(false);
 			CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("pl-PL");
 			Baza.UstalSciezkeBazy();
+#if AVALONIA
+			UI.AvaloniaUI.Przygotuj();
+#endif
 #if !SQLSERVER
 			if (!PierwszyStartBaza.Uruchom()) return;
 #endif
