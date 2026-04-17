@@ -1,45 +1,52 @@
 ﻿#if AVALONIA
+global using TControl = Avalonia.Controls.Control;
+global using TLabel = Avalonia.Controls.Label;
+global using TLinkLabel = Avalonia.Controls.HyperlinkButton;
+global using TText = Avalonia.Controls.TextBlock;
+global using TButton = Avalonia.Controls.Button;
+global using TTextBox = Avalonia.Controls.TextBox;
+global using TTextArea = Avalonia.Controls.TextBox;
+global using TCheckBox = Avalonia.Controls.CheckBox;
+global using TRadioButton = Avalonia.Controls.RadioButton;
+global using TNumericUpDown = Avalonia.Controls.NumericUpDown;
+global using TComboBox = Avalonia.Controls.ComboBox;
+global using TListBox = Avalonia.Controls.ListBox;
+global using TMenuItem = Avalonia.Controls.MenuItem;
+global using TDatePicker = Avalonia.Controls.DatePicker;
+global using TProgressBar = Avalonia.Controls.ProgressBar;
+global using TContextMenu = Avalonia.Controls.ContextMenu;
 using Avalonia.Layout;
 using HorizontalAlignment = Avalonia.Layout.HorizontalAlignment;
-using Label = Avalonia.Controls.Label;
-using Button = Avalonia.Controls.Button;
-using TextBox = Avalonia.Controls.TextBox;
-using CheckBox = Avalonia.Controls.CheckBox;
-using RadioButton = Avalonia.Controls.RadioButton;
-using NumericUpDown = Avalonia.Controls.NumericUpDown;
-using ComboBox = Avalonia.Controls.ComboBox;
-using ListBox = Avalonia.Controls.ListBox;
-using MenuItem = Avalonia.Controls.MenuItem;
-using ContextMenu = Avalonia.Controls.ContextMenu;
 using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Interactivity;
 using System.Globalization;
+using ProgressBar = Avalonia.Controls.ProgressBar;
 
 namespace ProFak.UI;
 
 class KontrolkiAV
 {
-	public static Label Label(string tekst)
+	public static TLabel Label(string tekst)
 	{
-		var label = new Label();
+		var label = new TLabel();
 		label.HorizontalContentAlignment = HorizontalAlignment.Right;
 		label.VerticalContentAlignment = VerticalAlignment.Center;
 		label.Content = tekst;
 		return label;
 	}
 
-	public static HyperlinkButton Link(string tekst, Action? akcja = null)
+	public static TLinkLabel Link(string tekst, Action? akcja = null)
 	{
-		var link = new HyperlinkButton();
+		var link = new TLinkLabel();
 		link.Content = tekst;
 		if (akcja != null) link.Click += BezpiecznaAkcja(akcja).Invoke;
 		return link;
 	}
 
-	public static TextBlock Text(string tekst, bool pogrubiony = false, int rozmiar = 9)
+	public static TText Text(string tekst, bool pogrubiony = false, int rozmiar = 9)
 	{
-		var text = new TextBlock();
+		var text = new TText();
 		text.HorizontalAlignment = HorizontalAlignment.Left;
 		text.VerticalAlignment = VerticalAlignment.Center;
 		text.Text = tekst;
@@ -54,15 +61,15 @@ class KontrolkiAV
 		return Link("[?]", Pomoc);
 	}
 
-	public static Button Button(string tekst, Action? akcja = null)
+	public static TButton Button(string tekst, Action? akcja = null)
 	{
-		var button = new Button();
+		var button = new TButton();
 		button.Content = Wyglad.IkonyAkcji ? tekst : Wyglad.NazwaBezIkony(tekst);
 		if (akcja != null) button.Click += BezpiecznaAkcja(akcja);
 		return button;
 	}
 
-	public static Button ButtonSlownik(Action? akcja = null)
+	public static TButton ButtonSlownik(Action? akcja = null)
 	{
 		var button = Button("...", akcja: akcja);
 		button.Width = 25;
@@ -70,7 +77,7 @@ class KontrolkiAV
 		return button;
 	}
 
-	public static Button ButtonDodaj(Action akcja)
+	public static TButton ButtonDodaj(Action akcja)
 	{
 		var button = Button(Wyglad.IkonyAkcji ? "➕" : "+", akcja: akcja);
 		button.Width = 25;
@@ -78,9 +85,9 @@ class KontrolkiAV
 		return button;
 	}
 
-	public static Button ButtonMenu(string tekst, MenuItem[] pozycje)
+	public static TButton ButtonMenu(string tekst, TMenuItem[] pozycje)
 	{
-		var menu = new ContextMenu();
+		var menu = new TContextMenu();
 		menu.ItemsSource = pozycje;
 		var button = new DropDownButton();
 		button.Content = tekst;
@@ -105,9 +112,9 @@ class KontrolkiAV
 		return Uruchom;
 	}
 
-	public static TextBox TextBox(bool haslo = false, string? podpowiedz = null, int szerokosc = 200, Action? zmienionaWartosc = null)
+	public static TTextBox TextBox(bool haslo = false, string? podpowiedz = null, int szerokosc = 200, Action? zmienionaWartosc = null)
 	{
-		var textBox = new TextBox();
+		var textBox = new TTextBox();
 		textBox.Width = szerokosc;
 		if (haslo) textBox.PasswordChar = '*';
 		if (!String.IsNullOrEmpty(podpowiedz)) textBox.PlaceholderText = podpowiedz;
@@ -115,33 +122,33 @@ class KontrolkiAV
 		return textBox;
 	}
 
-	public static TextBox TextArea(int linie = -1, Action? zmienionaWartosc = null)
+	public static TTextArea TextArea(int linie = -1, Action? zmienionaWartosc = null)
 	{
-		var textBox = TextBox();
+		var textBox = new TTextArea();
 		textBox.AcceptsReturn = true;
 		textBox.MinLines = Math.Max(2, linie);
 		if (zmienionaWartosc != null) textBox.TextChanged += BezpiecznaAkcja(zmienionaWartosc);
 		return textBox;
 	}
 
-	public static CheckBox CheckBox(string? etykieta = null, Action? zmienionaWartosc = null)
+	public static TCheckBox CheckBox(string? etykieta = null, Action? zmienionaWartosc = null)
 	{
-		var checkBox = new CheckBox();
+		var checkBox = new TCheckBox();
 		if (!String.IsNullOrEmpty(etykieta)) checkBox.Content = etykieta;
 		if (zmienionaWartosc != null) checkBox.IsCheckedChanged += BezpiecznaAkcja(zmienionaWartosc);
 		return checkBox;
 	}
 
-	public static RadioButton RadioButton(string? etykieta = null)
+	public static TRadioButton RadioButton(string? etykieta = null)
 	{
-		var radioButton = new RadioButton();
+		var radioButton = new TRadioButton();
 		if (!String.IsNullOrEmpty(etykieta)) radioButton.Content = etykieta;
 		return radioButton;
 	}
 
-	public static NumericUpDown NumericUpDown(int poPrzecinku = 2, int szerokosc = 100, Action? zmienionaWartosc = null)
+	public static TNumericUpDown NumericUpDown(int poPrzecinku = 2, int szerokosc = 100, Action? zmienionaWartosc = null)
 	{
-		var numericUpDown = new NumericUpDown();
+		var numericUpDown = new TNumericUpDown();
 		numericUpDown.NumberFormat = new NumberFormatInfo { NumberDecimalDigits = poPrzecinku };
 		numericUpDown.TextAlignment = TextAlignment.Right;
 		numericUpDown.Minimum = -999999999;
@@ -150,9 +157,9 @@ class KontrolkiAV
 		return numericUpDown;
 	}
 
-	public static DatePicker DatePicker(bool tylkoMiesiac = false, int szerokosc = 160)
+	public static TDatePicker DatePicker(bool tylkoMiesiac = false, int szerokosc = 160)
 	{
-		var datePicker = new DatePicker();
+		var datePicker = new TDatePicker();
 		datePicker.DayVisible = !tylkoMiesiac;
 		datePicker.DayFormat = "dd";
 		datePicker.MonthFormat = "MM";
@@ -160,9 +167,9 @@ class KontrolkiAV
 		return datePicker;
 	}
 
-	public static ComboBox DropDownList(int szerokosc = 200, Action? zmienionaWartosc = null)
+	public static TComboBox DropDownList(int szerokosc = 200, Action? zmienionaWartosc = null)
 	{
-		var comboBox = new ComboBox();
+		var comboBox = new TComboBox();
 		comboBox.IsEditable = false;
 		comboBox.Width = szerokosc;
 		if (zmienionaWartosc != null) comboBox.SelectionChanged += BezpiecznaAkcja(zmienionaWartosc);
@@ -177,19 +184,39 @@ class KontrolkiAV
 		return autoCompleteBox;
 	}
 
-	public static MenuItem PopupMenuItem(string etykieta, Action akcja)
+	public static TMenuItem PopupMenuItem(string etykieta, Action akcja)
 	{
-		var pozycja = new MenuItem();
+		var pozycja = new TMenuItem();
 		pozycja.Header = etykieta;
 		pozycja.Click += BezpiecznaAkcja(akcja);
 		return pozycja;
 	}
 
-	public static ListBox ListBox(Action? zmienionaWartosc = null)
+	public static TListBox ListBox(Action? zmienionaWartosc = null)
 	{
-		var listBox= new ListBox();
+		var listBox= new TListBox();
 		if (zmienionaWartosc != null) listBox.SelectionChanged += BezpiecznaAkcja(zmienionaWartosc);
 		return listBox;
+	}
+
+	public static TProgressBar ProgressBar()
+	{
+		var progressBar = new TProgressBar();
+		progressBar.IsIndeterminate = true;
+		return progressBar;
+	}
+}
+
+static class RozszerzeniaKontrolek
+{
+	extension(TControl kontrolka)
+	{
+		public bool Enabled { get => kontrolka.IsEnabled; set => kontrolka.IsEnabled = value; }
+	}
+
+	extension(TTextBox kontrolka)
+	{
+		public bool ReadOnly { get => kontrolka.IsReadOnly; set => kontrolka.IsReadOnly = value; }
 	}
 }
 #endif
