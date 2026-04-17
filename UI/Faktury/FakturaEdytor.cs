@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace ProFak.UI;
 
-partial class FakturaEdytor : FakturaEdytorBase
+partial class FakturaEdytor : Edytor<Faktura>
 {
 	private readonly Label labelRodzaj;
 	private readonly TextBox textBoxNumer;
@@ -611,8 +611,4 @@ Pozostałe elementy tekstowe zostaną przekazane jako dodatkowy opis.";
 		Rekord.PoprawNumeracjePozycji(Kontekst.Baza);
 		base.KoniecEdycji();
 	}
-}
-
-class FakturaEdytorBase : Edytor<Faktura>
-{
 }
