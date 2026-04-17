@@ -264,9 +264,8 @@ partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 		nowyKontekst.Dodaj(towar);
 		nowyKontekst.Baza.Zapisz(towar);
 		using var edytor = new TowarEdytor();
-		using var okno = new Dialog("Nowy towar", edytor, nowyKontekst);
 		edytor.Przygotuj(nowyKontekst, towar);
-		if (okno.ShowDialog() != DialogResult.OK) return;
+		if (!DialogEdycji.Pokaz("Nowy towar", edytor, nowyKontekst)) return;
 		edytor.KoniecEdycji();
 		nowyKontekst.Baza.Zapisz(towar);
 		transakcja.Zatwierdz();

@@ -14,7 +14,6 @@ class Spisy
 		spis.Akcje.Insert(0, wybor);
 		spis.Spis.Kontekst = nowyKontekst;
 		spis.Spis.RekordPoczatkowy = biezacaWartosc;
-		dialog.CzyPrzyciskiWidoczne = false;
 		dialog.Size = new System.Drawing.Size(Math.Max(spis.PreferowanaSzerokosc, 800), 450);
 		if (dialog.ShowDialog() != DialogResult.OK) return default;
 		transakcja.Zatwierdz();

@@ -329,9 +329,7 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 			using var edytor = new DostepKSeFEdytor();
 			edytor.SrodowiskoKSeF = Rekord.SrodowiskoKSeF;
 			edytor.NIP = nip;
-			using var okno = new Dialog("Dostęp do KSeF v2", edytor, nowyKontekst);
-			okno.CzyPrzyciskiWidoczne = false;
-			okno.ShowDialog();
+			Dialog.Pokaz("Dostęp do KSeF v2", edytor, nowyKontekst);
 			token = edytor.Token;
 		}
 
@@ -346,9 +344,7 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 		using var edytor = new ImportCertyfikatuKSeFEdytor();
 		edytor.SrodowiskoKSeF = Rekord.SrodowiskoKSeF;
 		edytor.NIP = Rekord.NIP;
-		using var okno = new Dialog("Dostęp do KSeF v2", edytor, nowyKontekst);
-		okno.CzyPrzyciskiWidoczne = false;
-		okno.ShowDialog();
+		Dialog.Pokaz("Dostęp do KSeF v2", edytor, nowyKontekst);
 		if (!String.IsNullOrEmpty(edytor.Certyfikat)) Rekord.TokenKSeF = edytor.Certyfikat;
 		kontroler.AktualizujKontrolki();
 	}

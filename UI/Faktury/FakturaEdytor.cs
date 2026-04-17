@@ -522,9 +522,8 @@ partial class FakturaEdytor : FakturaEdytorBase
 		nowyKontekst.Dodaj(kontrahent);
 		nowyKontekst.Baza.Zapisz(kontrahent);
 		using var edytor = new KontrahentEdytor();
-		using var okno = new Dialog("Nowy kontrahent", edytor, nowyKontekst);
 		edytor.Przygotuj(nowyKontekst, kontrahent);
-		if (okno.ShowDialog() != DialogResult.OK) return false;
+		if (!DialogEdycji.Pokaz("Nowy kontrahent", edytor, nowyKontekst)) return false;
 		edytor.KoniecEdycji();
 		nowyKontekst.Baza.Zapisz(kontrahent);
 		transakcja.Zatwierdz();

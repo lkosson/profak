@@ -74,9 +74,8 @@ class WczytajKSeFAkcja : AkcjaNaSpisie<Faktura>
 		{
 			kontekst.Dodaj(faktura);
 			using var edytor = new FakturaEdytor();
-			using var okno = new Dialog("Nowa pozycja", edytor, kontekst);
 			edytor.Przygotuj(kontekst, faktura);
-			if (okno.ShowDialog() != DialogResult.OK) return null;
+			if (!DialogEdycji.Pokaz("Nowa pozycja", edytor, kontekst)) return null;
 			edytor.KoniecEdycji();
 			kontekst.Baza.Zapisz(faktura);
 		}

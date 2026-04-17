@@ -1,46 +1,34 @@
-﻿using System.ComponentModel;
-using System.Data;
+﻿namespace ProFak.UI;
 
-namespace ProFak.UI;
-
-partial class Dialog : Form
+class Dialog : Form
 {
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-	public Control? Zawartosc { get { return panelZawartosc.Controls.Cast<Control>().FirstOrDefault(); } set { panelZawartosc.Controls.Clear(); if (value != null) UstawZawartosc(value); } }
-
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-	public bool CzyPrzyciskiWidoczne { get => flowLayoutPanelPrzyciski.Visible; set { flowLayoutPanelPrzyciski.Visible = value; CancelButton = value ? buttonAnuluj : null; } }
-
-	public FlowLayoutPanel Przyciski => flowLayoutPanelPrzyciski;
-
 	private Dialog()
 	{
-		InitializeComponent();
 		ShowInTaskbar = false;
 		Icon = GlowneOkno.Ikona;
-		Wyglad.UsunSkrotPrzycisku(buttonZapisz);
-		Wyglad.UsunSkrotPrzycisku(buttonAnuluj);
+		KeyPreview = true;
+		StartPosition = FormStartPosition.CenterParent;
 	}
 
-	public Dialog(string tytul, Control zawartosc, Kontekst kontekst)
+	protected Dialog(string tytul, Kontekst kontekst)
 		: this()
 	{
 		Text = tytul;
-		Zawartosc = zawartosc;
 		kontekst.Dialog = this;
 	}
 
-	private void UstawZawartosc(Control zawartosc)
+	public Dialog(string tytul, Control zawartosc, Kontekst kontekst)
+		: this(tytul, kontekst)
 	{
-		panelZawartosc.Controls.Add(zawartosc);
-		panelZawartosc.Size = Zawartosc!.Size;
-		ClientSize = tableLayoutPanelZawartosc.Size;
+		UstawZawartosc(zawartosc);
+	}
+
+	protected void UstawZawartosc(Control zawartosc)
+	{
+		Controls.Add(zawartosc);
+		ClientSize = zawartosc.Size;
 		MinimumSize = Size;
-		Zawartosc.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
-		var finalnyRozmiar = tableLayoutPanelZawartosc.Size;
-		tableLayoutPanelZawartosc.AutoSize = false;
-		tableLayoutPanelZawartosc.Size = finalnyRozmiar;
-		tableLayoutPanelZawartosc.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
+		zawartosc.Dock = DockStyle.Fill;
 	}
 
 	protected override void OnKeyDown(KeyEventArgs e)
@@ -49,12 +37,6 @@ partial class Dialog : Form
 		if (e.KeyCode == Keys.Escape)
 		{
 			DialogResult = DialogResult.Cancel;
-			Close();
-		}
-		else if (e.KeyCode == Keys.F10 && CzyPrzyciskiWidoczne)
-		{
-			e.SuppressKeyPress = true;
-			DialogResult = DialogResult.OK;
 			Close();
 		}
 	}
@@ -66,5 +48,11 @@ partial class Dialog : Form
 			e.Cancel = !ValidateChildren();
 		}
 		base.OnFormClosing(e);
+	}
+
+	public static void Pokaz(string tytul, Control zawartosc, Kontekst kontekst)
+	{
+		using var dialog = new Dialog(tytul, zawartosc, kontekst);
+		dialog.ShowDialog();
 	}
 }

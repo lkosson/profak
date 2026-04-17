@@ -56,9 +56,8 @@ class DodajJakoZakupAkcja : AkcjaNaSpisie<Faktura>
 			{
 				nowyKontekst.Dodaj(faktura);
 				using var edytor = new FakturaEdytor();
-				using var okno = new Dialog("Nowa pozycja", edytor, nowyKontekst);
 				edytor.Przygotuj(nowyKontekst, faktura);
-				if (okno.ShowDialog() != DialogResult.OK)
+				if (!DialogEdycji.Pokaz("Nowa pozycja", edytor, nowyKontekst))
 				{
 					if (naglowek != zaznaczoneRekordy.Last() && MessageBox.Show("Kontynuować dodawanie faktur ze wskazanych plików?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
 						break;

@@ -28,10 +28,8 @@ class EdytujRekordAkcja<TRekord, TEdytor> : AkcjaNaSpisie<TRekord>
 		var rekord = nowyKontekst.Baza.Znajdz(rekordRef);
 		nowyKontekst.Dodaj(rekord);
 		using var edytor = new TEdytor();
-		using var okno = new Dialog("Edycja danych", edytor, nowyKontekst);
-		if (pelnyEkran) okno.WindowState = FormWindowState.Maximized;
 		edytor.Przygotuj(nowyKontekst, rekord);
-		if (okno.ShowDialog() != DialogResult.OK) return;
+		if (!DialogEdycji.Pokaz("Edycja danych", edytor, nowyKontekst, pelnyEkran)) return;
 		edytor.KoniecEdycji();
 		nowyKontekst.Baza.Zapisz(rekord);
 		transakcja.Zatwierdz();

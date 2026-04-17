@@ -156,9 +156,8 @@ partial class KonfiguracjaEdytor : Edytor<Konfiguracja>
 		rekord.AktualizujWersje();
 		nowyKontekst.Dodaj(rekord);
 		using var edytor = new KonfiguracjaEdytor();
-		using var okno = new Dialog("Edycja konfiguracji", edytor, nowyKontekst);
 		edytor.Przygotuj(nowyKontekst, rekord);
-		if (okno.ShowDialog() != DialogResult.OK) return;
+		if (!DialogEdycji.Pokaz("Edycja konfiguracji", edytor, nowyKontekst)) return;
 		nowyKontekst.Baza.Zapisz(rekord);
 		if (edytor.PrzywrocUstawieniaSpisow) nowyKontekst.Baza.Usun<KolumnaSpisu>();
 		if (edytor.PrzywrocUstawieniaMenu) nowyKontekst.Baza.Usun<StanMenu>();

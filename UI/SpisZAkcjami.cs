@@ -147,7 +147,7 @@ class SpisZAkcjami<TRekord> : TableLayoutPanel, IKontrolkaZKontekstem
 
 	protected override void OnCreateControl()
 	{
-		panelAkcji.CzyGlownySpis = Spis.Kontekst.Dialog == null || !Spis.Kontekst.Dialog.CzyPrzyciskiWidoczne;
+		panelAkcji.CzyGlownySpis = Spis.Kontekst.Dialog == null || Spis.Kontekst.Dialog is not DialogEdycji;
 		foreach (var akcja in akcje)
 		{
 			var adapter = akcja.UtworzAdapter(Spis);

@@ -14,6 +14,9 @@ partial class KonfiguracjaSpisu : Edytor
 	private readonly CheckBox checkBoxUkryta;
 	private readonly CheckBox checkBoxRozciagnij;
 	private readonly NumericUpDown numericUpDownPoziomSortowania;
+	private readonly CheckBox checkBoxPrzywroc;
+
+	public bool CzyPrzywroc => checkBoxPrzywroc.Checked;
 
 	public KonfiguracjaSpisu()
 	{
@@ -24,6 +27,7 @@ partial class KonfiguracjaSpisu : Edytor
 		numericUpDownPoziomSortowania = Kontrolki.NumericUpDown(poPrzecinku: 0, zmienionaWartosc: ZmienioneSortowanie);
 		checkBoxUkryta = Kontrolki.CheckBox("Ukryta", zmienionaWartosc: ZmienioneUkrycie);
 		checkBoxRozciagnij = Kontrolki.CheckBox("Rozciągnij do pełnej szerokości", zmienionaWartosc: ZmienioneRozciagniecie);
+		checkBoxPrzywroc = Kontrolki.CheckBox("Przywróć domyślne ustawienia spisu");
 
 		textBoxKolumna.ReadOnly = true;
 
@@ -34,6 +38,7 @@ partial class KonfiguracjaSpisu : Edytor
 		parametry.DodajWiersz(numericUpDownPoziomSortowania, "Sortowanie");
 		parametry.DodajWiersz(checkBoxUkryta);
 		parametry.DodajWiersz(checkBoxRozciagnij);
+		parametry.DodajWiersz(checkBoxPrzywroc);
 
 		listBoxKolumny.Width = 200;
 		var uklad = new Siatka([-1, 0], []);

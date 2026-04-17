@@ -378,21 +378,13 @@ abstract class Spis<T> : Spis
 		}
 
 		using var edytor = new KonfiguracjaSpisu(kolumny);
-		using var okno = new Dialog("Konfiguracja spisu", edytor, nowyKontekst);
-		okno.Przyciski.Controls.Add(new Button()
-		{
-			AutoSize = true,
-			Text = "Przywróć domyślne ustawienia",
-			DialogResult = DialogResult.Ignore
-		});
-		var wynik = okno.ShowDialog();
-		if (wynik == DialogResult.Cancel) return;
-		if (wynik == DialogResult.OK) nowyKontekst.Baza.Zapisz(kolumny);
-		if (wynik == DialogResult.Ignore)
+		if (!DialogEdycji.Pokaz("Konfiguracja spisu", edytor, nowyKontekst)) return;
+		if (edytor.CzyPrzywroc)
 		{
 			nowyKontekst.Baza.Usun(kolumny.Where(e => e.Id > 0));
 			MessageBox.Show("Domyślne ustawienia zostaną załadowane po ponownym wyświetleniu spisu.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
+		else nowyKontekst.Baza.Zapisz(kolumny);
 		transakcja.Zatwierdz();
 		WczytajKonfiguracje();
 	}

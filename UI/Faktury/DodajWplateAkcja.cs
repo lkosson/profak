@@ -23,9 +23,8 @@ class DodajWplateAkcja : AkcjaNaSpisie<Faktura>
 		}
 		nowyKontekst.Dodaj(wplata);
 		using var edytor = new WplataEdytor();
-		using var okno = new Dialog("Nowa wpłata", edytor, nowyKontekst);
 		edytor.Przygotuj(nowyKontekst, wplata);
-		if (okno.ShowDialog() != DialogResult.OK) return;
+		if (!DialogEdycji.Pokaz("Nowa wpłata", edytor, nowyKontekst)) return;
 		edytor.KoniecEdycji();
 		if (wplata.Id > 0)
 		{
