@@ -56,6 +56,8 @@ class SiatkaAV : Grid
 				continue;
 			}
 
+			kontrolka.Width = Double.NaN;
+			kontrolka.HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Stretch;
 			Children.Add(kontrolka);
 			SetColumn(kontrolka, kolumna);
 			SetRow(kontrolka, wiersz);
