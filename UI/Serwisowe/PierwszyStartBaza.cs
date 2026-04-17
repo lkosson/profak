@@ -3,12 +3,13 @@ using System.ComponentModel;
 
 namespace ProFak.UI;
 
-class PierwszyStartBaza : Form
+class PierwszyStartBaza : Dialog
 {
 	private const string ZnacznikPierwszegoUruchomienia = "pierwsze-uruchomienie.txt";
 	private const string BazaDemo = "(demo)";
 	private string? bazaZrodlowa;
 	private string? bazaDocelowa;
+	private bool sukces;
 
 	private readonly RadioButton radioButtonNowaPrywatnaBaza;
 	private readonly RadioButton radioButtonNowaPublicznaBaza;
@@ -21,10 +22,9 @@ class PierwszyStartBaza : Form
 	private readonly Label labelStatus;
 	private readonly BackgroundWorker backgroundWorker;
 
-	public PierwszyStartBaza()
+	private PierwszyStartBaza(Kontekst kontekst)
+		: base("ProFak - Pierwsze uruchomienie", kontekst)
 	{
-		Text = "ProFak - Pierwsze uruchomienie";
-
 		var labelNaglowek1 = Kontrolki.Text("Wygląda na to, że program jeszcze nie był uruchamiany na tym komputerze. Przed rozpoczęciem pracy konieczne jest przygotowanie bazy danych.");
 		var labelNaglowek2 = Kontrolki.Text("Zaznacz jeden z poniższych punktów i kliknij \"Dalej\". Jeśli nie wiesz co wybrać i chcesz po prostu zacząć korzystać z programu, zostaw domyślny wybór bez zmian i kliknij \"Dalej\".");
 		radioButtonNowaPrywatnaBaza = Kontrolki.RadioButton("Utwórz nową, pustą bazę danych, dostępną tylko dla bieżącego użytkownika komputera.");
@@ -67,13 +67,11 @@ class PierwszyStartBaza : Form
 			new Poziomo([buttonDalej, progressBar, labelStatus])
 			]);
 		uklad.Padding = new Padding(10);
+		uklad.Size = uklad.GetPreferredSize(new Size(600, 0));
+
+		UstawZawartosc(uklad);
 
 		AcceptButton = buttonDalej;
-		SuspendLayout();
-		Controls.Add(uklad);
-		uklad.Dock = DockStyle.Fill;
-		ClientSize = new Size(585, 275);
-		ResumeLayout();
 	}
 
 	private bool CzySciezkaDostepna(string sciezka)
@@ -215,7 +213,7 @@ class PierwszyStartBaza : Form
 	{
 		if (e.Error == null)
 		{
-			DialogResult = DialogResult.OK;
+			sukces = true;
 			Close();
 			return;
 		}
@@ -259,9 +257,10 @@ class PierwszyStartBaza : Form
 			}
 		}
 
-		using var pierwszyStart = new PierwszyStartBaza();
-		var ok = pierwszyStart.ShowDialog() == DialogResult.OK;
-		if (pierwszeUruchomienieWersjiPrzenosnej && (!ok || String.IsNullOrEmpty(DB.Baza.Sciezka))) File.Delete(plikPierwszegoUruchomienia);
-		return ok;
+		using var kontekst = new Kontekst();
+		using var pierwszyStart = new PierwszyStartBaza(kontekst);
+		pierwszyStart.Pokaz();
+		if (pierwszeUruchomienieWersjiPrzenosnej && (!pierwszyStart.sukces || String.IsNullOrEmpty(DB.Baza.Sciezka))) File.Delete(plikPierwszegoUruchomienia);
+		return pierwszyStart.sukces;
 	}
 }
