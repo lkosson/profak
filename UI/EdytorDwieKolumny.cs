@@ -27,7 +27,8 @@ abstract class EdytorDwieKolumny<TRekord> : Edytor<TRekord>
 
 	public TextBox DodajTextBox(Expression<Func<TRekord, string>> wlasciwosc, string etykieta, bool wymagane = false)
 	{
-		var textbox = dwieKolumny.DodajTextBox(etykieta);
+		var textbox = Kontrolki.TextBox();
+		dwieKolumny.DodajWiersz(textbox, etykieta);
 		kontroler.Powiazanie(textbox, wlasciwosc);
 		if (wymagane) Wymagane(textbox);
 		return textbox;
@@ -35,36 +36,41 @@ abstract class EdytorDwieKolumny<TRekord> : Edytor<TRekord>
 
 	public TextBox DodajTextArea(Expression<Func<TRekord, string>> wlasciwosc, string etykieta, bool wymagane = false, int linie = 1)
 	{
-		var textbox = dwieKolumny.DodajTextArea(etykieta, linie);
-		kontroler.Powiazanie(textbox, wlasciwosc);
-		if (wymagane) Wymagane(textbox);
-		return textbox;
+		var textArea = Kontrolki.TextArea(linie);
+		dwieKolumny.DodajWiersz(textArea, etykieta);
+		kontroler.Powiazanie(textArea, wlasciwosc);
+		if (wymagane) Wymagane(textArea);
+		return textArea;
 	}
 
 	public CheckBox DodajCheckBox(Expression<Func<TRekord, bool>> wlasciwosc, string etykieta)
 	{
-		var checkBox = dwieKolumny.DodajCheckBox(etykieta);
+		var checkBox = Kontrolki.CheckBox(etykieta);
+		dwieKolumny.DodajWiersz(checkBox, null);
 		kontroler.Powiazanie(checkBox, wlasciwosc);
 		return checkBox;
 	}
 
 	public NumericUpDown DodajNumericUpDown(Expression<Func<TRekord, decimal>> wlasciwosc, string etykieta, int poprzecinku = 2)
 	{
-		var numericUpDown = dwieKolumny.DodajNumericUpDown(etykieta, poprzecinku);
+		var numericUpDown = Kontrolki.NumericUpDown(poprzecinku);
+		dwieKolumny.DodajWiersz(numericUpDown, etykieta);
 		kontroler.Powiazanie(numericUpDown, wlasciwosc);
 		return numericUpDown;
 	}
 
 	public NumericUpDown DodajNumericUpDown(Expression<Func<TRekord, int>> wlasciwosc, string etykieta)
 	{
-		var numericUpDown = dwieKolumny.DodajNumericUpDown(etykieta, 0);
+		var numericUpDown = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		dwieKolumny.DodajWiersz(numericUpDown, etykieta);
 		kontroler.Powiazanie(numericUpDown, wlasciwosc);
 		return numericUpDown;
 	}
 
 	public DateTimePicker DodajDatePicker(Expression<Func<TRekord, DateTime>> wlasciwosc, string etykieta)
 	{
-		var dateTimePicker = dwieKolumny.DodajDatePicker(etykieta);
+		var dateTimePicker = Kontrolki.DatePicker();
+		dwieKolumny.DodajWiersz(dateTimePicker, etykieta);
 		kontroler.Powiazanie(dateTimePicker, wlasciwosc);
 		return dateTimePicker;
 	}
@@ -72,7 +78,10 @@ abstract class EdytorDwieKolumny<TRekord> : Edytor<TRekord>
 	public ComboBox DodajDropDownList<TEnum>(Expression<Func<TRekord, TEnum>> wlasciwosc, string etykieta, bool wymagane = false)
 		where TEnum : struct, Enum
 	{
-		var comboBox = dwieKolumny.DodajDropDownList(etykieta);
+		var comboBox = Kontrolki.DropDownList();
+		comboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+		comboBox.Width = 200 * comboBox.DeviceDpi / 96;
+		dwieKolumny.DodajWiersz(comboBox, etykieta);
 		kontroler.Slownik<TEnum>(comboBox);
 		kontroler.Powiazanie(comboBox, wlasciwosc);
 		if (wymagane) Wymagane(comboBox);

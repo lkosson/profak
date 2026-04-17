@@ -40,48 +40,4 @@ class DwieKolumny : TableLayoutPanel
 
 		Size = GetPreferredSize(default);
 	}
-
-	public TextBox DodajTextBox(string etykieta)
-	{
-		var textBox = Kontrolki.TextBox();
-		DodajWiersz(textBox, etykieta);
-		return textBox;
-	}
-
-	public TextBox DodajTextArea(string etykieta, int linie)
-	{
-		var textArea = Kontrolki.TextArea(linie);
-		DodajWiersz(textArea, etykieta);
-		return textArea;
-	}
-
-	public CheckBox DodajCheckBox(string etykieta, bool pelnaSzerokosc = false)
-	{
-		var checkBox = Kontrolki.CheckBox(etykieta);
-		DodajWiersz(checkBox, null, pelnaSzerokosc);
-		return checkBox;
-	}
-
-	public NumericUpDown DodajNumericUpDown(string etykieta, int poPrzecinku = 2)
-	{
-		var numericUpDown = Kontrolki.NumericUpDown(poPrzecinku);
-		DodajWiersz(numericUpDown, etykieta);
-		return numericUpDown;
-	}
-
-	public DateTimePicker DodajDatePicker(string etykieta)
-	{
-		var dateTimePicker = Kontrolki.DatePicker();
-		DodajWiersz(dateTimePicker, etykieta);
-		return dateTimePicker;
-	}
-
-	public ComboBox DodajDropDownList(string etykieta)
-	{
-		var comboBox = Kontrolki.DropDownList();
-		comboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-		comboBox.Width = 200 * comboBox.DeviceDpi / 96;
-		DodajWiersz(comboBox, etykieta);
-		return comboBox;
-	}
 }
