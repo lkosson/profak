@@ -11,9 +11,14 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <DefineConstants>$(DefineConstants);nSQLSERVER;AVALONIA</DefineConstants>
+    <DefineConstants>$(DefineConstants);nSQLSERVER;AVALONIA;</DefineConstants>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(DefineConstants.Contains(;AVALONIA;))">
+    <AvaloniaUseCompiledBindingsByDefault>false</AvaloniaUseCompiledBindingsByDefault>
+    <EnableAvaloniaXamlCompilation>false</EnableAvaloniaXamlCompilation>
   </PropertyGroup>
 
   <ItemGroup>
