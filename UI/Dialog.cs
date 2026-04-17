@@ -2,18 +2,13 @@
 
 class Dialog : Form
 {
-	private Dialog()
+	protected Dialog(string tytul, Kontekst kontekst)
 	{
 		ShowInTaskbar = false;
 		Icon = GlowneOkno.Ikona;
 		KeyPreview = true;
 		StartPosition = FormStartPosition.CenterParent;
 		AutoValidate = AutoValidate.EnableAllowFocusChange;
-	}
-
-	protected Dialog(string tytul, Kontekst kontekst)
-		: this()
-	{
 		Text = tytul;
 		kontekst.Dialog = this;
 	}
@@ -51,9 +46,14 @@ class Dialog : Form
 		base.OnFormClosing(e);
 	}
 
+	public void Pokaz()
+	{
+		ShowDialog();
+	}
+
 	public static void Pokaz(string tytul, Control zawartosc, Kontekst kontekst)
 	{
 		using var dialog = new Dialog(tytul, zawartosc, kontekst);
-		dialog.ShowDialog();
+		dialog.Pokaz();
 	}
 }

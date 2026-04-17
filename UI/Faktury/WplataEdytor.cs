@@ -91,6 +91,6 @@ class WplataEdytor : EdytorDwieKolumny<Wplata>
 		form.ClientSize = new Size(600, 500);
 		form.BackColor = Color.White;
 
-		form.ShowDialog();
+		form.Pokaz();
 	}
 }

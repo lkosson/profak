@@ -54,7 +54,7 @@ class OknoPostepu : Dialog
 	{
 		using var kontekst = new Kontekst();
 		using var okno = new OknoPostepu(akcja, kontekst);
-		okno.ShowDialog();
-		if (okno.edi != null) okno.edi.Throw();
+		okno.Pokaz();
+		okno.edi?.Throw();
 	}
 }

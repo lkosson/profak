@@ -7,7 +7,6 @@ class OknoBledu : Dialog
 	private OknoBledu(Exception exc, Kontekst kontekst)
 		: base("ProFak - Błąd", kontekst)
 	{
-		StartPosition = FormStartPosition.CenterScreen;
 		var naglowek = Kontrolki.Text("W trakcie działania aplikacji wystąpił nieoczekiwany błąd. Spróbuj ponownie uruchomić program. Jeśli problem będzie się powtarzał, otwórz poniższy odnośnik i opisz w jakich okolicznościach występuje.\r\n\r\nPoniżej znajdują się techniczne informacje mogące pomóc w ustaleniu przyczyny problemu.");
 		var textAreaWyjatek = Kontrolki.TextArea(linie: 20);
 		var buttonOK = Kontrolki.Button("OK", akcja: Close);
@@ -39,7 +38,7 @@ class OknoBledu : Dialog
 #if SQLSERVER
 		else if (exc is Microsoft.Data.SqlClient.SqlException se && se.Number == 1222)
 		{
-			MessageBox.Show("Rekord jest modyfikowany na innym stanowisku.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			OknoKomunikatu.Ostrzezenie("Rekord jest modyfikowany na innym stanowisku.");
 		}
 #else
 		else if (exc is Microsoft.Data.Sqlite.SqliteException se && se.SqliteErrorCode == 5)
@@ -51,7 +50,7 @@ class OknoBledu : Dialog
 		{
 			using var kontekst = new Kontekst();
 			using var okno = new OknoBledu(exc, kontekst);
-			okno.ShowDialog();
+			okno.Pokaz();
 		}
 	}
 }
