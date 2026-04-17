@@ -30,11 +30,11 @@ class OknoBledu : Dialog
 	{
 		if (exc.GetType() == typeof(ApplicationException))
 		{
-			MessageBox.Show(exc.Message, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			OknoKomunikatu.Ostrzezenie(exc.Message);
 		}
 		else if (exc is OperationCanceledException)
 		{
-			MessageBox.Show("Operacja została przerwana.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			OknoKomunikatu.Informacja("Operacja została przerwana.");
 		}
 #if SQLSERVER
 		else if (exc is Microsoft.Data.SqlClient.SqlException se && se.Number == 1222)
@@ -44,7 +44,7 @@ class OknoBledu : Dialog
 #else
 		else if (exc is Microsoft.Data.Sqlite.SqliteException se && se.SqliteErrorCode == 5)
 		{
-			MessageBox.Show("Baza danych jest używana na innym stanowisku.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			OknoKomunikatu.Ostrzezenie("Baza danych jest używana na innym stanowisku.");
 		}
 #endif
 		else

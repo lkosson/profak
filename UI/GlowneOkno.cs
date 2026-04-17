@@ -32,7 +32,7 @@ public partial class GlowneOkno : Form
 	{
 		if (e.CloseReason == CloseReason.UserClosing && Wyglad.PotwierdzanieZamknieciaProgramu)
 		{
-			if (MessageBox.Show("Czy na pewno chcesz zamknąć program?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+			if (!OknoKomunikatu.PytanieTakNie("Czy na pewno chcesz zamknąć program?", domyslnie: false))
 			{
 				e.Cancel = true;
 			}

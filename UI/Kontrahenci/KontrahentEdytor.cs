@@ -293,7 +293,7 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 			wynik = await IO.MF.SprawdzBialaListeVAT(Rekord.NIP, Rekord.RachunekBankowy.Replace(" ", ""), cancellationToken);
 		});
 
-		MessageBox.Show($"Rachunek znajduje się na białej liście VAT, RequestId: {wynik}", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		OknoKomunikatu.Informacja($"Rachunek znajduje się na białej liście VAT, RequestId: {wynik}");
 	}
 
 	private void PobierzGUS()

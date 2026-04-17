@@ -141,7 +141,7 @@ class PierwszyStartBaza : Form
 		}
 		else return;
 
-		if (File.Exists(bazaDocelowa) && MessageBox.Show($"Baza {bazaDocelowa} już istnieje. Czy na pewno chcesz ją nadpisać i utworzyć w jej miejsce pustą bazę?\n\nTen proces jest nieodwracalny i STRACISZ WSZYSTKIE ISTNIEJĄCE DANE.", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
+		if (File.Exists(bazaDocelowa) && !OknoKomunikatu.PytanieTakNie($"Baza {bazaDocelowa} już istnieje. Czy na pewno chcesz ją nadpisać i utworzyć w jej miejsce pustą bazę?\n\nTen proces jest nieodwracalny i STRACISZ WSZYSTKIE ISTNIEJĄCE DANE.", domyslnie: false)) return;
 
 		buttonDalej.Enabled = false;
 		progressBar.Visible = true;
@@ -250,9 +250,9 @@ class PierwszyStartBaza : Form
 		if (File.Exists(DB.Baza.Sciezka))
 		{
 			if (!pierwszeUruchomienieWersjiPrzenosnej) return true;
-			var ret = MessageBox.Show($"Została znaleziona istniejąca baza danych: {DB.Baza.Sciezka}\n\nCzy chcesz jej użyć?", "ProFak", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-			if (ret == DialogResult.Yes) return true;
-			if (ret == DialogResult.Cancel)
+			var ret = OknoKomunikatu.PytanieTakNieAnuluj($"Została znaleziona istniejąca baza danych: {DB.Baza.Sciezka}\n\nCzy chcesz jej użyć?", domyslnie: true);
+			if (ret is true) return true;
+			if (ret is null)
 			{
 				File.Delete(plikPierwszegoUruchomienia);
 				return false;

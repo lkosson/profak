@@ -20,6 +20,6 @@ class GenerujJPK_EWPAkcja : AkcjaNaSpisie<ZaliczkaPit>
 		using var nowyKontekst = new Kontekst(kontekst);
 		foreach (var deklaracja in zaznaczoneRekordy) nowyKontekst.Dodaj(deklaracja);
 		IO.JPK_EWP.Generator.Utworz(dialog.FileName, nowyKontekst.Baza, zaznaczoneRekordy);
-		MessageBox.Show("Plik został zapisany pomyślnie.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		OknoKomunikatu.Informacja("Plik został zapisany pomyślnie.");
 	}
 }

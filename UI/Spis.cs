@@ -382,7 +382,7 @@ abstract class Spis<T> : Spis
 		if (edytor.CzyPrzywroc)
 		{
 			nowyKontekst.Baza.Usun(kolumny.Where(e => e.Id > 0));
-			MessageBox.Show("Domyślne ustawienia zostaną załadowane po ponownym wyświetleniu spisu.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			OknoKomunikatu.Informacja("Domyślne ustawienia zostaną załadowane po ponownym wyświetleniu spisu.");
 		}
 		else nowyKontekst.Baza.Zapisz(kolumny);
 		transakcja.Zatwierdz();

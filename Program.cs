@@ -46,7 +46,7 @@ public static class Program
 				var podmiot = kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot);
 				if (podmiot == null)
 				{
-					MessageBox.Show("Przed rozpoczêciem korzystania z programu nale¿y uzupe³niæ dane firmy.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					OknoKomunikatu.Informacja("Przed rozpoczêciem korzystania z programu nale¿y uzupe³niæ dane firmy.");
 					var _ = Enumerable.Empty<DB.Kontrahent>();
 					new UI.MojaFirmaAkcja().Uruchom(kontekst, ref _);
 				}

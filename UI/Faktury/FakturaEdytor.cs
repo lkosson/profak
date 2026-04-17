@@ -534,10 +534,10 @@ partial class FakturaEdytor : FakturaEdytorBase
 	{
 		if (String.IsNullOrEmpty(Rekord.Numer))
 		{
-			MessageBox.Show("Przed wygenerowaniem postaci ustrukturyzowanej należy zapisać fakturę w celu nadania jej numeru.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			OknoKomunikatu.Ostrzezenie("Przed wygenerowaniem postaci ustrukturyzowanej należy zapisać fakturę w celu nadania jej numeru.");
 			return;
 		}
-		if (!String.IsNullOrWhiteSpace(Rekord.XMLKSeF) && MessageBox.Show("Faktura ma już wygenerowaną postać ustrukturyzowaną. Czy na pewno chcesz ją wygenerować ponownie?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
+		if (!String.IsNullOrWhiteSpace(Rekord.XMLKSeF) && !OknoKomunikatu.PytanieTakNie("Faktura ma już wygenerowaną postać ustrukturyzowaną. Czy na pewno chcesz ją wygenerować ponownie?", domyslnie: false)) return;
 		Kontekst.Baza.Zapisz(Rekord);
 		var xml = IO.FA_3.Generator.ZbudujXML(Kontekst.Baza, Rekord);
 		Rekord.XMLKSeF = xml;

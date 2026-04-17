@@ -22,9 +22,9 @@ class WyslijDoKSeFAkcja : AkcjaNaSpisie<Faktura>
 				cancellationToken.ThrowIfCancellationRequested();
 				if (!String.IsNullOrWhiteSpace(faktura.NumerKSeF))
 				{
-					var res = MessageBox.Show($"Faktura {faktura.Numer} już była wysłana do KSeF. Czy chcesz ją wysłać ponownie?", "ProFak", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-					if (res == DialogResult.Cancel) return;
-					if (res == DialogResult.No) continue;
+					var res = OknoKomunikatu.PytanieTakNieAnuluj($"Faktura {faktura.Numer} już była wysłana do KSeF. Czy chcesz ją wysłać ponownie?", domyslnie: false);
+					if (res is null) return;
+					if (res is false) continue;
 				}
 				else if (String.IsNullOrWhiteSpace(faktura.XMLKSeF))
 				{

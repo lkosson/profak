@@ -13,7 +13,7 @@ class UsunRekordAkcja<TRekord> : AkcjaNaSpisie<TRekord>
 	{
 		using var nowyKontekst = new Kontekst(kontekst);
 		var liczba = zaznaczoneRekordy.Count();
-		if (MessageBox.Show(liczba > 1 ? $"Czy na pewno chcesz usunąć wszystkie ({liczba}) zaznaczone pozycje?" : "Czy na pewno chcesz usunąć zaznaczoną pozycję?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
+		if (!OknoKomunikatu.PytanieTakNie(liczba > 1 ? $"Czy na pewno chcesz usunąć wszystkie ({liczba}) zaznaczone pozycje?" : "Czy na pewno chcesz usunąć zaznaczoną pozycję?", domyslnie: false)) return;
 		using var transakcja = nowyKontekst.Transakcja();
 		Usun(nowyKontekst, zaznaczoneRekordy);
 		transakcja.Zatwierdz();

@@ -71,7 +71,7 @@ class ImportCertyfikatuKSeFEdytor : Edytor
 		if (dialog.ShowDialog() != DialogResult.OK) return;
 		var zawartosc = File.ReadAllText(dialog.FileName);
 		if (zawartosc.Contains("-----BEGIN CERTIFICATE-----")) textBoxCertyfikat.Text = dialog.FileName;
-		else MessageBox.Show("Wskazany plik nie zawiera poprawnego certyfikatu.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+		else OknoKomunikatu.Ostrzezenie("Wskazany plik nie zawiera poprawnego certyfikatu.");
 	}
 
 	private void WybierzKlucz()
@@ -84,20 +84,20 @@ class ImportCertyfikatuKSeFEdytor : Edytor
 		textBoxKlucz.Text = dialog.FileName;
 		var zawartosc = File.ReadAllText(dialog.FileName);
 		if (zawartosc.Contains("-----BEGIN ENCRYPTED PRIVATE KEY-----") || zawartosc.Contains("-----BEGIN PRIVATE KEY-----")) textBoxKlucz.Text = dialog.FileName;
-		else MessageBox.Show("Wskazany plik nie zawiera poprawnego klucza prywatnego.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+		else OknoKomunikatu.Ostrzezenie("Wskazany plik nie zawiera poprawnego klucza prywatnego.");
 	}
 
 	private void Zapisz()
 	{
 		if (String.IsNullOrEmpty(textBoxCertyfikat.Text))
 		{
-			MessageBox.Show("Wskaż plik z certyfikatem dostępowym KSeF.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			OknoKomunikatu.Ostrzezenie("Wskaż plik z certyfikatem dostępowym KSeF.");
 			return;
 		}
 
 		if (String.IsNullOrEmpty(textBoxKlucz.Text))
 		{
-			MessageBox.Show("Wskaż plik z kluczem prywatnym.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			OknoKomunikatu.Ostrzezenie("Wskaż plik z kluczem prywatnym.");
 			return;
 		}
 
@@ -118,7 +118,7 @@ class ImportCertyfikatuKSeFEdytor : Edytor
 		});
 
 		Certyfikat = Convert.ToBase64String(blobCertyfikatu);
-		MessageBox.Show("Certyfikat zaimportowany poprawnie. Możesz skasować pliki certyfikatu i klucza prywatnego.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		OknoKomunikatu.Informacja("Certyfikat zaimportowany poprawnie. Możesz skasować pliki certyfikatu i klucza prywatnego.");
 		ParentForm?.Close();
 	}
 }

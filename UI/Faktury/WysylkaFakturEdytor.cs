@@ -55,7 +55,7 @@ class WysylkaFakturEdytor : Edytor
 	protected override void OnLoad(EventArgs e)
 	{
 		var konfiguracja = Kontekst.Baza.Konfiguracja.First();
-		if (konfiguracja.CzyDomyslna) MessageBox.Show("Przed wysłaniem wiadomości należy uzupełnić parametry połączenia z serwerem pocztowym dostępne w menu \"Serwisowe\" » \"Konfiguracja\".", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+		if (konfiguracja.CzyDomyslna) OknoKomunikatu.Ostrzezenie("Przed wysłaniem wiadomości należy uzupełnić parametry połączenia z serwerem pocztowym dostępne w menu \"Serwisowe\" » \"Konfiguracja\".");
 		szablonAdresat = "[NABYWCA-NAZWA] <[NABYWCA-EMAIL]>";
 		szablonTemat = konfiguracja.EMailTemat;
 		szablonTresc = konfiguracja.EMailTresc;

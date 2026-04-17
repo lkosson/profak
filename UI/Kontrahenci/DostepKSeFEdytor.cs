@@ -59,7 +59,7 @@ partial class DostepKSeFEdytor : Edytor
 		dialog.FileName = "wniosek-do-podpisu.xml";
 		if (dialog.ShowDialog() != DialogResult.OK) return;
 		File.WriteAllText(dialog.FileName, xml);
-		MessageBox.Show("Wniosek został zapisany pomyślnie. Podpisz go elektronicznie i załaduj do programu zgodnie z dalszymi instrukcjami.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		OknoKomunikatu.Informacja("Wniosek został zapisany pomyślnie. Podpisz go elektronicznie i załaduj do programu zgodnie z dalszymi instrukcjami.");
 	}
 
 	private void WskazXML()
@@ -83,7 +83,7 @@ partial class DostepKSeFEdytor : Edytor
 
 		Token = token;
 		IO.KSEF2.API.ZapomnijAktywnaSesje();
-		MessageBox.Show("Dostęp do KSeF nadany pomyślnie. Można skasować utworzone pliki.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		OknoKomunikatu.Informacja("Dostęp do KSeF nadany pomyślnie. Można skasować utworzone pliki.");
 		ParentForm?.Close();
 	}
 

@@ -83,20 +83,20 @@ class BazyDanych : Edytor, IKontrolkaZKontekstem
 		var nowyPlik = comboBoxPlik.Text;
 		if (staryPlik == null)
 		{
-			MessageBox.Show("Nie można przenieść tymczasowej bazy danych.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			OknoKomunikatu.Ostrzezenie("Nie można przenieść tymczasowej bazy danych.");
 			return;
 		}
 		if (staryPlik == nowyPlik)
 		{
-			MessageBox.Show("Wprowadź ręcznie lub wybierz z listy obok ścieżkę, do której ma zostać przeniesiona baza danych.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			OknoKomunikatu.Informacja("Wprowadź ręcznie lub wybierz z listy obok ścieżkę, do której ma zostać przeniesiona baza danych.");
 			return;
 		}
 		if (File.Exists(nowyPlik))
 		{
-			MessageBox.Show($"Plik {nowyPlik} już istnieje. Przed przeniesieniem bazy przenieś go w inne miejsce.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			OknoKomunikatu.Ostrzezenie($"Plik {nowyPlik} już istnieje. Przed przeniesieniem bazy przenieś go w inne miejsce.");
 			return;
 		}
-		if (MessageBox.Show("Czy na pewno chcesz przenieść bazę danych do nowego miejsca?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+		if (!OknoKomunikatu.PytanieTakNie("Czy na pewno chcesz przenieść bazę danych do nowego miejsca?", domyslnie: false))
 		{
 			gotowy = false;
 			comboBoxPlik.Text = staryPlik;
@@ -130,7 +130,7 @@ class BazyDanych : Edytor, IKontrolkaZKontekstem
 		try
 		{
 			Baza.WykonajKopie(dialog.FileName);
-			MessageBox.Show("Kopia bazy danych została zapisana.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			OknoKomunikatu.Informacja("Kopia bazy danych została zapisana.");
 		}
 		catch (Exception exc)
 		{
@@ -146,13 +146,13 @@ class BazyDanych : Edytor, IKontrolkaZKontekstem
 
 		if (String.IsNullOrEmpty(Baza.Sciezka))
 		{
-			MessageBox.Show("Nie można odtworzyć kopii zapasowej do tymczasowej bazy danych.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			OknoKomunikatu.Ostrzezenie("Nie można odtworzyć kopii zapasowej do tymczasowej bazy danych.");
 			return;
 		}
 		if (Directory.Exists(Baza.KatalogKopiiZapasowych)) dialog.InitialDirectory = Baza.KatalogKopiiZapasowych;
 		if (dialog.ShowDialog() != DialogResult.OK) return;
 
-		if (MessageBox.Show("Dotychczasowe dane zostaną nadpisane. Czy na pewno chcesz kontynuować?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
+		if (!OknoKomunikatu.PytanieTakNie("Dotychczasowe dane zostaną nadpisane. Czy na pewno chcesz kontynuować?", domyslnie: false)) return;
 		var bazaRatunkowa = Baza.Sciezka + "-bak";
 		if (File.Exists(bazaRatunkowa)) File.Delete(bazaRatunkowa);
 		try
@@ -174,7 +174,7 @@ class BazyDanych : Edytor, IKontrolkaZKontekstem
 			OknoBledu.Pokaz(exc);
 			return;
 		}
-		MessageBox.Show("Baza danych została odtworzona.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		OknoKomunikatu.Informacja("Baza danych została odtworzona.");
 		Wypelnij();
 	}
 
@@ -188,7 +188,7 @@ class BazyDanych : Edytor, IKontrolkaZKontekstem
 		using var nowyKontekst = new Kontekst(Kontekst);
 		var json = IO.Eksport.Generator.Zbuduj(nowyKontekst.Baza);
 		File.WriteAllText(dialog.FileName, json);
-		MessageBox.Show("Dane programu zostały zapisane.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		OknoKomunikatu.Informacja("Dane programu zostały zapisane.");
 	}
 
 	private void WczytajJSON()
@@ -199,10 +199,10 @@ class BazyDanych : Edytor, IKontrolkaZKontekstem
 		if (dialog.ShowDialog() != DialogResult.OK) return;
 		using var nowyKontekst = new Kontekst(Kontekst);
 		var json = File.ReadAllText(dialog.FileName);
-		if (MessageBox.Show("Dotychczasowe dane zostaną nadpisane. Czy na pewno chcesz kontynuować?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
+		if (!OknoKomunikatu.PytanieTakNie("Dotychczasowe dane zostaną nadpisane. Czy na pewno chcesz kontynuować?", domyslnie: false)) return;
 		using var tx = nowyKontekst.Transakcja();
 		IO.Eksport.Generator.Wczytaj(nowyKontekst.Baza, json);
 		tx.Zatwierdz();
-		MessageBox.Show("Dane programu zostały wczytane.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		OknoKomunikatu.Informacja("Dane programu zostały wczytane.");
 	}
 }

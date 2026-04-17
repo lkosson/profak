@@ -190,10 +190,7 @@ class Edytor<TRekord> : Edytor
 			&& kontroler.CzyModelZmieniony
 			&& Wyglad.PotwierdzanieZamknieciaEdytora)
 		{
-			if (MessageBox.Show("Czy na pewno chcesz porzucić wprowadzone zmiany?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
-			{
-				e.Cancel = true;
-			}
+			e.Cancel = !OknoKomunikatu.PytanieTakNie("Czy na pewno chcesz porzucić wprowadzone zmiany?", domyslnie: false);
 		}
 	}
 }

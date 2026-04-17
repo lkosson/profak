@@ -49,14 +49,12 @@ class OProgramie : Edytor, IKontrolkaZKontekstem
 		var wersjaAplikacji = GetType().Assembly.GetName().Version;
 		if (wersjaGitHub != null && wersjaGitHub > wersjaAplikacji)
 		{
-			if (MessageBox.Show("Dostępna jest nowa wersja " + wersjaGitHub.ToString() + ".\r\nCzy chcesz przejść do strony pobierania?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-			{
-				Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = json.RootElement.GetProperty("html_url").ToString() });
-			}
+			if (!OknoKomunikatu.PytanieTakNie("Dostępna jest nowa wersja " + wersjaGitHub.ToString() + ".\r\nCzy chcesz przejść do strony pobierania?")) return;
+			Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = json.RootElement.GetProperty("html_url").ToString() });
 		}
 		else
 		{
-			MessageBox.Show("Nie znaleziono nowej wersji programu", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			OknoKomunikatu.Informacja("Nie znaleziono nowej wersji programu");
 		}
 	}
 }

@@ -59,6 +59,6 @@ class NumeratorEdytor : Edytor<Numerator>
 
 	private void OpisGrupy()
 	{
-		MessageBox.Show("Zaawansowany parametr określający kiedy numeracja ma ponownie zaczynać się od 1.\n\nPozostaw to pole puste, by numeracja była restartowana według roku, miesiąca lub dnia zgodnie z wybranym formatem numeru.\n\nJeśli chcesz, by numeracja była resetowana rocznie, ale w numerze faktury występował także numer miesiąca, wprowadź tu wyrażenie zawierające [Rok], ale nie [Miesiac].", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		OknoKomunikatu.Informacja("Zaawansowany parametr określający kiedy numeracja ma ponownie zaczynać się od 1.\n\nPozostaw to pole puste, by numeracja była restartowana według roku, miesiąca lub dnia zgodnie z wybranym formatem numeru.\n\nJeśli chcesz, by numeracja była resetowana rocznie, ale w numerze faktury występował także numer miesiąca, wprowadź tu wyrażenie zawierające [Rok], ale nie [Miesiac].");
 	}
 }
