@@ -20,7 +20,7 @@ abstract class EdytorDwieKolumny<TRekord> : Edytor<TRekord>
 		dwieKolumny.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
 	}
 
-	public void DodajWiersz(Control kontrolka, string etykieta)
+	public void DodajWiersz(Control kontrolka, string? etykieta)
 	{
 		dwieKolumny.DodajWiersz(kontrolka, etykieta);
 	}

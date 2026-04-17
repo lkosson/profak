@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProFak.DB;
+using ZXing;
+using ZXing.Windows.Compatibility;
 
 namespace ProFak.UI;
 
@@ -8,6 +10,7 @@ class WplataEdytor : EdytorDwieKolumny<Wplata>
 	private readonly NumericUpDown numericUpDownKwota;
 	private readonly TextBox textBoxUwagi;
 	private readonly CheckBox checkBoxCzyRozliczenie;
+	private readonly LinkLabel linkQR;
 
 	public WplataEdytor()
 	{
@@ -16,6 +19,8 @@ class WplataEdytor : EdytorDwieKolumny<Wplata>
 		numericUpDownKwota.Minimum = -numericUpDownKwota.Maximum;
 		textBoxUwagi = DodajTextBox(wplata => wplata.Uwagi, "Uwagi");
 		checkBoxCzyRozliczenie = DodajCheckBox(wplata => wplata.CzyRozliczenie, "Uwzględnij w rozliczeniu");
+		linkQR = Kontrolki.Link("Kod QR płatności", QR);
+		DodajWiersz(linkQR, null);
 		Walidacja(textBoxUwagi, WalidacjaUwag, false);
 		UstawRozmiar();
 	}
@@ -41,16 +46,51 @@ class WplataEdytor : EdytorDwieKolumny<Wplata>
 		{
 			numericUpDownKwota.Enabled = false;
 			numericUpDownKwota.Text = "";
+			linkQR.Visible = false;
 		}
 		else
 		{
 			checkBoxCzyRozliczenie.Visible = faktura.CzySprzedaz;
+			linkQR.Visible = faktura != null && faktura.CzyZakup && !String.IsNullOrEmpty(faktura.RachunekBankowy) && !String.IsNullOrEmpty(faktura.NIPSprzedawcy);
 		}
 	}
 
-	private string?	 WalidacjaUwag(string uwagi)
+	private string? WalidacjaUwag(string uwagi)
 	{
 		if (Rekord.CzyRozliczenie && String.IsNullOrEmpty(uwagi)) return "Należy podać opis rozliczenia";
 		return null;
+	}
+
+	private void QR()
+	{
+		var faktura = Kontekst.Znajdz<Faktura>();
+		if (faktura == null) return;
+		var kodPlatnosci = faktura.NIPSprzedawcy
+			+ "|PL|"
+			+ faktura.RachunekBankowy.Replace(" ", "").Replace("-", "")
+			+ "|" + (int)(Rekord.Kwota * 100)
+			+ "|" + (faktura.NazwaSprzedawcy.Length > 20 ? faktura.NazwaSprzedawcy.Substring(0, 20) : faktura.NazwaSprzedawcy)
+			+ "|" + (faktura.Numer.Length > 32 ? faktura.Numer.Substring(0, 32) : faktura.Numer)
+			+ "|" // Identyfikator polecenia zapłaty
+			+ "|" // Identyfikator Invobill
+			+ "|"; // Rezerwa
+
+		var writer = new BarcodeWriter();
+		writer.Options.Margin = 5;
+		writer.Options.Width = 500;
+		writer.Options.Height = 500;
+		writer.Format = BarcodeFormat.QR_CODE;
+		using var qr = writer.WriteAsBitmap(kodPlatnosci);
+
+		var pb = new PictureBox();
+		pb.Dock = DockStyle.Fill;
+		pb.SizeMode = PictureBoxSizeMode.Zoom;
+		pb.Image = qr;
+
+		using var form = new Dialog("Kod płatności", pb, Kontekst);
+		form.ClientSize = new Size(600, 500);
+		form.BackColor = Color.White;
+
+		form.ShowDialog();
 	}
 }
