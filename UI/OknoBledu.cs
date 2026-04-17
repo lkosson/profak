@@ -2,21 +2,26 @@
 
 namespace ProFak.UI;
 
-public partial class OknoBledu : Form
+class OknoBledu : Dialog
 {
-	public OknoBledu()
+	private OknoBledu(Exception exc, Kontekst kontekst)
+		: base("ProFak - Błąd", kontekst)
 	{
-		InitializeComponent();
-		ShowInTaskbar = false;
+		StartPosition = FormStartPosition.CenterScreen;
+		var naglowek = Kontrolki.Text("W trakcie działania aplikacji wystąpił nieoczekiwany błąd. Spróbuj ponownie uruchomić program. Jeśli problem będzie się powtarzał, otwórz poniższy odnośnik i opisz w jakich okolicznościach występuje.\r\n\r\nPoniżej znajdują się techniczne informacje mogące pomóc w ustaleniu przyczyny problemu.");
+		var textAreaWyjatek = Kontrolki.TextArea(linie: 20);
+		var buttonOK = Kontrolki.Button("OK", akcja: Close);
+		var linkURL = Kontrolki.Link("https://github.com/lkosson/profak/issues", akcja: Link);
+		textAreaWyjatek.ReadOnly = true;
+		textAreaWyjatek.Text = exc.ToString();
+		var uklad = new Siatka([0, -1], [0, -1, 0]);
+		uklad.DodajWiersz([(naglowek, 2)]);
+		uklad.DodajWiersz([(textAreaWyjatek, 2)]);
+		uklad.DodajWiersz([buttonOK, linkURL]);
+		UstawZawartosc(uklad);
 	}
 
-	public OknoBledu(Exception exc)
-		: this()
-	{
-		textBoxWyjatek.Text = exc.ToString();
-	}
-
-	private void linkLabelURL_LinkClicked(object? sender, LinkLabelLinkClickedEventArgs e)
+	private void Link()
 	{
 		Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = "https://github.com/lkosson/profak/issues" });
 	}
@@ -44,7 +49,8 @@ public partial class OknoBledu : Form
 #endif
 		else
 		{
-			using var okno = new OknoBledu(exc);
+			using var kontekst = new Kontekst();
+			using var okno = new OknoBledu(exc, kontekst);
 			okno.ShowDialog();
 		}
 	}
