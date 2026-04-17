@@ -30,13 +30,19 @@ class Dialog : Form
 		zawartosc.Dock = DockStyle.Fill;
 	}
 
+	protected override void OnLoad(EventArgs e)
+	{
+		base.OnLoad(e);
+		OknoGotowe();
+	}
+
 	protected override void OnKeyDown(KeyEventArgs e)
 	{
 		base.OnKeyDown(e);
 		if (e.KeyCode == Keys.Escape)
 		{
 			DialogResult = DialogResult.Cancel;
-			Close();
+			Zamknij();
 		}
 	}
 
@@ -49,9 +55,19 @@ class Dialog : Form
 		base.OnFormClosing(e);
 	}
 
+	protected virtual void OknoGotowe()
+	{
+	}
+
 	public void Pokaz()
 	{
 		ShowDialog();
+	}
+
+	public void Zamknij()
+	{
+		if (InvokeRequired) Invoke(Close);
+		else Close();
 	}
 
 	public static void Pokaz(string tytul, Control zawartosc, Kontekst kontekst)

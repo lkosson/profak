@@ -14,7 +14,7 @@ class DialogEdycjiAV : DialogAV
 		: base(tytul, kontekst)
 	{
 		var buttonZapisz = KontrolkiAV.Button("Zapisz [F10]", akcja: Zapisz);
-		var buttonAnuluj = KontrolkiAV.Button("Anuluj [ESC]", akcja: Close);
+		var buttonAnuluj = KontrolkiAV.Button("Anuluj [ESC]", akcja: Zamknij);
 		var uklad = new SiatkaAV([0, 0, -1], [-1, 0]);
 		uklad.DodajWiersz([(zawartosc, 3)]);
 		uklad.DodajWiersz([buttonZapisz, buttonAnuluj]);
@@ -24,7 +24,7 @@ class DialogEdycjiAV : DialogAV
 	private void Zapisz()
 	{
 		Wynik = true;
-		Close();
+		Zamknij();
 	}
 
 	protected override void OnKeyDown(KeyEventArgs e)

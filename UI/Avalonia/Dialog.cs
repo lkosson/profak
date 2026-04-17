@@ -35,21 +35,32 @@ class DialogAV : Window, IDisposable
 		MinHeight = Height;
 		SizeToContent = SizeToContent.Manual;
 		base.OnLoaded(e);
+		OknoGotowe();
 	}
 
 	protected override void OnKeyDown(KeyEventArgs e)
 	{
 		base.OnKeyDown(e);
-		if (e.Key == Key.Escape) Close();
+		if (e.Key == Key.Escape) Zamknij();
 	}
 
 	void IDisposable.Dispose()
 	{
 	}
 
+	protected virtual void OknoGotowe()
+	{
+	}
+
 	public void Pokaz()
 	{
 		AvaloniaUI.Wyswietl(this);
+	}
+
+	public void Zamknij()
+	{
+		if (Dispatcher.CheckAccess()) Close();
+		else Dispatcher.Post(Close);
 	}
 }
 #endif
