@@ -2,18 +2,18 @@
 
 namespace ProFak.UI;
 
-class OknoBledu : Dialog
+class OknoBledu : TDialog
 {
 	private OknoBledu(Exception exc, Kontekst kontekst)
 		: base("ProFak - Błąd", kontekst)
 	{
-		var naglowek = Kontrolki.Text("W trakcie działania aplikacji wystąpił nieoczekiwany błąd. Spróbuj ponownie uruchomić program. Jeśli problem będzie się powtarzał, otwórz poniższy odnośnik i opisz w jakich okolicznościach występuje.\r\n\r\nPoniżej znajdują się techniczne informacje mogące pomóc w ustaleniu przyczyny problemu.");
-		var textAreaWyjatek = Kontrolki.TextArea(linie: 20);
-		var buttonOK = Kontrolki.Button("OK", akcja: Close);
-		var linkURL = Kontrolki.Link("https://github.com/lkosson/profak/issues", akcja: Link);
-		textAreaWyjatek.ReadOnly = true;
+		var naglowek = TKontrolki.Text("W trakcie działania aplikacji wystąpił nieoczekiwany błąd. Spróbuj ponownie uruchomić program. Jeśli problem będzie się powtarzał, otwórz poniższy odnośnik i opisz w jakich okolicznościach występuje.\r\n\r\nPoniżej znajdują się techniczne informacje mogące pomóc w ustaleniu przyczyny problemu.");
+		var textAreaWyjatek = TKontrolki.TextArea(linie: 20);
+		var buttonOK = TKontrolki.Button("OK", akcja: Close);
+		var linkURL = TKontrolki.Link("https://github.com/lkosson/profak/issues", akcja: Link);
 		textAreaWyjatek.Text = exc.ToString();
-		var uklad = new Siatka([0, -1], [0, -1, 0]);
+		textAreaWyjatek.ReadOnly = true;
+		var uklad = new TSiatka([0, -1], [0, -1, 0]);
 		uklad.DodajWiersz([(naglowek, 2)]);
 		uklad.DodajWiersz([(textAreaWyjatek, 2)]);
 		uklad.DodajWiersz([buttonOK, linkURL]);
