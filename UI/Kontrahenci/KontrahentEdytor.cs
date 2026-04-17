@@ -315,7 +315,7 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 			OknoPostepu.Uruchom(async cancellationToken =>
 			{
 				var api = new IO.KSEF2.API(Rekord.SrodowiskoKSeF);
-				var unsignedXml = await api.PobierzZadanieDostepuDoPodpisuAsync(nip);
+				var unsignedXml = await api.PobierzZadanieDostepuDoPodpisuAsync(nip, cancellationToken);
 				cancellationToken.ThrowIfCancellationRequested();
 				var signedXml = api.PodpiszZadanieDlaSrodowiskaTestowego(unsignedXml, nip);
 				await api.PrzeslijZadanieDostepuAsync(signedXml, cancellationToken);

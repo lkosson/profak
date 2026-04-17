@@ -45,10 +45,10 @@ partial class DostepKSeFEdytor : Edytor
 		var nip = NIP;
 		if (String.IsNullOrEmpty(nip)) throw new ApplicationException("Należy podać NIP firmy.");
 		string? xml = null;
-		OknoPostepu.Uruchom(async () =>
+		OknoPostepu.Uruchom(async cancellationToken =>
 		{
 			using var api = new IO.KSEF2.API(SrodowiskoKSeF);
-			xml = await api.PobierzZadanieDostepuDoPodpisuAsync(nip);
+			xml = await api.PobierzZadanieDostepuDoPodpisuAsync(nip, cancellationToken);
 		});
 		if (xml == null) return;
 

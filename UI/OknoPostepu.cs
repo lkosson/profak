@@ -15,12 +15,6 @@ public partial class OknoPostepu : Form
 		akcja = default!;
 	}
 
-	private OknoPostepu(Func<Task> akcja)
-		: this()
-	{
-		this.akcja = _ => akcja();
-	}
-
 	private OknoPostepu(Func<CancellationToken, Task> akcja)
 		: this()
 	{
@@ -54,13 +48,6 @@ public partial class OknoPostepu : Form
 				Close();
 			}
 		});
-	}
-
-	public static void Uruchom(Func<Task> akcja)
-	{
-		using var okno = new OknoPostepu(akcja);
-		okno.ShowDialog();
-		if (okno.edi != null) okno.edi.Throw();
 	}
 
 	public static void Uruchom(Func<CancellationToken, Task> akcja)
