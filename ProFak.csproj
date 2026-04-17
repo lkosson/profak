@@ -35,10 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="UI\Faktury\RachunekGrupaAkcji.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Jint" Version="4.6.1" />
     <PackageReference Include="KSeF.Client" Version="1.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.2">
@@ -56,12 +52,6 @@
 
   <ItemGroup Condition="!$(DefineConstants.Contains(;SQLSERVER;))">
     <Compile Remove="DB\Migrations-SqlServer\*.cs"></Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="UI\OknoPostepu.cs">
-      <SubType>Form</SubType>
-    </Compile>
   </ItemGroup>
 
 </Project>
