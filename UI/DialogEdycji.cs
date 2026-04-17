@@ -24,7 +24,7 @@ class DialogEdycji : Dialog
 		{
 			e.SuppressKeyPress = true;
 			DialogResult = DialogResult.OK;
-			Close();
+			Zamknij();
 		}
 	}
 
