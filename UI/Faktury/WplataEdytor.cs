@@ -7,6 +7,7 @@ class WplataEdytor : EdytorDwieKolumny<Wplata>
 {
 	private readonly NumericUpDown numericUpDownKwota;
 	private readonly TextBox textBoxUwagi;
+	private readonly CheckBox checkBoxCzyRozliczenie;
 
 	public WplataEdytor()
 	{
@@ -14,7 +15,7 @@ class WplataEdytor : EdytorDwieKolumny<Wplata>
 		numericUpDownKwota = DodajNumericUpDown(wplata => wplata.Kwota, "Kwota");
 		numericUpDownKwota.Minimum = -numericUpDownKwota.Maximum;
 		textBoxUwagi = DodajTextBox(wplata => wplata.Uwagi, "Uwagi");
-		DodajCheckBox(wplata => wplata.CzyRozliczenie, "Uwzględnij w rozliczeniu");
+		checkBoxCzyRozliczenie = DodajCheckBox(wplata => wplata.CzyRozliczenie, "Uwzględnij w rozliczeniu");
 		Walidacja(textBoxUwagi, WalidacjaUwag, false);
 		UstawRozmiar();
 	}
@@ -40,6 +41,10 @@ class WplataEdytor : EdytorDwieKolumny<Wplata>
 		{
 			numericUpDownKwota.Enabled = false;
 			numericUpDownKwota.Text = "";
+		}
+		else
+		{
+			checkBoxCzyRozliczenie.Visible = faktura.CzySprzedaz;
 		}
 	}
 
