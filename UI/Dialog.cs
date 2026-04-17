@@ -8,6 +8,7 @@ class Dialog : Form
 		Icon = GlowneOkno.Ikona;
 		KeyPreview = true;
 		StartPosition = FormStartPosition.CenterParent;
+		AutoValidate = AutoValidate.EnableAllowFocusChange;
 	}
 
 	protected Dialog(string tytul, Kontekst kontekst)
