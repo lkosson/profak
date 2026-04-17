@@ -14,7 +14,7 @@ public class Generator
 	{
 		if (engine == null)
 		{
-			var asm = Assembly.GetCallingAssembly();
+			var asm = Assembly.GetExecutingAssembly();
 			using var skrypt = asm.GetManifestResourceStream("ProFak.IO.KSEFPDF.ksef-fe-invoice-converter.umd.cjs") ?? throw new ApplicationException("Błąd wewnętrzny: nie znaleziono skryptu ksef-pdf-generator.");
 			using var streamReader = new StreamReader(skrypt);
 			var trescSkryptu = streamReader.ReadToEnd();
