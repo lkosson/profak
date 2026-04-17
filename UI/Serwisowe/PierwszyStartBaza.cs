@@ -34,7 +34,7 @@ class PierwszyStartBaza : Dialog
 		radioButtonBazaDemo = Kontrolki.RadioButton("Uruchom program w trybie demonstracyjnym z przykładowymi danymi, w tymczasowej bazie danych.");
 		radioButtonOdtworzKopie = Kontrolki.RadioButton("Odtwórz bazę danych ze wskazanego pliku z kopią zapasową.");
 		buttonDalej = Kontrolki.Button("Dalej", Dalej);
-		progressBar = new ProgressBar();
+		progressBar = Kontrolki.ProgressBar();
 		labelStatus = Kontrolki.Label("");
 		backgroundWorker = new BackgroundWorker();
 
@@ -43,7 +43,6 @@ class PierwszyStartBaza : Dialog
 		radioButtonNowaLokalnaBaza.Enabled = CzySciezkaDostepna(DB.Baza.LokalnaSciezka);
 		labelNaglowek1.Margin = new Padding(3);
 		labelNaglowek2.Margin = new Padding(3);
-		progressBar.Style = ProgressBarStyle.Marquee;
 		progressBar.Visible = false;
 		backgroundWorker.WorkerReportsProgress = true;
 		backgroundWorker.DoWork += backgroundWorker_DoWork;

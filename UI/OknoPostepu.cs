@@ -17,7 +17,7 @@ class OknoPostepu : Dialog
 		ctsAnuluj = new CancellationTokenSource();
 
 		labelNaglowek = Kontrolki.Text("Trwa wykonywanie zleconej operacji");
-		var pasek = new ProgressBar { Style = ProgressBarStyle.Marquee };
+		var pasek = Kontrolki.ProgressBar();
 		buttonPrzerwij = Kontrolki.Button("Przerwij", akcja: Przerwij);
 		var uklad = new Pionowo([labelNaglowek, pasek, new Poziomo([buttonPrzerwij])]);
 		UstawZawartosc(uklad);

@@ -204,4 +204,11 @@ class Kontrolki
 		if (zmienionaWartosc != null) listBox.SelectedIndexChanged += BezpiecznaAkcja(zmienionaWartosc);
 		return listBox;
 	}
+
+	public static ProgressBar ProgressBar()
+	{
+		var progressBar = new ProgressBar();
+		progressBar.Style = ProgressBarStyle.Marquee;
+		return progressBar;
+	}
 }
