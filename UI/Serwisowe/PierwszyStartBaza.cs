@@ -213,7 +213,7 @@ class PierwszyStartBaza : Dialog
 		if (e.Error == null)
 		{
 			sukces = true;
-			Close();
+			Zamknij();
 			return;
 		}
 
