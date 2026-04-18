@@ -114,8 +114,8 @@ partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 		podatki.DodajWiersz("Stawka ryczałtu", [(comboBoxStawkaRyczaltu, 2)]);
 		podatki.DodajWiersz([(labelCenaZakupu = Kontrolki.Label("Cena zakupu"), 1), (numericUpDownCenaZakupu, 2)]);
 
-		var uklad = new Siatka([0, 0, 0, 0, -1], [0, 0]);
-		uklad.DodajWiersz([(naglowek, 5)]);
+		var uklad = new Siatka([-3, -3, -4, -4], [0, 0]);
+		uklad.DodajWiersz([(naglowek, 4)]);
 		uklad.DodajWiersz([
 			new Grupa("Cena jednostkowa", ceny),
 			new Grupa("Łączna wartość", wartosci),
