@@ -41,6 +41,10 @@ public partial class OknoBledu : Form
 		{
 			MessageBox.Show("Baza danych jest używana na innym stanowisku.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 		}
+		else if (exc is Microsoft.EntityFrameworkCore.DbUpdateException && exc.InnerException is Microsoft.Data.Sqlite.SqliteException se2 && se2.SqliteErrorCode == 19)
+		{
+			MessageBox.Show("Z tą pozycją są powiązane inne dane w bazie, blokujące możliwość usunięcia lub edycji.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+		}
 #endif
 		else
 		{
