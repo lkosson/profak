@@ -3,6 +3,7 @@ using ProFak.DB;
 using System.ComponentModel;
 using System.Data;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace ProFak.UI;
 
@@ -39,7 +40,16 @@ class GlowneOkno : Form
 		ZbudujMenu();
 	}
 
-	public static Icon? Ikona => (Icon?)new ComponentResourceManager(typeof(GlowneOkno)).GetObject("$this.Icon");
+	public static Icon? Ikona
+	{
+		get
+		{
+			var asm = Assembly.GetExecutingAssembly();
+			using var dane = asm.GetManifestResourceStream("ProFak.ikona.ico");
+			if (dane == null) return null;
+			return new Icon(dane);
+		}
+	}
 
 	protected override void OnLoad(EventArgs e)
 	{
