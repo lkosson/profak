@@ -9,7 +9,7 @@ class OknoBledu : Dialog
 	{
 		var naglowek = Kontrolki.Text("W trakcie działania aplikacji wystąpił nieoczekiwany błąd. Spróbuj ponownie uruchomić program. Jeśli problem będzie się powtarzał, otwórz poniższy odnośnik i opisz w jakich okolicznościach występuje.\r\n\r\nPoniżej znajdują się techniczne informacje mogące pomóc w ustaleniu przyczyny problemu.");
 		var textAreaWyjatek = Kontrolki.TextArea(linie: 20);
-		var buttonOK = Kontrolki.Button("OK", akcja: Close);
+		var buttonOK = Kontrolki.Button("OK", akcja: Zamknij);
 		var linkURL = Kontrolki.Link("https://github.com/lkosson/profak/issues", akcja: Link);
 		textAreaWyjatek.Text = exc.ToString();
 		textAreaWyjatek.ReadOnly = true;

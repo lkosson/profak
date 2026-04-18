@@ -21,6 +21,6 @@ class WybierzRekordAkcja<TRekord> : AkcjaNaSpisie<TRekord>
 		if (kontekst.Dialog == null) return;
 		WybranyRekord = zaznaczoneRekordy.Single();
 		kontekst.Dialog.DialogResult = DialogResult.OK;
-		kontekst.Dialog.Close();
+		kontekst.Dialog.Zamknij();
 	}
 }
