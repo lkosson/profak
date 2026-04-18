@@ -1,21 +1,17 @@
 ﻿#if AVALONIA
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Control = Avalonia.Controls.Control;
-using TabControl = Avalonia.Controls.TabControl;
-using KeyEventArgs = Avalonia.Input.KeyEventArgs;
-using KeyModifiers = Avalonia.Input.KeyModifiers;
 using Avalonia.Input;
 
 namespace ProFak.UI;
 
-class ZakladkiAV : TabControl
+class ZakladkiAV : Avalonia.Controls.TabControl
 {
 	public ZakladkiAV()
 	{
 	}
 
-	public TabItem Dodaj(string etykieta, Control zawartosc)
+	public TabItem Dodaj(string etykieta, TControl zawartosc)
 	{
 		if (Wyglad.SkrotyKlawiaturoweZakladek)
 		{
@@ -35,9 +31,9 @@ class ZakladkiAV : TabControl
 		base.OnLoaded(e);
 	}
 
-	private void TopLevel_KeyDown(object? sender, KeyEventArgs e)
+	private void TopLevel_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
 	{
-		if (e.KeyModifiers == KeyModifiers.Control && e.Key >= Key.F1 && e.Key < (Key.F1 + Items.Count))
+		if (e.KeyModifiers == Avalonia.Input.KeyModifiers.Control && e.Key >= Key.F1 && e.Key < (Key.F1 + Items.Count))
 		{
 			var tabIndex = e.Key - Key.F1;
 			SelectedIndex = tabIndex;

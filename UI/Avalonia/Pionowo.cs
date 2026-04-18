@@ -1,5 +1,4 @@
 ﻿using Avalonia.Controls;
-using Control = Avalonia.Controls.Control;
 
 namespace ProFak.UI;
 
@@ -9,7 +8,7 @@ class PionowoAV : StackPanel
 	{
 	}
 
-	public PionowoAV(Control[] kontrolki)
+	public PionowoAV(TControl[] kontrolki)
 		: this()
 	{
 		foreach (var kontrolka in kontrolki)

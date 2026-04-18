@@ -21,7 +21,6 @@ using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Interactivity;
 using System.Globalization;
-using ProgressBar = Avalonia.Controls.ProgressBar;
 
 namespace ProFak.UI;
 

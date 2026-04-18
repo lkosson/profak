@@ -1,7 +1,6 @@
 ﻿#if AVALONIA
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Control = Avalonia.Controls.Control;
 
 namespace ProFak.UI;
 
@@ -19,7 +18,7 @@ class DwieKolumnyAV : Grid
 		base.OnLoaded(e);
 	}
 
-	public void DodajWiersz(Control kontrolka, string? etykieta = null, bool pelnaSzerokosc = false)
+	public void DodajWiersz(TControl kontrolka, string? etykieta = null, bool pelnaSzerokosc = false)
 	{
 		RowDefinitions.Add(new RowDefinition(GridLength.Auto));
 

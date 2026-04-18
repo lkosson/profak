@@ -1,6 +1,5 @@
 ﻿#if AVALONIA
 using Avalonia.Controls;
-using Control = Avalonia.Controls.Control;
 
 namespace ProFak.UI;
 
@@ -10,7 +9,7 @@ class PoziomoAV : WrapPanel
 	{
 	}
 
-	public PoziomoAV(Control[] kontrolki)
+	public PoziomoAV(TControl[] kontrolki)
 		: this()
 	{
 		foreach (var kontrolka in kontrolki)
