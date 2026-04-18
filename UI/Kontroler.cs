@@ -95,7 +95,7 @@ partial class Kontroler<TModel>
 		{
 			pozycje.Add(new PozycjaListy<TEnum?> { Wartosc = wartosc, Opis = DB.Rekord.Format(wartosc) });
 		}
-		Slownik(comboBox, pozycje);
+		Slownik(comboBox, pozycje.ToArray());
 	}
 
 	public void Slownik(ComboBox comboBox, string opisTrue, string opisFalse)
