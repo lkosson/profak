@@ -9,10 +9,10 @@ class KSeFSpis : Spis<Faktura>
 	private readonly bool sprzedaz;
 	private readonly bool przyrostowo;
 	private readonly DateTime odDaty;
-	private readonly DataGridViewTextBoxColumn kolumnaNazwaNabywcy;
-	private readonly DataGridViewTextBoxColumn kolumnaNIPNabywcy;
-	private readonly DataGridViewTextBoxColumn kolumnaNazwaSprzedawcy;
-	private readonly DataGridViewTextBoxColumn kolumnaNIPSprzedawcy;
+	private readonly DataGridViewColumn kolumnaNazwaNabywcy;
+	private readonly DataGridViewColumn kolumnaNIPNabywcy;
+	private readonly DataGridViewColumn kolumnaNazwaSprzedawcy;
+	private readonly DataGridViewColumn kolumnaNIPSprzedawcy;
 	public override string Podsumowanie
 	{
 		get
