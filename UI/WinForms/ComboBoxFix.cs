@@ -1,4 +1,4 @@
-﻿namespace System.Windows.Forms;
+﻿namespace ProFak.UI;
 
 class ComboBoxFix : ComboBox
 {
