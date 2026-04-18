@@ -1,14 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿#if WINFORMS
+global using TControl = System.Windows.Forms.Control;
+global using TLabel = System.Windows.Forms.Label;
+global using TLinkLabel = System.Windows.Forms.LinkLabel;
+global using TText = System.Windows.Forms.Label;
+global using TButton = ProFak.UI.ButtonDPI;
+global using TTextBox = System.Windows.Forms.TextBox;
+global using TTextArea = System.Windows.Forms.TextBox;
+global using TCheckBox = System.Windows.Forms.CheckBox;
+global using TRadioButton = System.Windows.Forms.RadioButton;
+global using TNumericUpDown = ProFak.UI.NumericUpDownDPI;
+global using TComboBox = ProFak.UI.ComboBoxFix;
+global using TListBox = System.Windows.Forms.ListBox;
+global using TMenuItem = System.Windows.Forms.ToolStripMenuItem;
+global using TDatePicker = ProFak.UI.DateTimePickerFix;
+global using TProgressBar = System.Windows.Forms.ProgressBar;
+global using TContextMenu = System.Windows.Forms.ContextMenuStrip;
 
 namespace ProFak.UI;
 
 class Kontrolki
 {
-	public static Label Label(string tekst)
+	public static TLabel Label(string tekst)
 	{
-		var label = new Label();
+		var label = new TLabel();
 		label.Anchor = AnchorStyles.Right;
 		label.TextAlign = ContentAlignment.MiddleRight;
 		label.AutoSize = true;
@@ -16,9 +30,9 @@ class Kontrolki
 		return label;
 	}
 
-	public static LinkLabel Link(string tekst, Action? akcja = null)
+	public static TLinkLabel Link(string tekst, Action? akcja = null)
 	{
-		var label = new LinkLabel();
+		var label = new TLinkLabel();
 		label.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		label.TextAlign = ContentAlignment.MiddleLeft;
 		label.AutoSize = true;
@@ -27,9 +41,9 @@ class Kontrolki
 		return label;
 	}
 
-	public static Label Text(string tekst, bool pogrubiony = false, int rozmiar = 9)
+	public static TText Text(string tekst, bool pogrubiony = false, int rozmiar = 9)
 	{
-		var label = new Label();
+		var label = new TText();
 		label.Anchor = AnchorStyles.Left;
 		label.TextAlign = ContentAlignment.MiddleLeft;
 		label.AutoSize = true;
@@ -38,15 +52,15 @@ class Kontrolki
 		return label;
 	}
 
-	public static LinkLabel LinkPomoc(string tresc)
+	public static TLinkLabel LinkPomoc(string tresc)
 	{
 		void Pomoc() => OknoKomunikatu.Informacja(tresc);
 		return Link("[?]", Pomoc);
 	}
 
-	public static Button Button(string tekst, Action? akcja = null)
+	public static TButton Button(string tekst, Action? akcja = null)
 	{
-		var button = new ButtonDPI();
+		var button = new TButton();
 		button.Text = Wyglad.IkonyAkcji ? tekst : Wyglad.NazwaBezIkony(tekst);
 		button.AutoSize = true;
 		button.UseVisualStyleBackColor = true;
@@ -55,7 +69,7 @@ class Kontrolki
 		return button;
 	}
 
-	public static Button ButtonSlownik(Action? akcja = null)
+	public static TButton ButtonSlownik(Action? akcja = null)
 	{
 		var button = Button("...", akcja: akcja);
 		button.AutoSize = false;
@@ -64,7 +78,7 @@ class Kontrolki
 		return button;
 	}
 
-	public static Button ButtonDodaj(Action akcja)
+	public static TButton ButtonDodaj(Action akcja)
 	{
 		var button = Button(Wyglad.IkonyAkcji ? "➕" : "+", akcja: akcja);
 		button.AutoSize = false;
@@ -73,7 +87,7 @@ class Kontrolki
 		return button;
 	}
 
-	public static Button ButtonMenu(string tekst, ToolStripMenuItem[] pozycje)
+	public static TButton ButtonMenu(string tekst, ToolStripMenuItem[] pozycje)
 	{
 		var menu = new ContextMenuStrip();
 		menu.Items.AddRange(pozycje);
@@ -104,9 +118,9 @@ class Kontrolki
 		return Uruchom;
 	}
 
-	public static TextBox TextBox(bool haslo = false, string? podpowiedz = null, int szerokosc = 200, Action? zmienionaWartosc = null)
+	public static TTextBox TextBox(bool haslo = false, string? podpowiedz = null, int szerokosc = 200, Action? zmienionaWartosc = null)
 	{
-		var textBox = new TextBox();
+		var textBox = new TTextBox();
 		textBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		textBox.Width = szerokosc * textBox.DeviceDpi / 96;
 		if (haslo) textBox.UseSystemPasswordChar = true;
@@ -115,7 +129,7 @@ class Kontrolki
 		return textBox;
 	}
 
-	public static TextBox TextArea(int linie = -1, Action? zmienionaWartosc = null)
+	public static TTextBox TextArea(int linie = -1, Action? zmienionaWartosc = null)
 	{
 		var textBox = TextBox();
 		textBox.AcceptsReturn = true;
@@ -125,9 +139,9 @@ class Kontrolki
 		return textBox;
 	}
 
-	public static CheckBox CheckBox(string? etykieta = null, Action? zmienionaWartosc = null)
+	public static TCheckBox CheckBox(string? etykieta = null, Action? zmienionaWartosc = null)
 	{
-		var checkBox = new CheckBox();
+		var checkBox = new TCheckBox();
 		checkBox.AutoSize = true;
 		checkBox.Anchor = AnchorStyles.Left;
 		checkBox.UseVisualStyleBackColor = true;
@@ -136,18 +150,18 @@ class Kontrolki
 		return checkBox;
 	}
 
-	public static RadioButton RadioButton(string? etykieta = null)
+	public static TRadioButton RadioButton(string? etykieta = null)
 	{
-		var radioButton = new RadioButton();
+		var radioButton = new TRadioButton();
 		radioButton.AutoSize = true;
 		radioButton.UseVisualStyleBackColor = true;
 		if (!String.IsNullOrEmpty(etykieta)) radioButton.Text = etykieta;
 		return radioButton;
 	}
 
-	public static NumericUpDown NumericUpDown(int poPrzecinku = 2, int szerokosc = 100, Action? zmienionaWartosc = null)
+	public static TNumericUpDown NumericUpDown(int poPrzecinku = 2, int szerokosc = 100, Action? zmienionaWartosc = null)
 	{
-		var numericUpDown = new NumericUpDownDPI();
+		var numericUpDown = new TNumericUpDown();
 		numericUpDown.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		numericUpDown.TextAlign = HorizontalAlignment.Right;
 		numericUpDown.DecimalPlaces = poPrzecinku;
@@ -158,9 +172,9 @@ class Kontrolki
 		return numericUpDown;
 	}
 
-	public static DateTimePicker DatePicker(bool tylkoMiesiac = false, int szerokosc = 160)
+	public static TDatePicker DatePicker(bool tylkoMiesiac = false, int szerokosc = 160)
 	{
-		var dateTimePicker = new DateTimePickerFix();
+		var dateTimePicker = new TDatePicker();
 		dateTimePicker.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		dateTimePicker.Width = szerokosc * dateTimePicker.DeviceDpi / 96;
 		dateTimePicker.CustomFormat = tylkoMiesiac ? "MM-yyyy" : Wyglad.FormatDaty;
@@ -168,9 +182,9 @@ class Kontrolki
 		return dateTimePicker;
 	}
 
-	public static ComboBox DropDownList(int szerokosc = 200, Action? zmienionaWartosc = null)
+	public static TComboBox DropDownList(int szerokosc = 200, Action? zmienionaWartosc = null)
 	{
-		var comboBox = new ComboBoxFix();
+		var comboBox = new TComboBox();
 		comboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 		comboBox.Width = szerokosc * comboBox.DeviceDpi / 96;
@@ -178,9 +192,9 @@ class Kontrolki
 		return comboBox;
 	}
 
-	public static ComboBox SuggestBox(string[]? wartosci = null)
+	public static TComboBox SuggestBox(string[]? wartosci = null)
 	{
-		var comboBox = new ComboBoxFix();
+		var comboBox = new TComboBox();
 		comboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		comboBox.DropDownStyle = ComboBoxStyle.DropDown;
 		comboBox.Width = 200 * comboBox.DeviceDpi / 96;
@@ -188,27 +202,28 @@ class Kontrolki
 		return comboBox;
 	}
 
-	public static ToolStripMenuItem PopupMenuItem(string etykieta, Action akcja)
+	public static TMenuItem PopupMenuItem(string etykieta, Action akcja)
 	{
-		var pozycja = new ToolStripMenuItem();
+		var pozycja = new TMenuItem();
 		pozycja.Text = etykieta;
 		pozycja.Click += BezpiecznaAkcja(akcja);
 		return pozycja;
 	}
 
-	public static ListBox ListBox(Action? zmienionaWartosc = null)
+	public static TListBox ListBox(Action? zmienionaWartosc = null)
 	{
-		var listBox= new ListBox();
+		var listBox= new TListBox();
 		listBox.FormattingEnabled = true;
 		listBox.ItemHeight = 15;
 		if (zmienionaWartosc != null) listBox.SelectedIndexChanged += BezpiecznaAkcja(zmienionaWartosc);
 		return listBox;
 	}
 
-	public static ProgressBar ProgressBar()
+	public static TProgressBar ProgressBar()
 	{
-		var progressBar = new ProgressBar();
+		var progressBar = new TProgressBar();
 		progressBar.Style = ProgressBarStyle.Marquee;
 		return progressBar;
 	}
 }
+#endif

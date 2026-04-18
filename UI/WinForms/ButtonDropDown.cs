@@ -3,7 +3,7 @@ using System.Drawing.Drawing2D;
 
 namespace ProFak.UI;
 
-class ButtonDropDown : Button
+class ButtonDropDown : ButtonDPI
 {
 	[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 	public ContextMenuStrip? Menu { get; set; }

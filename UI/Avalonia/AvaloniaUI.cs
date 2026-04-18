@@ -8,7 +8,6 @@ global using TPionowo = ProFak.UI.PionowoAV;
 global using TPoziomo = ProFak.UI.PoziomoAV;
 global using TSiatka = ProFak.UI.SiatkaAV;
 global using TZakladki = ProFak.UI.ZakladkiAV;
-#endif
 
 using Avalonia;
 using Avalonia.Controls;
@@ -35,3 +34,4 @@ class AvaloniaUI
 		application.Run(okno);
 	}
 }
+#endif
