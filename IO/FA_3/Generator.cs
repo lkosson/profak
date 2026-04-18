@@ -849,11 +849,18 @@ public class Generator
 		}
 
 		var sposobyPlatnosci = baza.SposobyPlatnosci.ToList();
-		faktura.SposobPlatnosciRef = sposobyPlatnosci
-			.OrderBy(sposob => sposob.Nazwa.Contains(faktura.OpisSposobuPlatnosci, StringComparison.CurrentCultureIgnoreCase))
-			.ThenBy(sposob => Math.Abs(sposob.LiczbaDni - (faktura.TerminPlatnosci - faktura.DataWystawienia).TotalDays))
+		var wybranySposobPlatnosci = sposobyPlatnosci
+			.Where(sposob => sposob.LiczbaDni == Math.Round((faktura.TerminPlatnosci.Date - faktura.DataWystawienia.Date).TotalDays))
+			.OrderBy(sposob => String.Equals(sposob.Nazwa, faktura.OpisSposobuPlatnosci, StringComparison.CurrentCultureIgnoreCase) ? 0 : 1)
+			.ThenBy(sposob => sposob.Nazwa.Contains(faktura.OpisSposobuPlatnosci, StringComparison.CurrentCultureIgnoreCase) ? 0 : 1)
 			.ThenBy(sposob => sposob.CzyDomyslny ? 0 : 1)
 			.FirstOrDefault();
+
+		if (wybranySposobPlatnosci != null)
+		{
+			faktura.SposobPlatnosciRef = wybranySposobPlatnosci;
+			faktura.OpisSposobuPlatnosci = wybranySposobPlatnosci.Nazwa;
+		}
 
 		var waluta = baza.Waluty.FirstOrDefault(waluta => waluta.Skrot.ToLower() == faktura.Waluta.Skrot.ToLower());
 		if (waluta == null) baza.Zapisz(waluta = faktura.Waluta);
