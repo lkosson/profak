@@ -459,7 +459,7 @@ public class Faktura : Rekord<Faktura>
 	{
 		SposobPlatnosciRef = sposobPlatnosci;
 		OpisSposobuPlatnosci = sposobPlatnosci.Nazwa;
-		TerminPlatnosci = DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
+		if (CzySprzedaz || !CzyKSeF) TerminPlatnosci = DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
 	}
 
 	public string PodstawPolaWysylki(string szablon)
