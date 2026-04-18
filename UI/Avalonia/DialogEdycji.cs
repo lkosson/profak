@@ -1,8 +1,6 @@
 ﻿#if AVALONIA
 using Avalonia.Controls;
 using Avalonia.Input;
-using Control = Avalonia.Controls.Control;
-using KeyEventArgs = Avalonia.Input.KeyEventArgs;
 
 namespace ProFak.UI;
 
@@ -10,7 +8,7 @@ class DialogEdycjiAV : DialogAV
 {
 	public bool Wynik { get; private set; }
 
-	public DialogEdycjiAV(string tytul, Control zawartosc, Kontekst kontekst)
+	public DialogEdycjiAV(string tytul, TControl zawartosc, Kontekst kontekst)
 		: base(tytul, kontekst)
 	{
 		var buttonZapisz = KontrolkiAV.Button("Zapisz [F10]", akcja: Zapisz);
@@ -27,7 +25,7 @@ class DialogEdycjiAV : DialogAV
 		Zamknij();
 	}
 
-	protected override void OnKeyDown(KeyEventArgs e)
+	protected override void OnKeyDown(Avalonia.Input.KeyEventArgs e)
 	{
 		base.OnKeyDown(e);
 		if (e.Key == Key.F10) Zapisz();

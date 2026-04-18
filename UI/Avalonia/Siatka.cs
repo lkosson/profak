@@ -1,7 +1,6 @@
 ﻿#if AVALONIA
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Control = Avalonia.Controls.Control;
 
 namespace ProFak.UI;
 
@@ -43,7 +42,7 @@ class SiatkaAV : Grid
 		base.OnLoaded(e);
 	}
 
-	public void DodajWiersz(IEnumerable<(Control? kontrolka, int kolumny)> kontrolki)
+	public void DodajWiersz(IEnumerable<(TControl? kontrolka, int kolumny)> kontrolki)
 	{
 		if (wiersz >= RowDefinitions.Count) RowDefinitions.Add(new RowDefinition(GridLength.Auto));
 
@@ -68,16 +67,16 @@ class SiatkaAV : Grid
 		wiersz++;
 	}
 
-	public void DodajWiersz(IEnumerable<Control?> kontrolki)
+	public void DodajWiersz(IEnumerable<TControl?> kontrolki)
 		=> DodajWiersz(kontrolki.Select(kontrolka => (kontrolka, 1)));
 
-	public void DodajWiersz(string etykieta, IEnumerable<(Control? kontrolka, int kolumny)> kontrolki)
+	public void DodajWiersz(string etykieta, IEnumerable<(TControl? kontrolka, int kolumny)> kontrolki)
 		=> DodajWiersz(kontrolki.Prepend((KontrolkiAV.Label(etykieta), 1)));
 
-	public void DodajWiersz(string etykieta, IEnumerable<Control?> kontrolki)
+	public void DodajWiersz(string etykieta, IEnumerable<TControl?> kontrolki)
 		=> DodajWiersz(etykieta, kontrolki.Select(kontrolka => (kontrolka, 1)));
 
 	public void DodajWiersz(IEnumerable<string?> etykiety)
-		=> DodajWiersz(etykiety.Select(etykieta => (String.IsNullOrEmpty(etykieta) ? null : (Control?)KontrolkiAV.Label(etykieta), 1)));
+		=> DodajWiersz(etykiety.Select(etykieta => (String.IsNullOrEmpty(etykieta) ? null : (TControl?)KontrolkiAV.Label(etykieta), 1)));
 }
 #endif

@@ -2,8 +2,6 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Control = Avalonia.Controls.Control;
-using KeyEventArgs = Avalonia.Input.KeyEventArgs;
 
 namespace ProFak.UI;
 
@@ -18,13 +16,13 @@ class DialogAV : Window, IDisposable
 		//kontekst.Dialog = this;
 	}
 
-	public DialogAV(string tytul, Control zawartosc, Kontekst kontekst)
+	public DialogAV(string tytul, TControl zawartosc, Kontekst kontekst)
 		: this(tytul, kontekst)
 	{
 		UstawZawartosc(zawartosc);
 	}
 
-	protected void UstawZawartosc(Control zawartosc)
+	protected void UstawZawartosc(TControl zawartosc)
 	{
 		Content = zawartosc;
 	}
@@ -38,7 +36,7 @@ class DialogAV : Window, IDisposable
 		OknoGotowe();
 	}
 
-	protected override void OnKeyDown(KeyEventArgs e)
+	protected override void OnKeyDown(Avalonia.Input.KeyEventArgs e)
 	{
 		base.OnKeyDown(e);
 		if (e.Key == Key.Escape) Zamknij();

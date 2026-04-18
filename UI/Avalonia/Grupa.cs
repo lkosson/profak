@@ -1,13 +1,10 @@
 ﻿#if AVALONIA
-using Avalonia.Controls;
-using Control = Avalonia.Controls.Control;
-using GroupBox = Avalonia.Controls.GroupBox;
 
 namespace ProFak.UI;
 
-class GrupaAV : GroupBox
+class GrupaAV : Avalonia.Controls.GroupBox
 {
-	public GrupaAV(string opis, Control zawartosc)
+	public GrupaAV(string opis, TControl zawartosc)
 	{
 		Header = opis;
 		Content = zawartosc;
