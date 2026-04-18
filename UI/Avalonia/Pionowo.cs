@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls;
+﻿#if AVALONIA
+using Avalonia.Controls;
 
 namespace ProFak.UI;
 
@@ -17,3 +18,4 @@ class PionowoAV : StackPanel
 		}
 	}
 }
+#endif
