@@ -1,4 +1,5 @@
-﻿namespace ProFak.UI;
+﻿#if WINFORMS
+namespace ProFak.UI;
 
 class DwieKolumnyWF : TableLayoutPanel
 {
@@ -41,3 +42,4 @@ class DwieKolumnyWF : TableLayoutPanel
 		Size = GetPreferredSize(default);
 	}
 }
+#endif

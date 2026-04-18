@@ -10,6 +10,7 @@ global using TCheckBox = System.Windows.Forms.CheckBox;
 global using TRadioButton = System.Windows.Forms.RadioButton;
 global using TNumericUpDown = ProFak.UI.NumericUpDownDPI;
 global using TComboBox = ProFak.UI.ComboBoxFix;
+global using TSuggestBox = ProFak.UI.ComboBoxFix;
 global using TListBox = System.Windows.Forms.ListBox;
 global using TMenuItem = System.Windows.Forms.ToolStripMenuItem;
 global using TDatePicker = ProFak.UI.DateTimePickerFix;
@@ -192,9 +193,9 @@ class KontrolkiWF
 		return comboBox;
 	}
 
-	public static TComboBox SuggestBox(string[]? wartosci = null)
+	public static TSuggestBox SuggestBox(string[]? wartosci = null)
 	{
-		var comboBox = new TComboBox();
+		var comboBox = new TSuggestBox();
 		comboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		comboBox.DropDownStyle = ComboBoxStyle.DropDown;
 		comboBox.Width = 200 * comboBox.DeviceDpi / 96;

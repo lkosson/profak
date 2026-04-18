@@ -11,14 +11,14 @@ class BazyDanych : Edytor, IKontrolkaZKontekstem
 
 	private bool gotowy;
 
-	private readonly TextBox textBoxRozmiar;
-	private readonly ComboBox comboBoxPlik;
-	private readonly Button buttonUtworzKopie;
-	private readonly Button buttonPrzywrocKopie;
-	private readonly TextBox textBoxDataModyfikacji;
-	private readonly Button buttonPrzenies;
-	private readonly Button buttonZapiszJSON;
-	private readonly Button buttonWczytajJSON;
+	private readonly TTextBox textBoxRozmiar;
+	private readonly TSuggestBox comboBoxPlik;
+	private readonly TButton buttonUtworzKopie;
+	private readonly TButton buttonPrzywrocKopie;
+	private readonly TTextBox textBoxDataModyfikacji;
+	private readonly TButton buttonPrzenies;
+	private readonly TButton buttonZapiszJSON;
+	private readonly TButton buttonWczytajJSON;
 
 	public BazyDanych()
 	{

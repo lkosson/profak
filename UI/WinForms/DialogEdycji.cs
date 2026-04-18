@@ -1,4 +1,5 @@
-﻿namespace ProFak.UI;
+﻿#if WINFORMS
+namespace ProFak.UI;
 
 class DialogEdycjiWF : DialogWF
 {
@@ -35,3 +36,4 @@ class DialogEdycjiWF : DialogWF
 		return dialog.ShowDialog() == DialogResult.OK;
 	}
 }
+#endif

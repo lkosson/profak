@@ -1,4 +1,5 @@
-﻿namespace ProFak.UI;
+﻿#if WINFORMS
+namespace ProFak.UI;
 
 class DateTimePickerFix : DateTimePicker
 {
@@ -30,3 +31,4 @@ class DateTimePickerFix : DateTimePicker
 		base.OnKeyDown(e);
 	}
 }
+#endif

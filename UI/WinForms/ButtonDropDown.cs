@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿#if WINFORMS
+using System.ComponentModel;
 using System.Drawing.Drawing2D;
 
 namespace ProFak.UI;
@@ -59,3 +60,4 @@ class ButtonDropDown : ButtonDPI
 		}
 	}
 }
+#endif

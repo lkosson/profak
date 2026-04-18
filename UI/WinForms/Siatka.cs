@@ -1,4 +1,5 @@
-﻿namespace ProFak.UI;
+﻿#if WINFORMS
+namespace ProFak.UI;
 
 class SiatkaWF : TableLayoutPanel
 {
@@ -73,11 +74,12 @@ class SiatkaWF : TableLayoutPanel
 		=> DodajWiersz(kontrolki.Select(kontrolka => (kontrolka, 1)));
 
 	public void DodajWiersz(string etykieta, IEnumerable<(TControl? kontrolka, int kolumny)> kontrolki)
-		=> DodajWiersz(kontrolki.Prepend((TKontrolki.Label(etykieta), 1)));
+		=> DodajWiersz(kontrolki.Prepend((Kontrolki.Label(etykieta), 1)));
 
 	public void DodajWiersz(string etykieta, IEnumerable<TControl?> kontrolki)
 		=> DodajWiersz(etykieta, kontrolki.Select(kontrolka => (kontrolka, 1)));
 
 	public void DodajWiersz(IEnumerable<string?> etykiety)
-		=> DodajWiersz(etykiety.Select(etykieta => (String.IsNullOrEmpty(etykieta) ? null : (TControl?)TKontrolki.Label(etykieta), 1)));
+		=> DodajWiersz(etykiety.Select(etykieta => (String.IsNullOrEmpty(etykieta) ? null : (TControl?)Kontrolki.Label(etykieta), 1)));
 }
+#endif

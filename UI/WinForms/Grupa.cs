@@ -1,4 +1,5 @@
-﻿namespace ProFak.UI;
+﻿#if WINFORMS
+namespace ProFak.UI;
 
 class GrupaWF : GroupBox
 {
@@ -12,3 +13,4 @@ class GrupaWF : GroupBox
 		zawartosc.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
 	}
 }
+#endif

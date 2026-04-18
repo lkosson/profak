@@ -1,4 +1,5 @@
-﻿namespace ProFak.UI;
+﻿#if WINFORMS
+namespace ProFak.UI;
 
 class PionowoWF : TableLayoutPanel
 {
@@ -23,3 +24,4 @@ class PionowoWF : TableLayoutPanel
 		Size = PreferredSize;
 	}
 }
+#endif

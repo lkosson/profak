@@ -1,13 +1,13 @@
 ﻿#if AVALONIA
-global using TDialog = ProFak.UI.DialogAV;
-global using TDialogEdycji = ProFak.UI.DialogEdycjiAV;
-global using TDwieKolumny = ProFak.UI.DwieKolumnyAV;
-global using TGrupa = ProFak.UI.GrupaAV;
-global using TKontrolki = ProFak.UI.KontrolkiAV;
-global using TPionowo = ProFak.UI.PionowoAV;
-global using TPoziomo = ProFak.UI.PoziomoAV;
-global using TSiatka = ProFak.UI.SiatkaAV;
-global using TZakladki = ProFak.UI.ZakladkiAV;
+global using Dialog = ProFak.UI.DialogAV;
+global using DialogEdycji = ProFak.UI.DialogEdycjiAV;
+global using DwieKolumny = ProFak.UI.DwieKolumnyAV;
+global using Grupa = ProFak.UI.GrupaAV;
+global using Kontrolki = ProFak.UI.KontrolkiAV;
+global using Pionowo = ProFak.UI.PionowoAV;
+global using Poziomo = ProFak.UI.PoziomoAV;
+global using Siatka = ProFak.UI.SiatkaAV;
+global using Zakladki = ProFak.UI.ZakladkiAV;
 
 using Avalonia;
 using Avalonia.Controls;
