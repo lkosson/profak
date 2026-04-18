@@ -46,7 +46,6 @@ class AdapterAkcji<TRekord> : AdapterAkcji
 			if (!CzyDostepna) return;
 			IEnumerable<TRekord> wybraneRekordy = spis.WybraneRekordy.ToList();
 			akcja.Uruchom(spis.Kontekst, ref wybraneRekordy);
-			if (spis.Kontekst.Dialog != null && spis.Kontekst.Dialog.DialogResult != DialogResult.None) return;
 			if (akcja.PrzeladujPoZakonczeniu) spis.PrzeladujBezpiecznie();
 			spis.WybraneRekordy = wybraneRekordy;
 			spis.Focus();

@@ -16,11 +16,12 @@ class WybierzRekordAkcja<TRekord> : AkcjaNaSpisie<TRekord>
 
 	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.None && klawisz == Keys.Enter;
 
+	public override bool PrzeladujPoZakonczeniu => false;
+
 	public override void Uruchom(Kontekst kontekst, ref IEnumerable<TRekord> zaznaczoneRekordy)
 	{
 		if (kontekst.Dialog == null) return;
 		WybranyRekord = zaznaczoneRekordy.Single();
-		kontekst.Dialog.DialogResult = DialogResult.OK;
 		kontekst.Dialog.Zamknij();
 	}
 }
