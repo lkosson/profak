@@ -10,6 +10,7 @@ global using TCheckBox = Avalonia.Controls.CheckBox;
 global using TRadioButton = Avalonia.Controls.RadioButton;
 global using TNumericUpDown = Avalonia.Controls.NumericUpDown;
 global using TComboBox = Avalonia.Controls.ComboBox;
+global using TSuggestBox = Avalonia.Controls.AutoCompleteBox;
 global using TListBox = Avalonia.Controls.ListBox;
 global using TMenuItem = Avalonia.Controls.MenuItem;
 global using TDatePicker = Avalonia.Controls.DatePicker;
@@ -175,7 +176,7 @@ class KontrolkiAV
 		return comboBox;
 	}
 
-	public static AutoCompleteBox SuggestBox(string[]? wartosci = null)
+	public static TSuggestBox SuggestBox(string[]? wartosci = null)
 	{
 		var autoCompleteBox = new AutoCompleteBox();
 		autoCompleteBox.Width = 200;

@@ -1,4 +1,5 @@
-﻿namespace ProFak.UI;
+﻿#if WINFORMS
+namespace ProFak.UI;
 
 class DialogWF : Form
 {
@@ -76,3 +77,4 @@ class DialogWF : Form
 		dialog.Pokaz();
 	}
 }
+#endif

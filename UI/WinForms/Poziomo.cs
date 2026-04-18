@@ -1,4 +1,5 @@
-﻿namespace ProFak.UI;
+﻿#if WINFORMS
+namespace ProFak.UI;
 
 class PoziomoWF : FlowLayoutPanel
 {
@@ -22,3 +23,4 @@ class PoziomoWF : FlowLayoutPanel
 		Size = PreferredSize;
 	}
 }
+#endif

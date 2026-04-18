@@ -1,4 +1,5 @@
-﻿namespace ProFak.UI;
+﻿#if WINFORMS
+namespace ProFak.UI;
 
 class ComboBoxFix : ComboBox
 {
@@ -60,3 +61,4 @@ class ComboBoxFix : ComboBox
 		// przez co nie da się wyjść z pola TABem.
 	}
 }
+#endif

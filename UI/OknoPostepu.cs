@@ -2,7 +2,7 @@
 
 namespace ProFak.UI;
 
-class OknoPostepu : TDialog
+class OknoPostepu : Dialog
 {
 	private readonly TText labelNaglowek;
 	private readonly TButton buttonPrzerwij;
@@ -16,10 +16,10 @@ class OknoPostepu : TDialog
 		this.akcja = akcja;
 		ctsAnuluj = new CancellationTokenSource();
 
-		labelNaglowek = TKontrolki.Text("Trwa wykonywanie zleconej operacji");
-		var pasek = TKontrolki.ProgressBar();
-		buttonPrzerwij = TKontrolki.Button("Przerwij", akcja: Przerwij);
-		var uklad = new TPionowo([labelNaglowek, pasek, new TPoziomo([buttonPrzerwij])]);
+		labelNaglowek = Kontrolki.Text("Trwa wykonywanie zleconej operacji");
+		var pasek = Kontrolki.ProgressBar();
+		buttonPrzerwij = Kontrolki.Button("Przerwij", akcja: Przerwij);
+		var uklad = new Pionowo([labelNaglowek, pasek, new Poziomo([buttonPrzerwij])]);
 		UstawZawartosc(uklad);
 	}
 

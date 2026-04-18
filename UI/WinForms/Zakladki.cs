@@ -1,4 +1,5 @@
-﻿namespace ProFak.UI;
+﻿#if WINFORMS
+namespace ProFak.UI;
 
 class ZakladkiWF : TabControl
 {
@@ -45,3 +46,4 @@ class ZakladkiWF : TabControl
 		}
 	}
 }
+#endif
