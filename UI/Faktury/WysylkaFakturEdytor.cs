@@ -14,15 +14,15 @@ class WysylkaFakturEdytor : Edytor
 	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Kontekst Kontekst { get; set; } = default!;
 
-	private readonly TextBox textBoxTresc;
-	private readonly TextBox textBoxTemat;
-	private readonly TextBox textBoxAdresat;
-	private readonly ComboBox comboBoxFaktura;
-	private readonly Button buttonPoprzednia;
-	private readonly Button buttonNastepna;
-	private readonly Button buttonWyslij;
-	private readonly CheckBox checkBoxUstawDate;
-	private readonly CheckBox checkBoxPrzeliczTermin;
+	private readonly TTextBox textBoxTresc;
+	private readonly TTextBox textBoxTemat;
+	private readonly TTextBox textBoxAdresat;
+	private readonly TComboBox comboBoxFaktura;
+	private readonly TButton buttonPoprzednia;
+	private readonly TButton buttonNastepna;
+	private readonly TButton buttonWyslij;
+	private readonly TCheckBox checkBoxUstawDate;
+	private readonly TCheckBox checkBoxPrzeliczTermin;
 
 	private string szablonAdresat = "";
 	private string szablonTemat = "";

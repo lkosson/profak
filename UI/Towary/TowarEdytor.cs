@@ -5,12 +5,12 @@ namespace ProFak.UI;
 
 class TowarEdytor : Edytor<Towar>
 {
-	private readonly ComboBox comboBoxStawkaVat;
-	private readonly ComboBox comboBoxJednostkaMiary;
-	private readonly Button buttonStawkaVat;
-	private readonly Button buttonJednostkaMiary;
-	private readonly NumericUpDown numericUpDownCenaNetto;
-	private readonly NumericUpDown numericUpDownCenaBrutto;
+	private readonly TComboBox comboBoxStawkaVat;
+	private readonly TComboBox comboBoxJednostkaMiary;
+	private readonly TButton buttonStawkaVat;
+	private readonly TButton buttonJednostkaMiary;
+	private readonly TNumericUpDown numericUpDownCenaNetto;
+	private readonly TNumericUpDown numericUpDownCenaBrutto;
 
 	public TowarEdytor()
 	{

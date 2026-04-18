@@ -17,13 +17,13 @@ class ImportCertyfikatuKSeFEdytor : Edytor
 	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public string NIP { get; set; } = "";
 
-	private readonly LinkLabel linkLabelAplikacjaPodatnika;
-	private readonly TextBox textBoxCertyfikat;
-	private readonly TextBox textBoxKlucz;
-	private readonly TextBox textBoxHaslo;
-	private readonly Button buttonCertyfikat;
-	private readonly Button buttonKlucz;
-	private readonly Button buttonZapisz;
+	private readonly TLinkLabel linkLabelAplikacjaPodatnika;
+	private readonly TTextBox textBoxCertyfikat;
+	private readonly TTextBox textBoxKlucz;
+	private readonly TTextBox textBoxHaslo;
+	private readonly TButton buttonCertyfikat;
+	private readonly TButton buttonKlucz;
+	private readonly TButton buttonZapisz;
 
 	public ImportCertyfikatuKSeFEdytor()
 	{

@@ -8,25 +8,25 @@ partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 	private Slownik<Towar> slownikTowarow = default!;
 	private bool trwaPrzeliczanieCen;
 
-	private readonly ComboBox comboBoxTowar;
-	private readonly Button buttonTowar;
-	private readonly NumericUpDown numericUpDownIlosc;
-	private readonly NumericUpDown numericUpDownCenaNetto;
-	private readonly NumericUpDown numericUpDownCenaVat;
-	private readonly NumericUpDown numericUpDownCenaBrutto;
-	private readonly NumericUpDown numericUpDownWartoscNetto;
-	private readonly NumericUpDown numericUpDownWartoscVat;
-	private readonly NumericUpDown numericUpDownWartoscBrutto;
-	private readonly NumericUpDown numericUpDownCenaZakupu;
-	private readonly CheckBox checkBoxWedlugBrutto;
-	private readonly CheckBox checkBoxRecznie;
-	private readonly ComboBox comboBoxStawkaVat;
-	private readonly Button buttonStawkaVat;
-	private readonly ComboBox comboBoxJM;
-	private readonly NumericUpDown numericUpDownRabatProcent;
-	private readonly NumericUpDown numericUpDownRabatCena;
-	private readonly NumericUpDown numericUpDownRabatWartosc;
-	private readonly Label labelCenaZakupu;
+	private readonly TComboBox comboBoxTowar;
+	private readonly TButton buttonTowar;
+	private readonly TNumericUpDown numericUpDownIlosc;
+	private readonly TNumericUpDown numericUpDownCenaNetto;
+	private readonly TNumericUpDown numericUpDownCenaVat;
+	private readonly TNumericUpDown numericUpDownCenaBrutto;
+	private readonly TNumericUpDown numericUpDownWartoscNetto;
+	private readonly TNumericUpDown numericUpDownWartoscVat;
+	private readonly TNumericUpDown numericUpDownWartoscBrutto;
+	private readonly TNumericUpDown numericUpDownCenaZakupu;
+	private readonly TCheckBox checkBoxWedlugBrutto;
+	private readonly TCheckBox checkBoxRecznie;
+	private readonly TComboBox comboBoxStawkaVat;
+	private readonly TButton buttonStawkaVat;
+	private readonly TComboBox comboBoxJM;
+	private readonly TNumericUpDown numericUpDownRabatProcent;
+	private readonly TNumericUpDown numericUpDownRabatCena;
+	private readonly TNumericUpDown numericUpDownRabatWartosc;
+	private readonly TLabel labelCenaZakupu;
 
 	public PozycjaFakturyEdytor()
 	{
