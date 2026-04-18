@@ -1,8 +1,8 @@
 ﻿namespace ProFak.UI;
 
-class Grupa : GroupBox
+class GrupaWF : GroupBox
 {
-	public Grupa(string opis, Control zawartosc)
+	public GrupaWF(string opis, TControl zawartosc)
 	{
 		Text = opis;
 		Height = zawartosc.Height + 23 * DeviceDpi / 96;

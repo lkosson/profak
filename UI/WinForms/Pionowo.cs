@@ -1,14 +1,14 @@
 ﻿namespace ProFak.UI;
 
-class Pionowo : TableLayoutPanel
+class PionowoWF : TableLayoutPanel
 {
-	public Pionowo()
+	public PionowoWF()
 	{
 		ColumnCount = 1;
 		ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
 	}
 
-	public Pionowo(Control[] kontrolki)
+	public PionowoWF(TControl[] kontrolki)
 		: this()
 	{
 		foreach (var kontrolka in kontrolki)

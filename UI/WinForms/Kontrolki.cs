@@ -18,7 +18,7 @@ global using TContextMenu = System.Windows.Forms.ContextMenuStrip;
 
 namespace ProFak.UI;
 
-class Kontrolki
+class KontrolkiWF
 {
 	public static TLabel Label(string tekst)
 	{

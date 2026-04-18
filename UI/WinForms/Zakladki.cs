@@ -1,8 +1,8 @@
 ﻿namespace ProFak.UI;
 
-class Zakladki : TabControl
+class ZakladkiWF : TabControl
 {
-	public TabPage Dodaj(string etykieta, Control zawartosc)
+	public TabPage Dodaj(string etykieta, TControl zawartosc)
 	{
 		if (Wyglad.SkrotyKlawiaturoweZakladek)
 		{
