@@ -1,8 +1,8 @@
 ﻿namespace ProFak.UI;
 
-class Siatka : TableLayoutPanel
+class SiatkaWF : TableLayoutPanel
 {
-	public Siatka(IEnumerable<int> szerokosci, IEnumerable<int> wysokosci)
+	public SiatkaWF(IEnumerable<int> szerokosci, IEnumerable<int> wysokosci)
 	{
 		foreach (var szerokosc in szerokosci)
 		{
@@ -43,7 +43,7 @@ class Siatka : TableLayoutPanel
 		base.OnCreateControl();
 	}
 
-	public void DodajWiersz(IEnumerable<(Control? kontrolka, int kolumny)> kontrolki)
+	public void DodajWiersz(IEnumerable<(TControl? kontrolka, int kolumny)> kontrolki)
 	{
 		RowCount++;
 		if (RowStyles.Count < RowCount) RowStyles.Add(new RowStyle());
@@ -69,15 +69,15 @@ class Siatka : TableLayoutPanel
 		Size = GetPreferredSize(default);
 	}
 
-	public void DodajWiersz(IEnumerable<Control?> kontrolki)
+	public void DodajWiersz(IEnumerable<TControl?> kontrolki)
 		=> DodajWiersz(kontrolki.Select(kontrolka => (kontrolka, 1)));
 
-	public void DodajWiersz(string etykieta, IEnumerable<(Control? kontrolka, int kolumny)> kontrolki)
-		=> DodajWiersz(kontrolki.Prepend((Kontrolki.Label(etykieta), 1)));
+	public void DodajWiersz(string etykieta, IEnumerable<(TControl? kontrolka, int kolumny)> kontrolki)
+		=> DodajWiersz(kontrolki.Prepend((TKontrolki.Label(etykieta), 1)));
 
-	public void DodajWiersz(string etykieta, IEnumerable<Control?> kontrolki)
+	public void DodajWiersz(string etykieta, IEnumerable<TControl?> kontrolki)
 		=> DodajWiersz(etykieta, kontrolki.Select(kontrolka => (kontrolka, 1)));
 
 	public void DodajWiersz(IEnumerable<string?> etykiety)
-		=> DodajWiersz(etykiety.Select(etykieta => (String.IsNullOrEmpty(etykieta) ? null : (Control?)Kontrolki.Label(etykieta), 1)));
+		=> DodajWiersz(etykiety.Select(etykieta => (String.IsNullOrEmpty(etykieta) ? null : (TControl?)TKontrolki.Label(etykieta), 1)));
 }

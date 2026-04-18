@@ -1,8 +1,8 @@
 ﻿namespace ProFak.UI;
 
-class Dialog : Form
+class DialogWF : Form
 {
-	protected Dialog(string tytul, Kontekst kontekst)
+	protected DialogWF(string tytul, Kontekst kontekst)
 	{
 		Icon = GlowneOkno.Ikona;
 		KeyPreview = true;
@@ -16,13 +16,13 @@ class Dialog : Form
 		kontekst.Dialog = this;
 	}
 
-	public Dialog(string tytul, Control zawartosc, Kontekst kontekst)
+	public DialogWF(string tytul, TControl zawartosc, Kontekst kontekst)
 		: this(tytul, kontekst)
 	{
 		UstawZawartosc(zawartosc);
 	}
 
-	protected void UstawZawartosc(Control zawartosc)
+	protected void UstawZawartosc(TControl zawartosc)
 	{
 		Controls.Add(zawartosc);
 		ClientSize = zawartosc.Size;
@@ -72,7 +72,7 @@ class Dialog : Form
 
 	public static void Pokaz(string tytul, Control zawartosc, Kontekst kontekst)
 	{
-		using var dialog = new Dialog(tytul, zawartosc, kontekst);
+		using var dialog = new DialogWF(tytul, zawartosc, kontekst);
 		dialog.Pokaz();
 	}
 }

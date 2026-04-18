@@ -1,13 +1,13 @@
 ﻿#if WINFORMS
-global using TDialog = ProFak.UI.Dialog;
-global using TDialogEdycji = ProFak.UI.DialogEdycji;
-global using TDwieKolumny = ProFak.UI.DwieKolumny;
-global using TGrupa = ProFak.UI.Grupa;
-global using TKontrolki = ProFak.UI.Kontrolki;
-global using TPionowo = ProFak.UI.Pionowo;
-global using TPoziomo = ProFak.UI.Poziomo;
-global using TSiatka = ProFak.UI.Siatka;
-global using TZakladki = ProFak.UI.Zakladki;
+global using TDialog = ProFak.UI.DialogWF;
+global using TDialogEdycji = ProFak.UI.DialogEdycjiWF;
+global using TDwieKolumny = ProFak.UI.DwieKolumnyWF;
+global using TGrupa = ProFak.UI.GrupaWF;
+global using TKontrolki = ProFak.UI.KontrolkiWF;
+global using TPionowo = ProFak.UI.PionowoWF;
+global using TPoziomo = ProFak.UI.PoziomoWF;
+global using TSiatka = ProFak.UI.SiatkaWF;
+global using TZakladki = ProFak.UI.ZakladkiWF;
 #endif
 
 namespace ProFak.UI;
