@@ -7,10 +7,10 @@ namespace ProFak.UI;
 
 class WplataEdytor : EdytorDwieKolumny<Wplata>
 {
-	private readonly NumericUpDown numericUpDownKwota;
-	private readonly TextBox textBoxUwagi;
-	private readonly CheckBox checkBoxCzyRozliczenie;
-	private readonly LinkLabel linkQR;
+	private readonly TNumericUpDown numericUpDownKwota;
+	private readonly TTextBox textBoxUwagi;
+	private readonly TCheckBox checkBoxCzyRozliczenie;
+	private readonly TLinkLabel linkQR;
 
 	public WplataEdytor()
 	{

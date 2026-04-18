@@ -7,11 +7,11 @@ partial class KonfiguracjaEdytor : Edytor<Konfiguracja>
 	public bool PrzywrocUstawieniaSpisow => checkBoxPrzywrocUstawieniaSpisow.Checked;
 	public bool PrzywrocUstawieniaMenu => checkBoxPrzywrocUstawieniaMenu.Checked;
 
-	private readonly CheckBox checkBoxPrzywrocUstawieniaSpisow;
-	private readonly CheckBox checkBoxPrzywrocUstawieniaMenu;
-	private readonly TextBox textBoxPrzykladDaty;
-	private readonly TextBox textBoxPrzykladCzasu;
-	private readonly TextBox textBoxPrzykladKwoty;
+	private readonly TCheckBox checkBoxPrzywrocUstawieniaSpisow;
+	private readonly TCheckBox checkBoxPrzywrocUstawieniaMenu;
+	private readonly TTextBox textBoxPrzykladDaty;
+	private readonly TTextBox textBoxPrzykladCzasu;
+	private readonly TTextBox textBoxPrzykladKwoty;
 
 	public KonfiguracjaEdytor()
 	{
