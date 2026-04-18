@@ -60,7 +60,7 @@ class Kontrolki
 		var button = Button("...", akcja: akcja);
 		button.AutoSize = false;
 		button.Width = 25 * button.DeviceDpi / 96;
-		button.Height = 25; // tutaj bez DPI
+		button.Height = 25 * button.DeviceDpi / 96;
 		return button;
 	}
 
@@ -69,7 +69,7 @@ class Kontrolki
 		var button = Button(Wyglad.IkonyAkcji ? "➕" : "+", akcja: akcja);
 		button.AutoSize = false;
 		button.Width = 25 * button.DeviceDpi / 96;
-		button.Height = 25; // tutaj bez DPI
+		button.Height = 25 * button.DeviceDpi / 96;
 		return button;
 	}
 

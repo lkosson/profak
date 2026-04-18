@@ -10,7 +10,7 @@ class Zakladki : TabControl
 			etykieta += $"   [ᴄᴛʀʟ-ғ{num}]";
 		}
 		var wymiary = zawartosc.Size;
-		var szerokosc = wymiary.Width;
+		var szerokosc = wymiary.Width + 14; // ?? Dla DeklaracjaVatEdytor i Konfiguracja przy 150%
 		var wysokosc = wymiary.Height;
 		var tabPage = new TabPage();
 		tabPage.Text = etykieta;
@@ -19,10 +19,8 @@ class Zakladki : TabControl
 		tabPage.Controls.Add(zawartosc);
 		TabPages.Add(tabPage);
 		zawartosc.Dock = DockStyle.Fill;
-		//var zakladka = GetTabRect(TabPages.Count - 1);
 		wysokosc += tabPage.Padding.Top + tabPage.Padding.Bottom;
 		wysokosc += 31 * DeviceDpi / 96; //zakladka.Height;
-		//if (szerokosc < zakladka.Width) szerokosc = zakladka.Width;
 		if (Width < szerokosc) Width = szerokosc;
 		if (Height < wysokosc) Height = wysokosc;
 		return tabPage;

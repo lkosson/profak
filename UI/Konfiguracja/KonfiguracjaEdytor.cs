@@ -111,7 +111,9 @@ partial class KonfiguracjaEdytor : Edytor<Konfiguracja>
 		zakladki.Dodaj("Konfiguracja e-mail", siatkaEMail);
 		zakladki.Dodaj("Wygląd", siatkaWyglad);
 
-		UstawZawartosc(zakladki, new Size(800, 500));
+		zakladki.Size = zakladki.GetPreferredSize(new Size(800, 500));
+
+		UstawZawartosc(zakladki);
 	}
 
 	private void PrzeliczPrzykladDaty()
