@@ -16,6 +16,7 @@ global using TMenuItem = Avalonia.Controls.MenuItem;
 global using TDatePicker = Avalonia.Controls.DatePicker;
 global using TProgressBar = Avalonia.Controls.ProgressBar;
 global using TContextMenu = Avalonia.Controls.ContextMenu;
+global using TTreeNode = Avalonia.Controls.TreeNode;
 using Avalonia.Layout;
 using HorizontalAlignment = Avalonia.Layout.HorizontalAlignment;
 using Avalonia.Controls;
@@ -204,6 +205,14 @@ class KontrolkiAV
 		var progressBar = new TProgressBar();
 		progressBar.IsIndeterminate = true;
 		return progressBar;
+	}
+
+	public TTreeNode TreeNode(string tekst, string? nazwa = null, TTreeNode[]? podrzedne = null)
+	{
+		var wezel = new TTreeNode(tekst);
+		if (!String.IsNullOrEmpty(nazwa)) wezel.Name = nazwa;
+		if (podrzedne != null) wezel.Nodes.AddRange(podrzedne);
+		return wezel;
 	}
 }
 

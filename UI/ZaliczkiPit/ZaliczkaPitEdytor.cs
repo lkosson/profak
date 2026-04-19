@@ -38,7 +38,7 @@ class ZaliczkaPitEdytor : Edytor<ZaliczkaPit>
 
 		var dodajSprzedazDoZaliczki = new DynamicznaAkcja<Faktura>("➕ Dodaj do zaliczki [INS]", kontekst =>
 		{
-			using var spis = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazySpis { CzyBezZaliczkiPit = true });
+			using var spis = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazySpis { Parametry = new() { CzyBezZaliczkiPit = true } });
 			var faktura = Spisy.Wybierz(kontekst, spis, "Wybierz fakturę", default);
 			if (faktura == null) return;
 			faktura.ZaliczkaPitRef = Rekord;
@@ -48,7 +48,7 @@ class ZaliczkaPitEdytor : Edytor<ZaliczkaPit>
 
 		var dodajZakupDoZaliczki = new DynamicznaAkcja<Faktura>("➕ Dodaj do zaliczki [INS]", kontekst =>
 		{
-			using var spis = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis { CzyBezZaliczkiPit = true });
+			using var spis = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis { Parametry = new() { CzyBezZaliczkiPit = true } });
 			var faktura = Spisy.Wybierz(kontekst, spis, "Wybierz fakturę", default);
 			if (faktura == null) return;
 			faktura.ZaliczkaPitRef = Rekord;
@@ -91,9 +91,9 @@ class ZaliczkaPitEdytor : Edytor<ZaliczkaPit>
 	{
 		base.RekordGotowy();
 
-		fakturySprzedazy.Spis.ZaliczkaPitRef = Rekord;
+		fakturySprzedazy.Spis.Parametry.ZaliczkaPitRef = Rekord;
 		fakturySprzedazy.Spis.Kontekst = Kontekst;
-		fakturyZakupu.Spis.ZaliczkaPitRef = Rekord;
+		fakturyZakupu.Spis.Parametry.ZaliczkaPitRef = Rekord;
 		fakturyZakupu.Spis.Kontekst = Kontekst;
 	}
 

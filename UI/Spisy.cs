@@ -21,9 +21,9 @@ class Spisy
 		return wybor.WybranyRekord;
 	}
 
-	public static SpisZAkcjami<DeklaracjaVat, DeklaracjaVatSpis> DeklaracjeVat(string[]? parametry = null)
+	public static SpisZAkcjami<DeklaracjaVat, DeklaracjaVatSpis> DeklaracjeVat(int? rok)
 	{
-		return Utworz(new DeklaracjaVatSpis(parametry),
+		return Utworz(new DeklaracjaVatSpis { Rok = rok },
 			new DodajRekordAkcja<DeklaracjaVat, DeklaracjaVatEdytor>(),
 			new EdytujRekordAkcja<DeklaracjaVat, DeklaracjaVatEdytor>(),
 			new UsunRekordAkcja<DeklaracjaVat>(),
@@ -33,9 +33,9 @@ class Spisy
 		);
 	}
 
-	public static SpisZAkcjami<Faktura, FakturaSprzedazySpis> FakturySprzedazy(string[]? parametry = null)
+	public static SpisZAkcjami<Faktura, FakturaSprzedazySpis> FakturySprzedazy(FakturaSpisParametry parametry)
 	{
-		return Utworz(new FakturaSprzedazySpis(parametry),
+		return Utworz(new FakturaSprzedazySpis() { Parametry = parametry },
 			new FakturaSprzedazyAkcja(),
 			new FakturaVatMarzaAkcja(),
 			new FakturaPodobnaSprzedazAkcja(),
@@ -55,9 +55,9 @@ class Spisy
 		);
 	}
 
-	public static SpisZAkcjami<Faktura, RachunkiSprzedazySpis> RachunkiSprzedazy(string[]? parametry = null)
+	public static SpisZAkcjami<Faktura, RachunkiSprzedazySpis> RachunkiSprzedazy(FakturaSpisParametry parametry)
 	{
-		return Utworz(new RachunkiSprzedazySpis(parametry),
+		return Utworz(new RachunkiSprzedazySpis() { Parametry = parametry },
 			new RachunekAkcja(),
 			new FakturaPodobnaSprzedazAkcja(),
 			new KorektaRachunkuAkcja(),
@@ -72,9 +72,9 @@ class Spisy
 		);
 	}
 
-	public static SpisZAkcjami<Faktura, FakturaProformaSpis> FakturyProforma(string[]? parametry = null)
+	public static SpisZAkcjami<Faktura, FakturaProformaSpis> FakturyProforma(FakturaSpisParametry parametry)
 	{
-		return Utworz(new FakturaProformaSpis(parametry),
+		return Utworz(new FakturaProformaSpis() { Parametry = parametry },
 			new FakturaProformaAkcja(),
 			new FakturaPodobnaSprzedazAkcja(),
 			new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
@@ -87,9 +87,9 @@ class Spisy
 		);
 	}
 
-	public static SpisZAkcjami<Faktura, FakturaZakupuSpis> FakturyZakupu(string[]? parametry = null)
+	public static SpisZAkcjami<Faktura, FakturaZakupuSpis> FakturyZakupu(FakturaSpisParametry parametry)
 	{
-		return Utworz(new FakturaZakupuSpis(parametry),
+		return Utworz(new FakturaZakupuSpis() { Parametry = parametry },
 			new FakturaZakupuAkcja(),
 			new FakturaPodobnaZakupAkcja(),
 			new KorektaZakupuAkcja(),
@@ -116,18 +116,18 @@ class Spisy
 		);
 	}
 
-	public static SpisZAkcjami<Faktura, KSeFSpis> KSeFSprzedaz(string[]? parametry)
+	public static SpisZAkcjami<Faktura, KSeFSpis> KSeFSprzedaz(KSeFSpisParametry parametry)
 	{
-		return Utworz(new KSeFSpis(true, parametry),
+		return Utworz(new KSeFSpis() { Parametry = parametry },
 			new ZapiszJakoXMLAkcja(),
 			new ZapiszJakoPDFZKSeFAkcja(spisKSeF: true),
 			new PrzeladujAkcja<Faktura>()
 		);
 	}
 
-	public static SpisZAkcjami<Faktura, KSeFSpis> KSeFZakup(string[]? parametry)
+	public static SpisZAkcjami<Faktura, KSeFSpis> KSeFZakup(KSeFSpisParametry parametry)
 	{
-		return Utworz(new KSeFSpis(false, parametry),
+		return Utworz(new KSeFSpis() { Parametry = parametry },
 			new DodajJakoZakupAkcja(),
 			new ZapiszJakoPDFZKSeFAkcja(spisKSeF: true),
 			new ZapiszJakoXMLAkcja(),
@@ -190,9 +190,9 @@ class Spisy
 		);
 	}
 
-	public static SpisZAkcjami<SkladkaZus, SkladkaZusSpis> SkladkiZus(string[]? parametry = null)
+	public static SpisZAkcjami<SkladkaZus, SkladkaZusSpis> SkladkiZus(int? rok)
 	{
-		return Utworz(new SkladkaZusSpis(parametry),
+		return Utworz(new SkladkaZusSpis { Rok = rok },
 			new DodajRekordAkcja<SkladkaZus, SkladkaZusEdytor>(),
 			new EdytujRekordAkcja<SkladkaZus, SkladkaZusEdytor>(),
 			new UsunRekordAkcja<SkladkaZus>(),
@@ -284,9 +284,9 @@ class Spisy
 		);
 	}
 
-	public static SpisZAkcjami<ZaliczkaPit, ZaliczkaPitSpis> ZaliczkiPit(string[]? parametry = null)
+	public static SpisZAkcjami<ZaliczkaPit, ZaliczkaPitSpis> ZaliczkiPit(int? rok)
 	{
-		return Utworz(new ZaliczkaPitSpis(parametry),
+		return Utworz(new ZaliczkaPitSpis { Rok = rok },
 			new DodajRekordAkcja<ZaliczkaPit, ZaliczkaPitEdytor>(),
 			new EdytujRekordAkcja<ZaliczkaPit, ZaliczkaPitEdytor>(),
 			new UsunRekordAkcja<ZaliczkaPit>(),

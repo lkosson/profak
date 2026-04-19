@@ -3,12 +3,12 @@ using ProFak.IO.KSEF2;
 
 namespace ProFak.UI;
 
+#pragma warning disable WFO1000 // Missing code serialization configuration for property content
 class KSeFSpis : Spis<Faktura>
 {
+	public KSeFSpisParametry Parametry { get; set; } = new KSeFSpisParametry();
+	public static readonly DateTime DataStartowa = new DateTime(2026, 2, 1);
 	private bool pierwszeZaladowanie = true;
-	private readonly bool sprzedaz;
-	private readonly bool przyrostowo;
-	private readonly DateTime odDaty;
 	private readonly DataGridViewColumn kolumnaNazwaNabywcy;
 	private readonly DataGridViewColumn kolumnaNIPNabywcy;
 	private readonly DataGridViewColumn kolumnaNazwaSprzedawcy;
@@ -47,29 +47,12 @@ class KSeFSpis : Spis<Faktura>
 		Komunikat = "Przeładuj spis, aby pobrać dane z KSeF";
 	}
 
-	public KSeFSpis(bool sprzedaz, string[]? parametry)
-		: this()
-	{
-		this.sprzedaz = sprzedaz;
-		if (parametry == null) return;
-		odDaty = new DateTime(2026, 2, 1);
-		foreach (var parametr in parametry)
-		{
-			if (parametr == "Przyrostowo") przyrostowo = true;
-			else if (parametr == "Dzis") odDaty = DateTime.Now.Date;
-			else if (parametr == "Wczoraj") odDaty = DateTime.Now.Date.AddDays(-1);
-			else if (parametr == "Miesiac") odDaty = DateTime.Now.Date.AddDays(1 - DateTime.Now.Day);
-			else if (parametr == "Poprzedni") odDaty = DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-1);
-			else if (parametr == "Rok") odDaty = new DateTime(DateTime.Now.Year, 1, 1);
-		}
-	}
-
 	protected override void Przeladuj()
 	{
-		kolumnaNazwaNabywcy.Visible = sprzedaz;
-		kolumnaNIPNabywcy.Visible = sprzedaz;
-		kolumnaNazwaSprzedawcy.Visible = !sprzedaz;
-		kolumnaNIPSprzedawcy.Visible = !sprzedaz;
+		kolumnaNazwaNabywcy.Visible = Parametry.CzySprzedaz;
+		kolumnaNIPNabywcy.Visible = Parametry.CzySprzedaz;
+		kolumnaNazwaSprzedawcy.Visible = !Parametry.CzySprzedaz;
+		kolumnaNIPSprzedawcy.Visible = !Parametry.CzySprzedaz;
 
 		if (pierwszeZaladowanie)
 		{
@@ -85,7 +68,8 @@ class KSeFSpis : Spis<Faktura>
 		{
 			try
 			{
-				var odDaty = this.odDaty;
+				var przyrostowo = Parametry.OdDaty is null;
+				var odDaty = Parametry.OdDaty.GetValueOrDefault(DataStartowa);
 				var doDaty = DateTime.Now;
 				var podmiot = Kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
 				if (String.IsNullOrEmpty(podmiot.TokenKSeF)) throw new ApplicationException("Brak tokena dostępowego do KSeF w danych firmy.\nNadaj dostęp do KSeF w oknie \"Kontrahenci\" -> \"Moja firma\" -> \"Dane urzędowe\" -> \"Token KSeF\".");
@@ -108,11 +92,11 @@ class KSeFSpis : Spis<Faktura>
 					var koniecFragmentu = odDaty.AddMonths(3);
 					if (koniecFragmentu > doDaty) koniecFragmentu = doDaty;
 					//var fragment = await api.PobierzFakturyAsync(przyrostowo, sprzedaz, odDaty, koniecFragmentu, cancellationToken);
-					var fragment = await api.PobierzFakturyZbiorczoAsync(przyrostowo, sprzedaz, odDaty, koniecFragmentu, cancellationToken);
+					var fragment = await api.PobierzFakturyZbiorczoAsync(przyrostowo, Parametry.CzySprzedaz, odDaty, koniecFragmentu, cancellationToken);
 					odDaty = koniecFragmentu;
 					foreach (var (naglowek, xml) in fragment)
 					{
-						var rekord = api.WczytajNaglowek(naglowek, sprzedaz);
+						var rekord = api.WczytajNaglowek(naglowek, Parametry.CzySprzedaz);
 						rekord.XMLKSeF = xml;
 						rekordy.Add(rekord);
 					}
@@ -142,4 +126,10 @@ class KSeFSpis : Spis<Faktura>
 		base.UstawStylWiersza(rekord, kolumna, styl);
 		if (rekord.Id > 0) styl.ForeColor = Color.FromArgb(20, 170, 30);
 	}
+}
+
+class KSeFSpisParametry
+{
+	public bool CzySprzedaz { get; set; }
+	public DateTime? OdDaty { get; set; }
 }

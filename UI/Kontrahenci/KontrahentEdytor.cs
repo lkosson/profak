@@ -262,9 +262,9 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 		checkBoxImportKSeF.Visible = !Rekord.CzyPodmiot;
 		labelSposobPlatnosci.Visible = comboBoxSposobPlatnosci.Visible = buttonSposobPlatnosci.Visible = !Rekord.CzyPodmiot;
 
-		fakturySprzedazy.Spis.KontrahentRef = Rekord;
+		fakturySprzedazy.Spis.Parametry.KontrahentRef = Rekord;
 		fakturySprzedazy.Spis.Kontekst = Kontekst;
-		fakturyZakupu.Spis.KontrahentRef = Rekord;
+		fakturyZakupu.Spis.Parametry.KontrahentRef = Rekord;
 		fakturyZakupu.Spis.Kontekst = Kontekst;
 
 		if (Rekord.CzyPodmiot)

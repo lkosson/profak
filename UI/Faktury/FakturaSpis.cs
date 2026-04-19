@@ -4,30 +4,10 @@ using System.ComponentModel;
 
 namespace ProFak.UI;
 
+#pragma warning disable WFO1000 // Missing code serialization configuration for property content
 class FakturaSpis : Spis<Faktura>
 {
-	private readonly DateTime? odDaty;
-	private readonly DateTime? doDaty;
-	private readonly bool doZaplaty;
-	private readonly bool zaplacone;
-
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-	public Ref<Kontrahent> KontrahentRef { get; set; }
-
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-	public Ref<Towar> TowarRef { get; set; }
-
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-	public Ref<DeklaracjaVat> DeklaracjaVatRef { get; set; }
-
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-	public Ref<ZaliczkaPit> ZaliczkaPitRef { get; set; }
-
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-	public bool CzyBezDeklaracjiVat { get; set; }
-
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-	public bool CzyBezZaliczkiPit { get; set; }
+	public FakturaSpisParametry Parametry { get; set; } = new FakturaSpisParametry();
 
 	protected virtual RodzajFaktury[] Rodzaje => [];
 	protected virtual bool CzyWidocznySprzedawca => false;
@@ -98,34 +78,6 @@ class FakturaSpis : Spis<Faktura>
 		DodajKolumneId();
 	}
 
-	public FakturaSpis(string[]? parametry)
-		: this()
-	{
-		if (parametry == null) return;
-		int? rok = null;
-		int? miesiac = null;
-		foreach (var parametr in parametry)
-		{
-			if (parametr.StartsWith("R:")) rok = Int32.Parse(parametr[2..]);
-			else if (parametr.StartsWith("M:")) miesiac = Int32.Parse(parametr[2..]);
-			else if (parametr.StartsWith("K:")) KontrahentRef = Int32.Parse(parametr[2..]);
-			else if (parametr.StartsWith("T:")) TowarRef = Int32.Parse(parametr[2..]);
-			else if (parametr == "DoZaplaty") doZaplaty = true;
-			else if (parametr == "Zaplacone") zaplacone = true;
-		}
-		if (!rok.HasValue) return;
-		if (miesiac.HasValue)
-		{
-			odDaty = new DateTime(rok.Value, miesiac.Value, 1);
-			doDaty = odDaty.Value.AddMonths(1);
-		}
-		else
-		{
-			odDaty = new DateTime(rok.Value, 1, 1);
-			doDaty = odDaty.Value.AddYears(1);
-		}
-	}
-
 	protected override void Przeladuj()
 	{
 		var q = Kontekst.Baza.Faktury
@@ -138,18 +90,18 @@ class FakturaSpis : Spis<Faktura>
 			.Where(faktura => Rodzaje.Contains(faktura.Rodzaj));
 		if (CzyWidocznyNabywca) q = q.Include(faktura => faktura.Nabywca);
 		if (CzyWidocznySprzedawca) q = q.Include(faktura => faktura.Sprzedawca);
-		if (KontrahentRef.IsNotNull) q = q.Where(faktura => faktura.NabywcaId == KontrahentRef.Id || faktura.SprzedawcaId == KontrahentRef.Id);
-		if (odDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy >= odDaty.Value);
-		if (doDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy < doDaty.Value);
-		if (TowarRef.IsNotNull) q = q.Where(faktura => faktura.Pozycje.Any(pozycja => pozycja.TowarId == TowarRef.Id));
-		if (DeklaracjaVatRef.IsNotNull) q = q.Where(faktura => faktura.DeklaracjaVatId == DeklaracjaVatRef.Id);
-		if (ZaliczkaPitRef.IsNotNull) q = q.Where(faktura => faktura.ZaliczkaPitId == ZaliczkaPitRef.Id);
-		if (CzyBezDeklaracjiVat) q = q.Where(faktura => faktura.DeklaracjaVatId == null);
-		if (CzyBezZaliczkiPit) q = q.Where(faktura => faktura.ZaliczkaPitId == null);
+		if (Parametry.KontrahentRef.IsNotNull) q = q.Where(faktura => faktura.NabywcaId == Parametry.KontrahentRef.Id || faktura.SprzedawcaId == Parametry.KontrahentRef.Id);
+		if (Parametry.OdDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy >= Parametry.OdDaty.Value);
+		if (Parametry.DoDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy < Parametry.DoDaty.Value);
+		if (Parametry.TowarRef.IsNotNull) q = q.Where(faktura => faktura.Pozycje.Any(pozycja => pozycja.TowarId == Parametry.TowarRef.Id));
+		if (Parametry.DeklaracjaVatRef.IsNotNull) q = q.Where(faktura => faktura.DeklaracjaVatId == Parametry.DeklaracjaVatRef.Id);
+		if (Parametry.ZaliczkaPitRef.IsNotNull) q = q.Where(faktura => faktura.ZaliczkaPitId == Parametry.ZaliczkaPitRef.Id);
+		if (Parametry.CzyBezDeklaracjiVat) q = q.Where(faktura => faktura.DeklaracjaVatId == null);
+		if (Parametry.CzyBezZaliczkiPit) q = q.Where(faktura => faktura.ZaliczkaPitId == null);
 		q = q.OrderBy(faktura => faktura.DataWystawienia).ThenBy(faktura => faktura.Id);
 		Rekordy = q.ToList();
-		if (doZaplaty) Rekordy = Rekordy.Where(faktura => !faktura.CzyZaplacona).ToList();
-		if (zaplacone) Rekordy = Rekordy.Where(faktura => faktura.CzyZaplacona).ToList();
+		if (Parametry.CzyDoZaplaty) Rekordy = Rekordy.Where(faktura => !faktura.CzyZaplacona).ToList();
+		if (Parametry.CzyZaplacone) Rekordy = Rekordy.Where(faktura => faktura.CzyZaplacona).ToList();
 	}
 
 	protected override void UstawStylWiersza(Faktura rekord, string kolumna, DataGridViewCellStyle styl)
@@ -169,4 +121,18 @@ class FakturaSpis : Spis<Faktura>
 		if (kolumna == nameof(Faktura.Numer)) kolumna = nameof(Faktura.NumerSegmenty);
 		return base.KolumnaDlaSortowania(kolumna);
 	}
+}
+
+class FakturaSpisParametry
+{
+	public DateTime? OdDaty { get; set; }
+	public DateTime? DoDaty { get; set; }
+	public bool CzyZaplacone { get; set; }
+	public bool CzyDoZaplaty { get; set; }
+	public Ref<Kontrahent> KontrahentRef { get; set; }
+	public Ref<Towar> TowarRef { get; set; }
+	public Ref<DeklaracjaVat> DeklaracjaVatRef { get; set; }
+	public Ref<ZaliczkaPit> ZaliczkaPitRef { get; set; }
+	public bool CzyBezDeklaracjiVat { get; set; }
+	public bool CzyBezZaliczkiPit { get; set; }
 }

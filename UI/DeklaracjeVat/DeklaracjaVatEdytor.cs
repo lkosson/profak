@@ -69,7 +69,7 @@ class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
 
 		var dodajSprzedazDoDeklaracji = new DynamicznaAkcja<Faktura>("➕ Dodaj do deklaracji [INS]", kontekst =>
 		{
-			using var spis = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazySpis { CzyBezDeklaracjiVat = true });
+			using var spis = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazySpis { Parametry = new() { CzyBezDeklaracjiVat = true } });
 			var faktura = Spisy.Wybierz(kontekst, spis, "Wybierz fakturę", default);
 			if (faktura == null) return;
 			faktura.DeklaracjaVatRef = Rekord;
@@ -79,7 +79,7 @@ class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
 
 		var dodajZakupDoDeklaracji = new DynamicznaAkcja<Faktura>("➕ Dodaj do deklaracji [INS]", kontekst =>
 		{
-			using var spis = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis { CzyBezDeklaracjiVat = true });
+			using var spis = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis { Parametry = new() { CzyBezDeklaracjiVat = true } });
 			var faktura = Spisy.Wybierz(kontekst, spis, "Wybierz fakturę", default);
 			if (faktura == null) return;
 			faktura.DeklaracjaVatRef = Rekord;
@@ -122,9 +122,9 @@ class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
 	{
 		base.RekordGotowy();
 
-		fakturySprzedazy.Spis.DeklaracjaVatRef = Rekord;
+		fakturySprzedazy.Spis.Parametry.DeklaracjaVatRef = Rekord;
 		fakturySprzedazy.Spis.Kontekst = Kontekst;
-		fakturyZakupu.Spis.DeklaracjaVatRef = Rekord;
+		fakturyZakupu.Spis.Parametry.DeklaracjaVatRef = Rekord;
 		fakturyZakupu.Spis.Kontekst = Kontekst;
 	}
 

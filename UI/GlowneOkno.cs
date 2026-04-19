@@ -11,19 +11,10 @@ class GlowneOkno : Form
 {
 	private Menu menu;
 	private Panel panelZawartosc;
-	private TreeNode? ostatnioWybrany;
-	private bool trwaAktualizacjaMenu;
-	private bool menuGotowe;
 
 	public GlowneOkno()
 	{
-		menu = new Menu();
-		menu.AfterCollapse += menu_AfterCollapse;
-		menu.BeforeExpand += menu_BeforeExpand;
-		menu.AfterExpand += menu_AfterExpand;
-		menu.AfterSelect += menu_AfterSelect;
-		menu.NodeMouseClick += menu_NodeMouseClick;
-		menu.KeyPress += menu_KeyPress;
+		menu = new Menu(ZbudujMenu);
 
 		panelZawartosc = new Panel();
 
@@ -36,8 +27,6 @@ class GlowneOkno : Form
 		Icon = Ikona;
 		uklad.Dock = DockStyle.Fill;
 		Controls.Add(uklad);
-
-		ZbudujMenu();
 	}
 
 	public static Icon? Ikona
@@ -49,13 +38,6 @@ class GlowneOkno : Form
 			if (dane == null) return null;
 			return new Icon(dane);
 		}
-	}
-
-	protected override void OnLoad(EventArgs e)
-	{
-		RozwinMenu();
-		menuGotowe = true;
-		base.OnLoad(e);
 	}
 
 	protected override void OnFormClosing(FormClosingEventArgs e)
@@ -70,278 +52,102 @@ class GlowneOkno : Form
 		base.OnFormClosing(e);
 	}
 
-	private void ZbudujMenu()
+	private TTreeNode[] ZbudujMenu()
 	{
-		TreeNode Wezel(string tekst, string? nazwa = null, TreeNode[]? podrzedne = null)
-		{
-			var wezel = new TreeNode(tekst);
-			if (!String.IsNullOrEmpty(nazwa)) wezel.Name = nazwa;
-			if (podrzedne != null) wezel.Nodes.AddRange(podrzedne);
-			return wezel;
-		}
+		var fakturySprzedazyWszystkie = menu.UtworzWezel("Wszystkie", delegate { Wyswietl(Spisy.FakturySprzedazy(new())); });
+		var fakturySprzedazyDoZaplaty = menu.UtworzWezel("Do zapłaty", delegate { Wyswietl(Spisy.FakturySprzedazy(new() { CzyDoZaplaty = true })); });
+		var fakturySprzedazyZaplacone = menu.UtworzWezel("Zapłacone", delegate { Wyswietl(Spisy.FakturySprzedazy(new() { CzyZaplacone = true })); });
+		var fakturySprzedazyKSeFDzis = menu.UtworzWezel("Dzisiejsze", delegate { Wyswietl(Spisy.KSeFSprzedaz(new() { CzySprzedaz = true, OdDaty = DateTime.Now.Date })); });
+		var fakturySprzedazyKSeFMiesiac = menu.UtworzWezel("Z tego miesiąca", delegate { Wyswietl(Spisy.KSeFSprzedaz(new() { CzySprzedaz = true, OdDaty = DateTime.Now.Date.AddDays(1 - DateTime.Now.Day) })); });
+		var fakturySprzedazyKSeFPoprzedni = menu.UtworzWezel("Z tego i poprzedniego miesiąca", delegate { Wyswietl(Spisy.KSeFSprzedaz(new() { CzySprzedaz = true, OdDaty = DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-1) })); });
+		var fakturySprzedazyKSeFRok = menu.UtworzWezel("Z tego roku", delegate { Wyswietl(Spisy.KSeFSprzedaz(new() { CzySprzedaz = true, OdDaty = new DateTime(DateTime.Now.Year, 1, 1) })); });
+		var fakturySprzedazyKSeFWszystkie = menu.UtworzWezel("Wszystkie", delegate { Wyswietl(Spisy.KSeFSprzedaz(new() { CzySprzedaz = true, OdDaty = KSeFSpis.DataStartowa })); });
+		var fakturySprzedazyKSeF = menu.UtworzWezel("KSeF", [fakturySprzedazyKSeFDzis, fakturySprzedazyKSeFMiesiac, fakturySprzedazyKSeFPoprzedni, fakturySprzedazyKSeFRok, fakturySprzedazyKSeFWszystkie]);
+		var fakturySprzedazyWedlugDaty = menu.UtworzWezel("Według daty", () => WypelnijDatyFaktur(faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży, (odDaty, doDaty) => Wyswietl(Spisy.FakturySprzedazy(new() { OdDaty = odDaty, DoDaty = doDaty }))));
+		var fakturySprzedazyWedlugNabywcy = menu.UtworzWezel("Według nabywcy", () => WypelnijKontrahentowFaktur(faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży, faktura => faktura.Nabywca!, kontrahent => Wyswietl(Spisy.FakturySprzedazy(new() { KontrahentRef = kontrahent }))));
+		var fakturySprzedazyWedlugTowaru = menu.UtworzWezel("Według towaru", () => WypelnijTowaryFaktur(pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.Sprzedaż || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży, towar => Wyswietl(Spisy.FakturySprzedazy(new() { TowarRef = towar }))));
+		var fakturySprzedazy = menu.UtworzWezel("Faktury sprzedaży", [fakturySprzedazyWszystkie, fakturySprzedazyDoZaplaty, fakturySprzedazyZaplacone, fakturySprzedazyKSeF, fakturySprzedazyWedlugDaty, fakturySprzedazyWedlugNabywcy, fakturySprzedazyWedlugTowaru]);
 
-		TreeNode Ladowanie() => Wezel("(ładowanie)");
+		var rachunkiSprzedzazyWszystkie = menu.UtworzWezel("Wszystkie", delegate { Wyswietl(Spisy.RachunkiSprzedazy(new())); });
+		var rachunkiSprzedazyWedlugDaty = menu.UtworzWezel("Według daty", () => WypelnijDatyFaktur(faktura => faktura.Rodzaj == RodzajFaktury.Rachunek || faktura.Rodzaj == RodzajFaktury.KorektaRachunku, (odDaty, doDaty) => Wyswietl(Spisy.RachunkiSprzedazy(new() { OdDaty = odDaty, DoDaty = doDaty }))));
+		var rachunkiSprzedazyWedlugKontrahenta = menu.UtworzWezel("Według kontrahenta", () => WypelnijKontrahentowFaktur(faktura => faktura.Rodzaj == RodzajFaktury.Rachunek || faktura.Rodzaj == RodzajFaktury.KorektaRachunku, faktura => faktura.Nabywca!, kontrahent => Wyswietl(Spisy.RachunkiSprzedazy(new() { KontrahentRef = kontrahent }))));
+		var rachunkiSprzedazyyDoZaplaty = menu.UtworzWezel("Do zapłaty", delegate { Wyswietl(Spisy.RachunkiSprzedazy(new() { CzyDoZaplaty = true })); });
+		var rachunkiSprzedazyZaplacone = menu.UtworzWezel("Zapłacone", delegate { Wyswietl(Spisy.RachunkiSprzedazy(new() { CzyZaplacone = true })); });
+		var rachunkiSprzedazy = menu.UtworzWezel("Rachunki", [rachunkiSprzedzazyWszystkie, rachunkiSprzedazyyDoZaplaty, rachunkiSprzedazyZaplacone, rachunkiSprzedazyWedlugDaty, rachunkiSprzedazyWedlugKontrahenta]);
 
-		var fakturySprzedazyWszystkie = Wezel("Wszystkie", "Wszystkie");
-		var fakturySprzedazyDoZaplaty = Wezel("Do zapłaty", "DoZaplaty");
-		var fakturySprzedazyZaplacone = Wezel("Zapłacone", "Zaplacone");
-		var fakturySprzedazyKSeFDzis = Wezel("Dzisiejsze", "Dzis");
-		var fakturySprzedazyKSeFMiesiac = Wezel("Z tego miesiąca", "Miesiac");
-		var fakturySprzedazyKSeFPoprzedni = Wezel("Z tego i poprzedniego miesiąca", "Poprzedni");
-		var fakturySprzedazyKSeFRok = Wezel("Z tego roku", "Rok");
-		var fakturySprzedazyKSeFWszystkie = Wezel("Wszystkie");
-		var fakturySprzedazyKSeF = Wezel("KSeF", "KSeFSprzedaz", [fakturySprzedazyKSeFDzis, fakturySprzedazyKSeFMiesiac, fakturySprzedazyKSeFPoprzedni, fakturySprzedazyKSeFRok, fakturySprzedazyKSeFWszystkie]);
-		var fakturySprzedazyWedlugDaty = Wezel("Według daty", "WedlugDaty", [Ladowanie()]);
-		var fakturySprzedazyWedlugNabywcy = Wezel("Według nabywcy", "WedlugKontrahenta", [Ladowanie()]);
-		var fakturySprzedazyWedlugTowaru = Wezel("Według towaru", "WedlugTowaru", [Ladowanie()]);
-		var fakturySprzedazy = Wezel("Faktury sprzedaży", "FakturySprzedazy", [fakturySprzedazyWszystkie, fakturySprzedazyDoZaplaty, fakturySprzedazyZaplacone, fakturySprzedazyKSeF, fakturySprzedazyWedlugDaty, fakturySprzedazyWedlugNabywcy, fakturySprzedazyWedlugTowaru]);
+		var fakturyProformaWszystkie = menu.UtworzWezel("Wszystkie", delegate { Wyswietl(Spisy.FakturyProforma(new())); });
+		var fakturyProformaDoZaplaty = menu.UtworzWezel("Do zapłaty", delegate { Wyswietl(Spisy.FakturyProforma(new() { CzyDoZaplaty = true })); });
+		var fakturyProformaZaplacone = menu.UtworzWezel("Zapłacone", delegate { Wyswietl(Spisy.FakturyProforma(new() { CzyZaplacone = true })); });
+		var fakturyProformaWedlugDaty = menu.UtworzWezel("Według daty", () => WypelnijDatyFaktur(faktura => faktura.Rodzaj == RodzajFaktury.Proforma, (odDaty, doDaty) => Wyswietl(Spisy.FakturyProforma(new() { OdDaty = odDaty, DoDaty = doDaty }))));
+		var fakturyProformaWedlugNabywcy = menu.UtworzWezel("Według nabywcy", () => WypelnijKontrahentowFaktur(faktura => faktura.Rodzaj == RodzajFaktury.Proforma, faktura => faktura.Nabywca!, kontrahent => Wyswietl(Spisy.FakturyProforma(new() { KontrahentRef = kontrahent }))));
+		var fakturyProformaWedlugTowaru = menu.UtworzWezel("Według towaru", () => WypelnijTowaryFaktur(pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.Proforma, towar => Wyswietl(Spisy.FakturyProforma(new() { TowarRef = towar }))));
+		var fakturyProforma = menu.UtworzWezel("Faktury proforma", [fakturyProformaWszystkie, fakturyProformaDoZaplaty, fakturyProformaZaplacone, fakturyProformaWedlugDaty, fakturyProformaWedlugNabywcy, fakturyProformaWedlugTowaru]);
 
-		var rachunkiSprzedzazyWszystkie = Wezel("Wszystkie", "Wszystkie");
-		var rachunkiSprzedazyWedlugDaty = Wezel("Według daty", "WedlugDaty", [Ladowanie()]);
-		var rachunkiSprzedazyWedlugKontrahenta = Wezel("Według kontrahenta", "WedlugKontrahenta", [Ladowanie()]);
-		var rachunkiSprzedazyyDoZaplaty = Wezel("Do zapłaty", "DoZaplaty");
-		var rachunkiSprzedazyZaplacone = Wezel("Zapłacone", "Zaplacone");
-		var rachunkiSprzedazy = Wezel("Rachunki", "RachunkiSprzedazy", [rachunkiSprzedzazyWszystkie,rachunkiSprzedazyyDoZaplaty,rachunkiSprzedazyZaplacone, rachunkiSprzedazyWedlugDaty,rachunkiSprzedazyWedlugKontrahenta]);
+		var fakturyZakupuWszystkie = menu.UtworzWezel("Wszystkie", delegate { Wyswietl(Spisy.FakturyZakupu(new())); });
+		var fakturyZakupuDoZaplaty = menu.UtworzWezel("Do zapłaty", delegate { Wyswietl(Spisy.FakturyZakupu(new() { CzyDoZaplaty = true })); });
+		var fakturyZakupuZaplacone = menu.UtworzWezel("Zapłacone", delegate { Wyswietl(Spisy.FakturyZakupu(new() { CzyZaplacone = true })); });
+		var fakturyZakupuKSeFPrzyrostowo = menu.UtworzWezel("Przyrostowo", delegate { Wyswietl(Spisy.KSeFZakup(new() { CzySprzedaz = false, OdDaty = default })); });
+		var fakturyZakupuKSeFDzis = menu.UtworzWezel("Dzisiejsze", delegate { Wyswietl(Spisy.KSeFZakup(new() { CzySprzedaz = false, OdDaty = DateTime.Now.Date })); });
+		var fakturyZakupuKSeFWczoraj = menu.UtworzWezel("Od wczoraj", delegate { Wyswietl(Spisy.KSeFZakup(new() { CzySprzedaz = false, OdDaty = DateTime.Now.Date.AddDays(-1) })); });
+		var fakturyZakupuKSeFMiesiac = menu.UtworzWezel("Z tego miesiąca", delegate { Wyswietl(Spisy.KSeFZakup(new() { CzySprzedaz = false, OdDaty = DateTime.Now.Date.AddDays(1 - DateTime.Now.Day) })); });
+		var fakturyZakupuKSeFPoprzedni = menu.UtworzWezel("Z tego i poprzedniego miesiąca", delegate { Wyswietl(Spisy.KSeFZakup(new() { CzySprzedaz = false, OdDaty = DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-1) })); });
+		var fakturyZakupuKSeFRok = menu.UtworzWezel("Z tego roku", delegate { Wyswietl(Spisy.KSeFZakup(new() { CzySprzedaz = false, OdDaty = new DateTime(DateTime.Now.Year, 1, 1) })); });
+		var fakturyZakupuKSeFWszystkie = menu.UtworzWezel("Wszystkie", delegate { Wyswietl(Spisy.KSeFZakup(new() { CzySprzedaz = false, OdDaty = KSeFSpis.DataStartowa })); });
+		var fakturyZakupuKSeF = menu.UtworzWezel("KSeF", [fakturyZakupuKSeFPrzyrostowo, fakturyZakupuKSeFDzis, fakturyZakupuKSeFWczoraj, fakturyZakupuKSeFMiesiac, fakturyZakupuKSeFPoprzedni, fakturyZakupuKSeFRok, fakturyZakupuKSeFWszystkie]);
+		var fakturyZakupuWedlugDaty = menu.UtworzWezel("Według daty", () => WypelnijDatyFaktur(faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny, (odDaty, doDaty) => Wyswietl(Spisy.FakturyZakupu(new() { OdDaty = odDaty, DoDaty = doDaty }))));
+		var fakturyZakupuWedlugSprzedawcy = menu.UtworzWezel("Według sprzedawcy", () => WypelnijKontrahentowFaktur(faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny, faktura => faktura.Sprzedawca!, kontrahent => Wyswietl(Spisy.FakturyZakupu(new() { KontrahentRef = kontrahent }))));
+		var fakturyZakupuWedlugTowaru = menu.UtworzWezel("Według towaru", () => WypelnijTowaryFaktur(pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.Zakup || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaZakupu || pozycja.Faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny, towar => Wyswietl(Spisy.FakturyZakupu(new() { TowarRef = towar }))));
+		var fakturyZakupu = menu.UtworzWezel("Faktury zakupu", [fakturyZakupuWszystkie, fakturyZakupuDoZaplaty, fakturyZakupuZaplacone, fakturyZakupuKSeF, fakturyZakupuWedlugDaty, fakturyZakupuWedlugSprzedawcy, fakturyZakupuWedlugTowaru]);
 
-		var fakturyProformaWszystkie = Wezel("Wszystkie", "Wszystkie");
-		var fakturyProformaDoZaplaty = Wezel("Do zapłaty", "DoZaplaty");
-		var fakturyProformaZaplacone = Wezel("Zapłacone", "Zaplacone");
-		var fakturyProformaWedlugDaty = Wezel("Według daty", "WedlugDaty", [Ladowanie()]);
-		var fakturyProformaWedlugNabywcy = Wezel("Według nabywcy", "WedlugKontrahenta", [Ladowanie()]);
-		var fakturyProformaWedlugTowaru = Wezel("Według towaru", "WedlugTowaru", [Ladowanie()]);
-		var fakturyProforma = Wezel("Faktury proforma", "FakturyProforma", [fakturyProformaWszystkie, fakturyProformaDoZaplaty, fakturyProformaZaplacone, fakturyProformaWedlugDaty, fakturyProformaWedlugNabywcy, fakturyProformaWedlugTowaru]);
-		var fakturyZakupuWszystkie = Wezel("Wszystkie", "Wszystkie");
-		var fakturyZakupuDoZaplaty = Wezel("Do zapłaty", "DoZaplaty");
-		var fakturyZakupuZaplacone = Wezel("Zapłacone", "Zaplacone");
-		var fakturyZakupuKSeFPrzyrostowo = Wezel("Przyrostowo", "Przyrostowo");
-		var fakturyZakupuKSeFDzis = Wezel("Dzisiejsze", "Dzis");
-		var fakturyZakupuKSeFWczoraj = Wezel("Od wczoraj", "Wczoraj");
-		var fakturyZakupuKSeFMiesiac = Wezel("Z tego miesiąca", "Miesiac");
-		var fakturyZakupuKSeFPoprzedni = Wezel("Z tego i poprzedniego miesiąca", "Poprzedni");
-		var fakturyZakupuKSeFRok = Wezel("Z tego roku", "Rok");
-		var fakturyZakupuKSeFWszystkie = Wezel("Wszystkie");
-		var fakturyZakupuKSeF = Wezel("KSeF", "KSeFZakup", [fakturyZakupuKSeFPrzyrostowo, fakturyZakupuKSeFDzis, fakturyZakupuKSeFWczoraj, fakturyZakupuKSeFMiesiac, fakturyZakupuKSeFPoprzedni, fakturyZakupuKSeFRok, fakturyZakupuKSeFWszystkie]);
-		var fakturyZakupuWedlugDaty = Wezel("Według daty", "WedlugDaty", [Ladowanie()]);
-		var fakturyZakupuWedlugSprzedawcy = Wezel("Według sprzedawcy", "WedlugKontrahenta", [Ladowanie()]);
-		var fakturyZakupuWedlugTowaru = Wezel("Według towaru", "WedlugTowaru", [Ladowanie()]);
-		var fakturyZakupu = Wezel("Faktury zakupu", "FakturyZakupu", [fakturyZakupuWszystkie, fakturyZakupuDoZaplaty, fakturyZakupuZaplacone, fakturyZakupuKSeF, fakturyZakupuWedlugDaty, fakturyZakupuWedlugSprzedawcy, fakturyZakupuWedlugTowaru]);
-		var faktury = Wezel("Faktury", "Faktury", [fakturySprzedazy, fakturyProforma, fakturyZakupu]);
-		var deklaracjeVat = Wezel("Deklaracje Vat", "DeklaracjeVat", [Ladowanie()]);
-		var skladkiZus = Wezel("Składki Zus", "SkladkiZus", [Ladowanie()]);
-		var zaliczkiPit = Wezel("Zaliczki Pit", "ZaliczkiPit", [Ladowanie()]);
-		var podatki = Wezel("Podatki", "Podatki", [deklaracjeVat, skladkiZus, zaliczkiPit]);
-		var kontrahenci = Wezel("Kontrahenci", "Kontrahenci");
-		var towary = Wezel("Towary", "Towary");
-		var jednostkiMiar = Wezel("Jednostki miar", "JednostkiMiar");
-		var sposobyPlatnosci = Wezel("Sposoby płatności", "SposobyPlatnosci");
-		var stawkiVat = Wezel("Stawki VAT", "StawkiVat");
-		var urzedySkarbowe = Wezel("Urzędy skarbowe", "UrzedySkarbowe");
-		var waluty = Wezel("Waluty", "Waluty");
-		var slowniki = Wezel("Słowniki", "Slowniki", [jednostkiMiar, sposobyPlatnosci, stawkiVat, urzedySkarbowe, waluty]);
-		var numeracja = Wezel("Numeracja", "Numeratory");
-		var konfiguracja = Wezel("Konfiguracja", "Konfiguracja");
+		var faktury = menu.UtworzWezel("Faktury", [fakturySprzedazy, fakturyProforma, fakturyZakupu]);
+		var deklaracjeVat = menu.UtworzWezel("Deklaracje Vat", WypelnijDeklaracjeVat);
+		var skladkiZus = menu.UtworzWezel("Składki Zus", WypelnijSkladkiZus);
+		var zaliczkiPit = menu.UtworzWezel("Zaliczki Pit", WypelnijZaliczkiPit);
+		var podatki = menu.UtworzWezel("Podatki", [deklaracjeVat, skladkiZus, zaliczkiPit]);
+		var kontrahenci = menu.UtworzWezel("Kontrahenci", delegate { Wyswietl(Spisy.Kontrahenci()); });
+		var towary = menu.UtworzWezel("Towary", delegate { Wyswietl(Spisy.Towary()); });
+		var jednostkiMiar = menu.UtworzWezel("Jednostki miar", delegate { Wyswietl(Spisy.JednostkiMiar()); });
+		var sposobyPlatnosci = menu.UtworzWezel("Sposoby płatności", delegate { Wyswietl(Spisy.SposobyPlatnosci()); });
+		var stawkiVat = menu.UtworzWezel("Stawki VAT", delegate { Wyswietl(Spisy.StawkiVat()); });
+		var urzedySkarbowe = menu.UtworzWezel("Urzędy skarbowe", delegate { Wyswietl(Spisy.UrzedySkarbowe()); });
+		var waluty = menu.UtworzWezel("Waluty", delegate { Wyswietl(Spisy.Waluty()); });
+		var slowniki = menu.UtworzWezel("Słowniki", [jednostkiMiar, sposobyPlatnosci, stawkiVat, urzedySkarbowe, waluty]);
+		var numeracja = menu.UtworzWezel("Numeracja", delegate { Wyswietl(Spisy.Numeratory()); });
+		var konfiguracja = menu.UtworzWezel("Konfiguracja", KonfiguracjaEdytor.Wyswietl);
 #if !SQLSERVER
-		var bazaDanych = Wezel("Baza danych", "Baza");
+		var bazaDanych = menu.UtworzWezel("Baza danych", delegate { Wyswietl(new BazyDanych()); });
 #endif
-		var usunieteFaktury = Wezel("Usunięte faktury", "FakturyUsuniete");
-		var polecenieSQL = Wezel("Polecenie SQL", "SQL");
-		var bezposredniaEdycja = Wezel("Bezpośrednia edycja", "Tabele");
-		var oProgramie = Wezel("O programie", "OProgramie");
+		var usunieteFaktury = menu.UtworzWezel("Usunięte faktury", delegate { Wyswietl(Spisy.FakturyUsuniete()); });
+		var polecenieSQL = menu.UtworzWezel("Polecenie SQL", delegate { Wyswietl(new EkranSQL()); });
+		var bezposredniaEdycja = menu.UtworzWezel("Bezpośrednia edycja", delegate { Wyswietl(new EdytorTabeli()); });
+		var oProgramie = menu.UtworzWezel("O programie", delegate { Wyswietl(new OProgramie()); });
 #if SQLSERVER
-		var serwisowe = Wezel("Serwisowe", "Serwisowe", [numeracja, konfiguracja, usunieteFaktury, polecenieSQL, bezposredniaEdycja, oProgramie]);
+		var serwisowe = menu.UtworzWezel("Serwisowe", [numeracja, konfiguracja, usunieteFaktury, polecenieSQL, bezposredniaEdycja, oProgramie]);
 #else
-		var serwisowe = Wezel("Serwisowe", "Serwisowe", [numeracja, konfiguracja, bazaDanych, usunieteFaktury, polecenieSQL, bezposredniaEdycja, oProgramie]);
+		var serwisowe = menu.UtworzWezel("Serwisowe", [numeracja, konfiguracja, bazaDanych, usunieteFaktury, polecenieSQL, bezposredniaEdycja, oProgramie]);
 #endif
-		menu.Nodes.Clear();
-		menu.Nodes.AddRange([faktury, rachunkiSprzedazy, podatki, kontrahenci, towary, slowniki, serwisowe]);
+
+		faktury.Expand();
+		fakturySprzedazy.Expand();
+		fakturySprzedazyWedlugDaty.Expand();
+		fakturySprzedazyKSeF.Expand();
+		fakturyProforma.Expand();
+		fakturyZakupu.Expand();
+		fakturyZakupuWedlugDaty.Expand();
+		fakturyZakupuKSeF.Expand();
+		slowniki.Expand();
+		podatki.Expand();
+
+		return [faktury, rachunkiSprzedazy, podatki, kontrahenci, towary, slowniki, serwisowe];
 	}
 
-	private void PokazMenuKontekstowe(TreeNode wezel)
-	{
-		var menuKontekstowe = new ContextMenuStrip();
-		var menuPokaz = new ToolStripMenuItem("Pokaż");
-		var menuUkryj = new ToolStripMenuItem("Ukryj");
-		var menuPokazUkryte = new ToolStripMenuItem("Pokaż ukryte");
-		menuPokaz.Click += delegate
-		{
-			ZapiszStanPozycji(wezel, ukryta: false);
-			wezel.ForeColor = SystemColors.ControlText;
-		};
-		menuUkryj.Click += delegate
-		{
-			ZapiszStanPozycji(wezel, ukryta: true);
-			if (wezel.Parent == null) menu.Nodes.Remove(wezel);
-			else wezel.Parent.Nodes.Remove(wezel);
-		};
-		menuPokazUkryte.Click += delegate
-		{
-			ZbudujMenu();
-			RozwinMenu(pokazUkryte: true);
-		};
-		if (wezel.ForeColor == SystemColors.GrayText) menuKontekstowe.Items.Add(menuPokaz);
-		else menuKontekstowe.Items.Add(menuUkryj);
-		menuKontekstowe.Items.Add(menuPokazUkryte);
-		menuKontekstowe.Closed += delegate
-		{
-			BeginInvoke(delegate { menuKontekstowe.Dispose(); });
-		};
-		menuKontekstowe.Show(Cursor.Position);
-	}
-
-	private void RozwinMenu(bool pokazUkryte = false)
-	{
-		using var kontekst = new Kontekst();
-		var stany = kontekst.Baza.StanyMenu.ToList();
-		if (stany.Count == 0)
-		{
-			RozwinMenuDomyslne();
-			return;
-		}
-
-		var stanyWedlugNazwy = stany.ToDictionary(stan => stan.Pozycja);
-		TreeNode? doWyswietlenia = null;
-		RozwinMenu(menu.Nodes.Cast<TreeNode>(), stanyWedlugNazwy, pokazUkryte, ref doWyswietlenia);
-
-		if (doWyswietlenia == null) WyswietlDomyslny();
-		else menu.SelectedNode = doWyswietlenia;
-	}
-
-	private void RozwinMenu(IEnumerable<TreeNode> wezly, Dictionary<string, StanMenu> stany, bool pokazUkryte, ref TreeNode? wybrany)
-	{
-		var doUsuniecia = new List<TreeNode>();
-		foreach (var wezel in wezly)
-		{
-			if (stany.TryGetValue(wezel.FullPath, out var stan))
-			{
-				if (!stan.CzyZwinieta) wezel.Expand();
-				if (stan.CzyAktywna) wybrany = wezel;
-				if (stan.CzyUkryta) doUsuniecia.Add(wezel);
-			}
-
-			RozwinMenu(wezel.Nodes.Cast<TreeNode>(), stany, pokazUkryte, ref wybrany);
-		}
-
-		foreach (var wezel in doUsuniecia)
-		{
-			if (pokazUkryte) wezel.ForeColor = SystemColors.GrayText;
-			else wezel.Remove();
-		}
-	}
-
-	private TreeNode? WezelMenu(string pierwszy, params string[] sciezka)
-	{
-		var wezel = menu.Nodes[pierwszy];
-		if (wezel == null) return null;
-		foreach (var nazwa in sciezka)
-		{
-			if (nazwa == "*") wezel = wezel.Nodes.Cast<TreeNode>().LastOrDefault();
-			else wezel = wezel.Nodes[nazwa];
-			if (wezel == null) return null;
-		}
-		return wezel;
-	}
-
-	private void RozwinMenuDomyslne()
-	{
-		WezelMenu("Faktury")?.Expand();
-		WezelMenu("Faktury", "FakturySprzedazy")?.Expand();
-		WezelMenu("Faktury", "FakturySprzedazy", "WedlugDaty")?.Expand();
-		WezelMenu("Faktury", "FakturySprzedazy", "WedlugDaty", "*")?.Expand();
-		WezelMenu("Faktury", "FakturySprzedazy", "KSeFSprzedaz")?.Expand();
-		WezelMenu("Faktury", "FakturyProforma")?.Expand();
-		WezelMenu("Faktury", "FakturyZakupu")?.Expand();
-		WezelMenu("Faktury", "FakturyZakupu", "WedlugDaty")?.Expand();
-		WezelMenu("Faktury", "FakturyZakupu", "WedlugDaty", "*")?.Expand();
-		WezelMenu("Faktury", "FakturyZakupu", "KSeFZakup")?.Expand();
-		WezelMenu("Slowniki")?.Expand();
-		WezelMenu("Podatki")?.Expand();
-		WyswietlDomyslny();
-	}
-
-	private void WyswietlDomyslny()
-	{
-		var doWybrania = WezelMenu("Faktury", "FakturySprzedazy", "WedlugDaty", "*", "*");
-		if (doWybrania == null) doWybrania = WezelMenu("Faktury", "FakturySprzedazy", "Wszystkie");
-		Wyswietl(doWybrania);
-	}
-
-	private void menu_AfterSelect(object? sender, TreeViewEventArgs e)
-	{
-		if (trwaAktualizacjaMenu) return;
-		if ((e.Action & TreeViewAction.ByKeyboard) == TreeViewAction.ByKeyboard) return;
-		var wybrany = menu.SelectedNode;
-		if (wybrany == null) return;
-		if (ostatnioWybrany == null || ostatnioWybrany.TreeView == null || !ostatnioWybrany.FullPath.StartsWith(wybrany.FullPath)) while (wybrany.Nodes.Count > 0) wybrany = wybrany.Nodes[0];
-		if (menu.SelectedNode == wybrany) Wyswietl(wybrany);
-		else menu.SelectedNode = wybrany;
-
-		ZapiszStanPozycji(menu.SelectedNode /* dla spisu według kontrahentów/towarów/dat mogło się zmienić */);
-	}
-
-	private void menu_KeyPress(object? sender, KeyPressEventArgs e)
-	{
-		if (e.KeyChar == '\r')
-		{
-			e.Handled = true;
-			Wyswietl(menu.SelectedNode);
-		}
-		else if (e.KeyChar == '/')
-		{
-			e.Handled = true;
-			menu.SelectedNode?.Collapse(false);
-		}
-	}
-
-	private void Wyswietl(TreeNode? pozycja, string[]? parametry = null)
-	{
-		if (pozycja == null) return;
-		if (parametry == null)
-		{
-			if (ostatnioWybrany != null)
-			{
-				ostatnioWybrany.BackColor = Color.Empty;
-				ostatnioWybrany.ForeColor = Color.Empty;
-			}
-			ostatnioWybrany = pozycja;
-			pozycja.BackColor = SystemColors.Highlight;
-			pozycja.ForeColor = SystemColors.HighlightText;
-		}
-
-		if (pozycja.Name == "JednostkiMiar") Wyswietl(Spisy.JednostkiMiar(), pozycja.Name);
-		else if (pozycja.Name == "Kontrahenci") Wyswietl(Spisy.Kontrahenci(), pozycja.Name);
-		else if (pozycja.Name == "SposobyPlatnosci") Wyswietl(Spisy.SposobyPlatnosci(), pozycja.Name);
-		else if (pozycja.Name == "StawkiVat") Wyswietl(Spisy.StawkiVat(), pozycja.Name);
-		else if (pozycja.Name == "Waluty") Wyswietl(Spisy.Waluty(), pozycja.Name);
-		else if (pozycja.Name == "Towary") Wyswietl(Spisy.Towary(), pozycja.Name);
-		else if (pozycja.Name == "DeklaracjeVat") Wyswietl(Spisy.DeklaracjeVat(parametry), pozycja.Name);
-		else if (pozycja.Name == "SkladkiZus") Wyswietl(Spisy.SkladkiZus(parametry), pozycja.Name);
-		else if (pozycja.Name == "ZaliczkiPit") Wyswietl(Spisy.ZaliczkiPit(parametry), pozycja.Name);
-		else if (pozycja.Name == "UrzedySkarbowe") Wyswietl(Spisy.UrzedySkarbowe(), pozycja.Name);
-		else if (pozycja.Name == "FakturyZakupu") Wyswietl(Spisy.FakturyZakupu(parametry), pozycja.Name);
-		else if (pozycja.Name == "KSeFZakup") Wyswietl(Spisy.KSeFZakup(parametry), pozycja.Name);
-		else if (pozycja.Name == "KSeFSprzedaz") Wyswietl(Spisy.KSeFSprzedaz(parametry), pozycja.Name);
-		else if (pozycja.Name == "FakturySprzedazy") Wyswietl(Spisy.FakturySprzedazy(parametry), pozycja.Name);
-		else if (pozycja.Name == "RachunkiSprzedazy") Wyswietl(Spisy.RachunkiSprzedazy(parametry), pozycja.Name);
-		else if (pozycja.Name == "FakturyProforma") Wyswietl(Spisy.FakturyProforma(parametry), pozycja.Name);
-		else if (pozycja.Name == "Konfiguracja") KonfiguracjaEdytor.Wyswietl();
-		else if (pozycja.Name == "Numeratory") Wyswietl(Spisy.Numeratory(), pozycja.Name);
-		else if (pozycja.Name == "StanyNumeratorow") Wyswietl(Spisy.StanyNumeratorow(), pozycja.Name);
-		else if (pozycja.Name == "SQL") Wyswietl(new EkranSQL(), pozycja.Name);
-		else if (pozycja.Name == "Tabele") Wyswietl(new EdytorTabeli(), pozycja.Name);
-		else if (pozycja.Name == "Baza") Wyswietl(new BazyDanych(), pozycja.Name);
-		else if (pozycja.Name == "OProgramie") Wyswietl(new OProgramie(), pozycja.Name);
-		else if (pozycja.Name == "FakturyUsuniete") Wyswietl(Spisy.FakturyUsuniete(), pozycja.Name);
-		else if (pozycja.Parent != null) Wyswietl(pozycja.Parent, (parametry ?? Enumerable.Empty<string>()).Append(pozycja.Name).ToArray());
-	}
-
-	private void Wyswietl<TKontrolka>(TKontrolka kontrolka, string nazwa)
+	private void Wyswietl<TKontrolka>(TKontrolka kontrolka)
 		where TKontrolka : Control, IKontrolkaZKontekstem
 	{
 		var doUsuniecia = panelZawartosc.Controls.Cast<Control>().ToList();
 
 		var kontekst = new Kontekst();
 		kontrolka.Kontekst = kontekst;
-		kontrolka.Name = nazwa;
 		kontrolka.Disposed += delegate { panelZawartosc.Controls.Remove(kontrolka); menu.Focus(); kontekst.Dispose(); };
 		kontrolka.Dock = DockStyle.Fill;
 		panelZawartosc.Controls.Add(kontrolka);
@@ -358,75 +164,7 @@ class GlowneOkno : Form
 		kontrolka.Focus();
 	}
 
-	private void menu_BeforeExpand(object? sender, TreeViewCancelEventArgs e)
-	{
-		if (e.Node == null) return;
-		if (trwaAktualizacjaMenu) return;
-		trwaAktualizacjaMenu = true;
-		try
-		{
-			if (e.Node.Name == "WedlugDaty" && e.Node.Parent?.Name == "FakturySprzedazy") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży);
-			else if (e.Node.Name == "WedlugDaty" && e.Node.Parent?.Name == "FakturyProforma") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Proforma);
-			else if (e.Node.Name == "WedlugDaty" && e.Node.Parent?.Name == "RachunkiSprzedazy") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Rachunek || faktura.Rodzaj == RodzajFaktury.KorektaRachunku);
-			else if (e.Node.Name == "WedlugDaty" && e.Node.Parent?.Name == "FakturyZakupu") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny);
-			else if (e.Node.Name == "WedlugDaty" && e.Node.Parent?.Name == "FakturyVatMarza") WypelnijDatyFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży);
-			else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent?.Name == "FakturySprzedazy") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży, faktura => faktura.Nabywca!);
-			else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent?.Name == "FakturyProforma") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Proforma, faktura => faktura.Nabywca!);
-			else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent?.Name == "RachunkiSprzedazy") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Rachunek || faktura.Rodzaj == RodzajFaktury.KorektaRachunku, faktura => faktura.Nabywca!);
-			else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent?.Name == "FakturyZakupu") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny, faktura => faktura.Sprzedawca!);
-			else if (e.Node.Name == "WedlugKontrahenta" && e.Node.Parent?.Name == "FakturyVatMarza") WypelnijKontrahentowFaktur(e.Node, faktura => faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży, faktura => faktura.Nabywca!);
-			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent?.Name == "FakturySprzedazy") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.Sprzedaż || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży);
-			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent?.Name == "FakturyProforma") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.Proforma);
-			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent?.Name == "RachunkiSprzedazy") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.Rachunek || pozycja.Faktura!.Rodzaj == RodzajFaktury.KorektaRachunku);
-			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent?.Name == "FakturyZakupu") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.Zakup || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaZakupu || pozycja.Faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny);
-			else if (e.Node.Name == "WedlugTowaru" && e.Node.Parent?.Name == "FakturyVatMarza") WypelnijTowaryFaktur(e.Node, pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.VatMarża || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaVatMarży);
-			else if (e.Node.Name == "DeklaracjeVat") WypelnijDeklaracjeVat(e.Node);
-			else if (e.Node.Name == "SkladkiZus") WypelnijSkladkiZus(e.Node);
-			else if (e.Node.Name == "ZaliczkiPit") WypelnijZaliczkiPit(e.Node);
-		}
-		finally
-		{
-			trwaAktualizacjaMenu = false;
-		}
-	}
-
-	private void menu_AfterExpand(object? sender, TreeViewEventArgs e)
-	{
-		ZapiszStanPozycji(e.Node);
-	}
-
-	private void menu_AfterCollapse(object? sender, TreeViewEventArgs e)
-	{
-		ZapiszStanPozycji(e.Node);
-	}
-
-	private void ZapiszStanPozycji(TreeNode? treeNode, bool ukryta = false)
-	{
-		if (!menuGotowe) return;
-		if (treeNode == null) return;
-		if (String.IsNullOrEmpty(treeNode.Name)) return;
-		using var kontekst = new Kontekst();
-		if (kontekst.Baza.CzyZablokowana()) return;
-		using var transakcja = kontekst.Transakcja();
-		var stan = kontekst.Baza.StanyMenu.FirstOrDefault(e => e.Pozycja == treeNode.FullPath);
-		if (stan == null) stan = new StanMenu { Pozycja = treeNode.FullPath };
-		stan.CzyZwinieta = !treeNode.IsExpanded;
-		stan.CzyAktywna = treeNode.IsSelected;
-		stan.CzyUkryta = ukryta || treeNode.ForeColor == SystemColors.GrayText;
-		if (stan.CzyAktywna)
-		{
-			var aktywne = kontekst.Baza.StanyMenu.Where(e => e.CzyAktywna).ToList();
-			foreach (var aktywna in aktywne)
-			{
-				aktywna.CzyAktywna = false;
-				kontekst.Baza.Zapisz(aktywna);
-			}
-		}
-		kontekst.Baza.Zapisz(stan);
-		transakcja.Zatwierdz();
-	}
-
-	private void WypelnijDatyFaktur(TreeNode treeNode, Expression<Func<Faktura, bool>> warunek)
+	private IEnumerable<TTreeNode> WypelnijDatyFaktur(Expression<Func<Faktura, bool>> warunek, Action<DateTime, DateTime> akcja)
 	{
 		using var kontekst = new Kontekst();
 		var daty = kontekst.Baza.Faktury
@@ -435,24 +173,40 @@ class GlowneOkno : Form
 			.Distinct()
 			.ToList();
 
-		while (treeNode.Nodes.Count > 0) treeNode.Nodes.RemoveAt(0);
+		var wezly = new List<TTreeNode>();
 
 		var lata = daty.Append(DateTime.Now.Date).OrderBy(data => data).GroupBy(data => data.Year).Select(rok => (rok.Key, miesiace: rok.Select(data => data.Month).Distinct().ToList())).ToList();
 		foreach (var (rok, miesiace) in lata)
 		{
-			var treeNodeRok = new TreeNode { Name = "R:" + rok, Text = rok.ToString() };
-			var treeNodeWszystko = new TreeNode { Name = "R:" + rok, Text = "(cały rok)" };
-			treeNodeRok.Nodes.Add(treeNodeWszystko);
+			void UruchomRok()
+			{
+				var odDaty = new DateTime(rok, 1, 1);
+				var doDaty = odDaty.AddYears(1);
+				akcja(odDaty, doDaty);
+			}
+
+			var wezlyMiesiace = new List<TTreeNode>();
+
+			wezlyMiesiace.Add(menu.UtworzWezel("(cały rok)", UruchomRok));
+
 			foreach (var miesiac in miesiace)
 			{
-				var treeNodeMiesiac = new TreeNode { Name = "M:" + miesiac, Text = new DateTime(rok, miesiac, 1).ToString("MMMM") };
-				treeNodeRok.Nodes.Add(treeNodeMiesiac);
+				void UruchomMiesiac()
+				{
+					var odDaty = new DateTime(rok, miesiac, 1);
+					var doDaty = odDaty.AddMonths(1);
+					akcja(odDaty, doDaty);
+				}
+				wezlyMiesiace.Add(menu.UtworzWezel(new DateTime(rok, miesiac, 1).ToString("MMMM"), UruchomMiesiac));
 			}
-			treeNode.Nodes.Add(treeNodeRok);
+
+			wezly.Add(menu.UtworzWezel(rok.ToString(), wezlyMiesiace.ToArray()));
 		}
+
+		return wezly;
 	}
 
-	private void WypelnijKontrahentowFaktur(TreeNode treeNode, Expression<Func<Faktura, bool>> warunek, Expression<Func<Faktura, Kontrahent>> pole)
+	private IEnumerable<TTreeNode> WypelnijKontrahentowFaktur(Expression<Func<Faktura, bool>> warunek, Expression<Func<Faktura, Kontrahent>> pole, Action<Kontrahent> akcja)
 	{
 		using var kontekst = new Kontekst();
 		var kontrahenci = kontekst.Baza.Faktury
@@ -464,15 +218,17 @@ class GlowneOkno : Form
 			.OrderBy(kontrahent => kontrahent.Nazwa)
 			.ToList();
 
-		while (treeNode.Nodes.Count > 0) treeNode.Nodes.RemoveAt(0);
+		var wezly = new List<TTreeNode>();
 
 		foreach (var kontrahent in kontrahenci)
 		{
-			treeNode.Nodes.Add(new TreeNode { Name = "K:" + kontrahent.Id, Text = kontrahent.Nazwa.ToString() });
+			wezly.Add(menu.UtworzWezel(kontrahent.Nazwa, delegate { akcja(kontrahent); }));
 		}
+
+		return wezly;
 	}
 
-	private void WypelnijTowaryFaktur(TreeNode treeNode, Expression<Func<PozycjaFaktury, bool>> warunek)
+	private IEnumerable<TTreeNode> WypelnijTowaryFaktur(Expression<Func<PozycjaFaktury, bool>> warunek, Action<Towar> akcja)
 	{
 		using var kontekst = new Kontekst();
 		var towary = kontekst.Baza.PozycjeFaktur
@@ -484,60 +240,57 @@ class GlowneOkno : Form
 			.OrderBy(towar => towar.Nazwa)
 			.ToList();
 
-		while (treeNode.Nodes.Count > 0) treeNode.Nodes.RemoveAt(0);
+		var wezly = new List<TTreeNode>();
 
 		foreach (var towar in towary)
 		{
-			treeNode.Nodes.Add(new TreeNode { Name = "T:" + towar.Id, Text = towar.Nazwa.ToString() });
+			wezly.Add(menu.UtworzWezel(towar.Nazwa, delegate { akcja(towar); }));
 		}
+
+		return wezly;
 	}
 
-	private void WypelnijDeklaracjeVat(TreeNode treeNode)
+	private TTreeNode[] WypelnijDeklaracjeVat()
 	{
 		using var kontekst = new Kontekst();
 		var daty = kontekst.Baza.DeklaracjeVat
 			.Select(faktura => faktura.Miesiac)
 			.Distinct()
 			.ToList();
-		WypelnijWedlugLat(treeNode, daty);
+		return WypelnijWedlugLat(daty, rok => Wyswietl(Spisy.DeklaracjeVat(rok)));
 	}
 
-	private void WypelnijSkladkiZus(TreeNode treeNode)
+	private TTreeNode[] WypelnijSkladkiZus()
 	{
 		using var kontekst = new Kontekst();
 		var daty = kontekst.Baza.SkladkiZus
 			.Select(faktura => faktura.Miesiac)
 			.Distinct()
 			.ToList();
-		WypelnijWedlugLat(treeNode, daty);
+		return WypelnijWedlugLat(daty, rok => Wyswietl(Spisy.SkladkiZus(rok)));
 	}
 
-	private void WypelnijZaliczkiPit(TreeNode treeNode)
+	private TTreeNode[] WypelnijZaliczkiPit()
 	{
 		using var kontekst = new Kontekst();
 		var daty = kontekst.Baza.ZaliczkiPit
 			.Select(faktura => faktura.Miesiac)
 			.Distinct()
 			.ToList();
-		WypelnijWedlugLat(treeNode, daty);
+		return WypelnijWedlugLat(daty, rok => Wyswietl(Spisy.ZaliczkiPit(rok)));
 	}
 
-	private void WypelnijWedlugLat(TreeNode treeNode, IEnumerable<DateTime> daty)
+	private TTreeNode[] WypelnijWedlugLat(IEnumerable<DateTime> daty, Action<int?> akcja)
 	{
-		while (treeNode.Nodes.Count > 0) treeNode.Nodes.RemoveAt(0);
+		var wezly = new List<TTreeNode>();
 
 		var lata = daty.Append(DateTime.Now.Date).Select(data => data.Year).Distinct().OrderBy(rok => rok).ToList();
-		var treeNodeWszystko = new TreeNode { Name = "", Text = "(wszystkie)" };
-		treeNode.Nodes.Add(treeNodeWszystko);
+		wezly.Add(menu.UtworzWezel("(wszystkie)", delegate { akcja(null); }));
 		foreach (var rok in lata)
 		{
-			var treeNodeRok = new TreeNode { Name = "R:" + rok, Text = rok.ToString() };
-			treeNode.Nodes.Add(treeNodeRok);
+			wezly.Add(menu.UtworzWezel(rok.ToString(), delegate { akcja(rok); }));
 		}
-	}
 
-	private void menu_NodeMouseClick(object? sender, TreeNodeMouseClickEventArgs e)
-	{
-		if (e.Button == MouseButtons.Right && e.Node != null) PokazMenuKontekstowe(e.Node);
+		return wezly.ToArray();
 	}
 }

@@ -10,11 +10,6 @@ class RachunkiSprzedazySpis : FakturaSprzedazySpis
 
 	public RachunkiSprzedazySpis()
 	{
-	}
-
-	public RachunkiSprzedazySpis(string[]? parametry)
-		: base(parametry)
-	{
 		Columns[nameof(Faktura.CzyKSeF)]?.Visible = false;
 		Columns[nameof(Faktura.NumerKSeF)]?.Visible = false;
 		Columns[nameof(Faktura.CzyTP)]?.Visible = false;
