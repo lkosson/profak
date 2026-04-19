@@ -41,36 +41,10 @@ partial class Menu
 		return wezel;
 	}
 
-	private TTreeNode? Wezel(params string[] sciezka)
-	{
-		var wezel = Nodes[sciezka.First()];
-		if (wezel == null) return null;
-		foreach (var nazwa in sciezka.Skip(1))
-		{
-			if (nazwa == "*") wezel = wezel.Nodes.Cast<TreeNode>().LastOrDefault();
-			else wezel = wezel.Nodes[nazwa];
-			if (wezel == null) return null;
-		}
-		return wezel;
-	}
-	/*
-	public void Rozwin(params string[] sciezka)
-	{
-		var wezel = Wezel(sciezka);
-		wezel?.Expand();
-	}
-
-	public void Wybierz(params string[] sciezka)
-	{
-		var wezel = Wezel(sciezka);
-		if (wezel != null) SelectedNode = wezel;
-	}
-	*/
 	private void ZapiszStanPozycji(TreeNode? treeNode, bool ukryta = false)
 	{
 		if (!menuGotowe) return;
 		if (treeNode == null) return;
-		if (String.IsNullOrEmpty(treeNode.Name)) return;
 		using var kontekst = new Kontekst();
 		if (kontekst.Baza.CzyZablokowana()) return;
 		using var transakcja = kontekst.Transakcja();
@@ -111,8 +85,7 @@ partial class Menu
 		};
 		menuPokazUkryte.Click += delegate
 		{
-			Zbuduj();
-			Rozwin(pokazUkryte: true);
+			Zbuduj(pokazUkryte: true);
 		};
 		if (wezel.ForeColor == SystemColors.GrayText) menuKontekstowe.Items.Add(menuPokaz);
 		else menuKontekstowe.Items.Add(menuUkryj);
@@ -128,17 +101,15 @@ partial class Menu
 	{
 		using var kontekst = new Kontekst();
 		var stany = kontekst.Baza.StanyMenu.ToList();
-		if (stany.Count == 0) return;
-
 		CollapseAll();
 		var stanyWedlugNazwy = stany.ToDictionary(stan => stan.Pozycja);
 		TreeNode? doWyswietlenia = null;
-		RozwinMenu(Nodes.Cast<TreeNode>(), stanyWedlugNazwy, pokazUkryte, ref doWyswietlenia);
+		Rozwin(Nodes.Cast<TreeNode>(), stanyWedlugNazwy, pokazUkryte, ref doWyswietlenia);
 
-		if (doWyswietlenia == null) SelectedNode = doWyswietlenia;
+		if (doWyswietlenia != null) SelectedNode = doWyswietlenia;
 	}
 
-	private void RozwinMenu(IEnumerable<TreeNode> wezly, Dictionary<string, StanMenu> stany, bool pokazUkryte, ref TreeNode? wybrany)
+	private void Rozwin(IEnumerable<TreeNode> wezly, Dictionary<string, StanMenu> stany, bool pokazUkryte, ref TreeNode? wybrany)
 	{
 		var doUsuniecia = new List<TreeNode>();
 		foreach (var wezel in wezly)
@@ -150,7 +121,7 @@ partial class Menu
 				if (stan.CzyUkryta) doUsuniecia.Add(wezel);
 			}
 
-			RozwinMenu(wezel.Nodes.Cast<TreeNode>(), stany, pokazUkryte, ref wybrany);
+			Rozwin(wezel.Nodes.Cast<TreeNode>(), stany, pokazUkryte, ref wybrany);
 		}
 
 		foreach (var wezel in doUsuniecia)
