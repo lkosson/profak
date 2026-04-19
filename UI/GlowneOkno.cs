@@ -127,17 +127,6 @@ class GlowneOkno : Form
 		var serwisowe = menu.UtworzWezel("Serwisowe", [numeracja, konfiguracja, bazaDanych, usunieteFaktury, polecenieSQL, bezposredniaEdycja, oProgramie]);
 #endif
 
-		faktury.Expand();
-		fakturySprzedazy.Expand();
-		fakturySprzedazyWedlugDaty.Expand();
-		fakturySprzedazyKSeF.Expand();
-		fakturyProforma.Expand();
-		fakturyZakupu.Expand();
-		fakturyZakupuWedlugDaty.Expand();
-		fakturyZakupuKSeF.Expand();
-		slowniki.Expand();
-		podatki.Expand();
-
 		return [faktury, rachunkiSprzedazy, podatki, kontrahenci, towary, slowniki, serwisowe];
 	}
 
@@ -164,7 +153,7 @@ class GlowneOkno : Form
 		kontrolka.Focus();
 	}
 
-	private IEnumerable<TTreeNode> WypelnijDatyFaktur(Expression<Func<Faktura, bool>> warunek, Action<DateTime, DateTime> akcja)
+	private TTreeNode[] WypelnijDatyFaktur(Expression<Func<Faktura, bool>> warunek, Action<DateTime, DateTime> akcja)
 	{
 		using var kontekst = new Kontekst();
 		var daty = kontekst.Baza.Faktury
@@ -203,10 +192,10 @@ class GlowneOkno : Form
 			wezly.Add(menu.UtworzWezel(rok.ToString(), wezlyMiesiace.ToArray()));
 		}
 
-		return wezly;
+		return wezly.ToArray();
 	}
 
-	private IEnumerable<TTreeNode> WypelnijKontrahentowFaktur(Expression<Func<Faktura, bool>> warunek, Expression<Func<Faktura, Kontrahent>> pole, Action<Kontrahent> akcja)
+	private TTreeNode[] WypelnijKontrahentowFaktur(Expression<Func<Faktura, bool>> warunek, Expression<Func<Faktura, Kontrahent>> pole, Action<Kontrahent> akcja)
 	{
 		using var kontekst = new Kontekst();
 		var kontrahenci = kontekst.Baza.Faktury
@@ -225,10 +214,10 @@ class GlowneOkno : Form
 			wezly.Add(menu.UtworzWezel(kontrahent.Nazwa, delegate { akcja(kontrahent); }));
 		}
 
-		return wezly;
+		return wezly.ToArray();
 	}
 
-	private IEnumerable<TTreeNode> WypelnijTowaryFaktur(Expression<Func<PozycjaFaktury, bool>> warunek, Action<Towar> akcja)
+	private TTreeNode[] WypelnijTowaryFaktur(Expression<Func<PozycjaFaktury, bool>> warunek, Action<Towar> akcja)
 	{
 		using var kontekst = new Kontekst();
 		var towary = kontekst.Baza.PozycjeFaktur
@@ -247,7 +236,7 @@ class GlowneOkno : Form
 			wezly.Add(menu.UtworzWezel(towar.Nazwa, delegate { akcja(towar); }));
 		}
 
-		return wezly;
+		return wezly.ToArray();
 	}
 
 	private TTreeNode[] WypelnijDeklaracjeVat()

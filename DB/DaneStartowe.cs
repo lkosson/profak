@@ -55,6 +55,20 @@ class DaneStartowe
 			baza.Zapisz(new Waluta { CzyDomyslna = true, Skrot = "PLN", Nazwa = "Polski złoty" });
 		}
 
+		if (!baza.StanyMenu.Any())
+		{
+			baza.Zapisz(new StanMenu { Pozycja = "Faktury" });
+			baza.Zapisz(new StanMenu { Pozycja = "Faktury\\Faktury sprzedaży" });
+			baza.Zapisz(new StanMenu { Pozycja = "Faktury\\Faktury sprzedaży\\KSeF" });
+			baza.Zapisz(new StanMenu { Pozycja = "Faktury\\Faktury sprzedaży\\Według daty" });
+			baza.Zapisz(new StanMenu { Pozycja = "Faktury\\Faktury sprzedaży\\Według daty\\" + DateTime.Now.Year });
+			baza.Zapisz(new StanMenu { Pozycja = "Faktury\\Faktury sprzedaży\\Według daty\\" + DateTime.Now.Year + "\\" + DateTime.Now.ToString("MMMM"), CzyAktywna = true });
+			baza.Zapisz(new StanMenu { Pozycja = "Faktury\\Faktury zakupu" });
+			baza.Zapisz(new StanMenu { Pozycja = "Faktury\\Faktury zakupu\\KSeF" });
+			baza.Zapisz(new StanMenu { Pozycja = "Slowniki" });
+			baza.Zapisz(new StanMenu { Pozycja = "Podatki" });
+		}
+
 		if (!baza.UrzedySkarbowe.Any())
 		{
 			baza.Zapisz(new UrzadSkarbowy { Kod = "0202", Nazwa = "URZĄD SKARBOWY W BOLESŁAWCU" });

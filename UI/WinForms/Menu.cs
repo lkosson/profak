@@ -7,18 +7,19 @@ partial class Menu : TreeView
 {
 	private TreeNode? ostatnioWybrany;
 
-	private void Zbuduj()
+	private void Zbuduj(bool pokazUkryte = false)
 	{
+		var pozycje = konstruktorMenu();
 		Nodes.Clear();
-		Nodes.AddRange(konstruktorMenu());
+		Nodes.AddRange(pozycje);
+		Rozwin(pokazUkryte);
 	}
 
 	protected override void OnHandleCreated(EventArgs e)
 	{
-		Zbuduj();
 		SendMessage(this.Handle, TVM_SETEXTENDEDSTYLE, (IntPtr)TVS_EX_DOUBLEBUFFER, (IntPtr)TVS_EX_DOUBLEBUFFER);
 		base.OnHandleCreated(e);
-		Rozwin();
+		Zbuduj();
 		menuGotowe = true;
 	}
 
@@ -90,21 +91,16 @@ partial class Menu : TreeView
 
 	private void Wyswietl(TTreeNode wezel)
 	{
-		if (akcje.TryGetValue(wezel, out var akcja))
+		if (ostatnioWybrany != null)
 		{
-			akcja();
+			ostatnioWybrany.BackColor = Color.Empty;
+			ostatnioWybrany.ForeColor = Color.Empty;
 		}
-		else
-		{
-			if (ostatnioWybrany != null)
-			{
-				ostatnioWybrany.BackColor = Color.Empty;
-				ostatnioWybrany.ForeColor = Color.Empty;
-			}
-			ostatnioWybrany = wezel;
-			wezel.BackColor = SystemColors.Highlight;
-			wezel.ForeColor = SystemColors.HighlightText;
-		}
+		ostatnioWybrany = wezel;
+		wezel.BackColor = SystemColors.Highlight;
+		wezel.ForeColor = SystemColors.HighlightText;
+
+		if (akcje.TryGetValue(wezel, out var akcja)) akcja();
 	}
 
 	private const int TVM_SETEXTENDEDSTYLE = 0x1100 + 44;
