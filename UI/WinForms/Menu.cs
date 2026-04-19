@@ -5,15 +5,107 @@ namespace ProFak.UI;
 
 partial class Menu : TreeView
 {
-	public Menu()
+	private TreeNode? ostatnioWybrany;
+
+	private void Zbuduj()
 	{
 		Margin = new Padding(0);
+		Nodes.Clear();
+		Nodes.AddRange(konstruktorMenu());
 	}
 
 	protected override void OnHandleCreated(EventArgs e)
 	{
+		Zbuduj();
 		SendMessage(this.Handle, TVM_SETEXTENDEDSTYLE, (IntPtr)TVS_EX_DOUBLEBUFFER, (IntPtr)TVS_EX_DOUBLEBUFFER);
 		base.OnHandleCreated(e);
+		Rozwin();
+		menuGotowe = true;
+	}
+
+	protected override void OnBeforeExpand(TreeViewCancelEventArgs e)
+	{
+		base.OnBeforeExpand(e);
+		if (e.Node == null) return;
+		if (trwaAktualizacjaMenu) return;
+		if (!rozwiniecia.TryGetValue(e.Node, out var rozwiniecie)) return;
+		trwaAktualizacjaMenu = true;
+		try
+		{
+			var noweWezly = rozwiniecie();
+			e.Node.Nodes.Clear();
+			e.Node.Nodes.AddRange(noweWezly);
+		}
+		finally
+		{
+			trwaAktualizacjaMenu = false;
+		}
+	}
+
+	protected override void OnAfterExpand(TreeViewEventArgs e)
+	{
+		base.OnAfterExpand(e);
+		ZapiszStanPozycji(e.Node);
+	}
+
+	protected override void OnAfterCollapse(TreeViewEventArgs e)
+	{
+		base.OnAfterCollapse(e);
+		ZapiszStanPozycji(e.Node);
+	}
+
+	protected override void OnAfterSelect(TreeViewEventArgs e)
+	{
+		base.OnAfterSelect(e);
+		if (trwaAktualizacjaMenu) return;
+		if ((e.Action & TreeViewAction.ByKeyboard) == TreeViewAction.ByKeyboard) return;
+		var wybrany = SelectedNode;
+		if (wybrany == null) return;
+		if (ostatnioWybrany == null || ostatnioWybrany.TreeView == null || !ostatnioWybrany.FullPath.StartsWith(wybrany.FullPath)) while (wybrany.Nodes.Count > 0) wybrany = wybrany.Nodes[0];
+		if (SelectedNode == wybrany) Wyswietl(wybrany);
+		else SelectedNode = wybrany;
+
+		ZapiszStanPozycji(SelectedNode /* dla spisu według kontrahentów/towarów/dat mogło się zmienić */);
+	}
+
+	protected override void OnKeyPress(KeyPressEventArgs e)
+	{
+		base.OnKeyPress(e);
+		if (SelectedNode == null) return;
+		if (e.KeyChar == '\r')
+		{
+			e.Handled = true;
+			Wyswietl(SelectedNode);
+		}
+		else if (e.KeyChar == '/')
+		{
+			e.Handled = true;
+			SelectedNode.Collapse(false);
+		}
+	}
+	protected override void OnNodeMouseClick(TreeNodeMouseClickEventArgs e)
+	{
+		base.OnNodeMouseClick(e);
+		if (e.Button == MouseButtons.Right && e.Node != null) PokazMenuKontekstowe(e.Node);
+	}
+
+	private void Wyswietl(TTreeNode wezel)
+	{
+		if (akcje.TryGetValue(wezel, out var akcja))
+		{
+			akcja();
+		}
+		else
+		{
+			if (ostatnioWybrany != null)
+			{
+				ostatnioWybrany.BackColor = Color.Empty;
+				ostatnioWybrany.ForeColor = Color.Empty;
+			}
+			ostatnioWybrany = wezel;
+			wezel.BackColor = SystemColors.Highlight;
+			wezel.ForeColor = SystemColors.HighlightText;
+		}
 	}
 
 	private const int TVM_SETEXTENDEDSTYLE = 0x1100 + 44;

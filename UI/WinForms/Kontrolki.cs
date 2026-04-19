@@ -16,6 +16,7 @@ global using TMenuItem = System.Windows.Forms.ToolStripMenuItem;
 global using TDatePicker = ProFak.UI.DateTimePickerFix;
 global using TProgressBar = System.Windows.Forms.ProgressBar;
 global using TContextMenu = System.Windows.Forms.ContextMenuStrip;
+global using TTreeNode = System.Windows.Forms.TreeNode;
 
 namespace ProFak.UI;
 
@@ -225,6 +226,13 @@ class KontrolkiWF
 		var progressBar = new TProgressBar();
 		progressBar.Style = ProgressBarStyle.Marquee;
 		return progressBar;
+	}
+
+	public static TTreeNode TreeNode(string tekst, TTreeNode[]? podrzedne = null)
+	{
+		var wezel = new TTreeNode(tekst);
+		if (podrzedne != null) wezel.Nodes.AddRange(podrzedne);
+		return wezel;
 	}
 }
 #endif

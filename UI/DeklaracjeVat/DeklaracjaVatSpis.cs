@@ -2,10 +2,10 @@
 
 namespace ProFak.UI;
 
+#pragma warning disable WFO1000 // Missing code serialization configuration for property content
 class DeklaracjaVatSpis : Spis<DeklaracjaVat>
 {
-	private readonly DateTime? odDaty;
-	private readonly DateTime? doDaty;
+	public int? Rok { get; set; }
 
 	public override string Podsumowanie
 	{
@@ -32,35 +32,10 @@ class DeklaracjaVatSpis : Spis<DeklaracjaVat>
 		DodajKolumneId();
 	}
 
-	public DeklaracjaVatSpis(string[]? parametry)
-		: this()
-	{
-		if (parametry == null) return;
-		int? rok = null;
-		int? miesiac = null;
-		foreach (var parametr in parametry)
-		{
-			if (parametr.StartsWith("R:")) rok = Int32.Parse(parametr[2..]);
-			else if (parametr.StartsWith("M:")) miesiac = Int32.Parse(parametr[2..]);
-		}
-		if (!rok.HasValue) return;
-		if (miesiac.HasValue)
-		{
-			odDaty = new DateTime(rok.Value, miesiac.Value, 1);
-			doDaty = odDaty.Value.AddMonths(1);
-		}
-		else
-		{
-			odDaty = new DateTime(rok.Value, 1, 1);
-			doDaty = odDaty.Value.AddYears(1);
-		}
-	}
-
 	protected override void Przeladuj()
 	{
 		var q = Kontekst.Baza.DeklaracjeVat;
-		if (odDaty.HasValue) q = q.Where(deklaracja => deklaracja.Miesiac >= odDaty.Value);
-		if (doDaty.HasValue) q = q.Where(deklaracja => deklaracja.Miesiac < doDaty.Value);
+		if (Rok.HasValue) q = q.Where(deklaracja => deklaracja.Miesiac >= new DateTime(Rok.Value, 1, 1) && deklaracja.Miesiac < new DateTime(Rok.Value + 1, 1, 1));
 		Rekordy = q.OrderBy(deklaracja => deklaracja.Miesiac).ToList();
 	}
 }
