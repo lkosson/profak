@@ -29,7 +29,7 @@ class WplataEdytor : EdytorDwieKolumny<Wplata>
 			var fakturaPlusWplaty = Kontekst.Baza.Faktury
 				.Include(e => e.Wplaty)
 				.FirstOrDefault(e => e.Id == faktura.Id);
-			rekord.Kwota = fakturaPlusWplaty!.PozostaloDoZaplaty;
+			rekord.Kwota = faktura.RazemBrutto - fakturaPlusWplaty!.SumaWplat;
 		}
 	}
 
