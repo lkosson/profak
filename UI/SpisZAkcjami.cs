@@ -36,8 +36,6 @@ class SpisZAkcjami<TRekord> : TableLayoutPanel, IKontrolkaZKontekstem
 
 		Controls.Add(panelAkcji, 1, 0);
 
-		panelAkcji.DodajKontrolke(wyszukiwarka);
-
 		spis.Dock = DockStyle.Fill;
 		spis.ZaznaczenieZmienione += spis_ZaznaczenieZmienione;
 		spis.RekordyZmienione += spis_RekordyZmienione;
@@ -47,7 +45,6 @@ class SpisZAkcjami<TRekord> : TableLayoutPanel, IKontrolkaZKontekstem
 		Controls.Add(spis, 0, 0);
 		MinimumSize = new Size(panelAkcji.MinimumSize.Width + spis.MinimumSize.Width + panelAkcji.Margin.Left + spis.Margin.Right, panelAkcji.MinimumSize.Height + spis.MinimumSize.Height + Math.Max(panelAkcji.Margin.Top, spis.Margin.Top) + Math.Max(panelAkcji.Margin.Bottom, spis.Margin.Bottom));
 	}
-
 
 	private void spis_KeyDown(object? sender, KeyEventArgs e)
 	{
@@ -123,16 +120,22 @@ class SpisZAkcjami<TRekord> : TableLayoutPanel, IKontrolkaZKontekstem
 
 	protected override void OnCreateControl()
 	{
-		panelAkcji.CzyGlownySpis = Spis.Kontekst.Dialog == null || Spis.Kontekst.Dialog is not DialogEdycji;
 		foreach (var akcja in akcje)
 		{
 			var adapter = akcja.UtworzAdapter(Spis);
 			if (adapter.CzyDomyslna && domyslnaAkcja == null) domyslnaAkcja = adapter;
-			panelAkcji.DodajAkcje(adapter);
 			adapteryAkcji.Add(adapter);
 		}
+
+		panelAkcji.CzyGlownySpis = Spis.Kontekst.Dialog == null || Spis.Kontekst.Dialog is not DialogEdycji;
+		panelAkcji.SuspendLayout();
+		panelAkcji.DodajKontrolke(wyszukiwarka);
+		foreach (var adapter in adapteryAkcji)
+		{
+			panelAkcji.DodajAkcje(adapter);
+		}
 		panelAkcji.DodajKontrolke(podsumowanie);
-		panelAkcji.AktualizujUklad();
+		panelAkcji.ResumeLayout();
 		base.OnCreateControl();
 	}
 }
