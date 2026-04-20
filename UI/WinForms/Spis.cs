@@ -1,8 +1,6 @@
 ﻿#if WINFORMS
 using ProFak.DB;
 using System.ComponentModel;
-using System.Linq.Expressions;
-using System.Text.RegularExpressions;
 
 namespace ProFak.UI;
 

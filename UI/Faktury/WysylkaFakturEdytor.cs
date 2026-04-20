@@ -1,5 +1,4 @@
 ﻿using ProFak.DB;
-using System.ComponentModel;
 using System.Data;
 using System.Net;
 using System.Net.Mail;
@@ -8,10 +7,7 @@ namespace ProFak.UI;
 
 class WysylkaFakturEdytor : Edytor
 {
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public IEnumerable<Faktura> Faktury { get; set; } = [];
-	
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Kontekst Kontekst { get; set; } = default!;
 
 	private readonly TTextBox textBoxTresc;

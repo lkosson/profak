@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProFak.DB;
-using System.ComponentModel;
 
 namespace ProFak.UI;
 
-#pragma warning disable WFO1000 // Missing code serialization configuration for property content
 class FakturaSpis : Spis<Faktura>
 {
 	public FakturaSpisParametry Parametry { get; set; } = new FakturaSpisParametry();

@@ -3,7 +3,6 @@ using ProFak.IO.KSEF2;
 
 namespace ProFak.UI;
 
-#pragma warning disable WFO1000 // Missing code serialization configuration for property content
 class KSeFSpis : Spis<Faktura>
 {
 	public KSeFSpisParametry Parametry { get; set; } = new KSeFSpisParametry();

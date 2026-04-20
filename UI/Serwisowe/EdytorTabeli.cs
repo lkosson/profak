@@ -1,11 +1,9 @@
-﻿using System.ComponentModel;
-using System.Data;
+﻿using System.Data;
 
 namespace ProFak.UI;
 
 partial class EdytorTabeli : Edytor, IKontrolkaZKontekstem
 {
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Kontekst Kontekst { get; set; } = default!;
 
 	private readonly Button buttonWczytaj;

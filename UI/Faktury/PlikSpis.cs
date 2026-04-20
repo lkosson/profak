@@ -1,11 +1,9 @@
 ﻿using ProFak.DB;
-using System.ComponentModel;
 
 namespace ProFak.UI;
 
 class PlikSpis : Spis<Plik>
 {
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Ref<Faktura> FakturaRef { get; set; }
 
 	public PlikSpis()

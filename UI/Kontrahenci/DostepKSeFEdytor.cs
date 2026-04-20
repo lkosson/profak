@@ -1,18 +1,12 @@
 ﻿using ProFak.DB;
-using System.ComponentModel;
 using System.Diagnostics;
 
 namespace ProFak.UI;
 
 partial class DostepKSeFEdytor : Edytor
 {
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public SrodowiskoKSeF SrodowiskoKSeF { get; set; }
-
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public string? Token { get; set; }
-
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public string? NIP { get => textBoxNIP.Text; set => textBoxNIP.Text = value; }
 
 	private readonly TextBox textBoxNIP;

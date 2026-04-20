@@ -1,11 +1,9 @@
 ﻿using ProFak.DB;
-using System.ComponentModel;
 
 namespace ProFak.UI;
 
 class PozycjaFakturySpis : Spis<PozycjaFaktury>
 {
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Ref<Faktura> FakturaRef { get; set; }
 
 	public PozycjaFakturySpis()
