@@ -1,82 +1,44 @@
 ﻿namespace ProFak.UI;
 
-class PanelAkcji : Panel
+class PanelAkcji : Pionowo
 {
 	public bool CzyGlownySpis { get; set; }
 
-	private readonly List<(Button przycisk, AdapterAkcji adapter)> przyciski;
+	private readonly List<(Button przycisk, AdapterAkcji adapter)> przyciski = [];
 
 	public PanelAkcji()
 	{
-		przyciski = new List<(Button przycisk, AdapterAkcji adapter)>();
 		MinimumSize = new Size(200 * DeviceDpi / 96, 200 * DeviceDpi / 96);
 		TabIndex = 100;
 	}
 
-	protected override void OnSizeChanged(EventArgs e)
-	{
-		base.OnSizeChanged(e);
-		AktualizujUklad();
-	}
-
-	protected override void OnCreateControl()
-	{
-		base.OnCreateControl();
-		AktualizujUklad();
-	}
-
-	public void AktualizujUklad()
-	{
-		SuspendLayout();
-		int y = 0;
-		y += Padding.Top;
-		var szerokosc = MinimumSize.Width;
-		foreach (Control kontrolka in Controls)
-		{
-			var szerokoscKontrolki = kontrolka.PreferredSize.Width + Math.Max(Padding.Left, kontrolka.Margin.Left) + Math.Max(Padding.Right, kontrolka.Margin.Right);
-			if (szerokoscKontrolki > szerokosc) szerokosc = szerokoscKontrolki;
-		}
-
-		Width = szerokosc;
-		foreach (Control kontrolka in Controls)
-		{
-			kontrolka.Location = new Point(Math.Max(Padding.Left, kontrolka.Margin.Left), y);
-			kontrolka.Width = szerokosc - Math.Max(Padding.Left, kontrolka.Margin.Left) - Math.Max(Padding.Right, kontrolka.Margin.Right);
-			y += kontrolka.Height;
-			y += kontrolka.Margin.Bottom;
-		}
-		Height = y;
-		ResumeLayout();
-	}
-
 	public void DodajKontrolke(Control kontrolka)
 	{
-		Controls.Add(kontrolka);
+		DodajWiersz(kontrolka);
 	}
 
 	public void DodajAkcje(AdapterAkcji adapter)
 	{
-		var przycisk = new ButtonDropDown();
-		przycisk.AutoSize = true;
-		przycisk.TabIndex = TabIndex + Controls.Count;
-		przycisk.Click += delegate { adapter.Uruchom(); };
+		TButton przycisk;
 		if (adapter.Podrzedne.Count > 0)
 		{
-			var menu = new ContextMenuStrip();
-			menu.ShowImageMargin = false;
+			var pozycje = new List<TMenuItem>();
 			foreach (var podrzedna in adapter.Podrzedne)
 			{
-				var pozycja = new ToolStripButton();
-				pozycja.Text = Wyglad.NazwaAkcji(podrzedna);
+				var pozycja = Kontrolki.PopupMenuItem(Wyglad.NazwaAkcji(podrzedna), podrzedna.Uruchom);
 				pozycja.Dock = DockStyle.Fill;
 				pozycja.TextAlign = ContentAlignment.MiddleLeft;
-				pozycja.Click += delegate { podrzedna.Uruchom(); };
-				menu.Items.Add(pozycja);
+				pozycje.Add(pozycja);
 			}
-			przycisk.Menu = menu;
+			przycisk = Kontrolki.ButtonMenu("", pozycje.ToArray());
 		}
+		else
+		{
+			przycisk = Kontrolki.Button("", adapter.Uruchom);
+		}
+
 		AktualizujPrzycisk(przycisk, adapter);
-		Controls.Add(przycisk);
+		DodajKontrolke(przycisk);
 		przyciski.Add((przycisk, adapter));
 	}
 
@@ -86,7 +48,6 @@ class PanelAkcji : Panel
 		{
 			AktualizujPrzycisk(przycisk, adapter);
 		}
-		AktualizujUklad();
 	}
 
 	private void AktualizujPrzycisk(Button przycisk, AdapterAkcji adapter)

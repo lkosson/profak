@@ -17,6 +17,7 @@ global using TDatePicker = ProFak.UI.DateTimePickerFix;
 global using TProgressBar = System.Windows.Forms.ProgressBar;
 global using TContextMenu = System.Windows.Forms.ContextMenuStrip;
 global using TTreeNode = System.Windows.Forms.TreeNode;
+global using TButtonDropDown = ProFak.UI.ButtonDropDown;
 
 namespace ProFak.UI;
 
@@ -89,11 +90,12 @@ class KontrolkiWF
 		return button;
 	}
 
-	public static TButton ButtonMenu(string tekst, ToolStripMenuItem[] pozycje)
+	public static TButton ButtonMenu(string tekst, TMenuItem[] pozycje)
 	{
 		var menu = new ContextMenuStrip();
+		menu.ShowImageMargin = false;
 		menu.Items.AddRange(pozycje);
-		var button = new ButtonDropDown();
+		var button = new TButtonDropDown();
 		button.Text = tekst + "    ";
 		button.AutoSize = true;
 		button.UseVisualStyleBackColor = true;

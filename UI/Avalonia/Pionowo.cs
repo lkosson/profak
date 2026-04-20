@@ -17,5 +17,10 @@ class PionowoAV : StackPanel
 			Children.Add(kontrolka);
 		}
 	}
+
+	public void DodajWiersz(TControl kontrolka)
+	{
+		Children.Add(kontrolka);
+	}
 }
 #endif
