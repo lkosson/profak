@@ -60,7 +60,7 @@ public class Konfiguracja : Rekord<Konfiguracja>
 			PotwierdzanieZamknieciaEdytora = true;
 			PotwierdzanieZamknieciaProgramu = false;
 			WstepneLadowanieReportingServices = true;
-			SzerokoscMenu = 270;
+			SzerokoscMenu = 275;
 			RozmiarCzcionki = 0;
 			NazwaCzcionki = "";
 			Wersja = 1;
