@@ -85,6 +85,7 @@ partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 
 		var naglowek = new Siatka([0, 50, 20, 0, -1, 0, 0, 20, 80, 80], []);
 		naglowek.DodajWiersz([Kontrolki.Label("LP"), numericUpDownLP, null, Kontrolki.Label("Towar/opis"), comboBoxTowar, buttonTowar, buttonNowyTowar, null, numericUpDownIlosc, comboBoxJM]);
+		numericUpDownLP.TabIndex = 999;
 		numericUpDownIlosc.TabIndex = comboBoxJM.TabIndex + 1;
 
 		var ceny = new DwieKolumny();
