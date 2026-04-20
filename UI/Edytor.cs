@@ -174,10 +174,10 @@ class Edytor<TRekord> : Edytor
 	{
 	}
 
-	protected override void OnParentChanged(EventArgs e)
+	protected override void OnHandleCreated(EventArgs e)
 	{
-		base.OnParentChanged(e);
-		if (ParentForm != null) ParentForm.FormClosing += ParentForm_FormClosing;
+		base.OnHandleCreated(e);
+		ParentForm?.FormClosing += ParentForm_FormClosing;
 	}
 
 	private void ParentForm_FormClosing(object? sender, FormClosingEventArgs e)
