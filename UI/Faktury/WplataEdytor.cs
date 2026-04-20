@@ -26,10 +26,8 @@ class WplataEdytor : EdytorDwieKolumny<Wplata>
 		var faktura = Kontekst.Znajdz<Faktura>();
 		if (rekord.Kwota == 0 && faktura != null)
 		{
-			var fakturaPlusWplaty = Kontekst.Baza.Faktury
-				.Include(e => e.Wplaty)
-				.FirstOrDefault(e => e.Id == faktura.Id);
-			rekord.Kwota = faktura.RazemBrutto - fakturaPlusWplaty!.SumaWplat;
+			var sumaWplat = Kontekst.Baza.Wplaty.Where(e => e.FakturaId == faktura.Id).Sum(e => e.Kwota);
+			rekord.Kwota = faktura.RazemBrutto - sumaWplat;
 		}
 	}
 

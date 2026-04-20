@@ -58,6 +58,7 @@ public class API(string baza) : IDisposable
 		}
 
 		faktura.PrzeliczRazem(Baza);
+		faktura.DodajWplateJesliTrzeba(Baza);
 		Baza.Zapisz(faktura);
 
 		return faktura;
