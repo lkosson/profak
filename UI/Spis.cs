@@ -137,26 +137,9 @@ abstract partial class Spis<T> : Spis
 		WczytajKonfiguracje();
 	}
 
-	public void UstawFiltr(string wyrazenieFiltra)
+	public void UstawFiltr(Func<T, bool> filtr)
 	{
-		if (String.IsNullOrWhiteSpace(wyrazenieFiltra))
-		{
-			filtr = rekord => true;
-		}
-		else
-		{
-			var fragmenty = Regex.Matches(wyrazenieFiltra, @"(?:[^\s""]+|""[^""]*"")+");
-			List<Func<T, bool>> dopasowania = new List<Func<T, bool>>();
-			foreach (Match fragment in fragmenty)
-			{
-				if (!fragment.Success) continue;
-				var fraza = fragment.Value;
-				Func<T, bool> dopasowanieFragmentu = rekord => rekord.CzyPasuje(fraza);
-				dopasowania.Add(dopasowanieFragmentu);
-			}
-			filtr = (Func<T, bool>)Delegate.Combine(dopasowania.ToArray())!;
-		}
-
+		this.filtr = filtr;
 		Rekordy = oryginalneRekordy ?? [];
 	}
 
