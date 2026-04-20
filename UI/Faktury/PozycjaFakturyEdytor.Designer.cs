@@ -522,7 +522,7 @@ partial class PozycjaFakturyEdytor
 		tableLayoutPanel5.SetColumnSpan(comboBoxGTU, 2);
 		comboBoxGTU.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 		comboBoxGTU.FormattingEnabled = true;
-		comboBoxGTU.Items.AddRange(new object[] { "-", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13" });
+		comboBoxGTU.Items.AddRange(new object[] { "-", "01 - Napoje alkoholowe", "02 - Paliwa", "03 - Oleje opałowe i smarowe", "04 - Wyroby tytoniowe", "05 - Odpady", "06 - Urządzenia elektroniczne", "07 - Pojazdy i części", "08 - Metale szlachetne i nieszlachetne", "09 - Leki i wyroby medyczne", "10 - Budynki, budowle, grunty", "11 - Uprawnienia do emisji", "12 - Usługi niematerialne", "13 - Usługi transportowe" });
 		comboBoxGTU.Location = new System.Drawing.Point(97, 34);
 		comboBoxGTU.Name = "comboBoxGTU";
 		comboBoxGTU.Size = new System.Drawing.Size(81, 23);
@@ -590,7 +590,7 @@ partial class PozycjaFakturyEdytor
 		label11.Name = "label11";
 		label11.Size = new System.Drawing.Size(88, 15);
 		label11.TabIndex = 6;
-		label11.Text = "Stawka ryczałtu";
+		label11.Text = "Ryczałt";
 		// 
 		// comboBoxStawkaRyczaltu
 		// 
