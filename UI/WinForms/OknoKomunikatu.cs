@@ -1,4 +1,5 @@
-﻿namespace ProFak.UI;
+﻿#if WINFORMS
+namespace ProFak.UI;
 
 class OknoKomunikatu
 {
@@ -25,3 +26,4 @@ class OknoKomunikatu
 		return null;
 	}
 }
+#endif
