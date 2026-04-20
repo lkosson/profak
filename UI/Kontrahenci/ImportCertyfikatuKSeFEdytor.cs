@@ -1,6 +1,5 @@
 ﻿using KSeF.Client.Extensions;
 using ProFak.DB;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 
@@ -8,13 +7,8 @@ namespace ProFak.UI;
 
 class ImportCertyfikatuKSeFEdytor : Edytor
 {
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public SrodowiskoKSeF SrodowiskoKSeF { get; set; }
-
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public string Certyfikat { get; set; } = "";
-
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public string NIP { get; set; } = "";
 
 	private readonly TLinkLabel linkLabelAplikacjaPodatnika;

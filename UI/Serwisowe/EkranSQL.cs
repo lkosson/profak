@@ -1,12 +1,10 @@
-﻿using System.ComponentModel;
-using System.Data;
+﻿using System.Data;
 using System.Runtime.CompilerServices;
 
 namespace ProFak.UI;
 
 class EkranSQL : Edytor, IKontrolkaZKontekstem
 {
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Kontekst Kontekst { get; set; } = default!;
 
 	private readonly TextBox textBoxSQL;

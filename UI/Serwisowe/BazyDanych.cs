@@ -1,12 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProFak.DB;
-using System.ComponentModel;
 
 namespace ProFak.UI;
 
 class BazyDanych : Edytor, IKontrolkaZKontekstem
 {
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Kontekst Kontekst { get; set; } = default!;
 
 	private bool gotowy;

@@ -2,7 +2,6 @@
 
 namespace ProFak.UI;
 
-#pragma warning disable WFO1000 // Missing code serialization configuration for property content
 class SkladkaZusSpis : Spis<SkladkaZus>
 {
 	public int? Rok { get; set; }

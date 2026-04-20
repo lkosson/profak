@@ -1,11 +1,9 @@
 ﻿using ProFak.DB;
-using System.ComponentModel;
 
 namespace ProFak.UI;
 
 class StanNumeratoraSpis : Spis<StanNumeratora>
 {
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Ref<Numerator> NumeratorRef { get; set; }
 
 	public StanNumeratoraSpis()

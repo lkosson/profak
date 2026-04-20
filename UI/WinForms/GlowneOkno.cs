@@ -1,10 +1,5 @@
 ﻿#if WINFORMS
-using Microsoft.EntityFrameworkCore;
-using ProFak.DB;
-using System.ComponentModel;
 using System.Data;
-using System.Linq.Expressions;
-using System.Reflection;
 
 namespace ProFak.UI;
 

@@ -1,12 +1,10 @@
-﻿using System.ComponentModel;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text.Json;
 
 namespace ProFak.UI;
 
 class OProgramie : Edytor, IKontrolkaZKontekstem
 {
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Kontekst Kontekst { get; set; } = default!;
 
 	public OProgramie()

@@ -1,15 +1,11 @@
 ﻿#if WINFORMS
-using System.ComponentModel;
 using System.Drawing.Drawing2D;
 
 namespace ProFak.UI;
 
 class ButtonDropDown : ButtonDPI
 {
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 	public ContextMenuStrip? Menu { get; set; }
-
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 	public bool OpenMenuOnClick { get; set; }
 
 	public ButtonDropDown()

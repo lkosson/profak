@@ -1,10 +1,7 @@
-﻿using System.ComponentModel;
-
-namespace ProFak.UI;
+﻿namespace ProFak.UI;
 
 class PanelAkcji : Panel
 {
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public bool CzyGlownySpis { get; set; }
 
 	private readonly List<(Button przycisk, AdapterAkcji adapter)> przyciski;

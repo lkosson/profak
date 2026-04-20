@@ -1,5 +1,4 @@
 ﻿using ProFak.DB;
-using System.ComponentModel;
 using System.Data;
 
 namespace ProFak.UI;
@@ -16,8 +15,6 @@ class SpisZAkcjami<TRekord> : TableLayoutPanel, IKontrolkaZKontekstem
 
 	public Spis<TRekord> Spis { get; }
 	public List<AkcjaNaSpisie<TRekord>> Akcje => akcje;
-
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Kontekst Kontekst { get => Spis.Kontekst; set => Spis.Kontekst = value; }
 	public int PreferowanaSzerokosc => Spis.PreferowanaSzerokosc + Spis.Margin.Right + panelAkcji.Width + panelAkcji.Margin.Right;
 

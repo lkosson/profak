@@ -1,7 +1,5 @@
 ﻿using ProFak.DB;
-using System.ComponentModel;
 using System.Linq.Expressions;
-using System.Text.RegularExpressions;
 
 namespace ProFak.UI;
 
@@ -20,17 +18,13 @@ abstract partial class Spis<T> : Spis
 	private bool rekordyPodczasZmiany;
 	private bool kolumnyZmienione;
 
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Kontekst Kontekst { get; set; } = default!;
-
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public IEnumerable<T> WybraneRekordy
 	{
 		get => Sortuj(WybraneRekordyImpl);
 		set => WybraneRekordyImpl = value;
 	}
 
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public IEnumerable<T> Rekordy
 	{
 		get => RekordyImpl ?? [];
@@ -48,7 +42,6 @@ abstract partial class Spis<T> : Spis
 		}
 	}
 
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public string? Komunikat
 	{
 		get => field;
@@ -76,7 +69,6 @@ abstract partial class Spis<T> : Spis
 	public event Action? RekordyZmienione;
 	public event Action? ZaznaczenieZmienione;
 
-	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Ref<T> RekordPoczatkowy { get; set; }
 
 	private void OdswiezWiersze()
