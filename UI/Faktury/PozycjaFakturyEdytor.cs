@@ -54,7 +54,7 @@ partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 		numericUpDownRabatWartosc = Kontrolki.NumericUpDown(poPrzecinku: 2, szerokosc: 90);
 
 		kontroler.Slownik<decimal?>(comboBoxStawkaRyczaltu, null, 17m, 15m, 14m, 12.5m, 12m, 10m, 8.5m, 5.5m, 3m, 2m);
-		kontroler.Slownik(comboBoxGTU, "-", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13");
+		kontroler.Slownik(comboBoxGTU, "-", "01 - Napoje alkoholowe", "02 - Paliwa", "03 - Oleje opałowe i smarowe", "04 - Wyroby tytoniowe", "05 - Odpady", "06 - Urządzenia elektroniczne", "07 - Pojazdy i części", "08 - Metale szlachetne i nieszlachetne", "09 - Leki i wyroby medyczne", "10 - Budynki, budowle, grunty", "11 - Uprawnienia do emisji", "12 - Usługi niematerialne", "13 - Usługi transportowe");
 
 		kontroler.Powiazanie(numericUpDownLP, pozycja => pozycja.LP);
 		kontroler.Powiazanie(comboBoxTowar, pozycja => pozycja.Opis);
@@ -109,9 +109,9 @@ partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 		comboBoxStawkaRyczaltu.Width = 40;
 
 		var podatki = new Siatka([0, -1, 0], []);
-		podatki.DodajWiersz("Stawka Vat", [comboBoxStawkaVat, buttonStawkaVat]);
+		podatki.DodajWiersz("Vat", [comboBoxStawkaVat, buttonStawkaVat]);
 		podatki.DodajWiersz("GTU", [(comboBoxGTU, 2)]);
-		podatki.DodajWiersz("Stawka ryczałtu", [(comboBoxStawkaRyczaltu, 2)]);
+		podatki.DodajWiersz("Ryczałt", [(comboBoxStawkaRyczaltu, 2)]);
 		podatki.DodajWiersz([(labelCenaZakupu = Kontrolki.Label("Cena zakupu"), 1), (numericUpDownCenaZakupu, 2)]);
 
 		var uklad = new Siatka([-3, -3, -4, -4], [0, 0]);

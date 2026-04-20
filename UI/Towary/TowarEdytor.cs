@@ -30,7 +30,7 @@ class TowarEdytor : Edytor<Towar>
 		kontroler.Slownik<RodzajTowaru>(comboBoxRodzaj);
 		kontroler.Slownik(comboBoxSposobLiczenia, "według brutto", "według netto");
 		kontroler.Slownik(comboBoxWidocznosc, "ukryty", "widoczny");
-		kontroler.Slownik(comboBoxGTU, "-", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13");
+		kontroler.Slownik(comboBoxGTU, "-", "01 - Napoje alkoholowe", "02 - Paliwa", "03 - Oleje opałowe i smarowe", "04 - Wyroby tytoniowe", "05 - Odpady", "06 - Urządzenia elektroniczne", "07 - Pojazdy i części", "08 - Metale szlachetne i nieszlachetne", "09 - Leki i wyroby medyczne", "10 - Budynki, budowle, grunty", "11 - Uprawnienia do emisji", "12 - Usługi niematerialne", "13 - Usługi transportowe");
 		kontroler.Slownik<decimal?>(comboBoxStawkaRyczaltu, null, 17m, 15m, 14m, 12.5m, 12m, 10m, 8.5m, 5.5m, 3m, 2m);
 
 		kontroler.Powiazanie(textBoxNazwa, towar => towar.Nazwa);
