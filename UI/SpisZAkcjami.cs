@@ -8,7 +8,7 @@ class SpisZAkcjami<TRekord> : TableLayoutPanel, IKontrolkaZKontekstem
 	where TRekord : Rekord<TRekord>
 {
 	protected readonly PanelAkcji panelAkcji;
-	protected readonly Wyszukiwarka wyszukiwarka;
+	protected readonly Wyszukiwarka<TRekord> wyszukiwarka;
 	protected readonly Podsumowanie podsumowanie;
 	protected AdapterAkcji? domyslnaAkcja;
 	protected readonly List<AkcjaNaSpisie<TRekord>> akcje;
@@ -26,7 +26,7 @@ class SpisZAkcjami<TRekord> : TableLayoutPanel, IKontrolkaZKontekstem
 		akcje = new List<AkcjaNaSpisie<TRekord>>();
 		adapteryAkcji = [];
 		panelAkcji = new PanelAkcji();
-		wyszukiwarka = new Wyszukiwarka();
+		wyszukiwarka = new Wyszukiwarka<TRekord>(spis);
 		podsumowanie = new Podsumowanie();
 
 		Spis = spis;
@@ -40,8 +40,6 @@ class SpisZAkcjami<TRekord> : TableLayoutPanel, IKontrolkaZKontekstem
 		Controls.Add(panelAkcji, 1, 0);
 
 		panelAkcji.DodajKontrolke(wyszukiwarka);
-		wyszukiwarka.TextChanged += wyszukiwarka_TextChanged;
-		wyszukiwarka.KeyDown += wyszukiwarka_KeyDown;
 
 		spis.Dock = DockStyle.Fill;
 		spis.ZaznaczenieZmienione += spis_ZaznaczenieZmienione;
@@ -53,25 +51,6 @@ class SpisZAkcjami<TRekord> : TableLayoutPanel, IKontrolkaZKontekstem
 		MinimumSize = new Size(panelAkcji.MinimumSize.Width + spis.MinimumSize.Width + panelAkcji.Margin.Left + spis.Margin.Right, panelAkcji.MinimumSize.Height + spis.MinimumSize.Height + Math.Max(panelAkcji.Margin.Top, spis.Margin.Top) + Math.Max(panelAkcji.Margin.Bottom, spis.Margin.Bottom));
 	}
 
-	private void wyszukiwarka_KeyDown(object? sender, KeyEventArgs e)
-	{
-		if (e.KeyCode == Keys.Escape)
-		{
-			wyszukiwarka.Text = "";
-			Spis.Focus();
-			e.Handled = true;
-		}
-		else if (e.KeyCode == Keys.Enter)
-		{
-			if (Spis.Rekordy.Any()) Spis.Focus();
-			e.Handled = true;
-		}
-	}
-
-	private void wyszukiwarka_TextChanged(object? sender, EventArgs e)
-	{
-		Spis.UstawFiltr(wyszukiwarka.Text);
-	}
 
 	private void spis_KeyDown(object? sender, KeyEventArgs e)
 	{
