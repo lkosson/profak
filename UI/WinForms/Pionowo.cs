@@ -29,7 +29,6 @@ class PionowoWF : TableLayoutPanel
 		Controls.Add(kontrolka, 0, RowCount - 1);
 		kontrolka.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		RowCount++;
-		Size = PreferredSize;
 	}
 }
 #endif
