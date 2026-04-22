@@ -38,7 +38,7 @@ partial class GlowneOkno : Form
 
 
 	private void Wyswietl<TKontrolka>(TKontrolka kontrolka)
-		where TKontrolka : Control, IKontrolkaZKontekstem
+		where TKontrolka : TControl, IKontrolkaZKontekstem
 	{
 		var doUsuniecia = panelZawartosc.Controls.Cast<Control>().ToList();
 
