@@ -14,7 +14,7 @@ class Spisy
 		spis.Akcje.Insert(0, wybor);
 		spis.Spis.Kontekst = nowyKontekst;
 		spis.Spis.RekordPoczatkowy = biezacaWartosc;
-		dialog.Size = new Size(Math.Max(spis.PreferowanaSzerokosc, 800), 450);
+		dialog.Size = new Size(Math.Min(Math.Max(spis.PreferowanaSzerokosc, 800), 1200), 450);
 		dialog.Pokaz();
 		if (wybor.WybranyRekord is null) return default;
 		transakcja.Zatwierdz();
