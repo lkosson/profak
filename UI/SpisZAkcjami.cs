@@ -10,24 +10,23 @@ class SpisZAkcjami<TRekord> : Siatka, IKontrolkaZKontekstem
 	protected readonly Wyszukiwarka<TRekord> wyszukiwarka;
 	protected readonly Podsumowanie podsumowanie;
 	protected AdapterAkcji? domyslnaAkcja;
-	protected readonly List<AkcjaNaSpisie<TRekord>> akcje;
 	protected readonly List<AdapterAkcji> adapteryAkcji;
 
 	public Spis<TRekord> Spis { get; }
-	public List<AkcjaNaSpisie<TRekord>> Akcje => akcje;
 	public Kontekst Kontekst { get => Spis.Kontekst; set => Spis.Kontekst = value; }
 	public int PreferowanaSzerokosc => Spis.PreferowanaSzerokosc + Spis.Margin.Right + panelAkcji.Width + panelAkcji.Margin.Right;
 
-	public SpisZAkcjami(Spis<TRekord> spis)
+	public SpisZAkcjami(Spis<TRekord> spis, IEnumerable<AkcjaNaSpisie<TRekord>> akcje)
 		: base([-1, 0], [-1])
 	{
-		akcje = new List<AkcjaNaSpisie<TRekord>>();
 		adapteryAkcji = [];
 		panelAkcji = new PanelAkcji();
 		wyszukiwarka = new Wyszukiwarka<TRekord>(spis);
 		podsumowanie = new Podsumowanie();
-
 		Spis = spis;
+
+		foreach (var akcja in akcje)
+			DodajAkcje(akcja);
 
 		spis.ZaznaczenieZmienione += spis_ZaznaczenieZmienione;
 		spis.RekordyZmienione += spis_RekordyZmienione;
@@ -73,6 +72,14 @@ class SpisZAkcjami<TRekord> : Siatka, IKontrolkaZKontekstem
 		Kontrolki.Menu(pozycje.ToArray(), wyswietl: true);
 	}
 
+	public void DodajAkcje(AkcjaNaSpisie<TRekord> akcja, bool naPoczatku = false)
+	{
+		var adapter = akcja.UtworzAdapter(Spis);
+		if (adapter.CzyDomyslna) domyslnaAkcja = adapter;
+		if (naPoczatku) adapteryAkcji.Insert(0, adapter);
+		else adapteryAkcji.Add(adapter);
+	}
+
 	protected override void OnGotFocus(EventArgs e)
 	{
 		base.OnGotFocus(e);
@@ -81,22 +88,8 @@ class SpisZAkcjami<TRekord> : Siatka, IKontrolkaZKontekstem
 
 	protected override void OnCreateControl()
 	{
-		foreach (var akcja in akcje)
-		{
-			var adapter = akcja.UtworzAdapter(Spis);
-			if (adapter.CzyDomyslna && domyslnaAkcja == null) domyslnaAkcja = adapter;
-			adapteryAkcji.Add(adapter);
-		}
-
 		panelAkcji.CzyGlownySpis = Spis.Kontekst.Dialog == null || Spis.Kontekst.Dialog is not DialogEdycji;
-		panelAkcji.SuspendLayout();
-		panelAkcji.DodajKontrolke(wyszukiwarka);
-		foreach (var adapter in adapteryAkcji)
-		{
-			panelAkcji.DodajAkcje(adapter);
-		}
-		panelAkcji.DodajKontrolke(podsumowanie);
-		panelAkcji.ResumeLayout();
+		panelAkcji.UstawUklad([wyszukiwarka], adapteryAkcji, [podsumowanie]);
 		base.OnCreateControl();
 	}
 }
@@ -108,9 +101,8 @@ class SpisZAkcjami<TRekord, TSpis> : SpisZAkcjami<TRekord>
 	public new TSpis Spis { get; }
 
 	public SpisZAkcjami(TSpis spis, IEnumerable<AkcjaNaSpisie<TRekord>>? akcje = null)
-		: base(spis)
+		: base(spis, akcje ?? [])
 	{
 		Spis = spis;
-		if (akcje != null) Akcje.AddRange(akcje);
 	}
 }

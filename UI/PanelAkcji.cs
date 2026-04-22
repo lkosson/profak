@@ -12,12 +12,21 @@ class PanelAkcji : Pionowo
 		TabIndex = 100;
 	}
 
-	public void DodajKontrolke(Control kontrolka)
+	public void UstawUklad(IEnumerable<TControl> naglowek, IEnumerable<AdapterAkcji> adaptery, IEnumerable<TControl> stopka)
+	{
+		SuspendLayout();
+		foreach (var kontrolka in naglowek) DodajKontrolke(kontrolka);
+		foreach (var adapter in adaptery) DodajAkcje(adapter);
+		foreach (var kontrolka in stopka) DodajKontrolke(kontrolka);
+		ResumeLayout();
+	}
+
+	private void DodajKontrolke(Control kontrolka)
 	{
 		DodajWiersz(kontrolka);
 	}
 
-	public void DodajAkcje(AdapterAkcji adapter)
+	private void DodajAkcje(AdapterAkcji adapter)
 	{
 		TButton przycisk;
 		if (adapter.Podrzedne.Count > 0)
