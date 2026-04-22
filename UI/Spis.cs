@@ -68,6 +68,8 @@ abstract partial class Spis<T> : Spis
 
 	public event Action? RekordyZmienione;
 	public event Action? ZaznaczenieZmienione;
+	public event Action? PokazMenuKontekstowe;
+	public event Func<Keys, Keys, bool>? ObsluzKlawisz;
 
 	public Ref<T> RekordPoczatkowy { get; set; }
 

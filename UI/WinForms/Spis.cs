@@ -230,11 +230,24 @@ abstract partial class Spis<T> : Spis
 		{
 			SelectionMode = DataGridViewSelectionMode.CellSelect;
 		}
-		if (e.Button == MouseButtons.Right && e.RowIndex == -1)
+		if (e.Button == MouseButtons.Right)
 		{
-			PokazKonfiguracjeSpisu();
+			if (e.RowIndex == -1) PokazKonfiguracjeSpisu();
+			else PokazMenuKontekstowe?.Invoke();
 		}
 		base.OnCellMouseDown(e);
+	}
+
+	protected override void OnCellDoubleClick(DataGridViewCellEventArgs e)
+	{
+		if (e.RowIndex != -1 && e.ColumnIndex != -1) ObsluzKlawisz?.Invoke(Keys.Enter, Keys.None);
+		base.OnCellDoubleClick(e);
+	}
+
+	protected override void OnKeyDown(KeyEventArgs e)
+	{
+		e.Handled = ObsluzKlawisz?.Invoke(e.KeyCode, e.Modifiers) ?? false;
+		base.OnKeyDown(e);
 	}
 
 	public override DataObject? GetClipboardContent()
