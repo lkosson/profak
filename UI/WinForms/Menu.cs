@@ -45,13 +45,13 @@ partial class Menu : TreeView
 	protected override void OnAfterExpand(TreeViewEventArgs e)
 	{
 		base.OnAfterExpand(e);
-		ZapiszStanPozycji(e.Node);
+		ZapiszStanPozycji(e.Node, zwinieta: false);
 	}
 
 	protected override void OnAfterCollapse(TreeViewEventArgs e)
 	{
 		base.OnAfterCollapse(e);
-		ZapiszStanPozycji(e.Node);
+		ZapiszStanPozycji(e.Node, zwinieta: true);
 	}
 
 	protected override void OnAfterSelect(TreeViewEventArgs e)
@@ -65,7 +65,7 @@ partial class Menu : TreeView
 		if (SelectedNode == wybrany) Wyswietl(wybrany);
 		else SelectedNode = wybrany;
 
-		ZapiszStanPozycji(SelectedNode /* dla spisu według kontrahentów/towarów/dat mogło się zmienić */);
+		ZapiszStanPozycji(SelectedNode /* dla spisu według kontrahentów/towarów/dat mogło się zmienić */, zwinieta: false, aktywna: true);
 	}
 
 	protected override void OnKeyPress(KeyPressEventArgs e)
