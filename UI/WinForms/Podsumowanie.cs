@@ -9,7 +9,6 @@ partial class Podsumowanie : LinkLabel
 {
 	public Podsumowanie()
 	{
-		AutoSize = true;
 		LinkBehavior = LinkBehavior.HoverUnderline;
 		Links.Clear();
 	}
@@ -53,6 +52,8 @@ partial class Podsumowanie : LinkLabel
 			Links.Clear();
 			foreach (var odnosnik in odnosniki)
 				Links.Add(odnosnik.poczatek, odnosnik.wartosc.Length, odnosnik.wartosc);
+			var nowyRozmiar = GetPreferredSize(default);
+			if (Height < nowyRozmiar.Height) Height = nowyRozmiar.Height;
 		}
 	}
 
