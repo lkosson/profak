@@ -43,12 +43,12 @@ class ImportCertyfikatuKSeFEdytor : Edytor
 		UstawZawartosc(uklad);
 	}
 
-	protected override void OnLoad(EventArgs e)
+	protected override void EdytorGotowy()
 	{
+		base.EdytorGotowy();
 		if (SrodowiskoKSeF == SrodowiskoKSeF.Test) linkLabelAplikacjaPodatnika.Text = "https://ap-test.ksef.mf.gov.pl/web/";
 		else if (SrodowiskoKSeF == SrodowiskoKSeF.Demo) linkLabelAplikacjaPodatnika.Text = "https://ap-demo.ksef.mf.gov.pl/web/";
 		else if (SrodowiskoKSeF == SrodowiskoKSeF.Prod) linkLabelAplikacjaPodatnika.Text = "https://ap.ksef.mf.gov.pl/web/";
-		base.OnLoad(e);
 	}
 
 	private void AplikacjaPodatnika()
