@@ -12,6 +12,7 @@ global using TNumericUpDown = Avalonia.Controls.NumericUpDown;
 global using TComboBox = Avalonia.Controls.ComboBox;
 global using TSuggestBox = Avalonia.Controls.AutoCompleteBox;
 global using TListBox = Avalonia.Controls.ListBox;
+global using TMenu = Avalonia.Controls.ContextMenu;
 global using TMenuItem = Avalonia.Controls.MenuItem;
 global using TDatePicker = Avalonia.Controls.DatePicker;
 global using TProgressBar = Avalonia.Controls.ProgressBar;
@@ -184,6 +185,14 @@ class KontrolkiAV
 		return autoCompleteBox;
 	}
 
+	public static TMenu Menu(TMenuItem[] pozycje, bool wyswietl = false)
+	{
+		var menu = new TMenu();
+		menu.ItemsSource = pozycje;
+		if (wyswietl) menu.Open();
+		return menu;
+	}
+
 	public static TMenuItem MenuItem(string etykieta, Action akcja)
 	{
 		var pozycja = new TMenuItem();
@@ -231,6 +240,11 @@ static class RozszerzeniaKontrolek
 	extension(TTextBox kontrolka)
 	{
 		public bool ReadOnly { get => kontrolka.IsReadOnly; set => kontrolka.IsReadOnly = value; }
+	}
+
+	extension(TLinkLabel kontrolka)
+	{
+		public string Text { get => kontrolka.Content as string; set => kontrolka.Content = value; }
 	}
 }
 #endif
