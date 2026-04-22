@@ -3,7 +3,7 @@ using System.Data;
 
 namespace ProFak.UI;
 
-class SpisZAkcjami<TRekord> : TableLayoutPanel, IKontrolkaZKontekstem
+class SpisZAkcjami<TRekord> : Siatka, IKontrolkaZKontekstem
 	where TRekord : Rekord<TRekord>
 {
 	protected readonly PanelAkcji panelAkcji;
@@ -19,6 +19,7 @@ class SpisZAkcjami<TRekord> : TableLayoutPanel, IKontrolkaZKontekstem
 	public int PreferowanaSzerokosc => Spis.PreferowanaSzerokosc + Spis.Margin.Right + panelAkcji.Width + panelAkcji.Margin.Right;
 
 	public SpisZAkcjami(Spis<TRekord> spis)
+		: base([-1, 0], [-1])
 	{
 		akcje = new List<AkcjaNaSpisie<TRekord>>();
 		adapteryAkcji = [];
@@ -28,22 +29,13 @@ class SpisZAkcjami<TRekord> : TableLayoutPanel, IKontrolkaZKontekstem
 
 		Spis = spis;
 
-		Dock = DockStyle.Fill;
-
-		ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-		ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
-		RowStyles.Add(new RowStyle(SizeType.Percent, 100));
-
-		Controls.Add(panelAkcji, 1, 0);
-
-		spis.Dock = DockStyle.Fill;
 		spis.ZaznaczenieZmienione += spis_ZaznaczenieZmienione;
 		spis.RekordyZmienione += spis_RekordyZmienione;
 		spis.CellDoubleClick += spis_CellDoubleClick;
 		spis.CellMouseDown += spis_CellMouseDown;
 		spis.KeyDown += spis_KeyDown;
-		Controls.Add(spis, 0, 0);
-		MinimumSize = new Size(panelAkcji.MinimumSize.Width + spis.MinimumSize.Width + panelAkcji.Margin.Left + spis.Margin.Right, panelAkcji.MinimumSize.Height + spis.MinimumSize.Height + Math.Max(panelAkcji.Margin.Top, spis.Margin.Top) + Math.Max(panelAkcji.Margin.Bottom, spis.Margin.Bottom));
+
+		DodajWiersz([spis, panelAkcji]);
 	}
 
 	private void spis_KeyDown(object? sender, KeyEventArgs e)
