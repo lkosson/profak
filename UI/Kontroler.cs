@@ -5,7 +5,7 @@ namespace ProFak.UI;
 
 partial class Kontroler<TModel>
 {
-	private readonly HashSet<Control> aktualizowaneKontrolki;
+	private readonly HashSet<TControl> aktualizowaneKontrolki;
 	private TModel model = default!;
 	private readonly List<Action> powiazania;
 	private bool modelZmieniony;
@@ -40,7 +40,7 @@ partial class Kontroler<TModel>
 	}
 
 	private void DodajPowiazanie<TKontrolka, TWartosc>(TKontrolka kontrolka, Func<TModel, TWartosc> pobierzWartosc, Action<TKontrolka, TWartosc> ustawWartosc)
-		where TKontrolka : Control
+		where TKontrolka : TControl
 	{
 		void Powiazanie() => AktualizujKontrolke(kontrolka, pobierzWartosc, ustawWartosc);
 		if (model != null) Powiazanie();
@@ -48,7 +48,7 @@ partial class Kontroler<TModel>
 	}
 
 	private void AktualizujModel<TWartosc, TKontrolka>(TKontrolka kontrolka, Action<TModel, TWartosc>? ustawWartosc, Func<TKontrolka, TWartosc> pobierzWartosc)
-		where TKontrolka : Control
+		where TKontrolka : TControl
 	{
 		if (model is null) return;
 		if (aktualizowaneKontrolki.Contains(kontrolka)) return;
@@ -66,7 +66,7 @@ partial class Kontroler<TModel>
 	}
 
 	private void AktualizujKontrolke<TWartosc, TKontrolka>(TKontrolka kontrolka, Func<TModel, TWartosc> pobierzWartosc, Action<TKontrolka, TWartosc> ustawWartosc)
-		where TKontrolka : Control
+		where TKontrolka : TControl
 	{
 		if (model is null) return;
 		if (aktualizowaneKontrolki.Contains(kontrolka)) return;
@@ -87,7 +87,7 @@ partial class Kontroler<TModel>
 		foreach (var powiazanie in powiazania) powiazanie();
 	}
 
-	public void Slownik<TEnum>(ComboBox comboBox, bool dopuscPuste = false) where TEnum : struct, Enum
+	public void Slownik<TEnum>(TComboBox comboBox, bool dopuscPuste = false) where TEnum : struct, Enum
 	{
 		var pozycje = new List<PozycjaListy<TEnum?>>();
 		if (dopuscPuste) pozycje.Add(new PozycjaListy<TEnum?> { Opis = "" });
@@ -98,12 +98,12 @@ partial class Kontroler<TModel>
 		Slownik(comboBox, pozycje.ToArray());
 	}
 
-	public void Slownik(ComboBox comboBox, string opisTrue, string opisFalse)
+	public void Slownik(TComboBox comboBox, string opisTrue, string opisFalse)
 	{
 		Slownik(comboBox, [new PozycjaListy<bool> { Wartosc = false, Opis = opisFalse }, new PozycjaListy<bool> { Wartosc = true, Opis = opisTrue }]);
 	}
 
-	public void Slownik<T>(ComboBox comboBox, params T[] wartosci)
+	public void Slownik<T>(TComboBox comboBox, params T[] wartosci)
 	{
 		Slownik(comboBox, wartosci.Select(wartosc => new PozycjaListy<T> { Wartosc = wartosc, Opis = wartosc?.ToString() ?? "" }).ToArray());
 	}

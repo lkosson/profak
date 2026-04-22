@@ -47,17 +47,17 @@ abstract class Edytor : UserControl
 		ResumeLayout(true);
 	}
 
-	public void Wymagane(TextBox textBox)
+	public void Wymagane(TTextBox textBox)
 	{
 		textBox.Validating += TextBox_Wymagane_Validating;
 	}
 
-	public void Wymagane(ComboBox comboBox)
+	public void Wymagane(TComboBox comboBox)
 	{
 		comboBox.Validating += ComboBox_Wymagane_Validating;
 	}
 
-	public void Walidacja(TextBox textBox, Func<string, string?> walidator, bool miekki)
+	public void Walidacja(TTextBox textBox, Func<string, string?> walidator, bool miekki)
 	{
 		textBox.Validating += (control, e) =>
 		{
@@ -77,7 +77,7 @@ abstract class Edytor : UserControl
 		};
 	}
 
-	public void Walidacja<T>(ComboBox comboBox, Func<T, string?> walidator, bool miekki)
+	public void Walidacja<T>(TComboBox comboBox, Func<T, string?> walidator, bool miekki)
 	{
 		comboBox.Validating += (control, e) =>
 		{
@@ -98,23 +98,9 @@ abstract class Edytor : UserControl
 		};
 	}
 
-	protected void Dymek(Control kontrolka, string tresc)
+	protected void Dymek(TControl kontrolka, string tresc)
 	{
 		toolTip.SetToolTip(kontrolka, tresc);
-	}
-
-	protected void PodswietlStrukture()
-	{
-		var kolory = new[] { Color.Transparent, Color.Brown, Color.Red, Color.Orange, Color.Yellow, Color.GreenYellow, Color.DarkGreen, Color.Blue, Color.Violet };
-
-		void Podswietl(Control kontrolka, int poziom)
-		{
-			kontrolka.BackColor = kolory[poziom];
-			foreach (Control podkontrolka in kontrolka.Controls)
-				Podswietl(podkontrolka, poziom + 1);
-		}
-
-		Podswietl(this, 0);
 	}
 
 	private void TextBox_Wymagane_Validating(object? sender, CancelEventArgs e)
