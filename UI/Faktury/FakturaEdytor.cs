@@ -112,11 +112,11 @@ partial class FakturaEdytor : Edytor<Faktura>
 		checkBoxReczneKwoty = Kontrolki.CheckBox("Kwota \"razem\" ustawiona ręcznie");
 		linkLabelUwagiPomoc = Kontrolki.LinkPomoc(PomocUwagiPubliczne);
 		textBoxNazwaBanku = Kontrolki.TextBox(podpowiedz: "Nazwa banku", szerokosc: 120);
-		menuKSeFGenerujXML = Kontrolki.PopupMenuItem("Generuj XML", GenerujXML);
-		menuKSeFZapiszXML = Kontrolki.PopupMenuItem("Zapisz XML", ZapiszXML);
-		menuKSeFZapiszWizualizacje = Kontrolki.PopupMenuItem("Zapisz PDF z wizualizacją", ZapiszWizualizacje);
-		menuKSeFKopiujOdnosnik = Kontrolki.PopupMenuItem("Kopiuj odnośnik do schowka", KopiujOdnosnik);
-		menuKSeFOtworzOdnosnik = Kontrolki.PopupMenuItem("Otwórz odnośnik w przeglądarce", OtworzOdnosnik);
+		menuKSeFGenerujXML = Kontrolki.MenuItem("Generuj XML", GenerujXML);
+		menuKSeFZapiszXML = Kontrolki.MenuItem("Zapisz XML", ZapiszXML);
+		menuKSeFZapiszWizualizacje = Kontrolki.MenuItem("Zapisz PDF z wizualizacją", ZapiszWizualizacje);
+		menuKSeFKopiujOdnosnik = Kontrolki.MenuItem("Kopiuj odnośnik do schowka", KopiujOdnosnik);
+		menuKSeFOtworzOdnosnik = Kontrolki.MenuItem("Otwórz odnośnik w przeglądarce", OtworzOdnosnik);
 		buttonDropDownKSeF = Kontrolki.ButtonMenu("e-Faktura", [menuKSeFGenerujXML, menuKSeFZapiszXML, menuKSeFZapiszWizualizacje, menuKSeFKopiujOdnosnik, menuKSeFOtworzOdnosnik]);
 
 		textBoxKSeFXML.Font = new Font("Consolas", 9);

@@ -94,21 +94,15 @@ class SpisZAkcjami<TRekord> : TableLayoutPanel, IKontrolkaZKontekstem
 
 	protected virtual ContextMenuStrip ZbudujMenuKontekstowe()
 	{
-		var menu = new ContextMenuStrip();
-		menu.ShowImageMargin = false;
+		var pozycje = new List<TMenuItem>();
 		foreach (var adapter in adapteryAkcji.OrderBy(e => e.CzyDomyslna ? 0 : 1))
 		{
 			if (adapter.CzyGlobalna) continue;
 			if (!adapter.CzyDostepna) continue;
-			var pozycja = new ToolStripMenuItem();
-			pozycja.Text = adapter.NazwaBezSkrotu;
-			pozycja.ShortcutKeyDisplayString = adapter.Skrot;
-			pozycja.Click += delegate
-			{
-				adapter.Uruchom();
-			};
-			menu.Items.Add(pozycja);
+			var pozycja = Kontrolki.MenuItem(adapter.NazwaBezSkrotu, adapter.Uruchom, skrot: adapter.Skrot);
+			pozycje.Add(pozycja);
 		}
+		var menu = Kontrolki.Menu(pozycje.ToArray());
 		return menu;
 	}
 

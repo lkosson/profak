@@ -25,7 +25,7 @@ class PanelAkcji : Pionowo
 			var pozycje = new List<TMenuItem>();
 			foreach (var podrzedna in adapter.Podrzedne)
 			{
-				var pozycja = Kontrolki.PopupMenuItem(Wyglad.NazwaAkcji(podrzedna), podrzedna.Uruchom);
+				var pozycja = Kontrolki.MenuItem(Wyglad.NazwaAkcji(podrzedna), podrzedna.Uruchom);
 				pozycja.Dock = DockStyle.Fill;
 				pozycja.TextAlign = ContentAlignment.MiddleLeft;
 				pozycje.Add(pozycja);
