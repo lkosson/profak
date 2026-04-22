@@ -185,7 +185,7 @@ class KontrolkiAV
 		return autoCompleteBox;
 	}
 
-	public static TMenuItem PopupMenuItem(string etykieta, Action akcja)
+	public static TMenuItem MenuItem(string etykieta, Action akcja)
 	{
 		var pozycja = new TMenuItem();
 		pozycja.Header = etykieta;

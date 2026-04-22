@@ -12,6 +12,7 @@ global using TNumericUpDown = ProFak.UI.NumericUpDownDPI;
 global using TComboBox = ProFak.UI.ComboBoxFix;
 global using TSuggestBox = ProFak.UI.ComboBoxFix;
 global using TListBox = System.Windows.Forms.ListBox;
+global using TMenu = System.Windows.Forms.ContextMenuStrip;
 global using TMenuItem = System.Windows.Forms.ToolStripMenuItem;
 global using TDatePicker = ProFak.UI.DateTimePickerFix;
 global using TProgressBar = System.Windows.Forms.ProgressBar;
@@ -92,9 +93,7 @@ class KontrolkiWF
 
 	public static TButton ButtonMenu(string tekst, TMenuItem[] pozycje)
 	{
-		var menu = new ContextMenuStrip();
-		menu.ShowImageMargin = false;
-		menu.Items.AddRange(pozycje);
+		var menu = Menu(pozycje);
 		var button = new TButtonDropDown();
 		button.Text = tekst + "    ";
 		button.AutoSize = true;
@@ -206,10 +205,19 @@ class KontrolkiWF
 		return comboBox;
 	}
 
-	public static TMenuItem PopupMenuItem(string etykieta, Action akcja)
+	public static TMenu Menu(TMenuItem[] pozycje)
+	{
+		var menu = new TMenu();
+		menu.ShowImageMargin = false;
+		menu.Items.AddRange(pozycje);
+		return menu;
+	}
+
+	public static TMenuItem MenuItem(string etykieta, Action akcja, string? skrot = null)
 	{
 		var pozycja = new TMenuItem();
 		pozycja.Text = etykieta;
+		if (!String.IsNullOrEmpty(skrot)) pozycja.ShortcutKeyDisplayString = skrot;
 		pozycja.Click += BezpiecznaAkcja(akcja);
 		return pozycja;
 	}
