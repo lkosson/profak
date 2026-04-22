@@ -16,7 +16,6 @@ global using TMenuItem = Avalonia.Controls.MenuItem;
 global using TDatePicker = Avalonia.Controls.DatePicker;
 global using TProgressBar = Avalonia.Controls.ProgressBar;
 global using TContextMenu = Avalonia.Controls.ContextMenu;
-global using TTreeNode = Avalonia.Controls.TreeNode;
 using Avalonia.Layout;
 using HorizontalAlignment = Avalonia.Layout.HorizontalAlignment;
 using Avalonia.Controls;
@@ -207,13 +206,19 @@ class KontrolkiAV
 		return progressBar;
 	}
 
-	public TTreeNode TreeNode(string tekst, string? nazwa = null, TTreeNode[]? podrzedne = null)
+	public TTreeNode TreeNode(string tekst, TTreeNode[]? podrzedne = null)
 	{
-		var wezel = new TTreeNode(tekst);
-		if (!String.IsNullOrEmpty(nazwa)) wezel.Name = nazwa;
-		if (podrzedne != null) wezel.Nodes.AddRange(podrzedne);
+		var wezel = new TTreeNode();
+		wezel.Text = tekst;
+		if (podrzedne != null) wezel.Children.AddRange(podrzedne);
 		return wezel;
 	}
+}
+
+class TTreeNode
+{
+	public string Text { get; set; } = "";
+	public List<TTreeNode> Children { get; set; } = [];
 }
 
 static class RozszerzeniaKontrolek
