@@ -23,6 +23,7 @@ using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Interactivity;
 using System.Globalization;
+using System.Collections.ObjectModel;
 
 namespace ProFak.UI;
 
@@ -217,11 +218,18 @@ class KontrolkiAV
 		return progressBar;
 	}
 
-	public TTreeNode TreeNode(string tekst, TTreeNode[]? podrzedne = null)
+	public static TTreeNode TreeNode(string tekst, TTreeNode[]? podrzedne = null)
 	{
 		var wezel = new TTreeNode();
 		wezel.Text = tekst;
-		if (podrzedne != null) wezel.Children.AddRange(podrzedne);
+		if (podrzedne != null)
+		{
+			foreach (var podrzedny in podrzedne)
+			{
+				podrzedny.Parent = wezel;
+				wezel.Nodes.Add(podrzedny);
+			}
+		}
 		return wezel;
 	}
 }
@@ -229,7 +237,11 @@ class KontrolkiAV
 class TTreeNode
 {
 	public string Text { get; set; } = "";
-	public List<TTreeNode> Children { get; set; } = [];
+	public string FullPath => Parent == null ? Text : Parent.FullPath + "\\" + Text;
+	public TTreeNode? Parent { get; set; }
+	// TODO Avalonia
+	public Color ForeColor { get; set; }
+	public ObservableCollection<TTreeNode> Nodes { get; set; } = [];
 }
 
 static class RozszerzeniaKontrolek
