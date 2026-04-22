@@ -41,7 +41,7 @@ partial class Menu
 		return wezel;
 	}
 
-	private void ZapiszStanPozycji(TreeNode? treeNode, bool ukryta = false)
+	private void ZapiszStanPozycji(TTreeNode? treeNode, bool ukryta = false, bool zwinieta = false, bool aktywna = false)
 	{
 		if (!menuGotowe) return;
 		if (treeNode == null) return;
@@ -50,53 +50,52 @@ partial class Menu
 		using var transakcja = kontekst.Transakcja();
 		var stan = kontekst.Baza.StanyMenu.FirstOrDefault(e => e.Pozycja == treeNode.FullPath);
 		if (stan == null) stan = new StanMenu { Pozycja = treeNode.FullPath };
-		stan.CzyZwinieta = !treeNode.IsExpanded;
-		stan.CzyAktywna = treeNode.IsSelected;
+		stan.CzyZwinieta = zwinieta;
+		stan.CzyAktywna = aktywna;
 		stan.CzyUkryta = ukryta || treeNode.ForeColor == SystemColors.GrayText;
 		if (stan.CzyAktywna)
 		{
-			var aktywne = kontekst.Baza.StanyMenu.Where(e => e.CzyAktywna).ToList();
-			foreach (var aktywna in aktywne)
+			var stareAktywne = kontekst.Baza.StanyMenu.Where(e => e.CzyAktywna).ToList();
+			foreach (var staraAktywna in stareAktywne)
 			{
-				aktywna.CzyAktywna = false;
-				kontekst.Baza.Zapisz(aktywna);
+				staraAktywna.CzyAktywna = false;
+				kontekst.Baza.Zapisz(staraAktywna);
 			}
 		}
 		kontekst.Baza.Zapisz(stan);
 		transakcja.Zatwierdz();
 	}
 
-	private void PokazMenuKontekstowe(TreeNode wezel)
+	private void PokazMenuKontekstowe(TTreeNode wezel)
 	{
-		var menuKontekstowe = new ContextMenuStrip();
-		var menuPokaz = new ToolStripMenuItem("Pokaż");
-		var menuUkryj = new ToolStripMenuItem("Ukryj");
-		var menuPokazUkryte = new ToolStripMenuItem("Pokaż ukryte");
-		menuPokaz.Click += delegate
+		void Pokaz()
 		{
 			ZapiszStanPozycji(wezel, ukryta: false);
 			wezel.ForeColor = SystemColors.ControlText;
-		};
-		menuUkryj.Click += delegate
+		}
+
+		void Ukryj()
 		{
 			ZapiszStanPozycji(wezel, ukryta: true);
 			if (wezel.Parent == null) Nodes.Remove(wezel);
 			else wezel.Parent.Nodes.Remove(wezel);
-		};
-		menuPokazUkryte.Click += delegate
+		}
+
+		void PokazUkryte()
 		{
 			Zbuduj(pokazUkryte: true);
-		};
-		if (wezel.ForeColor == SystemColors.GrayText) menuKontekstowe.Items.Add(menuPokaz);
-		else menuKontekstowe.Items.Add(menuUkryj);
-		menuKontekstowe.Items.Add(menuPokazUkryte);
-		menuKontekstowe.Closed += delegate
-		{
-			BeginInvoke(delegate { menuKontekstowe.Dispose(); });
-		};
-		menuKontekstowe.Show(Cursor.Position);
-	}
+		}
 
+		var menuKontekstowe = new ContextMenuStrip();
+		var menuPokaz = Kontrolki.MenuItem("Pokaż", Pokaz);
+		var menuUkryj = Kontrolki.MenuItem("Ukryj", Ukryj);
+		var menuPokazUkryte = Kontrolki.MenuItem("Pokaż ukryte", PokazUkryte);
+		var ukryty = wezel.ForeColor == SystemColors.GrayText;
+		Kontrolki.Menu([ukryty ? menuPokaz : menuUkryj, menuPokazUkryte], wyswietl: true);
+
+	}
+	// TODO Avalonia
+#if WINFORMS
 	private void Rozwin(bool pokazUkryte = false)
 	{
 		using var kontekst = new Kontekst();
@@ -130,4 +129,5 @@ partial class Menu
 			else wezel.Remove();
 		}
 	}
+#endif
 }
