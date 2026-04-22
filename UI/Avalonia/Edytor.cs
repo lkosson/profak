@@ -14,6 +14,11 @@ abstract class Edytor : Avalonia.Controls.Panel
 	protected override void OnAttachedToVisualTree(Avalonia.VisualTreeAttachmentEventArgs e)
 	{
 		base.OnAttachedToVisualTree(e);
+		EdytorGotowy();
+	}
+
+	protected virtual void EdytorGotowy()
+	{
 		var topLevel = TopLevel.GetTopLevel(this);
 		if (topLevel is DialogEdycji dialog) dialog.Closing += Dialog_Closing;
 	}
