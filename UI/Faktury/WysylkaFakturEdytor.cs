@@ -48,8 +48,9 @@ class WysylkaFakturEdytor : Edytor
 		UstawZawartosc(uklad);
 	}
 
-	protected override void OnLoad(EventArgs e)
+	protected override void EdytorGotowy()
 	{
+		base.EdytorGotowy();
 		var konfiguracja = Kontekst.Baza.Konfiguracja.First();
 		if (konfiguracja.CzyDomyslna) OknoKomunikatu.Ostrzezenie("Przed wysłaniem wiadomości należy uzupełnić parametry połączenia z serwerem pocztowym dostępne w menu \"Serwisowe\" » \"Konfiguracja\".");
 		szablonAdresat = "[NABYWCA-NAZWA] <[NABYWCA-EMAIL]>";
@@ -61,7 +62,6 @@ class WysylkaFakturEdytor : Edytor
 		pozycje.AddRange(Faktury.OrderBy(e => e.DataWystawienia).ThenBy(e => e.Id));
 		comboBoxFaktura.DisplayMember = "Numer";
 		comboBoxFaktura.DataSource = pozycje;
-		base.OnLoad(e);
 	}
 
 	private void ZmienionaFaktura()
