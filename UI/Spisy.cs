@@ -11,7 +11,7 @@ class Spisy
 		using var nowyKontekst = new Kontekst(kontekst);
 		using var transakcja = nowyKontekst.Transakcja();
 		using var dialog = new Dialog(tytul, spis, nowyKontekst);
-		spis.Akcje.Insert(0, wybor);
+		spis.DodajAkcje(wybor, naPoczatku: true);
 		spis.Spis.Kontekst = nowyKontekst;
 		spis.Spis.RekordPoczatkowy = biezacaWartosc;
 		dialog.Size = new Size(Math.Min(Math.Max(spis.PreferowanaSzerokosc, 800), 1200), 450);
