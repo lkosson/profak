@@ -31,28 +31,12 @@ class SpisZAkcjami<TRekord> : Siatka, IKontrolkaZKontekstem
 
 		spis.ZaznaczenieZmienione += spis_ZaznaczenieZmienione;
 		spis.RekordyZmienione += spis_RekordyZmienione;
-		spis.CellDoubleClick += spis_CellDoubleClick;
-		spis.CellMouseDown += spis_CellMouseDown;
-		spis.KeyDown += spis_KeyDown;
+		spis.PokazMenuKontekstowe += PokazMenuKontekstowe;
+		spis.ObsluzKlawisz += ObsluzKlawisz;
 		Controls.Add(spis, 0, 0);
 		MinimumSize = new Size(panelAkcji.MinimumSize.Width + spis.MinimumSize.Width + panelAkcji.Margin.Left + spis.Margin.Right, Math.Max(panelAkcji.MinimumSize.Height, spis.MinimumSize.Height) + Math.Max(panelAkcji.Margin.Top, spis.Margin.Top) + Math.Max(panelAkcji.Margin.Bottom, spis.Margin.Bottom));
 
 		DodajWiersz([spis, panelAkcji]);
-	}
-
-	private void spis_KeyDown(object? sender, KeyEventArgs e)
-	{
-		e.Handled = ObsluzKlawisz(e.KeyCode, e.Modifiers);
-	}
-
-	private void spis_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
-	{
-		if (e.RowIndex != -1 && e.ColumnIndex != -1 && domyslnaAkcja != null) domyslnaAkcja.Uruchom();
-	}
-
-	private void spis_CellMouseDown(object? sender, DataGridViewCellMouseEventArgs e)
-	{
-		if (e.Button == MouseButtons.Right && e.RowIndex != -1) PokazMenuKontekstowe();
 	}
 
 	private void spis_ZaznaczenieZmienione()
