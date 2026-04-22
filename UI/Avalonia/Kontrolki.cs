@@ -193,10 +193,12 @@ class KontrolkiAV
 		return menu;
 	}
 
-	public static TMenuItem MenuItem(string etykieta, Action akcja)
+	public static TMenuItem MenuItem(string etykieta, Action akcja, string? skrot = null)
 	{
 		var pozycja = new TMenuItem();
 		pozycja.Header = etykieta;
+		// TODO Avalonia
+		//pozycja.InputGesture = skrot;
 		pozycja.Click += BezpiecznaAkcja(akcja);
 		return pozycja;
 	}
