@@ -62,16 +62,6 @@ class SpisZAkcjami<TRekord> : Siatka, IKontrolkaZKontekstem
 
 	private void PokazMenuKontekstowe()
 	{
-		var menu = ZbudujMenuKontekstowe();
-		menu.Closed += delegate
-		{
-			BeginInvoke(delegate { menu.Dispose(); });
-		};
-		menu.Show(Cursor.Position);
-	}
-
-	protected virtual ContextMenuStrip ZbudujMenuKontekstowe()
-	{
 		var pozycje = new List<TMenuItem>();
 		foreach (var adapter in adapteryAkcji.OrderBy(e => e.CzyDomyslna ? 0 : 1))
 		{
@@ -80,8 +70,7 @@ class SpisZAkcjami<TRekord> : Siatka, IKontrolkaZKontekstem
 			var pozycja = Kontrolki.MenuItem(adapter.NazwaBezSkrotu, adapter.Uruchom, skrot: adapter.Skrot);
 			pozycje.Add(pozycja);
 		}
-		var menu = Kontrolki.Menu(pozycje.ToArray());
-		return menu;
+		Kontrolki.Menu(pozycje.ToArray(), wyswietl: true);
 	}
 
 	protected override void OnGotFocus(EventArgs e)

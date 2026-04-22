@@ -205,11 +205,19 @@ class KontrolkiWF
 		return comboBox;
 	}
 
-	public static TMenu Menu(TMenuItem[] pozycje)
+	public static TMenu Menu(TMenuItem[] pozycje, bool wyswietl = false)
 	{
 		var menu = new TMenu();
 		menu.ShowImageMargin = false;
 		menu.Items.AddRange(pozycje);
+		if (wyswietl)
+		{
+			menu.Closed += delegate
+			{
+				menu.BeginInvoke(delegate { menu.Dispose(); });
+			};
+			menu.Show(Cursor.Position);
+		}
 		return menu;
 	}
 
