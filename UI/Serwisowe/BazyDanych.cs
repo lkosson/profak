@@ -6,7 +6,8 @@ namespace ProFak.UI;
 class BazyDanych : Edytor, IKontrolkaZKontekstem
 {
 	public Kontekst Kontekst { get; set; } = default!;
-
+	//TODO Avalonia
+#if WINFORMS
 	private bool gotowy;
 
 	private readonly TTextBox textBoxRozmiar;
@@ -203,4 +204,5 @@ class BazyDanych : Edytor, IKontrolkaZKontekstem
 		tx.Zatwierdz();
 		OknoKomunikatu.Informacja("Dane programu zostały wczytane.");
 	}
+#endif
 }

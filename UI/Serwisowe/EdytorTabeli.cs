@@ -5,7 +5,8 @@ namespace ProFak.UI;
 partial class EdytorTabeli : Edytor, IKontrolkaZKontekstem
 {
 	public Kontekst Kontekst { get; set; } = default!;
-
+	// TODO Avalonia
+#if WINFORMS
 	private readonly Button buttonWczytaj;
 	private readonly TextBox textBoxStatus;
 	private readonly Spis dataGridViewWynik;
@@ -144,4 +145,5 @@ partial class EdytorTabeli : Edytor, IKontrolkaZKontekstem
 			}
 		}
 	}
+#endif
 }
