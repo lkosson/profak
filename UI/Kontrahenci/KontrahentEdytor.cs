@@ -20,7 +20,7 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 	private readonly TTextBox textBoxUwagiWewnetrzne;
 	private readonly TComboBox comboBoxStan;
 	private readonly TCheckBox checkBoxTP;
-	private readonly TComboBox comboBoxKodUrzedu;
+	private readonly TSuggestBox comboBoxKodUrzedu;
 	private readonly TTextBox textBoxOsobaFizycznaImie;
 	private readonly TTextBox textBoxOsobaFizycznaNazwisko;
 	private readonly TButton buttonUrzadSkarbowy;
@@ -38,11 +38,11 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 	private readonly TButton buttonCertyfikatKSeF;
 	private readonly TTextBox textBoxNazwaBanku;
 	private readonly TButton buttonWaluta;
-	private readonly TComboBox comboBoxWaluta;
+	private readonly TSuggestBox comboBoxWaluta;
 	private readonly TCheckBox checkBoxImportKSeF;
-	private readonly TabPage tabPageFakturySprzedazy;
-	private readonly TabPage tabPageFakturyZakupu;
-	private readonly TabPage tabPagePodatki;
+	private readonly TTabPage tabPageFakturySprzedazy;
+	private readonly TTabPage tabPageFakturyZakupu;
+	private readonly TTabPage tabPagePodatki;
 	private readonly Zakladki zakladki;
 
 	public KontrahentEdytor()
@@ -269,12 +269,12 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 
 		if (Rekord.CzyPodmiot)
 		{
-			zakladki.TabPages.Remove(tabPageFakturySprzedazy);
-			zakladki.TabPages.Remove(tabPageFakturyZakupu);
+			zakladki.Usun(tabPageFakturySprzedazy);
+			zakladki.Usun(tabPageFakturyZakupu);
 		}
 		else
 		{
-			zakladki.TabPages.Remove(tabPagePodatki);
+			zakladki.Usun(tabPagePodatki);
 		}
 	}
 
