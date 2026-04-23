@@ -240,7 +240,7 @@ class TTreeNode
 	public string FullPath => Parent == null ? Text : Parent.FullPath + "\\" + Text;
 	public TTreeNode? Parent { get; set; }
 	// TODO Avalonia
-	public Color ForeColor { get; set; }
+	public System.Drawing.Color ForeColor { get; set; }
 	public ObservableCollection<TTreeNode> Nodes { get; set; } = [];
 }
 
