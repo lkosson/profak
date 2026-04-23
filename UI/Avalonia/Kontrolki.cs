@@ -205,9 +205,10 @@ class KontrolkiAV
 		return pozycja;
 	}
 
-	public static TListBox ListBox(Action? zmienionaWartosc = null)
+	public static TListBox ListBox(Action? zmienionaWartosc = null, object[]? wartosci = null)
 	{
-		var listBox= new TListBox();
+		var listBox = new TListBox();
+		if (wartosci != null) foreach (var wartosc in wartosci) listBox.Items.Add(wartosc);
 		if (zmienionaWartosc != null) listBox.SelectionChanged += BezpiecznaAkcja(zmienionaWartosc);
 		return listBox;
 	}
@@ -250,6 +251,12 @@ static class RozszerzeniaKontrolek
 	extension(TControl kontrolka)
 	{
 		public bool Enabled { get => kontrolka.IsEnabled; set => kontrolka.IsEnabled = value; }
+		public bool Visible { get => kontrolka.IsVisible; set => kontrolka.IsVisible = value; }
+	}
+
+	extension(TButton kontrolka)
+	{
+		public string Text { get => kontrolka.Content is string text ? text : ""; set => kontrolka.Content = value; }
 	}
 
 	extension(TTextBox kontrolka)
@@ -257,9 +264,19 @@ static class RozszerzeniaKontrolek
 		public bool ReadOnly { get => kontrolka.IsReadOnly; set => kontrolka.IsReadOnly = value; }
 	}
 
+	extension(TCheckBox kontrolka)
+	{
+		public bool Checked { get => kontrolka.IsChecked ?? false; set => kontrolka.IsChecked = value; }
+	}
+
+	extension(TRadioButton kontrolka)
+	{
+		public bool Checked { get => kontrolka.IsChecked ?? false; set => kontrolka.IsChecked = value; }
+	}
+
 	extension(TLinkLabel kontrolka)
 	{
-		public string Text { get => kontrolka.Content as string; set => kontrolka.Content = value; }
+		public string Text { get => kontrolka.Content is string text ? text : ""; set => kontrolka.Content = value; }
 	}
 }
 #endif

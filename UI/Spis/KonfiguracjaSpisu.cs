@@ -7,20 +7,20 @@ partial class KonfiguracjaSpisu : Edytor
 {
 	private bool trwaZmianaWartosci;
 
-	private readonly ListBox listBoxKolumny;
-	private readonly TextBox textBoxKolumna;
-	private readonly NumericUpDown numericUpDownSzerokosc;
-	private readonly NumericUpDown numericUpDownKolejnosc;
-	private readonly CheckBox checkBoxUkryta;
-	private readonly CheckBox checkBoxRozciagnij;
-	private readonly NumericUpDown numericUpDownPoziomSortowania;
-	private readonly CheckBox checkBoxPrzywroc;
+	private readonly TListBox listBoxKolumny;
+	private readonly TTextBox textBoxKolumna;
+	private readonly TNumericUpDown numericUpDownSzerokosc;
+	private readonly TNumericUpDown numericUpDownKolejnosc;
+	private readonly TCheckBox checkBoxUkryta;
+	private readonly TCheckBox checkBoxRozciagnij;
+	private readonly TNumericUpDown numericUpDownPoziomSortowania;
+	private readonly TCheckBox checkBoxPrzywroc;
 
 	public bool CzyPrzywroc => checkBoxPrzywroc.Checked;
 
-	public KonfiguracjaSpisu()
+	public KonfiguracjaSpisu(IEnumerable<KolumnaSpisu> konfiguracjaKolumn)
 	{
-		listBoxKolumny = Kontrolki.ListBox(zmienionaWartosc: WybranaKolumna);
+		listBoxKolumny = Kontrolki.ListBox(zmienionaWartosc: WybranaKolumna, konfiguracjaKolumn.Where(e => e.Kolejnosc >= 0).OrderBy(e => e.Kolejnosc).ToArray());
 		textBoxKolumna = Kontrolki.TextBox();
 		numericUpDownSzerokosc = Kontrolki.NumericUpDown(poPrzecinku: 0, zmienionaWartosc: ZmienionaSzerokosc);
 		numericUpDownKolejnosc = Kontrolki.NumericUpDown(poPrzecinku: 0, zmienionaWartosc: ZmienionaKolejnosc);
@@ -45,12 +45,6 @@ partial class KonfiguracjaSpisu : Edytor
 		uklad.DodajWiersz([listBoxKolumny, parametry]);
 
 		UstawZawartosc(uklad);
-	}
-
-	public KonfiguracjaSpisu(IEnumerable<KolumnaSpisu> konfiguracjaKolumn)
-		: this()
-	{
-		listBoxKolumny.DataSource = konfiguracjaKolumn.Where(e => e.Kolejnosc >= 0).OrderBy(e => e.Kolejnosc).ToList();
 	}
 
 	private void ZmienWartosci(Action zmianaWartosci)
