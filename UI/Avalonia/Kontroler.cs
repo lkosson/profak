@@ -58,6 +58,12 @@ partial class Kontroler<TModel>
 		DodajPowiazanie(comboBox, pobierzWartosc, (comboBox, wartosc) => { if (comboBox.SelectedIndex != -1) comboBox.SelectedIndex = -1; if (wartosc != null) comboBox.SelectedValue = wartosc; });
 	}
 
+	public void Powiazanie<TWartosc>(TSuggestBox suggestBox, Func<TModel, TWartosc> pobierzWartosc, Action<TModel, TWartosc>? ustawWartosc, Action? wartoscZmieniona = null)
+	{
+		suggestBox.SelectionChanged += delegate { AktualizujModel(suggestBox, (model, wartosc) => ustawWartosc?.Invoke(model, wartosc!), suggestBox => suggestBox.SelectedItem is TWartosc wartosc ? wartosc : default); wartoscZmieniona?.Invoke(); };
+		DodajPowiazanie(suggestBox, pobierzWartosc, (suggestBox, wartosc) => { suggestBox.SelectedItem = wartosc; });
+	}
+
 	private void Slownik<T>(TComboBox comboBox, PozycjaListy<T>[] wartosci)
 	{
 		comboBox.SelectedValueBinding = CompiledBinding.Create<PozycjaListy<T>, T>(pozycja => pozycja.Wartosc!);
