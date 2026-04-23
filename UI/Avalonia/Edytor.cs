@@ -3,11 +3,16 @@ using Avalonia.Controls;
 
 namespace ProFak.UI;
 
-abstract class Edytor : Avalonia.Controls.Panel
+abstract class Edytor : Avalonia.Controls.Panel, IDisposable
 {
 	public virtual bool CzyModelZmieniony => false;
+	protected int DeviceDpi => 96;
 
 	public Edytor()
+	{
+	}
+
+	void IDisposable.Dispose()
 	{
 	}
 
@@ -55,6 +60,11 @@ abstract class Edytor : Avalonia.Controls.Panel
 	{
 		//TODO Avalonia
 		//comboBox.Validating += ComboBox_Wymagane_Validating;
+	}
+
+	public void Wymagane(TSuggestBox suggestBox)
+	{
+		//TODO Avalonia
 	}
 
 	public void Walidacja(TTextBox textBox, Func<string, string?> walidator, bool miekki)
