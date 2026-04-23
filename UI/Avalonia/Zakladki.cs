@@ -11,7 +11,7 @@ class ZakladkiAV : Avalonia.Controls.TabControl
 	{
 	}
 
-	public TabItem Dodaj(string etykieta, TControl zawartosc)
+	public TTabPage Dodaj(string etykieta, TControl zawartosc)
 	{
 		if (Wyglad.SkrotyKlawiaturoweZakladek)
 		{
@@ -19,7 +19,7 @@ class ZakladkiAV : Avalonia.Controls.TabControl
 			etykieta += $"   [ᴄᴛʀʟ-ғ{num}]";
 		}
 
-		var tabItem = new TabItem();
+		var tabItem = new TTabPage();
 		tabItem.Header = etykieta;
 		tabItem.Content = zawartosc;
 		return tabItem;
