@@ -3,7 +3,7 @@ namespace ProFak.UI;
 
 class ZakladkiWF : TabControl
 {
-	public TabPage Dodaj(string etykieta, TControl zawartosc)
+	public TTabPage Dodaj(string etykieta, TControl zawartosc)
 	{
 		if (Wyglad.SkrotyKlawiaturoweZakladek)
 		{
@@ -13,7 +13,7 @@ class ZakladkiWF : TabControl
 		var wymiary = zawartosc.Size;
 		var szerokosc = wymiary.Width + 20; // Dla DeklaracjaVatEdytor i Konfiguracja - Padding zakładki, ramka i margines kontrolki
 		var wysokosc = wymiary.Height;
-		var tabPage = new TabPage();
+		var tabPage = new TTabPage();
 		tabPage.Text = etykieta;
 		tabPage.Padding = new Padding(3);
 		tabPage.UseVisualStyleBackColor = true;
