@@ -22,7 +22,13 @@ class ZakladkiAV : Avalonia.Controls.TabControl
 		var tabItem = new TTabPage();
 		tabItem.Header = etykieta;
 		tabItem.Content = zawartosc;
+		Items.Add(tabItem);
 		return tabItem;
+	}
+
+	public void Usun(TTabPage zakladka)
+	{
+		Items.Remove(zakladka);
 	}
 
 	protected override void OnLoaded(RoutedEventArgs e)

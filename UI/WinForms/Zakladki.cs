@@ -27,6 +27,11 @@ class ZakladkiWF : TabControl
 		return tabPage;
 	}
 
+	public void Usun(TTabPage zakladka)
+	{
+		TabPages.Remove(zakladka);
+	}
+
 	protected override void OnCreateControl()
 	{
 		base.OnCreateControl();
