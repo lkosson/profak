@@ -3,7 +3,7 @@ using System.Data;
 
 namespace ProFak.UI;
 
-class SpisZAkcjami<TRekord> : Siatka, IKontrolkaZKontekstem
+partial class SpisZAkcjami<TRekord> : Siatka, IKontrolkaZKontekstem
 	where TRekord : Rekord<TRekord>
 {
 	protected readonly PanelAkcji panelAkcji;
@@ -14,7 +14,7 @@ class SpisZAkcjami<TRekord> : Siatka, IKontrolkaZKontekstem
 
 	public Spis<TRekord> Spis { get; }
 	public Kontekst Kontekst { get => Spis.Kontekst; set => Spis.Kontekst = value; }
-	public int PreferowanaSzerokosc => Spis.PreferowanaSzerokosc + Spis.Margin.Right + panelAkcji.Width + panelAkcji.Margin.Right;
+	public int PreferowanaSzerokosc => (int)(Spis.PreferowanaSzerokosc + Spis.Margin.Right + panelAkcji.Width + panelAkcji.Margin.Right);
 
 	public SpisZAkcjami(Spis<TRekord> spis, IEnumerable<AkcjaNaSpisie<TRekord>> akcje)
 		: base([-1, 0], [-1])
@@ -51,7 +51,7 @@ class SpisZAkcjami<TRekord> : Siatka, IKontrolkaZKontekstem
 
 	protected virtual bool ObsluzKlawisz(Keys klawisz, Keys modyfikatory)
 	{
-		if (klawisz == Keys.Escape) { Dispose(); return true; }
+		if (klawisz == Keys.Escape) { Zamknij(); return true; }
 		else if (klawisz == Keys.F3 || (klawisz == Keys.F && modyfikatory == Keys.Control)) { wyszukiwarka.Focus(); return true; }
 		else if (klawisz == Keys.Home && Spis.Rekordy.FirstOrDefault() is TRekord pierwszyRekord) { Spis.WybraneRekordy = [pierwszyRekord]; return true; }
 		else if (klawisz == Keys.End && Spis.Rekordy.LastOrDefault() is TRekord ostatniRekord) { Spis.WybraneRekordy = [ostatniRekord]; return true; }
@@ -78,19 +78,6 @@ class SpisZAkcjami<TRekord> : Siatka, IKontrolkaZKontekstem
 		if (adapter.CzyDomyslna) domyslnaAkcja = adapter;
 		if (naPoczatku) adapteryAkcji.Insert(0, adapter);
 		else adapteryAkcji.Add(adapter);
-	}
-
-	protected override void OnGotFocus(EventArgs e)
-	{
-		base.OnGotFocus(e);
-		Spis.Focus();
-	}
-
-	protected override void OnCreateControl()
-	{
-		panelAkcji.CzyGlownySpis = Spis.Kontekst.Dialog == null || Spis.Kontekst.Dialog is not DialogEdycji;
-		panelAkcji.UstawUklad([wyszukiwarka], adapteryAkcji, [podsumowanie]);
-		base.OnCreateControl();
 	}
 }
 
