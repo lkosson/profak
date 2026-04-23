@@ -7,9 +7,9 @@ class EkranSQL : Edytor, IKontrolkaZKontekstem
 {
 	public Kontekst Kontekst { get; set; } = default!;
 
-	private readonly TextBox textBoxSQL;
-	private readonly Button buttonUruchom;
-	private readonly TextBox textBoxStatus;
+	private readonly TTextBox textBoxSQL;
+	private readonly TButton buttonUruchom;
+	private readonly TTextBox textBoxStatus;
 	private readonly DataGridView dataGridViewWynik;
 
 	public EkranSQL()

@@ -231,11 +231,12 @@ class KontrolkiWF
 		return pozycja;
 	}
 
-	public static TListBox ListBox(Action? zmienionaWartosc = null)
+	public static TListBox ListBox(Action? zmienionaWartosc = null, object[]? wartosci = null)
 	{
 		var listBox= new TListBox();
 		listBox.FormattingEnabled = true;
 		listBox.ItemHeight = 15;
+		if (wartosci != null) listBox.DataSource = wartosci;
 		if (zmienionaWartosc != null) listBox.SelectedIndexChanged += BezpiecznaAkcja(zmienionaWartosc);
 		return listBox;
 	}

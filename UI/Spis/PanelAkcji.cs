@@ -4,7 +4,7 @@ class PanelAkcji : Pionowo
 {
 	public bool CzyGlownySpis { get; set; }
 
-	private readonly List<(Button przycisk, AdapterAkcji adapter)> przyciski = [];
+	private readonly List<(TButton przycisk, AdapterAkcji adapter)> przyciski = [];
 
 	public PanelAkcji()
 	{
@@ -21,7 +21,7 @@ class PanelAkcji : Pionowo
 		ResumeLayout();
 	}
 
-	private void DodajKontrolke(Control kontrolka)
+	private void DodajKontrolke(TControl kontrolka)
 	{
 		DodajWiersz(kontrolka);
 	}
@@ -59,7 +59,7 @@ class PanelAkcji : Pionowo
 		}
 	}
 
-	private void AktualizujPrzycisk(Button przycisk, AdapterAkcji adapter)
+	private void AktualizujPrzycisk(TButton przycisk, AdapterAkcji adapter)
 	{
 		przycisk.Text = Wyglad.NazwaAkcji(adapter);
 		przycisk.Enabled = adapter.CzyDostepna;

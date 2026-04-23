@@ -6,20 +6,20 @@ namespace ProFak.UI;
 
 partial class FakturaEdytor : Edytor<Faktura>
 {
-	private readonly TLabel labelRodzaj;
+	private readonly TText labelRodzaj;
 	private readonly TTextBox textBoxNumer;
 	private readonly TTextBox textBoxDaneSprzedawcy;
 	private readonly TTextBox textBoxDaneNabywcy;
 	private readonly TTextBox textBoxRachunekBankowy;
-	private readonly TComboBox comboBoxSposobPlatnosci;
+	private readonly TSuggestBox comboBoxSposobPlatnosci;
 	private readonly TButton buttonSprzedawca;
 	private readonly TButton buttonNabywca;
 	private readonly TButton buttonSposobPlatnosci;
-	private readonly TComboBox comboBoxNIPSprzedawcy;
-	private readonly TComboBox comboBoxNIPNabywcy;
-	private readonly TComboBox comboBoxNazwaSprzedawcy;
+	private readonly TSuggestBox comboBoxNIPSprzedawcy;
+	private readonly TSuggestBox comboBoxNIPNabywcy;
+	private readonly TSuggestBox comboBoxNazwaSprzedawcy;
 	private readonly TComboBox comboBoxWaluta;
-	private readonly TComboBox comboBoxNazwaNabywcy;
+	private readonly TSuggestBox comboBoxNazwaNabywcy;
 	private readonly TButton buttonWaluta;
 	private readonly TNumericUpDown numericUpDownNetto;
 	private readonly TNumericUpDown numericUpDownVat;
@@ -27,8 +27,8 @@ partial class FakturaEdytor : Edytor<Faktura>
 	private readonly TTextBox textBoxUwagiPubliczne;
 	private readonly TTextBox textBoxUwagiWewnetrzne;
 	private readonly TCheckBox checkBoxTP;
-	private readonly TComboBox comboBoxProcentKosztow;
-	private readonly TComboBox comboBoxProcentVat;
+	private readonly TSuggestBox comboBoxProcentKosztow;
+	private readonly TSuggestBox comboBoxProcentVat;
 	private readonly TButton buttonNowySprzedawca;
 	private readonly TButton buttonNowyNabywca;
 	private readonly TCheckBox checkBoxZakupSrodkowTrwalych;
@@ -54,8 +54,8 @@ partial class FakturaEdytor : Edytor<Faktura>
 	private readonly TMenuItem menuKSeFOtworzOdnosnik;
 	private readonly TMenuItem menuKSeFGenerujXML;
 	private readonly Zakladki zakladki;
-	private readonly TabPage tabPagePodatki;
-	private readonly TabPage tabPageKSeF;
+	private readonly TTabPage tabPagePodatki;
+	private readonly TTabPage tabPageKSeF;
 
 	private readonly SpisZAkcjami<Wplata, WplataSpis> wplaty;
 	private readonly SpisZAkcjami<PozycjaFaktury, PozycjaFakturySpis> pozycjeFaktury;
@@ -483,8 +483,8 @@ partial class FakturaEdytor : Edytor<Faktura>
 
 		if (Rekord.Rodzaj == RodzajFaktury.Rachunek || Rekord.Rodzaj == RodzajFaktury.KorektaRachunku)
 		{
-			zakladki.TabPages.Remove(tabPageKSeF);
-			zakladki.TabPages.Remove(tabPagePodatki);
+			zakladki.Usun(tabPageKSeF);
+			zakladki.Usun(tabPagePodatki);
 		}
 	}
 

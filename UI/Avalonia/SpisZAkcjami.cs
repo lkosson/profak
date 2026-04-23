@@ -4,8 +4,12 @@ using Avalonia.Input;
 
 namespace ProFak.UI;
 
-partial class SpisZAkcjami<TRekord>
+partial class SpisZAkcjami<TRekord> : IDisposable
 {
+	void IDisposable.Dispose()
+	{
+	}
+
 	protected override void OnGotFocus(FocusChangedEventArgs e)
 	{
 		base.OnGotFocus(e);

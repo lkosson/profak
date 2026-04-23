@@ -11,15 +11,15 @@ class PierwszyStartBaza : Dialog
 	private string? bazaDocelowa;
 	private bool sukces;
 
-	private readonly RadioButton radioButtonNowaPrywatnaBaza;
-	private readonly RadioButton radioButtonNowaPublicznaBaza;
-	private readonly RadioButton radioButtonNowaLokalnaBaza;
-	private readonly RadioButton radioButtonZewnetrznaBaza;
-	private readonly RadioButton radioButtonBazaDemo;
-	private readonly RadioButton radioButtonOdtworzKopie;
-	private readonly Button buttonDalej;
-	private readonly ProgressBar progressBar;
-	private readonly Label labelStatus;
+	private readonly TRadioButton radioButtonNowaPrywatnaBaza;
+	private readonly TRadioButton radioButtonNowaPublicznaBaza;
+	private readonly TRadioButton radioButtonNowaLokalnaBaza;
+	private readonly TRadioButton radioButtonZewnetrznaBaza;
+	private readonly TRadioButton radioButtonBazaDemo;
+	private readonly TRadioButton radioButtonOdtworzKopie;
+	private readonly TButton buttonDalej;
+	private readonly TProgressBar progressBar;
+	private readonly TLabel labelStatus;
 	private readonly BackgroundWorker backgroundWorker;
 
 	private PierwszyStartBaza(Kontekst kontekst)
