@@ -9,6 +9,7 @@ class SposobPlatnosciEdytor : EdytorDwieKolumny<SposobPlatnosci>
 		DodajTextBox(sposobPlatnosci => sposobPlatnosci.Nazwa, "Nazwa", wymagane: true);
 		DodajNumericUpDown(sposobPlatnosci => sposobPlatnosci.LiczbaDni, "Liczba dni");
 		DodajCheckBox(sposobPlatnosci => sposobPlatnosci.CzyDomyslny, "Domyślny");
+		DodajCheckBox(sposobPlatnosci => sposobPlatnosci.CzyZaplacone, "Zapłacone");
 		UstawRozmiar();
 	}
 }

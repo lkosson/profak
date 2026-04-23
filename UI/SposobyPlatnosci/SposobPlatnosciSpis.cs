@@ -9,6 +9,7 @@ class SposobPlatnosciSpis : Spis<SposobPlatnosci>
 		DodajKolumne(nameof(SposobPlatnosci.Nazwa), "Nazwa", rozciagnij: true);
 		DodajKolumne(nameof(SposobPlatnosci.LiczbaDni), "Liczba dni", wyrownajDoPrawej: true);
 		DodajKolumne(nameof(SposobPlatnosci.CzyDomyslnyFmt), "Domyślny");
+		DodajKolumne(nameof(SposobPlatnosci.CzyZaplaconeFmt), "Zapłacone");
 		DodajKolumneId();
 	}
 

@@ -432,7 +432,8 @@ public class Generator
 		}
 		if (ksefFaktura.Fa.Platnosc != null)
 		{
-			if (ksefFaktura.Fa.Platnosc.TerminPlatnosci != null && ksefFaktura.Fa.Platnosc.TerminPlatnosci.Count > 0 && ksefFaktura.Fa.Platnosc.TerminPlatnosci[0].Termin.HasValue) dbFaktura.TerminPlatnosci = ksefFaktura.Fa.Platnosc.TerminPlatnosci[0].Termin!.Value;
+			DateTime? terminPlatnosci = null;
+			if (ksefFaktura.Fa.Platnosc.TerminPlatnosci != null && ksefFaktura.Fa.Platnosc.TerminPlatnosci.Count > 0 && ksefFaktura.Fa.Platnosc.TerminPlatnosci[0].Termin.HasValue) terminPlatnosci = ksefFaktura.Fa.Platnosc.TerminPlatnosci[0].Termin!.Value;
 			if (ksefFaktura.Fa.Platnosc.RachunekBankowy != null && ksefFaktura.Fa.Platnosc.RachunekBankowy.Count > 0)
 			{
 				dbFaktura.RachunekBankowy = ksefFaktura.Fa.Platnosc.RachunekBankowy[0].NrRB;
@@ -453,7 +454,13 @@ public class Generator
 
 			if (ksefFaktura.Fa.Platnosc.Zaplacono == TWybor1.Item1 && String.IsNullOrEmpty(dbFaktura.OpisSposobuPlatnosci)) dbFaktura.OpisSposobuPlatnosci = "Zapłacono";
 
-			if (ksefFaktura.Fa.Platnosc.DataZaplaty.HasValue) dbFaktura.Wplaty.Add(new Wplata { Data = ksefFaktura.Fa.Platnosc.DataZaplaty.Value, Kwota = ksefFaktura.Fa.P_15 });
+			if (ksefFaktura.Fa.Platnosc.DataZaplaty.HasValue)
+			{
+				dbFaktura.Wplaty.Add(new Wplata { Data = ksefFaktura.Fa.Platnosc.DataZaplaty.Value, Kwota = ksefFaktura.Fa.P_15 });
+				if (terminPlatnosci == null) terminPlatnosci = ksefFaktura.Fa.Platnosc.DataZaplaty.Value;
+			}
+
+			if (terminPlatnosci != null) dbFaktura.TerminPlatnosci = terminPlatnosci.Value;
 		}
 
 		if ((ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.ZAL || ksefFaktura.Fa.RodzajFaktury == TRodzajFaktury.KOR_ZAL)
@@ -849,11 +856,18 @@ public class Generator
 		}
 
 		var sposobyPlatnosci = baza.SposobyPlatnosci.ToList();
-		faktura.SposobPlatnosciRef = sposobyPlatnosci
-			.OrderBy(sposob => sposob.Nazwa.Contains(faktura.OpisSposobuPlatnosci, StringComparison.CurrentCultureIgnoreCase))
-			.ThenBy(sposob => Math.Abs(sposob.LiczbaDni - (faktura.TerminPlatnosci - faktura.DataWystawienia).TotalDays))
+		var wybranySposobPlatnosci = sposobyPlatnosci
+			.Where(sposob => sposob.LiczbaDni == Math.Round((faktura.TerminPlatnosci.Date - faktura.DataWystawienia.Date).TotalDays))
+			.OrderBy(sposob => String.Equals(sposob.Nazwa, faktura.OpisSposobuPlatnosci, StringComparison.CurrentCultureIgnoreCase) ? 0 : 1)
+			.ThenBy(sposob => sposob.Nazwa.Contains(faktura.OpisSposobuPlatnosci, StringComparison.CurrentCultureIgnoreCase) ? 0 : 1)
 			.ThenBy(sposob => sposob.CzyDomyslny ? 0 : 1)
 			.FirstOrDefault();
+
+		if (wybranySposobPlatnosci != null)
+		{
+			faktura.SposobPlatnosciRef = wybranySposobPlatnosci;
+			faktura.OpisSposobuPlatnosci = wybranySposobPlatnosci.Nazwa;
+		}
 
 		var waluta = baza.Waluty.FirstOrDefault(waluta => waluta.Skrot.ToLower() == faktura.Waluta.Skrot.ToLower());
 		if (waluta == null) baza.Zapisz(waluta = faktura.Waluta);

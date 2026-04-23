@@ -158,10 +158,27 @@ public class Faktura : Rekord<Faktura>
 		}
 	}
 
+	public void ZakonczWystawianie(Baza baza)
+	{
+		NadajNumer(baza);
+		DodajWplateJesliTrzeba(baza);
+	}
+
 	public void NadajNumer(Baza baza)
 	{
 		if (Numerator == null) return;
 		Numer = DB.Numerator.NadajNumer(baza, Numerator.Value, Podstawienie);
+	}
+
+	public void DodajWplateJesliTrzeba(Baza baza)
+	{
+		if (SposobPlatnosciRef.IsNull) return;
+		var sposobPlatnosci = baza.Znajdz(SposobPlatnosciRef);
+		if (!sposobPlatnosci.CzyZaplacone) return;
+		var wplaty = baza.Wplaty.Where(e => e.FakturaId == Id).Sum(e => e.Kwota);
+		if (wplaty > 0) return;
+		var wplata = new Wplata { Data = DataWystawienia, Kwota = RazemBrutto, FakturaRef = this };
+		baza.Zapisz(wplata);
 	}
 
 	public void PrzeliczRazem(Baza baza)
@@ -459,7 +476,7 @@ public class Faktura : Rekord<Faktura>
 	{
 		SposobPlatnosciRef = sposobPlatnosci;
 		OpisSposobuPlatnosci = sposobPlatnosci.Nazwa;
-		TerminPlatnosci = DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
+		if (CzySprzedaz || !CzyKSeF) TerminPlatnosci = DataWystawienia.AddDays(sposobPlatnosci.LiczbaDni);
 	}
 
 	public string PodstawPolaWysylki(string szablon)

@@ -13,7 +13,7 @@ class RachunekAkcja : DodajRekordAkcja<Faktura, FakturaEdytor>
 
 	protected override void ZapiszRekord(Kontekst kontekst, Faktura rekord)
 	{
-		rekord.NadajNumer(kontekst.Baza);
+		rekord.ZakonczWystawianie(kontekst.Baza);
 		base.ZapiszRekord(kontekst, rekord);
 	}
 }
