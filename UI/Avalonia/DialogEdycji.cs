@@ -44,5 +44,13 @@ class DialogEdycjiAV : DialogAV
 	{
 		return true;
 	}
+
+	public static bool Pokaz(string tytul, TControl zawartosc, Kontekst kontekst, bool pelnyEkran = false)
+	{
+		using var dialog = new DialogEdycjiAV(tytul, zawartosc, kontekst);
+		if (pelnyEkran) dialog.WindowState = WindowState.Maximized;
+		AvaloniaUI.Wyswietl(dialog);
+		return dialog.Wynik;
+	}
 }
 #endif
