@@ -16,6 +16,12 @@ abstract class Edytor : Avalonia.Controls.Panel, IDisposable
 	{
 	}
 
+	protected void Zamknij()
+	{
+		var topLevel = TopLevel.GetTopLevel(this);
+		if (topLevel is Dialog dialog) dialog.Zamknij();
+	}
+
 	protected override void OnAttachedToVisualTree(Avalonia.VisualTreeAttachmentEventArgs e)
 	{
 		base.OnAttachedToVisualTree(e);

@@ -17,6 +17,11 @@ abstract class Edytor : UserControl
 		toolTip = new ToolTip(container);
 	}
 
+	protected void Zamknij()
+	{
+		ParentForm?.Close();
+	}
+
 	protected override void OnLoad(EventArgs e)
 	{
 		base.OnLoad(e);
