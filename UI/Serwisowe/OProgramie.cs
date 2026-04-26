@@ -17,11 +17,8 @@ class OProgramie : Edytor, IKontrolkaZKontekstem
 		var buttonAktualizacje = Kontrolki.Button("Sprawdź aktualizacje", SprawdzAktualizacje);
 		var labelLicencja = Kontrolki.Text("Twórcą i właścicielem praw autorskich do programu jest Łukasz Kosson. Program jest dostępny bezpłatnie i bezterminowo. Masz prawo korzystać z programu na dowolnej liczbie stanowisk, ale ponosisz pełną i wyłączną odpowiedzialność za wszelkie skutki korzystania z programu.");
 
-		labelNaglowek.Margin = labelWersja.Margin = labelSciezka.Margin = labelData.Margin = buttonAktualizacje.Margin = linkStrona.Margin = labelLicencja.Margin = new Padding(10);
-		labelNaglowek.TextAlign = labelWersja.TextAlign = labelSciezka.TextAlign = labelData.TextAlign = linkStrona.TextAlign = labelLicencja.TextAlign = ContentAlignment.MiddleCenter;
-		var uklad = new Pionowo([labelNaglowek, labelWersja, labelSciezka, labelData, linkStrona, buttonAktualizacje, labelLicencja]);
-		buttonAktualizacje.Anchor = AnchorStyles.None;
-		buttonAktualizacje.Width = 120;
+		labelNaglowek.Margin = labelWersja.Margin = labelSciezka.Margin = labelData.Margin = buttonAktualizacje.Margin = linkStrona.Margin = labelLicencja.Margin = new TPadding(10);
+		var uklad = new Pionowo([labelNaglowek, labelWersja, labelSciezka, labelData, linkStrona, buttonAktualizacje, labelLicencja], wysrodkowane: true);
 
 		UstawZawartosc(uklad, new Size(400, 0));
 	}

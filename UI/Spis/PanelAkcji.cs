@@ -7,6 +7,7 @@ class PanelAkcji : Pionowo
 	private readonly List<(TButton przycisk, AdapterAkcji adapter)> przyciski = [];
 
 	public PanelAkcji()
+		: base([])
 	{
 		MinimumSize = new Size(200 * DeviceDpi / 96, 50);
 		TabIndex = 100;

@@ -5,13 +5,11 @@ namespace ProFak.UI;
 
 class PionowoAV : StackPanel
 {
-	public PionowoAV()
-	{
-	}
+	private readonly bool wysrodkowane;
 
-	public PionowoAV(TControl[] kontrolki)
-		: this()
+	public PionowoAV(TControl[] kontrolki, bool wysrodkowane = false)
 	{
+		this.wysrodkowane = wysrodkowane;
 		foreach (var kontrolka in kontrolki)
 		{
 			Children.Add(kontrolka);
