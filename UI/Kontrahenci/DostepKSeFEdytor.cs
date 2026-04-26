@@ -29,7 +29,7 @@ partial class DostepKSeFEdytor : Edytor
 			Kontrolki.Text("Gdy już masz podpisany plik, kliknij na poniższy przycisk, aby go wskazać. ProFak użyje go do zalogowania się do KSeF w Twoim imieniu i wygenerowania tokena dostępowego umożliwiającego wystawianie i odbieranie faktur."),
 			new Poziomo([buttonWskazXML])
 			]);
-		//uklad.Size = uklad.GetPreferredSize(new Size(800 * DeviceDpi / 96, 0));
+		uklad.OgraniczSzerokosc(800);
 
 		UstawZawartosc(uklad);
 	}

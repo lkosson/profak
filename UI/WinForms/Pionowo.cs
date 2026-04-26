@@ -29,5 +29,10 @@ class PionowoWF : TableLayoutPanel
 		kontrolka.Anchor = wysrodkowane ? AnchorStyles.Top : AnchorStyles.Left | AnchorStyles.Right;
 		RowCount++;
 	}
+
+	public void OgraniczSzerokosc(int szerokosc)
+	{
+		Size = GetPreferredSize(new Size(szerokosc * DeviceDpi / 96, 0));
+	}
 }
 #endif

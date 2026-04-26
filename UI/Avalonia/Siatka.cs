@@ -25,6 +25,10 @@ class SiatkaAV : Grid
 		}
 	}
 
+	public void OgraniczSzerokosc(int szerokosc)
+	{
+	}
+
 	protected override void OnLoaded(RoutedEventArgs e)
 	{
 		var jestWypelnienie = false;

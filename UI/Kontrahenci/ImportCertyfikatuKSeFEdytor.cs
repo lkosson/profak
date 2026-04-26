@@ -38,7 +38,7 @@ class ImportCertyfikatuKSeFEdytor : Edytor
 		uklad.DodajWiersz("Hasło klucza prywatnego", [(textBoxHaslo, 2)]);
 		uklad.DodajWiersz([(Kontrolki.Text("Po kliknięciu \"Zapisz\" ProFak wczyta podane pliki, a następnie spróbuje uwierzytelnić się przy użyciu certyfikatu w API KSeF."), 3)]);
 		uklad.DodajWiersz([(new Poziomo([buttonZapisz]), 3)]);
-		uklad.Size = uklad.GetPreferredSize(new Size(600 * DeviceDpi / 96, 0));
+		uklad.OgraniczSzerokosc(600);
 
 		UstawZawartosc(uklad);
 	}
