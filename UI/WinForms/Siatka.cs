@@ -44,6 +44,11 @@ class SiatkaWF : TableLayoutPanel
 		base.OnCreateControl();
 	}
 
+	public void OgraniczSzerokosc(int szerokosc)
+	{
+		Size = GetPreferredSize(new Size(szerokosc * DeviceDpi / 96, 0));
+	}
+
 	public void DodajWiersz(IEnumerable<(TControl? kontrolka, int kolumny)> kontrolki)
 	{
 		RowCount++;

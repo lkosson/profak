@@ -66,7 +66,7 @@ class PierwszyStartBaza : Dialog
 			new Poziomo([buttonDalej, progressBar, labelStatus])
 			]);
 		uklad.Margin = new TPadding(10);
-		//uklad.Size = uklad.GetPreferredSize(new Size(600 * DeviceDpi / 96, 0));
+		uklad.OgraniczSzerokosc(600);
 
 		UstawZawartosc(uklad);
 

@@ -20,5 +20,9 @@ class PionowoAV : StackPanel
 	{
 		Children.Add(kontrolka);
 	}
+
+	public void OgraniczSzerokosc(int szerokosc)
+	{
+	}
 }
 #endif
