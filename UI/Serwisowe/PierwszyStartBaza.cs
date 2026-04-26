@@ -41,8 +41,8 @@ class PierwszyStartBaza : Dialog
 		radioButtonNowaPrywatnaBaza.Enabled = CzySciezkaDostepna(DB.Baza.PrywatnaSciezka);
 		radioButtonNowaPublicznaBaza.Enabled = CzySciezkaDostepna(DB.Baza.PublicznaSciezka);
 		radioButtonNowaLokalnaBaza.Enabled = CzySciezkaDostepna(DB.Baza.LokalnaSciezka);
-		labelNaglowek1.Margin = new Padding(3);
-		labelNaglowek2.Margin = new Padding(3);
+		labelNaglowek1.Margin = new TPadding(3);
+		labelNaglowek2.Margin = new TPadding(3);
 		progressBar.Visible = false;
 		backgroundWorker.WorkerReportsProgress = true;
 		backgroundWorker.DoWork += backgroundWorker_DoWork;
@@ -65,12 +65,12 @@ class PierwszyStartBaza : Dialog
 			radioButtonOdtworzKopie,
 			new Poziomo([buttonDalej, progressBar, labelStatus])
 			]);
-		uklad.Padding = new Padding(10);
-		uklad.Size = uklad.GetPreferredSize(new Size(600 * DeviceDpi / 96, 0));
+		uklad.Margin = new TPadding(10);
+		//uklad.Size = uklad.GetPreferredSize(new Size(600 * DeviceDpi / 96, 0));
 
 		UstawZawartosc(uklad);
 
-		AcceptButton = buttonDalej;
+		//AcceptButton = buttonDalej;
 	}
 
 	private bool CzySciezkaDostepna(string sciezka)

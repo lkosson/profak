@@ -260,6 +260,11 @@ static class RozszerzeniaKontrolek
 		public string Text { get => kontrolka.Content is string text ? text : ""; set => kontrolka.Content = value; }
 	}
 
+	extension(TLabel kontrolka)
+	{
+		public string Text { get => kontrolka.Content is string text ? text : ""; set => kontrolka.Content = value; }
+	}
+
 	extension(TTextBox kontrolka)
 	{
 		public bool ReadOnly { get => kontrolka.IsReadOnly; set => kontrolka.IsReadOnly = value; }
