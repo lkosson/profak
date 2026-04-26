@@ -24,5 +24,8 @@ class PionowoAV : StackPanel
 	public void OgraniczSzerokosc(int szerokosc)
 	{
 	}
+
+	protected void SuspendLayout() { }
+	protected void ResumeLayout() { }
 }
 #endif

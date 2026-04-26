@@ -10,6 +10,9 @@ class PanelAkcji : Pionowo
 		: base([])
 	{
 		MinimumSize = new Size(200 * DeviceDpi / 96, 200 * DeviceDpi / 96);
+#if WINFORMS
+		AutoSize = true;
+#endif
 		TabIndex = 100;
 	}
 
@@ -36,8 +39,6 @@ class PanelAkcji : Pionowo
 			foreach (var podrzedna in adapter.Podrzedne)
 			{
 				var pozycja = Kontrolki.MenuItem(Wyglad.NazwaAkcji(podrzedna), podrzedna.Uruchom);
-				pozycja.Dock = DockStyle.Fill;
-				pozycja.TextAlign = ContentAlignment.MiddleLeft;
 				pozycje.Add(pozycja);
 			}
 			przycisk = Kontrolki.ButtonMenu("", pozycje.ToArray());

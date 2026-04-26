@@ -95,6 +95,11 @@ class KontrolkiWF
 
 	public static TButton ButtonMenu(string tekst, TMenuItem[] pozycje)
 	{
+		foreach (var pozycja in pozycje)
+		{
+			pozycja.Dock = DockStyle.Fill;
+			pozycja.TextAlign = ContentAlignment.MiddleLeft;
+		}
 		var menu = Menu(pozycje);
 		var button = new TButtonDropDown();
 		button.Text = tekst + "    ";
