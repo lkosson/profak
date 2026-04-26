@@ -113,6 +113,6 @@ class ImportCertyfikatuKSeFEdytor : Edytor
 
 		Certyfikat = Convert.ToBase64String(blobCertyfikatu);
 		OknoKomunikatu.Informacja("Certyfikat zaimportowany poprawnie. Możesz skasować pliki certyfikatu i klucza prywatnego.");
-		ParentForm?.Close();
+		Zamknij();
 	}
 }

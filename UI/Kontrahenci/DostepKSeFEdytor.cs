@@ -9,7 +9,7 @@ partial class DostepKSeFEdytor : Edytor
 	public string? Token { get; set; }
 	public string? NIP { get => textBoxNIP.Text; set => textBoxNIP.Text = value; }
 
-	private readonly TextBox textBoxNIP;
+	private readonly TTextBox textBoxNIP;
 
 	public DostepKSeFEdytor()
 	{
@@ -29,7 +29,7 @@ partial class DostepKSeFEdytor : Edytor
 			Kontrolki.Text("Gdy już masz podpisany plik, kliknij na poniższy przycisk, aby go wskazać. ProFak użyje go do zalogowania się do KSeF w Twoim imieniu i wygenerowania tokena dostępowego umożliwiającego wystawianie i odbieranie faktur."),
 			new Poziomo([buttonWskazXML])
 			]);
-		uklad.Size = uklad.GetPreferredSize(new Size(800 * DeviceDpi / 96, 0));
+		//uklad.Size = uklad.GetPreferredSize(new Size(800 * DeviceDpi / 96, 0));
 
 		UstawZawartosc(uklad);
 	}
@@ -78,7 +78,7 @@ partial class DostepKSeFEdytor : Edytor
 		Token = token;
 		IO.KSEF2.API.ZapomnijAktywnaSesje();
 		OknoKomunikatu.Informacja("Dostęp do KSeF nadany pomyślnie. Można skasować utworzone pliki.");
-		ParentForm?.Close();
+		Zamknij();
 	}
 
 	private void EPUAP()

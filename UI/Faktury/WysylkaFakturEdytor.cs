@@ -136,11 +136,7 @@ class WysylkaFakturEdytor : Edytor
 		comboBoxFaktura.SelectedIndex = Math.Min(idx, faktury.Count - 1);
 		comboBoxFaktura.EndUpdate();
 
-		if (faktury.Count == 1 && ParentForm != null)
-		{
-			ParentForm.DialogResult = DialogResult.OK;
-			ParentForm.Close();
-		}
+		if (faktury.Count == 1) Zamknij();
 	}
 
 	private void WyslijWszystkie()
@@ -177,11 +173,7 @@ class WysylkaFakturEdytor : Edytor
 			}
 		});
 
-		if (ParentForm != null)
-		{
-			ParentForm.DialogResult = DialogResult.OK;
-			ParentForm.Close();
-		}
+		Zamknij();
 	}
 
 	private byte[] PrzygotujPDF(Ref<Faktura> fakturaRef)
