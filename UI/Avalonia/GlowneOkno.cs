@@ -46,5 +46,10 @@ partial class GlowneOkno : Window
 		panelZawartosc.Children.Add(kontrolka);
 		kontrolka.Focus();
 	}
+
+	public static void Pokaz()
+	{
+		AvaloniaUI.Wyswietl(new GlowneOkno());
+	}
 }
 #endif

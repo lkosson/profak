@@ -60,5 +60,11 @@ class DialogAV : Window, IDisposable
 		if (Dispatcher.CheckAccess()) Close();
 		else Dispatcher.Post(Close);
 	}
+
+	public static void Pokaz(string tytul, TControl zawartosc, Kontekst kontekst)
+	{
+		using var dialog = new Dialog(tytul, zawartosc, kontekst);
+		dialog.Pokaz();
+	}
 }
 #endif

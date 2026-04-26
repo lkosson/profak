@@ -56,7 +56,7 @@ public static class Program
 			}
 
 			if (Wyglad.WstepneLadowanieReportingServices) OknoWydruku.ZaladujWstepnieReportViewer();
-			Application.Run(new UI.GlowneOkno());
+			GlowneOkno.Pokaz();
 		}
 		catch (Exception exc)
 		{

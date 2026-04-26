@@ -68,9 +68,9 @@ class DialogWF : Form
 		else Close();
 	}
 
-	public static void Pokaz(string tytul, Control zawartosc, Kontekst kontekst)
+	public static void Pokaz(string tytul, TControl zawartosc, Kontekst kontekst)
 	{
-		using var dialog = new DialogWF(tytul, zawartosc, kontekst);
+		using var dialog = new Dialog(tytul, zawartosc, kontekst);
 		dialog.Pokaz();
 	}
 }
