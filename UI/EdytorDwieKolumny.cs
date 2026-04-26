@@ -11,16 +11,14 @@ abstract class EdytorDwieKolumny<TRekord> : Edytor<TRekord>
 	public EdytorDwieKolumny()
 	{
 		dwieKolumny = new DwieKolumny();
-		Controls.Add(dwieKolumny);
 	}
 
 	public void UstawRozmiar()
 	{
-		Size = dwieKolumny.Size;
-		dwieKolumny.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
+		UstawZawartosc(dwieKolumny);
 	}
 
-	public void DodajWiersz(Control kontrolka, string? etykieta)
+	public void DodajWiersz(TControl kontrolka, string? etykieta)
 	{
 		dwieKolumny.DodajWiersz(kontrolka, etykieta);
 	}
@@ -79,8 +77,6 @@ abstract class EdytorDwieKolumny<TRekord> : Edytor<TRekord>
 		where TEnum : struct, Enum
 	{
 		var comboBox = Kontrolki.DropDownList();
-		comboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-		comboBox.Width = 200 * comboBox.DeviceDpi / 96;
 		dwieKolumny.DodajWiersz(comboBox, etykieta);
 		kontroler.Slownik<TEnum>(comboBox);
 		kontroler.Powiazanie(comboBox, wlasciwosc);
