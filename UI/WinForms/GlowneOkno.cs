@@ -36,7 +36,6 @@ partial class GlowneOkno : Form
 		base.OnFormClosing(e);
 	}
 
-
 	private void Wyswietl<TKontrolka>(TKontrolka kontrolka)
 		where TKontrolka : TControl, IKontrolkaZKontekstem
 	{
@@ -58,6 +57,12 @@ partial class GlowneOkno : Form
 		}
 
 		kontrolka.Focus();
+	}
+
+	public static void Pokaz()
+	{
+		using var okno = new GlowneOkno();
+		Application.Run(okno);
 	}
 }
 #endif
