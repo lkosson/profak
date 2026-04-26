@@ -4,7 +4,14 @@ namespace ProFak.UI;
 
 class UsunFaktureAkcja : UsunRekordAkcja<Faktura>
 {
-	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => base.CzyKlawiszSkrotu(klawisz, modyfikatory) || (klawisz == Keys.Delete && modyfikatory == Keys.Shift);
+	private bool usunNaStale;
+
+	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory)
+	{
+		usunNaStale = modyfikatory == Keys.Shift;
+		return base.CzyKlawiszSkrotu(klawisz, modyfikatory) || (klawisz == Keys.Delete && modyfikatory == Keys.Shift);
+	}
+
 	public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) => base.CzyDostepnaDlaRekordow(zaznaczoneRekordy) && !zaznaczoneRekordy.Any(faktura => faktura.FakturaKorygujacaRef.IsNotNull);
 
 	protected override void Usun(Kontekst kontekst, IEnumerable<Faktura> zaznaczoneRekordy)
@@ -53,7 +60,7 @@ class UsunFaktureAkcja : UsunRekordAkcja<Faktura>
 				kontekst.Baza.Zapisz(fakturaKorygowana);
 			}
 
-			if (GlowneOkno.ModifierKeys == Keys.Shift)
+			if (usunNaStale)
 			{
 				kontekst.Baza.Usun(faktura);
 			}

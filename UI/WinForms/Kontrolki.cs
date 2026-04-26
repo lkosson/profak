@@ -182,13 +182,14 @@ class KontrolkiWF
 		return numericUpDown;
 	}
 
-	public static TDatePicker DatePicker(bool tylkoMiesiac = false, int szerokosc = 160)
+	public static TDatePicker DatePicker(bool tylkoMiesiac = false, bool dopuscPusta = false, int szerokosc = 160)
 	{
 		var dateTimePicker = new TDatePicker();
 		dateTimePicker.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		dateTimePicker.Width = szerokosc * dateTimePicker.DeviceDpi / 96;
 		dateTimePicker.CustomFormat = tylkoMiesiac ? "MM-yyyy" : Wyglad.FormatDaty;
 		dateTimePicker.Format = DateTimePickerFormat.Custom;
+		dateTimePicker.ShowCheckBox = dopuscPusta;
 		return dateTimePicker;
 	}
 

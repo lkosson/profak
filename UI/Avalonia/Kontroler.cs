@@ -1,10 +1,14 @@
 ﻿#if AVALONIA
 using Avalonia.Data;
+using System.Linq.Expressions;
 
 namespace ProFak.UI;
 
 partial class Kontroler<TModel>
 {
+	public void Powiazanie(TSuggestBox suggestBox, Expression<Func<TModel, string>> wlasciwosc, Action? wartoscZmieniona = null) => Powiazanie(suggestBox, wlasciwosc, Powiazanie, wartoscZmieniona);
+	public void Powiazanie(TSuggestBox suggestBox, Expression<Func<TModel, int>> wlasciwosc, Action? wartoscZmieniona = null) => Powiazanie(suggestBox, wlasciwosc, Powiazanie, wartoscZmieniona);
+
 	public void Powiazanie(TDatePicker dateTimePicker, Func<TModel, DateTime> pobierzWartosc, Action<TModel, DateTime>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
 		dateTimePicker.SelectedDateChanged += delegate { AktualizujModel(dateTimePicker, ustawWartosc, dtp => dtp.SelectedDate?.LocalDateTime ?? default); wartoscZmieniona?.Invoke(); };

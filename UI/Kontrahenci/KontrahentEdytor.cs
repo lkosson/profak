@@ -78,7 +78,7 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 		textBoxTokenKSeF = Kontrolki.TextBox();
 		comboBoxSrodowiskoKSeF = Kontrolki.DropDownList();
 		buttonKSeFAuth = Kontrolki.Button("Uzyskaj dostęp", akcja: KSeFAuth);
-		dateTimePickerOsobaFizycznaDataUrodzenia = Kontrolki.DatePicker();
+		dateTimePickerOsobaFizycznaDataUrodzenia = Kontrolki.DatePicker(dopuscPusta: true);
 		buttonCertyfikatKSeF = Kontrolki.Button("Importuj certyfikat", akcja: CertyfikatKSeF);
 
 		fakturySprzedazy = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazyBezNabywcySpis(), new AkcjaNaSpisie<Faktura>[] { new EdytujRekordAkcja<Faktura, FakturaEdytor>(), new WydrukFakturyAkcja(), new PrzeladujAkcja<Faktura>() });
@@ -139,7 +139,6 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 			]);
 
 		comboBoxSrodowiskoKSeF.Width = 80;
-		dateTimePickerOsobaFizycznaDataUrodzenia.ShowCheckBox = true;
 		var daneUrzedowe = new Siatka([0, 0, -1, 0, 0], []);
 		daneUrzedowe.DodajWiersz("Kod urzędu skarbowego", [(comboBoxKodUrzedu, 3), (buttonUrzadSkarbowy, 1)]);
 		daneUrzedowe.DodajWiersz("Pierwsze imię", [(textBoxOsobaFizycznaImie, 4)]);

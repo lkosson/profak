@@ -161,7 +161,7 @@ class KontrolkiAV
 		return numericUpDown;
 	}
 
-	public static TDatePicker DatePicker(bool tylkoMiesiac = false, int szerokosc = 160)
+	public static TDatePicker DatePicker(bool tylkoMiesiac = false, bool dopuscPusta = false, int szerokosc = 160)
 	{
 		var datePicker = new TDatePicker();
 		datePicker.DayVisible = !tylkoMiesiac;
