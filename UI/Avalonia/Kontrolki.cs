@@ -18,6 +18,7 @@ global using TDatePicker = Avalonia.Controls.DatePicker;
 global using TProgressBar = Avalonia.Controls.ProgressBar;
 global using TContextMenu = Avalonia.Controls.ContextMenu;
 global using TTabPage = Avalonia.Controls.TabItem;
+global using TPadding = Avalonia.Thickness;
 using Avalonia.Layout;
 using HorizontalAlignment = Avalonia.Layout.HorizontalAlignment;
 using Avalonia.Controls;
