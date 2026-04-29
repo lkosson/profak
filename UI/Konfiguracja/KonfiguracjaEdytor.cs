@@ -75,8 +75,14 @@ partial class KonfiguracjaEdytor : Edytor<Konfiguracja>
 		kontroler.Powiazanie(comboBoxFormatCzasu, konfiguracja => konfiguracja.FormatCzasu, PrzeliczPrzykladCzasu);
 		kontroler.Powiazanie(comboBoxFormatKwoty, konfiguracja => konfiguracja.FormatKwoty, PrzeliczPrzykladKwoty);
 
+#if WINFORMS
 		textBoxRozmiarCzcionki.PlaceholderText = DefaultFont.Size.ToString();
 		textBoxNazwaCzcionki.PlaceholderText = DefaultFont.FontFamily.Name;
+#endif
+#if AVALONIA
+		textBoxNazwaCzcionki.PlaceholderText = new Avalonia.Controls.Window().FontFamily.ToString();
+		textBoxRozmiarCzcionki.PlaceholderText = new Avalonia.Controls.Window().FontSize.ToString();
+#endif
 
 		var siatkaEMail = new Siatka([0, -1, 0], []);
 		siatkaEMail.DodajWiersz("Serwer SMTP", [(textBoxSMTPSerwer, 2)]);
@@ -99,7 +105,12 @@ partial class KonfiguracjaEdytor : Edytor<Konfiguracja>
 		siatkaWyglad.DodajWiersz([(checkBoxPrzywrocUstawieniaSpisow, 7)]);
 		siatkaWyglad.DodajWiersz([(checkBoxPrzywrocUstawieniaMenu, 7)]);
 		siatkaWyglad.DodajWiersz("Szerokość menu głównego", [numericUpDownSzerokoscMenu]);
+#if WINFORMS
 		siatkaWyglad.DodajWiersz("Czcionka", [textBoxNazwaCzcionki, null, textBoxRozmiarCzcionki, Kontrolki.ButtonSlownik(WybierzCzcionke)]);
+#endif
+#if AVALONIA
+		siatkaWyglad.DodajWiersz("Czcionka", [textBoxNazwaCzcionki]);
+#endif
 		siatkaWyglad.DodajWiersz("Wysokość wierszy spisu", [numericUpDownWysokoscWierszy]);
 
 		siatkaWyglad.DodajWiersz("Format daty", [(comboBoxFormatDaty, 1), (Kontrolki.LinkPomoc(PomocFormatDaty), 1), (textBoxPrzykladDaty, 3)]);
@@ -110,8 +121,6 @@ partial class KonfiguracjaEdytor : Edytor<Konfiguracja>
 		var zakladki = new Zakladki();
 		zakladki.Dodaj("Konfiguracja e-mail", siatkaEMail);
 		zakladki.Dodaj("Wygląd", siatkaWyglad);
-
-		zakladki.Size = zakladki.GetPreferredSize(new Size(800, 500));
 
 		UstawZawartosc(zakladki);
 	}
@@ -166,7 +175,7 @@ partial class KonfiguracjaEdytor : Edytor<Konfiguracja>
 		transakcja.Zatwierdz();
 		Wyglad.WczytajZBazy();
 	}
-
+#if WINFORMS
 	private void WybierzCzcionke()
 	{
 		using var dialog = new FontDialog();
@@ -178,7 +187,7 @@ partial class KonfiguracjaEdytor : Edytor<Konfiguracja>
 		Rekord.RozmiarCzcionki = (int)Single.Round(dialog.Font.Size);
 		kontroler.AktualizujKontrolki();
 	}
-
+#endif
 	private const string PomocTrescWiadomosci = @"Lista dostępnych pól:
 
 [NUMER] - pełny numer faktury
