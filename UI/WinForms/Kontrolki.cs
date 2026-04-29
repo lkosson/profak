@@ -139,12 +139,17 @@ class KontrolkiWF
 		return textBox;
 	}
 
-	public static TTextBox TextArea(int linie = -1, Action? zmienionaWartosc = null)
+	public static TTextBox TextArea(int linie = -1, bool proporcjonalna = true, Action? zmienionaWartosc = null)
 	{
 		var textBox = TextBox();
 		textBox.AcceptsReturn = true;
 		textBox.Multiline = true;
 		if (linie > 1) textBox.Height += (textBox.Height - 8 * textBox.DeviceDpi / 96) * textBox.DeviceDpi / 96 * (linie - 1);
+		if (!proporcjonalna)
+		{
+			textBox.Font = new Font("Consolas", 9);
+			textBox.ScrollBars = ScrollBars.Both;
+		}
 		if (zmienionaWartosc != null) textBox.TextChanged += BezpiecznaAkcja(zmienionaWartosc);
 		return textBox;
 	}

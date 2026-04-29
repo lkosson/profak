@@ -102,7 +102,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 		textBoxOpisZdarzenia = Kontrolki.TextBox();
 		textBoxNumerKSeF = Kontrolki.TextBox(szerokosc: 220);
 		textBoxDataKSeF = Kontrolki.TextBox();
-		textBoxKSeFXML = Kontrolki.TextArea();
+		textBoxKSeFXML = Kontrolki.TextArea(proporcjonalna: false);
 		dateTimePickerDataWystawienia = Kontrolki.DatePicker();
 		dateTimePickerDataSprzedazy = Kontrolki.DatePicker();
 		dateTimePickerDataWprowadzenia = Kontrolki.DatePicker();
@@ -118,9 +118,6 @@ partial class FakturaEdytor : Edytor<Faktura>
 		menuKSeFKopiujOdnosnik = Kontrolki.MenuItem("Kopiuj odnośnik do schowka", KopiujOdnosnik);
 		menuKSeFOtworzOdnosnik = Kontrolki.MenuItem("Otwórz odnośnik w przeglądarce", OtworzOdnosnik);
 		buttonDropDownKSeF = Kontrolki.ButtonMenu("e-Faktura", [menuKSeFGenerujXML, menuKSeFZapiszXML, menuKSeFZapiszWizualizacje, menuKSeFKopiujOdnosnik, menuKSeFOtworzOdnosnik]);
-
-		textBoxKSeFXML.Font = new Font("Consolas", 9);
-		textBoxKSeFXML.ScrollBars = ScrollBars.Both;
 
 		kontroler.Slownik<ProceduraMarży>(comboBoxProceduraMarzy);
 

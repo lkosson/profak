@@ -126,11 +126,12 @@ class KontrolkiAV
 		return textBox;
 	}
 
-	public static TTextArea TextArea(int linie = -1, Action? zmienionaWartosc = null)
+	public static TTextArea TextArea(int linie = -1, bool proporcjonalna = true, Action? zmienionaWartosc = null)
 	{
 		var textBox = new TTextArea();
 		textBox.AcceptsReturn = true;
 		textBox.MinLines = Math.Max(2, linie);
+		if (!proporcjonalna) textBox.FontFamily = new Avalonia.Media.FontFamily("Consolas");
 		if (zmienionaWartosc != null) textBox.TextChanged += BezpiecznaAkcja(zmienionaWartosc);
 		return textBox;
 	}
@@ -184,6 +185,7 @@ class KontrolkiAV
 	{
 		var autoCompleteBox = new AutoCompleteBox();
 		autoCompleteBox.Width = 200;
+		autoCompleteBox.FilterMode = AutoCompleteFilterMode.Contains;
 		if (wartosci != null) autoCompleteBox.ItemsSource = wartosci;
 		return autoCompleteBox;
 	}
@@ -268,6 +270,11 @@ static class RozszerzeniaKontrolek
 	extension(TTextBox kontrolka)
 	{
 		public bool ReadOnly { get => kontrolka.IsReadOnly; set => kontrolka.IsReadOnly = value; }
+	}
+
+	extension(TNumericUpDown kontrolka)
+	{
+		public int DecimalPlaces { get => kontrolka.NumberFormat?.NumberDecimalDigits ?? 0; set => kontrolka.NumberFormat = new NumberFormatInfo { NumberDecimalDigits = value }; }
 	}
 
 	extension(TCheckBox kontrolka)
