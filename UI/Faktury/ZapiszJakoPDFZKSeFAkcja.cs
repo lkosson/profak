@@ -40,7 +40,7 @@ class ZapiszJakoPDFZKSeFAkcja(bool spisKSeF = false) : AkcjaNaSpisie<Faktura>
 					await api.UwierzytelnijAsync(podmiot.NIP, podmiot.TokenKSeF, cancellationToken);
 					faktura.XMLKSeF = await api.PobierzFaktureAsync(faktura.NumerKSeF, cancellationToken);
 				}
-				pdf = IO.KSEFPDF.Generator.ZbudujPDF(faktura.XMLKSeF, faktura.NumerKSeF, cancellationToken);
+				pdf = IO.KSEFPDF.Generator.ZbudujPDF(faktura.XMLKSeF, faktura.NumerKSeF, faktura.URLKSeF, cancellationToken);
 			});
 			File.WriteAllBytes(dialog.FileName, pdf);
 			Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = dialog.FileName });
@@ -71,7 +71,7 @@ class ZapiszJakoPDFZKSeFAkcja(bool spisKSeF = false) : AkcjaNaSpisie<Faktura>
 
 				foreach (var faktura in faktury)
 				{
-					var pdf = IO.KSEFPDF.Generator.ZbudujPDF(faktura.XMLKSeF, faktura.NumerKSeF, cancellationToken);
+					var pdf = IO.KSEFPDF.Generator.ZbudujPDF(faktura.XMLKSeF, faktura.NumerKSeF, faktura.URLKSeF, cancellationToken);
 					var nazwaPliku = faktura.NumerKSeFJakoNazwaPliku + ".pdf";
 					File.WriteAllBytes(Path.Combine(katalog, nazwaPliku), pdf);
 					liczbaPlikow++;

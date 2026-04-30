@@ -114,6 +114,7 @@ class KSeFSpis : Spis<Faktura>
 					{
 						var rekord = api.WczytajNaglowek(naglowek, sprzedaz);
 						rekord.XMLKSeF = xml;
+						rekord.URLKSeF = api.ZbudujUrl(xml, rekord.NIPSprzedawcy, rekord.DataWystawienia);
 						rekordy.Add(rekord);
 					}
 				}

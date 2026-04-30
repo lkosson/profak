@@ -10,7 +10,7 @@ public class Generator
 {
 	private static Engine? engine;
 
-	public static byte[] ZbudujPDF(string ksefXml, string ksefNumer, CancellationToken cancellationToken)
+	public static byte[] ZbudujPDF(string ksefXml, string ksefNumer, string ksefUrl, CancellationToken cancellationToken)
 	{
 		if (engine == null)
 		{
@@ -32,7 +32,8 @@ public class Generator
 		}
 		engine.SetValue("xml", ksefXml);
 		engine.SetValue("ksefNumer", ksefNumer);
-		var wynik = engine.Evaluate("exports.generateInvoice(xml, { \"nrKSeF\": ksefNumer }, \"base64\");");
+		engine.SetValue("ksefUrl", ksefUrl);
+		var wynik = engine.Evaluate("exports.generateInvoice(xml, { \"nrKSeF\": ksefNumer, \"qrCode\": ksefUrl }, \"base64\");");
 		var pdfb64 = wynik.UnwrapIfPromise(cancellationToken);
 		var pdf = Convert.FromBase64String(pdfb64.AsString());
 		return pdf;

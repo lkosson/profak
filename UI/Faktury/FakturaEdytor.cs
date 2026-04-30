@@ -436,7 +436,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 		byte[] pdf = [];
 		OknoPostepu.Uruchom(cancellationToken =>
 		{
-			pdf = IO.KSEFPDF.Generator.ZbudujPDF(Rekord.XMLKSeF, Rekord.NumerKSeF, cancellationToken);
+			pdf = IO.KSEFPDF.Generator.ZbudujPDF(Rekord.XMLKSeF, Rekord.NumerKSeF, Rekord.URLKSeF, cancellationToken);
 			return Task.CompletedTask;
 		});
 		File.WriteAllBytes(dialog.FileName, pdf);
