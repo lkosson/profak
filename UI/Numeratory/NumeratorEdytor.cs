@@ -12,7 +12,7 @@ class NumeratorEdytor : Edytor<Numerator>
 		var comboBoxPrzeznaczenie = Kontrolki.DropDownList();
 		var comboBoxFormat = Kontrolki.SuggestBox(["F/[Numer]", "F/[Numer:000000]", "F/[Numer:0000]/[Rok]", "F/[Numer:0000]/[Miesiac:00]/[Rok]", "F/[Numer]/[Data:yy/MM]", "F/[Numer:0000]/[Data:yyMMdd]"]);
 		var textBoxGrupa = Kontrolki.TextBox();
-		var linkLabelGrupa = Kontrolki.Link("?", OpisGrupy);
+		var linkLabelGrupa = Kontrolki.LinkPomoc(PomocFormatGrupy);
 		textBoxPrzyklad = Kontrolki.TextBox();
 		stanyNumeratora = Spisy.StanyNumeratorow();
 
@@ -57,8 +57,9 @@ class NumeratorEdytor : Edytor<Numerator>
 		}
 	}
 
-	private void OpisGrupy()
-	{
-		OknoKomunikatu.Informacja("Zaawansowany parametr określający kiedy numeracja ma ponownie zaczynać się od 1.\n\nPozostaw to pole puste, by numeracja była restartowana według roku, miesiąca lub dnia zgodnie z wybranym formatem numeru.\n\nJeśli chcesz, by numeracja była resetowana rocznie, ale w numerze faktury występował także numer miesiąca, wprowadź tu wyrażenie zawierające [Rok], ale nie [Miesiac].");
-	}
+	private const string PomocFormatGrupy = @"Zaawansowany parametr określający kiedy numeracja ma ponownie zaczynać się od 1.
+
+Pozostaw to pole puste, by numeracja była restartowana według roku, miesiąca lub dnia zgodnie z wybranym formatem numeru.
+
+Jeśli chcesz, by numeracja była resetowana rocznie, ale w numerze faktury występował także numer miesiąca, wprowadź tu wyrażenie zawierające [Rok], ale nie [Miesiac].";
 }
