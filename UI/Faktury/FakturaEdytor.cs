@@ -441,13 +441,6 @@ partial class FakturaEdytor : Edytor<Faktura>
 		{
 			var numer = Numerator.NadajNumer(Kontekst.Baza, Rekord.Numerator.Value, Rekord.Podstawienie, zwiekszLicznik: false);
 			textBoxNumer.PlaceholderText = numer;
-			comboBoxNazwaNabywcy.Focus();
-			ActiveControl = comboBoxNazwaNabywcy;
-		}
-		else
-		{
-			textBoxNumer.Focus();
-			ActiveControl = textBoxNumer;
 		}
 
 		if (Rekord.CzySprzedaz)
@@ -493,6 +486,12 @@ partial class FakturaEdytor : Edytor<Faktura>
 			zakladki.TabPages.Remove(tabPageKSeF);
 			zakladki.TabPages.Remove(tabPagePodatki);
 		}
+	}
+
+	protected override void OnLoad(EventArgs e)
+	{
+		base.OnLoad(e);
+		if (!String.IsNullOrEmpty(textBoxNumer.PlaceholderText)) ActiveControl = comboBoxNazwaNabywcy;
 	}
 
 	private void NowySprzedawca()
