@@ -12,7 +12,7 @@ class PanelAkcji : Panel
 	public PanelAkcji()
 	{
 		przyciski = new List<(Button przycisk, AdapterAkcji adapter)>();
-		MinimumSize = new Size(200 * DeviceDpi / 96, 50);
+		MinimumSize = new Size(200 * DeviceDpi / 96, 200 * DeviceDpi / 96);
 		TabIndex = 100;
 	}
 

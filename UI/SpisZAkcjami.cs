@@ -50,7 +50,7 @@ class SpisZAkcjami<TRekord> : TableLayoutPanel, IKontrolkaZKontekstem
 		spis.CellMouseDown += spis_CellMouseDown;
 		spis.KeyDown += spis_KeyDown;
 		Controls.Add(spis, 0, 0);
-		MinimumSize = new Size(panelAkcji.MinimumSize.Width + spis.MinimumSize.Width + panelAkcji.Margin.Left + spis.Margin.Right, panelAkcji.MinimumSize.Height + spis.MinimumSize.Height + Math.Max(panelAkcji.Margin.Top, spis.Margin.Top) + Math.Max(panelAkcji.Margin.Bottom, spis.Margin.Bottom));
+		MinimumSize = new Size(panelAkcji.MinimumSize.Width + spis.MinimumSize.Width + panelAkcji.Margin.Left + spis.Margin.Right, Math.Max(panelAkcji.MinimumSize.Height, spis.MinimumSize.Height) + Math.Max(panelAkcji.Margin.Top, spis.Margin.Top) + Math.Max(panelAkcji.Margin.Bottom, spis.Margin.Bottom));
 	}
 
 	private void wyszukiwarka_KeyDown(object? sender, KeyEventArgs e)
