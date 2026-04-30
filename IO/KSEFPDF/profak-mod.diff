@@ -1,45 +1,11 @@
-diff --git a/ksef-fe-invoice-converter.umd.cjs b/ksef-fe-invoice-converter.umd.cjs
-index e05856e..17e9cfb 100644
---- a/ksef-fe-invoice-converter.umd.cjs
-+++ b/ksef-fe-invoice-converter.umd.cjs
-@@ -1,3 +1,12 @@
-+function setTimeout(fun) { fun(); }
-+function clearTimeout() { }
-+var exports = {};
-+var module = 'ksef';
-+var navigator = {};
-+var window = { navigator: navigator };
-+window.window = window;
-+
-+
- (function(global2, factory) {
-   typeof exports === "object" && typeof module !== "undefined" ? factory(exports) : typeof define === "function" && define.amd ? define(["exports"], factory) : (global2 = typeof globalThis !== "undefined" ? globalThis : global2 || self, factory(global2["ksef-fe-invoice-converter"] = {}));
- })(this, (function(exports2) {
-@@ -73151,5 +73160,27 @@
-   exports2.generateNaglowekUPO = generateNaglowekUPO;
-   exports2.generatePDFUPO = generatePDFUPO;
-   exports2.generateStyle = generateStyle;
-+  exports2.generateInvoiceFromString = async function(xmlStr, nrKSeF) {
-+    pdfMake.vfs = pdfFonts;
-+    const xml = stripPrefixes(libExports.xml2js(xmlStr, { compact: true }));
-+    const wersja = xml?.Faktura?.Naglowek?.KodFormularza?._attributes?.kodSystemowy;
-+    let pdf;
-+    return new Promise((resolve) => {
-+      switch (wersja) {
-+        case "FA (1)":
-+          pdf = generateFA1(xml.Faktura, { nrKSeF: nrKSeF });
-+          break;
-+        case "FA (2)":
-+          pdf = generateFA2(xml.Faktura, { nrKSeF: nrKSeF });
-+          break;
-+        case "FA (3)":
-+          pdf = generateFA3(xml.Faktura, { nrKSeF: nrKSeF });
-+          break;
-+      }
-+      pdf.getBase64((base64) => {
-+        resolve(base64);
-+      });
-+    });
-+  };
-   Object.defineProperty(exports2, Symbol.toStringTag, { value: "Module" });
- }));
+--- "a/ksef-fe-invoice-converter.umd.cjs"
++++ "b/ksef-fe-invoice-converter.umd.cjs"
+@@ -63798,7 +63798,7 @@
+         _global.pdfMake.addVirtualFileSystem(vfs);
+       }
+       {
+-        module2.exports = vfs;
++        module2.exports = { vfs: vfs };
+       }
+     })(vfs_fonts$1);
+     return vfs_fonts$1.exports;

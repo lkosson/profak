@@ -14,16 +14,25 @@ public class Generator
 	{
 		if (engine == null)
 		{
-			var asm = Assembly.GetExecutingAssembly();
-			using var skrypt = asm.GetManifestResourceStream("ProFak.IO.KSEFPDF.ksef-fe-invoice-converter.umd.cjs") ?? throw new ApplicationException("Błąd wewnętrzny: nie znaleziono skryptu ksef-pdf-generator.");
-			using var streamReader = new StreamReader(skrypt);
-			var trescSkryptu = streamReader.ReadToEnd();
 			engine = new Engine();
-			engine.Evaluate(trescSkryptu);
+			engine.SetValue("logImpl", new Action<object>(v => { Console.WriteLine(v); }));
+
+			var asm = Assembly.GetExecutingAssembly();
+
+			void Wczytaj(string plikSkryptu)
+			{
+				using var skrypt = asm.GetManifestResourceStream(plikSkryptu) ?? throw new ApplicationException($"Błąd wewnętrzny: nie znaleziono skryptu {plikSkryptu}.");
+				using var streamReader = new StreamReader(skrypt);
+				var trescSkryptu = streamReader.ReadToEnd();
+				engine!.Evaluate(trescSkryptu);
+			}
+
+			Wczytaj("ProFak.IO.KSEFPDF.ksef-fe-invoice-converter-wrapper.cjs");
+			Wczytaj("ProFak.IO.KSEFPDF.ksef-fe-invoice-converter.umd.cjs");
 		}
 		engine.SetValue("xml", ksefXml);
 		engine.SetValue("ksefNumer", ksefNumer);
-		var wynik = engine.Evaluate(@"exports.generateInvoiceFromString(xml, ksefNumer);");
+		var wynik = engine.Evaluate("exports.generateInvoice(xml, { \"nrKSeF\": ksefNumer }, \"base64\");");
 		var pdfb64 = wynik.UnwrapIfPromise(cancellationToken);
 		var pdf = Convert.FromBase64String(pdfb64.AsString());
 		return pdf;
