@@ -4,10 +4,13 @@ class Dialog : Form
 {
 	protected Dialog(string tytul, Kontekst kontekst)
 	{
-		ShowInTaskbar = false;
 		Icon = GlowneOkno.Ikona;
 		KeyPreview = true;
-		StartPosition = FormStartPosition.CenterParent;
+		if (Application.OpenForms.Count > 0)
+		{
+			ShowInTaskbar = false;
+			StartPosition = FormStartPosition.CenterParent;
+		}
 		AutoValidate = AutoValidate.EnableAllowFocusChange;
 		Text = tytul;
 		kontekst.Dialog = this;
