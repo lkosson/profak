@@ -10,7 +10,7 @@ class Zakladki : TabControl
 			etykieta += $"   [ᴄᴛʀʟ-ғ{num}]";
 		}
 		var wymiary = zawartosc.Size;
-		var szerokosc = wymiary.Width + 14; // ?? Dla DeklaracjaVatEdytor i Konfiguracja przy 150%
+		var szerokosc = wymiary.Width + 20; // Dla DeklaracjaVatEdytor i Konfiguracja - Padding zakładki, ramka i margines kontrolki
 		var wysokosc = wymiary.Height;
 		var tabPage = new TabPage();
 		tabPage.Text = etykieta;
