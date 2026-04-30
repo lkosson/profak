@@ -9,8 +9,6 @@ class WplataEdytor : EdytorDwieKolumny<Wplata>
 {
 	private readonly NumericUpDown numericUpDownKwota;
 	private readonly TextBox textBoxUwagi;
-	private readonly CheckBox checkBoxCzyRozliczenie;
-	private readonly LinkLabel linkQR;
 
 	public WplataEdytor()
 	{
@@ -18,9 +16,6 @@ class WplataEdytor : EdytorDwieKolumny<Wplata>
 		numericUpDownKwota = DodajNumericUpDown(wplata => wplata.Kwota, "Kwota");
 		numericUpDownKwota.Minimum = -numericUpDownKwota.Maximum;
 		textBoxUwagi = DodajTextBox(wplata => wplata.Uwagi, "Uwagi");
-		checkBoxCzyRozliczenie = DodajCheckBox(wplata => wplata.CzyRozliczenie, "Uwzględnij w rozliczeniu");
-		linkQR = Kontrolki.Link("Kod QR płatności", QR);
-		DodajWiersz(linkQR, null);
 		Walidacja(textBoxUwagi, WalidacjaUwag, false);
 		UstawRozmiar();
 	}
@@ -44,12 +39,19 @@ class WplataEdytor : EdytorDwieKolumny<Wplata>
 		{
 			numericUpDownKwota.Enabled = false;
 			numericUpDownKwota.Text = "";
-			linkQR.Visible = false;
 		}
 		else
 		{
-			checkBoxCzyRozliczenie.Visible = faktura.CzySprzedaz;
-			linkQR.Visible = faktura != null && faktura.CzyZakup && !String.IsNullOrEmpty(faktura.RachunekBankowy) && !String.IsNullOrEmpty(faktura.NIPSprzedawcy);
+			if (faktura.CzySprzedaz)
+			{
+				DodajCheckBox(wplata => wplata.CzyRozliczenie, "Uwzględnij w rozliczeniu");
+				UstawRozmiar();
+			}
+			if (faktura.CzyZakup && !String.IsNullOrEmpty(faktura.RachunekBankowy) && !String.IsNullOrEmpty(faktura.NIPSprzedawcy))
+			{
+				DodajWiersz(Kontrolki.Link("Kod QR płatności", QR), null);
+				UstawRozmiar();
+			}
 		}
 	}
 
