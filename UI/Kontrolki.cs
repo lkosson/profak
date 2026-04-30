@@ -120,7 +120,7 @@ class Kontrolki
 		var textBox = TextBox();
 		textBox.AcceptsReturn = true;
 		textBox.Multiline = true;
-		if (linie > 1) textBox.Height += (textBox.Height - 8) * (linie - 1);
+		if (linie > 1) textBox.Height += (textBox.Height - 8 * textBox.DeviceDpi / 96) * textBox.DeviceDpi / 96 * (linie - 1);
 		if (zmienionaWartosc != null) textBox.TextChanged += BezpiecznaAkcja(zmienionaWartosc);
 		return textBox;
 	}
