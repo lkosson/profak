@@ -26,6 +26,7 @@ class GlowneOkno : Form
 		menu.KeyPress += menu_KeyPress;
 
 		panelZawartosc = new Panel();
+		panelZawartosc.Margin = new Padding(0);
 
 		var uklad = new Siatka([Wyglad.SzerokoscMenu, -1], [-1]);
 		uklad.DodajWiersz([menu, panelZawartosc]);
