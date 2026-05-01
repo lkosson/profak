@@ -2,14 +2,21 @@
 
 namespace ProFak.UI;
 
-partial class ZaliczkaPitEdytor : ZaliczkaPitEdytorBase
+class ZaliczkaPitEdytor : Edytor<ZaliczkaPit>
 {
 	private readonly SpisZAkcjami<Faktura, FakturaSprzedazySpis> fakturySprzedazy;
 	private readonly SpisZAkcjami<Faktura, FakturaZakupuSpis> fakturyZakupu;
 
 	public ZaliczkaPitEdytor()
 	{
-		InitializeComponent();
+		var dateTimePickerMiesiac = Kontrolki.DatePicker(tylkoMiesiac: true);
+		var numericUpDownPrzychody = Kontrolki.NumericUpDown();
+		var numericUpDownKoszty = Kontrolki.NumericUpDown();
+		var numericUpDownSkladkiZus = Kontrolki.NumericUpDown();
+		var numericUpDownPodatek = Kontrolki.NumericUpDown();
+		var numericUpDownPrzeniesiony = Kontrolki.NumericUpDown();
+		var numericUpDownDoPrzeniesienia = Kontrolki.NumericUpDown();
+		var numericUpDownDoWplaty = Kontrolki.NumericUpDown();
 
 		kontroler.Powiazanie(dateTimePickerMiesiac, deklaracja => deklaracja.Miesiac);
 		kontroler.Powiazanie(numericUpDownPrzychody, deklaracja => deklaracja.Przychody);
@@ -19,6 +26,15 @@ partial class ZaliczkaPitEdytor : ZaliczkaPitEdytorBase
 		kontroler.Powiazanie(numericUpDownPrzeniesiony, deklaracja => deklaracja.Przeniesiony);
 		kontroler.Powiazanie(numericUpDownDoPrzeniesienia, deklaracja => deklaracja.DoPrzeniesienia);
 		kontroler.Powiazanie(numericUpDownDoWplaty, deklaracja => deklaracja.DoWplaty);
+
+		var obliczenia = new DwieKolumny();
+		obliczenia.DodajWiersz(numericUpDownPrzychody, "Przychody");
+		obliczenia.DodajWiersz(numericUpDownKoszty, "Koszty");
+		obliczenia.DodajWiersz(numericUpDownSkladkiZus, "Składki ZUS");
+		obliczenia.DodajWiersz(numericUpDownPodatek, "Podatek");
+		obliczenia.DodajWiersz(numericUpDownPrzeniesiony, "Przeniesiony");
+		obliczenia.DodajWiersz(numericUpDownDoPrzeniesienia, "Do przeniesienia");
+		obliczenia.DodajWiersz(numericUpDownDoWplaty, "Do wpłaty");
 
 		var dodajSprzedazDoZaliczki = new DynamicznaAkcja<Faktura>("➕ Dodaj do zaliczki [INS]", kontekst =>
 		{
@@ -40,7 +56,6 @@ partial class ZaliczkaPitEdytor : ZaliczkaPitEdytorBase
 			Przelicz();
 		}, Keys.Insert, Keys.None);
 
-
 		var usunZZaliczki = new DynamicznaAkcja<Faktura>("❌ Usuń z zaliczki [DEL]", (kontekst, rekordy) =>
 		{
 			foreach (var rekord in rekordy)
@@ -54,8 +69,22 @@ partial class ZaliczkaPitEdytor : ZaliczkaPitEdytorBase
 		fakturySprzedazy = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazySpis(), new AkcjaNaSpisie<Faktura>[] { dodajSprzedazDoZaliczki, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZZaliczki, new WydrukFakturyAkcja(), new PrzeladujAkcja<Faktura>() });
 		fakturyZakupu = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis(), new AkcjaNaSpisie<Faktura>[] { dodajZakupDoZaliczki, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZZaliczki, new PrzeladujAkcja<Faktura>() });
 
-		tabPageFakturySprzedazy.Controls.Add(fakturySprzedazy);
-		tabPageFakturyZakupu.Controls.Add(fakturyZakupu);
+		var naglowek = new Poziomo([
+			Kontrolki.Label("Miesiąc"),
+			dateTimePickerMiesiac,
+			Kontrolki.Button("Przelicz", delegate { WybierzFaktury(); Przelicz(); })
+			]);
+
+		var zakladki = new Zakladki();
+		zakladki.Dodaj("Obliczenia", obliczenia);
+		zakladki.Dodaj("Sprzedaż", fakturySprzedazy);
+		zakladki.Dodaj("Zakup", fakturyZakupu);
+
+		var uklad = new Siatka([-1], [0, -1]);
+		uklad.DodajWiersz([naglowek]);
+		uklad.DodajWiersz([zakladki]);
+
+		UstawZawartosc(uklad);
 	}
 
 	protected override void RekordGotowy()
@@ -93,8 +122,4 @@ partial class ZaliczkaPitEdytor : ZaliczkaPitEdytorBase
 		Rekord.Przelicz(Kontekst.Baza);
 		kontroler.AktualizujKontrolki();
 	}
-}
-
-class ZaliczkaPitEdytorBase : Edytor<ZaliczkaPit>
-{
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProFak.DB;
-using ProFak.UI.Faktury;
 
 namespace ProFak.UI;
 
@@ -14,7 +13,6 @@ class WyslijMailAkcja : AkcjaNaSpisie<Faktura>
 	{
 		using var nowyKontekst = new Kontekst(kontekst);
 		using var edytor = new WysylkaFakturEdytor();
-		using var okno = new Dialog("Wysyłka faktur", edytor, nowyKontekst);
 		var faktury = new List<Faktura>();
 		foreach (var rekord in zaznaczoneRekordy)
 		{
@@ -27,9 +25,8 @@ class WyslijMailAkcja : AkcjaNaSpisie<Faktura>
 				.First();
 			faktury.Add(faktura);
 		}
-		okno.CzyPrzyciskiWidoczne = false;
 		edytor.Kontekst = nowyKontekst;
 		edytor.Faktury = faktury;
-		okno.ShowDialog();
+		Dialog.Pokaz("Wysyłka faktur", edytor, nowyKontekst);
 	}
 }

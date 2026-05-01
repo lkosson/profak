@@ -1,19 +1,28 @@
-﻿using Microsoft.Reporting.WinForms;
-using ProFak.DB;
+﻿using ProFak.DB;
 using System.ComponentModel;
 using System.Data;
 using System.Net;
 using System.Net.Mail;
 
-namespace ProFak.UI.Faktury;
+namespace ProFak.UI;
 
-partial class WysylkaFakturEdytor : UserControl
+class WysylkaFakturEdytor : Edytor
 {
 	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public IEnumerable<Faktura> Faktury { get; set; } = [];
-
+	
 	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Kontekst Kontekst { get; set; } = default!;
+
+	private readonly TextBox textBoxTresc;
+	private readonly TextBox textBoxTemat;
+	private readonly TextBox textBoxAdresat;
+	private readonly ComboBox comboBoxFaktura;
+	private readonly Button buttonPoprzednia;
+	private readonly Button buttonNastepna;
+	private readonly Button buttonWyslij;
+	private readonly CheckBox checkBoxUstawDate;
+	private readonly CheckBox checkBoxPrzeliczTermin;
 
 	private string szablonAdresat = "";
 	private string szablonTemat = "";
@@ -22,16 +31,31 @@ partial class WysylkaFakturEdytor : UserControl
 
 	public WysylkaFakturEdytor()
 	{
-		InitializeComponent();
-		Wyglad.UsunIkonePrzycisku(buttonNastepna);
-		Wyglad.UsunIkonePrzycisku(buttonPoprzednia);
-		Wyglad.UsunIkonePrzycisku(buttonWyslij);
+		textBoxTresc = Kontrolki.TextArea(linie: 15, zmienionaWartosc: ZmienionaTresc);
+		textBoxTemat = Kontrolki.TextBox(zmienionaWartosc: ZmienionyTemat);
+		textBoxAdresat = Kontrolki.TextBox(zmienionaWartosc: ZmienionyAdresat);
+		comboBoxFaktura = Kontrolki.DropDownList(zmienionaWartosc: ZmienionaFaktura);
+		buttonPoprzednia = Kontrolki.Button("« Poprzednia", Poprzednia);
+		buttonNastepna = Kontrolki.Button("» Następna", Nastepna);
+		buttonWyslij = Kontrolki.Button("✉ Wyślij", Wyslij);
+		checkBoxUstawDate = Kontrolki.CheckBox("Ustaw datę wystawienia na bieżący dzień", zmienionaWartosc: ZmienionaData);
+		checkBoxPrzeliczTermin = Kontrolki.CheckBox("i przelicz termin płatności");
+
+		checkBoxPrzeliczTermin.Enabled = false;
+		var uklad = new Siatka([0, -1, 0, 0, 0], [0, 0, 0, 0, -1]);
+		uklad.DodajWiersz("Faktura", [comboBoxFaktura, buttonPoprzednia, buttonNastepna, buttonWyslij]);
+		uklad.DodajWiersz("Adresat", [(textBoxAdresat, 4)]);
+		uklad.DodajWiersz("Temat", [(textBoxTemat, 4)]);
+		uklad.DodajWiersz([(new Poziomo([checkBoxUstawDate, checkBoxPrzeliczTermin]), 5)]);
+		uklad.DodajWiersz([(textBoxTresc, 5)]);
+
+		UstawZawartosc(uklad);
 	}
 
 	protected override void OnLoad(EventArgs e)
 	{
 		var konfiguracja = Kontekst.Baza.Konfiguracja.First();
-		if (konfiguracja.CzyDomyslna) MessageBox.Show("Przed wysłaniem wiadomości należy uzupełnić parametry połączenia z serwerem pocztowym dostępne w menu \"Serwisowe\" » \"Konfiguracja\".", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+		if (konfiguracja.CzyDomyslna) OknoKomunikatu.Ostrzezenie("Przed wysłaniem wiadomości należy uzupełnić parametry połączenia z serwerem pocztowym dostępne w menu \"Serwisowe\" » \"Konfiguracja\".");
 		szablonAdresat = "[NABYWCA-NAZWA] <[NABYWCA-EMAIL]>";
 		szablonTemat = konfiguracja.EMailTemat;
 		szablonTresc = konfiguracja.EMailTresc;
@@ -39,11 +63,12 @@ partial class WysylkaFakturEdytor : UserControl
 		var pozycje = new List<Faktura>();
 		pozycje.Add(new Faktura { Numer = "(wszystkie)", Id = 0 });
 		pozycje.AddRange(Faktury.OrderBy(e => e.DataWystawienia).ThenBy(e => e.Id));
+		comboBoxFaktura.DisplayMember = "Numer";
 		comboBoxFaktura.DataSource = pozycje;
 		base.OnLoad(e);
 	}
 
-	private void comboBoxFaktura_SelectedIndexChanged(object? sender, EventArgs e)
+	private void ZmienionaFaktura()
 	{
 		if (comboBoxFaktura.SelectedIndex == 0)
 		{
@@ -59,30 +84,23 @@ partial class WysylkaFakturEdytor : UserControl
 		}
 	}
 
-	private void buttonPoprzednia_Click(object? sender, EventArgs e)
+	private void Poprzednia()
 	{
 		if (comboBoxFaktura.SelectedIndex == 0) return;
 		comboBoxFaktura.SelectedIndex--;
 	}
 
-	private void buttonNastepna_Click(object? sender, EventArgs e)
+	private void Nastepna()
 	{
 		if (comboBoxFaktura.SelectedIndex == comboBoxFaktura.Items.Count - 1) return;
 		comboBoxFaktura.SelectedIndex++;
 	}
 
-	private void buttonWyslij_Click(object? sender, EventArgs e)
+	private void Wyslij()
 	{
-		try
-		{
-			var idx = comboBoxFaktura.SelectedIndex;
-			if (idx == 0) WyslijWszystkie();
-			else WyslijBiezaca();
-		}
-		catch (Exception exc)
-		{
-			OknoBledu.Pokaz(exc);
-		}
+		var idx = comboBoxFaktura.SelectedIndex;
+		if (idx == 0) WyslijWszystkie();
+		else WyslijBiezaca();
 	}
 
 	private void WyslijBiezaca()
@@ -193,25 +211,25 @@ partial class WysylkaFakturEdytor : UserControl
 		await smtp.SendMailAsync(wiadomosc, cancellationToken);
 	}
 
-	private void textBoxAdresat_TextChanged(object? sender, EventArgs e)
+	private void ZmienionyAdresat()
 	{
 		if (comboBoxFaktura.SelectedIndex != 0) return;
 		szablonAdresat = textBoxAdresat.Text;
 	}
 
-	private void textBoxTemat_TextChanged(object? sender, EventArgs e)
+	private void ZmienionyTemat()
 	{
 		if (comboBoxFaktura.SelectedIndex != 0) return;
 		szablonTemat = textBoxTemat.Text;
 	}
 
-	private void textBoxTresc_TextChanged(object? sender, EventArgs e)
+	private void ZmienionaTresc()
 	{
 		if (comboBoxFaktura.SelectedIndex != 0) return;
 		szablonTresc = textBoxTresc.Text;
 	}
 
-	private void checkBoxUstawDate_CheckedChanged(object? sender, EventArgs e)
+	private void ZmienionaData()
 	{
 		checkBoxPrzeliczTermin.Enabled = checkBoxUstawDate.Checked;
 		if (!checkBoxUstawDate.Checked) checkBoxPrzeliczTermin.Checked = false;

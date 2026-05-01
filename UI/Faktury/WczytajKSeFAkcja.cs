@@ -23,9 +23,9 @@ class WczytajKSeFAkcja : AkcjaNaSpisie<Faktura>
 		var pominOkno = false;
 		if (pliki.Length > 1)
 		{
-			var odp = MessageBox.Show("Wybrano więcej niż jeden plik do importu. Czy wczytać faktury w ciemno, bez wyświetlania formularza edycji dla każdej z nich?", "ProFak", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-			if (odp == DialogResult.Cancel) return;
-			if (odp == DialogResult.Yes) pominOkno = true;
+			var odp = OknoKomunikatu.PytanieTakNieAnuluj("Wybrano więcej niż jeden plik do importu. Czy wczytać faktury w ciemno, bez wyświetlania formularza edycji dla każdej z nich?", domyslnie: false);
+			if (odp is null) return;
+			if (odp is false) pominOkno = true;
 		}
 
 		for (var i = 0; i < pliki.Length; i++)
@@ -36,7 +36,7 @@ class WczytajKSeFAkcja : AkcjaNaSpisie<Faktura>
 			var faktura = DodajFakture(nowyKontekst, plik, pominOkno);
 			if (faktura == null)
 			{
-				if (i < pliki.Length - 1 && MessageBox.Show("Kontynuować dodawanie faktur ze wskazanych plików?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
+				if (i < pliki.Length - 1 && !OknoKomunikatu.PytanieTakNie("Kontynuować dodawanie faktur ze wskazanych plików?"))
 					break;
 				continue;
 			}
@@ -56,7 +56,7 @@ class WczytajKSeFAkcja : AkcjaNaSpisie<Faktura>
 		}
 		catch (Exception exc)
 		{
-			MessageBox.Show($"Wczytanie faktury z pliku {plik} nie powiodło się ({exc.Message}).", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			OknoKomunikatu.Ostrzezenie($"Wczytanie faktury z pliku {plik} nie powiodło się ({exc.Message}).");
 			return null;
 		}
 		faktura.DataKSeF = DateTime.Now;
@@ -64,7 +64,7 @@ class WczytajKSeFAkcja : AkcjaNaSpisie<Faktura>
 		if (Regex.IsMatch(numerKsef, @"\d{10}-\d{8}-[0-9A-Fa-f]{12}-[0-9A-Fa-f]{2}"))
 		{
 			var istniejaca = kontekst.Baza.Faktury.FirstOrDefault(e => e.NumerKSeF == numerKsef && e.Rodzaj != RodzajFaktury.Usunięta);
-			if (istniejaca != null && MessageBox.Show($"Faktura {istniejaca.Numer} ({istniejaca.NumerKSeF}) już istnieje w bazie. Czy mimo to chcesz ją dodać ponownie?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) != DialogResult.Yes) 
+			if (istniejaca != null && !OknoKomunikatu.PytanieTakNie($"Faktura {istniejaca.Numer} ({istniejaca.NumerKSeF}) już istnieje w bazie. Czy mimo to chcesz ją dodać ponownie?", domyslnie: false))
 				return null;
 			faktura.NumerKSeF = numerKsef;
 		}
@@ -74,9 +74,8 @@ class WczytajKSeFAkcja : AkcjaNaSpisie<Faktura>
 		{
 			kontekst.Dodaj(faktura);
 			using var edytor = new FakturaEdytor();
-			using var okno = new Dialog("Nowa pozycja", edytor, kontekst);
 			edytor.Przygotuj(kontekst, faktura);
-			if (okno.ShowDialog() != DialogResult.OK) return null;
+			if (!DialogEdycji.Pokaz("Nowa pozycja", edytor, kontekst)) return null;
 			edytor.KoniecEdycji();
 			kontekst.Baza.Zapisz(faktura);
 		}

@@ -14,9 +14,9 @@ class DodajJakoZakupAkcja : AkcjaNaSpisie<Faktura>
 		var pominOkno = false;
 		if (zaznaczoneRekordy.Count() > 1)
 		{
-			var odp = MessageBox.Show("Wybrano więcej niż jedną fakturę do dodania. Czy zapisać faktury w ciemno, bez wyświetlania formularza edycji dla każdej z nich?", "ProFak", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-			if (odp == DialogResult.Cancel) return;
-			if (odp == DialogResult.Yes) pominOkno = true;
+			var odp = OknoKomunikatu.PytanieTakNieAnuluj("Wybrano więcej niż jedną fakturę do dodania. Czy zapisać faktury w ciemno, bez wyświetlania formularza edycji dla każdej z nich?", domyslnie: false);
+			if (odp is null) return;
+			if (odp is true) pominOkno = true;
 		}
 
 		var rekordy = new List<Faktura>();
@@ -28,9 +28,9 @@ class DodajJakoZakupAkcja : AkcjaNaSpisie<Faktura>
 			var istniejaca = nowyKontekst.Baza.Faktury.FirstOrDefault(e => e.NumerKSeF == naglowek.NumerKSeF && e.Rodzaj != RodzajFaktury.Usunięta);
 			if (istniejaca != null)
 			{
-				var odp = MessageBox.Show($"Faktura {istniejaca.Numer} ({istniejaca.NumerKSeF}) już istnieje w bazie. Czy mimo to chcesz ją dodać ponownie?", "ProFak", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-				if (odp == DialogResult.No) continue;
-				if (odp == DialogResult.Cancel) break;
+				var odp = OknoKomunikatu.PytanieTakNieAnuluj($"Faktura {istniejaca.Numer} ({istniejaca.NumerKSeF}) już istnieje w bazie. Czy mimo to chcesz ją dodać ponownie?", domyslnie: false);
+				if (odp is false) continue;
+				if (odp is null) break;
 			}
 
 			if (String.IsNullOrEmpty(naglowek.XMLKSeF))
@@ -56,11 +56,10 @@ class DodajJakoZakupAkcja : AkcjaNaSpisie<Faktura>
 			{
 				nowyKontekst.Dodaj(faktura);
 				using var edytor = new FakturaEdytor();
-				using var okno = new Dialog("Nowa pozycja", edytor, nowyKontekst);
 				edytor.Przygotuj(nowyKontekst, faktura);
-				if (okno.ShowDialog() != DialogResult.OK)
+				if (!DialogEdycji.Pokaz("Nowa pozycja", edytor, nowyKontekst))
 				{
-					if (naglowek != zaznaczoneRekordy.Last() && MessageBox.Show("Kontynuować dodawanie faktur ze wskazanych plików?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) != DialogResult.Yes)
+					if (naglowek != zaznaczoneRekordy.Last() && !OknoKomunikatu.PytanieTakNie("Kontynuować dodawanie faktur ze wskazanych plików?"))
 						break;
 					continue;
 				}

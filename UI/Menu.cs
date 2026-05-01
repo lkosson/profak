@@ -6,6 +6,7 @@ class Menu : TreeView
 {
 	public Menu()
 	{
+		Margin = new Padding(0);
 	}
 
 	protected override void OnHandleCreated(EventArgs e)

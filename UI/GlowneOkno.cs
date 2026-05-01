@@ -3,23 +3,54 @@ using ProFak.DB;
 using System.ComponentModel;
 using System.Data;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace ProFak.UI;
 
-public partial class GlowneOkno : Form
+class GlowneOkno : Form
 {
+	private Menu menu;
+	private Panel panelZawartosc;
 	private TreeNode? ostatnioWybrany;
 	private bool trwaAktualizacjaMenu;
 	private bool menuGotowe;
 
 	public GlowneOkno()
 	{
-		InitializeComponent();
+		menu = new Menu();
+		menu.AfterCollapse += menu_AfterCollapse;
+		menu.BeforeExpand += menu_BeforeExpand;
+		menu.AfterExpand += menu_AfterExpand;
+		menu.AfterSelect += menu_AfterSelect;
+		menu.NodeMouseClick += menu_NodeMouseClick;
+		menu.KeyPress += menu_KeyPress;
+
+		panelZawartosc = new Panel();
+		panelZawartosc.Margin = new Padding(0);
+
+		var uklad = new Siatka([Wyglad.SzerokoscMenu, -1], [-1]);
+		uklad.DodajWiersz([menu, panelZawartosc]);
+
+		KeyPreview = true;
+		WindowState = FormWindowState.Maximized;
+		Text = "ProFak";
+		Icon = Ikona;
+		uklad.Dock = DockStyle.Fill;
+		Controls.Add(uklad);
+
 		ZbudujMenu();
-		panelMenu.Width = Wyglad.SzerokoscMenu;
 	}
 
-	public static Icon? Ikona => (Icon?)new ComponentResourceManager(typeof(GlowneOkno)).GetObject("$this.Icon");
+	public static Icon? Ikona
+	{
+		get
+		{
+			var asm = Assembly.GetExecutingAssembly();
+			using var dane = asm.GetManifestResourceStream("ProFak.ikona.ico");
+			if (dane == null) return null;
+			return new Icon(dane);
+		}
+	}
 
 	protected override void OnLoad(EventArgs e)
 	{
@@ -32,7 +63,7 @@ public partial class GlowneOkno : Form
 	{
 		if (e.CloseReason == CloseReason.UserClosing && Wyglad.PotwierdzanieZamknieciaProgramu)
 		{
-			if (MessageBox.Show("Czy na pewno chcesz zamknąć program?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+			if (!OknoKomunikatu.PytanieTakNie("Czy na pewno chcesz zamknąć program?", domyslnie: false))
 			{
 				e.Cancel = true;
 			}

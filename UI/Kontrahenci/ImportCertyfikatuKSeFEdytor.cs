@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 
-namespace ProFak.UI.Kontrahenci;
+namespace ProFak.UI;
 
-partial class ImportCertyfikatuKSeFEdytor : UserControl
+class ImportCertyfikatuKSeFEdytor : Edytor
 {
 	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public SrodowiskoKSeF SrodowiskoKSeF { get; set; }
@@ -17,9 +17,36 @@ partial class ImportCertyfikatuKSeFEdytor : UserControl
 	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public string NIP { get; set; } = "";
 
+	private readonly LinkLabel linkLabelAplikacjaPodatnika;
+	private readonly TextBox textBoxCertyfikat;
+	private readonly TextBox textBoxKlucz;
+	private readonly TextBox textBoxHaslo;
+	private readonly Button buttonCertyfikat;
+	private readonly Button buttonKlucz;
+	private readonly Button buttonZapisz;
+
 	public ImportCertyfikatuKSeFEdytor()
 	{
-		InitializeComponent();
+		textBoxCertyfikat = Kontrolki.TextBox();
+		textBoxKlucz = Kontrolki.TextBox();
+		textBoxHaslo = Kontrolki.TextBox();
+		buttonCertyfikat = Kontrolki.ButtonSlownik(WybierzCertyfikat);
+		buttonKlucz = Kontrolki.ButtonSlownik(WybierzKlucz);
+		buttonZapisz = Kontrolki.Button("Zapisz", Zapisz);
+		linkLabelAplikacjaPodatnika = Kontrolki.Link("Aplikacja podatnika", AplikacjaPodatnika);
+
+		var uklad = new Siatka([0, -1, 0], []);
+		uklad.DodajWiersz([(Kontrolki.Text("Aby nadać ProFakowi dostęp do KSeF przy użyciu certyfikatu, zaloguj się do Aplikacji Podatnika używając poniższego odnośnika, a następnie wygeneruj nowy certyfikat przeznaczony do uwierzytelniania."), 3)]);
+		uklad.DodajWiersz([(linkLabelAplikacjaPodatnika, 3)]);
+		uklad.DodajWiersz([(Kontrolki.Text("Wskaż w poniższych polach pliki z wygenerowanym w Aplikacji Podatnika certyfikatem i kluczem prywatnym oraz wprowadź hasło do klucza prywatnego."), 3)]);
+		uklad.DodajWiersz("Plik certyfikatu", [textBoxCertyfikat, buttonCertyfikat]);
+		uklad.DodajWiersz("Plik klucza prywatnego", [textBoxKlucz, buttonKlucz]);
+		uklad.DodajWiersz("Hasło klucza prywatnego", [(textBoxHaslo, 2)]);
+		uklad.DodajWiersz([(Kontrolki.Text("Po kliknięciu \"Zapisz\" ProFak wczyta podane pliki, a następnie spróbuje uwierzytelnić się przy użyciu certyfikatu w API KSeF."), 3)]);
+		uklad.DodajWiersz([(new Poziomo([buttonZapisz]), 3)]);
+		uklad.Size = uklad.GetPreferredSize(new Size(600 * DeviceDpi / 96, 0));
+
+		UstawZawartosc(uklad);
 	}
 
 	protected override void OnLoad(EventArgs e)
@@ -30,12 +57,12 @@ partial class ImportCertyfikatuKSeFEdytor : UserControl
 		base.OnLoad(e);
 	}
 
-	private void linkLabelAplikacjaPodatnika_LinkClicked(object? sender, LinkLabelLinkClickedEventArgs e)
+	private void AplikacjaPodatnika()
 	{
-		if (sender is LinkLabel link) Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = link.Text });
+		Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = linkLabelAplikacjaPodatnika.Text });
 	}
 
-	private void buttonCertyfikat_Click(object? sender, EventArgs e)
+	private void WybierzCertyfikat()
 	{
 		using var dialog = new OpenFileDialog();
 		dialog.Filter = "Certyfikaty (*.crt)|*.crt|Wszystkie pliki (*.*)|*.*";
@@ -44,10 +71,10 @@ partial class ImportCertyfikatuKSeFEdytor : UserControl
 		if (dialog.ShowDialog() != DialogResult.OK) return;
 		var zawartosc = File.ReadAllText(dialog.FileName);
 		if (zawartosc.Contains("-----BEGIN CERTIFICATE-----")) textBoxCertyfikat.Text = dialog.FileName;
-		else MessageBox.Show("Wskazany plik nie zawiera poprawnego certyfikatu.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+		else OknoKomunikatu.Ostrzezenie("Wskazany plik nie zawiera poprawnego certyfikatu.");
 	}
 
-	private void buttonKlucz_Click(object? sender, EventArgs e)
+	private void WybierzKlucz()
 	{
 		using var dialog = new OpenFileDialog();
 		dialog.Filter = "Klucze prywatne (*.key)|*.key|Wszystkie pliki (*.*)|*.*";
@@ -57,48 +84,41 @@ partial class ImportCertyfikatuKSeFEdytor : UserControl
 		textBoxKlucz.Text = dialog.FileName;
 		var zawartosc = File.ReadAllText(dialog.FileName);
 		if (zawartosc.Contains("-----BEGIN ENCRYPTED PRIVATE KEY-----") || zawartosc.Contains("-----BEGIN PRIVATE KEY-----")) textBoxKlucz.Text = dialog.FileName;
-		else MessageBox.Show("Wskazany plik nie zawiera poprawnego klucza prywatnego.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+		else OknoKomunikatu.Ostrzezenie("Wskazany plik nie zawiera poprawnego klucza prywatnego.");
 	}
 
-	private void buttonZapisz_Click(object? sender, EventArgs e)
+	private void Zapisz()
 	{
-		try
+		if (String.IsNullOrEmpty(textBoxCertyfikat.Text))
 		{
-			if (String.IsNullOrEmpty(textBoxCertyfikat.Text))
-			{
-				MessageBox.Show("Wskaż plik z certyfikatem dostępowym KSeF.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-				return;
-			}
-
-			if (String.IsNullOrEmpty(textBoxKlucz.Text))
-			{
-				MessageBox.Show("Wskaż plik z kluczem prywatnym.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-				return;
-			}
-
-			var plikCertyfikatu = textBoxCertyfikat.Text;
-			var plikKlucza = textBoxKlucz.Text;
-			if (!plikCertyfikatu.StartsWith("-----")) plikCertyfikatu = File.ReadAllText(plikCertyfikatu);
-			if (!plikKlucza.StartsWith("-----")) plikKlucza = File.ReadAllText(plikKlucza);
-
-			var certyfikat = X509CertificateLoaderExtensions.LoadCertificate(Encoding.UTF8.GetBytes(plikCertyfikatu));
-			var polaczonyCertyfikat = X509CertificateLoaderExtensions.MergeWithPemKey(certyfikat, plikKlucza, textBoxHaslo.Text);
-			var blobCertyfikatu = polaczonyCertyfikat.Export(System.Security.Cryptography.X509Certificates.X509ContentType.Pkcs12);
-
-			OknoPostepu.Uruchom(async cancellationToken =>
-			{
-				IO.KSEF2.API.ZapomnijAktywnaSesje();
-				using var api = new IO.KSEF2.API(SrodowiskoKSeF);
-				await api.UwierzytelnijAsync(NIP, polaczonyCertyfikat, cancellationToken);
-			});
-
-			Certyfikat = Convert.ToBase64String(blobCertyfikatu);
-			MessageBox.Show("Certyfikat zaimportowany poprawnie. Możesz skasować pliki certyfikatu i klucza prywatnego.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
-			ParentForm?.Close();
+			OknoKomunikatu.Ostrzezenie("Wskaż plik z certyfikatem dostępowym KSeF.");
+			return;
 		}
-		catch (Exception exc)
+
+		if (String.IsNullOrEmpty(textBoxKlucz.Text))
 		{
-			OknoBledu.Pokaz(exc);
+			OknoKomunikatu.Ostrzezenie("Wskaż plik z kluczem prywatnym.");
+			return;
 		}
+
+		var plikCertyfikatu = textBoxCertyfikat.Text;
+		var plikKlucza = textBoxKlucz.Text;
+		if (!plikCertyfikatu.StartsWith("-----")) plikCertyfikatu = File.ReadAllText(plikCertyfikatu);
+		if (!plikKlucza.StartsWith("-----")) plikKlucza = File.ReadAllText(plikKlucza);
+
+		var certyfikat = X509CertificateLoaderExtensions.LoadCertificate(Encoding.UTF8.GetBytes(plikCertyfikatu));
+		var polaczonyCertyfikat = X509CertificateLoaderExtensions.MergeWithPemKey(certyfikat, plikKlucza, textBoxHaslo.Text);
+		var blobCertyfikatu = polaczonyCertyfikat.Export(System.Security.Cryptography.X509Certificates.X509ContentType.Pkcs12);
+
+		OknoPostepu.Uruchom(async cancellationToken =>
+		{
+			IO.KSEF2.API.ZapomnijAktywnaSesje();
+			using var api = new IO.KSEF2.API(SrodowiskoKSeF);
+			await api.UwierzytelnijAsync(NIP, polaczonyCertyfikat, cancellationToken);
+		});
+
+		Certyfikat = Convert.ToBase64String(blobCertyfikatu);
+		OknoKomunikatu.Informacja("Certyfikat zaimportowany poprawnie. Możesz skasować pliki certyfikatu i klucza prywatnego.");
+		ParentForm?.Close();
 	}
 }

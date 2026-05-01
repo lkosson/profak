@@ -16,7 +16,7 @@ class ZapiszJakoPDFZKSeFAkcja(bool spisKSeF = false) : AkcjaNaSpisie<Faktura>
 		var faktury = zaznaczoneRekordy.Where(e => !String.IsNullOrEmpty(e.NumerKSeF)).ToList();
 		if (faktury.Count == 0)
 		{
-			MessageBox.Show("Żadna z wybranych faktur nie posiada danych KSeF.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			OknoKomunikatu.Ostrzezenie("Żadna z wybranych faktur nie posiada danych KSeF.");
 			return;
 		}
 
@@ -77,7 +77,7 @@ class ZapiszJakoPDFZKSeFAkcja(bool spisKSeF = false) : AkcjaNaSpisie<Faktura>
 					liczbaPlikow++;
 				}
 			});
-			MessageBox.Show($"Liczba wygenerowanych plików PDF: {liczbaPlikow}.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			OknoKomunikatu.Informacja($"Liczba wygenerowanych plików PDF: {liczbaPlikow}.");
 		}
 	}
 }

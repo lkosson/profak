@@ -26,6 +26,6 @@ class ZapiszPlikiAkcja : AkcjaNaSpisie<Faktura>
 				liczbaPlikow++;
 			}
 		}
-		MessageBox.Show($"Liczba zapisanych plików: {liczbaPlikow}.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		OknoKomunikatu.Informacja($"Liczba zapisanych plików: {liczbaPlikow}.");
 	}
 }

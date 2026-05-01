@@ -3,14 +3,46 @@ using System.Data;
 
 namespace ProFak.UI;
 
-partial class EdytorTabeli : UserControl, IKontrolkaZKontekstem
+partial class EdytorTabeli : Edytor, IKontrolkaZKontekstem
 {
 	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Kontekst Kontekst { get; set; } = default!;
 
+	private readonly Button buttonWczytaj;
+	private readonly TextBox textBoxStatus;
+	private readonly Spis dataGridViewWynik;
+	private readonly ComboBox comboBoxTabela;
+	private readonly NumericUpDown numericUpDownIDDo;
+	private readonly NumericUpDown numericUpDownIDOd;
+
 	public EdytorTabeli()
 	{
-		InitializeComponent();
+		comboBoxTabela = Kontrolki.DropDownList();
+		numericUpDownIDOd = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		numericUpDownIDDo = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		buttonWczytaj = Kontrolki.Button("Wczytaj", Wczytaj);
+		textBoxStatus = Kontrolki.TextBox();
+		dataGridViewWynik = new Spis();
+
+		textBoxStatus.ReadOnly = true;
+		dataGridViewWynik.AllowUserToAddRows = false;
+		dataGridViewWynik.AllowUserToDeleteRows = false;
+		dataGridViewWynik.AllowUserToOrderColumns = true;
+		dataGridViewWynik.AllowUserToResizeRows = false;
+		dataGridViewWynik.EnableHeadersVisualStyles = false;
+		dataGridViewWynik.RowHeadersVisible = false;
+		dataGridViewWynik.CellEndEdit += dataGridViewWynik_CellEndEdit;
+		dataGridViewWynik.KeyUp += dataGridViewWynik_KeyUp;
+		numericUpDownIDDo.Value = 999999999;
+
+		var zakres = new Siatka([0, 0, 0, 0, 0, 0, -1], []);
+		zakres.DodajWiersz([comboBoxTabela, Kontrolki.Label("ID="), numericUpDownIDOd, Kontrolki.Label("..."), numericUpDownIDDo, buttonWczytaj, textBoxStatus]);
+
+		var uklad = new Siatka([-1], [0, -1]);
+		uklad.DodajWiersz([new Grupa("Zakres danych", zakres)]);
+		uklad.DodajWiersz([new Grupa("Wynik", dataGridViewWynik)]);
+
+		UstawZawartosc(uklad);
 	}
 
 	protected override void OnCreateControl()
@@ -56,7 +88,7 @@ partial class EdytorTabeli : UserControl, IKontrolkaZKontekstem
 		};
 	}
 
-	private void buttonUruchom_Click(object? sender, EventArgs e)
+	private void Wczytaj()
 	{
 		try
 		{

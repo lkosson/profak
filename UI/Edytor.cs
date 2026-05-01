@@ -3,48 +3,27 @@ using System.ComponentModel;
 
 namespace ProFak.UI;
 
-class Edytor<TRekord> : UserControl
-	where TRekord : Rekord<TRekord>
+class Edytor : UserControl
 {
-	protected readonly Kontroler<TRekord> kontroler;
 	private readonly Container container;
 	protected readonly ErrorProvider errorProvider;
 	protected readonly ToolTip toolTip;
 
-	public TRekord Rekord { get => kontroler.Model; private set => kontroler.Model = value; }
-	public Kontekst Kontekst { get; private set; } = default!;
-
 	public Edytor()
 	{
 		container = new Container();
-		kontroler = new Kontroler<TRekord>();
 		errorProvider = new ErrorProvider(container);
 		toolTip = new ToolTip(container);
 	}
 
-	public void Przygotuj(Kontekst kontekst, TRekord rekord)
+	protected void UstawZawartosc(Control zawartosc, Size wymiary = default)
 	{
-		Kontekst = kontekst;
-		KontekstGotowy();
-		PrzygotujRekord(rekord);
-		Rekord = rekord;
-		RekordGotowy();
-	}
-
-	protected virtual void PrzygotujRekord(TRekord rekord)
-	{
-	}
-
-	protected virtual void KontekstGotowy()
-	{
-	}
-
-	protected virtual void RekordGotowy()
-	{
-	}
-
-	public virtual void KoniecEdycji()
-	{
+		SuspendLayout();
+		if (wymiary == default) wymiary = zawartosc.Size;
+		zawartosc.Dock = DockStyle.Fill;
+		Controls.Add(zawartosc);
+		MinimumSize = Size = wymiary;
+		ResumeLayout(true);
 	}
 
 	public void Wymagane(TextBox textBox)
@@ -98,6 +77,25 @@ class Edytor<TRekord> : UserControl
 		};
 	}
 
+	protected void Dymek(Control kontrolka, string tresc)
+	{
+		toolTip.SetToolTip(kontrolka, tresc);
+	}
+
+	protected void PodswietlStrukture()
+	{
+		var kolory = new[] { Color.Transparent, Color.Brown, Color.Red, Color.Orange, Color.Yellow, Color.GreenYellow, Color.DarkGreen, Color.Blue, Color.Violet };
+
+		void Podswietl(Control kontrolka, int poziom)
+		{
+			kontrolka.BackColor = kolory[poziom];
+			foreach (Control podkontrolka in kontrolka.Controls)
+				Podswietl(podkontrolka, poziom + 1);
+		}
+
+		Podswietl(this, 0);
+	}
+
 	private void TextBox_Wymagane_Validating(object? sender, CancelEventArgs e)
 	{
 		if (ModifierKeys == Keys.Shift) return;
@@ -131,10 +129,55 @@ class Edytor<TRekord> : UserControl
 		}
 	}
 
-	protected override void OnParentChanged(EventArgs e)
+	protected override void Dispose(bool disposing)
 	{
-		base.OnParentChanged(e);
-		if (ParentForm != null) ParentForm.FormClosing += ParentForm_FormClosing;
+		if (disposing) container.Dispose();
+		base.Dispose(disposing);
+	}
+}
+
+class Edytor<TRekord> : Edytor
+	where TRekord : Rekord<TRekord>
+{
+	protected readonly Kontroler<TRekord> kontroler;
+
+	public TRekord Rekord { get => kontroler.Model; private set => kontroler.Model = value; }
+	public Kontekst Kontekst { get; private set; } = default!;
+
+	public Edytor()
+	{
+		kontroler = new Kontroler<TRekord>();
+	}
+
+	public void Przygotuj(Kontekst kontekst, TRekord rekord)
+	{
+		Kontekst = kontekst;
+		KontekstGotowy();
+		PrzygotujRekord(rekord);
+		Rekord = rekord;
+		RekordGotowy();
+	}
+
+	protected virtual void PrzygotujRekord(TRekord rekord)
+	{
+	}
+
+	protected virtual void KontekstGotowy()
+	{
+	}
+
+	protected virtual void RekordGotowy()
+	{
+	}
+
+	public virtual void KoniecEdycji()
+	{
+	}
+
+	protected override void OnHandleCreated(EventArgs e)
+	{
+		base.OnHandleCreated(e);
+		ParentForm?.FormClosing += ParentForm_FormClosing;
 	}
 
 	private void ParentForm_FormClosing(object? sender, FormClosingEventArgs e)
@@ -147,16 +190,7 @@ class Edytor<TRekord> : UserControl
 			&& kontroler.CzyModelZmieniony
 			&& Wyglad.PotwierdzanieZamknieciaEdytora)
 		{
-			if (MessageBox.Show("Czy na pewno chcesz porzucić wprowadzone zmiany?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
-			{
-				e.Cancel = true;
-			}
+			e.Cancel = !OknoKomunikatu.PytanieTakNie("Czy na pewno chcesz porzucić wprowadzone zmiany?", domyslnie: false);
 		}
-	}
-
-	protected override void Dispose(bool disposing)
-	{
-		if (disposing) container.Dispose();
-		base.Dispose(disposing);
 	}
 }

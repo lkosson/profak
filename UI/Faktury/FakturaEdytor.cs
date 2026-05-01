@@ -4,8 +4,59 @@ using System.Diagnostics;
 
 namespace ProFak.UI;
 
-partial class FakturaEdytor : FakturaEdytorBase
+partial class FakturaEdytor : Edytor<Faktura>
 {
+	private readonly Label labelRodzaj;
+	private readonly TextBox textBoxNumer;
+	private readonly TextBox textBoxDaneSprzedawcy;
+	private readonly TextBox textBoxDaneNabywcy;
+	private readonly TextBox textBoxRachunekBankowy;
+	private readonly ComboBox comboBoxSposobPlatnosci;
+	private readonly Button buttonSprzedawca;
+	private readonly Button buttonNabywca;
+	private readonly Button buttonSposobPlatnosci;
+	private readonly ComboBox comboBoxNIPSprzedawcy;
+	private readonly ComboBox comboBoxNIPNabywcy;
+	private readonly ComboBox comboBoxNazwaSprzedawcy;
+	private readonly ComboBox comboBoxWaluta;
+	private readonly ComboBox comboBoxNazwaNabywcy;
+	private readonly Button buttonWaluta;
+	private readonly NumericUpDown numericUpDownNetto;
+	private readonly NumericUpDown numericUpDownVat;
+	private readonly NumericUpDown numericUpDownBrutto;
+	private readonly TextBox textBoxUwagiPubliczne;
+	private readonly TextBox textBoxUwagiWewnetrzne;
+	private readonly CheckBox checkBoxTP;
+	private readonly ComboBox comboBoxProcentKosztow;
+	private readonly ComboBox comboBoxProcentVat;
+	private readonly Button buttonNowySprzedawca;
+	private readonly Button buttonNowyNabywca;
+	private readonly CheckBox checkBoxZakupSrodkowTrwalych;
+	private readonly CheckBox checkBoxWDT;
+	private readonly CheckBox checkBoxWNT;
+	private readonly TextBox textBoxOpisZdarzenia;
+	private readonly TextBox textBoxNumerKSeF;
+	private readonly TextBox textBoxKSeFXML;
+	private readonly DateTimePicker dateTimePickerDataWystawienia;
+	private readonly DateTimePicker dateTimePickerDataSprzedazy;
+	private readonly DateTimePicker dateTimePickerDataWprowadzenia;
+	private readonly DateTimePicker dateTimePickerTerminPlatnosci;
+	private readonly NumericUpDown numericUpDownKurs;
+	private readonly ComboBox comboBoxProceduraMarzy;
+	private readonly CheckBox checkBoxReczneKwoty;
+	private readonly LinkLabel linkLabelUwagiPomoc;
+	private readonly TextBox textBoxNazwaBanku;
+	private readonly TextBox textBoxDataKSeF;
+	private readonly Button buttonDropDownKSeF;
+	private readonly ToolStripMenuItem menuKSeFZapiszXML;
+	private readonly ToolStripMenuItem menuKSeFZapiszWizualizacje;
+	private readonly ToolStripMenuItem menuKSeFKopiujOdnosnik;
+	private readonly ToolStripMenuItem menuKSeFOtworzOdnosnik;
+	private readonly ToolStripMenuItem menuKSeFGenerujXML;
+	private readonly Zakladki zakladki;
+	private readonly TabPage tabPagePodatki;
+	private readonly TabPage tabPageKSeF;
+
 	private readonly SpisZAkcjami<Wplata, WplataSpis> wplaty;
 	private readonly SpisZAkcjami<PozycjaFaktury, PozycjaFakturySpis> pozycjeFaktury;
 	private readonly SpisZAkcjami<Plik, PlikSpis> pliki;
@@ -20,7 +71,56 @@ partial class FakturaEdytor : FakturaEdytorBase
 
 	public FakturaEdytor()
 	{
-		InitializeComponent();
+		labelRodzaj = Kontrolki.Text("");
+		textBoxNumer = Kontrolki.TextBox();
+		textBoxDaneSprzedawcy = Kontrolki.TextArea(3);
+		textBoxDaneNabywcy = Kontrolki.TextArea(3);
+		textBoxRachunekBankowy = Kontrolki.TextBox();
+		comboBoxSposobPlatnosci = Kontrolki.SuggestBox();
+		buttonSprzedawca = Kontrolki.ButtonSlownik();
+		buttonNowySprzedawca = Kontrolki.ButtonDodaj(NowySprzedawca);
+		buttonNabywca = Kontrolki.ButtonSlownik();
+		buttonNowyNabywca = Kontrolki.ButtonDodaj(NowyNabywca);
+		buttonSposobPlatnosci = Kontrolki.ButtonSlownik();
+		comboBoxNIPSprzedawcy = Kontrolki.SuggestBox();
+		comboBoxNIPNabywcy = Kontrolki.SuggestBox();
+		comboBoxNazwaSprzedawcy = Kontrolki.SuggestBox();
+		comboBoxNazwaNabywcy = Kontrolki.SuggestBox();
+		comboBoxWaluta = Kontrolki.DropDownList(szerokosc: 70);
+		buttonWaluta = Kontrolki.ButtonSlownik();
+		numericUpDownNetto = Kontrolki.NumericUpDown();
+		numericUpDownVat = Kontrolki.NumericUpDown();
+		numericUpDownBrutto = Kontrolki.NumericUpDown();
+		textBoxUwagiPubliczne = Kontrolki.TextArea();
+		textBoxUwagiWewnetrzne = Kontrolki.TextArea();
+		checkBoxTP = Kontrolki.CheckBox("Podmiot powiązany");
+		comboBoxProcentKosztow = Kontrolki.SuggestBox(["100%", "75%", "20%", "0%"]);
+		comboBoxProcentVat = Kontrolki.SuggestBox(["100%", "50%", "0%"]);
+		checkBoxZakupSrodkowTrwalych = Kontrolki.CheckBox("Zakup środków trwałych");
+		checkBoxWDT = Kontrolki.CheckBox("WDT");
+		checkBoxWNT = Kontrolki.CheckBox("WNT");
+		textBoxOpisZdarzenia = Kontrolki.TextBox();
+		textBoxNumerKSeF = Kontrolki.TextBox(szerokosc: 220);
+		textBoxDataKSeF = Kontrolki.TextBox();
+		textBoxKSeFXML = Kontrolki.TextArea();
+		dateTimePickerDataWystawienia = Kontrolki.DatePicker();
+		dateTimePickerDataSprzedazy = Kontrolki.DatePicker();
+		dateTimePickerDataWprowadzenia = Kontrolki.DatePicker();
+		dateTimePickerTerminPlatnosci = Kontrolki.DatePicker();
+		numericUpDownKurs = Kontrolki.NumericUpDown(poPrzecinku: 4, szerokosc: 70);
+		comboBoxProceduraMarzy = Kontrolki.DropDownList();
+		checkBoxReczneKwoty = Kontrolki.CheckBox("Kwota \"razem\" ustawiona ręcznie");
+		linkLabelUwagiPomoc = Kontrolki.LinkPomoc(PomocUwagiPubliczne);
+		textBoxNazwaBanku = Kontrolki.TextBox(podpowiedz: "Nazwa banku", szerokosc: 120);
+		menuKSeFGenerujXML = Kontrolki.PopupMenuItem("Generuj XML", GenerujXML);
+		menuKSeFZapiszXML = Kontrolki.PopupMenuItem("Zapisz XML", ZapiszXML);
+		menuKSeFZapiszWizualizacje = Kontrolki.PopupMenuItem("Zapisz PDF z wizualizacją", ZapiszWizualizacje);
+		menuKSeFKopiujOdnosnik = Kontrolki.PopupMenuItem("Kopiuj odnośnik do schowka", KopiujOdnosnik);
+		menuKSeFOtworzOdnosnik = Kontrolki.PopupMenuItem("Otwórz odnośnik w przeglądarce", OtworzOdnosnik);
+		buttonDropDownKSeF = Kontrolki.ButtonMenu("e-Faktura", [menuKSeFGenerujXML, menuKSeFZapiszXML, menuKSeFZapiszWizualizacje, menuKSeFKopiujOdnosnik, menuKSeFOtworzOdnosnik]);
+
+		textBoxKSeFXML.Font = new Font("Consolas", 9);
+		textBoxKSeFXML.ScrollBars = ScrollBars.Both;
 
 		kontroler.Slownik<ProceduraMarży>(comboBoxProceduraMarzy);
 
@@ -74,23 +174,97 @@ partial class FakturaEdytor : FakturaEdytorBase
 		Walidacja<ProceduraMarży>(comboBoxProceduraMarzy, WalidacjaProceduryMarzy, false);
 		Walidacja(textBoxNumer, WalidacjaNumer, false);
 
-		tabPageWplaty.Controls.Add(wplaty = Spisy.Wplaty());
-		tabPagePozycje.Controls.Add(pozycjeFaktury = Spisy.PozycjeFaktur());
-		tabPagePliki.Controls.Add(pliki = Spisy.Pliki());
-		tabPageDodatkowePodmioty.Controls.Add(dodatkowePodmioty = Spisy.DodatkowePodmioty());
+		var naglowek = new Siatka([100, 0, -1, 20, 0, 0, 0, 20, 0, 0], []);
+		naglowek.DodajWiersz([labelRodzaj, Kontrolki.Label("Numer"), textBoxNumer, null, Kontrolki.Label("Waluta"), comboBoxWaluta, buttonWaluta, null, Kontrolki.Label("Kurs"), numericUpDownKurs]);
+
+		var sprzedawca = new Siatka([0, -1, 0, 0], []);
+		sprzedawca.DodajWiersz("NIP", [comboBoxNIPSprzedawcy, buttonSprzedawca, buttonNowySprzedawca]);
+		sprzedawca.DodajWiersz("Nazwa", [(comboBoxNazwaSprzedawcy, 3)]);
+		sprzedawca.DodajWiersz("Adres", [(textBoxDaneSprzedawcy, 3)]);
+
+		var nabywca = new Siatka([0, -1, 0, 0], []);
+		nabywca.DodajWiersz("NIP", [comboBoxNIPNabywcy, buttonNabywca, buttonNowyNabywca]);
+		nabywca.DodajWiersz("Nazwa", [(comboBoxNazwaNabywcy, 3)]);
+		nabywca.DodajWiersz("Adres", [(textBoxDaneNabywcy, 3)]);
+
+		var kontrahenci = new Siatka([-1, -1], []);
+		kontrahenci.DodajWiersz([
+			new Grupa("Sprzedawca", sprzedawca),
+			new Grupa("Nabywca", nabywca)
+			]);
+
+		var daty = new DwieKolumny();
+		daty.DodajWiersz(dateTimePickerDataWystawienia, "Data wystawienia");
+		daty.DodajWiersz(dateTimePickerDataSprzedazy, "Data sprzedaży");
+		daty.DodajWiersz(dateTimePickerDataWprowadzenia, "Data wprowadzenia");
+
+		var platnosc = new Siatka([0, -1, 0, 0], []);
+		platnosc.DodajWiersz("Sposób płatności", [(comboBoxSposobPlatnosci, 2), (buttonSposobPlatnosci, 1)]);
+		platnosc.DodajWiersz("Termin płatności", [(dateTimePickerTerminPlatnosci, 3)]);
+		platnosc.DodajWiersz("Numer rachunku", [(textBoxRachunekBankowy, 1), (textBoxNazwaBanku, 2)]);
+
+		var razem = new DwieKolumny();
+		razem.DodajWiersz(numericUpDownNetto, "Netto");
+		razem.DodajWiersz(numericUpDownVat, "VAT");
+		razem.DodajWiersz(numericUpDownBrutto, "Brutto");
+
+		var datyPlatnoscKwoty = new Siatka([0, -1, 0], []);
+		datyPlatnoscKwoty.DodajWiersz([
+			new Grupa("Daty", daty),
+			new Grupa("Płatności", platnosc),
+			new Grupa("Razem", razem)
+			]);
+
+		pozycjeFaktury = Spisy.PozycjeFaktur();
+		wplaty = Spisy.Wplaty();
+		pliki = Spisy.Pliki();
+		dodatkowePodmioty = Spisy.DodatkowePodmioty();
+
+		Grupa gruppaUwagiPubliczne;
+		linkLabelUwagiPomoc.Anchor = AnchorStyles.Bottom;
+		var uwagi = new Siatka([-1, -1], [-1]);
+		uwagi.DodajWiersz([
+			gruppaUwagiPubliczne = new Grupa("Uwagi (drukowane na fakturze)", textBoxUwagiPubliczne),
+			new Grupa("Uwagi (wewnętrzne)", textBoxUwagiWewnetrzne)
+			]);
+
+		gruppaUwagiPubliczne.Controls.Add(linkLabelUwagiPomoc);
+		linkLabelUwagiPomoc.Location = new Point(textBoxUwagiPubliczne.Width - 20, textBoxUwagiPubliczne.Height);
+		linkLabelUwagiPomoc.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+		linkLabelUwagiPomoc.BringToFront();
+
+		var podatki = new Siatka([0, 0, 20, 0, -1], []);
+		podatki.DodajWiersz("Udział w kosztach", [comboBoxProcentKosztow, null, checkBoxWDT]);
+		podatki.DodajWiersz("Udział w VA naliczonym", [comboBoxProcentVat, null, checkBoxWNT]);
+		podatki.DodajWiersz("Opis zdarzenia na PKPiR", [textBoxOpisZdarzenia, null, checkBoxTP]);
+		podatki.DodajWiersz("Procedura marży", [comboBoxProceduraMarzy, null, checkBoxZakupSrodkowTrwalych]);
+		podatki.DodajWiersz([null, null, null, checkBoxReczneKwoty]);
+
+		textBoxDataKSeF.ReadOnly = true;
+		buttonDropDownKSeF.Width = 120;
+		var ksef = new Siatka([0, 0, 20, 0, 0, 0, -1], [0, -1]);
+		ksef.DodajWiersz("Numer KSeF", [textBoxNumerKSeF, null, Kontrolki.Label("Data KSeF"), textBoxDataKSeF, buttonDropDownKSeF]);
+		ksef.DodajWiersz([(textBoxKSeFXML, 7)]);
+
+		pozycjeFaktury.Height = 200;
+		zakladki = new Zakladki();
+		zakladki.Dodaj("Pozycje", pozycjeFaktury);
+		zakladki.Dodaj("Wpłaty", wplaty);
+		zakladki.Dodaj("Pliki", pliki);
+		zakladki.Dodaj("Uwagi", uwagi);
+		zakladki.Dodaj("Dodatkowe podmioty", dodatkowePodmioty);
+		tabPagePodatki = zakladki.Dodaj("Podatki", podatki);
+		tabPageKSeF = zakladki.Dodaj("KSeF", ksef);
+
+		var uklad = new Siatka([-1], [0, 0, 0, -1]);
+		uklad.DodajWiersz([naglowek]);
+		uklad.DodajWiersz([kontrahenci]);
+		uklad.DodajWiersz([datyPlatnoscKwoty]);
+		uklad.DodajWiersz([zakladki]);
+
 		pozycjeFaktury.Spis.RekordyZmienione += pozycjeFakturySpis_RekordyZmienione;
 
-		dateTimePickerDataSprzedazy.CustomFormat = Wyglad.FormatDaty;
-		dateTimePickerDataWprowadzenia.CustomFormat = Wyglad.FormatDaty;
-		dateTimePickerDataWystawienia.CustomFormat = Wyglad.FormatDaty;
-		dateTimePickerTerminPlatnosci.CustomFormat = Wyglad.FormatDaty;
-
-		dateTimePickerDataSprzedazy.Format = DateTimePickerFormat.Custom;
-		dateTimePickerDataWprowadzenia.Format = DateTimePickerFormat.Custom;
-		dateTimePickerDataWystawienia.Format = DateTimePickerFormat.Custom;
-		dateTimePickerTerminPlatnosci.Format = DateTimePickerFormat.Custom;
-
-		Wyglad.UsunSkrotyZakladek(tabControl1);
+		UstawZawartosc(uklad);
 	}
 
 	private string? WalidacjaProceduryMarzy(ProceduraMarży wartosc)
@@ -98,7 +272,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 		if (Rekord.Rodzaj != RodzajFaktury.VatMarża && Rekord.Rodzaj != RodzajFaktury.KorektaVatMarży) return null;
 		if (wartosc == ProceduraMarży.NieDotyczy)
 		{
-			tabControl1.SelectedTab = tabPagePodatki;
+			zakladki.SelectedTab = tabPagePodatki;
 			return "Należy wybrać procedurę marży dla faktury Vat marża.";
 		}
 		return null;
@@ -116,52 +290,6 @@ partial class FakturaEdytor : FakturaEdytorBase
 	{
 		Rekord.PrzeliczRazem(Kontekst.Baza);
 		kontroler.AktualizujKontrolki();
-	}
-
-
-	protected override void OnHandleCreated(EventArgs e)
-	{
-		base.OnHandleCreated(e);
-		ParentForm?.KeyDown += Form_OnKeyDown;
-	}
-
-	private void Form_OnKeyDown(object? sender, KeyEventArgs e)
-	{
-		if (e.KeyCode == Keys.F1 && e.Modifiers == Keys.Control)
-		{
-			tabControl1.SelectedTab = tabPagePozycje;
-			pozycjeFaktury.Focus();
-		}
-		else if (e.KeyCode == Keys.F2 && e.Modifiers == Keys.Control)
-		{
-			tabControl1.SelectedTab = tabPageWplaty;
-			wplaty.Focus();
-		}
-		else if (e.KeyCode == Keys.F3 && e.Modifiers == Keys.Control)
-		{
-			tabControl1.SelectedTab = tabPagePliki;
-			pliki.Focus();
-		}
-		else if (e.KeyCode == Keys.F4 && e.Modifiers == Keys.Control)
-		{
-			tabControl1.SelectedTab = tabPageUwagi;
-			textBoxUwagiPubliczne.Focus();
-		}
-		else if (e.KeyCode == Keys.F5 && e.Modifiers == Keys.Control)
-		{
-			tabControl1.SelectedTab = tabPageDodatkowePodmioty;
-			wplaty.Focus();
-		}
-		else if (e.KeyCode == Keys.F6 && e.Modifiers == Keys.Control)
-		{
-			tabControl1.SelectedTab = tabPagePodatki;
-			wplaty.Focus();
-		}
-		else if (e.KeyCode == Keys.F7 && e.Modifiers == Keys.Control)
-		{
-			tabControl1.SelectedTab = tabPageKSeF;
-			textBoxNumerKSeF.Focus();
-		}
 	}
 
 	protected override void KontekstGotowy()
@@ -289,10 +417,10 @@ partial class FakturaEdytor : FakturaEdytorBase
 		pliki.Spis.Kontekst = Kontekst;
 		dodatkowePodmioty.Spis.FakturaRef = Rekord;
 		dodatkowePodmioty.Spis.Kontekst = Kontekst;
-		toolStripMenuItemKopiujOdnosnik.Enabled = !String.IsNullOrEmpty(Rekord.URLKSeF) || !String.IsNullOrEmpty(Rekord.XMLKSeF);
-		toolStripMenuItemOtworzOdnosnik.Enabled = !String.IsNullOrEmpty(Rekord.URLKSeF) || !String.IsNullOrEmpty(Rekord.XMLKSeF);
-		toolStripMenuItemZapiszXML.Enabled = !String.IsNullOrEmpty(Rekord.XMLKSeF) || CzySprzedaz;
-		toolStripMenuItemZapiszWizualizacje.Enabled = !String.IsNullOrEmpty(Rekord.XMLKSeF);
+		menuKSeFKopiujOdnosnik.Enabled = !String.IsNullOrEmpty(Rekord.URLKSeF) || !String.IsNullOrEmpty(Rekord.XMLKSeF);
+		menuKSeFOtworzOdnosnik.Enabled = !String.IsNullOrEmpty(Rekord.URLKSeF) || !String.IsNullOrEmpty(Rekord.XMLKSeF);
+		menuKSeFZapiszXML.Enabled = !String.IsNullOrEmpty(Rekord.XMLKSeF) || CzySprzedaz;
+		menuKSeFZapiszWizualizacje.Enabled = !String.IsNullOrEmpty(Rekord.XMLKSeF);
 
 		var fakturaKorygowana = Kontekst.Baza.ZnajdzLubNull(Rekord.FakturaKorygowanaRef);
 
@@ -313,13 +441,6 @@ partial class FakturaEdytor : FakturaEdytorBase
 		{
 			var numer = Numerator.NadajNumer(Kontekst.Baza, Rekord.Numerator.Value, Rekord.Podstawienie, zwiekszLicznik: false);
 			textBoxNumer.PlaceholderText = numer;
-			comboBoxNazwaNabywcy.Focus();
-			ActiveControl = comboBoxNazwaNabywcy;
-		}
-		else
-		{
-			textBoxNumer.Focus();
-			ActiveControl = textBoxNumer;
 		}
 
 		if (Rekord.CzySprzedaz)
@@ -356,18 +477,24 @@ partial class FakturaEdytor : FakturaEdytorBase
 			buttonNowyNabywca.Enabled = false;
 			textBoxDaneNabywcy.Enabled = false;
 
-			toolStripMenuItemGenerujXML.Enabled = false;
+			menuKSeFGenerujXML.Enabled = false;
 			textBoxKSeFXML.ReadOnly = true;
 		}
 
 		if (Rekord.Rodzaj == RodzajFaktury.Rachunek || Rekord.Rodzaj == RodzajFaktury.KorektaRachunku)
 		{
-			tabControl1.TabPages.Remove(tabPageKSeF);
-			tabControl1.TabPages.Remove(tabPagePodatki);
+			zakladki.TabPages.Remove(tabPageKSeF);
+			zakladki.TabPages.Remove(tabPagePodatki);
 		}
 	}
 
-	private void buttonNowySprzedawca_Click(object? sender, EventArgs e)
+	protected override void OnLoad(EventArgs e)
+	{
+		base.OnLoad(e);
+		if (!String.IsNullOrEmpty(textBoxNumer.PlaceholderText)) ActiveControl = comboBoxNazwaNabywcy;
+	}
+
+	private void NowySprzedawca()
 	{
 		var kontrahent = new Kontrahent { Nazwa = comboBoxNazwaSprzedawcy.Text, NIP = comboBoxNIPSprzedawcy.Text, AdresRejestrowy = textBoxDaneSprzedawcy.Text };
 		if (!EdytorNowegoKontrahenta(kontrahent)) return;
@@ -377,7 +504,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 		kontroler.AktualizujKontrolki();
 	}
 
-	private void buttonNowyNabywca_Click(object? sender, EventArgs e)
+	private void NowyNabywca()
 	{
 		var kontrahent = new Kontrahent { Nazwa = comboBoxNazwaNabywcy.Text, NIP = comboBoxNIPNabywcy.Text, AdresRejestrowy = textBoxDaneNabywcy.Text };
 		if (!EdytorNowegoKontrahenta(kontrahent)) return;
@@ -394,30 +521,29 @@ partial class FakturaEdytor : FakturaEdytorBase
 		nowyKontekst.Dodaj(kontrahent);
 		nowyKontekst.Baza.Zapisz(kontrahent);
 		using var edytor = new KontrahentEdytor();
-		using var okno = new Dialog("Nowy kontrahent", edytor, nowyKontekst);
 		edytor.Przygotuj(nowyKontekst, kontrahent);
-		if (okno.ShowDialog() != DialogResult.OK) return false;
+		if (!DialogEdycji.Pokaz("Nowy kontrahent", edytor, nowyKontekst)) return false;
 		edytor.KoniecEdycji();
 		nowyKontekst.Baza.Zapisz(kontrahent);
 		transakcja.Zatwierdz();
 		return true;
 	}
 
-	private void toolStripMenuItemGenerujXML_Click(object? sender, EventArgs e)
+	private void GenerujXML()
 	{
 		if (String.IsNullOrEmpty(Rekord.Numer))
 		{
-			MessageBox.Show("Przed wygenerowaniem postaci ustrukturyzowanej należy zapisać fakturę w celu nadania jej numeru.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			OknoKomunikatu.Ostrzezenie("Przed wygenerowaniem postaci ustrukturyzowanej należy zapisać fakturę w celu nadania jej numeru.");
 			return;
 		}
-		if (!String.IsNullOrWhiteSpace(Rekord.XMLKSeF) && MessageBox.Show("Faktura ma już wygenerowaną postać ustrukturyzowaną. Czy na pewno chcesz ją wygenerować ponownie?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
+		if (!String.IsNullOrWhiteSpace(Rekord.XMLKSeF) && !OknoKomunikatu.PytanieTakNie("Faktura ma już wygenerowaną postać ustrukturyzowaną. Czy na pewno chcesz ją wygenerować ponownie?", domyslnie: false)) return;
 		Kontekst.Baza.Zapisz(Rekord);
 		var xml = IO.FA_3.Generator.ZbudujXML(Kontekst.Baza, Rekord);
 		Rekord.XMLKSeF = xml;
 		kontroler.AktualizujKontrolki();
 	}
 
-	private void toolStripMenuItemZapiszXML_Click(object sender, EventArgs e)
+	private void ZapiszXML()
 	{
 		var nowyKontekst = new Kontekst(Kontekst);
 		var akcja = new ZapiszJakoXMLLokalneAkcja();
@@ -425,7 +551,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 		akcja.Uruchom(nowyKontekst, ref rekord);
 	}
 
-	private void toolStripMenuItemZapiszWizualizacje_Click(object sender, EventArgs e)
+	private void ZapiszWizualizacje()
 	{
 		using var dialog = new SaveFileDialog();
 		dialog.Filter = "Dokument PDF (*.pdf)|*.pdf";
@@ -443,7 +569,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 		Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = dialog.FileName });
 	}
 
-	private void toolStripMenuItemKopiujOdnosnik_Click(object sender, EventArgs e)
+	private void KopiujOdnosnik()
 	{
 		var url = Rekord.URLKSeF;
 		if (String.IsNullOrEmpty(url))
@@ -455,7 +581,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 		Clipboard.SetText(url);
 	}
 
-	private void toolStripMenuItemOtworzOdnosnik_Click(object sender, EventArgs e)
+	private void OtworzOdnosnik()
 	{
 		var url = Rekord.URLKSeF;
 		if (String.IsNullOrEmpty(url))
@@ -467,9 +593,7 @@ partial class FakturaEdytor : FakturaEdytorBase
 		Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = url });
 	}
 
-	private void linkLabelUwagiPomoc_LinkClicked(object? sender, LinkLabelLinkClickedEventArgs e)
-	{
-		MessageBox.Show(@"Następujące frazy zostaną rozpoznane i automatycznie umieszczone w odpowiednich polach w momencie wysyłki do KSeF:
+	private const string PomocUwagiPubliczne = @"Następujące frazy zostaną rozpoznane i automatycznie umieszczone w odpowiednich polach w momencie wysyłki do KSeF:
 
 BDO: XXXXXXXXX
 KRS: XXXXXXXXXX
@@ -479,16 +603,11 @@ Data zamówienia: XXXX-XX-XX
 Przyczyna korekty: XXXX
 Mechanizm podzielonej płatności lub Split payment
 
-Pozostałe elementy tekstowe zostaną przekazane jako dodatkowy opis.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
-	}
+Pozostałe elementy tekstowe zostaną przekazane jako dodatkowy opis.";
 
 	public override void KoniecEdycji()
 	{
 		Rekord.PoprawNumeracjePozycji(Kontekst.Baza);
 		base.KoniecEdycji();
 	}
-}
-
-class FakturaEdytorBase : Edytor<Faktura>
-{
 }

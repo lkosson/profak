@@ -20,6 +20,6 @@ class GenerujJPK_V7MAkcja : AkcjaNaSpisie<DeklaracjaVat>
 		using var nowyKontekst = new Kontekst(kontekst);
 		nowyKontekst.Dodaj(deklaracja);
 		IO.JPK_V7M.Generator.Utworz(dialog.FileName, nowyKontekst.Baza, deklaracja);
-		MessageBox.Show("Plik został zapisany pomyślnie.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		OknoKomunikatu.Informacja("Plik został zapisany pomyślnie.");
 	}
 }

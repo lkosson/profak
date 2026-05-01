@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="ikona.ico" />
     <EmbeddedResource Include="IO\KSEFPDF\ksef-fe-invoice-converter.umd.cjs" />
     <EmbeddedResource Include="IO\KSEFPDF\ksef-fe-invoice-converter-wrapper.cjs" />
     <EmbeddedResource Include="Wydruki\FakturaPozycje.rdlc" />
@@ -34,10 +35,6 @@
     <EmbeddedResource Include="Wydruki\Faktura.rdlc" />
     <EmbeddedResource Include="Wydruki\EwidencjaPrzychodow.rdlc" />
     <EmbeddedResource Include="Wydruki\PKPiR.rdlc" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="UI\Faktury\RachunekGrupaAkcji.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -58,103 +55,6 @@
 
   <ItemGroup Condition="!$(DefineConstants.Contains(;SQLSERVER;))">
     <Compile Remove="DB\Migrations-SqlServer\*.cs"></Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="UI\ButtonDropDown.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\DateTimePickerFix.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\DeklaracjeVat\DeklaracjaVatEdytor.cs" />
-    <Compile Update="UI\DeklaracjeVat\DeklaracjaVatSpis.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\EdytorDwieKolumny.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\Faktury\FakturaProformaSpis.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\Faktury\RachunkiSprzedazySpis.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\Faktury\FakturaSpis.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\Faktury\FakturaUsunietaSpis.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\Faktury\KSeFSpis.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\Faktury\FakturaZakupuEdytor.cs" />
-    <Compile Update="UI\Faktury\PlikSpis.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\Faktury\DodatkowyPodmiotSpis.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\Faktury\DodatkowyPodmiotEdytor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="UI\Konfiguracja\KonfiguracjaEdytor.cs" />
-    <Compile Update="UI\Numeratory\NumeratorSpis.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\Numeratory\StanNumeratoraSpis.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\Numeratory\StanNumeratoraEdytor.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\Faktury\WplataSpis.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\Faktury\WplataEdytor.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\Faktury\PozycjaFakturySpis.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\Faktury\FakturaZakupuSpis.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\Faktury\FakturaSprzedazySpis.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\Faktury\FakturaEdytor.cs" />
-    <Compile Update="UI\ButtonDPI.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\OknoPostepu.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="UI\Serwisowe\EdytorTabeli.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="UI\SkladkiZus\SkladkaZusEdytor.cs" />
-    <Compile Update="UI\SkladkiZus\SkladkaZusSpis.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\Towary\TowarSpis.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\Podsumowanie.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\Menu.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\UrzedySkarbowe\UrzadSkarbowyEdytor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="UI\UrzedySkarbowe\UrzadSkarbowySpis.cs" />
-    <Compile Update="UI\ZaliczkiPit\ZaliczkaPitEdytor.cs" />
-    <Compile Update="UI\ZaliczkiPit\ZaliczkaPitSpis.cs">
-      <SubType>Component</SubType>
-    </Compile>
   </ItemGroup>
 
 </Project>

@@ -30,15 +30,13 @@ public static class Program
 				if (args[0] == "xsd") Wydruki.GeneratorXSD.Utworz();
 				if (args[0] == "sql")
 				{
-					using var kontekst = new UI.Kontekst();
-					using var dialog = new UI.Dialog("ProFak", new UI.EkranSQL() { Kontekst = kontekst }, kontekst) { CzyPrzyciskiWidoczne = false };
-					dialog.ShowDialog();
+					using var kontekst = new Kontekst();
+					Dialog.Pokaz("ProFak", new EkranSQL() { Kontekst = kontekst }, kontekst);
 				}
 				if (args[0] == "db")
 				{
-					using var kontekst = new UI.Kontekst();
-					using var dialog = new UI.Dialog("ProFak", new UI.BazyDanych() { Kontekst = kontekst }, kontekst) { CzyPrzyciskiWidoczne = false };
-					dialog.ShowDialog();
+					using var kontekst = new Kontekst();
+					Dialog.Pokaz("ProFak", new BazyDanych() { Kontekst = kontekst }, kontekst);
 				}
 				return;
 			}
@@ -48,7 +46,7 @@ public static class Program
 				var podmiot = kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot);
 				if (podmiot == null)
 				{
-					MessageBox.Show("Przed rozpoczêciem korzystania z programu nale¿y uzupe³niæ dane firmy.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					OknoKomunikatu.Informacja("Przed rozpoczêciem korzystania z programu nale¿y uzupe³niæ dane firmy.");
 					var _ = Enumerable.Empty<DB.Kontrahent>();
 					new UI.MojaFirmaAkcja().Uruchom(kontekst, ref _);
 				}

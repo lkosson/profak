@@ -3,16 +3,58 @@ using System.Data;
 
 namespace ProFak.UI;
 
-partial class PozycjaFakturyEdytor : PozycjaFakturyEdytorBase
+partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 {
 	private Slownik<Towar> slownikTowarow = default!;
 	private bool trwaPrzeliczanieCen;
 
+	private readonly ComboBox comboBoxTowar;
+	private readonly Button buttonTowar;
+	private readonly NumericUpDown numericUpDownIlosc;
+	private readonly NumericUpDown numericUpDownCenaNetto;
+	private readonly NumericUpDown numericUpDownCenaVat;
+	private readonly NumericUpDown numericUpDownCenaBrutto;
+	private readonly NumericUpDown numericUpDownWartoscNetto;
+	private readonly NumericUpDown numericUpDownWartoscVat;
+	private readonly NumericUpDown numericUpDownWartoscBrutto;
+	private readonly NumericUpDown numericUpDownCenaZakupu;
+	private readonly CheckBox checkBoxWedlugBrutto;
+	private readonly CheckBox checkBoxRecznie;
+	private readonly ComboBox comboBoxStawkaVat;
+	private readonly Button buttonStawkaVat;
+	private readonly ComboBox comboBoxJM;
+	private readonly NumericUpDown numericUpDownRabatProcent;
+	private readonly NumericUpDown numericUpDownRabatCena;
+	private readonly NumericUpDown numericUpDownRabatWartosc;
+	private readonly Label labelCenaZakupu;
+
 	public PozycjaFakturyEdytor()
 	{
-		InitializeComponent();
+		var numericUpDownLP = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		comboBoxTowar = Kontrolki.SuggestBox();
+		buttonTowar = Kontrolki.ButtonSlownik();
+		var buttonNowyTowar = Kontrolki.ButtonDodaj(NowyTowar);
+		numericUpDownIlosc = Kontrolki.NumericUpDown(poPrzecinku: 4, szerokosc: 50);
+		numericUpDownCenaNetto = Kontrolki.NumericUpDown(poPrzecinku: 2);
+		numericUpDownCenaVat = Kontrolki.NumericUpDown(poPrzecinku: 2);
+		numericUpDownCenaBrutto = Kontrolki.NumericUpDown(poPrzecinku: 2);
+		numericUpDownWartoscNetto = Kontrolki.NumericUpDown(poPrzecinku: 2);
+		numericUpDownWartoscVat = Kontrolki.NumericUpDown(poPrzecinku: 2);
+		numericUpDownWartoscBrutto = Kontrolki.NumericUpDown(poPrzecinku: 2);
+		numericUpDownCenaZakupu = Kontrolki.NumericUpDown(poPrzecinku: 2);
+		checkBoxWedlugBrutto = Kontrolki.CheckBox("Według ceny brutto");
+		checkBoxRecznie = Kontrolki.CheckBox("Ustaw kwoty ręcznie");
+		comboBoxStawkaVat = Kontrolki.DropDownList();
+		buttonStawkaVat = Kontrolki.ButtonSlownik();
+		comboBoxJM = Kontrolki.DropDownList();
+		var comboBoxGTU = Kontrolki.DropDownList();
+		var comboBoxStawkaRyczaltu = Kontrolki.DropDownList();
+		numericUpDownRabatProcent = Kontrolki.NumericUpDown(poPrzecinku: 2, szerokosc: 90);
+		numericUpDownRabatCena = Kontrolki.NumericUpDown(poPrzecinku: 2, szerokosc: 90);
+		numericUpDownRabatWartosc = Kontrolki.NumericUpDown(poPrzecinku: 2, szerokosc: 90);
 
 		kontroler.Slownik<decimal?>(comboBoxStawkaRyczaltu, null, 17m, 15m, 14m, 12.5m, 12m, 10m, 8.5m, 5.5m, 3m, 2m);
+		kontroler.Slownik(comboBoxGTU, "-", "01 - Napoje alkoholowe", "02 - Paliwa", "03 - Oleje opałowe i smarowe", "04 - Wyroby tytoniowe", "05 - Odpady", "06 - Urządzenia elektroniczne", "07 - Pojazdy i części", "08 - Metale szlachetne i nieszlachetne", "09 - Leki i wyroby medyczne", "10 - Budynki, budowle, grunty", "11 - Uprawnienia do emisji", "12 - Usługi niematerialne", "13 - Usługi transportowe");
 
 		kontroler.Powiazanie(numericUpDownLP, pozycja => pozycja.LP);
 		kontroler.Powiazanie(comboBoxTowar, pozycja => pozycja.Opis);
@@ -37,6 +79,52 @@ partial class PozycjaFakturyEdytor : PozycjaFakturyEdytorBase
 		Wymagane(comboBoxTowar);
 		Wymagane(comboBoxStawkaVat);
 		Wymagane(comboBoxJM);
+		Dymek(buttonNowyTowar, "Dodaj do słownika towarów");
+		Dymek(buttonTowar, "Wyświetl pełną listę");
+		Dymek(buttonStawkaVat, "Wyświetl pełną listę");
+
+		var naglowek = new Siatka([0, 50, 20, 0, -1, 0, 0, 20, 80, 80], []);
+		naglowek.DodajWiersz([Kontrolki.Label("LP"), numericUpDownLP, null, Kontrolki.Label("Towar/opis"), comboBoxTowar, buttonTowar, buttonNowyTowar, null, numericUpDownIlosc, comboBoxJM]);
+		numericUpDownLP.TabIndex = 999;
+		numericUpDownIlosc.TabIndex = comboBoxJM.TabIndex + 1;
+
+		var ceny = new DwieKolumny();
+		ceny.DodajWiersz(numericUpDownCenaNetto, "Netto");
+		ceny.DodajWiersz(numericUpDownCenaVat, "Vat");
+		ceny.DodajWiersz(numericUpDownCenaBrutto, "Brutto");
+		ceny.DodajWiersz(checkBoxWedlugBrutto, null, pelnaSzerokosc: true);
+
+		var wartosci = new DwieKolumny();
+		wartosci.DodajWiersz(numericUpDownWartoscNetto, "Netto");
+		wartosci.DodajWiersz(numericUpDownWartoscVat, "Vat");
+		wartosci.DodajWiersz(numericUpDownWartoscBrutto, "Brutto");
+		wartosci.DodajWiersz(checkBoxRecznie, null, pelnaSzerokosc: true);
+
+		var rabaty = new DwieKolumny();
+		rabaty.DodajWiersz(numericUpDownRabatProcent, "Procentowy");
+		rabaty.DodajWiersz(numericUpDownRabatCena, "Od ceny jedn.");
+		rabaty.DodajWiersz(numericUpDownRabatWartosc, "Od wartości");
+
+		comboBoxStawkaVat.Width = 40;
+		comboBoxGTU.Width = 40;
+		comboBoxStawkaRyczaltu.Width = 40;
+
+		var podatki = new Siatka([0, -1, 0], []);
+		podatki.DodajWiersz("Vat", [comboBoxStawkaVat, buttonStawkaVat]);
+		podatki.DodajWiersz("GTU", [(comboBoxGTU, 2)]);
+		podatki.DodajWiersz("Ryczałt", [(comboBoxStawkaRyczaltu, 2)]);
+		podatki.DodajWiersz([(labelCenaZakupu = Kontrolki.Label("Cena zakupu"), 1), (numericUpDownCenaZakupu, 2)]);
+
+		var uklad = new Siatka([-3, -3, -4, -4], [0, 0]);
+		uklad.DodajWiersz([(naglowek, 4)]);
+		uklad.DodajWiersz([
+			new Grupa("Cena jednostkowa", ceny),
+			new Grupa("Łączna wartość", wartosci),
+			new Grupa("Rabat", rabaty),
+			new Grupa("Podatki", podatki),
+			]);
+
+		UstawZawartosc(uklad);
 	}
 
 	protected override void KontekstGotowy()
@@ -159,7 +247,7 @@ partial class PozycjaFakturyEdytor : PozycjaFakturyEdytorBase
 		PrzeliczCeny();
 	}
 
-	private void buttonNowyTowar_Click(object? sender, EventArgs e)
+	private void NowyTowar()
 	{
 		var towar = new Towar
 		{
@@ -177,17 +265,12 @@ partial class PozycjaFakturyEdytor : PozycjaFakturyEdytorBase
 		nowyKontekst.Dodaj(towar);
 		nowyKontekst.Baza.Zapisz(towar);
 		using var edytor = new TowarEdytor();
-		using var okno = new Dialog("Nowy towar", edytor, nowyKontekst);
 		edytor.Przygotuj(nowyKontekst, towar);
-		if (okno.ShowDialog() != DialogResult.OK) return;
+		if (!DialogEdycji.Pokaz("Nowy towar", edytor, nowyKontekst)) return;
 		edytor.KoniecEdycji();
 		nowyKontekst.Baza.Zapisz(towar);
 		transakcja.Zatwierdz();
 		slownikTowarow.Przeladuj();
 		UstawTowar(towar);
 	}
-}
-
-class PozycjaFakturyEdytorBase : Edytor<PozycjaFaktury>
-{
 }

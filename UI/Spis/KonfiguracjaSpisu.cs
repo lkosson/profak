@@ -3,13 +3,48 @@ using System.Data;
 
 namespace ProFak.UI;
 
-partial class KonfiguracjaSpisu : UserControl
+partial class KonfiguracjaSpisu : Edytor
 {
 	private bool trwaZmianaWartosci;
 
+	private readonly ListBox listBoxKolumny;
+	private readonly TextBox textBoxKolumna;
+	private readonly NumericUpDown numericUpDownSzerokosc;
+	private readonly NumericUpDown numericUpDownKolejnosc;
+	private readonly CheckBox checkBoxUkryta;
+	private readonly CheckBox checkBoxRozciagnij;
+	private readonly NumericUpDown numericUpDownPoziomSortowania;
+	private readonly CheckBox checkBoxPrzywroc;
+
+	public bool CzyPrzywroc => checkBoxPrzywroc.Checked;
+
 	public KonfiguracjaSpisu()
 	{
-		InitializeComponent();
+		listBoxKolumny = Kontrolki.ListBox(zmienionaWartosc: WybranaKolumna);
+		textBoxKolumna = Kontrolki.TextBox();
+		numericUpDownSzerokosc = Kontrolki.NumericUpDown(poPrzecinku: 0, zmienionaWartosc: ZmienionaSzerokosc);
+		numericUpDownKolejnosc = Kontrolki.NumericUpDown(poPrzecinku: 0, zmienionaWartosc: ZmienionaKolejnosc);
+		numericUpDownPoziomSortowania = Kontrolki.NumericUpDown(poPrzecinku: 0, zmienionaWartosc: ZmienioneSortowanie);
+		checkBoxUkryta = Kontrolki.CheckBox("Ukryta", zmienionaWartosc: ZmienioneUkrycie);
+		checkBoxRozciagnij = Kontrolki.CheckBox("Rozciągnij do pełnej szerokości", zmienionaWartosc: ZmienioneRozciagniecie);
+		checkBoxPrzywroc = Kontrolki.CheckBox("Przywróć domyślne ustawienia spisu");
+
+		textBoxKolumna.ReadOnly = true;
+
+		var parametry = new DwieKolumny();
+		parametry.DodajWiersz(textBoxKolumna, "Kolumna");
+		parametry.DodajWiersz(numericUpDownSzerokosc, "Szerokość");
+		parametry.DodajWiersz(numericUpDownKolejnosc, "Kolejność");
+		parametry.DodajWiersz(numericUpDownPoziomSortowania, "Sortowanie");
+		parametry.DodajWiersz(checkBoxUkryta);
+		parametry.DodajWiersz(checkBoxRozciagnij);
+		parametry.DodajWiersz(checkBoxPrzywroc);
+
+		listBoxKolumny.Width = 200;
+		var uklad = new Siatka([-1, 0], []);
+		uklad.DodajWiersz([listBoxKolumny, parametry]);
+
+		UstawZawartosc(uklad);
 	}
 
 	public KonfiguracjaSpisu(IEnumerable<KolumnaSpisu> konfiguracjaKolumn)
@@ -41,7 +76,7 @@ partial class KonfiguracjaSpisu : UserControl
 		if (checkBoxRozciagnij.Checked && !checkBoxRozciagnij.Enabled) checkBoxRozciagnij.Checked = false;
 	}
 
-	private void listBoxKolumny_SelectedIndexChanged(object? sender, EventArgs e)
+	private void WybranaKolumna()
 	{
 		if (listBoxKolumny.SelectedItem is not KolumnaSpisu kolumna) return;
 		ZmienWartosci(delegate
@@ -56,7 +91,7 @@ partial class KonfiguracjaSpisu : UserControl
 		});
 	}
 
-	private void numericUpDownSzerokosc_ValueChanged(object? sender, EventArgs e)
+	private void ZmienionaSzerokosc()
 	{
 		if (listBoxKolumny.SelectedItem is not KolumnaSpisu kolumna) return;
 		ZmienWartosci(delegate
@@ -65,7 +100,7 @@ partial class KonfiguracjaSpisu : UserControl
 		});
 	}
 
-	private void numericUpDownKolejnosc_ValueChanged(object? sender, EventArgs e)
+	private void ZmienionaKolejnosc()
 	{
 		if (listBoxKolumny.SelectedItem is not KolumnaSpisu kolumna) return;
 		ZmienWartosci(delegate
@@ -74,7 +109,7 @@ partial class KonfiguracjaSpisu : UserControl
 		});
 	}
 
-	private void numericUpDownPoziomSortowania_ValueChanged(object? sender, EventArgs e)
+	private void ZmienioneSortowanie()
 	{
 		if (listBoxKolumny.SelectedItem is not KolumnaSpisu kolumna) return;
 		ZmienWartosci(delegate
@@ -83,7 +118,7 @@ partial class KonfiguracjaSpisu : UserControl
 		});
 	}
 
-	private void checkBoxUkryta_CheckedChanged(object? sender, EventArgs e)
+	private void ZmienioneUkrycie()
 	{
 		if (listBoxKolumny.SelectedItem is not KolumnaSpisu kolumna) return;
 		ZmienWartosci(delegate
@@ -101,7 +136,7 @@ partial class KonfiguracjaSpisu : UserControl
 		});
 	}
 
-	private void checkBoxRozciagnij_CheckedChanged(object? sender, EventArgs e)
+	private void ZmienioneRozciagniecie()
 	{
 		if (listBoxKolumny.SelectedItem is not KolumnaSpisu kolumna) return;
 		ZmienWartosci(delegate

@@ -161,15 +161,15 @@ public class API : IDisposable
 
 		await cryptographyService.WarmupAsync(cancellationToken);
 
-		var zadanieDostepu = await PobierzZadanieDostepuDoPodpisuAsync(nip);
+		var zadanieDostepu = await PobierzZadanieDostepuDoPodpisuAsync(nip, cancellationToken);
 		var podpisanyXml = SignatureService.Sign(zadanieDostepu, certyfikat);
 		var (accessToken, refreshToken) = await PrzeslijZadanieDostepuAsync(podpisanyXml, cancellationToken);
 		cachedAuth = (accessToken, refreshToken, srodowisko!.Value, nip);
 	}
 
-	public async Task<string> PobierzZadanieDostepuDoPodpisuAsync(string nip)
+	public async Task<string> PobierzZadanieDostepuDoPodpisuAsync(string nip, CancellationToken cancellationToken)
 	{
-		var challenge = await ksefClient.GetAuthChallengeAsync();
+		var challenge = await ksefClient.GetAuthChallengeAsync(cancellationToken);
 		var authTokenRequest = AuthTokenRequestBuilder
 			.Create()
 			.WithChallenge(challenge.Challenge)

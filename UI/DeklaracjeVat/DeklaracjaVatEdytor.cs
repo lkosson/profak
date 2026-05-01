@@ -2,14 +2,36 @@
 
 namespace ProFak.UI;
 
-partial class DeklaracjaVatEdytor : DeklaracjaVatEdytorBase
+class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
 {
 	private readonly SpisZAkcjami<Faktura, FakturaSprzedazySpis> fakturySprzedazy;
 	private readonly SpisZAkcjami<Faktura, FakturaZakupuSpis> fakturyZakupu;
 
 	public DeklaracjaVatEdytor()
 	{
-		InitializeComponent();
+		var dateTimePickerMiesiac = Kontrolki.DatePicker(tylkoMiesiac: true);
+
+		var numericUpDownNettoZW = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNetto0 = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNetto5 = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNetto8 = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNetto23 = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNettoWDT = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNettoWNT = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNalezny5 = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNalezny8 = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNalezny23 = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNaleznyWNT = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNettoSrodkiTrwale = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNettoPozostale = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNaliczonyPrzeniesiony = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNaliczonySrodkiTrwale = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNaliczonyPozostale = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNettoRazem = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNaleznyRazem = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownNaliczonyRazem = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownDoWplaty = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var numericUpDownDoPrzeniesienia = Kontrolki.NumericUpDown(poPrzecinku: 0);
 
 		kontroler.Powiazanie(dateTimePickerMiesiac, deklaracja => deklaracja.Miesiac);
 		kontroler.Powiazanie(numericUpDownNettoZW, deklaracja => deklaracja.NettoZW);
@@ -34,6 +56,17 @@ partial class DeklaracjaVatEdytor : DeklaracjaVatEdytorBase
 		kontroler.Powiazanie(numericUpDownDoWplaty, deklaracja => deklaracja.DoWplaty);
 		kontroler.Powiazanie(numericUpDownDoPrzeniesienia, deklaracja => deklaracja.DoPrzeniesienia);
 
+		var obliczenia = new Siatka([0, -1, -1, 20, 0, -1, -1], []);
+		obliczenia.DodajWiersz([null, "Podstawa", "Podatek należny", null, null, "Wartość netto", "Podatek naliczony"]);
+		obliczenia.DodajWiersz([Kontrolki.Label("Zwolnione"), numericUpDownNettoZW, null, null, Kontrolki.Label("Z przeniesienia"), null, numericUpDownNaliczonyPrzeniesiony]);
+		obliczenia.DodajWiersz([Kontrolki.Label("0%"), numericUpDownNetto0, null, null, Kontrolki.Label("Środki trwałe"), numericUpDownNettoSrodkiTrwale, numericUpDownNaliczonySrodkiTrwale]);
+		obliczenia.DodajWiersz([Kontrolki.Label("5%"), numericUpDownNetto5, numericUpDownNalezny5, null, Kontrolki.Label("Pozostałe"), numericUpDownNettoPozostale, numericUpDownNaliczonyPozostale]);
+		obliczenia.DodajWiersz([Kontrolki.Label("8%"), numericUpDownNetto8, numericUpDownNalezny8, null, Kontrolki.Label("Razem"), null, numericUpDownNaliczonyRazem]);
+		obliczenia.DodajWiersz([Kontrolki.Label("23%"), numericUpDownNetto23, numericUpDownNalezny23]);
+		obliczenia.DodajWiersz([Kontrolki.Label("WDT"), numericUpDownNettoWDT]);
+		obliczenia.DodajWiersz([Kontrolki.Label("WNT"), numericUpDownNettoWNT, numericUpDownNaleznyWNT, null, Kontrolki.Label("Do wpłaty"), null, numericUpDownDoWplaty]);
+		obliczenia.DodajWiersz([Kontrolki.Label("Razem"), numericUpDownNettoRazem, numericUpDownNaleznyRazem, null, Kontrolki.Label("Do przeniesienia"), null, numericUpDownDoPrzeniesienia]);
+
 		var dodajSprzedazDoDeklaracji = new DynamicznaAkcja<Faktura>("➕ Dodaj do deklaracji [INS]", kontekst =>
 		{
 			using var spis = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazySpis { CzyBezDeklaracjiVat = true });
@@ -54,7 +87,6 @@ partial class DeklaracjaVatEdytor : DeklaracjaVatEdytorBase
 			Przelicz();
 		}, Keys.Insert, Keys.None);
 
-
 		var usunZDeklaracji = new DynamicznaAkcja<Faktura>("❌ Usuń z deklaracji [DEL]", (kontekst, rekordy) =>
 		{
 			foreach (var rekord in rekordy)
@@ -68,8 +100,22 @@ partial class DeklaracjaVatEdytor : DeklaracjaVatEdytorBase
 		fakturySprzedazy = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazySpis(), new AkcjaNaSpisie<Faktura>[] { dodajSprzedazDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new WydrukFakturyAkcja(), new PrzeladujAkcja<Faktura>() });
 		fakturyZakupu = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis(), new AkcjaNaSpisie<Faktura>[] { dodajZakupDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new PrzeladujAkcja<Faktura>() });
 
-		tabPageFakturySprzedazy.Controls.Add(fakturySprzedazy);
-		tabPageFakturyZakupu.Controls.Add(fakturyZakupu);
+		var naglowek = new Poziomo([
+			Kontrolki.Label("Miesiąc"),
+			dateTimePickerMiesiac,
+			Kontrolki.Button("Przelicz", delegate { WybierzFaktury(); Przelicz(); })
+			]);
+
+		var zakladki = new Zakladki();
+		zakladki.Dodaj("Obliczenia", obliczenia);
+		zakladki.Dodaj("Sprzedaż", fakturySprzedazy);
+		zakladki.Dodaj("Zakup", fakturyZakupu);
+
+		var uklad = new Siatka([-1], [0, -1]);
+		uklad.DodajWiersz([naglowek]);
+		uklad.DodajWiersz([zakladki]);
+
+		UstawZawartosc(uklad);
 	}
 
 	protected override void RekordGotowy()
@@ -80,19 +126,6 @@ partial class DeklaracjaVatEdytor : DeklaracjaVatEdytorBase
 		fakturySprzedazy.Spis.Kontekst = Kontekst;
 		fakturyZakupu.Spis.DeklaracjaVatRef = Rekord;
 		fakturyZakupu.Spis.Kontekst = Kontekst;
-	}
-
-	private void buttonPrzelicz_Click(object? sender, EventArgs e)
-	{
-		try
-		{
-			WybierzFaktury();
-			Przelicz();
-		}
-		catch (Exception exc)
-		{
-			OknoBledu.Pokaz(exc);
-		}
 	}
 
 	private void WybierzFaktury()
@@ -107,8 +140,4 @@ partial class DeklaracjaVatEdytor : DeklaracjaVatEdytorBase
 		Rekord.Przelicz(Kontekst.Baza);
 		kontroler.AktualizujKontrolki();
 	}
-}
-
-class DeklaracjaVatEdytorBase : Edytor<DeklaracjaVat>
-{
 }

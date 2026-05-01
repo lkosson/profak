@@ -2,14 +2,53 @@
 
 namespace ProFak.UI;
 
-partial class KonfiguracjaEdytor : KonfiguracjaEdytorBase
+partial class KonfiguracjaEdytor : Edytor<Konfiguracja>
 {
 	public bool PrzywrocUstawieniaSpisow => checkBoxPrzywrocUstawieniaSpisow.Checked;
 	public bool PrzywrocUstawieniaMenu => checkBoxPrzywrocUstawieniaMenu.Checked;
 
+	private readonly CheckBox checkBoxPrzywrocUstawieniaSpisow;
+	private readonly CheckBox checkBoxPrzywrocUstawieniaMenu;
+	private readonly TextBox textBoxPrzykladDaty;
+	private readonly TextBox textBoxPrzykladCzasu;
+	private readonly TextBox textBoxPrzykladKwoty;
+
 	public KonfiguracjaEdytor()
 	{
-		InitializeComponent();
+		var textBoxSMTPSerwer = Kontrolki.TextBox();
+		var numericUpDownSMTPort = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var textBoxSMTPLogin = Kontrolki.TextBox();
+		var textBoxSMTPHaslo = Kontrolki.TextBox(haslo: true);
+		var textBoxEMailNadawca = Kontrolki.TextBox();
+		var textBoxEMailTemat = Kontrolki.TextBox();
+		var textBoxEMailTresc = Kontrolki.TextArea(linie: 10);
+
+		var checkBoxSkrotyKlawiaturoweAkcji = Kontrolki.CheckBox("Pokaż skróty klawiaturowe akcji na spisie");
+		var checkBoxSkrotyKlawiaturoweZakladek = Kontrolki.CheckBox("Pokaż skróty klawiaturowe do przełączania zakładek");
+		var checkBoxSkrotyKlawiaturowePrzyciskow = Kontrolki.CheckBox("Pokaż skróty klawiaturowe przycisków");
+		var checkBoxIkonyAkcji = Kontrolki.CheckBox("Pokaż piktogramy akcji na spisie");
+		var checkBoxDomyslnyPodgladStrony = Kontrolki.CheckBox("Wyświetlaj domyślnie widok strony jako podgląd wydruku");
+		var checkBoxPotwierdzanieZamknieciaEdytora = Kontrolki.CheckBox("Pytaj o potwierdzenie porzucenia zmian");
+		var checkBoxPotwierdzanieZamknieciaProgramu = Kontrolki.CheckBox("Pytaj o potwierdzenie zamknięcia programu");
+		var checkBoxWstepneLadowanieReportingServices = Kontrolki.CheckBox("Załaduj w tle moduł wydruków przy starcie programu");
+		checkBoxPrzywrocUstawieniaSpisow = Kontrolki.CheckBox("Przywróć domyślne ustawienia spisów");
+		checkBoxPrzywrocUstawieniaMenu = Kontrolki.CheckBox("Przywróć domyślne ustawienia menu");
+		var numericUpDownSzerokoscMenu = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var textBoxRozmiarCzcionki = Kontrolki.TextBox();
+		var textBoxNazwaCzcionki = Kontrolki.TextBox();
+
+		var numericUpDownWysokoscWierszy = Kontrolki.NumericUpDown(poPrzecinku: 0);
+		var comboBoxFormatDaty = Kontrolki.SuggestBox(["yyyy-MM-dd", "dd.MM.yyyy", "d MMMM yyyy"]);
+		var comboBoxFormatCzasu = Kontrolki.SuggestBox(["yyyy-MM-dd HH:mm:ss", "dd.MM.yyyy HH:mm:ss", "d MMMM yyyy H:mm:ss"]);
+		var comboBoxFormatKwoty = Kontrolki.SuggestBox(["#,##0.00", "0.00", "0.##"]);
+
+		textBoxPrzykladDaty = Kontrolki.TextBox();
+		textBoxPrzykladCzasu = Kontrolki.TextBox();
+		textBoxPrzykladKwoty = Kontrolki.TextBox();
+
+		textBoxPrzykladDaty.ReadOnly = true;
+		textBoxPrzykladCzasu.ReadOnly = true;
+		textBoxPrzykladKwoty.ReadOnly = true;
 
 		kontroler.Powiazanie(textBoxSMTPSerwer, konfiguracja => konfiguracja.SMTPSerwer);
 		kontroler.Powiazanie(numericUpDownSMTPort, konfiguracja => konfiguracja.SMTPPort);
@@ -38,6 +77,43 @@ partial class KonfiguracjaEdytor : KonfiguracjaEdytorBase
 
 		textBoxRozmiarCzcionki.PlaceholderText = DefaultFont.Size.ToString();
 		textBoxNazwaCzcionki.PlaceholderText = DefaultFont.FontFamily.Name;
+
+		var siatkaEMail = new Siatka([0, -1, 0], []);
+		siatkaEMail.DodajWiersz("Serwer SMTP", [(textBoxSMTPSerwer, 2)]);
+		siatkaEMail.DodajWiersz("Port", [(numericUpDownSMTPort, 2)]);
+		siatkaEMail.DodajWiersz("Login", [(textBoxSMTPLogin, 2)]);
+		siatkaEMail.DodajWiersz("Hasło", [(textBoxSMTPHaslo, 2)]);
+		siatkaEMail.DodajWiersz("Adres nadawcy", [(textBoxEMailNadawca, 2)]);
+		siatkaEMail.DodajWiersz("Temat wiadomości", [(textBoxEMailTemat, 2)]);
+		siatkaEMail.DodajWiersz("Treść wiadomości", [textBoxEMailTresc, Kontrolki.LinkPomoc(PomocTrescWiadomosci)]);
+
+		var siatkaWyglad = new Siatka([0, 0, 0, 50, 0, 0, -1], []);
+		siatkaWyglad.DodajWiersz([(checkBoxSkrotyKlawiaturoweAkcji, 7)]);
+		siatkaWyglad.DodajWiersz([(checkBoxSkrotyKlawiaturoweZakladek, 7)]);
+		siatkaWyglad.DodajWiersz([(checkBoxSkrotyKlawiaturowePrzyciskow, 7)]);
+		siatkaWyglad.DodajWiersz([(checkBoxIkonyAkcji, 7)]);
+		siatkaWyglad.DodajWiersz([(checkBoxDomyslnyPodgladStrony, 7)]);
+		siatkaWyglad.DodajWiersz([(checkBoxPotwierdzanieZamknieciaEdytora, 7)]);
+		siatkaWyglad.DodajWiersz([(checkBoxPotwierdzanieZamknieciaProgramu, 7)]);
+		siatkaWyglad.DodajWiersz([(checkBoxWstepneLadowanieReportingServices, 7)]);
+		siatkaWyglad.DodajWiersz([(checkBoxPrzywrocUstawieniaSpisow, 7)]);
+		siatkaWyglad.DodajWiersz([(checkBoxPrzywrocUstawieniaMenu, 7)]);
+		siatkaWyglad.DodajWiersz("Szerokość menu głównego", [numericUpDownSzerokoscMenu]);
+		siatkaWyglad.DodajWiersz("Czcionka", [textBoxNazwaCzcionki, null, textBoxRozmiarCzcionki, Kontrolki.ButtonSlownik(WybierzCzcionke)]);
+		siatkaWyglad.DodajWiersz("Wysokość wierszy spisu", [numericUpDownWysokoscWierszy]);
+
+		siatkaWyglad.DodajWiersz("Format daty", [(comboBoxFormatDaty, 1), (Kontrolki.LinkPomoc(PomocFormatDaty), 1), (textBoxPrzykladDaty, 3)]);
+		siatkaWyglad.DodajWiersz("Format czasu", [(comboBoxFormatCzasu, 1), (Kontrolki.LinkPomoc(PomocFormatCzasu), 1), (textBoxPrzykladCzasu, 3)]);
+		siatkaWyglad.DodajWiersz("Format kwot", [(comboBoxFormatKwoty, 1), (Kontrolki.LinkPomoc(PomocFormatKwoty), 1), (textBoxPrzykladKwoty, 3)]);
+		siatkaWyglad.DodajWiersz([(Kontrolki.Text("Zmiana czcionki i szerokości menu będzie obowiązywać od kolejnego uruchomienia programu"), 7)]);
+
+		var zakladki = new Zakladki();
+		zakladki.Dodaj("Konfiguracja e-mail", siatkaEMail);
+		zakladki.Dodaj("Wygląd", siatkaWyglad);
+
+		zakladki.Size = zakladki.GetPreferredSize(new Size(800, 500));
+
+		UstawZawartosc(zakladki);
 	}
 
 	private void PrzeliczPrzykladDaty()
@@ -82,9 +158,8 @@ partial class KonfiguracjaEdytor : KonfiguracjaEdytorBase
 		rekord.AktualizujWersje();
 		nowyKontekst.Dodaj(rekord);
 		using var edytor = new KonfiguracjaEdytor();
-		using var okno = new Dialog("Edycja konfiguracji", edytor, nowyKontekst);
 		edytor.Przygotuj(nowyKontekst, rekord);
-		if (okno.ShowDialog() != DialogResult.OK) return;
+		if (!DialogEdycji.Pokaz("Edycja konfiguracji", edytor, nowyKontekst)) return;
 		nowyKontekst.Baza.Zapisz(rekord);
 		if (edytor.PrzywrocUstawieniaSpisow) nowyKontekst.Baza.Usun<KolumnaSpisu>();
 		if (edytor.PrzywrocUstawieniaMenu) nowyKontekst.Baza.Usun<StanMenu>();
@@ -92,7 +167,7 @@ partial class KonfiguracjaEdytor : KonfiguracjaEdytorBase
 		Wyglad.WczytajZBazy();
 	}
 
-	private void buttonWybierzCzcionke_Click(object sender, EventArgs e)
+	private void WybierzCzcionke()
 	{
 		using var dialog = new FontDialog();
 		using var font = new Font(String.IsNullOrEmpty(Rekord.NazwaCzcionki) ? DefaultFont.FontFamily.Name : Rekord.NazwaCzcionki, Rekord.RozmiarCzcionki == 0 ? DefaultFont.Size : Rekord.RozmiarCzcionki);
@@ -104,9 +179,7 @@ partial class KonfiguracjaEdytor : KonfiguracjaEdytorBase
 		kontroler.AktualizujKontrolki();
 	}
 
-	private void linkLabelTrescPomoc_LinkClicked(object? sender, LinkLabelLinkClickedEventArgs e)
-	{
-		MessageBox.Show(@"Lista dostępnych pól:
+	private const string PomocTrescWiadomosci = @"Lista dostępnych pól:
 
 [NUMER] - pełny numer faktury
 [DATA-SPRZEDAZY] - data sprzedaży w formacie rrrr-mm-dd
@@ -125,12 +198,9 @@ partial class KonfiguracjaEdytor : KonfiguracjaEdytorBase
 [KWOTA-VAT] - łączna kwota VAT z faktury
 [WALUTA] - kod waluty faktury
 [UWAGI] - uwagi do faktury (publiczne)
-[RACHUNEK] - numer rachunku wskazany na fakturze", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
-	}
+[RACHUNEK] - numer rachunku wskazany na fakturze";
 
-	private void linkLabelFormatDaty_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-	{
-		MessageBox.Show(@"Lista dostępnych pól:
+	private const string PomocFormatDaty = @"Lista dostępnych pól:
 
 d - dzień miesiąca, od 1 do 31
 dd - dzień miesiąca z wiodącym zerem, od 01 do 31
@@ -144,12 +214,9 @@ MMMM - nazwa miesiąca, np. Marzec
 
 y - rok, od 1 do 99
 yy - rok z wiodącym zerem, od 01 do 99
-yyyy - pełny rok, np. 2026", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
-	}
+yyyy - pełny rok, np. 2026";
 
-	private void linkLabelFormatCzasu_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-	{
-		MessageBox.Show(@"Lista dostępnych pól jak dla formatu daty oraz:
+	private const string PomocFormatCzasu = @"Lista dostępnych pól jak dla formatu daty oraz:
 
 h - godzina, od 1 do 12
 H - godzina, od 0 do 23
@@ -161,20 +228,12 @@ m - minuta, od 0 do 59
 mm - minuta z wiodącym zerem, od 00 do 59
 
 s - sekunda, od 0 do 59
-ss - sekunda z wiodącym zerem, od 00 do 59", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
-	}
+ss - sekunda z wiodącym zerem, od 00 do 59";
 
-	private void linkLabelFormatKwoty_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-	{
-		MessageBox.Show(@"Znaczenie symboli:
+	private const string PomocFormatKwoty = @"Znaczenie symboli:
 
 0 - cyfra dziesiętna, wystąpienie obowiązkowe
 # - cyfra dziesiętna, tylko jeśli niezerowa
 , - separator tysięcy
-. - seperator części dziesiętnej", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
-	}
-}
-
-class KonfiguracjaEdytorBase : Edytor<Konfiguracja>
-{
+. - seperator części dziesiętnej";
 }

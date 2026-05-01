@@ -4,16 +4,45 @@ using System.ComponentModel;
 
 namespace ProFak.UI;
 
-partial class BazyDanych : UserControl, IKontrolkaZKontekstem
+class BazyDanych : Edytor, IKontrolkaZKontekstem
 {
 	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Kontekst Kontekst { get; set; } = default!;
 
 	private bool gotowy;
 
+	private readonly TextBox textBoxRozmiar;
+	private readonly ComboBox comboBoxPlik;
+	private readonly Button buttonUtworzKopie;
+	private readonly Button buttonPrzywrocKopie;
+	private readonly TextBox textBoxDataModyfikacji;
+	private readonly Button buttonPrzenies;
+	private readonly Button buttonZapiszJSON;
+	private readonly Button buttonWczytajJSON;
+
 	public BazyDanych()
 	{
-		InitializeComponent();
+		textBoxRozmiar = Kontrolki.TextBox();
+		comboBoxPlik = Kontrolki.SuggestBox();
+		textBoxDataModyfikacji = Kontrolki.TextBox();
+		buttonPrzenies = Kontrolki.Button("Przenieś", Przenies);
+		buttonZapiszJSON = Kontrolki.Button("Zapisz JSON", ZapiszJSON);
+		buttonWczytajJSON = Kontrolki.Button("Wczytaj JSON", WczytajJSON);
+		buttonUtworzKopie = Kontrolki.Button("Utwórz", UtworzKopie);
+		buttonPrzywrocKopie = Kontrolki.Button("Przywróć", PrzywrocKopie);
+
+		textBoxRozmiar.ReadOnly = true;
+		textBoxDataModyfikacji.ReadOnly = true;
+
+		var uklad = new Siatka([0, -1, 0], []);
+		uklad.DodajWiersz("Plik bazy danych", [comboBoxPlik, buttonPrzenies]);
+		uklad.DodajWiersz("Rozmiar bazy", [(textBoxRozmiar, 2)]);
+		uklad.DodajWiersz("Ostatnia modyfikacja", [(textBoxDataModyfikacji, 2)]);
+		uklad.DodajWiersz("Kopia bezpieczeństwa", [(new Poziomo([buttonUtworzKopie, buttonPrzywrocKopie]), 2)]);
+		uklad.DodajWiersz("Eksport danych", [(new Poziomo([buttonZapiszJSON, buttonWczytajJSON]), 2)]);
+		uklad.MaximumSize = new Size(700, 400);
+
+		UstawZawartosc(uklad);
 	}
 
 	protected override void OnLoad(EventArgs e)
@@ -47,27 +76,27 @@ partial class BazyDanych : UserControl, IKontrolkaZKontekstem
 		gotowy = true;
 	}
 
-	private void buttonPrzenies_Click(object? sender, EventArgs e)
+	private void Przenies()
 	{
 		if (!gotowy) return;
 		var staryPlik = Baza.Sciezka;
 		var nowyPlik = comboBoxPlik.Text;
 		if (staryPlik == null)
 		{
-			MessageBox.Show("Nie można przenieść tymczasowej bazy danych.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			OknoKomunikatu.Ostrzezenie("Nie można przenieść tymczasowej bazy danych.");
 			return;
 		}
 		if (staryPlik == nowyPlik)
 		{
-			MessageBox.Show("Wprowadź ręcznie lub wybierz z listy obok ścieżkę, do której ma zostać przeniesiona baza danych.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			OknoKomunikatu.Informacja("Wprowadź ręcznie lub wybierz z listy obok ścieżkę, do której ma zostać przeniesiona baza danych.");
 			return;
 		}
 		if (File.Exists(nowyPlik))
 		{
-			MessageBox.Show($"Plik {nowyPlik} już istnieje. Przed przeniesieniem bazy przenieś go w inne miejsce.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			OknoKomunikatu.Ostrzezenie($"Plik {nowyPlik} już istnieje. Przed przeniesieniem bazy przenieś go w inne miejsce.");
 			return;
 		}
-		if (MessageBox.Show("Czy na pewno chcesz przenieść bazę danych do nowego miejsca?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+		if (!OknoKomunikatu.PytanieTakNie("Czy na pewno chcesz przenieść bazę danych do nowego miejsca?", domyslnie: false))
 		{
 			gotowy = false;
 			comboBoxPlik.Text = staryPlik;
@@ -83,22 +112,25 @@ partial class BazyDanych : UserControl, IKontrolkaZKontekstem
 		Wypelnij();
 	}
 
-	private void buttonUtworzKopie_Click(object? sender, EventArgs e)
+	private void UtworzKopie()
 	{
+		using var dialog = new SaveFileDialog();
+		dialog.Filter = "Kopia zapasowa programu ProFak (*.probak)|*.probak|Wszystkie pliki (*.*)|*.*";
+		dialog.RestoreDirectory = true;
 		try
 		{
 			if (!Directory.Exists(Baza.KatalogKopiiZapasowych)) Directory.CreateDirectory(Baza.KatalogKopiiZapasowych);
-			saveFileDialogBackup.InitialDirectory = Baza.KatalogKopiiZapasowych;
+			dialog.InitialDirectory = Baza.KatalogKopiiZapasowych;
 		}
 		catch
 		{
 		}
-		saveFileDialogBackup.FileName = $"profak-{DateTime.Now:yyyyMMdd}.probak";
-		if (saveFileDialogBackup.ShowDialog() != DialogResult.OK) return;
+		dialog.FileName = $"profak-{DateTime.Now:yyyyMMdd}.probak";
+		if (dialog.ShowDialog() != DialogResult.OK) return;
 		try
 		{
-			Baza.WykonajKopie(saveFileDialogBackup.FileName);
-			MessageBox.Show("Kopia bazy danych została zapisana.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			Baza.WykonajKopie(dialog.FileName);
+			OknoKomunikatu.Informacja("Kopia bazy danych została zapisana.");
 		}
 		catch (Exception exc)
 		{
@@ -106,24 +138,28 @@ partial class BazyDanych : UserControl, IKontrolkaZKontekstem
 		}
 	}
 
-	private void buttonPrzywrocKopie_Click(object? sender, EventArgs e)
+	private void PrzywrocKopie()
 	{
+		var dialog = new OpenFileDialog();
+		dialog.Filter = "Kopia zapasowa programu ProFak (*.probak)|*.probak|Wszystkie pliki (*.*)|*.*";
+		dialog.RestoreDirectory = true;
+
 		if (String.IsNullOrEmpty(Baza.Sciezka))
 		{
-			MessageBox.Show("Nie można odtworzyć kopii zapasowej do tymczasowej bazy danych.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			OknoKomunikatu.Ostrzezenie("Nie można odtworzyć kopii zapasowej do tymczasowej bazy danych.");
 			return;
 		}
-		if (Directory.Exists(Baza.KatalogKopiiZapasowych)) openFileDialogBackup.InitialDirectory = Baza.KatalogKopiiZapasowych;
-		if (openFileDialogBackup.ShowDialog() != DialogResult.OK) return;
+		if (Directory.Exists(Baza.KatalogKopiiZapasowych)) dialog.InitialDirectory = Baza.KatalogKopiiZapasowych;
+		if (dialog.ShowDialog() != DialogResult.OK) return;
 
-		if (MessageBox.Show("Dotychczasowe dane zostaną nadpisane. Czy na pewno chcesz kontynuować?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
+		if (!OknoKomunikatu.PytanieTakNie("Dotychczasowe dane zostaną nadpisane. Czy na pewno chcesz kontynuować?", domyslnie: false)) return;
 		var bazaRatunkowa = Baza.Sciezka + "-bak";
 		if (File.Exists(bazaRatunkowa)) File.Delete(bazaRatunkowa);
 		try
 		{
 			File.Move(Baza.Sciezka, bazaRatunkowa);
 			// Tu nie potrzeba korzystać z mechanizmów SQLite'a - plik źródłowy nie jest aktywną bazą
-			File.Copy(openFileDialogBackup.FileName, Baza.Sciezka);
+			File.Copy(dialog.FileName, Baza.Sciezka);
 			using var baza = new DB.Baza();
 			baza.Database.Migrate();
 		}
@@ -138,29 +174,35 @@ partial class BazyDanych : UserControl, IKontrolkaZKontekstem
 			OknoBledu.Pokaz(exc);
 			return;
 		}
-		MessageBox.Show("Baza danych została odtworzona.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		OknoKomunikatu.Informacja("Baza danych została odtworzona.");
 		Wypelnij();
 	}
 
-	private void buttonZapiszJSON_Click(object sender, EventArgs e)
+	private void ZapiszJSON()
 	{
-		saveFileDialogJSON.FileName = $"profak-{DateTime.Now:yyyyMMdd}.json";
-		if (saveFileDialogJSON.ShowDialog() != DialogResult.OK) return;
+		using var dialog = new SaveFileDialog();
+		dialog.Filter = "Dane programu ProFak (*.json)|*.json|Wszystkie pliki (*.*)|*.*";
+		dialog.RestoreDirectory = true;
+		dialog.FileName = $"profak-{DateTime.Now:yyyyMMdd}.json";
+		if (dialog.ShowDialog() != DialogResult.OK) return;
 		using var nowyKontekst = new Kontekst(Kontekst);
 		var json = IO.Eksport.Generator.Zbuduj(nowyKontekst.Baza);
-		File.WriteAllText(saveFileDialogJSON.FileName, json);
-		MessageBox.Show("Dane programu zostały zapisane.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		File.WriteAllText(dialog.FileName, json);
+		OknoKomunikatu.Informacja("Dane programu zostały zapisane.");
 	}
 
-	private void buttonWczytajJSON_Click(object sender, EventArgs e)
+	private void WczytajJSON()
 	{
-		if (openFileDialogJSON.ShowDialog() != DialogResult.OK) return;
+		using var dialog = new OpenFileDialog();
+		dialog.Filter = "Dane programu ProFak (*.json)|*.json|Wszystkie pliki (*.*)|*.*";
+		dialog.RestoreDirectory = true;
+		if (dialog.ShowDialog() != DialogResult.OK) return;
 		using var nowyKontekst = new Kontekst(Kontekst);
-		var json = File.ReadAllText(openFileDialogJSON.FileName);
-		if (MessageBox.Show("Dotychczasowe dane zostaną nadpisane. Czy na pewno chcesz kontynuować?", "ProFak", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
+		var json = File.ReadAllText(dialog.FileName);
+		if (!OknoKomunikatu.PytanieTakNie("Dotychczasowe dane zostaną nadpisane. Czy na pewno chcesz kontynuować?", domyslnie: false)) return;
 		using var tx = nowyKontekst.Transakcja();
 		IO.Eksport.Generator.Wczytaj(nowyKontekst.Baza, json);
 		tx.Zatwierdz();
-		MessageBox.Show("Dane programu zostały wczytane.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		OknoKomunikatu.Informacja("Dane programu zostały wczytane.");
 	}
 }

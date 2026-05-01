@@ -41,10 +41,8 @@ class DodajRekordAkcja<TRekord, TEdytor> : AkcjaNaSpisie<TRekord>
 		if (rekord == null) return;
 		nowyKontekst.Dodaj(rekord);
 		using var edytor = new TEdytor();
-		using var okno = new Dialog("Nowa pozycja", edytor, nowyKontekst);
-		if (pelnyEkran) okno.WindowState = FormWindowState.Maximized;
 		edytor.Przygotuj(nowyKontekst, rekord);
-		if (okno.ShowDialog() != DialogResult.OK) return;
+		if (!DialogEdycji.Pokaz("Nowa pozycja", edytor, nowyKontekst, pelnyEkran)) return;
 		edytor.KoniecEdycji();
 		ZapiszRekord(nowyKontekst, rekord);
 		transakcja.Zatwierdz();
