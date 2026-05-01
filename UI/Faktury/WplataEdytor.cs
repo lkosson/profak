@@ -9,8 +9,6 @@ class WplataEdytor : EdytorDwieKolumny<Wplata>
 {
 	private readonly TNumericUpDown numericUpDownKwota;
 	private readonly TTextBox textBoxUwagi;
-	private readonly TCheckBox checkBoxCzyRozliczenie;
-	private readonly TLinkLabel linkQR;
 
 	public WplataEdytor()
 	{
@@ -19,7 +17,6 @@ class WplataEdytor : EdytorDwieKolumny<Wplata>
 		numericUpDownKwota.Minimum = -numericUpDownKwota.Maximum;
 		textBoxUwagi = DodajTextBox(wplata => wplata.Uwagi, "Uwagi");
 		Walidacja(textBoxUwagi, WalidacjaUwag, false);
-		UstawRozmiar();
 	}
 
 	protected override void PrzygotujRekord(Wplata rekord)
@@ -47,14 +44,13 @@ class WplataEdytor : EdytorDwieKolumny<Wplata>
 			if (faktura.CzySprzedaz)
 			{
 				DodajCheckBox(wplata => wplata.CzyRozliczenie, "Uwzględnij w rozliczeniu");
-				UstawRozmiar();
 			}
 			if (faktura.CzyZakup && !String.IsNullOrEmpty(faktura.RachunekBankowy) && !String.IsNullOrEmpty(faktura.NIPSprzedawcy))
 			{
 				DodajWiersz(Kontrolki.Link("Kod QR płatności", QR), null);
-				UstawRozmiar();
 			}
 		}
+		UstawRozmiar();
 	}
 
 	private string? WalidacjaUwag(string uwagi)

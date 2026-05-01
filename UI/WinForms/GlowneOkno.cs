@@ -12,6 +12,7 @@ partial class GlowneOkno : Form
 		menu = new Menu(ZbudujMenu);
 
 		panelZawartosc = new Panel();
+		panelZawartosc.Margin = new Padding(0);
 
 		var uklad = new Siatka([Wyglad.SzerokoscMenu, -1], [-1]);
 		uklad.DodajWiersz([menu, panelZawartosc]);

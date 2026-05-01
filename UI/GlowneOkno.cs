@@ -9,25 +9,6 @@ namespace ProFak.UI;
 partial class GlowneOkno
 {
 	private Menu menu;
-	private Panel panelZawartosc;
-
-	public GlowneOkno()
-	{
-		menu = new Menu(ZbudujMenu);
-
-		panelZawartosc = new Panel();
-		panelZawartosc.Margin = new Padding(0);
-
-		var uklad = new Siatka([Wyglad.SzerokoscMenu, -1], [-1]);
-		uklad.DodajWiersz([menu, panelZawartosc]);
-
-		KeyPreview = true;
-		WindowState = FormWindowState.Maximized;
-		Text = "ProFak";
-		Icon = Ikona;
-		uklad.Dock = DockStyle.Fill;
-		Controls.Add(uklad);
-	}
 
 	public static Icon? Ikona
 	{
