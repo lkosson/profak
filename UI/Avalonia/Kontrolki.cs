@@ -291,5 +291,10 @@ static class RozszerzeniaKontrolek
 	{
 		public string Text { get => kontrolka.Content is string text ? text : ""; set => kontrolka.Content = value; }
 	}
+
+	extension(TSuggestBox kontrolka)
+	{
+		public object? SelectedValue { get => (kontrolka?.SelectedItem as IPozycjaListy)?.Wartosc; set => kontrolka.SelectedItem = kontrolka.ItemsSource.OfType<IPozycjaListy>().FirstOrDefault(e => e.Wartosc == value); }
+	}
 }
 #endif

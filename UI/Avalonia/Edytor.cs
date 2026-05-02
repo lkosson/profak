@@ -56,6 +56,12 @@ abstract class Edytor : Avalonia.Controls.Panel, IDisposable
 		MinHeight = Height = wysokosc;
 	}
 
+	protected void KontrolkaStartowa(TControl kontrolka)
+	{
+		//TODO Avalonia
+		//ActiveControl = kontrolka;
+	}
+
 	public void Wymagane(TTextBox textBox)
 	{
 		//TODO Avalonia

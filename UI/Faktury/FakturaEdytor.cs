@@ -217,19 +217,28 @@ partial class FakturaEdytor : Edytor<Faktura>
 		pliki = Spisy.Pliki();
 		dodatkowePodmioty = Spisy.DodatkowePodmioty();
 
-		Grupa gruppaUwagiPubliczne;
+#if WINFORMS
+		Grupa grupaUwagiPubliczne;
 		linkLabelUwagiPomoc.Anchor = AnchorStyles.Bottom;
 		var uwagi = new Siatka([-1, -1], [-1]);
 		uwagi.DodajWiersz([
-			gruppaUwagiPubliczne = new Grupa("Uwagi (drukowane na fakturze)", textBoxUwagiPubliczne),
+			grupaUwagiPubliczne = new Grupa("Uwagi (drukowane na fakturze)", textBoxUwagiPubliczne),
 			new Grupa("Uwagi (wewnętrzne)", textBoxUwagiWewnetrzne)
 			]);
 
-		gruppaUwagiPubliczne.Controls.Add(linkLabelUwagiPomoc);
+		grupaUwagiPubliczne.Controls.Add(linkLabelUwagiPomoc);
 		linkLabelUwagiPomoc.Location = new Point(textBoxUwagiPubliczne.Width - 20, textBoxUwagiPubliczne.Height);
 		linkLabelUwagiPomoc.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
 		linkLabelUwagiPomoc.BringToFront();
-
+#endif
+#if AVALONIA
+		var uwagi = new Siatka([-1, 0, -1], [-1]);
+		uwagi.DodajWiersz([
+			new Grupa("Uwagi (drukowane na fakturze)", textBoxUwagiPubliczne),
+			linkLabelUwagiPomoc,
+			new Grupa("Uwagi (wewnętrzne)", textBoxUwagiWewnetrzne)
+			]);
+#endif
 		var podatki = new Siatka([0, 0, 20, 0, -1], []);
 		podatki.DodajWiersz("Udział w kosztach", [comboBoxProcentKosztow, null, checkBoxWDT]);
 		podatki.DodajWiersz("Udział w VA naliczonym", [comboBoxProcentVat, null, checkBoxWNT]);
@@ -485,10 +494,10 @@ partial class FakturaEdytor : Edytor<Faktura>
 		}
 	}
 
-	protected override void OnLoad(EventArgs e)
+	protected override void EdytorGotowy()
 	{
-		base.OnLoad(e);
-		if (!String.IsNullOrEmpty(textBoxNumer.PlaceholderText)) ActiveControl = comboBoxNazwaNabywcy;
+		base.EdytorGotowy();
+		KontrolkaStartowa(comboBoxNazwaNabywcy);
 	}
 
 	private void NowySprzedawca()

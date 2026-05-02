@@ -57,6 +57,11 @@ abstract class Edytor : UserControl
 		ResumeLayout(true);
 	}
 
+	protected void KontrolkaStartowa(TControl kontrolka)
+	{
+		ActiveControl = kontrolka;
+	}
+
 	public void Wymagane(TTextBox textBox)
 	{
 		textBox.Validating += TextBox_Wymagane_Validating;

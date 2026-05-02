@@ -46,5 +46,7 @@ class ZakladkiAV : Avalonia.Controls.TabControl
 			//SelectNextControl(tab, true, true, true, true);
 		}
 	}
+
+	public TTabPage? SelectedTab { get => (TTabPage?)Items[SelectedIndex]; set => SelectedIndex = Items.IndexOf(value); }
 }
 #endif
