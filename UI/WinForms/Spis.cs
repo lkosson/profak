@@ -167,9 +167,9 @@ abstract partial class Spis<T> : Spis
 		base.Dispose(disposing);
 	}
 
-	public DataGridViewColumn DodajKolumne(string wlasciwosc, string naglowek, bool checkbox = false, bool wyrownajDoPrawej = false, bool rozciagnij = false, string? format = null, int? szerokosc = null, Func<T, string?>? tooltip = null)
+	public TDataGridColumn DodajKolumne(string wlasciwosc, string naglowek, bool checkbox = false, bool wyrownajDoPrawej = false, bool rozciagnij = false, string? format = null, int? szerokosc = null, Func<T, string?>? tooltip = null)
 	{
-		DataGridViewColumn kolumna = checkbox ? new DataGridViewCheckBoxColumn() : new DataGridViewTextBoxColumn();
+		TDataGridColumn kolumna = checkbox ? new DataGridViewCheckBoxColumn() : new DataGridViewTextBoxColumn();
 		kolumna.HeaderText = naglowek;
 		kolumna.DataPropertyName = wlasciwosc;
 		kolumna.Name = wlasciwosc;

@@ -1,4 +1,6 @@
 ﻿#if AVALONIA
+using Avalonia.Controls;
+using Avalonia.Data;
 using ProFak.DB;
 using System.ComponentModel;
 using System.Linq.Expressions;
@@ -6,8 +8,10 @@ using System.Text.RegularExpressions;
 
 namespace ProFak.UI;
 
-partial class Spis : DataGridView
+// TODO Avalonia
+partial class Spis : TDataGrid
 {
+	/*
 	public Spis()
 	{
 		DoubleBuffered = true;
@@ -37,17 +41,35 @@ partial class Spis : DataGridView
 		base.OnMouseUp(e);
 		if (!DoubleBuffered) DoubleBuffered = true;
 	}
+	*/
 }
 
 abstract partial class Spis<T> : Spis
 	where T : Rekord<T>
 {
-	private readonly Container container;
-	private readonly BindingSource bindingSource;
+	private IEnumerable<T>? RekordyImpl
+	{
+		get => ItemsSource as IEnumerable<T>;
+		set => ItemsSource = value;
+	}
 
 	private IEnumerable<T> WybraneRekordyImpl
 	{
-		get => SelectedRows.Cast<DataGridViewRow>().Select(row => row.DataBoundItem).Cast<T>();
+		get => [];
+		set { }
+	}
+
+	public virtual int PreferowanaSzerokosc => 0;
+
+	private void ZaznaczPosortowaneKolumny() { }
+	private void WczytajKonfiguracje() { }
+	private void ZapiszKonfiguracje() { }
+	private void Invalidate() { }
+
+	/*
+	private IEnumerable<T> WybraneRekordyImpl
+	{
+		get => SelectedItem SelectedRows.Cast<DataGridViewRow>().Select(row => row.DataBoundItem).Cast<T>();
 
 		set
 		{
@@ -171,12 +193,14 @@ abstract partial class Spis<T> : Spis
 		if (disposing) container.Dispose();
 		base.Dispose(disposing);
 	}
-
-	public DataGridViewColumn DodajKolumne(string wlasciwosc, string naglowek, bool checkbox = false, bool wyrownajDoPrawej = false, bool rozciagnij = false, string? format = null, int? szerokosc = null, Func<T, string?>? tooltip = null)
+	*/
+	public TDataGridColumn DodajKolumne(string wlasciwosc, string naglowek, bool checkbox = false, bool wyrownajDoPrawej = false, bool rozciagnij = false, string? format = null, int? szerokosc = null, Func<T, string?>? tooltip = null)
 	{
-		DataGridViewColumn kolumna = checkbox ? new DataGridViewCheckBoxColumn() : new DataGridViewTextBoxColumn();
-		kolumna.HeaderText = naglowek;
-		kolumna.DataPropertyName = wlasciwosc;
+		TDataGridColumn kolumna = checkbox ? new DataGridTextColumn() : new DataGridCheckBoxColumn();
+		kolumna.Header = naglowek;
+		kolumna.Binding = new ReflectionBinding(wlasciwosc);
+		// TODO Avalonia
+		/*
 		kolumna.Name = wlasciwosc;
 		kolumna.DefaultCellStyle.Alignment = wyrownajDoPrawej ? DataGridViewContentAlignment.MiddleRight : DataGridViewContentAlignment.MiddleLeft;
 		kolumna.AutoSizeMode = rozciagnij ? DataGridViewAutoSizeColumnMode.Fill : DataGridViewAutoSizeColumnMode.NotSet;
@@ -184,11 +208,12 @@ abstract partial class Spis<T> : Spis
 		if (!String.IsNullOrEmpty(format)) kolumna.DefaultCellStyle.Format = format;
 		if (szerokosc.HasValue) kolumna.Width = Wyglad.PrzeskalujRozmiar(szerokosc.Value) * DeviceDpi / 96;
 		if (rozciagnij) kolumna.MinimumWidth = 50;
-		Columns.Add(kolumna);
 		if (tooltip != null) tooltipyDlaKolumn[kolumna.Index] = tooltip;
+		*/
+		Columns.Add(kolumna);
 		return kolumna;
 	}
-
+	/*
 	protected override void OnCellToolTipTextNeeded(DataGridViewCellToolTipTextNeededEventArgs e)
 	{
 		if (e.RowIndex != -1
@@ -387,5 +412,6 @@ abstract partial class Spis<T> : Spis
 		}
 		Kontekst.Baza.Zapisz(doZapisu);
 	}
+	*/
 }
 #endif

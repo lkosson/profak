@@ -20,6 +20,7 @@ global using TContextMenu = Avalonia.Controls.ContextMenu;
 global using TTabPage = Avalonia.Controls.TabItem;
 global using TPadding = Avalonia.Thickness;
 global using TDataGrid = Avalonia.Controls.DataGrid;
+global using TDataGridColumn = Avalonia.Controls.DataGridBoundColumn;
 using Avalonia.Layout;
 using HorizontalAlignment = Avalonia.Layout.HorizontalAlignment;
 using Avalonia.Controls;
@@ -308,6 +309,13 @@ static class RozszerzeniaKontrolek
 	extension(TDataGrid kontrolka)
 	{
 		public object? DataSource { get => kontrolka.ItemsSource; set => kontrolka.ItemsSource = (System.Collections.IEnumerable?)value; }
+	}
+
+	extension(TDataGridColumn kontrolka)
+	{
+		public bool Visible { get => kontrolka.IsVisible; set => kontrolka.IsVisible = value; }
+		public string Name { get => ""; set { } }
+		public DataGridViewAutoSizeColumnMode AutoSizeMode { get => default; set { } }
 	}
 }
 #endif

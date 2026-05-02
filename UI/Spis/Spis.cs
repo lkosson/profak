@@ -91,10 +91,10 @@ abstract partial class Spis<T> : Spis
 		}
 	}
 
-	public DataGridViewColumn DodajKolumneBool(string wlasciwosc, string naglowek, int? szerokosc = null, Func<T, string>? tooltip = null) => DodajKolumne(wlasciwosc, naglowek, checkbox: true, szerokosc: szerokosc, tooltip: tooltip);
-	public DataGridViewColumn DodajKolumneData(string wlasciwosc, string naglowek, string? format = null, int? szerokosc = 120, Func<T, string?>? tooltip = null) => DodajKolumne(wlasciwosc, naglowek, wyrownajDoPrawej: true, format: format ?? Wyglad.FormatDaty, szerokosc: szerokosc, tooltip: tooltip);
-	public DataGridViewColumn DodajKolumneKwota(string wlasciwosc, string naglowek, string? format = null, int? szerokosc = 80, Func<T, string?>? tooltip = null) => DodajKolumne(wlasciwosc, naglowek, wyrownajDoPrawej: true, format: format ?? Wyglad.FormatKwoty, szerokosc: szerokosc, tooltip: tooltip);
-	public DataGridViewColumn DodajKolumneId() => DodajKolumne("Id", "Id", wyrownajDoPrawej: true, szerokosc: 60);
+	public TDataGridColumn DodajKolumneBool(string wlasciwosc, string naglowek, int? szerokosc = null, Func<T, string>? tooltip = null) => DodajKolumne(wlasciwosc, naglowek, checkbox: true, szerokosc: szerokosc, tooltip: tooltip);
+	public TDataGridColumn DodajKolumneData(string wlasciwosc, string naglowek, string? format = null, int? szerokosc = 120, Func<T, string?>? tooltip = null) => DodajKolumne(wlasciwosc, naglowek, wyrownajDoPrawej: true, format: format ?? Wyglad.FormatDaty, szerokosc: szerokosc, tooltip: tooltip);
+	public TDataGridColumn DodajKolumneKwota(string wlasciwosc, string naglowek, string? format = null, int? szerokosc = 80, Func<T, string?>? tooltip = null) => DodajKolumne(wlasciwosc, naglowek, wyrownajDoPrawej: true, format: format ?? Wyglad.FormatKwoty, szerokosc: szerokosc, tooltip: tooltip);
+	public TDataGridColumn DodajKolumneId() => DodajKolumne("Id", "Id", wyrownajDoPrawej: true, szerokosc: 60);
 
 	protected abstract void Przeladuj();
 
@@ -110,7 +110,7 @@ abstract partial class Spis<T> : Spis
 
 		var spis = GetType().Name;
 		var kolumny = Kontekst.Baza.KolumnySpisow.Where(e => e.Spis == spis).ToList();
-		foreach (DataGridViewColumn kolumna in Columns)
+		foreach (TDataGridColumn kolumna in Columns)
 		{
 			if (kolumny.Any(e => e.Kolumna == kolumna.Name)) continue;
 			var konfiguracjaKolumny = new KolumnaSpisu { Spis = spis, Kolumna = kolumna.Name };

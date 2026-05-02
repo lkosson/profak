@@ -8,10 +8,10 @@ class KSeFSpis : Spis<Faktura>
 	public KSeFSpisParametry Parametry { get; set; } = new KSeFSpisParametry();
 	public static readonly DateTime DataStartowa = new DateTime(2026, 2, 1);
 	private bool pierwszeZaladowanie = true;
-	private readonly DataGridViewColumn kolumnaNazwaNabywcy;
-	private readonly DataGridViewColumn kolumnaNIPNabywcy;
-	private readonly DataGridViewColumn kolumnaNazwaSprzedawcy;
-	private readonly DataGridViewColumn kolumnaNIPSprzedawcy;
+	private readonly TDataGridColumn kolumnaNazwaNabywcy;
+	private readonly TDataGridColumn kolumnaNIPNabywcy;
+	private readonly TDataGridColumn kolumnaNazwaSprzedawcy;
+	private readonly TDataGridColumn kolumnaNIPSprzedawcy;
 	public override string Podsumowanie
 	{
 		get

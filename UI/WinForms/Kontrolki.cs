@@ -22,6 +22,7 @@ global using TButtonDropDown = ProFak.UI.ButtonDropDown;
 global using TTabPage = System.Windows.Forms.TabPage;
 global using TPadding = System.Windows.Forms.Padding;
 global using TDataGrid = System.Windows.Forms.DataGridView;
+global using TDataGridColumn = System.Windows.Forms.DataGridViewColumn;
 
 namespace ProFak.UI;
 
