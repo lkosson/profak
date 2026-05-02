@@ -21,6 +21,7 @@ global using TTreeNode = System.Windows.Forms.TreeNode;
 global using TButtonDropDown = ProFak.UI.ButtonDropDown;
 global using TTabPage = System.Windows.Forms.TabPage;
 global using TPadding = System.Windows.Forms.Padding;
+global using TDataGrid = System.Windows.Forms.DataGridView;
 
 namespace ProFak.UI;
 

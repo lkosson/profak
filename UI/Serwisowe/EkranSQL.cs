@@ -10,14 +10,14 @@ class EkranSQL : Edytor, IKontrolkaZKontekstem
 	private readonly TTextBox textBoxSQL;
 	private readonly TButton buttonUruchom;
 	private readonly TTextBox textBoxStatus;
-	private readonly DataGridView dataGridViewWynik;
+	private readonly TDataGrid dataGridViewWynik;
 
 	public EkranSQL()
 	{
 		textBoxSQL = Kontrolki.TextArea(linie: 5);
 		buttonUruchom = Kontrolki.Button("Uruchom [F5]", akcja: Uruchom);
 		textBoxStatus = Kontrolki.TextBox();
-		dataGridViewWynik = new DataGridView();
+		dataGridViewWynik = new TDataGrid();
 
 		textBoxStatus.ReadOnly = true;
 		textBoxSQL.KeyDown += textBoxSQL_KeyDown;
@@ -60,8 +60,17 @@ class EkranSQL : Edytor, IKontrolkaZKontekstem
 		}
 	}
 
+#if WINFORMS
 	private void textBoxSQL_KeyDown(object? sender, KeyEventArgs e)
 	{
 		if (e.KeyCode == Keys.F5) Uruchom();
 	}
+#endif
+#if AVALONIA
+	private void textBoxSQL_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
+	{
+		if (e.Key == Avalonia.Input.Key.F5) Uruchom();
+	}
+	
+#endif
 }

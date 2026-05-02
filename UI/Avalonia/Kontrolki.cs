@@ -19,6 +19,7 @@ global using TProgressBar = Avalonia.Controls.ProgressBar;
 global using TContextMenu = Avalonia.Controls.ContextMenu;
 global using TTabPage = Avalonia.Controls.TabItem;
 global using TPadding = Avalonia.Thickness;
+global using TDataGrid = Avalonia.Controls.DataGrid;
 using Avalonia.Layout;
 using HorizontalAlignment = Avalonia.Layout.HorizontalAlignment;
 using Avalonia.Controls;
@@ -295,6 +296,11 @@ static class RozszerzeniaKontrolek
 	extension(TSuggestBox kontrolka)
 	{
 		public object? SelectedValue { get => (kontrolka?.SelectedItem as IPozycjaListy)?.Wartosc; set => kontrolka.SelectedItem = kontrolka.ItemsSource.OfType<IPozycjaListy>().FirstOrDefault(e => e.Wartosc == value); }
+	}
+
+	extension(TDataGrid kontrolka)
+	{
+		public object? DataSource { get => kontrolka.ItemsSource; set => kontrolka.ItemsSource = (System.Collections.IEnumerable?)value; }
 	}
 }
 #endif
