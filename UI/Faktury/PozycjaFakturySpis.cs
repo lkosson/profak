@@ -27,9 +27,5 @@ class PozycjaFakturySpis : Spis<PozycjaFaktury>
 		Rekordy = q.ToList();
 	}
 
-	protected override void UstawStylWiersza(PozycjaFaktury rekord, string kolumna, DataGridViewCellStyle styl)
-	{
-		base.UstawStylWiersza(rekord, kolumna, styl);
-		if (rekord.CzyPrzedKorekta) { styl.ForeColor = Color.LightGray; styl.SelectionForeColor = Color.LightGray; }
-	}
+	protected override TColor KolorWiersza(PozycjaFaktury rekord) => rekord.Id > 0 ? Kontrolki.Color(210, 210, 210) : base.KolorWiersza(rekord);
 }

@@ -121,11 +121,7 @@ class KSeFSpis : Spis<Faktura>
 		Komunikat = null;
 	}
 
-	protected override void UstawStylWiersza(Faktura rekord, string kolumna, DataGridViewCellStyle styl)
-	{
-		base.UstawStylWiersza(rekord, kolumna, styl);
-		if (rekord.Id > 0) styl.ForeColor = Color.FromArgb(20, 170, 30);
-	}
+	protected override TColor KolorWiersza(Faktura rekord) => rekord.Id > 0 ? Kontrolki.Color(20, 170, 30) : base.KolorWiersza(rekord);
 }
 
 class KSeFSpisParametry

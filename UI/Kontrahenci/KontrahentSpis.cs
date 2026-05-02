@@ -20,11 +20,10 @@ class KontrahentSpis : Spis<Kontrahent>
 		Rekordy = Kontekst.Baza.Kontrahenci.AsEnumerable().Where(kontrahent => !kontrahent.CzyPodmiot).OrderBy(kontrahent => kontrahent.Nazwa);
 	}
 
-	protected override void UstawStylWiersza(Kontrahent rekord, string kolumna, DataGridViewCellStyle styl)
+	protected override TColor KolorWiersza(Kontrahent rekord)
 	{
-		base.UstawStylWiersza(rekord, kolumna, styl);
-		if (rekord.CzyPodmiot) styl.Font = new Font(styl.Font!, FontStyle.Bold);
-		else if (rekord.CzyArchiwalny) styl.ForeColor = Color.Gray;
-		else if (rekord.CzyImportKSeF) styl.ForeColor = Color.LightSkyBlue;
+		if (rekord.CzyArchiwalny) return Kontrolki.Color(128, 128, 128);
+		if (rekord.CzyImportKSeF) return Kontrolki.Color(135, 206, 250);
+		return base.KolorWiersza(rekord);
 	}
 }

@@ -18,12 +18,10 @@ class TowarSpis : Spis<Towar>
 		Rekordy = Kontekst.Baza.Towary.AsEnumerable().OrderBy(towar => towar.Nazwa);
 	}
 
-	protected override void UstawStylWiersza(Towar rekord, string kolumna, DataGridViewCellStyle styl)
+	protected override TColor KolorWiersza(Towar rekord)
 	{
-		base.UstawStylWiersza(rekord, kolumna, styl);
-		if (rekord.CzyArchiwalny) styl.ForeColor = Color.LightGray;
-		else if (rekord.Rodzaj == RodzajTowaru.Usługa) styl.ForeColor = Color.DarkBlue;
-		if (rekord.CzyWedlugCenBrutto && kolumna == nameof(Towar.CenaBrutto)) styl.Font = new Font(styl.Font!, FontStyle.Bold);
-		if (!rekord.CzyWedlugCenBrutto && kolumna == nameof(Towar.CenaNetto)) styl.Font = new Font(styl.Font!, FontStyle.Bold);
+		if (rekord.CzyArchiwalny) return Kontrolki.Color(210, 210, 210);
+		if (rekord.Rodzaj == RodzajTowaru.Usługa) return Kontrolki.Color(0, 0, 139);
+		return base.KolorWiersza(rekord);
 	}
 }

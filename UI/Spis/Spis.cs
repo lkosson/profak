@@ -98,9 +98,8 @@ abstract partial class Spis<T> : Spis
 
 	protected abstract void Przeladuj();
 
-	protected virtual void UstawStylWiersza(T rekord, string kolumna, DataGridViewCellStyle styl)
-	{
-	}
+	protected virtual TColor KolorWiersza(T rekord) => default;
+	protected virtual bool CzyWierszPogrubiony(T rekord) => false;
 
 	private void PokazKonfiguracjeSpisu()
 	{

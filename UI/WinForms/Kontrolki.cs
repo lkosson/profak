@@ -23,6 +23,7 @@ global using TTabPage = System.Windows.Forms.TabPage;
 global using TPadding = System.Windows.Forms.Padding;
 global using TDataGrid = System.Windows.Forms.DataGridView;
 global using TDataGridColumn = System.Windows.Forms.DataGridViewColumn;
+global using TColor = System.Drawing.Color;
 
 namespace ProFak.UI;
 
@@ -268,5 +269,7 @@ class KontrolkiWF
 		if (podrzedne != null) wezel.Nodes.AddRange(podrzedne);
 		return wezel;
 	}
+
+	public static TColor Color(int r, int g, int b) => Color.FromArgb(r, g, b);
 }
 #endif

@@ -17,9 +17,5 @@ class WalutaSpis : Spis<Waluta>
 		Rekordy = Kontekst.Baza.Waluty.AsEnumerable().OrderBy(waluta => waluta.Skrot);
 	}
 
-	protected override void UstawStylWiersza(Waluta rekord, string kolumna, DataGridViewCellStyle styl)
-	{
-		base.UstawStylWiersza(rekord, kolumna, styl);
-		if (rekord.CzyDomyslna) styl.Font = new Font(styl.Font!, FontStyle.Bold);
-	}
+	protected override bool CzyWierszPogrubiony(Waluta rekord) => rekord.CzyDomyslna;
 }

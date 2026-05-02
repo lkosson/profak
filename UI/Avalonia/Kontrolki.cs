@@ -21,6 +21,7 @@ global using TTabPage = Avalonia.Controls.TabItem;
 global using TPadding = Avalonia.Thickness;
 global using TDataGrid = Avalonia.Controls.DataGrid;
 global using TDataGridColumn = Avalonia.Controls.DataGridBoundColumn;
+global using TColor = Avalonia.Media.Color;
 using Avalonia.Layout;
 using HorizontalAlignment = Avalonia.Layout.HorizontalAlignment;
 using Avalonia.Controls;
@@ -239,6 +240,8 @@ class KontrolkiAV
 		}
 		return wezel;
 	}
+
+	public static TColor Color(int r, int g, int b) => new TColor(255, (byte)r, (byte)g, (byte)b);
 }
 
 class TTreeNode

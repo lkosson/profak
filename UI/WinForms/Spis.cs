@@ -207,6 +207,13 @@ abstract partial class Spis<T> : Spis
 		}
 	}
 
+	private void UstawStylWiersza(T rekord, string kolumna, DataGridViewCellStyle styl)
+	{
+		if (CzyWierszPogrubiony(rekord)) styl.Font = new Font(styl.Font!, FontStyle.Bold);
+		var kolor = KolorWiersza(rekord);
+		if (kolor is not default) styl.ForeColor = kolor;
+	}
+
 	protected override void OnCellClick(DataGridViewCellEventArgs e)
 	{
 		base.OnCellClick(e);

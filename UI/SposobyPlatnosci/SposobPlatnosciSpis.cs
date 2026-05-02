@@ -18,9 +18,5 @@ class SposobPlatnosciSpis : Spis<SposobPlatnosci>
 		Rekordy = Kontekst.Baza.SposobyPlatnosci.AsEnumerable().OrderBy(sposob => sposob.Nazwa);
 	}
 
-	protected override void UstawStylWiersza(SposobPlatnosci rekord, string kolumna, DataGridViewCellStyle styl)
-	{
-		base.UstawStylWiersza(rekord, kolumna, styl);
-		if (rekord.CzyDomyslny) styl.Font = new Font(styl.Font!, FontStyle.Bold);
-	}
+	protected override bool CzyWierszPogrubiony(SposobPlatnosci rekord) => rekord.CzyDomyslny;
 }

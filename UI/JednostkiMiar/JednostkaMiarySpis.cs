@@ -18,9 +18,5 @@ class JednostkaMiarySpis : Spis<JednostkaMiary>
 		Rekordy = Kontekst.Baza.JednostkiMiar.AsEnumerable().OrderBy(jednostka => jednostka.Nazwa);
 	}
 
-	protected override void UstawStylWiersza(JednostkaMiary rekord, string kolumna, DataGridViewCellStyle styl)
-	{
-		base.UstawStylWiersza(rekord, kolumna, styl);
-		if (rekord.CzyDomyslna) styl.Font = new Font(styl.Font!, FontStyle.Bold);
-	}
+	protected override bool CzyWierszPogrubiony(JednostkaMiary rekord) => rekord.CzyDomyslna;
 }

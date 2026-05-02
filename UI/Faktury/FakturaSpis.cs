@@ -102,16 +102,16 @@ class FakturaSpis : Spis<Faktura>
 		if (Parametry.CzyZaplacone) Rekordy = Rekordy.Where(faktura => faktura.CzyZaplacona).ToList();
 	}
 
-	protected override void UstawStylWiersza(Faktura rekord, string kolumna, DataGridViewCellStyle styl)
+	protected override TColor KolorWiersza(Faktura rekord)
 	{
-		base.UstawStylWiersza(rekord, kolumna, styl);
-		if (rekord.DniPoTerminie > 0) styl.ForeColor = Color.FromArgb(160, 20, 20);
-		else if (!rekord.CzyZaplacona) styl.ForeColor = Color.FromArgb(240, 80, 40);
-		else if (rekord.FakturaKorygujacaRef.IsNotNull) styl.ForeColor = Color.FromArgb(120, 120, 120);
-		else if (rekord.Rodzaj == RodzajFaktury.KorektaSprzedaży) styl.ForeColor = Color.FromArgb(50, 60, 220);
-		else if (rekord.Rodzaj == RodzajFaktury.KorektaZakupu) styl.ForeColor = Color.FromArgb(50, 60, 220);
-		else if (rekord.Rodzaj == RodzajFaktury.KorektaVatMarży) styl.ForeColor = Color.FromArgb(50, 60, 220);
-		else if (rekord.Rodzaj == RodzajFaktury.DowódWewnętrzny) styl.ForeColor = Color.FromArgb(220, 60, 220);
+		if (rekord.DniPoTerminie > 0) return Kontrolki.Color(160, 20, 20);
+		else if (!rekord.CzyZaplacona) return Kontrolki.Color(240, 80, 40);
+		else if (rekord.FakturaKorygujacaRef.IsNotNull) return Kontrolki.Color(120, 120, 120);
+		else if (rekord.Rodzaj == RodzajFaktury.KorektaSprzedaży) return Kontrolki.Color(50, 60, 220);
+		else if (rekord.Rodzaj == RodzajFaktury.KorektaZakupu) return Kontrolki.Color(50, 60, 220);
+		else if (rekord.Rodzaj == RodzajFaktury.KorektaVatMarży) return Kontrolki.Color(50, 60, 220);
+		else if (rekord.Rodzaj == RodzajFaktury.DowódWewnętrzny) return Kontrolki.Color(220, 60, 220);
+		return base.KolorWiersza(rekord);
 	}
 
 	protected override Func<Faktura, IComparable>? KolumnaDlaSortowania(string kolumna)

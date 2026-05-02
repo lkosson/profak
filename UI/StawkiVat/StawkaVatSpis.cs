@@ -18,9 +18,5 @@ partial class StawkaVatSpis : Spis<StawkaVat>
 		Rekordy = Kontekst.Baza.StawkiVat.AsEnumerable().OrderBy(stawka => stawka.Skrot);
 	}
 
-	protected override void UstawStylWiersza(StawkaVat rekord, string kolumna, DataGridViewCellStyle styl)
-	{
-		base.UstawStylWiersza(rekord, kolumna, styl);
-		if (rekord.CzyDomyslna) styl.Font = new Font(styl.Font!, FontStyle.Bold);
-	}
+	protected override bool CzyWierszPogrubiony(StawkaVat rekord) => rekord.CzyDomyslna;
 }
