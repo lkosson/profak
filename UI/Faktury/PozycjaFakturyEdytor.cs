@@ -8,7 +8,7 @@ partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 	private Slownik<Towar> slownikTowarow = default!;
 	private bool trwaPrzeliczanieCen;
 
-	private readonly TComboBox comboBoxTowar;
+	private readonly TSuggestBox comboBoxTowar;
 	private readonly TButton buttonTowar;
 	private readonly TNumericUpDown numericUpDownIlosc;
 	private readonly TNumericUpDown numericUpDownCenaNetto;

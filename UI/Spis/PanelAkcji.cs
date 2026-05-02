@@ -9,8 +9,8 @@ class PanelAkcji : Pionowo
 	public PanelAkcji()
 		: base([])
 	{
-		MinimumSize = new Size(200 * DeviceDpi / 96, 200 * DeviceDpi / 96);
 #if WINFORMS
+		MinimumSize = new Size(200 * DeviceDpi / 96, 200 * DeviceDpi / 96);
 		AutoSize = true;
 #endif
 		TabIndex = 100;

@@ -32,9 +32,9 @@ partial class SpisZAkcjami<TRekord> : Siatka, IKontrolkaZKontekstem
 		spis.RekordyZmienione += spis_RekordyZmienione;
 		spis.PokazMenuKontekstowe += PokazMenuKontekstowe;
 		spis.ObsluzKlawisz += ObsluzKlawisz;
-		Controls.Add(spis, 0, 0);
+#if WINFORMS
 		MinimumSize = new Size(panelAkcji.MinimumSize.Width + spis.MinimumSize.Width + panelAkcji.Margin.Left + spis.Margin.Right, Math.Max(panelAkcji.MinimumSize.Height, spis.MinimumSize.Height) + Math.Max(panelAkcji.Margin.Top, spis.Margin.Top) + Math.Max(panelAkcji.Margin.Bottom, spis.Margin.Bottom));
-
+#endif
 		DodajWiersz([spis, panelAkcji]);
 	}
 

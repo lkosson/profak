@@ -80,6 +80,8 @@ class WplataEdytor : EdytorDwieKolumny<Wplata>
 		writer.Format = BarcodeFormat.QR_CODE;
 		using var qr = writer.WriteAsBitmap(kodPlatnosci);
 
+		// TODO Avalonia
+#if WINFORMS
 		var pb = new PictureBox();
 		pb.Dock = DockStyle.Fill;
 		pb.SizeMode = PictureBoxSizeMode.Zoom;
@@ -88,7 +90,7 @@ class WplataEdytor : EdytorDwieKolumny<Wplata>
 		using var form = new Dialog("Kod płatności", pb, Kontekst);
 		form.ClientSize = new Size(600, 500);
 		form.BackColor = Color.White;
-
 		form.Pokaz();
+#endif
 	}
 }
