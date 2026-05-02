@@ -15,7 +15,9 @@ class FakturaSpis : Spis<Faktura>
 		|| Rodzaje.Contains(RodzajFaktury.KorektaSprzedaży)
 		|| Rodzaje.Contains(RodzajFaktury.Proforma)
 		|| Rodzaje.Contains(RodzajFaktury.VatMarża)
-		|| Rodzaje.Contains(RodzajFaktury.KorektaVatMarży);
+		|| Rodzaje.Contains(RodzajFaktury.KorektaVatMarży)
+		|| Rodzaje.Contains(RodzajFaktury.Rachunek)
+		|| Rodzaje.Contains(RodzajFaktury.KorektaRachunku);
 
 	public override string Podsumowanie
 	{
@@ -34,6 +36,7 @@ class FakturaSpis : Spis<Faktura>
 
 	public FakturaSpis()
 	{
+		var czyRachunek = Rodzaje.Contains(RodzajFaktury.Rachunek) || Rodzaje.Contains(RodzajFaktury.KorektaRachunku);
 		DodajKolumne(nameof(Faktura.Numer), "Numer");
 		DodajKolumne(nameof(Faktura.RodzajFmt), "Rodzaj", szerokosc: 0);
 		DodajKolumneData(nameof(Faktura.DataWystawienia), "Data wystawienia");
@@ -56,7 +59,10 @@ class FakturaSpis : Spis<Faktura>
 		DodajKolumneKwota(nameof(Faktura.RazemBrutto), "Brutto");
 		DodajKolumne(nameof(Faktura.WalutaFmt), "Waluta", szerokosc: 70);
 		DodajKolumneBool(nameof(Faktura.CzyZaplacona), "Zapł.", szerokosc: 50, tooltip: faktura => faktura.SumaWplat.ToString(Wyglad.FormatKwoty));
-		DodajKolumneBool(nameof(Faktura.CzyKSeF), "KSeF", szerokosc: 50, tooltip: faktura => faktura.NumerKSeF);
+		if (!czyRachunek)
+		{
+			DodajKolumneBool(nameof(Faktura.CzyKSeF), "KSeF", szerokosc: 50, tooltip: faktura => faktura.NumerKSeF);
+		}
 		DodajKolumneBool(nameof(Faktura.CzyPliki), "Pliki", szerokosc: 50, tooltip: faktura => String.Join("\n", faktura.Pliki.Select(e => e.Nazwa)));
 		DodajKolumne(nameof(Faktura.PozycjeFmt), "Pozycje", szerokosc: 150);
 		DodajKolumne(nameof(Faktura.UwagiPubliczne), "Uwagi (publiczne)", szerokosc: 150);
@@ -70,9 +76,12 @@ class FakturaSpis : Spis<Faktura>
 		DodajKolumneData(nameof(Faktura.DataWplywu), "Data zapłaty");
 		if (CzySprzedaz) DodajKolumneData(nameof(Faktura.DataWyslania), "Data wysłania", tooltip: faktura => faktura.DataWyslania?.ToString(Wyglad.FormatCzasu));
 		DodajKolumne(nameof(Faktura.NumerPowiazanej), "Powiązana");
-		DodajKolumne(nameof(Faktura.NumerKSeF), "Numer KSeF", szerokosc: 0);
-		DodajKolumneBool(nameof(Faktura.CzyTP), "TP", szerokosc: 0);
-		DodajKolumneBool(nameof(Faktura.CzyWDT), "WDT", szerokosc: 0);
+		if (!czyRachunek)
+		{
+			DodajKolumne(nameof(Faktura.NumerKSeF), "Numer KSeF", szerokosc: 0);
+			DodajKolumneBool(nameof(Faktura.CzyTP), "TP", szerokosc: 0);
+			DodajKolumneBool(nameof(Faktura.CzyWDT), "WDT", szerokosc: 0);
+		}
 		DodajKolumneId();
 	}
 
