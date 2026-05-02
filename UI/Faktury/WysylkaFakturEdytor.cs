@@ -60,7 +60,12 @@ class WysylkaFakturEdytor : Edytor
 		var pozycje = new List<Faktura>();
 		pozycje.Add(new Faktura { Numer = "(wszystkie)", Id = 0 });
 		pozycje.AddRange(Faktury.OrderBy(e => e.DataWystawienia).ThenBy(e => e.Id));
+#if WINFORMS
 		comboBoxFaktura.DisplayMember = "Numer";
+#endif
+#if AVALONIA
+		comboBoxFaktura.DisplayMemberBinding = Avalonia.Data.CompiledBinding.Create<Faktura, string>(pozycja => pozycja.Numer);
+#endif
 		comboBoxFaktura.DataSource = pozycje;
 	}
 
@@ -132,10 +137,8 @@ class WysylkaFakturEdytor : Edytor
 		comboBoxFaktura.BeginUpdate();
 		comboBoxFaktura.DataSource = Array.Empty<Faktura>();
 		comboBoxFaktura.DataSource = faktury;
-		comboBoxFaktura.DisplayMember = "Numer";
 		comboBoxFaktura.SelectedIndex = Math.Min(idx, faktury.Count - 1);
 		comboBoxFaktura.EndUpdate();
-
 		if (faktury.Count == 1) Zamknij();
 	}
 

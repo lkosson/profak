@@ -298,6 +298,13 @@ static class RozszerzeniaKontrolek
 		public object? SelectedValue { get => (kontrolka?.SelectedItem as IPozycjaListy)?.Wartosc; set => kontrolka.SelectedItem = kontrolka.ItemsSource.OfType<IPozycjaListy>().FirstOrDefault(e => e.Wartosc == value); }
 	}
 
+	extension(TComboBox kontrolka)
+	{
+		public object? DataSource { get => kontrolka.ItemsSource; set => kontrolka.ItemsSource = (System.Collections.IEnumerable?)value; }
+		public void BeginUpdate() { }
+		public void EndUpdate() { }
+	}
+
 	extension(TDataGrid kontrolka)
 	{
 		public object? DataSource { get => kontrolka.ItemsSource; set => kontrolka.ItemsSource = (System.Collections.IEnumerable?)value; }
