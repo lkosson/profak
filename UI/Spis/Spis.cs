@@ -113,8 +113,14 @@ abstract partial class Spis<T> : Spis
 		{
 			if (kolumny.Any(e => e.Kolumna == kolumna.Name)) continue;
 			var konfiguracjaKolumny = new KolumnaSpisu { Spis = spis, Kolumna = kolumna.Name };
+#if WINFORMS
+			var szerokosc = kolumna.Width;
+#endif
+#if AVALONIA
+			var szerokosc = (int)kolumna.ActualWidth;
+#endif
 			konfiguracjaKolumny.Kolejnosc = kolumna.DisplayIndex;
-			konfiguracjaKolumny.Szerokosc = kolumna.Visible ? kolumna.AutoSizeMode == DataGridViewAutoSizeColumnMode.Fill ? -1 : kolumna.Width : 0;
+			konfiguracjaKolumny.Szerokosc = kolumna.Visible ? kolumna.AutoSizeMode == DataGridViewAutoSizeColumnMode.Fill ? -1 : szerokosc : 0;
 			kolumny.Add(konfiguracjaKolumny);
 		}
 
