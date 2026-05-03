@@ -20,6 +20,7 @@ namespace ProFak.UI;
 class AvaloniaUI
 {
 	private static Application application = default!;
+	private static Window? glowneOkno;
 
 	public static void Przygotuj()
 	{
@@ -31,7 +32,22 @@ class AvaloniaUI
 
 	public static void Wyswietl(Window okno)
 	{
-		application.Run(okno);
+		if (glowneOkno == null)
+		{
+			glowneOkno = okno;
+			try
+			{
+				application.Run(okno);
+			}
+			finally
+			{
+				glowneOkno = null;
+			}
+		}
+		else
+		{
+			okno.ShowDialog(glowneOkno);
+		}
 	}
 }
 #endif
