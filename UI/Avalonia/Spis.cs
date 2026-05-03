@@ -1,4 +1,5 @@
 ﻿#if AVALONIA
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data;
 using ProFak.DB;
@@ -11,37 +12,16 @@ namespace ProFak.UI;
 // TODO Avalonia
 partial class Spis : TDataGrid
 {
-	/*
+	protected override Type StyleKeyOverride => typeof(TDataGrid);
+
 	public Spis()
 	{
-		DoubleBuffered = true;
-		AllowUserToAddRows = false;
-		AllowUserToDeleteRows = false;
-		AllowUserToResizeRows = true;
-		AllowUserToOrderColumns = true;
-		RowHeadersVisible = true;
-		RowHeadersWidth = 16;
-		ColumnHeadersHeight = Wyglad.PrzeskalujRozmiar(Wyglad.WysokoscWiersza) * DeviceDpi / 96;
-		RowTemplate.Height = ColumnHeadersHeight;
-		ShowCellToolTips = true;
-		EnableHeadersVisualStyles = false;
-		ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.False;
+		IsReadOnly = true;
+		CanUserResizeColumns = true;
+		CanUserReorderColumns = true;
+		CanUserSortColumns = true;
+		RowHeight = Wyglad.PrzeskalujRozmiar(Wyglad.WysokoscWiersza);
 	}
-
-	protected override void OnMouseDown(MouseEventArgs e)
-	{
-		base.OnMouseDown(e);
-		if (e.Button != MouseButtons.Left) return;
-		var hit = HitTest(e.X, e.Y);
-		if (hit.Type == DataGridViewHitTestType.ColumnHeader || hit.Type == DataGridViewHitTestType.RowHeader) DoubleBuffered = false;
-	}
-
-	protected override void OnMouseUp(MouseEventArgs e)
-	{
-		base.OnMouseUp(e);
-		if (!DoubleBuffered) DoubleBuffered = true;
-	}
-	*/
 }
 
 abstract partial class Spis<T> : Spis
@@ -55,8 +35,13 @@ abstract partial class Spis<T> : Spis
 
 	private IEnumerable<T> WybraneRekordyImpl
 	{
-		get => [];
-		set { }
+		get => SelectedItems.Cast<T>();
+		set
+		{
+			SelectedItems.Clear();
+			foreach (var rekord in value)
+				SelectedItems.Add(rekord);
+		}
 	}
 
 	public virtual int PreferowanaSzerokosc => 0;
@@ -66,34 +51,21 @@ abstract partial class Spis<T> : Spis
 	private void ZapiszKonfiguracje() { }
 	private void Invalidate() { }
 
+	protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+	{
+		base.OnAttachedToVisualTree(e);
+		if (Kontekst != null) PrzeladujBezpiecznie();
+		WczytajKonfiguracje();
+	}
+
+	protected override void OnSelectionChanged(SelectionChangedEventArgs e)
+	{
+		if (rekordyPodczasZmiany) return;
+		ZaznaczenieZmienione?.Invoke();
+		base.OnSelectionChanged(e);
+	}
+
 	/*
-	private IEnumerable<T> WybraneRekordyImpl
-	{
-		get => SelectedItem SelectedRows.Cast<DataGridViewRow>().Select(row => row.DataBoundItem).Cast<T>();
-
-		set
-		{
-			var pierwszy = true;
-			foreach (DataGridViewRow row in Rows)
-			{
-				if (!(row.DataBoundItem is T rekord)) continue;
-				var wybrany = value.Contains(rekord);
-				row.Selected = wybrany;
-				if (pierwszy && wybrany)
-				{
-					CurrentCell = row.Cells.Cast<DataGridViewCell>().FirstOrDefault(e => e.Visible);
-					pierwszy = false;
-				}
-			}
-		}
-	}
-
-	private IEnumerable<T>? RekordyImpl
-	{
-		get => bindingSource.DataSource as IEnumerable<T>;
-		set => bindingSource.DataSource = value;
-	}
-
 	public virtual int PreferowanaSzerokosc
 	{
 		get
@@ -111,18 +83,11 @@ abstract partial class Spis<T> : Spis
 
 	public Spis()
 	{
-		AutoGenerateColumns = false;
-		ReadOnly = true;
-		SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 		TabIndex = 50;
 
 		kolumnyKolejnosci = new List<(string kolumna, bool malejaco, Func<T, IComparable> metoda)>();
 		filtr = x => true;
 
-		container = new Container();
-		bindingSource = new BindingSource(container);
-		bindingSource.DataSource = typeof(T);
-		DataSource = bindingSource;
 		MinimumSize = new Size(500, 100);
 		Rows.CollectionChanged += Rows_CollectionChanged;
 	}
@@ -144,22 +109,6 @@ abstract partial class Spis<T> : Spis
 	{
 		base.OnBindingContextChanged(e);
 		ZaznaczPosortowaneKolumny();
-	}
-
-	protected override void OnSelectionChanged(EventArgs e)
-	{
-		if (rekordyPodczasZmiany) return;
-		if (bindingSource.DataSource == null) return;
-		ZaznaczenieZmienione?.Invoke();
-		base.OnSelectionChanged(e);
-	}
-
-	protected override void OnCreateControl()
-	{
-		base.OnCreateControl();
-		if (Kontekst != null) PrzeladujBezpiecznie();
-		bindingSource.ResetBindings(true);
-		WczytajKonfiguracje();
 	}
 
 	protected override void OnPaint(PaintEventArgs e)
@@ -188,26 +137,20 @@ abstract partial class Spis<T> : Spis
 		base.OnScroll(e);
 	}
 
-	protected override void Dispose(bool disposing)
-	{
-		if (disposing) container.Dispose();
-		base.Dispose(disposing);
-	}
 	*/
 	public TDataGridColumn DodajKolumne(string wlasciwosc, string naglowek, bool checkbox = false, bool wyrownajDoPrawej = false, bool rozciagnij = false, string? format = null, int? szerokosc = null, Func<T, string?>? tooltip = null)
 	{
-		TDataGridColumn kolumna = checkbox ? new DataGridTextColumn() : new DataGridCheckBoxColumn();
+		TDataGridColumn kolumna = checkbox ? new DataGridCheckBoxColumn() : new DataGridTextColumn();
 		kolumna.Header = naglowek;
+		kolumna.Name = wlasciwosc;
+		kolumna.IsVisible = szerokosc != 0;
+		kolumna.Width = rozciagnij ? new DataGridLength(1, DataGridLengthUnitType.Star) : szerokosc.HasValue ? new DataGridLength(szerokosc.Value, DataGridLengthUnitType.Pixel) : DataGridLength.SizeToHeader;
+		if (rozciagnij) kolumna.MinWidth = 50;
 		kolumna.Binding = new ReflectionBinding(wlasciwosc);
 		// TODO Avalonia
 		/*
-		kolumna.Name = wlasciwosc;
 		kolumna.DefaultCellStyle.Alignment = wyrownajDoPrawej ? DataGridViewContentAlignment.MiddleRight : DataGridViewContentAlignment.MiddleLeft;
-		kolumna.AutoSizeMode = rozciagnij ? DataGridViewAutoSizeColumnMode.Fill : DataGridViewAutoSizeColumnMode.NotSet;
-		kolumna.Visible = szerokosc != 0;
 		if (!String.IsNullOrEmpty(format)) kolumna.DefaultCellStyle.Format = format;
-		if (szerokosc.HasValue) kolumna.Width = Wyglad.PrzeskalujRozmiar(szerokosc.Value) * DeviceDpi / 96;
-		if (rozciagnij) kolumna.MinimumWidth = 50;
 		if (tooltip != null) tooltipyDlaKolumn[kolumna.Index] = tooltip;
 		*/
 		Columns.Add(kolumna);
