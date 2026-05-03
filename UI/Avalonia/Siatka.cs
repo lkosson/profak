@@ -6,6 +6,8 @@ namespace ProFak.UI;
 
 class SiatkaAV : Grid
 {
+	protected override Type StyleKeyOverride => typeof(Grid);
+
 	private int wiersz;
 
 	public SiatkaAV(IEnumerable<int> szerokosci, IEnumerable<int> wysokosci)

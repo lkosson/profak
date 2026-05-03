@@ -6,6 +6,8 @@ namespace ProFak.UI;
 
 partial class GlowneOkno : Window
 {
+	protected override Type StyleKeyOverride => typeof(Window);
+
 	private Panel panelZawartosc;
 
 	public GlowneOkno()

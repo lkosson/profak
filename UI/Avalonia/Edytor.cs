@@ -5,6 +5,7 @@ namespace ProFak.UI;
 
 abstract class Edytor : Avalonia.Controls.Panel, IDisposable
 {
+	protected override Type StyleKeyOverride => typeof(Avalonia.Controls.Panel);
 	public virtual bool CzyModelZmieniony => false;
 	protected int DeviceDpi => 96;
 

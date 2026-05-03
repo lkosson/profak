@@ -5,6 +5,8 @@ namespace ProFak.UI;
 
 class PoziomoAV : WrapPanel
 {
+	protected override Type StyleKeyOverride => typeof(WrapPanel);
+
 	public PoziomoAV()
 	{
 	}

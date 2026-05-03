@@ -7,6 +7,8 @@ namespace ProFak.UI;
 
 class ZakladkiAV : Avalonia.Controls.TabControl
 {
+	protected override Type StyleKeyOverride => typeof(Avalonia.Controls.TabControl);
+
 	public ZakladkiAV()
 	{
 	}

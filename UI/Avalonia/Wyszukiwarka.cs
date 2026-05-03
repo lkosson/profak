@@ -5,6 +5,8 @@ namespace ProFak.UI;
 
 partial class Wyszukiwarka<TRekord> : TTextBox
 {
+	protected override Type StyleKeyOverride => typeof(TTextBox);
+
 	public Wyszukiwarka(Spis<TRekord> spis)
 	{
 		this.spis = spis;

@@ -6,6 +6,8 @@ namespace ProFak.UI;
 
 class DwieKolumnyAV : Grid
 {
+	protected override Type StyleKeyOverride => typeof(Grid);
+
 	public DwieKolumnyAV()
 	{
 		ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));

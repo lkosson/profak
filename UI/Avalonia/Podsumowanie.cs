@@ -7,6 +7,8 @@ namespace ProFak.UI;
 
 partial class Podsumowanie : TLinkLabel
 {
+	protected override Type StyleKeyOverride => typeof(TLinkLabel);
+
 	public Podsumowanie()
 	{
 	}

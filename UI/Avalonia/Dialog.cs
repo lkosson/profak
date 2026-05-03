@@ -7,6 +7,8 @@ namespace ProFak.UI;
 
 class DialogAV : Window, IDisposable
 {
+	protected override Type StyleKeyOverride => typeof(Window);
+
 	protected DialogAV(string tytul, Kontekst kontekst)
 	{
 		SizeToContent = SizeToContent.WidthAndHeight;
