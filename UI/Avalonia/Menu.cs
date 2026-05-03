@@ -9,11 +9,9 @@ namespace ProFak.UI;
 
 partial class Menu : Avalonia.Controls.TreeView
 {
+	protected override Type StyleKeyOverride => typeof(Avalonia.Controls.TreeView);
 	public ObservableCollection<TTreeNode> Nodes { get; } = [];
-	public TTreeNode? SelectedNode {
-		get => (TTreeNode?)((TreeViewItem?)SelectedItem)?.DataContext;
-		set { /* TODO Avalonia */ }
-	}
+	public TTreeNode? SelectedNode { get => (TTreeNode?)SelectedItem; set { SelectedItem = value; } }
 
 	private void Zbuduj(bool pokazUkryte = false)
 	{
@@ -58,7 +56,7 @@ partial class Menu : Avalonia.Controls.TreeView
 			trwaAktualizacjaMenu = false;
 		}
 
-		ZapiszStanPozycji(wezel);
+		ZapiszStanPozycji(wezel, zwinieta: false);
 	}
 
 	private void Collapse(object? sender, RoutedEventArgs e)
@@ -66,7 +64,7 @@ partial class Menu : Avalonia.Controls.TreeView
 		var item = (TreeViewItem)e.Source!;
 		if (item == null) return;
 		var wezel = (TTreeNode)item.DataContext!;
-		ZapiszStanPozycji(wezel);
+		ZapiszStanPozycji(wezel, zwinieta: true);
 	}
 
 	private void Menu_SelectionChanged(object? sender, SelectionChangedEventArgs e)
