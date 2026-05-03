@@ -252,6 +252,8 @@ class TTreeNode
 	// TODO Avalonia
 	public System.Drawing.Color ForeColor { get; set; }
 	public ObservableCollection<TTreeNode> Nodes { get; set; } = [];
+
+	public override string ToString() => FullPath;
 }
 
 static class RozszerzeniaKontrolek

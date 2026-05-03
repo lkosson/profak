@@ -8,6 +8,7 @@ partial class Kontroler<TModel>
 {
 	public void Powiazanie(TSuggestBox suggestBox, Expression<Func<TModel, string>> wlasciwosc, Action? wartoscZmieniona = null) => Powiazanie(suggestBox, wlasciwosc, Powiazanie, wartoscZmieniona);
 	public void Powiazanie(TSuggestBox suggestBox, Expression<Func<TModel, int>> wlasciwosc, Action? wartoscZmieniona = null) => Powiazanie(suggestBox, wlasciwosc, Powiazanie, wartoscZmieniona);
+	public void Powiazanie<TWartosc>(TSuggestBox suggestBox, Expression<Func<TModel, TWartosc>> wlasciwosc, Action? wartoscZmieniona = null) => Powiazanie(suggestBox, wlasciwosc, Powiazanie, wartoscZmieniona);
 
 	public void Powiazanie(TDatePicker dateTimePicker, Func<TModel, DateTime> pobierzWartosc, Action<TModel, DateTime>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
