@@ -20,7 +20,7 @@ namespace ProFak.UI;
 class AvaloniaUI
 {
 	private static Application application = default!;
-	private static Window? glowneOkno;
+	private static Window? aktywneOkno;
 
 	public static void Przygotuj()
 	{
@@ -32,21 +32,16 @@ class AvaloniaUI
 
 	public static void Wyswietl(Window okno)
 	{
-		if (glowneOkno == null)
+		var poprzednieOkno = aktywneOkno;
+		aktywneOkno = okno;
+		try
 		{
-			glowneOkno = okno;
-			try
-			{
-				application.Run(okno);
-			}
-			finally
-			{
-				glowneOkno = null;
-			}
+			if (poprzednieOkno != null) okno.ShowDialog(poprzednieOkno);
+			application.Run(okno);
 		}
-		else
+		finally
 		{
-			okno.ShowDialog(glowneOkno);
+			aktywneOkno = poprzednieOkno;
 		}
 	}
 }

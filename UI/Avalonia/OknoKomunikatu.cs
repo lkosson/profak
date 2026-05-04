@@ -57,7 +57,6 @@ class OknoKomunikatu
 
 		window.Content = uklad;
 		window.SizeToContent = SizeToContent.WidthAndHeight;
-		window.Show();
 
 		AvaloniaUI.Wyswietl(window);
 
