@@ -10,10 +10,10 @@ class Spisy
 		var wybor = new WybierzRekordAkcja<TRekord>();
 		using var nowyKontekst = new Kontekst(kontekst);
 		using var transakcja = nowyKontekst.Transakcja();
-		using var dialog = new Dialog(tytul, spis, nowyKontekst);
-		spis.DodajAkcje(wybor, naPoczatku: true);
 		spis.Spis.Kontekst = nowyKontekst;
 		spis.Spis.RekordPoczatkowy = biezacaWartosc;
+		spis.DodajAkcje(wybor, naPoczatku: true);
+		using var dialog = new Dialog(tytul, spis, nowyKontekst);
 		dialog.Width = Math.Min(Math.Max(spis.PreferowanaSzerokosc, 800), 1200);
 		dialog.Height = 450;
 		dialog.Pokaz();
