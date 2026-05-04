@@ -2,11 +2,10 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data;
+using Avalonia.Input;
+using Avalonia.Input.Platform;
 using Avalonia.LogicalTree;
 using ProFak.DB;
-using System.ComponentModel;
-using System.Linq.Expressions;
-using System.Text.RegularExpressions;
 
 namespace ProFak.UI;
 
@@ -86,6 +85,7 @@ abstract partial class Spis<T> : Spis
 
 		kolumnyKolejnosci = new List<(string kolumna, bool malejaco, Func<T, IComparable> metoda)>();
 		filtr = x => true;
+		CellPointerPressed += Spis_CellPointerPressed;
 	}
 
 	/*
@@ -126,11 +126,13 @@ abstract partial class Spis<T> : Spis
 	{
 		TDataGridColumn kolumna = checkbox ? new DataGridCheckBoxColumn() : new DataGridTextColumn();
 		kolumna.Header = naglowek;
+		kolumna.HeaderPointerPressed += Kolumna_HeaderPointerPressed;
 		kolumna.Name = wlasciwosc;
 		kolumna.IsVisible = szerokosc != 0;
 		kolumna.Width = rozciagnij ? new DataGridLength(1, DataGridLengthUnitType.Star) : szerokosc.HasValue ? new DataGridLength(szerokosc.Value, DataGridLengthUnitType.Pixel) : DataGridLength.SizeToHeader;
 		if (rozciagnij) kolumna.MinWidth = 50;
 		kolumna.Binding = new ReflectionBinding(wlasciwosc);
+		kolumna.SortMemberPath = wlasciwosc;
 		// TODO Avalonia
 		/*
 		kolumna.DefaultCellStyle.Alignment = wyrownajDoPrawej ? DataGridViewContentAlignment.MiddleRight : DataGridViewContentAlignment.MiddleLeft;
@@ -140,95 +142,61 @@ abstract partial class Spis<T> : Spis
 		Columns.Add(kolumna);
 		return kolumna;
 	}
+
+	
+
 	/*
-	protected override void OnCellToolTipTextNeeded(DataGridViewCellToolTipTextNeededEventArgs e)
-	{
-		if (e.RowIndex != -1
-			&& tooltipyDlaKolumn.TryGetValue(e.ColumnIndex, out var tooltip)
-			&& Rows[e.RowIndex].DataBoundItem is T rekord) e.ToolTipText = tooltip(rekord);
-		else base.OnCellToolTipTextNeeded(e);
-	}
+protected override void OnCellToolTipTextNeeded(DataGridViewCellToolTipTextNeededEventArgs e)
+{
+if (e.RowIndex != -1
+&& tooltipyDlaKolumn.TryGetValue(e.ColumnIndex, out var tooltip)
+&& Rows[e.RowIndex].DataBoundItem is T rekord) e.ToolTipText = tooltip(rekord);
+else base.OnCellToolTipTextNeeded(e);
+}
 
-	protected override void OnCellPainting(DataGridViewCellPaintingEventArgs e)
-	{
-		base.OnCellPainting(e);
-		if (e.RowIndex == -1)
-		{
-			e.CellStyle?.SelectionBackColor = System.Drawing.SystemColors.Control;
-		}
-		else if (e.ColumnIndex != -1 && e.CellStyle != null)
-		{
-			if (Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection == SortOrder.Ascending) e.CellStyle.BackColor = Color.FromArgb(210, 242, 167);
-			else if (Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection == SortOrder.Descending) e.CellStyle.BackColor = Color.FromArgb(242, 219, 167);
-			if (Rows[e.RowIndex].DataBoundItem is T rekord) UstawStylWiersza(rekord, Columns[e.ColumnIndex].DataPropertyName, e.CellStyle);
-		}
-	}
+protected override void OnCellPainting(DataGridViewCellPaintingEventArgs e)
+{
+base.OnCellPainting(e);
+if (e.RowIndex == -1)
+{
+e.CellStyle?.SelectionBackColor = System.Drawing.SystemColors.Control;
+}
+else if (e.ColumnIndex != -1 && e.CellStyle != null)
+{
+if (Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection == SortOrder.Ascending) e.CellStyle.BackColor = Color.FromArgb(210, 242, 167);
+else if (Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection == SortOrder.Descending) e.CellStyle.BackColor = Color.FromArgb(242, 219, 167);
+if (Rows[e.RowIndex].DataBoundItem is T rekord) UstawStylWiersza(rekord, Columns[e.ColumnIndex].DataPropertyName, e.CellStyle);
+}
+}
+*/
 
-	protected override void OnCellClick(DataGridViewCellEventArgs e)
+	private void Kolumna_HeaderPointerPressed(object? sender, PointerPressedEventArgs e)
 	{
-		base.OnCellClick(e);
-		if (e.ColumnIndex == -1)
-		{
-			SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-			if (e.RowIndex != -1) Rows[e.RowIndex].Selected = true;
-		}
-		else if (e.RowIndex == -1)
-		{
-			UstawKolejnosc(Columns[e.ColumnIndex].DataPropertyName, ModifierKeys != Keys.Control && ModifierKeys != Keys.Shift);
-			OdswiezWiersze();
-			ZaznaczPosortowaneKolumny();
-			kolumnyZmienione = true;
-		}
-	}
-
-	protected override void OnCellMouseDown(DataGridViewCellMouseEventArgs e)
-	{
-		if ((ModifierKeys & Keys.Alt) == Keys.Alt)
-		{
-			SelectionMode = DataGridViewSelectionMode.CellSelect;
-		}
-		if (e.Button == MouseButtons.Right && e.RowIndex == -1)
+		if (e.Properties.IsRightButtonPressed)
 		{
 			PokazKonfiguracjeSpisu();
 		}
-		base.OnCellMouseDown(e);
 	}
 
-	public override DataObject? GetClipboardContent()
+	private void Spis_CellPointerPressed(object? sender, DataGridCellPointerPressedEventArgs e)
 	{
-		var dataObject = base.GetClipboardContent();
-		if (dataObject == null) return null;
-
-		var poprawiony = new DataObject();
-		void PoprawFormatowanie(TextDataFormat format)
+		if (e.PointerPressedEventArgs.Properties.IsLeftButtonPressed && e.PointerPressedEventArgs.ClickCount == 2)
 		{
-			if (!dataObject.ContainsText(format)) return;
-			var tekst = dataObject.GetText(format);
-			if (tekst == null) return;
-			tekst = tekst.Replace("\u00A0", "");
-			poprawiony.SetText(tekst, format);
+			ObsluzKlawisz?.Invoke(Keys.Enter, Keys.None);
 		}
-
-		PoprawFormatowanie(TextDataFormat.Text);
-		PoprawFormatowanie(TextDataFormat.UnicodeText);
-		PoprawFormatowanie(TextDataFormat.CommaSeparatedValue);
-		// Bez HTML
-
-		return poprawiony;
+		else if (e.PointerPressedEventArgs.Properties.IsRightButtonPressed)
+		{
+			TopLevel.GetTopLevel(this)?.Clipboard?.SetTextAsync((e.Cell.Content as TextBlock)?.Text?.Replace("\u00A0", ""));
+		}
 	}
 
-	private void ZaznaczPosortowaneKolumny()
+	protected override void OnKeyDown(Avalonia.Input.KeyEventArgs e)
 	{
-		foreach (DataGridViewColumn kolumna in Columns)
-		{
-			kolumna.HeaderCell.SortGlyphDirection = SortOrder.None;
-		}
-
-		foreach (var kolumna in kolumnyKolejnosci)
-		{
-			Columns[kolumna.kolumna]?.HeaderCell.SortGlyphDirection = kolumna.malejaco ? SortOrder.Descending : SortOrder.Ascending;
-		}
+		base.OnKeyDown(e);
+		//ObsluzKlawisz(e.Key, e.KeyModifiers);
 	}
+
+	/*
 
 	protected override void OnColumnDisplayIndexChanged(DataGridViewColumnEventArgs e)
 	{
