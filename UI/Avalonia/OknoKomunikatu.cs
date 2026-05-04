@@ -47,8 +47,13 @@ class OknoKomunikatu
 			var _i = i;
 			var tekst = przyciski[i];
 			var przycisk = Kontrolki.Button(tekst, delegate { wynik = _i; window.Close(); });
+			przycisk.IsCancel = tekst == "Nie" || tekst == "Anuluj" || tekst == "OK";
 			panelPrzyciski.Children.Add(przycisk);
-			if (i == domyslny) przycisk.AttachedToVisualTree += delegate { przycisk.Focus(); };
+			if (i == domyslny)
+			{
+				przycisk.AttachedToVisualTree += delegate { przycisk.Focus(); };
+				przycisk.IsDefault = true;
+			}
 		}
 
 		var uklad = new StackPanel { Spacing = 8, Margin = new Thickness(8) };
