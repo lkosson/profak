@@ -36,16 +36,16 @@ abstract partial class Spis<T> : Spis
 
 	private IEnumerable<T> WybraneRekordyImpl
 	{
-		get => SelectedItems.Cast<T>();
+		get => RekordPoczatkowy.IsNotNull && SelectedItems.Count == 0 ? [] : SelectedItems.Cast<T>();
 		set
 		{
 			SelectedItems.Clear();
 			foreach (var rekord in value)
 				SelectedItems.Add(rekord);
+			var rekordPoczatkowy = RekordyImpl?.FirstOrDefault(r => r.Ref == RekordPoczatkowy);
+			if (rekordPoczatkowy != null) SelectedItems.Add(rekordPoczatkowy);
 		}
 	}
-
-	public virtual int PreferowanaSzerokosc => 0;
 
 	private void ZaznaczPosortowaneKolumny() { }
 	private void WczytajKonfiguracje() { }
@@ -66,17 +66,15 @@ abstract partial class Spis<T> : Spis
 		base.OnSelectionChanged(e);
 	}
 
-	/*
 	public virtual int PreferowanaSzerokosc
 	{
 		get
 		{
 			var szerokosc = 0;
-			foreach (DataGridViewColumn kolumna in Columns)
+			foreach (var kolumna in Columns)
 			{
-				if (!kolumna.Visible) continue;
-				if (kolumna.AutoSizeMode == DataGridViewAutoSizeColumnMode.Fill) szerokosc += 400;
-				else szerokosc += kolumna.Width;
+				if (!kolumna.IsVisible) continue;
+				szerokosc += (int)kolumna.ActualWidth;
 			}
 			return szerokosc;
 		}
@@ -88,24 +86,9 @@ abstract partial class Spis<T> : Spis
 
 		kolumnyKolejnosci = new List<(string kolumna, bool malejaco, Func<T, IComparable> metoda)>();
 		filtr = x => true;
-
-		MinimumSize = new Size(500, 100);
-		Rows.CollectionChanged += Rows_CollectionChanged;
 	}
 
-	private void Rows_CollectionChanged(object? sender, CollectionChangeEventArgs e)
-	{
-		if (RekordPoczatkowy == default) return;
-
-		foreach (DataGridViewRow row in Rows)
-		{
-			if (row.DataBoundItem is not T rekord) continue;
-			if (rekord.Ref != RekordPoczatkowy) continue;
-			bindingSource.Position = row.Index;
-			break;
-		}
-	}
-
+	/*
 	protected override void OnBindingContextChanged(EventArgs e)
 	{
 		base.OnBindingContextChanged(e);
