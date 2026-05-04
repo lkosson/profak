@@ -15,7 +15,7 @@ class DialogAV : Window, IDisposable
 		ShowInTaskbar = false;
 		//Icon = GlowneOkno.Ikona;
 		Title = tytul;
-		//kontekst.Dialog = this;
+		kontekst.Dialog = this;
 	}
 
 	public DialogAV(string tytul, TControl zawartosc, Kontekst kontekst)
