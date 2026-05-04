@@ -1,6 +1,7 @@
 ﻿#if AVALONIA
 using Avalonia;
 using Avalonia.Input;
+using Avalonia.LogicalTree;
 
 namespace ProFak.UI;
 
@@ -16,11 +17,11 @@ partial class SpisZAkcjami<TRekord> : IDisposable
 		Spis.Focus();
 	}
 
-	protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+	protected override void OnAttachedToLogicalTree(LogicalTreeAttachmentEventArgs e)
 	{
 		panelAkcji.CzyGlownySpis = Spis.Kontekst.Dialog == null || Spis.Kontekst.Dialog is not DialogEdycji;
 		panelAkcji.UstawUklad([wyszukiwarka], adapteryAkcji, [podsumowanie]);
-		base.OnAttachedToVisualTree(e);
+		base.OnAttachedToLogicalTree(e);
 	}
 
 	private void Zamknij()

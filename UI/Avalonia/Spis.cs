@@ -2,6 +2,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data;
+using Avalonia.LogicalTree;
 using ProFak.DB;
 using System.ComponentModel;
 using System.Linq.Expressions;
@@ -51,9 +52,9 @@ abstract partial class Spis<T> : Spis
 	private void ZapiszKonfiguracje() { }
 	private void Invalidate() { }
 
-	protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+	protected override void OnAttachedToLogicalTree(LogicalTreeAttachmentEventArgs e)
 	{
-		base.OnAttachedToVisualTree(e);
+		base.OnAttachedToLogicalTree(e);
 		if (Kontekst != null) PrzeladujBezpiecznie();
 		WczytajKonfiguracje();
 	}

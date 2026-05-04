@@ -3,6 +3,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Interactivity;
+using Avalonia.LogicalTree;
 using System.Collections.ObjectModel;
 
 namespace ProFak.UI;
@@ -24,11 +25,11 @@ partial class Menu : Avalonia.Controls.TreeView
 		Rozwin(pokazUkryte);
 	}
 
-	protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+	protected override void OnAttachedToLogicalTree(LogicalTreeAttachmentEventArgs e)
 	{
 		ItemTemplate = new FuncTreeDataTemplate<TTreeNode>((node, scope) => new TText { Text = node.Text }, treeNode => treeNode.Nodes);
 		ItemsSource = Nodes;
-		base.OnAttachedToVisualTree(e);
+		base.OnAttachedToLogicalTree(e);
 		Zbuduj();
 		AddHandler(TreeViewItem.ExpandedEvent, Expand);
 		AddHandler(TreeViewItem.CollapsedEvent, Collapse);
