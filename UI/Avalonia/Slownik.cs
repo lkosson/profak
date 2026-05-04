@@ -105,8 +105,8 @@ class Slownik<T>
 		var nowaPozycja = pozycje.FirstOrDefault(p => p.Wartosc == wartosc);
 		if (nowaPozycja != null)
 		{
-			comboBox.SelectedItem = nowaPozycja;
-			suggestBox.SelectedItem = nowaPozycja;
+			comboBox?.SelectedItem = nowaPozycja;
+			suggestBox?.SelectedItem = nowaPozycja;
 		}
 		if (!ustawionaNowaWartosc) ustawWartosc(wartosc);
 	}
