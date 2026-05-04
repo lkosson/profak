@@ -18,7 +18,7 @@ class DodajRekordAkcja<TRekord, TEdytor> : AkcjaNaSpisie<TRekord>
 	}
 
 	public override bool CzyDostepnaDlaRekordow(IEnumerable<TRekord> zaznaczoneRekordy) => true;
-	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.None && klawisz == Keys.Insert;
+	public override bool CzyKlawiszSkrotu(TKeys klawisz, TKeyModifiers modyfikatory) => modyfikatory == TKeyModifiers.None && klawisz == TKeys.Insert;
 
 	protected virtual TRekord? UtworzRekord(Kontekst kontekst, IEnumerable<TRekord> zaznaczoneRekordy)
 	{

@@ -6,7 +6,7 @@ class ZapiszPlikAkcja : AkcjaNaSpisie<Plik>
 {
 	public override string Nazwa => "🖫 Zapisz plik [CTRL-S]";
 	public override bool CzyDostepnaDlaRekordow(IEnumerable<Plik> zaznaczoneRekordy) => zaznaczoneRekordy.Any();
-	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.Control && klawisz == Keys.S;
+	public override bool CzyKlawiszSkrotu(TKeys klawisz, TKeyModifiers modyfikatory) => modyfikatory == TKeyModifiers.Control && klawisz == TKeys.S;
 
 	public override void Uruchom(Kontekst kontekst, ref IEnumerable<Plik> zaznaczoneRekordy)
 	{

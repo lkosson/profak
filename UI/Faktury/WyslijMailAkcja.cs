@@ -7,7 +7,7 @@ class WyslijMailAkcja : AkcjaNaSpisie<Faktura>
 {
 	public override string Nazwa => "✉ Wyślij e-mailem [CTRL-E]";
 	public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) => zaznaczoneRekordy.Any();
-	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => klawisz == Keys.E && modyfikatory == Keys.Control;
+	public override bool CzyKlawiszSkrotu(TKeys klawisz, TKeyModifiers modyfikatory) => klawisz == TKeys.E && modyfikatory == TKeyModifiers.Control;
 
 	public override void Uruchom(Kontekst kontekst, ref IEnumerable<Faktura> zaznaczoneRekordy)
 	{

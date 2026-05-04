@@ -49,13 +49,13 @@ partial class SpisZAkcjami<TRekord> : Siatka, IKontrolkaZKontekstem
 		podsumowanie.Text = Spis.Podsumowanie;
 	}
 
-	protected virtual bool ObsluzKlawisz(Keys klawisz, Keys modyfikatory)
+	protected virtual bool ObsluzKlawisz(TKeys klawisz, TKeyModifiers modyfikatory)
 	{
-		if (klawisz == Keys.Escape) { Zamknij(); return true; }
-		else if (klawisz == Keys.F3 || (klawisz == Keys.F && modyfikatory == Keys.Control)) { wyszukiwarka.Focus(); return true; }
-		else if (klawisz == Keys.Home && Spis.Rekordy.FirstOrDefault() is TRekord pierwszyRekord) { Spis.WybraneRekordy = [pierwszyRekord]; return true; }
-		else if (klawisz == Keys.End && Spis.Rekordy.LastOrDefault() is TRekord ostatniRekord) { Spis.WybraneRekordy = [ostatniRekord]; return true; }
-		else if (klawisz == Keys.Apps || (klawisz == Keys.F10 && modyfikatory == Keys.Shift)) { PokazMenuKontekstowe(); return true; }
+		if (klawisz == TKeys.Escape) { Zamknij(); return true; }
+		else if (klawisz == TKeys.F3 || (klawisz == TKeys.F && modyfikatory == TKeyModifiers.Control)) { wyszukiwarka.Focus(); return true; }
+		else if (klawisz == TKeys.Home && Spis.Rekordy.FirstOrDefault() is TRekord pierwszyRekord) { Spis.WybraneRekordy = [pierwszyRekord]; return true; }
+		else if (klawisz == TKeys.End && Spis.Rekordy.LastOrDefault() is TRekord ostatniRekord) { Spis.WybraneRekordy = [ostatniRekord]; return true; }
+		else if (klawisz == TKeys.Apps || (klawisz == TKeys.F10 && modyfikatory == TKeyModifiers.Shift)) { PokazMenuKontekstowe(); return true; }
 		else return panelAkcji.ObsluzKlawisz(klawisz, modyfikatory);
 	}
 

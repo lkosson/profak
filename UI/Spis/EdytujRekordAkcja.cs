@@ -17,7 +17,7 @@ class EdytujRekordAkcja<TRekord, TEdytor> : AkcjaNaSpisie<TRekord>
 
 	public override bool CzyDostepnaDlaRekordow(IEnumerable<TRekord> zaznaczoneRekordy) => zaznaczoneRekordy.Count() == 1;
 
-	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.None && (klawisz == Keys.Enter || klawisz == Keys.F2);
+	public override bool CzyKlawiszSkrotu(TKeys klawisz, TKeyModifiers modyfikatory) => modyfikatory == TKeyModifiers.None && (klawisz == TKeys.Enter || klawisz == TKeys.F2);
 
 	public override void Uruchom(Kontekst kontekst, ref IEnumerable<TRekord> zaznaczoneRekordy)
 	{

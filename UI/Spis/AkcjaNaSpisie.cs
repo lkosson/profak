@@ -8,7 +8,7 @@ abstract class AkcjaNaSpisie<TRekord>
 	public abstract string Nazwa { get; }
 	public abstract bool CzyDostepnaDlaRekordow(IEnumerable<TRekord> zaznaczoneRekordy);
 	public abstract void Uruchom(Kontekst kontekst, ref IEnumerable<TRekord> zaznaczoneRekordy);
-	public virtual bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => false;
+	public virtual bool CzyKlawiszSkrotu(TKeys klawisz, TKeyModifiers modyfikatory) => false;
 	public virtual IReadOnlyCollection<AkcjaNaSpisie<TRekord>> Podrzedne => [];
 	public virtual bool PrzeladujPoZakonczeniu => true;
 

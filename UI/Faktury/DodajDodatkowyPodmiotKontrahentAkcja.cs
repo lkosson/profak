@@ -5,7 +5,7 @@ namespace ProFak.UI;
 class DodajDodatkowyPodmiotKontrahentAkcja : DodajRekordAkcja<DodatkowyPodmiot, DodatkowyPodmiotEdytor>
 {
 	public override string Nazwa => "➕ Dodaj kontrahenta [SHIFT-INS]";
-	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.Shift && klawisz == Keys.Insert;
+	public override bool CzyKlawiszSkrotu(TKeys klawisz, TKeyModifiers modyfikatory) => modyfikatory == TKeyModifiers.Shift && klawisz == TKeys.Insert;
 
 	public DodajDodatkowyPodmiotKontrahentAkcja(Action<DodatkowyPodmiot> przygotujRekord)
 		: base(przygotujRekord)

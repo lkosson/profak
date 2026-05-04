@@ -8,7 +8,7 @@ class MojaFirmaAkcja : AkcjaNaSpisie<Kontrahent>
 
 	public override bool CzyDostepnaDlaRekordow(IEnumerable<Kontrahent> zaznaczoneRekordy) => true;
 
-	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => false;
+	public override bool CzyKlawiszSkrotu(TKeys klawisz, TKeyModifiers modyfikatory) => false;
 
 	public override void Uruchom(Kontekst kontekst, ref IEnumerable<Kontrahent> zaznaczoneRekordy)
 	{

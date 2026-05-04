@@ -6,7 +6,7 @@ class WydrukZaliczekAkcja : AkcjaNaSpisie<ZaliczkaPit>
 {
 	public override string Nazwa => "🖶 Drukuj [CTRL-P]";
 	public override bool CzyDostepnaDlaRekordow(IEnumerable<ZaliczkaPit> zaznaczoneRekordy) => zaznaczoneRekordy.Count() >= 1;
-	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => klawisz == Keys.P && modyfikatory == Keys.Control;
+	public override bool CzyKlawiszSkrotu(TKeys klawisz, TKeyModifiers modyfikatory) => klawisz == TKeys.P && modyfikatory == TKeyModifiers.Control;
 
 	public override void Uruchom(Kontekst kontekst, ref IEnumerable<ZaliczkaPit> zaznaczoneRekordy)
 	{

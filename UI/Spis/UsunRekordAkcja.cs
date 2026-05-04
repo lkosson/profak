@@ -7,7 +7,7 @@ class UsunRekordAkcja<TRekord> : AkcjaNaSpisie<TRekord>
 {
 	public override string Nazwa => "❌ Usuń [DEL]";
 	public override bool CzyDostepnaDlaRekordow(IEnumerable<TRekord> zaznaczoneRekordy) => zaznaczoneRekordy.Count() >= 1;
-	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.None && (klawisz == Keys.Delete || klawisz == Keys.F8);
+	public override bool CzyKlawiszSkrotu(TKeys klawisz, TKeyModifiers modyfikatory) => modyfikatory == TKeyModifiers.None && (klawisz == TKeys.Delete || klawisz == TKeys.F8);
 
 	public override void Uruchom(Kontekst kontekst, ref IEnumerable<TRekord> zaznaczoneRekordy)
 	{

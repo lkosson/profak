@@ -10,7 +10,7 @@ class FakturaProformaAkcja : DodajRekordAkcja<Faktura, FakturaEdytor>
 	{
 	}
 
-	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => false;
+	public override bool CzyKlawiszSkrotu(TKeys klawisz, TKeyModifiers modyfikatory) => false;
 
 	protected override void ZapiszRekord(Kontekst kontekst, Faktura rekord)
 	{

@@ -6,7 +6,7 @@ class WczytajJPK_FAAkcja : AkcjaNaSpisie<Faktura>
 {
 	public override string Nazwa => "➕ Wczytaj JPK_FA";
 	public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) => true;
-	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => false;
+	public override bool CzyKlawiszSkrotu(TKeys klawisz, TKeyModifiers modyfikatory) => false;
 
 	public override void Uruchom(Kontekst kontekst, ref IEnumerable<Faktura> zaznaczoneRekordy)
 	{

@@ -7,16 +7,16 @@ class DynamicznaAkcja<TRekord> : AkcjaNaSpisie<TRekord>
 {
 	private readonly string nazwa;
 	private readonly Action<Kontekst, IEnumerable<TRekord>> akcja;
-	private readonly Keys klawisz;
-	private readonly Keys modyfikatory;
+	private readonly TKeys klawisz;
+	private readonly TKeyModifiers modyfikatory;
 	private readonly bool wymaganyRekord;
 
 	public override string Nazwa => nazwa;
 
 	public override bool CzyDostepnaDlaRekordow(IEnumerable<TRekord> zaznaczoneRekordy) => !wymaganyRekord || zaznaczoneRekordy.Count() >= 1;
-	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == this.modyfikatory && klawisz == this.klawisz;
+	public override bool CzyKlawiszSkrotu(TKeys klawisz, TKeyModifiers modyfikatory) => modyfikatory == this.modyfikatory && klawisz == this.klawisz;
 
-	public DynamicznaAkcja(string nazwa, Action<Kontekst, IEnumerable<TRekord>> akcja, Keys klawisz, Keys modyfikatory)
+	public DynamicznaAkcja(string nazwa, Action<Kontekst, IEnumerable<TRekord>> akcja, TKeys klawisz, TKeyModifiers modyfikatory)
 	{
 		this.nazwa = nazwa;
 		this.akcja = akcja;
@@ -25,7 +25,7 @@ class DynamicznaAkcja<TRekord> : AkcjaNaSpisie<TRekord>
 		this.wymaganyRekord = true;
 	}
 
-	public DynamicznaAkcja(string nazwa, Action<Kontekst> akcja, Keys klawisz, Keys modyfikatory)
+	public DynamicznaAkcja(string nazwa, Action<Kontekst> akcja, TKeys klawisz, TKeyModifiers modyfikatory)
 	{
 		this.nazwa = nazwa;
 		this.akcja = (kontekst, rekordy) => akcja(kontekst);

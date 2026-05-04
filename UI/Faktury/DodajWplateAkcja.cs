@@ -8,7 +8,7 @@ class DodajWplateAkcja : AkcjaNaSpisie<Faktura>
 {
 	public override string Nazwa => "💰 Dodaj wpłatę [CTRL-W]";
 	public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) => zaznaczoneRekordy.Any(faktura => !faktura.CzyZaplacona);
-	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => klawisz == Keys.W && modyfikatory == Keys.Control;
+	public override bool CzyKlawiszSkrotu(TKeys klawisz, TKeyModifiers modyfikatory) => klawisz == TKeys.W && modyfikatory == TKeyModifiers.Control;
 
 	public override void Uruchom(Kontekst kontekst, ref IEnumerable<Faktura> zaznaczoneRekordy)
 	{

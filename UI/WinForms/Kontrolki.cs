@@ -24,6 +24,8 @@ global using TPadding = System.Windows.Forms.Padding;
 global using TDataGrid = System.Windows.Forms.DataGridView;
 global using TDataGridColumn = System.Windows.Forms.DataGridViewColumn;
 global using TColor = System.Drawing.Color;
+global using TKeys = System.Windows.Forms.Keys;
+global using TKeyModifiers = System.Windows.Forms.Keys;
 
 namespace ProFak.UI;
 
@@ -270,6 +272,6 @@ class KontrolkiWF
 		return wezel;
 	}
 
-	public static TColor Color(int r, int g, int b) => Color.FromArgb(r, g, b);
+	public static TColor Color(int r, int g, int b) => System.Drawing.Color.FromArgb(r, g, b);
 }
 #endif

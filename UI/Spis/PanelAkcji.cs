@@ -67,7 +67,7 @@ class PanelAkcji : Pionowo
 		przycisk.Enabled = adapter.CzyDostepna;
 	}
 
-	public bool ObsluzKlawisz(Keys klawisz, Keys modyfikatory)
+	public bool ObsluzKlawisz(TKeys klawisz, TKeyModifiers modyfikatory)
 	{
 		foreach ((_, var adapter) in przyciski)
 		{

@@ -13,7 +13,7 @@ abstract class AdapterAkcji
 	public abstract IReadOnlyCollection<AdapterAkcji> Podrzedne { get; }
 
 	public abstract void Uruchom();
-	public abstract bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory);
+	public abstract bool CzyKlawiszSkrotu(TKeys klawisz, TKeyModifiers modyfikatory);
 }
 
 class AdapterAkcji<TRekord> : AdapterAkcji
@@ -25,12 +25,12 @@ class AdapterAkcji<TRekord> : AdapterAkcji
 
 	public override string Nazwa => akcja.Nazwa;
 	public override bool CzyDostepna => akcja.CzyDostepnaDlaRekordow(spis.WybraneRekordy);
-	public override bool CzyDomyslna => akcja.CzyKlawiszSkrotu(Keys.Enter, Keys.None);
+	public override bool CzyDomyslna => akcja.CzyKlawiszSkrotu(TKeys.Enter, TKeyModifiers.None);
 	public override bool CzyGlobalna => akcja.CzyDostepnaDlaRekordow([]);
 	public override string NazwaBezSkrotu => Wyglad.NazwaBezSkrotu(Nazwa);
 	public override string Skrot => Wyglad.Skrot(Nazwa);
 	public override IReadOnlyCollection<AdapterAkcji> Podrzedne => podrzedne;
-	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => akcja.CzyKlawiszSkrotu(klawisz, modyfikatory);
+	public override bool CzyKlawiszSkrotu(TKeys klawisz, TKeyModifiers modyfikatory) => akcja.CzyKlawiszSkrotu(klawisz, modyfikatory);
 
 	public AdapterAkcji(AkcjaNaSpisie<TRekord> akcja, Spis<TRekord> spis)
 	{

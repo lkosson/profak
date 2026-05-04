@@ -6,7 +6,7 @@ class WyslijDoKSeFAkcja : AkcjaNaSpisie<Faktura>
 {
 	public override string Nazwa => "✉ Wyślij do KSeF [CTRL-K]";
 	public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) => zaznaczoneRekordy.Any();
-	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => klawisz == Keys.K && modyfikatory == Keys.Control;
+	public override bool CzyKlawiszSkrotu(TKeys klawisz, TKeyModifiers modyfikatory) => klawisz == TKeys.K && modyfikatory == TKeyModifiers.Control;
 
 	public override void Uruchom(Kontekst kontekst, ref IEnumerable<Faktura> zaznaczoneRekordy)
 	{

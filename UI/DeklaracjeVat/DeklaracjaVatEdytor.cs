@@ -75,7 +75,7 @@ class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
 			faktura.DeklaracjaVatRef = Rekord;
 			kontekst.Baza.Zapisz(faktura);
 			Przelicz();
-		}, Keys.Insert, Keys.None);
+		}, TKeys.Insert, TKeyModifiers.None);
 
 		var dodajZakupDoDeklaracji = new DynamicznaAkcja<Faktura>("➕ Dodaj do deklaracji [INS]", kontekst =>
 		{
@@ -85,7 +85,7 @@ class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
 			faktura.DeklaracjaVatRef = Rekord;
 			kontekst.Baza.Zapisz(faktura);
 			Przelicz();
-		}, Keys.Insert, Keys.None);
+		}, TKeys.Insert, TKeyModifiers.None);
 
 		var usunZDeklaracji = new DynamicznaAkcja<Faktura>("❌ Usuń z deklaracji [DEL]", (kontekst, rekordy) =>
 		{
@@ -95,7 +95,7 @@ class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
 			}
 			kontekst.Baza.Zapisz(rekordy);
 			Przelicz();
-		}, Keys.Delete, Keys.None);
+		}, TKeys.Delete, TKeyModifiers.None);
 
 		fakturySprzedazy = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazySpis(), new AkcjaNaSpisie<Faktura>[] { dodajSprzedazDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new WydrukFakturyAkcja(), new PrzeladujAkcja<Faktura>() });
 		fakturyZakupu = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis(), new AkcjaNaSpisie<Faktura>[] { dodajZakupDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new PrzeladujAkcja<Faktura>() });

@@ -6,10 +6,10 @@ class UsunFaktureAkcja : UsunRekordAkcja<Faktura>
 {
 	private bool usunNaStale;
 
-	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory)
+	public override bool CzyKlawiszSkrotu(TKeys klawisz, TKeyModifiers modyfikatory)
 	{
-		usunNaStale = modyfikatory == Keys.Shift;
-		return base.CzyKlawiszSkrotu(klawisz, modyfikatory) || (klawisz == Keys.Delete && modyfikatory == Keys.Shift);
+		usunNaStale = modyfikatory == TKeyModifiers.Shift;
+		return base.CzyKlawiszSkrotu(klawisz, modyfikatory) || (klawisz == TKeys.Delete && modyfikatory == TKeyModifiers.Shift);
 	}
 
 	public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) => base.CzyDostepnaDlaRekordow(zaznaczoneRekordy) && !zaznaczoneRekordy.Any(faktura => faktura.FakturaKorygujacaRef.IsNotNull);

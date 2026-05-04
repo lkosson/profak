@@ -211,7 +211,7 @@ abstract partial class Spis<T> : Spis
 	{
 		if (CzyWierszPogrubiony(rekord)) styl.Font = new Font(styl.Font!, FontStyle.Bold);
 		var kolor = KolorWiersza(rekord);
-		if (kolor is not default) styl.ForeColor = kolor;
+		if (kolor != default) styl.ForeColor = kolor;
 	}
 
 	protected override void OnCellClick(DataGridViewCellEventArgs e)
@@ -224,7 +224,7 @@ abstract partial class Spis<T> : Spis
 		}
 		else if (e.RowIndex == -1)
 		{
-			UstawKolejnosc(Columns[e.ColumnIndex].DataPropertyName, ModifierKeys != Keys.Control && ModifierKeys != Keys.Shift);
+			UstawKolejnosc(Columns[e.ColumnIndex].DataPropertyName, ModifierKeys != TKeys.Control && ModifierKeys != TKeyModifiers.Shift);
 			OdswiezWiersze();
 			ZaznaczPosortowaneKolumny();
 			kolumnyZmienione = true;
@@ -247,7 +247,7 @@ abstract partial class Spis<T> : Spis
 
 	protected override void OnCellDoubleClick(DataGridViewCellEventArgs e)
 	{
-		if (e.RowIndex != -1 && e.ColumnIndex != -1) ObsluzKlawisz?.Invoke(Keys.Enter, Keys.None);
+		if (e.RowIndex != -1 && e.ColumnIndex != -1) ObsluzKlawisz?.Invoke(TKeys.Enter, TKeyModifiers.None);
 		base.OnCellDoubleClick(e);
 	}
 

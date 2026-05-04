@@ -6,7 +6,7 @@ class PozycjaFakturyKlonujAkcja : DodajRekordAkcja<PozycjaFaktury, PozycjaFaktur
 {
 	public override string Nazwa => "➕ Klonuj pozycję [SHIFT-INS]";
 	public override bool CzyDostepnaDlaRekordow(IEnumerable<PozycjaFaktury> zaznaczoneRekordy) => zaznaczoneRekordy.Count() == 1 && !zaznaczoneRekordy.Single().CzyPrzedKorekta;
-	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.Shift && klawisz == Keys.Insert;
+	public override bool CzyKlawiszSkrotu(TKeys klawisz, TKeyModifiers modyfikatory) => modyfikatory == TKeyModifiers.Shift && klawisz == TKeys.Insert;
 
 	protected override PozycjaFaktury UtworzRekord(Kontekst kontekst, IEnumerable<PozycjaFaktury> zaznaczoneRekordy)
 	{

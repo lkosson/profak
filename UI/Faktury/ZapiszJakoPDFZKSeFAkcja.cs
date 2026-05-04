@@ -6,7 +6,7 @@ namespace ProFak.UI;
 class ZapiszJakoPDFZKSeFAkcja(bool spisKSeF = false) : AkcjaNaSpisie<Faktura>
 {
 	public override string Nazwa => "🖫 Zapisz PDF KSeF [CTRL-P]";
-	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.Control && klawisz == Keys.P;
+	public override bool CzyKlawiszSkrotu(TKeys klawisz, TKeyModifiers modyfikatory) => modyfikatory == TKeyModifiers.Control && klawisz == TKeys.P;
 	public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) 
 		=> zaznaczoneRekordy.Any(e => !String.IsNullOrEmpty(e.NumerKSeF));
 	public override bool PrzeladujPoZakonczeniu => false;

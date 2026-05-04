@@ -44,7 +44,7 @@ class ZaliczkaPitEdytor : Edytor<ZaliczkaPit>
 			faktura.ZaliczkaPitRef = Rekord;
 			kontekst.Baza.Zapisz(faktura);
 			Przelicz();
-		}, Keys.Insert, Keys.None);
+		}, TKeys.Insert, TKeyModifiers.None);
 
 		var dodajZakupDoZaliczki = new DynamicznaAkcja<Faktura>("➕ Dodaj do zaliczki [INS]", kontekst =>
 		{
@@ -54,7 +54,7 @@ class ZaliczkaPitEdytor : Edytor<ZaliczkaPit>
 			faktura.ZaliczkaPitRef = Rekord;
 			kontekst.Baza.Zapisz(faktura);
 			Przelicz();
-		}, Keys.Insert, Keys.None);
+		}, TKeys.Insert, TKeyModifiers.None);
 
 		var usunZZaliczki = new DynamicznaAkcja<Faktura>("❌ Usuń z zaliczki [DEL]", (kontekst, rekordy) =>
 		{
@@ -64,7 +64,7 @@ class ZaliczkaPitEdytor : Edytor<ZaliczkaPit>
 			}
 			kontekst.Baza.Zapisz(rekordy);
 			Przelicz();
-		}, Keys.Delete, Keys.None);
+		}, TKeys.Delete, TKeyModifiers.None);
 
 		fakturySprzedazy = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazySpis(), new AkcjaNaSpisie<Faktura>[] { dodajSprzedazDoZaliczki, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZZaliczki, new WydrukFakturyAkcja(), new PrzeladujAkcja<Faktura>() });
 		fakturyZakupu = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis(), new AkcjaNaSpisie<Faktura>[] { dodajZakupDoZaliczki, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZZaliczki, new PrzeladujAkcja<Faktura>() });

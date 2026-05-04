@@ -175,7 +175,7 @@ if (Rows[e.RowIndex].DataBoundItem is T rekord) UstawStylWiersza(rekord, Columns
 	{
 		if (e.PointerPressedEventArgs.Properties.IsLeftButtonPressed && e.PointerPressedEventArgs.ClickCount == 2)
 		{
-			ObsluzKlawisz?.Invoke(Keys.Enter, Keys.None);
+			ObsluzKlawisz?.Invoke(TKeys.Enter, TKeyModifiers.None);
 		}
 		else if (e.PointerPressedEventArgs.Properties.IsRightButtonPressed)
 		{
@@ -186,7 +186,7 @@ if (Rows[e.RowIndex].DataBoundItem is T rekord) UstawStylWiersza(rekord, Columns
 	protected override void OnKeyDown(Avalonia.Input.KeyEventArgs e)
 	{
 		base.OnKeyDown(e);
-		//ObsluzKlawisz(e.Key, e.KeyModifiers);
+		ObsluzKlawisz?.Invoke(e.Key, e.KeyModifiers);
 	}
 
 	/*

@@ -8,7 +8,7 @@ class DodajPlikAkcja : AkcjaNaSpisie<Plik>
 
 	public override string Nazwa => "➕ Dołącz plik [INS]";
 	public override bool CzyDostepnaDlaRekordow(IEnumerable<Plik> zaznaczoneRekordy) => true;
-	public override bool CzyKlawiszSkrotu(Keys klawisz, Keys modyfikatory) => modyfikatory == Keys.None && klawisz == Keys.Insert;
+	public override bool CzyKlawiszSkrotu(TKeys klawisz, TKeyModifiers modyfikatory) => modyfikatory == TKeyModifiers.None && klawisz == TKeys.Insert;
 
 	public DodajPlikAkcja(PlikSpis spis)
 	{
