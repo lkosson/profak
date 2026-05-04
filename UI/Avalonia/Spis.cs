@@ -5,6 +5,7 @@ using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Input.Platform;
 using Avalonia.LogicalTree;
+using Avalonia.Media;
 using ProFak.DB;
 
 namespace ProFak.UI;
@@ -30,7 +31,7 @@ abstract partial class Spis<T> : Spis
 	private IEnumerable<T>? RekordyImpl
 	{
 		get => ItemsSource as IEnumerable<T>;
-		set => ItemsSource = value;
+		set { ItemsSource = value; Invalidate(); }
 	}
 
 	private IEnumerable<T> WybraneRekordyImpl
@@ -49,7 +50,6 @@ abstract partial class Spis<T> : Spis
 	private void ZaznaczPosortowaneKolumny() { }
 	private void WczytajKonfiguracje() { }
 	private void ZapiszKonfiguracje() { }
-	private void Invalidate() { }
 
 	protected override void OnAttachedToLogicalTree(LogicalTreeAttachmentEventArgs e)
 	{
@@ -88,40 +88,31 @@ abstract partial class Spis<T> : Spis
 		CellPointerPressed += Spis_CellPointerPressed;
 	}
 
-	/*
-	protected override void OnBindingContextChanged(EventArgs e)
+	private void Invalidate()
 	{
-		base.OnBindingContextChanged(e);
-		ZaznaczPosortowaneKolumny();
-	}
-
-	protected override void OnPaint(PaintEventArgs e)
-	{
-		base.OnPaint(e);
 		var komunikat = Komunikat;
 		if (String.IsNullOrEmpty(komunikat) && Rekordy.Count() == 0) komunikat = oryginalneRekordy == null || !oryginalneRekordy.Any() ? "Spis nie zawiera danych" : "Nie znaleziono pasujących rekordów";
-		if (!String.IsNullOrEmpty(komunikat))
+
+		if (String.IsNullOrEmpty(komunikat))
 		{
-			using var font = new Font(Font.FontFamily, 24, FontStyle.Bold);
-			using var brush = new SolidBrush(Color.FromArgb(200, 50, 50, 50));
-			using var sf = new StringFormat(StringFormat.GenericTypographic) { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
-			e.Graphics.DrawString(komunikat, font, brush, new RectangleF(0, 0, Width, Height), sf);
+			Background = null;
+		}
+		else
+		{
+			var tekst = new TText();
+			tekst.FontSize = 24;
+			tekst.FontWeight = FontWeight.Bold;
+			tekst.Text = komunikat;
+			tekst.Foreground = new SolidColorBrush(new TColor(200, 50, 50, 50));
+			var tlo = new VisualBrush();
+			tlo.Stretch = Stretch.None;
+			tlo.AlignmentX = AlignmentX.Center;
+			tlo.AlignmentY = AlignmentY.Center;
+			tlo.Visual = tekst;
+			Background = tlo;
 		}
 	}
 
-	protected override void OnResize(EventArgs e)
-	{
-		if (!String.IsNullOrWhiteSpace(Komunikat)) Invalidate();
-		base.OnResize(e);
-	}
-
-	protected override void OnScroll(ScrollEventArgs e)
-	{
-		if (!String.IsNullOrWhiteSpace(Komunikat)) Invalidate();
-		base.OnScroll(e);
-	}
-
-	*/
 	public TDataGridColumn DodajKolumne(string wlasciwosc, string naglowek, bool checkbox = false, bool wyrownajDoPrawej = false, bool rozciagnij = false, string? format = null, int? szerokosc = null, Func<T, string?>? tooltip = null)
 	{
 		TDataGridColumn kolumna = checkbox ? new DataGridCheckBoxColumn() : new DataGridTextColumn();
@@ -131,7 +122,9 @@ abstract partial class Spis<T> : Spis
 		kolumna.IsVisible = szerokosc != 0;
 		kolumna.Width = rozciagnij ? new DataGridLength(1, DataGridLengthUnitType.Star) : szerokosc.HasValue ? new DataGridLength(szerokosc.Value, DataGridLengthUnitType.Pixel) : DataGridLength.SizeToHeader;
 		if (rozciagnij) kolumna.MinWidth = 50;
-		kolumna.Binding = new ReflectionBinding(wlasciwosc);
+		var binding = new ReflectionBinding(wlasciwosc);
+		if (!String.IsNullOrEmpty(format)) binding.StringFormat = format;
+		kolumna.Binding = binding;
 		kolumna.SortMemberPath = wlasciwosc;
 		// TODO Avalonia
 		/*
