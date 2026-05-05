@@ -26,6 +26,7 @@ class DialogAV : Window, IDisposable
 
 	protected void UstawZawartosc(TControl zawartosc)
 	{
+		zawartosc.Margin = new TPadding(3);
 		Content = zawartosc;
 	}
 

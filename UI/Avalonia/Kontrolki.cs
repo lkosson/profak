@@ -41,6 +41,7 @@ class KontrolkiAV
 		var label = new TLabel();
 		label.HorizontalContentAlignment = HorizontalAlignment.Right;
 		label.VerticalContentAlignment = VerticalAlignment.Center;
+		label.Padding = new TPadding(3, 3);
 		label.Content = tekst;
 		return label;
 	}
@@ -73,6 +74,8 @@ class KontrolkiAV
 	public static TButton Button(string tekst, Action? akcja = null)
 	{
 		var button = new TButton();
+		button.Margin = new TPadding(3, 3);
+		button.Padding = new TPadding(7, 3);
 		button.Content = Wyglad.IkonyAkcji ? tekst : Wyglad.NazwaBezIkony(tekst);
 		if (akcja != null) button.Click += BezpiecznaAkcja(akcja);
 		return button;
@@ -124,7 +127,8 @@ class KontrolkiAV
 	public static TTextBox TextBox(bool haslo = false, string? podpowiedz = null, int szerokosc = 200, Action? zmienionaWartosc = null)
 	{
 		var textBox = new TTextBox();
-		textBox.Width = szerokosc;
+		textBox.MinWidth = szerokosc;
+		textBox.Margin = new TPadding(3, 3);
 		if (haslo) textBox.PasswordChar = '*';
 		if (!String.IsNullOrEmpty(podpowiedz)) textBox.PlaceholderText = podpowiedz;
 		if (zmienionaWartosc != null) textBox.TextChanged += BezpiecznaAkcja(zmienionaWartosc);
@@ -136,6 +140,7 @@ class KontrolkiAV
 		var textBox = new TTextArea();
 		textBox.AcceptsReturn = true;
 		textBox.MinLines = Math.Max(2, linie);
+		textBox.Margin = new TPadding(3, 3);
 		if (!proporcjonalna) textBox.FontFamily = new Avalonia.Media.FontFamily("Consolas");
 		if (zmienionaWartosc != null) textBox.TextChanged += BezpiecznaAkcja(zmienionaWartosc);
 		return textBox;
@@ -144,6 +149,7 @@ class KontrolkiAV
 	public static TCheckBox CheckBox(string? etykieta = null, Action? zmienionaWartosc = null)
 	{
 		var checkBox = new TCheckBox();
+		checkBox.Margin = new TPadding(3, 3);
 		if (!String.IsNullOrEmpty(etykieta)) checkBox.Content = etykieta;
 		if (zmienionaWartosc != null) checkBox.IsCheckedChanged += BezpiecznaAkcja(zmienionaWartosc);
 		return checkBox;
@@ -152,6 +158,7 @@ class KontrolkiAV
 	public static TRadioButton RadioButton(string? etykieta = null)
 	{
 		var radioButton = new TRadioButton();
+		radioButton.Margin = new TPadding(3, 3);
 		if (!String.IsNullOrEmpty(etykieta)) radioButton.Content = etykieta;
 		return radioButton;
 	}
@@ -159,6 +166,8 @@ class KontrolkiAV
 	public static TNumericUpDown NumericUpDown(int poPrzecinku = 2, int szerokosc = 100, Action? zmienionaWartosc = null)
 	{
 		var numericUpDown = new TNumericUpDown();
+		numericUpDown.MinWidth = szerokosc;
+		numericUpDown.Margin = new TPadding(3, 3);
 		numericUpDown.NumberFormat = new NumberFormatInfo { NumberDecimalDigits = poPrzecinku };
 		numericUpDown.TextAlignment = TextAlignment.Right;
 		numericUpDown.Minimum = -999999999;
@@ -170,6 +179,8 @@ class KontrolkiAV
 	public static TDatePicker DatePicker(bool tylkoMiesiac = false, bool dopuscPusta = false, int szerokosc = 160)
 	{
 		var datePicker = new TDatePicker();
+		datePicker.MinWidth = szerokosc;
+		datePicker.Margin = new TPadding(3, 3);
 		datePicker.DayVisible = !tylkoMiesiac;
 		datePicker.DayFormat = "dd";
 		datePicker.MonthFormat = "MM";
@@ -180,8 +191,9 @@ class KontrolkiAV
 	public static TComboBox DropDownList(int szerokosc = 200, Action? zmienionaWartosc = null)
 	{
 		var comboBox = new TComboBox();
+		comboBox.Margin = new TPadding(3, 3);
 		comboBox.IsEditable = false;
-		comboBox.Width = szerokosc;
+		comboBox.MinWidth = szerokosc;
 		if (zmienionaWartosc != null) comboBox.SelectionChanged += BezpiecznaAkcja(zmienionaWartosc);
 		return comboBox;
 	}
@@ -189,6 +201,7 @@ class KontrolkiAV
 	public static TSuggestBox SuggestBox(string[]? wartosci = null)
 	{
 		var autoCompleteBox = new AutoCompleteBox();
+		autoCompleteBox.Margin = new TPadding(3, 3);
 		autoCompleteBox.Width = 200;
 		autoCompleteBox.FilterMode = AutoCompleteFilterMode.Contains;
 		if (wartosci != null) autoCompleteBox.ItemsSource = wartosci;
