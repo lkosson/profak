@@ -35,7 +35,7 @@ partial class Kontroler<TModel>
 
 	public void Powiazanie(TTextBox textBox, Func<TModel, string> pobierzWartosc, Action<TModel, string>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
-		textBox.TextChanged += delegate { AktualizujModel(textBox, ustawWartosc, txt => txt.Text ?? ""); wartoscZmieniona?.Invoke(); };
+		textBox.TextChanging += delegate { AktualizujModel(textBox, ustawWartosc, txt => txt.Text ?? ""); wartoscZmieniona?.Invoke(); };
 		DodajPowiazanie(textBox, pobierzWartosc, (txt, wartosc) => txt.Text = wartosc);
 	}
 
