@@ -41,7 +41,7 @@ partial class KonfiguracjaSpisu : Edytor
 		parametry.DodajWiersz(checkBoxPrzywroc);
 
 		listBoxKolumny.Width = 200;
-		var uklad = new Siatka([-1, 0], []);
+		var uklad = new Siatka([-1, 0], [-1]);
 		uklad.DodajWiersz([listBoxKolumny, parametry]);
 
 		UstawZawartosc(uklad);
