@@ -39,9 +39,12 @@ abstract partial class Spis<T> : Spis
 		get => RekordPoczatkowy.IsNotNull && SelectedItems.Count == 0 ? [] : SelectedItems.Cast<T>();
 		set
 		{
+			var rekordy = RekordyImpl?.ToHashSet() ?? [];
+			SelectedItem = null;
 			SelectedItems.Clear();
 			foreach (var rekord in value)
-				SelectedItems.Add(rekord);
+				if (rekordy.Contains(rekord))
+					SelectedItems.Add(rekord);
 			var rekordPoczatkowy = RekordyImpl?.FirstOrDefault(r => r.Ref == RekordPoczatkowy);
 			if (rekordPoczatkowy != null) SelectedItems.Add(rekordPoczatkowy);
 		}
