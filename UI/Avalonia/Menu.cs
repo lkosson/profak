@@ -69,12 +69,35 @@ partial class Menu : Avalonia.Controls.TreeView
 		ZapiszStanPozycji(wezel, zwinieta: true);
 	}
 
+	private TreeViewItem? ZnajdzKontrolkeDlaWezla(TTreeNode wezel)
+	{
+		TreeViewItem? Znajdz(Controls? kontrolki)
+		{
+			foreach (TreeViewItem kontrolka in kontrolki ?? [])
+			{
+				var wezelKontrolki = kontrolka.DataContext as TTreeNode;
+				if (wezelKontrolki == wezel) return kontrolka;
+				var wynik = Znajdz(kontrolka?.Presenter?.Panel?.Children);
+				if (wynik != null) return wynik;
+			}
+			return null;
+		}
+
+		return Znajdz(Presenter?.Panel?.Children);
+	}
+
 	private void Menu_SelectionChanged(object? sender, SelectionChangedEventArgs e)
 	{
 		if (trwaAktualizacjaMenu) return;
 		var wybrany = SelectedNode;
 		if (wybrany == null) return;
-		while (wybrany.Nodes.Count > 0) wybrany = wybrany.Nodes[0];
+		if (wybrany.Nodes.Count > 0)
+		{
+			var kontrolka = ZnajdzKontrolkeDlaWezla(wybrany);
+			if (kontrolka != null && !kontrolka.IsExpanded) kontrolka.IsExpanded = true;
+			SelectedNode = wybrany;
+			return;
+		}
 		if (SelectedNode == wybrany) Wyswietl(wybrany);
 		else SelectedNode = wybrany;
 
