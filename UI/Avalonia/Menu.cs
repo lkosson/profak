@@ -27,6 +27,7 @@ partial class Menu : Avalonia.Controls.TreeView
 
 	protected override void OnAttachedToLogicalTree(LogicalTreeAttachmentEventArgs e)
 	{
+		Padding = new Thickness(0);
 		ItemTemplate = new FuncTreeDataTemplate<TTreeNode>((node, scope) => new TText { Text = node.Text }, treeNode => treeNode.Nodes);
 		ItemsSource = Nodes;
 		base.OnAttachedToLogicalTree(e);

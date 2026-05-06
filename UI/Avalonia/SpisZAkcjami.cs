@@ -14,7 +14,7 @@ partial class SpisZAkcjami<TRekord> : IDisposable
 	protected override void OnGotFocus(FocusChangedEventArgs e)
 	{
 		base.OnGotFocus(e);
-		Spis.Focus();
+		//Spis.Focus();
 	}
 
 	protected override void OnAttachedToLogicalTree(LogicalTreeAttachmentEventArgs e)

@@ -16,11 +16,12 @@ partial class Wyszukiwarka<TRekord> : TTextBox
 		if (Wyglad.SkrotyKlawiaturoweAkcji) opis += " [F3]";
 		PlaceholderText = opis;
 		TextAlignment = Avalonia.Media.TextAlignment.Center;
+		Margin = new TPadding(3, 3);
+		TextChanged += Wyszukiwarka_TextChanged;
 	}
 
-	protected override void OnTextInput(TextInputEventArgs e)
+	private void Wyszukiwarka_TextChanged(object? sender, Avalonia.Controls.TextChangedEventArgs e)
 	{
-		base.OnTextInput(e);
 		UstawFiltr(Text ?? "");
 		TextAlignment = String.IsNullOrEmpty(Text) ? Avalonia.Media.TextAlignment.Center : Avalonia.Media.TextAlignment.Left;
 	}
