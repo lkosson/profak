@@ -113,22 +113,21 @@ class BazyDanych : Edytor, IKontrolkaZKontekstem
 
 	private void UtworzKopie()
 	{
-		using var dialog = new SaveFileDialog();
-		dialog.Filter = "Kopia zapasowa programu ProFak (*.probak)|*.probak|Wszystkie pliki (*.*)|*.*";
-		dialog.RestoreDirectory = true;
+		var katalog = "";
 		try
 		{
 			if (!Directory.Exists(Baza.KatalogKopiiZapasowych)) Directory.CreateDirectory(Baza.KatalogKopiiZapasowych);
-			dialog.InitialDirectory = Baza.KatalogKopiiZapasowych;
+			katalog = Baza.KatalogKopiiZapasowych;
 		}
 		catch
 		{
 		}
-		dialog.FileName = $"profak-{DateTime.Now:yyyyMMdd}.probak";
-		if (dialog.ShowDialog() != DialogResult.OK) return;
+
+		var plik = OknoWyboruPliku.Zapisz("Wybierz gdzie zapisać kopię bazy", "Kopia zapasowa programu ProFak", "*.probak", $"profak-{DateTime.Now:yyyyMMdd}.probak", katalog);
+		if (plik == null) return;
 		try
 		{
-			Baza.WykonajKopie(dialog.FileName);
+			Baza.WykonajKopie(plik);
 			OknoKomunikatu.Informacja("Kopia bazy danych została zapisana.");
 		}
 		catch (Exception exc)
@@ -139,17 +138,13 @@ class BazyDanych : Edytor, IKontrolkaZKontekstem
 
 	private void PrzywrocKopie()
 	{
-		var dialog = new OpenFileDialog();
-		dialog.Filter = "Kopia zapasowa programu ProFak (*.probak)|*.probak|Wszystkie pliki (*.*)|*.*";
-		dialog.RestoreDirectory = true;
-
 		if (String.IsNullOrEmpty(Baza.Sciezka))
 		{
 			OknoKomunikatu.Ostrzezenie("Nie można odtworzyć kopii zapasowej do tymczasowej bazy danych.");
 			return;
 		}
-		if (Directory.Exists(Baza.KatalogKopiiZapasowych)) dialog.InitialDirectory = Baza.KatalogKopiiZapasowych;
-		if (dialog.ShowDialog() != DialogResult.OK) return;
+		var plik = OknoWyboruPliku.OtworzJeden("Wybierz kopię zapasową do załadowania", "Kopia zapasowa programu ProFak", "*.probak", Directory.Exists(Baza.KatalogKopiiZapasowych) ? Baza.KatalogKopiiZapasowych : null);
+		if (plik == null) return;
 
 		if (!OknoKomunikatu.PytanieTakNie("Dotychczasowe dane zostaną nadpisane. Czy na pewno chcesz kontynuować?", domyslnie: false)) return;
 		var bazaRatunkowa = Baza.Sciezka + "-bak";
@@ -158,7 +153,7 @@ class BazyDanych : Edytor, IKontrolkaZKontekstem
 		{
 			File.Move(Baza.Sciezka, bazaRatunkowa);
 			// Tu nie potrzeba korzystać z mechanizmów SQLite'a - plik źródłowy nie jest aktywną bazą
-			File.Copy(dialog.FileName, Baza.Sciezka);
+			File.Copy(plik, Baza.Sciezka);
 			using var baza = new DB.Baza();
 			baza.Database.Migrate();
 		}
@@ -179,25 +174,20 @@ class BazyDanych : Edytor, IKontrolkaZKontekstem
 
 	private void ZapiszJSON()
 	{
-		using var dialog = new SaveFileDialog();
-		dialog.Filter = "Dane programu ProFak (*.json)|*.json|Wszystkie pliki (*.*)|*.*";
-		dialog.RestoreDirectory = true;
-		dialog.FileName = $"profak-{DateTime.Now:yyyyMMdd}.json";
-		if (dialog.ShowDialog() != DialogResult.OK) return;
+		var plik = OknoWyboruPliku.Zapisz("Wybierz gdzie zapisać kopię danych", "Dane programu ProFak", "*.json", $"profak-{DateTime.Now:yyyyMMdd}.json");
+		if (plik == null) return;
 		using var nowyKontekst = new Kontekst(Kontekst);
 		var json = IO.Eksport.Generator.Zbuduj(nowyKontekst.Baza);
-		File.WriteAllText(dialog.FileName, json);
+		File.WriteAllText(plik, json);
 		OknoKomunikatu.Informacja("Dane programu zostały zapisane.");
 	}
 
 	private void WczytajJSON()
 	{
-		using var dialog = new OpenFileDialog();
-		dialog.Filter = "Dane programu ProFak (*.json)|*.json|Wszystkie pliki (*.*)|*.*";
-		dialog.RestoreDirectory = true;
-		if (dialog.ShowDialog() != DialogResult.OK) return;
+		var plik = OknoWyboruPliku.OtworzJeden("Wybierz kopię danych do wczytania", "Dane programu ProFak", "*.json");
+		if (plik == null) return;
 		using var nowyKontekst = new Kontekst(Kontekst);
-		var json = File.ReadAllText(dialog.FileName);
+		var json = File.ReadAllText(plik);
 		if (!OknoKomunikatu.PytanieTakNie("Dotychczasowe dane zostaną nadpisane. Czy na pewno chcesz kontynuować?", domyslnie: false)) return;
 		using var tx = nowyKontekst.Transakcja();
 		IO.Eksport.Generator.Wczytaj(nowyKontekst.Baza, json);

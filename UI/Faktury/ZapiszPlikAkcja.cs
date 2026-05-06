@@ -13,13 +13,10 @@ class ZapiszPlikAkcja : AkcjaNaSpisie<Plik>
 		var plik = zaznaczoneRekordy.Single();
 		using var nowyKontekst = new Kontekst(kontekst);
 		nowyKontekst.Dodaj(plik);
-		using var dialog = new SaveFileDialog();
-		dialog.Title = "Zapisywanie pliku";
-		dialog.RestoreDirectory = true;
-		dialog.FileName = plik.Nazwa;
-		if (dialog.ShowDialog() != DialogResult.OK) return;
+		var nazwa = OknoWyboruPliku.Zapisz("Zapisywanie pliku", nazwa: plik.Nazwa);
+		if (nazwa == null) return;
 		using var transakcja = nowyKontekst.Transakcja();
 		var zawartosc = nowyKontekst.Baza.Znajdz<Zawartosc>(plik.ZawartoscId);
-		File.WriteAllBytes(dialog.FileName, zawartosc.Dane);
+		File.WriteAllBytes(nazwa, zawartosc.Dane);
 	}
 }

@@ -114,12 +114,9 @@ class PierwszyStartBaza : Dialog
 		}
 		else if (radioButtonZewnetrznaBaza.Checked)
 		{
-			using var dialog = new OpenFileDialog();
-			dialog.FileName = "profak.sqlite3";
-			dialog.Filter = "Baza danych ProFak (profak.sqlite3)|profak.sqlite3|Wszystkie pliki (*.*)|*.*";
-			dialog.RestoreDirectory = true;
-			if (dialog.ShowDialog() != DialogResult.OK) return;
-			bazaZrodlowa = dialog.FileName;
+			var plik = OknoWyboruPliku.OtworzJeden("Wybierz zewnętrzną bazę danych", "Baza danych ProFak", "profak.sqlite3");
+			if (plik == null) return;
+			bazaZrodlowa = plik;
 			bazaDocelowa = null;
 		}
 		else if (radioButtonBazaDemo.Checked)
@@ -129,11 +126,9 @@ class PierwszyStartBaza : Dialog
 		}
 		else if (radioButtonOdtworzKopie.Checked)
 		{
-			using var dialog = new OpenFileDialog();
-			dialog.Filter = "Kopia zapasowa programu ProFak (*.probak)|*.probak|Wszystkie pliki (*.*)|*.*";
-			dialog.RestoreDirectory = true;
-			if (dialog.ShowDialog() != DialogResult.OK) return;
-			bazaZrodlowa = dialog.FileName;
+			var plik = OknoWyboruPliku.OtworzJeden("Wybierz kopię zapasową bazę danych", "Kopia zapasowa programu ProFak", "*.probak");
+			if (plik == null) return;
+			bazaZrodlowa = plik;
 			bazaDocelowa = DB.Baza.PrywatnaSciezka;
 		}
 		else return;

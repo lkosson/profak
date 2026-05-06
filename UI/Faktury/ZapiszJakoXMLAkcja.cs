@@ -18,21 +18,12 @@ class ZapiszJakoXMLAkcja : AkcjaNaSpisie<Faktura>
 
 	protected string? WybierzPlik(string numerKSeF)
 	{
-		using var dialog = new SaveFileDialog();
-		dialog.Title = "Zapisywanie pliku";
-		dialog.RestoreDirectory = true;
-		dialog.FileName = numerKSeF + ".xml";
-		if (dialog.ShowDialog() != DialogResult.OK) return null;
-		return dialog.FileName;
+		return OknoWyboruPliku.Zapisz("Zapisywanie pliku", "Plik XML", "*.xml", numerKSeF + ".xml");
 	}
 
 	protected string? WybierzKatalog()
 	{
-		using var dialog = new FolderBrowserDialog();
-		dialog.Description = "Wybierz katalog, do którego mają zostać zapisane pliki.";
-		dialog.AutoUpgradeEnabled = false;
-		if (dialog.ShowDialog() != DialogResult.OK) return null;
-		return dialog.SelectedPath;
+		return OknoWyboruPliku.Katalog("Wybierz katalog, do którego mają zostać zapisane pliki.");
 	}
 
 	protected void ZapiszXml(string plik, Faktura naglowek, string xml)

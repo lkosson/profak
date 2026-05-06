@@ -46,25 +46,17 @@ partial class DostepKSeFEdytor : Edytor
 		});
 		if (xml == null) return;
 
-		using var dialog = new SaveFileDialog();
-		dialog.Filter = "Wniosek o dostęp (*.xml)|*.xml|Wszystkie pliki (*.*)|*.*";
-		dialog.Title = "Wybierz miejsce do zapisu wniosku o dostęp";
-		dialog.RestoreDirectory = true;
-		dialog.FileName = "wniosek-do-podpisu.xml";
-		if (dialog.ShowDialog() != DialogResult.OK) return;
-		File.WriteAllText(dialog.FileName, xml);
+		var plik = OknoWyboruPliku.Zapisz("Wybierz miejsce do zapisu wniosku o dostęp", "Wniosek o dostęp", "*.xml", "wniosek-do-podpisu.xml");
+		if (plik == null) return;
+		File.WriteAllText(plik, xml);
 		OknoKomunikatu.Informacja("Wniosek został zapisany pomyślnie. Podpisz go elektronicznie i załaduj do programu zgodnie z dalszymi instrukcjami.");
 	}
 
 	private void WskazXML()
 	{
-		using var dialog = new OpenFileDialog();
-		dialog.Filter = "Wniosek o dostęp (*.xml)|*.xml|Wszystkie pliki (*.*)|*.*";
-		dialog.Title = "Wybierz plik z podpisanym wnioskiem o dostęp";
-		dialog.RestoreDirectory = true;
-		if (dialog.ShowDialog() != DialogResult.OK) return;
-
-		var signedXml = File.ReadAllText(dialog.FileName);
+		var plik = OknoWyboruPliku.OtworzJeden("Wybierz plik z podpisanym wnioskiem o dostęp", "Wniosek o dostęp", "*.xml");
+		if (plik == null) return;
+		var signedXml = File.ReadAllText(plik);
 
 		string? token = null;
 		OknoPostepu.Uruchom(async cancellationToken =>

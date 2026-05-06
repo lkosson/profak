@@ -17,16 +17,13 @@ class DodajPlikAkcja : AkcjaNaSpisie<Plik>
 
 	public override void Uruchom(Kontekst kontekst, ref IEnumerable<Plik> zaznaczoneRekordy)
 	{
-		using var dialog = new OpenFileDialog();
-		dialog.Title = "Wybierz pliki do dołączenia do faktury";
-		dialog.Multiselect = true;
-		dialog.RestoreDirectory = true;
-		if (dialog.ShowDialog() != DialogResult.OK) return;
+		var pliki = OknoWyboruPliku.OtworzWiele("Wybierz pliki do dołączenia do faktury");
+		if (pliki == null) return;
 
 		using var nowyKontekst = new Kontekst(kontekst);
 		using var transakcja = nowyKontekst.Transakcja();
 
-		foreach (var sciezka in dialog.FileNames)
+		foreach (var sciezka in pliki)
 		{
 			var dane = File.ReadAllBytes(sciezka);
 			var nazwa = Path.GetFileName(sciezka);

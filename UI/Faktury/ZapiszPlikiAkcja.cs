@@ -11,11 +11,8 @@ class ZapiszPlikiAkcja : AkcjaNaSpisie<Faktura>
 	{
 		using var nowyKontekst = new Kontekst(kontekst);
 		using var transakcja = nowyKontekst.Transakcja();
-		using var dialog = new FolderBrowserDialog();
-		dialog.AutoUpgradeEnabled = false;
-		dialog.Description = "Wybierz folder, do którego mają zostać zapisane pliki.";
-		if (dialog.ShowDialog() != DialogResult.OK) return;
-		var katalog = dialog.SelectedPath;
+		var katalog = OknoWyboruPliku.Katalog("Wybierz katalog, do którego mają zostać zapisane pliki.");
+		if (katalog == null) return;
 		var liczbaPlikow = 0;
 		foreach (var faktura in zaznaczoneRekordy)
 		{

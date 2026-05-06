@@ -10,16 +10,11 @@ class GenerujJPK_V7MAkcja : AkcjaNaSpisie<DeklaracjaVat>
 	public override void Uruchom(Kontekst kontekst, ref IEnumerable<DeklaracjaVat> zaznaczoneRekordy)
 	{
 		var deklaracja = zaznaczoneRekordy.Single();
-		using var dialog = new SaveFileDialog();
-		dialog.Filter = "Deklaracja JPK_V7M (*.xml)|*.xml|Wszystkie pliki (*.*)|*.*";
-		dialog.Title = "Wybierz miejsce do zapisu JPK";
-		dialog.RestoreDirectory = true;
-		dialog.FileName = $"jpk-v7m-{deklaracja.Miesiac:yyyy-MM}.xml";
-		if (dialog.ShowDialog() != DialogResult.OK) return;
-
+		var plik = OknoWyboruPliku.Zapisz("Wybierz miejsce do zapisu JPK", "Deklaracja JPK_V7M", "*.xml", $"jpk-v7m-{deklaracja.Miesiac:yyyy-MM}.xml");
+		if (plik == null) return;
 		using var nowyKontekst = new Kontekst(kontekst);
 		nowyKontekst.Dodaj(deklaracja);
-		IO.JPK_V7M.Generator.Utworz(dialog.FileName, nowyKontekst.Baza, deklaracja);
+		IO.JPK_V7M.Generator.Utworz(plik, nowyKontekst.Baza, deklaracja);
 		OknoKomunikatu.Informacja("Plik został zapisany pomyślnie.");
 	}
 }

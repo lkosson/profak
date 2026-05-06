@@ -23,13 +23,10 @@ class ZapiszJakoPDFZKSeFAkcja(bool spisKSeF = false) : AkcjaNaSpisie<Faktura>
 		if (faktury.Count == 1)
 		{
 			var faktura = faktury[0];
-			using var dialog = new SaveFileDialog();
-			dialog.Filter = "Dokument PDF (*.pdf)|*.pdf";
-			dialog.Title = "Zapisywanie wizualizacji faktury KSeF";
-			dialog.RestoreDirectory = true;
-			dialog.FileName = faktura.NumerKSeFJakoNazwaPliku + ".pdf";
-			if (dialog.ShowDialog() != DialogResult.OK) return;
-			
+
+			var plik = OknoWyboruPliku.Zapisz("Zapisywanie wizualizacji faktury", "Dokument PDF", "*.pdf", faktura.NumerKSeFJakoNazwaPliku + ".pdf");
+			if (plik == null) return;
+
 			byte[] pdf = [];
 			OknoPostepu.Uruchom(async cancellationToken =>
 			{
@@ -42,17 +39,14 @@ class ZapiszJakoPDFZKSeFAkcja(bool spisKSeF = false) : AkcjaNaSpisie<Faktura>
 				}
 				pdf = IO.KSEFPDF.Generator.ZbudujPDF(faktura.XMLKSeF, faktura.NumerKSeF, faktura.URLKSeF, cancellationToken);
 			});
-			File.WriteAllBytes(dialog.FileName, pdf);
-			Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = dialog.FileName });
+			File.WriteAllBytes(plik, pdf);
+			Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = plik });
 		}
 		else
 		{
-			using var dialog = new FolderBrowserDialog();
-			dialog.AutoUpgradeEnabled = false;
-			dialog.Description = "Wybierz folder, do którego mają zostać zapisane pliki PDF.";
-			if (dialog.ShowDialog() != DialogResult.OK) return;
-			var katalog = dialog.SelectedPath;
-			
+			var katalog = OknoWyboruPliku.Katalog("Wybierz katalog, do którego mają zostać zapisane pliki PDF.");
+			if (katalog == null) return;
+
 			var liczbaPlikow = 0;
 			OknoPostepu.Uruchom(async cancellationToken =>
 			{

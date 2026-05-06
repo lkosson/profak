@@ -58,26 +58,19 @@ class ImportCertyfikatuKSeFEdytor : Edytor
 
 	private void WybierzCertyfikat()
 	{
-		using var dialog = new OpenFileDialog();
-		dialog.Filter = "Certyfikaty (*.crt)|*.crt|Wszystkie pliki (*.*)|*.*";
-		dialog.Title = "Wybierz plik z certyfikatem KSeF";
-		dialog.RestoreDirectory = true;
-		if (dialog.ShowDialog() != DialogResult.OK) return;
-		var zawartosc = File.ReadAllText(dialog.FileName);
-		if (zawartosc.Contains("-----BEGIN CERTIFICATE-----")) textBoxCertyfikat.Text = dialog.FileName;
+		var plik = OknoWyboruPliku.OtworzJeden("Wybierz plik z certyfikatem KSeF", "Certyfikaty", "*.crt");
+		if (plik == null) return;
+		var zawartosc = File.ReadAllText(plik);
+		if (zawartosc.Contains("-----BEGIN CERTIFICATE-----")) textBoxCertyfikat.Text = plik;
 		else OknoKomunikatu.Ostrzezenie("Wskazany plik nie zawiera poprawnego certyfikatu.");
 	}
 
 	private void WybierzKlucz()
 	{
-		using var dialog = new OpenFileDialog();
-		dialog.Filter = "Klucze prywatne (*.key)|*.key|Wszystkie pliki (*.*)|*.*";
-		dialog.Title = "Wybierz plik z kluczem prywatnym KSeF";
-		dialog.RestoreDirectory = true;
-		if (dialog.ShowDialog() != DialogResult.OK) return;
-		textBoxKlucz.Text = dialog.FileName;
-		var zawartosc = File.ReadAllText(dialog.FileName);
-		if (zawartosc.Contains("-----BEGIN ENCRYPTED PRIVATE KEY-----") || zawartosc.Contains("-----BEGIN PRIVATE KEY-----")) textBoxKlucz.Text = dialog.FileName;
+		var plik = OknoWyboruPliku.OtworzJeden("Wybierz plik z kluczem prywatnym KSeF", "Klucze prywatne", "*.key");
+		if (plik == null) return;
+		var zawartosc = File.ReadAllText(plik);
+		if (zawartosc.Contains("-----BEGIN ENCRYPTED PRIVATE KEY-----") || zawartosc.Contains("-----BEGIN PRIVATE KEY-----")) textBoxKlucz.Text = plik;
 		else OknoKomunikatu.Ostrzezenie("Wskazany plik nie zawiera poprawnego klucza prywatnego.");
 	}
 

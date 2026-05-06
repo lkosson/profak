@@ -559,20 +559,16 @@ partial class FakturaEdytor : Edytor<Faktura>
 
 	private void ZapiszWizualizacje()
 	{
-		using var dialog = new SaveFileDialog();
-		dialog.Filter = "Dokument PDF (*.pdf)|*.pdf";
-		dialog.Title = "Zapisywanie wizualizacji faktury";
-		dialog.RestoreDirectory = true;
-		dialog.FileName = Rekord.NumerKSeFJakoNazwaPliku + ".pdf";
-		if (dialog.ShowDialog() != DialogResult.OK) return;
+		var plik = OknoWyboruPliku.Zapisz("Zapisywanie wizualizacji faktury", "Dokument PDF", "*.pdf", Rekord.NumerKSeFJakoNazwaPliku + ".pdf");
+		if (plik == null) return;
 		byte[] pdf = [];
 		OknoPostepu.Uruchom(cancellationToken =>
 		{
 			pdf = IO.KSEFPDF.Generator.ZbudujPDF(Rekord.XMLKSeF, Rekord.NumerKSeF, Rekord.URLKSeF, cancellationToken);
 			return Task.CompletedTask;
 		});
-		File.WriteAllBytes(dialog.FileName, pdf);
-		Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = dialog.FileName });
+		File.WriteAllBytes(plik, pdf);
+		Process.Start(new ProcessStartInfo { UseShellExecute = true, FileName = plik });
 	}
 
 	private void KopiujOdnosnik()

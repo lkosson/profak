@@ -11,15 +11,9 @@ class WczytajKSeFAkcja : AkcjaNaSpisie<Faktura>
 
 	public override void Uruchom(Kontekst kontekst, ref IEnumerable<Faktura> zaznaczoneRekordy)
 	{
-		using var dialog = new OpenFileDialog();
-		dialog.Filter = "e-Faktura XML (*.xml)|*.xml|Wszystkie pliki (*.*)|*.*";
-		dialog.Title = "Wybierz e-Fakturę do załadowania";
-		dialog.RestoreDirectory = true;
-		dialog.Multiselect = true;
-		if (dialog.ShowDialog() != DialogResult.OK) return;
-
+		var pliki = OknoWyboruPliku.OtworzWiele("Wybierz e-Faktury do załadowania", "e-Faktura XML", "*.xml");
+		if (pliki == null) return;
 		var rekordy = new List<Faktura>();
-		var pliki = dialog.FileNames;
 		var pominOkno = false;
 		if (pliki.Length > 1)
 		{
