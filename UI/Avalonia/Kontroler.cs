@@ -69,7 +69,7 @@ partial class Kontroler<TModel>
 		DodajPowiazanie(suggestBox, pobierzWartosc, (suggestBox, wartosc) => { suggestBox.SelectedValue = wartosc; });
 	}
 
-	private void Slownik<T>(TComboBox comboBox, PozycjaListy<T>[] wartosci)
+	public void Slownik<T>(TComboBox comboBox, PozycjaListy<T>[] wartosci)
 	{
 		comboBox.SelectedValueBinding = CompiledBinding.Create<PozycjaListy<T>, T>(pozycja => pozycja.Wartosc!);
 		comboBox.DisplayMemberBinding = CompiledBinding.Create<PozycjaListy<T>, string>(pozycja => pozycja.Opis);

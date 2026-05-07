@@ -1,18 +1,18 @@
-﻿using System.Data;
+﻿using ProFak.DB;
+using System.Data;
 
 namespace ProFak.UI;
 
 partial class EdytorTabeli : Edytor, IKontrolkaZKontekstem
 {
 	public Kontekst Kontekst { get; set; } = default!;
-	// TODO Avalonia
-#if WINFORMS
-	private readonly Button buttonWczytaj;
-	private readonly TextBox textBoxStatus;
-	private readonly Spis dataGridViewWynik;
-	private readonly ComboBox comboBoxTabela;
-	private readonly NumericUpDown numericUpDownIDDo;
-	private readonly NumericUpDown numericUpDownIDOd;
+
+	private readonly TButton buttonWczytaj;
+	private readonly TTextBox textBoxStatus;
+	private readonly Spis spis;
+	private readonly TComboBox comboBoxTabela;
+	private readonly TNumericUpDown numericUpDownIDDo;
+	private readonly TNumericUpDown numericUpDownIDOd;
 
 	public EdytorTabeli()
 	{
@@ -21,17 +21,9 @@ partial class EdytorTabeli : Edytor, IKontrolkaZKontekstem
 		numericUpDownIDDo = Kontrolki.NumericUpDown(poPrzecinku: 0);
 		buttonWczytaj = Kontrolki.Button("Wczytaj", Wczytaj);
 		textBoxStatus = Kontrolki.TextBox();
-		dataGridViewWynik = new Spis();
+		spis = new SpisEdytowalny(Edycja, Usuniecie);
 
-		textBoxStatus.ReadOnly = true;
-		dataGridViewWynik.AllowUserToAddRows = false;
-		dataGridViewWynik.AllowUserToDeleteRows = false;
-		dataGridViewWynik.AllowUserToOrderColumns = true;
-		dataGridViewWynik.AllowUserToResizeRows = false;
-		dataGridViewWynik.EnableHeadersVisualStyles = false;
-		dataGridViewWynik.RowHeadersVisible = false;
-		dataGridViewWynik.CellEndEdit += dataGridViewWynik_CellEndEdit;
-		dataGridViewWynik.KeyUp += dataGridViewWynik_KeyUp;
+		numericUpDownIDOd.Value = 0;
 		numericUpDownIDDo.Value = 999999999;
 
 		var zakres = new Siatka([0, 0, 0, 0, 0, 0, -1], []);
@@ -39,51 +31,46 @@ partial class EdytorTabeli : Edytor, IKontrolkaZKontekstem
 
 		var uklad = new Siatka([-1], [0, -1]);
 		uklad.DodajWiersz([new Grupa("Zakres danych", zakres)]);
-		uklad.DodajWiersz([new Grupa("Wynik", dataGridViewWynik)]);
+		uklad.DodajWiersz([new Grupa("Wynik", spis)]);
+
+		var tabele = new[]
+		{
+			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Deklaracje Vat", Wartosc = GeneratorDanych(kontekst => kontekst.Baza.DeklaracjeVat) },
+			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Dodatkowe podmioty", Wartosc = GeneratorDanych(kontekst => kontekst.Baza.DodatkowePodmioty) },
+			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Faktury", Wartosc = GeneratorDanych(kontekst => kontekst.Baza.Faktury) },
+			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Jednostki miar", Wartosc = GeneratorDanych(kontekst => kontekst.Baza.JednostkiMiar) },
+			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Kolumny spisów", Wartosc = GeneratorDanych(kontekst => kontekst.Baza.KolumnySpisow) },
+			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Konfiguracja", Wartosc = GeneratorDanych(kontekst => kontekst.Baza.Konfiguracja) },
+			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Kontrahenci", Wartosc = GeneratorDanych(kontekst => kontekst.Baza.Kontrahenci) },
+			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Numeratory", Wartosc = GeneratorDanych(kontekst => kontekst.Baza.Numeratory) },
+			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Pliki", Wartosc = GeneratorDanych(kontekst => kontekst.Baza.Pliki) },
+			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Pozycje faktur", Wartosc = GeneratorDanych(kontekst => kontekst.Baza.PozycjeFaktur) },
+			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Składki Zus", Wartosc = GeneratorDanych(kontekst => kontekst.Baza.SkladkiZus) },
+			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Sposoby płatności", Wartosc = GeneratorDanych(kontekst => kontekst.Baza.SposobyPlatnosci) },
+			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Stany menu", Wartosc = GeneratorDanych(kontekst => kontekst.Baza.StanyMenu) },
+			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Stany numeratorów", Wartosc = GeneratorDanych(kontekst => kontekst.Baza.StanyNumeratorow) },
+			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Stawki Vat", Wartosc = GeneratorDanych(kontekst => kontekst.Baza.StawkiVat) },
+			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Towary", Wartosc = GeneratorDanych(kontekst => kontekst.Baza.Towary) },
+			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Urzędy skarbowe", Wartosc = GeneratorDanych(kontekst => kontekst.Baza.UrzedySkarbowe) },
+			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Waluty", Wartosc = GeneratorDanych(kontekst => kontekst.Baza.Waluty) },
+			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Wpłaty", Wartosc = GeneratorDanych(kontekst => kontekst.Baza.Wplaty) },
+			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Zawartości", Wartosc = GeneratorDanych(kontekst => kontekst.Baza.Zawartosci) }
+		};
+
+		var kontroler = new Kontroler<object>();
+		kontroler.Slownik(comboBoxTabela, tabele);
 
 		UstawZawartosc(uklad);
 	}
 
-	protected override void OnCreateControl()
-	{
-		base.OnCreateControl();
-		dataGridViewWynik.AllowUserToDeleteRows = true;
-		dataGridViewWynik.RowHeadersVisible = true;
-		comboBoxTabela.DisplayMember = nameof(PozycjaListy<IQueryable>.Opis);
-		comboBoxTabela.ValueMember = nameof(PozycjaListy<IQueryable>.Wartosc);
-		comboBoxTabela.DataSource = new[]
-		{
-			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Deklaracje Vat", Wartosc = GeneratorDanych(Kontekst.Baza.DeklaracjeVat) },
-			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Dodatkowe podmioty", Wartosc = GeneratorDanych(Kontekst.Baza.DodatkowePodmioty) },
-			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Faktury", Wartosc = GeneratorDanych(Kontekst.Baza.Faktury) },
-			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Jednostki miar", Wartosc = GeneratorDanych(Kontekst.Baza.JednostkiMiar) },
-			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Kolumny spisów", Wartosc = GeneratorDanych(Kontekst.Baza.KolumnySpisow) },
-			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Konfiguracja", Wartosc = GeneratorDanych(Kontekst.Baza.Konfiguracja) },
-			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Kontrahenci", Wartosc = GeneratorDanych(Kontekst.Baza.Kontrahenci) },
-			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Numeratory", Wartosc = GeneratorDanych(Kontekst.Baza.Numeratory) },
-			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Pliki", Wartosc = GeneratorDanych(Kontekst.Baza.Pliki) },
-			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Pozycje faktur", Wartosc = GeneratorDanych(Kontekst.Baza.PozycjeFaktur) },
-			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Składki Zus", Wartosc = GeneratorDanych(Kontekst.Baza.SkladkiZus) },
-			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Sposoby płatności", Wartosc = GeneratorDanych(Kontekst.Baza.SposobyPlatnosci) },
-			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Stany menu", Wartosc = GeneratorDanych(Kontekst.Baza.StanyMenu) },
-			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Stany numeratorów", Wartosc = GeneratorDanych(Kontekst.Baza.StanyNumeratorow) },
-			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Stawki Vat", Wartosc = GeneratorDanych(Kontekst.Baza.StawkiVat) },
-			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Towary", Wartosc = GeneratorDanych(Kontekst.Baza.Towary) },
-			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Urzędy skarbowe", Wartosc = GeneratorDanych(Kontekst.Baza.UrzedySkarbowe) },
-			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Waluty", Wartosc = GeneratorDanych(Kontekst.Baza.Waluty) },
-			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Wpłaty", Wartosc = GeneratorDanych(Kontekst.Baza.Wplaty) },
-			new PozycjaListy<Func<IEnumerable<object>>> { Opis = "Zawartości", Wartosc = GeneratorDanych(Kontekst.Baza.Zawartosci) }
-		};
-	}
-
-	private Func<IEnumerable<object>> GeneratorDanych<T>(IQueryable<T> tabela)
+	private Func<IEnumerable<object>> GeneratorDanych<T>(Func<Kontekst, IQueryable<T>> generatorTabeli)
 		where T : DB.Rekord<T>
 	{
 		return delegate
 		{
-			var idOd = (int)numericUpDownIDOd.Value;
-			var idDo = (int)numericUpDownIDDo.Value;
-			return tabela.Where(rekord => rekord.Id >= idOd && rekord.Id <= idDo).Cast<object>().ToList();
+			var idOd = (int?)numericUpDownIDOd.Value;
+			var idDo = (int?)numericUpDownIDDo.Value;
+			return generatorTabeli(Kontekst).Where(rekord => rekord.Id >= idOd && rekord.Id <= idDo).Cast<object>().ToList();
 		};
 	}
 
@@ -93,7 +80,7 @@ partial class EdytorTabeli : Edytor, IKontrolkaZKontekstem
 		{
 			if (comboBoxTabela.SelectedValue is not Func<IEnumerable<object>> generator) return;
 			var dane = generator();
-			dataGridViewWynik.DataSource = dane;
+			spis.DataSource = dane;
 			textBoxStatus.Text = "Liczba pozycji: " + dane.Count();
 		}
 		catch (Exception exc)
@@ -102,15 +89,15 @@ partial class EdytorTabeli : Edytor, IKontrolkaZKontekstem
 		}
 	}
 
-	private void dataGridViewWynik_CellEndEdit(object? sender, DataGridViewCellEventArgs e)
+	private void Edycja(object wiersz)
 	{
 		try
 		{
+			if (wiersz is not Rekord rekord) return;
 			textBoxStatus.Text = "Zapisywanie ...";
 			using var nowyKontekst = new Kontekst(Kontekst);
 			using var tx = nowyKontekst.Transakcja();
-			var rekord = dataGridViewWynik.Rows[e.RowIndex].DataBoundItem;
-			if (rekord != null) Kontekst.Baza.Zapisz(rekord);
+			Kontekst.Baza.Zapisz(rekord);
 			tx.Zatwierdz();
 			textBoxStatus.Text = "Zapisano zmianę.";
 		}
@@ -120,30 +107,25 @@ partial class EdytorTabeli : Edytor, IKontrolkaZKontekstem
 		}
 	}
 
-	private void dataGridViewWynik_KeyUp(object? sender, KeyEventArgs e)
+	private void Usuniecie(object[] wiersze)
 	{
-		if (e.KeyCode == Keys.Delete && e.Modifiers == Keys.None)
+		try
 		{
-			try
+			textBoxStatus.Text = "Kasowanie ...";
+			using var nowyKontekst = new Kontekst(Kontekst);
+			using var tx = nowyKontekst.Transakcja();
+			foreach (var rekord in wiersze.OfType<Rekord>())
 			{
-				if (dataGridViewWynik.SelectedRows.Count == 0) return;
-				textBoxStatus.Text = "Kasowanie ...";
-				using var nowyKontekst = new Kontekst(Kontekst);
-				using var tx = nowyKontekst.Transakcja();
-				foreach (DataGridViewRow wiersz in dataGridViewWynik.SelectedRows)
-				{
-					var rekord = wiersz.DataBoundItem;
-					if (rekord != null) Kontekst.Baza.Usun(rekord);
-				}
-				tx.Zatwierdz();
-				if (dataGridViewWynik.SelectedRows.Count == 1) textBoxStatus.Text = "Usunięto rekord.";
-				else textBoxStatus.Text = "Usunięto rekordy : " + dataGridViewWynik.SelectedRows.Count;
+				Kontekst.Baza.Usun(rekord);
 			}
-			catch (Exception exc)
-			{
-				textBoxStatus.Text = exc.GetType() + ": " + exc.Message;
-			}
+			tx.Zatwierdz();
+			Wczytaj();
+			if (wiersze.Length == 1) textBoxStatus.Text = "Usunięto rekord.";
+			else textBoxStatus.Text = "Usunięto rekordy : " + wiersze.Length;
+		}
+		catch (Exception exc)
+		{
+			textBoxStatus.Text = exc.GetType() + ": " + exc.Message;
 		}
 	}
-#endif
 }

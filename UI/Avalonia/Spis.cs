@@ -306,4 +306,37 @@ if (Rows[e.RowIndex].DataBoundItem is T rekord) UstawStylWiersza(rekord, Columns
 	}
 	*/
 }
+
+class SpisEdytowalny : Spis
+{
+	private Action<object> edycja;
+	private Action<object[]> usuniecie;
+
+	public SpisEdytowalny(Action<object> edycja, Action<object[]> usuniecie)
+	{
+		this.edycja = edycja;
+		this.usuniecie = usuniecie;
+		IsReadOnly = false;
+		AutoGenerateColumns = true;
+	}
+
+	protected override void OnCellEditEnding(DataGridCellEditEndingEventArgs e)
+	{
+		base.OnCellEditEnding(e);
+		if (e.EditAction == DataGridEditAction.Commit && e.Row.DataContext != null)
+		{
+			edycja(e.Row.DataContext);
+		}
+	}
+
+	protected override void OnKeyDown(Avalonia.Input.KeyEventArgs e)
+	{
+		base.OnKeyDown(e);
+		if (e.Key == Key.Delete && e.KeyModifiers == KeyModifiers.None)
+		{
+			usuniecie(SelectedItems.Cast<object>().ToArray());
+		}
+	}
+}
+
 #endif

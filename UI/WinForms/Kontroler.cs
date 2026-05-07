@@ -60,7 +60,7 @@ partial class Kontroler<TModel>
 		DodajPowiazanie(comboBox, pobierzWartosc, (comboBox, wartosc) => { if (comboBox.SelectedIndex != -1) comboBox.SelectedIndex = -1; if (wartosc != null) comboBox.SelectedValue = wartosc; });
 	}
 
-	private void Slownik<T>(TComboBox comboBox, PozycjaListy<T>[] wartosci)
+	public void Slownik<T>(TComboBox comboBox, PozycjaListy<T>[] wartosci)
 	{
 		comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 		comboBox.DisplayMember = "Opis";

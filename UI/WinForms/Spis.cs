@@ -403,4 +403,32 @@ abstract partial class Spis<T> : Spis
 		Kontekst.Baza.Zapisz(doZapisu);
 	}
 }
+
+class SpisEdytowalny : Spis
+{
+	private Action<object> edycja;
+	private Action<object[]> usuniecie;
+
+	public SpisEdytowalny(Action<object> edycja, Action<object[]> usuniecie)
+	{
+		this.edycja = edycja;
+		this.usuniecie = usuniecie;
+		AutoGenerateColumns = true;
+		AllowUserToDeleteRows = true;
+		ReadOnly = false;
+	}
+
+	protected override void OnCellEndEdit(DataGridViewCellEventArgs e)
+	{
+		base.OnCellEndEdit(e);
+		var rekord = Rows[e.RowIndex].DataBoundItem;
+		if (rekord != null) edycja(rekord);
+	}
+
+	protected override void OnKeyUp(KeyEventArgs e)
+	{
+		base.OnKeyUp(e);
+		if (e.KeyCode == Keys.Delete && e.Modifiers == Keys.None) usuniecie(SelectedRows.Cast<DataGridViewRow>().Where(e => e.DataBoundItem != null).Select(e => e.DataBoundItem!).ToArray());
+	}
+}
 #endif
