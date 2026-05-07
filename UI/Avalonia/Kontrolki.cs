@@ -335,7 +335,6 @@ static class RozszerzeniaKontrolek
 	{
 		public bool Visible { get => kontrolka.IsVisible; set => kontrolka.IsVisible = value; }
 		public string Name { get => ""; set { } }
-		public DataGridViewAutoSizeColumnMode AutoSizeMode { get => default; set { } }
 	}
 }
 #endif

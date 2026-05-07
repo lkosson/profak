@@ -38,27 +38,6 @@ class Wyglad
 		return nazwa.Substring(idx);
 	}
 
-	public static void UsunSkrotyZakladek(TabControl tabControl)
-	{
-		if (SkrotyKlawiaturoweZakladek) return;
-		foreach (TabPage zakladka in tabControl.TabPages)
-		{
-			zakladka.Text = NazwaBezSkrotu(zakladka.Text).Trim();
-		}
-	}
-
-	public static void UsunIkonePrzycisku(Button przycisk)
-	{
-		if (IkonyAkcji) return;
-		przycisk.Text = NazwaBezIkony(przycisk.Text);
-	}
-
-	public static void UsunSkrotPrzycisku(Button przycisk)
-	{
-		if (SkrotyKlawiaturowePrzyciskow) return;
-		przycisk.Text = NazwaBezSkrotu(przycisk.Text);
-	}
-
 	public static string NazwaBezSkrotu(string tekst)
 	{
 		var dopasowanie = nazwaPlusSkrot.Match(tekst);
