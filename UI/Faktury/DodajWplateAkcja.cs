@@ -1,6 +1,4 @@
 ﻿using ProFak.DB;
-using ZXing;
-using ZXing.Windows.Compatibility;
 
 namespace ProFak.UI;
 

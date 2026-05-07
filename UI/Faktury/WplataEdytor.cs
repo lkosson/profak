@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProFak.DB;
-using ZXing;
-using ZXing.Windows.Compatibility;
+using QRCoder;
 
 namespace ProFak.UI;
 
@@ -73,18 +72,15 @@ class WplataEdytor : EdytorDwieKolumny<Wplata>
 			+ "|" // Identyfikator Invobill
 			+ "|"; // Rezerwa
 
-		var writer = new BarcodeWriter();
-		writer.Options.Margin = 5;
-		writer.Options.Width = 500;
-		writer.Options.Height = 500;
-		writer.Format = BarcodeFormat.QR_CODE;
-		using var qr = writer.WriteAsBitmap(kodPlatnosci);
+		using var qrc = QRCodeGenerator.GenerateQrCode(kodPlatnosci, QRCodeGenerator.ECCLevel.Default);
+		using var renderer = new PngByteQRCode(qrc);
+		var qr = renderer.GetGraphic(20);
 
 #if WINFORMS
 		var pb = new PictureBox();
 		pb.Dock = DockStyle.Fill;
 		pb.SizeMode = PictureBoxSizeMode.Zoom;
-		pb.Image = qr;
+		pb.Image = new Bitmap(new MemoryStream(qr));
 
 		using var form = new Dialog("Kod płatności", pb, Kontekst);
 		form.ClientSize = new Size(600, 500);
@@ -93,10 +89,7 @@ class WplataEdytor : EdytorDwieKolumny<Wplata>
 #endif
 #if AVALONIA
 		var image = new Avalonia.Controls.Image();
-		var png = new MemoryStream();
-		qr.Save(png, System.Drawing.Imaging.ImageFormat.Png);
-		png.Position = 0;
-		var bitmap = new Avalonia.Media.Imaging.Bitmap(png);
+		var bitmap = new Avalonia.Media.Imaging.Bitmap(new MemoryStream(qr));
 		image.Source = bitmap;
 		var form = new Dialog("Kod płatności", image, Kontekst);
 		form.Background = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Colors.White);

@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Reporting.WinForms;
 using ProFak.DB;
-using System.Drawing.Imaging;
-using ZXing;
-using ZXing.Windows.Compatibility;
+using QRCoder;
 
 namespace ProFak.Wydruki;
 
@@ -124,16 +122,10 @@ public class Faktura : Wydruk
 
 			if (!String.IsNullOrEmpty(faktura.URLKSeF))
 			{
-				var writer = new BarcodeWriter();
-				writer.Options.Margin = 0;
-				writer.Options.NoPadding = true;
-				writer.Options.Width = 500;
-				writer.Options.Height = 500;
-				writer.Format = BarcodeFormat.QR_CODE;
-				var qrKSeF = writer.WriteAsBitmap(faktura.URLKSeF);
-				var ms = new MemoryStream();
-				qrKSeF.Save(ms, ImageFormat.Png);
-				fakturaDTO.KodKSeF = Convert.ToBase64String(ms.ToArray());
+				using var qrc = QRCodeGenerator.GenerateQrCode(faktura.URLKSeF, QRCodeGenerator.ECCLevel.Default);
+				using var renderer = new PngByteQRCode(qrc);
+				var qr = renderer.GetGraphic(20);
+				fakturaDTO.KodKSeF = Convert.ToBase64String(qr);
 			}
 
 			fakturaDTO.OpisPozycji = "";
