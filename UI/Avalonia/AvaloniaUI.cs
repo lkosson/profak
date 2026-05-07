@@ -8,6 +8,7 @@ global using Pionowo = ProFak.UI.PionowoAV;
 global using Poziomo = ProFak.UI.PoziomoAV;
 global using Siatka = ProFak.UI.SiatkaAV;
 global using Zakladki = ProFak.UI.ZakladkiAV;
+global using TUI = ProFak.UI.AvaloniaUI;
 
 using Avalonia;
 using Avalonia.Controls;

@@ -14,14 +14,9 @@ public static class Program
 		{
 			Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 			Wyglad.ZaladujDomyslny();
-			Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
 			CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("pl-PL");
 			Baza.UstalSciezkeBazy();
-#if AVALONIA
-			UI.AvaloniaUI.Przygotuj();
-#endif
+			TUI.Przygotuj();
 #if !SQLSERVER
 			if (!PierwszyStartBaza.Uruchom()) return;
 #endif
