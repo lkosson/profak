@@ -86,7 +86,6 @@ partial class Menu
 			Zbuduj(pokazUkryte: true);
 		}
 
-		var menuKontekstowe = new ContextMenuStrip();
 		var menuPokaz = Kontrolki.MenuItem("Pokaż", Pokaz);
 		var menuUkryj = Kontrolki.MenuItem("Ukryj", Ukryj);
 		var menuPokazUkryte = Kontrolki.MenuItem("Pokaż ukryte", PokazUkryte);
