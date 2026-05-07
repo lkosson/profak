@@ -36,6 +36,8 @@ class OknoWyboruPliku
 		var storageProvider = new Window().StorageProvider;
 		var opts = new FilePickerSaveOptions();
 		opts.Title = tytul;
+		if (!String.IsNullOrEmpty(nazwa)) opts.SuggestedFileName = nazwa;
+		if (!String.IsNullOrEmpty(katalog)) opts.SuggestedStartLocation = storageProvider.TryGetFolderFromPathAsync(katalog).GetAwaiter().GetResult();
 		if (!String.IsNullOrEmpty(opis) && !String.IsNullOrEmpty(maska)) opts.FileTypeChoices = [new FilePickerFileType(opis) { Patterns = [maska] }, FilePickerFileTypes.All];
 		if (!String.IsNullOrEmpty(maska)) opts.DefaultExtension = maska;
 		var plik = storageProvider.SaveFilePickerAsync(opts).GetAwaiter().GetResult();
