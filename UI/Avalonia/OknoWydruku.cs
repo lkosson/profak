@@ -34,7 +34,8 @@ class OknoWydruku : Form
 
 	public OknoWydruku(Wydruki.Wydruk wydruk)
 	{
-		Icon = GlowneOkno.Ikona;
+		//TODO Avalonia
+		//Icon = GlowneOkno.Ikona;
 		WindowState = FormWindowState.Maximized;
 		ShowInTaskbar = false;
 		KeyPreview = true;
@@ -85,5 +86,6 @@ class OknoWydruku : Form
 			}
 		});
 	}
+}
 #endif
 #endif
