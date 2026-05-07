@@ -10,14 +10,14 @@ partial class GlowneOkno
 {
 	private Menu menu;
 
-	public static Icon? Ikona
+	public static TIcon? Ikona
 	{
 		get
 		{
 			var asm = Assembly.GetExecutingAssembly();
 			using var dane = asm.GetManifestResourceStream("ProFak.ikona.ico");
 			if (dane == null) return null;
-			return new Icon(dane);
+			return new TIcon(dane);
 		}
 	}
 

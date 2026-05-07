@@ -21,8 +21,7 @@ partial class GlowneOkno : Window
 
 		WindowState = WindowState.Maximized;
 		Title = "ProFak";
-		//TODO Avalonia
-		//Icon = Ikona;
+		Icon = Ikona;
 		Content = uklad;
 	}
 

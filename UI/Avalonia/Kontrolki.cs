@@ -24,6 +24,7 @@ global using TDataGridColumn = Avalonia.Controls.DataGridBoundColumn;
 global using TColor = Avalonia.Media.Color;
 global using TKeys = Avalonia.Input.Key;
 global using TKeyModifiers = Avalonia.Input.KeyModifiers;
+global using TIcon = Avalonia.Controls.WindowIcon;
 using Avalonia.Layout;
 using HorizontalAlignment = Avalonia.Layout.HorizontalAlignment;
 using Avalonia.Controls;

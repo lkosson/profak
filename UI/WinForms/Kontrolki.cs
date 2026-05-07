@@ -26,6 +26,7 @@ global using TDataGridColumn = System.Windows.Forms.DataGridViewColumn;
 global using TColor = System.Drawing.Color;
 global using TKeys = System.Windows.Forms.Keys;
 global using TKeyModifiers = System.Windows.Forms.Keys;
+global using TIcon = System.Drawing.Icon;
 
 namespace ProFak.UI;
 

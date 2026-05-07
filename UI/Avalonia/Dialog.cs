@@ -13,7 +13,7 @@ class DialogAV : Window, IDisposable
 	{
 		SizeToContent = SizeToContent.WidthAndHeight;
 		ShowInTaskbar = false;
-		//Icon = GlowneOkno.Ikona;
+		Icon = GlowneOkno.Ikona;
 		Title = tytul;
 		kontekst.Dialog = this;
 	}
