@@ -67,7 +67,7 @@ class KontrolkiAV
 
 	public static HyperlinkButton LinkPomoc(string tresc)
 	{
-		void Pomoc() => MessageBox.Show(tresc, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		void Pomoc() => OknoKomunikatu.Informacja(tresc);
 		return Link("[?]", Pomoc);
 	}
 
