@@ -6,8 +6,7 @@ namespace ProFak.UI;
 class BazyDanych : Edytor, IKontrolkaZKontekstem
 {
 	public Kontekst Kontekst { get; set; } = default!;
-	//TODO Avalonia
-#if WINFORMS
+
 	private bool gotowy;
 
 	private readonly TTextBox textBoxRozmiar;
@@ -22,7 +21,7 @@ class BazyDanych : Edytor, IKontrolkaZKontekstem
 	public BazyDanych()
 	{
 		textBoxRozmiar = Kontrolki.TextBox();
-		comboBoxPlik = Kontrolki.SuggestBox();
+		comboBoxPlik = Kontrolki.SuggestBox([Baza.PublicznaSciezka, Baza.PrywatnaSciezka, Baza.LokalnaSciezka]);
 		textBoxDataModyfikacji = Kontrolki.TextBox();
 		buttonPrzenies = Kontrolki.Button("Przenieś", Przenies);
 		buttonZapiszJSON = Kontrolki.Button("Zapisz JSON", ZapiszJSON);
@@ -33,21 +32,20 @@ class BazyDanych : Edytor, IKontrolkaZKontekstem
 		textBoxRozmiar.ReadOnly = true;
 		textBoxDataModyfikacji.ReadOnly = true;
 
-		var uklad = new Siatka([0, -1, 0], []);
+		var uklad = new Siatka([0, 500, 0, -1], []);
 		uklad.DodajWiersz("Plik bazy danych", [comboBoxPlik, buttonPrzenies]);
 		uklad.DodajWiersz("Rozmiar bazy", [(textBoxRozmiar, 2)]);
 		uklad.DodajWiersz("Ostatnia modyfikacja", [(textBoxDataModyfikacji, 2)]);
 		uklad.DodajWiersz("Kopia bezpieczeństwa", [(new Poziomo([buttonUtworzKopie, buttonPrzywrocKopie]), 2)]);
 		uklad.DodajWiersz("Eksport danych", [(new Poziomo([buttonZapiszJSON, buttonWczytajJSON]), 2)]);
-		uklad.MaximumSize = new Size(700, 400);
 
 		UstawZawartosc(uklad);
 	}
 
-	protected override void OnLoad(EventArgs e)
+	protected override void EdytorGotowy()
 	{
+		base.EdytorGotowy();
 		Wypelnij();
-		base.OnLoad(e);
 	}
 
 	private void Wypelnij()
@@ -65,13 +63,9 @@ class BazyDanych : Edytor, IKontrolkaZKontekstem
 		comboBoxPlik.Text = plik.FullName;
 		textBoxRozmiar.Text = plik.Length.ToString("#,##0");
 		textBoxDataModyfikacji.Text = plik.LastWriteTime.ToString("d MMMM yyyy, H:mm:ss");
-		comboBoxPlik.Items.Clear();
-		comboBoxPlik.Items.Add(Baza.PublicznaSciezka);
-		comboBoxPlik.Items.Add(Baza.PrywatnaSciezka);
-		comboBoxPlik.Items.Add(Baza.LokalnaSciezka);
-		if (Baza.Sciezka == Baza.PublicznaSciezka) comboBoxPlik.SelectedIndex = 0;
-		if (Baza.Sciezka == Baza.PrywatnaSciezka) comboBoxPlik.SelectedIndex = 1;
-		if (Baza.Sciezka == Baza.LokalnaSciezka) comboBoxPlik.SelectedIndex = 2;
+		if (Baza.Sciezka == Baza.PublicznaSciezka) comboBoxPlik.Text = Baza.PublicznaSciezka;
+		if (Baza.Sciezka == Baza.PrywatnaSciezka) comboBoxPlik.Text = Baza.PrywatnaSciezka;
+		if (Baza.Sciezka == Baza.LokalnaSciezka) comboBoxPlik.Text = Baza.LokalnaSciezka;
 		gotowy = true;
 	}
 
@@ -194,5 +188,4 @@ class BazyDanych : Edytor, IKontrolkaZKontekstem
 		tx.Zatwierdz();
 		OknoKomunikatu.Informacja("Dane programu zostały wczytane.");
 	}
-#endif
 }
