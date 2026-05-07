@@ -1,4 +1,5 @@
-﻿namespace ProFak.UI;
+﻿#if WINFORMS
+namespace ProFak.UI;
 
 class OknoWydruku : Form
 {
@@ -59,3 +60,4 @@ class OknoWydruku : Form
 		});
 	}
 }
+#endif
