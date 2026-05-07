@@ -47,7 +47,7 @@ class OknoBledu : Dialog
 		}
 		else if (exc is Microsoft.EntityFrameworkCore.DbUpdateException && exc.InnerException is Microsoft.Data.Sqlite.SqliteException se2 && se2.SqliteErrorCode == 19)
 		{
-			MessageBox.Show("Z tą pozycją są powiązane inne dane w bazie, blokujące możliwość usunięcia lub edycji.", "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			OknoKomunikatu.Ostrzezenie("Z tą pozycją są powiązane inne dane w bazie, blokujące możliwość usunięcia lub edycji.");
 		}
 #endif
 		else
