@@ -14,7 +14,6 @@ class OknoKomunikatu
 	public static void Ostrzezenie(string komunikat)
 	{
 		Pokaz("⚠️", komunikat, ["OK"]);
-		MessageBox.Show(komunikat, "ProFak", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 	}
 
 	public static bool PytanieTakNie(string komunikat, bool domyslnie = true)
