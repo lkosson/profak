@@ -15,6 +15,7 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Themes.Simple;
 using Application = Avalonia.Application;
+using Avalonia.Platform.Storage;
 
 namespace ProFak.UI;
 
@@ -22,6 +23,7 @@ class AvaloniaUI
 {
 	private static Application application = default!;
 	private static Window? aktywneOkno;
+	public static IStorageProvider StorageProvider => aktywneOkno?.StorageProvider ?? new Window().StorageProvider;
 
 	public static void Przygotuj()
 	{
