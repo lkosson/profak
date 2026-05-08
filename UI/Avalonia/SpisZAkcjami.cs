@@ -26,7 +26,9 @@ partial class SpisZAkcjami<TRekord> : IDisposable
 
 	private void Zamknij()
 	{
-		((Avalonia.Controls.Panel?)Parent)?.Children.Remove(this);
+		if (Spis.Kontekst.Dialog is DialogEdycji) return;
+		if (Spis.Kontekst.Dialog is not Dialog dialog) return;
+		dialog.Zamknij();
 	}
 }
 #endif
