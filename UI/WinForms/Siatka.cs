@@ -89,7 +89,7 @@ class SiatkaWF : TableLayoutPanel
 
 	public static Siatka BlokadaRozciagania(TControl kontrolka)
 	{
-		var siatka = new Siatka([-1, 0, -1], []);
+		var siatka = new Siatka([-1, 0, -1], [-1]);
 		siatka.DodajWiersz([null, kontrolka, null]);
 		return siatka;
 	}

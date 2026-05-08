@@ -19,7 +19,7 @@ class OProgramie : Edytor, IKontrolkaZKontekstem
 
 		labelNaglowek.Margin = labelWersja.Margin = labelSciezka.Margin = labelData.Margin = buttonAktualizacje.Margin = linkStrona.Margin = labelLicencja.Margin = new TPadding(10);
 		var uklad = new Pionowo([labelNaglowek, labelWersja, labelSciezka, labelData, linkStrona, Siatka.BlokadaRozciagania(buttonAktualizacje), labelLicencja]);
-		//uklad.OgraniczSzerokosc(700);
+		uklad.OgraniczSzerokosc(700);
 
 		UstawZawartosc(uklad);
 	}

@@ -53,7 +53,7 @@ abstract class Edytor : UserControl
 		var wymiary = zawartosc.Size;
 		zawartosc.Dock = DockStyle.Fill;
 		Controls.Add(zawartosc);
-		MinimumSize = Size = wymiary;
+		Size = wymiary;
 		ResumeLayout(true);
 	}
 

@@ -56,7 +56,7 @@ class KontrolkiWF
 	public static TText Text(string tekst, bool pogrubiony = false, int rozmiar = 9, bool wysrodkowany = false)
 	{
 		var label = new TText();
-		label.Anchor = AnchorStyles.Left;
+		label.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		label.TextAlign = wysrodkowany ? ContentAlignment.MiddleCenter : ContentAlignment.MiddleLeft;
 		label.AutoSize = true;
 		label.Text = tekst;
