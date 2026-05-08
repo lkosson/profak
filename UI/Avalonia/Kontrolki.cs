@@ -239,6 +239,7 @@ class KontrolkiAV
 	{
 		var progressBar = new TProgressBar();
 		progressBar.IsIndeterminate = true;
+		progressBar.Width = 250;
 		return progressBar;
 	}
 

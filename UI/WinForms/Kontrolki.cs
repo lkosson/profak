@@ -263,6 +263,7 @@ class KontrolkiWF
 	{
 		var progressBar = new TProgressBar();
 		progressBar.Style = ProgressBarStyle.Marquee;
+		progressBar.Width = 250;
 		return progressBar;
 	}
 
