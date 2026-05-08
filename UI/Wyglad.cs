@@ -54,6 +54,8 @@ class Wyglad
 
 	private static void UstawCzcionke()
 	{
+		// TODO Avalonia
+#if WINFORMS
 		if (!RozmiarCzcionki.HasValue) return;
 		try
 		{
@@ -64,12 +66,18 @@ class Wyglad
 		{
 			// Application.SetDefaultFont nie działa jeśli było już wyświetlone jakiekolwiek okno
 		}
+#endif
 	}
 
 	public static int PrzeskalujRozmiar(int rozmiarPx)
 	{
 		if (!RozmiarCzcionki.HasValue) return rozmiarPx;
+#if AVALONIA
+		return (int)(rozmiarPx * RozmiarCzcionki.Value / new TTextBox().FontSize);
+#endif
+#if WINFORMS
 		return (int)(rozmiarPx * RozmiarCzcionki.Value / SystemFonts.MessageBoxFont!.Size);
+#endif
 	}
 
 	public static void ZaladujDomyslny()
