@@ -1,6 +1,7 @@
 ﻿#if AVALONIA
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Media;
 
 namespace ProFak.UI;
 
@@ -25,7 +26,7 @@ class OknoKomunikatu
 	public static bool? PytanieTakNieAnuluj(string komunikat, bool? domyslnie = true)
 	{
 		var wynik = Pokaz("❔", komunikat, ["Tak", "Nie", "Anuluj"], domyslny: domyslnie is null ? 2 : domyslnie is true ? 0 : 1);
-		if (wynik is null) return null;
+		if (wynik is null or 2) return null;
 		return wynik == 0;
 	}
 
@@ -34,7 +35,14 @@ class OknoKomunikatu
 		int? wynik = null;
 		var window = new Window { Title = "ProFak" };
 		var textBlockIkona = new TText { Text = ikona, FontSize = 30 };
-		var textBlockKomunikat = new TText { Text = komunikat };
+		var textBlockKomunikat = new TText
+		{
+			Text = komunikat,
+			VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
+			HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
+			TextAlignment = TextAlignment.Center,
+			MinWidth = 150,
+		};
 		var panelKomunikat = new StackPanel { Orientation = Avalonia.Layout.Orientation.Horizontal, Spacing = 8 };
 		var panelPrzyciski = new StackPanel { Orientation = Avalonia.Layout.Orientation.Horizontal, Spacing = 8, HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center };
 
@@ -50,7 +58,7 @@ class OknoKomunikatu
 			panelPrzyciski.Children.Add(przycisk);
 			if (i == domyslny)
 			{
-				przycisk.AttachedToVisualTree += delegate { przycisk.Focus(); };
+				przycisk.AttachedToVisualTree += delegate { przycisk.Focus(Avalonia.Input.NavigationMethod.Tab); };
 				przycisk.IsDefault = true;
 			}
 		}
