@@ -3,11 +3,8 @@ namespace ProFak.UI;
 
 class PionowoWF : TableLayoutPanel
 {
-	private readonly bool wysrodkowane;
-
-	public PionowoWF(TControl[] kontrolki, bool wysrodkowane = false)
+	public PionowoWF(TControl[] kontrolki)
 	{
-		this.wysrodkowane = wysrodkowane;
 		ColumnCount = 1;
 		RowCount = 1;
 		ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
@@ -26,13 +23,13 @@ class PionowoWF : TableLayoutPanel
 	{
 		RowStyles.Insert(RowCount - 1, new RowStyle(SizeType.AutoSize));
 		Controls.Add(kontrolka, 0, RowCount - 1);
-		kontrolka.Anchor = wysrodkowane ? AnchorStyles.Top : AnchorStyles.Left | AnchorStyles.Right;
+		kontrolka.Anchor = AnchorStyles.Left | AnchorStyles.Right;
 		RowCount++;
 	}
 
 	public void OgraniczSzerokosc(int szerokosc)
 	{
-		Size = GetPreferredSize(new Size(szerokosc * DeviceDpi / 96, 0));
+		MaximumSize = new Size(szerokosc * DeviceDpi / 96, 99999);
 	}
 }
 #endif

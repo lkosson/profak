@@ -7,14 +7,11 @@ class PionowoAV : StackPanel
 {
 	protected override Type StyleKeyOverride => typeof(StackPanel);
 
-	private readonly bool wysrodkowane;
-
-	public PionowoAV(TControl[] kontrolki, bool wysrodkowane = false)
+	public PionowoAV(TControl[] kontrolki)
 	{
-		this.wysrodkowane = wysrodkowane;
 		foreach (var kontrolka in kontrolki)
 		{
-			Children.Add(kontrolka);
+			DodajWiersz(kontrolka);
 		}
 	}
 
@@ -25,6 +22,7 @@ class PionowoAV : StackPanel
 
 	public void OgraniczSzerokosc(int szerokosc)
 	{
+		MaxWidth = szerokosc;
 	}
 
 	protected void SuspendLayout() { }
