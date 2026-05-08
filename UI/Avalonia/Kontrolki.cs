@@ -47,22 +47,24 @@ class KontrolkiAV
 		return label;
 	}
 
-	public static TLinkLabel Link(string tekst, Action? akcja = null)
+	public static TLinkLabel Link(string tekst, Action? akcja = null, bool wysrodkowany = false)
 	{
 		var link = new TLinkLabel();
 		link.Content = tekst;
+		link.HorizontalAlignment = wysrodkowany ? HorizontalAlignment.Center : HorizontalAlignment.Left;
 		if (akcja != null) link.Click += BezpiecznaAkcja(akcja).Invoke;
 		return link;
 	}
 
-	public static TText Text(string tekst, bool pogrubiony = false, int rozmiar = 9)
+	public static TText Text(string tekst, bool pogrubiony = false, int rozmiar = 9, bool wysrodkowany = false)
 	{
 		var text = new TText();
-		text.HorizontalAlignment = HorizontalAlignment.Left;
+		text.HorizontalAlignment = wysrodkowany ? HorizontalAlignment.Center : HorizontalAlignment.Left;
 		text.VerticalAlignment = VerticalAlignment.Center;
 		text.Text = tekst;
 		text.FontSize = rozmiar * 12 / 9;
 		text.FontWeight = pogrubiony ? FontWeight.Bold : FontWeight.Regular;
+		text.TextWrapping = TextWrapping.WrapWithOverflow;
 		return text;
 	}
 

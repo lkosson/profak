@@ -42,22 +42,22 @@ class KontrolkiWF
 		return label;
 	}
 
-	public static TLinkLabel Link(string tekst, Action? akcja = null)
+	public static TLinkLabel Link(string tekst, Action? akcja = null, bool wysrodkowany = false)
 	{
 		var label = new TLinkLabel();
 		label.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-		label.TextAlign = ContentAlignment.MiddleLeft;
+		label.TextAlign = wysrodkowany ? ContentAlignment.MiddleCenter : ContentAlignment.MiddleLeft;
 		label.AutoSize = true;
 		label.Text = tekst;
 		if (akcja != null) label.LinkClicked += BezpiecznaAkcja(akcja).Invoke;
 		return label;
 	}
 
-	public static TText Text(string tekst, bool pogrubiony = false, int rozmiar = 9)
+	public static TText Text(string tekst, bool pogrubiony = false, int rozmiar = 9, bool wysrodkowany = false)
 	{
 		var label = new TText();
 		label.Anchor = AnchorStyles.Left;
-		label.TextAlign = ContentAlignment.MiddleLeft;
+		label.TextAlign = wysrodkowany ? ContentAlignment.MiddleCenter : ContentAlignment.MiddleLeft;
 		label.AutoSize = true;
 		label.Text = tekst;
 		label.Font = new Font(label.Font.FontFamily, rozmiar, pogrubiony ? FontStyle.Bold : FontStyle.Regular);
