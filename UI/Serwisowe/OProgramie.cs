@@ -18,7 +18,7 @@ class OProgramie : Edytor, IKontrolkaZKontekstem
 		var labelLicencja = Kontrolki.Text("Twórcą i właścicielem praw autorskich do programu jest Łukasz Kosson. Program jest dostępny bezpłatnie i bezterminowo. Masz prawo korzystać z programu na dowolnej liczbie stanowisk, ale ponosisz pełną i wyłączną odpowiedzialność za wszelkie skutki korzystania z programu.", wysrodkowany: true);
 
 		labelNaglowek.Margin = labelWersja.Margin = labelSciezka.Margin = labelData.Margin = buttonAktualizacje.Margin = linkStrona.Margin = labelLicencja.Margin = new TPadding(10);
-		var uklad = new Pionowo([labelNaglowek, labelWersja, labelSciezka, labelData, linkStrona, buttonAktualizacje, labelLicencja]);
+		var uklad = new Pionowo([labelNaglowek, labelWersja, labelSciezka, labelData, linkStrona, Siatka.BlokadaRozciagania(buttonAktualizacje), labelLicencja]);
 		//uklad.OgraniczSzerokosc(700);
 
 		UstawZawartosc(uklad);

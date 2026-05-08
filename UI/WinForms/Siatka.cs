@@ -86,5 +86,12 @@ class SiatkaWF : TableLayoutPanel
 
 	public void DodajWiersz(IEnumerable<string?> etykiety)
 		=> DodajWiersz(etykiety.Select(etykieta => (String.IsNullOrEmpty(etykieta) ? null : (TControl?)Kontrolki.Label(etykieta), 1)));
+
+	public static Siatka BlokadaRozciagania(TControl kontrolka)
+	{
+		var siatka = new Siatka([-1, 0, -1], []);
+		siatka.DodajWiersz([null, kontrolka, null]);
+		return siatka;
+	}
 }
 #endif
