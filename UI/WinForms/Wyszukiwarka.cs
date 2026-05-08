@@ -6,11 +6,7 @@ partial class Wyszukiwarka<TRekord> : TextBox
 	public Wyszukiwarka(Spis<TRekord> spis)
 	{
 		this.spis = spis;
-		var opis = "";
-		if (Wyglad.IkonyAkcji) opis += "🔍 ";
-		opis += "Wyszukaj";
-		if (Wyglad.SkrotyKlawiaturoweAkcji) opis += " [F3]";
-		PlaceholderText = opis;
+		PlaceholderText = Opis;
 		TextAlign = HorizontalAlignment.Center;
 	}
 

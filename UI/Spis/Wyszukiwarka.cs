@@ -7,6 +7,7 @@ partial class Wyszukiwarka<TRekord>
 	where TRekord : Rekord<TRekord>
 {
 	private Spis<TRekord> spis;
+	private string Opis => (Wyglad.IkonyAkcji ? "🔍 " : "") + "Wyszukaj" + (Wyglad.SkrotyKlawiaturoweAkcji ? " [F3]" : "");
 
 	private void UstawFiltr(string wyrazenieFiltra)
 	{
