@@ -9,18 +9,19 @@ class OProgramie : Edytor, IKontrolkaZKontekstem
 
 	public OProgramie()
 	{
-		var labelNaglowek = Kontrolki.Text("ProFak", rozmiar: 16);
-		var labelWersja = Kontrolki.Text(GetType().Assembly.GetName().Version!.ToString());
-		var labelSciezka = Kontrolki.Text(Environment.ProcessPath!);
-		var labelData = Kontrolki.Text(File.GetLastWriteTime(Environment.ProcessPath!).ToString("d MMMM yyyy, H:mm:ss"));
-		var linkStrona = Kontrolki.Link("https://github.com/lkosson/profak", OtworzStrone);
+		var labelNaglowek = Kontrolki.Text("ProFak", rozmiar: 16, wysrodkowany: true);
+		var labelWersja = Kontrolki.Text(GetType().Assembly.GetName().Version!.ToString(), wysrodkowany: true);
+		var labelSciezka = Kontrolki.Text(Environment.ProcessPath!, wysrodkowany: true);
+		var labelData = Kontrolki.Text(File.GetLastWriteTime(Environment.ProcessPath!).ToString("d MMMM yyyy, H:mm:ss"), wysrodkowany: true);
+		var linkStrona = Kontrolki.Link("https://github.com/lkosson/profak", OtworzStrone, wysrodkowany: true);
 		var buttonAktualizacje = Kontrolki.Button("Sprawdź aktualizacje", SprawdzAktualizacje);
-		var labelLicencja = Kontrolki.Text("Twórcą i właścicielem praw autorskich do programu jest Łukasz Kosson. Program jest dostępny bezpłatnie i bezterminowo. Masz prawo korzystać z programu na dowolnej liczbie stanowisk, ale ponosisz pełną i wyłączną odpowiedzialność za wszelkie skutki korzystania z programu.");
+		var labelLicencja = Kontrolki.Text("Twórcą i właścicielem praw autorskich do programu jest Łukasz Kosson. Program jest dostępny bezpłatnie i bezterminowo. Masz prawo korzystać z programu na dowolnej liczbie stanowisk, ale ponosisz pełną i wyłączną odpowiedzialność za wszelkie skutki korzystania z programu.", wysrodkowany: true);
 
 		labelNaglowek.Margin = labelWersja.Margin = labelSciezka.Margin = labelData.Margin = buttonAktualizacje.Margin = linkStrona.Margin = labelLicencja.Margin = new TPadding(10);
-		var uklad = new Pionowo([labelNaglowek, labelWersja, labelSciezka, labelData, linkStrona, buttonAktualizacje, labelLicencja], wysrodkowane: true);
+		var uklad = new Pionowo([labelNaglowek, labelWersja, labelSciezka, labelData, linkStrona, buttonAktualizacje, labelLicencja]);
+		//uklad.OgraniczSzerokosc(700);
 
-		UstawZawartosc(uklad, new Size(400, 0));
+		UstawZawartosc(uklad);
 	}
 
 	private void OtworzStrone()

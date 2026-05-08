@@ -48,14 +48,9 @@ abstract class Edytor : Avalonia.Controls.Panel, IDisposable
 		}
 	}
 
-	protected void UstawZawartosc(TControl zawartosc, Size wymiary = default)
+	protected void UstawZawartosc(TControl zawartosc)
 	{
 		Children.Add(zawartosc);
-		if (wymiary != default)
-		{
-			MinWidth = Width = wymiary.Width;
-			MinHeight = Height = wymiary.Height;
-		}
 	}
 
 	protected void KontrolkaStartowa(TControl kontrolka)

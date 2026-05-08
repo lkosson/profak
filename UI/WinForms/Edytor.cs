@@ -47,10 +47,10 @@ abstract class Edytor : UserControl
 		}
 	}
 
-	protected void UstawZawartosc(TControl zawartosc, Size wymiary = default)
+	protected void UstawZawartosc(TControl zawartosc)
 	{
 		SuspendLayout();
-		if (wymiary == default) wymiary = zawartosc.Size;
+		var wymiary = zawartosc.Size;
 		zawartosc.Dock = DockStyle.Fill;
 		Controls.Add(zawartosc);
 		MinimumSize = Size = wymiary;

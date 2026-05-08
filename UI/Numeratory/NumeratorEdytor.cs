@@ -34,7 +34,7 @@ class NumeratorEdytor : Edytor<Numerator>
 		siatka.DodajWiersz("Przykładowy numer", [(textBoxPrzyklad, 2)]);
 		siatka.DodajWiersz([(stanyNumeratora, 3)]);
 
-		UstawZawartosc(siatka, new Size(800, 350));
+		UstawZawartosc(siatka);
 	}
 
 	protected override void RekordGotowy()
