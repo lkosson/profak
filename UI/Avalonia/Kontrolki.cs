@@ -166,10 +166,18 @@ class KontrolkiAV
 		return radioButton;
 	}
 
-	public static TNumericUpDown NumericUpDown(int poPrzecinku = 2, int szerokosc = 100, Action? zmienionaWartosc = null)
+	public static TNumericUpDown NumericUpDown(int poPrzecinku = 2, int szerokosc = 0, Action? zmienionaWartosc = null)
 	{
 		var numericUpDown = new TNumericUpDown();
-		numericUpDown.MinWidth = szerokosc;
+		if (szerokosc == 0)
+		{
+			numericUpDown.MinWidth = 100;
+		}
+		else
+		{
+			numericUpDown.MinWidth = szerokosc;
+			numericUpDown.MaxWidth = szerokosc;
+		}
 		numericUpDown.Margin = new TPadding(3, 3);
 		numericUpDown.NumberFormat = new NumberFormatInfo { NumberDecimalDigits = poPrzecinku };
 		numericUpDown.TextAlignment = TextAlignment.Right;
@@ -191,12 +199,20 @@ class KontrolkiAV
 		return datePicker;
 	}
 
-	public static TComboBox DropDownList(int szerokosc = 200, Action? zmienionaWartosc = null)
+	public static TComboBox DropDownList(int szerokosc = 0, Action? zmienionaWartosc = null)
 	{
 		var comboBox = new TComboBox();
 		comboBox.Margin = new TPadding(3, 3);
 		comboBox.IsEditable = false;
-		comboBox.MinWidth = szerokosc;
+		if (szerokosc == 0)
+		{
+			comboBox.MinWidth = 50;
+		}
+		else
+		{
+			comboBox.MinWidth = szerokosc;
+			comboBox.MaxWidth = szerokosc;
+		}
 		if (zmienionaWartosc != null) comboBox.SelectionChanged += BezpiecznaAkcja(zmienionaWartosc);
 		return comboBox;
 	}
