@@ -16,6 +16,7 @@ class DialogAV : Window, IDisposable
 		Icon = GlowneOkno.Ikona;
 		Title = tytul;
 		kontekst.Dialog = this;
+		SetValue(XYFocus.NavigationModesProperty, XYFocusNavigationModes.Enabled);
 	}
 
 	public DialogAV(string tytul, TControl zawartosc, Kontekst kontekst)
