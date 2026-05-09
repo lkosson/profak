@@ -51,6 +51,7 @@ abstract class Edytor : UserControl
 	{
 		SuspendLayout();
 		var wymiary = zawartosc.Size;
+		if (zawartosc.MaximumSize != default) MaximumSize = zawartosc.MaximumSize;
 		zawartosc.Dock = DockStyle.Fill;
 		Controls.Add(zawartosc);
 		Size = wymiary;

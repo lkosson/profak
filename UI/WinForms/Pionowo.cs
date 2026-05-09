@@ -30,6 +30,7 @@ class PionowoWF : TableLayoutPanel
 	public void OgraniczSzerokosc(int szerokosc)
 	{
 		MaximumSize = new Size(szerokosc * DeviceDpi / 96, 99999);
+		Size = PreferredSize;
 	}
 }
 #endif

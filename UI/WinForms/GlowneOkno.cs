@@ -5,14 +5,18 @@ namespace ProFak.UI;
 
 partial class GlowneOkno : Form
 {
-	private Panel panelZawartosc;
+	private TableLayoutPanel panelZawartosc;
 
 	public GlowneOkno()
 	{
 		menu = new Menu(ZbudujMenu);
 
-		panelZawartosc = new Panel();
+		panelZawartosc = new TableLayoutPanel();
 		panelZawartosc.Margin = new Padding(0);
+		panelZawartosc.RowCount = 1;
+		panelZawartosc.ColumnCount = 1;
+		panelZawartosc.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
+		panelZawartosc.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
 
 		var uklad = new Siatka([Wyglad.SzerokoscMenu, -1], [-1]);
 		uklad.DodajWiersz([menu, panelZawartosc]);
@@ -45,7 +49,8 @@ partial class GlowneOkno : Form
 		var kontekst = new Kontekst();
 		kontrolka.Kontekst = kontekst;
 		kontrolka.Disposed += delegate { panelZawartosc.Controls.Remove(kontrolka); menu.Focus(); kontekst.Dispose(); };
-		kontrolka.Dock = DockStyle.Fill;
+		if (kontrolka.MaximumSize == default) kontrolka.Dock = DockStyle.Fill;
+		else kontrolka.Anchor = AnchorStyles.None;
 		panelZawartosc.Controls.Add(kontrolka);
 		kontrolka.BringToFront();
 
