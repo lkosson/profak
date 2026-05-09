@@ -52,7 +52,7 @@ partial class Menu
 		if (stan == null) stan = new StanMenu { Pozycja = treeNode.FullPath };
 		stan.CzyZwinieta = zwinieta;
 		stan.CzyAktywna = aktywna;
-		stan.CzyUkryta = ukryta || treeNode.ForeColor == SystemColors.GrayText;
+		stan.CzyUkryta = ukryta || treeNode.ForeColor == KolorUkryty;
 		if (stan.CzyAktywna)
 		{
 			var stareAktywne = kontekst.Baza.StanyMenu.Where(e => e.CzyAktywna).ToList();
@@ -71,7 +71,7 @@ partial class Menu
 		void Pokaz()
 		{
 			ZapiszStanPozycji(wezel, ukryta: false);
-			wezel.ForeColor = SystemColors.ControlText;
+			wezel.ForeColor = KolorAktywny;
 		}
 
 		void Ukryj()
@@ -89,7 +89,7 @@ partial class Menu
 		var menuPokaz = Kontrolki.MenuItem("Pokaż", Pokaz);
 		var menuUkryj = Kontrolki.MenuItem("Ukryj", Ukryj);
 		var menuPokazUkryte = Kontrolki.MenuItem("Pokaż ukryte", PokazUkryte);
-		var ukryty = wezel.ForeColor == SystemColors.GrayText;
+		var ukryty = wezel.ForeColor == KolorUkryty;
 		Kontrolki.Menu([ukryty ? menuPokaz : menuUkryj, menuPokazUkryte], wyswietl: true);
 
 	}

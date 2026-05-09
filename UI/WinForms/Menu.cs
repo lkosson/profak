@@ -6,6 +6,8 @@ namespace ProFak.UI;
 partial class Menu : TreeView
 {
 	private TreeNode? ostatnioWybrany;
+	private Color KolorAktywny => SystemColors.ControlText;
+	private Color KolorUkryty => SystemColors.GrayText;
 
 	private void Zbuduj(bool pokazUkryte = false)
 	{

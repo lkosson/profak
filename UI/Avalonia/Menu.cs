@@ -5,6 +5,7 @@ using Avalonia.Controls.Templates;
 using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
 using System.Collections.ObjectModel;
+using System.Drawing;
 
 namespace ProFak.UI;
 
@@ -13,6 +14,8 @@ partial class Menu : Avalonia.Controls.TreeView
 	protected override Type StyleKeyOverride => typeof(Avalonia.Controls.TreeView);
 	public ObservableCollection<TTreeNode> Nodes { get; } = [];
 	public TTreeNode? SelectedNode { get => (TTreeNode?)SelectedItem; set { SelectedItem = value; } }
+	private Color KolorAktywny => Color.Black;
+	private Color KolorUkryty => Color.Gray;
 
 	private void Zbuduj(bool pokazUkryte = false)
 	{
