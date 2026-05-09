@@ -580,7 +580,12 @@ partial class FakturaEdytor : Edytor<Faktura>
 			using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
 			url = api.ZbudujUrl(Rekord.XMLKSeF, Rekord.NIPSprzedawcy, Rekord.DataWystawienia);
 		}
+#if AVALONIA
+		Avalonia.Input.Platform.ClipboardExtensions.SetTextAsync(Kontekst.Dialog?.Clipboard!, url);
+#endif
+#if WINFORMS
 		Clipboard.SetText(url);
+#endif
 	}
 
 	private void OtworzOdnosnik()
