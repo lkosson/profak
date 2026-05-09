@@ -123,7 +123,7 @@ abstract partial class Spis<T> : Spis
 		kolumna.HeaderPointerPressed += Kolumna_HeaderPointerPressed;
 		kolumna.Name = wlasciwosc;
 		kolumna.IsVisible = szerokosc != 0;
-		kolumna.Width = rozciagnij ? new DataGridLength(1, DataGridLengthUnitType.Star) : szerokosc.HasValue ? new DataGridLength(szerokosc.Value, DataGridLengthUnitType.Pixel) : DataGridLength.SizeToHeader;
+		kolumna.Width = rozciagnij ? DataGridLength.Auto : szerokosc.HasValue ? new DataGridLength(szerokosc.Value, DataGridLengthUnitType.Pixel) : DataGridLength.SizeToHeader;
 		if (rozciagnij) kolumna.MinWidth = 50;
 		var binding = new ReflectionBinding(wlasciwosc);
 		binding.Mode = BindingMode.OneWay;
