@@ -1,6 +1,7 @@
 ﻿#if AVALONIA
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Media;
 
 namespace ProFak.UI;
@@ -34,6 +35,7 @@ class OknoKomunikatu
 	{
 		int? wynik = null;
 		var window = new Window { Title = "ProFak" };
+		window.SetValue(XYFocus.NavigationModesProperty, XYFocusNavigationModes.Enabled);
 		var textBlockIkona = new TText { Text = ikona, FontSize = 30 };
 		var textBlockKomunikat = new TText
 		{
