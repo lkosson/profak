@@ -16,7 +16,7 @@ public static class Program
 			Wyglad.ZaladujDomyslny();
 			CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("pl-PL");
 			Baza.UstalSciezkeBazy();
-			TUI.Przygotuj();
+			Interfejs.Przygotuj();
 #if !SQLSERVER
 			if (!PierwszyStartBaza.Uruchom()) return;
 #endif

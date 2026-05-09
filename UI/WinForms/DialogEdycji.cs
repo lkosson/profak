@@ -1,9 +1,9 @@
 ﻿#if WINFORMS
 namespace ProFak.UI;
 
-class DialogEdycjiWF : DialogWF
+class DialogEdycji : Dialog
 {
-	public DialogEdycjiWF(string tytul, TControl zawartosc, Kontekst kontekst)
+	public DialogEdycji(string tytul, TControl zawartosc, Kontekst kontekst)
 		: base(tytul, kontekst)
 	{
 		var buttonZapisz = Kontrolki.Button("Zapisz [F10]");
@@ -31,7 +31,7 @@ class DialogEdycjiWF : DialogWF
 
 	public static bool Pokaz(string tytul, Control zawartosc, Kontekst kontekst, bool pelnyEkran = false)
 	{
-		using var dialog = new DialogEdycjiWF(tytul, zawartosc, kontekst);
+		using var dialog = new DialogEdycji(tytul, zawartosc, kontekst);
 		if (pelnyEkran) dialog.WindowState = FormWindowState.Maximized;
 		return dialog.ShowDialog() == DialogResult.OK;
 	}

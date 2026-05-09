@@ -4,13 +4,13 @@ using Avalonia.Interactivity;
 
 namespace ProFak.UI;
 
-class SiatkaAV : Grid
+class Siatka : Grid
 {
 	protected override Type StyleKeyOverride => typeof(Grid);
 
 	private int wiersz;
 
-	public SiatkaAV(IEnumerable<int> szerokosci, IEnumerable<int> wysokosci)
+	public Siatka(IEnumerable<int> szerokosci, IEnumerable<int> wysokosci)
 	{
 		foreach (var szerokosc in szerokosci)
 		{
@@ -77,13 +77,13 @@ class SiatkaAV : Grid
 		=> DodajWiersz(kontrolki.Select(kontrolka => (kontrolka, 1)));
 
 	public void DodajWiersz(string etykieta, IEnumerable<(TControl? kontrolka, int kolumny)> kontrolki)
-		=> DodajWiersz(kontrolki.Prepend((KontrolkiAV.Label(etykieta), 1)));
+		=> DodajWiersz(kontrolki.Prepend((Kontrolki.Label(etykieta), 1)));
 
 	public void DodajWiersz(string etykieta, IEnumerable<TControl?> kontrolki)
 		=> DodajWiersz(etykieta, kontrolki.Select(kontrolka => (kontrolka, 1)));
 
 	public void DodajWiersz(IEnumerable<string?> etykiety)
-		=> DodajWiersz(etykiety.Select(etykieta => (String.IsNullOrEmpty(etykieta) ? null : (TControl?)KontrolkiAV.Label(etykieta), 1)));
+		=> DodajWiersz(etykiety.Select(etykieta => (String.IsNullOrEmpty(etykieta) ? null : (TControl?)Kontrolki.Label(etykieta), 1)));
 
 	public static Siatka BlokadaRozciagania(TControl kontrolka)
 	{

@@ -2,11 +2,11 @@
 
 namespace ProFak.UI;
 
-class GrupaAV : Avalonia.Controls.GroupBox
+class Grupa : Avalonia.Controls.GroupBox
 {
 	protected override Type StyleKeyOverride => typeof(Avalonia.Controls.GroupBox);
 
-	public GrupaAV(string opis, TControl zawartosc)
+	public Grupa(string opis, TControl zawartosc)
 	{
 		Header = opis;
 		Content = zawartosc;

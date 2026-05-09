@@ -4,16 +4,16 @@ using Avalonia.Input;
 
 namespace ProFak.UI;
 
-class DialogEdycjiAV : DialogAV
+class DialogEdycji : Dialog
 {
 	public bool Wynik { get; private set; }
 
-	public DialogEdycjiAV(string tytul, TControl zawartosc, Kontekst kontekst)
+	public DialogEdycji(string tytul, TControl zawartosc, Kontekst kontekst)
 		: base(tytul, kontekst)
 	{
-		var buttonZapisz = KontrolkiAV.Button("Zapisz [F10]", akcja: Zapisz);
-		var buttonAnuluj = KontrolkiAV.Button("Anuluj [ESC]", akcja: Zamknij);
-		var uklad = new SiatkaAV([0, 0, -1], [-1, 0]);
+		var buttonZapisz = Kontrolki.Button("Zapisz [F10]", akcja: Zapisz);
+		var buttonAnuluj = Kontrolki.Button("Anuluj [ESC]", akcja: Zamknij);
+		var uklad = new Siatka([0, 0, -1], [-1, 0]);
 		uklad.DodajWiersz([(zawartosc, 3)]);
 		uklad.DodajWiersz([buttonZapisz, buttonAnuluj]);
 		UstawZawartosc(uklad);
@@ -47,9 +47,9 @@ class DialogEdycjiAV : DialogAV
 
 	public static bool Pokaz(string tytul, TControl zawartosc, Kontekst kontekst, bool pelnyEkran = false)
 	{
-		using var dialog = new DialogEdycjiAV(tytul, zawartosc, kontekst);
+		using var dialog = new DialogEdycji(tytul, zawartosc, kontekst);
 		if (pelnyEkran) dialog.WindowState = WindowState.Maximized;
-		AvaloniaUI.Wyswietl(dialog);
+		Interfejs.Wyswietl(dialog);
 		return dialog.Wynik;
 	}
 }

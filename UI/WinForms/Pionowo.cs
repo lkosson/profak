@@ -1,9 +1,9 @@
 ﻿#if WINFORMS
 namespace ProFak.UI;
 
-class PionowoWF : TableLayoutPanel
+class Pionowo : TableLayoutPanel
 {
-	public PionowoWF(TControl[] kontrolki)
+	public Pionowo(TControl[] kontrolki)
 	{
 		ColumnCount = 1;
 		RowCount = 1;

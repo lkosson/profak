@@ -1,9 +1,9 @@
 ﻿#if WINFORMS
 namespace ProFak.UI;
 
-class PoziomoWF : FlowLayoutPanel
+class Poziomo : FlowLayoutPanel
 {
-	public PoziomoWF()
+	public Poziomo()
 	{
 		FlowDirection = FlowDirection.LeftToRight;
 		WrapContents = false;
@@ -11,7 +11,7 @@ class PoziomoWF : FlowLayoutPanel
 		Margin = new Padding(0);
 	}
 
-	public PoziomoWF(TControl[] kontrolki)
+	public Poziomo(TControl[] kontrolki)
 		: this()
 	{
 		foreach (var kontrolka in kontrolki)

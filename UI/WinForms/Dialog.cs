@@ -1,9 +1,9 @@
 ﻿#if WINFORMS
 namespace ProFak.UI;
 
-class DialogWF : Form
+class Dialog : Form
 {
-	protected DialogWF(string tytul, Kontekst kontekst)
+	protected Dialog(string tytul, Kontekst kontekst)
 	{
 		Icon = GlowneOkno.Ikona;
 		KeyPreview = true;
@@ -17,7 +17,7 @@ class DialogWF : Form
 		kontekst.Dialog = this;
 	}
 
-	public DialogWF(string tytul, TControl zawartosc, Kontekst kontekst)
+	public Dialog(string tytul, TControl zawartosc, Kontekst kontekst)
 		: this(tytul, kontekst)
 	{
 		UstawZawartosc(zawartosc);

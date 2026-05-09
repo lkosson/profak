@@ -1,9 +1,9 @@
 ﻿#if WINFORMS
 namespace ProFak.UI;
 
-class DwieKolumnyWF : TableLayoutPanel
+class DwieKolumny : TableLayoutPanel
 {
-	public DwieKolumnyWF()
+	public DwieKolumny()
 	{
 		ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
 		ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));

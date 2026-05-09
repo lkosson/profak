@@ -35,7 +35,7 @@ using System.Collections.ObjectModel;
 
 namespace ProFak.UI;
 
-class KontrolkiAV
+class Kontrolki
 {
 	public static TLabel Label(string tekst)
 	{

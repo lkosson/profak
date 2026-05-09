@@ -5,11 +5,11 @@ using Avalonia.Interactivity;
 
 namespace ProFak.UI;
 
-class DialogAV : Window, IDisposable
+class Dialog : Window, IDisposable
 {
 	protected override Type StyleKeyOverride => typeof(Window);
 
-	protected DialogAV(string tytul, Kontekst kontekst)
+	protected Dialog(string tytul, Kontekst kontekst)
 	{
 		SizeToContent = SizeToContent.WidthAndHeight;
 		ShowInTaskbar = false;
@@ -19,7 +19,7 @@ class DialogAV : Window, IDisposable
 		SetValue(XYFocus.NavigationModesProperty, XYFocusNavigationModes.Enabled);
 	}
 
-	public DialogAV(string tytul, TControl zawartosc, Kontekst kontekst)
+	public Dialog(string tytul, TControl zawartosc, Kontekst kontekst)
 		: this(tytul, kontekst)
 	{
 		UstawZawartosc(zawartosc);
@@ -56,7 +56,7 @@ class DialogAV : Window, IDisposable
 
 	public void Pokaz()
 	{
-		AvaloniaUI.Wyswietl(this);
+		Interfejs.Wyswietl(this);
 	}
 
 	public void Zamknij()

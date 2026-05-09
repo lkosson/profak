@@ -1,15 +1,4 @@
 ﻿#if AVALONIA
-global using Dialog = ProFak.UI.DialogAV;
-global using DialogEdycji = ProFak.UI.DialogEdycjiAV;
-global using DwieKolumny = ProFak.UI.DwieKolumnyAV;
-global using Grupa = ProFak.UI.GrupaAV;
-global using Kontrolki = ProFak.UI.KontrolkiAV;
-global using Pionowo = ProFak.UI.PionowoAV;
-global using Poziomo = ProFak.UI.PoziomoAV;
-global using Siatka = ProFak.UI.SiatkaAV;
-global using Zakladki = ProFak.UI.ZakladkiAV;
-global using TUI = ProFak.UI.AvaloniaUI;
-
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml.Styling;
@@ -19,7 +8,7 @@ using Avalonia.Platform.Storage;
 
 namespace ProFak.UI;
 
-class AvaloniaUI
+class Interfejs
 {
 	private static Application application = default!;
 	private static Window? aktywneOkno;

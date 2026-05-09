@@ -1,7 +1,7 @@
 ﻿#if WINFORMS
 namespace ProFak.UI;
 
-class ZakladkiWF : TabControl
+class Zakladki : TabControl
 {
 	public TTabPage Dodaj(string etykieta, TControl zawartosc)
 	{

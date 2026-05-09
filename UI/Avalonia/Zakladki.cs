@@ -5,11 +5,11 @@ using Avalonia.Input;
 
 namespace ProFak.UI;
 
-class ZakladkiAV : Avalonia.Controls.TabControl
+class Zakladki : Avalonia.Controls.TabControl
 {
 	protected override Type StyleKeyOverride => typeof(Avalonia.Controls.TabControl);
 
-	public ZakladkiAV()
+	public Zakladki()
 	{
 	}
 

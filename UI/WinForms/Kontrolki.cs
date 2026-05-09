@@ -30,7 +30,7 @@ global using TIcon = System.Drawing.Icon;
 
 namespace ProFak.UI;
 
-class KontrolkiWF
+class Kontrolki
 {
 	public static TLabel Label(string tekst)
 	{

@@ -72,7 +72,7 @@ class OknoKomunikatu
 		window.Content = uklad;
 		window.SizeToContent = SizeToContent.WidthAndHeight;
 
-		AvaloniaUI.Wyswietl(window);
+		Interfejs.Wyswietl(window);
 
 		return wynik;
 	}

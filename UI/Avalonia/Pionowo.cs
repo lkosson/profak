@@ -3,11 +3,11 @@ using Avalonia.Controls;
 
 namespace ProFak.UI;
 
-class PionowoAV : StackPanel
+class Pionowo : StackPanel
 {
 	protected override Type StyleKeyOverride => typeof(StackPanel);
 
-	public PionowoAV(TControl[] kontrolki)
+	public Pionowo(TControl[] kontrolki)
 	{
 		foreach (var kontrolka in kontrolki)
 		{

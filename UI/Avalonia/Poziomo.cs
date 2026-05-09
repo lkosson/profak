@@ -3,15 +3,15 @@ using Avalonia.Controls;
 
 namespace ProFak.UI;
 
-class PoziomoAV : WrapPanel
+class Poziomo : WrapPanel
 {
 	protected override Type StyleKeyOverride => typeof(WrapPanel);
 
-	public PoziomoAV()
+	public Poziomo()
 	{
 	}
 
-	public PoziomoAV(TControl[] kontrolki)
+	public Poziomo(TControl[] kontrolki)
 		: this()
 	{
 		foreach (var kontrolka in kontrolki)

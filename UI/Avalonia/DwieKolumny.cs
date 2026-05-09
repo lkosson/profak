@@ -4,11 +4,11 @@ using Avalonia.Interactivity;
 
 namespace ProFak.UI;
 
-class DwieKolumnyAV : Grid
+class DwieKolumny : Grid
 {
 	protected override Type StyleKeyOverride => typeof(Grid);
 
-	public DwieKolumnyAV()
+	public DwieKolumny()
 	{
 		ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
 		ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
@@ -26,7 +26,7 @@ class DwieKolumnyAV : Grid
 
 		if (!String.IsNullOrEmpty(etykieta))
 		{
-			var label = KontrolkiAV.Label(etykieta);
+			var label = Kontrolki.Label(etykieta);
 			Children.Add(label);
 			SetColumn(label, 0);
 			SetRow(label, RowDefinitions.Count - 1);

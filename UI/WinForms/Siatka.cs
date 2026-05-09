@@ -1,9 +1,9 @@
 ﻿#if WINFORMS
 namespace ProFak.UI;
 
-class SiatkaWF : TableLayoutPanel
+class Siatka : TableLayoutPanel
 {
-	public SiatkaWF(IEnumerable<int> szerokosci, IEnumerable<int> wysokosci)
+	public Siatka(IEnumerable<int> szerokosci, IEnumerable<int> wysokosci)
 	{
 		foreach (var szerokosc in szerokosci)
 		{

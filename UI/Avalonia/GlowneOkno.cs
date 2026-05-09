@@ -50,7 +50,7 @@ partial class GlowneOkno : Window
 
 	public static void Pokaz()
 	{
-		AvaloniaUI.Wyswietl(new GlowneOkno());
+		Interfejs.Wyswietl(new GlowneOkno());
 	}
 }
 #endif
