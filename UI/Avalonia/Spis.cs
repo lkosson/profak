@@ -118,7 +118,15 @@ abstract partial class Spis<T> : Spis
 
 	public TDataGridColumn DodajKolumne(string wlasciwosc, string naglowek, bool checkbox = false, bool wyrownajDoPrawej = false, bool rozciagnij = false, string? format = null, int? szerokosc = null, Func<T, string?>? tooltip = null)
 	{
-		TDataGridColumn kolumna = checkbox ? new DataGridCheckBoxColumn() : new DataGridTextColumn();
+		TDataGridColumn kolumna;
+		if (checkbox)
+		{
+			kolumna = new DataGridCheckBoxColumn();
+		}
+		else
+		{
+			kolumna = new DataGridTextColumnAlign() { HorizontalAlignment = wyrownajDoPrawej ? Avalonia.Layout.HorizontalAlignment.Right : null };
+		}
 		kolumna.Header = naglowek;
 		kolumna.HeaderPointerPressed += Kolumna_HeaderPointerPressed;
 		kolumna.Name = wlasciwosc;
@@ -336,6 +344,18 @@ class SpisEdytowalny : Spis
 		{
 			usuniecie(SelectedItems.Cast<object>().ToArray());
 		}
+	}
+}
+
+class DataGridTextColumnAlign : DataGridTextColumn
+{
+	public Avalonia.Layout.HorizontalAlignment? HorizontalAlignment { get; set; }
+
+	protected override TControl GenerateElement(Avalonia.Controls.DataGridCell cell, object dataItem)
+	{
+		var element = base.GenerateElement(cell, dataItem);
+		if (HorizontalAlignment != null) element.HorizontalAlignment = HorizontalAlignment.Value;
+		return element;
 	}
 }
 
