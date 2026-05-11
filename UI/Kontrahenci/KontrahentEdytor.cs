@@ -133,10 +133,8 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 		danePodstawowe.DodajWiersz("Domyślna waluta", [comboBoxWaluta, new Poziomo([buttonWaluta])]);
 
 		var uwagi = new Siatka([-1], [-1, -1]);
-		uwagi.DodajWiersz([
-			new Grupa("Uwagi (wewnętrzne)", textBoxUwagiWewnetrzne),
-			new Grupa("Uwagi (drukowane na fakturze)", textBoxUwagiPubliczne)
-			]);
+		uwagi.DodajWiersz([new Grupa("Uwagi (wewnętrzne)", textBoxUwagiWewnetrzne)]);
+		uwagi.DodajWiersz([new Grupa("Uwagi (drukowane na fakturze)", textBoxUwagiPubliczne)]);
 
 		comboBoxSrodowiskoKSeF.Width = 80;
 		var daneUrzedowe = new Siatka([0, 0, -1, 0, 0], []);
