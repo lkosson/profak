@@ -14,7 +14,7 @@ global using TSuggestBox = Avalonia.Controls.AutoCompleteBox;
 global using TListBox = Avalonia.Controls.ListBox;
 global using TMenu = Avalonia.Controls.ContextMenu;
 global using TMenuItem = Avalonia.Controls.MenuItem;
-global using TDatePicker = Avalonia.Controls.DatePicker;
+global using TDatePicker = Avalonia.Controls.CalendarDatePicker;
 global using TProgressBar = Avalonia.Controls.ProgressBar;
 global using TContextMenu = Avalonia.Controls.ContextMenu;
 global using TTabPage = Avalonia.Controls.TabItem;
@@ -192,10 +192,8 @@ class Kontrolki
 		var datePicker = new TDatePicker();
 		datePicker.MinWidth = szerokosc;
 		datePicker.Margin = new TPadding(3, 3);
-		datePicker.DayVisible = !tylkoMiesiac;
-		datePicker.DayFormat = "dd";
-		datePicker.MonthFormat = "MM";
-		datePicker.YearFormat = "yyyy";
+		datePicker.SelectedDateFormat = CalendarDatePickerFormat.Custom;
+		datePicker.CustomDateFormatString = tylkoMiesiac ? "MM-yyyy" : Wyglad.FormatDaty;
 		return datePicker;
 	}
 

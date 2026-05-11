@@ -12,13 +12,13 @@ partial class Kontroler<TModel>
 
 	public void Powiazanie(TDatePicker dateTimePicker, Func<TModel, DateTime> pobierzWartosc, Action<TModel, DateTime>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
-		dateTimePicker.SelectedDateChanged += delegate { AktualizujModel(dateTimePicker, ustawWartosc, dtp => dtp.SelectedDate?.LocalDateTime ?? default); wartoscZmieniona?.Invoke(); };
+		dateTimePicker.SelectedDateChanged += delegate { AktualizujModel(dateTimePicker, ustawWartosc, dtp => dtp.SelectedDate ?? default); wartoscZmieniona?.Invoke(); };
 		DodajPowiazanie(dateTimePicker, pobierzWartosc, (dtp, wartosc) => dtp.SelectedDate = wartosc);
 	}
 
 	public void Powiazanie(TDatePicker dateTimePicker, Func<TModel, DateTime?> pobierzWartosc, Action<TModel, DateTime?>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
-		dateTimePicker.SelectedDateChanged += delegate { AktualizujModel(dateTimePicker, ustawWartosc, dtp => dtp.SelectedDate.HasValue ? (DateTime?)dtp.SelectedDate?.LocalDateTime : null); wartoscZmieniona?.Invoke(); };
+		dateTimePicker.SelectedDateChanged += delegate { AktualizujModel(dateTimePicker, ustawWartosc, dtp => dtp.SelectedDate.HasValue ? (DateTime?)dtp.SelectedDate : null); wartoscZmieniona?.Invoke(); };
 		DodajPowiazanie(dateTimePicker, pobierzWartosc, (dtp, wartosc) => { dtp.SelectedDate = wartosc; });
 	}
 
