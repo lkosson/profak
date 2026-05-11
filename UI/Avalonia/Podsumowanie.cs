@@ -1,13 +1,16 @@
 ﻿#if AVALONIA
+using Avalonia.Controls;
+using Avalonia.Controls.Documents;
+using Avalonia.Input.Platform;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.RegularExpressions;
 
 namespace ProFak.UI;
 
-partial class Podsumowanie : TLinkLabel
+partial class Podsumowanie : TText
 {
-	protected override Type StyleKeyOverride => typeof(TLinkLabel);
+	protected override Type StyleKeyOverride => typeof(TText);
 
 	public Podsumowanie()
 	{
@@ -15,57 +18,36 @@ partial class Podsumowanie : TLinkLabel
 
 	public string Text
 	{
-		get => Content is string text ? text : "";
 		set
 		{
-			// TODO Avalonia
-			/*
-			var odnosniki = new List<(int poczatek, string wartosc)>();
-			if (value != null)
+			Inlines?.Clear();
+			if (value is null) return;
+			var sb = new StringBuilder(value.Length);
+			var poczatek = 0;
+			for (var i = 0; i <= value.Length; i++)
 			{
-				var sb = new StringBuilder(value.Length);
-				int? poczatek = null;
-				for (var i = 0; i < value.Length; i++)
+				var ch = i == value.Length ? '\0' : value[i];
+				if (ch == '<' || ch == '\0')
 				{
-					var ch = value[i];
-					if (ch == '<')
+					if (poczatek != i - 1)
 					{
-						poczatek = i + 1;
+						Inlines?.Add(value[poczatek..i]);
 					}
-					else if (ch == '>' && poczatek is not null)
-					{
-						var odnosnik = value[poczatek.Value..i];
-						odnosniki.Add((sb.Length, odnosnik));
-						sb.Append(odnosnik);
-						poczatek = null;
-					}
-					else if (poczatek is null)
-					{
-						sb.Append(ch);
-					}
+					poczatek = i + 1;
 				}
-				base.Text = sb.ToString();
+				else if (ch == '>')
+				{
+					var odnosnik = value[poczatek..i];
+					var link = new HyperlinkButton();
+					link.Padding = new Avalonia.Thickness(0);
+					link.Content = odnosnik;
+					link.Click += delegate { TopLevel.GetTopLevel(this)?.Clipboard?.SetTextAsync(odnosnik); };
+					var container = new InlineUIContainer(link) { BaselineAlignment = Avalonia.Media.BaselineAlignment.Bottom };
+					Inlines?.Add(container);
+					poczatek = i + 1;
+				}
 			}
-			else
-			{
-				base.Text = "";
-			}
-			Links.Clear();
-			foreach (var odnosnik in odnosniki)
-				Links.Add(odnosnik.poczatek, odnosnik.wartosc.Length, odnosnik.wartosc);
-			*/
-			Content = value;
 		}
-	}
-
-	protected override void OnClick()
-	{
-		// TODO Avalonia
-		/*
-		if (e.Link?.LinkData is not string tekst) return;
-		if (Regex.IsMatch(tekst, @"[0-9,\s]+")) tekst = tekst.Replace("\u00A0", "");
-		Clipboard.SetText(tekst);
-		*/
 	}
 }
 #endif
