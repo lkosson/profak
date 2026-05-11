@@ -13,6 +13,9 @@ class PanelAkcji : Pionowo
 		MinimumSize = new Size(200 * DeviceDpi / 96, 200 * DeviceDpi / 96);
 		AutoSize = true;
 #endif
+#if AVALONIA
+		MinWidth = 200;
+#endif
 		TabIndex = 100;
 	}
 
