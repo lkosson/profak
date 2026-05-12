@@ -191,7 +191,14 @@ if (Rows[e.RowIndex].DataBoundItem is T rekord) UstawStylWiersza(rekord, Columns
 		}
 		else if (e.PointerPressedEventArgs.Properties.IsRightButtonPressed)
 		{
-			TopLevel.GetTopLevel(this)?.Clipboard?.SetTextAsync((e.Cell.Content as TextBlock)?.Text?.Replace("\u00A0", ""));
+			if (e.PointerPressedEventArgs.KeyModifiers == KeyModifiers.Alt)
+			{
+				TopLevel.GetTopLevel(this)?.Clipboard?.SetTextAsync((e.Cell.Content as TextBlock)?.Text?.Replace("\u00A0", ""));
+			}
+			else
+			{
+				PokazMenuKontekstowe?.Invoke();
+			}
 		}
 	}
 

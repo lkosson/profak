@@ -90,7 +90,7 @@ partial class Menu
 		var menuUkryj = Kontrolki.MenuItem("Ukryj", Ukryj);
 		var menuPokazUkryte = Kontrolki.MenuItem("Pokaż ukryte", PokazUkryte);
 		var ukryty = wezel.ForeColor == KolorUkryty;
-		Kontrolki.Menu([ukryty ? menuPokaz : menuUkryj, menuPokazUkryte], wyswietl: true);
+		Kontrolki.Menu([ukryty ? menuPokaz : menuUkryj, menuPokazUkryte], wyswietlDla: this);
 
 	}
 	// TODO Avalonia

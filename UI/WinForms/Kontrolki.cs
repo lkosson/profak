@@ -224,12 +224,12 @@ class Kontrolki
 		return comboBox;
 	}
 
-	public static TMenu Menu(TMenuItem[] pozycje, bool wyswietl = false)
+	public static TMenu Menu(TMenuItem[] pozycje, TControl wyswietlDla = null)
 	{
 		var menu = new TMenu();
 		menu.ShowImageMargin = false;
 		menu.Items.AddRange(pozycje);
-		if (wyswietl)
+		if (wyswietlDla != null)
 		{
 			menu.Closed += delegate
 			{

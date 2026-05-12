@@ -69,7 +69,7 @@ partial class SpisZAkcjami<TRekord> : Siatka, IKontrolkaZKontekstem
 			var pozycja = Kontrolki.MenuItem(adapter.NazwaBezSkrotu, adapter.Uruchom, skrot: adapter.Skrot);
 			pozycje.Add(pozycja);
 		}
-		Kontrolki.Menu(pozycje.ToArray(), wyswietl: true);
+		Kontrolki.Menu(pozycje.ToArray(), wyswietlDla: this);
 	}
 
 	public void DodajAkcje(AkcjaNaSpisie<TRekord> akcja, bool naPoczatku = false)

@@ -225,11 +225,11 @@ class Kontrolki
 		return autoCompleteBox;
 	}
 
-	public static TMenu Menu(TMenuItem[] pozycje, bool wyswietl = false)
+	public static TMenu Menu(TMenuItem[] pozycje, TControl? wyswietlDla = null)
 	{
 		var menu = new TMenu();
 		menu.ItemsSource = pozycje;
-		if (wyswietl) menu.Open();
+		if (wyswietlDla != null) menu.Open(wyswietlDla);
 		return menu;
 	}
 
