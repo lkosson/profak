@@ -35,7 +35,6 @@ class Dialog : Window, IDisposable
 	{
 		MinWidth = Width;
 		MinHeight = Height;
-		SizeToContent = SizeToContent.Manual;
 		base.OnLoaded(e);
 		OknoGotowe();
 	}
