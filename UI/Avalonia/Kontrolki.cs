@@ -25,6 +25,7 @@ global using TColor = Avalonia.Media.Color;
 global using TKeys = Avalonia.Input.Key;
 global using TKeyModifiers = Avalonia.Input.KeyModifiers;
 global using TIcon = Avalonia.Controls.WindowIcon;
+global using TTreeNode = ProFak.UI.WezelMenu;
 using Avalonia.Layout;
 using HorizontalAlignment = Avalonia.Layout.HorizontalAlignment;
 using Avalonia.Controls;
@@ -259,34 +260,7 @@ class Kontrolki
 		return progressBar;
 	}
 
-	public static TTreeNode TreeNode(string tekst, TTreeNode[]? podrzedne = null)
-	{
-		var wezel = new TTreeNode();
-		wezel.Text = tekst;
-		if (podrzedne != null)
-		{
-			foreach (var podrzedny in podrzedne)
-			{
-				podrzedny.Parent = wezel;
-				wezel.Nodes.Add(podrzedny);
-			}
-		}
-		return wezel;
-	}
-
 	public static TColor Color(int r, int g, int b) => new TColor(255, (byte)r, (byte)g, (byte)b);
-}
-
-class TTreeNode
-{
-	public string Text { get; set; } = "";
-	public string FullPath => Parent == null ? Text : Parent.FullPath + "\\" + Text;
-	public TTreeNode? Parent { get; set; }
-	// TODO Avalonia
-	public System.Drawing.Color ForeColor { get; set; }
-	public ObservableCollection<TTreeNode> Nodes { get; set; } = [];
-
-	public override string ToString() => FullPath;
 }
 
 static class RozszerzeniaKontrolek

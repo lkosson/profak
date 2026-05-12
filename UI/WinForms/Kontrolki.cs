@@ -267,13 +267,6 @@ class Kontrolki
 		return progressBar;
 	}
 
-	public static TTreeNode TreeNode(string tekst, TTreeNode[]? podrzedne = null)
-	{
-		var wezel = new TTreeNode(tekst);
-		if (podrzedne != null) wezel.Nodes.AddRange(podrzedne);
-		return wezel;
-	}
-
 	public static TColor Color(int r, int g, int b) => System.Drawing.Color.FromArgb(r, g, b);
 }
 #endif

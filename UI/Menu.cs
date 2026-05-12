@@ -5,40 +5,11 @@ namespace ProFak.UI;
 partial class Menu
 {
 	private bool menuGotowe;
-	private bool trwaAktualizacjaMenu;
-	private Dictionary<TTreeNode, Action> akcje = [];
-	private Dictionary<TTreeNode, Func<TTreeNode[]>> rozwiniecia = [];
 	private readonly Func<TTreeNode[]> konstruktorMenu;
 
 	public Menu(Func<TTreeNode[]> konstruktorMenu)
 	{
 		this.konstruktorMenu = konstruktorMenu;
-	}
-
-	public TTreeNode UtworzWezel(string tekst)
-	{
-		var wezel = Kontrolki.TreeNode(tekst);
-		return wezel;
-	}
-
-	public TTreeNode UtworzWezel(string tekst, Action akcja)
-	{
-		var wezel = Kontrolki.TreeNode(tekst);
-		akcje[wezel] = akcja;
-		return wezel;
-	}
-
-	public TTreeNode UtworzWezel(string tekst, TTreeNode[]? podrzedne = null)
-	{
-		return Kontrolki.TreeNode(tekst, podrzedne);
-	}
-
-	public TTreeNode UtworzWezel(string tekst, Func<TTreeNode[]> rozwiniecie)
-	{
-		var wezelLadowanie = Kontrolki.TreeNode("(ładowanie)");
-		var wezel = UtworzWezel(tekst, [wezelLadowanie]);
-		rozwiniecia[wezel] = rozwiniecie;
-		return wezel;
 	}
 
 	private void ZapiszStanPozycji(TTreeNode? treeNode, bool ukryta = false, bool zwinieta = false, bool aktywna = false)

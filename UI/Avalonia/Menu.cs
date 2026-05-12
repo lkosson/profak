@@ -2,10 +2,12 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
+using Avalonia.Data;
 using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
+using Avalonia.Styling;
 using System.Collections.ObjectModel;
-using System.Drawing;
+using System.ComponentModel;
 
 namespace ProFak.UI;
 
@@ -28,17 +30,52 @@ partial class Menu : Avalonia.Controls.TreeView
 		Rozwin(pokazUkryte);
 	}
 
+	public TTreeNode UtworzWezel(string tekst)
+	{
+		var wezel = new TTreeNode();
+		wezel.Text = tekst;
+		return wezel;
+	}
+
+	public TTreeNode UtworzWezel(string tekst, Action akcja)
+	{
+		var wezel = UtworzWezel(tekst);
+		wezel.Akcja = akcja;
+		return wezel;
+	}
+
+	public TTreeNode UtworzWezel(string tekst, TTreeNode[] podrzedne)
+	{
+		var wezel = UtworzWezel(tekst);
+		foreach (var podrzedny in podrzedne)
+		{
+			podrzedny.Parent = wezel;
+			wezel.Nodes.Add(podrzedny);
+		}
+		return wezel;
+	}
+
+	public TTreeNode UtworzWezel(string tekst, Func<TTreeNode[]> rozwiniecie)
+	{
+		var wezelLadowanie = UtworzWezel("(ładowanie)");
+		var wezel = UtworzWezel(tekst, [wezelLadowanie]);
+		wezel.Generator = rozwiniecie;
+		return wezel;
+	}
+
 	protected override void OnAttachedToLogicalTree(LogicalTreeAttachmentEventArgs e)
 	{
+		var style = new Style(x => x.OfType<TreeViewItem>());
+		var binding = CompiledBinding.Create<TTreeNode, bool>(e => e.CzyRozwiniety);
+		style.Setters.Add(new Setter { Property = TreeViewItem.IsExpandedProperty, Value = binding });
+		Styles.Add(style);
+
 		Padding = new Thickness(0);
 		ItemTemplate = new FuncTreeDataTemplate<TTreeNode>((node, scope) => new TText { Text = node.Text }, treeNode => treeNode.Nodes);
 		ItemsSource = Nodes;
 		base.OnAttachedToLogicalTree(e);
 		Zbuduj();
-		AddHandler(TreeViewItem.ExpandedEvent, Expand);
-		AddHandler(TreeViewItem.CollapsedEvent, Collapse);
 		SelectionChanged += Menu_SelectionChanged;
-		menuGotowe = true;
 	}
 
 	private void Expand(object? sender, RoutedEventArgs e)
@@ -46,21 +83,6 @@ partial class Menu : Avalonia.Controls.TreeView
 		var item = (TreeViewItem)e.Source!;
 		if (item == null) return;
 		var wezel = (TTreeNode)item.DataContext!;
-		if (trwaAktualizacjaMenu) return;
-		if (!rozwiniecia.TryGetValue(wezel, out var rozwiniecie)) return;
-		trwaAktualizacjaMenu = true;
-		try
-		{
-			var noweWezly = rozwiniecie();
-			wezel.Nodes.Clear();
-			foreach (var nowyWezel in noweWezly)
-				wezel.Nodes.Add(nowyWezel);
-		}
-		finally
-		{
-			trwaAktualizacjaMenu = false;
-		}
-
 		ZapiszStanPozycji(wezel, zwinieta: false);
 	}
 
@@ -72,34 +94,14 @@ partial class Menu : Avalonia.Controls.TreeView
 		ZapiszStanPozycji(wezel, zwinieta: true);
 	}
 
-	private TreeViewItem? ZnajdzKontrolkeDlaWezla(TTreeNode wezel)
-	{
-		TreeViewItem? Znajdz(Controls? kontrolki)
-		{
-			foreach (TreeViewItem kontrolka in kontrolki ?? [])
-			{
-				var wezelKontrolki = kontrolka.DataContext as TTreeNode;
-				if (wezelKontrolki == wezel) return kontrolka;
-				var wynik = Znajdz(kontrolka?.Presenter?.Panel?.Children);
-				if (wynik != null) return wynik;
-			}
-			return null;
-		}
-
-		return Znajdz(Presenter?.Panel?.Children);
-	}
-
 	private void Menu_SelectionChanged(object? sender, SelectionChangedEventArgs e)
 	{
-		if (trwaAktualizacjaMenu) return;
 		var wybrany = SelectedNode;
 		if (wybrany == null) return;
-		if (wybrany.Nodes.Count > 0)
+		while (wybrany.Nodes.Count > 0)
 		{
-			var kontrolka = ZnajdzKontrolkeDlaWezla(wybrany);
-			if (kontrolka != null && !kontrolka.IsExpanded) kontrolka.IsExpanded = true;
-			SelectedNode = wybrany;
-			return;
+			wybrany.CzyRozwiniety = true;
+			wybrany = wybrany.Nodes[0];
 		}
 		if (SelectedNode == wybrany) Wyswietl(wybrany);
 		else SelectedNode = wybrany;
@@ -119,8 +121,7 @@ partial class Menu : Avalonia.Controls.TreeView
 		else if (e.Key == Avalonia.Input.Key.OemQuestion)
 		{
 			e.Handled = true;
-			// TODO Avalonia
-			//SelectedNode.Collapse(false);
+			SelectedNode.CzyRozwiniety = false;
 		}
 	}
 	// TODO Avalonia
@@ -139,7 +140,49 @@ partial class Menu : Avalonia.Controls.TreeView
 
 	private void Wyswietl(TTreeNode wezel)
 	{
-		if (akcje.TryGetValue(wezel, out var akcja)) akcja();
+		wezel?.Akcja?.Invoke();
 	}
+}
+
+class WezelMenu : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	// Nazwy dla zgodności z WinForms TreeNode
+	public string Text { get; set; } = "";
+	public string FullPath => Parent == null ? Text : Parent.FullPath + "\\" + Text;
+	public TTreeNode? Parent { get; set; }
+
+	// TODO Avalonia
+	public System.Drawing.Color ForeColor { get; set; }
+	public ObservableCollection<TTreeNode> Nodes { get; set; } = [];
+
+	public Action? Akcja { get; set; }
+	public Func<TTreeNode[]>? Generator { get; set; }
+
+	public bool CzyRozwiniety
+	{
+		get
+		{
+			return field;
+		}
+
+		set
+		{
+			PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(nameof(CzyRozwiniety)));
+			field = value;
+			if (Generator != null)
+			{
+				var noweWezly = Generator();
+				Nodes.Clear();
+				foreach (var nowyWezel in noweWezly)
+					Nodes.Add(nowyWezel);
+			}
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CzyRozwiniety)));
+		}
+	}
+
+	public event PropertyChangingEventHandler? PropertyChanging;
+	public event PropertyChangedEventHandler? PropertyChanged;
+
+	public override string ToString() => FullPath;
 }
 #endif

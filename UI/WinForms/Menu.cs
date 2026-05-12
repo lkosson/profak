@@ -5,6 +5,9 @@ namespace ProFak.UI;
 
 partial class Menu : TreeView
 {
+	private bool trwaAktualizacjaMenu;
+	private Dictionary<TTreeNode, Action> akcje = [];
+	private Dictionary<TTreeNode, Func<TTreeNode[]>> rozwiniecia = [];
 	private TreeNode? ostatnioWybrany;
 	private Color KolorAktywny => SystemColors.ControlText;
 	private Color KolorUkryty => SystemColors.GrayText;
@@ -16,6 +19,34 @@ partial class Menu : TreeView
 		Nodes.Clear();
 		Nodes.AddRange(pozycje);
 		Rozwin(pokazUkryte);
+	}
+
+	public TTreeNode UtworzWezel(string tekst)
+	{
+		var wezel = new TreeNode(tekst);
+		return wezel;
+	}
+
+	public TTreeNode UtworzWezel(string tekst, Action akcja)
+	{
+		var wezel = UtworzWezel(tekst);
+		akcje[wezel] = akcja;
+		return wezel;
+	}
+
+	public TTreeNode UtworzWezel(string tekst, TTreeNode[] podrzedne)
+	{
+		var wezel = UtworzWezel(tekst);
+		wezel.Nodes.AddRange(podrzedne);
+		return wezel;
+	}
+
+	public TTreeNode UtworzWezel(string tekst, Func<TTreeNode[]> rozwiniecie)
+	{
+		var wezelLadowanie = UtworzWezel("(ładowanie)");
+		var wezel = UtworzWezel(tekst, [wezelLadowanie]);
+		rozwiniecia[wezel] = rozwiniecie;
+		return wezel;
 	}
 
 	protected override void OnHandleCreated(EventArgs e)
