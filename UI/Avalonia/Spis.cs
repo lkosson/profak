@@ -125,7 +125,7 @@ abstract partial class Spis<T> : Spis
 		}
 		else
 		{
-			kolumna = new DataGridTextColumnAlign() { HorizontalAlignment = wyrownajDoPrawej ? Avalonia.Layout.HorizontalAlignment.Right : null };
+			kolumna = new SpisDataGridTextColumn(wyrownajDoPrawej, PobierzStylKomorki);
 		}
 		kolumna.Header = naglowek;
 		kolumna.HeaderPointerPressed += Kolumna_HeaderPointerPressed;
@@ -148,7 +148,7 @@ abstract partial class Spis<T> : Spis
 		return kolumna;
 	}
 
-	
+
 
 	/*
 protected override void OnCellToolTipTextNeeded(DataGridViewCellToolTipTextNeededEventArgs e)
@@ -158,22 +158,14 @@ if (e.RowIndex != -1
 && Rows[e.RowIndex].DataBoundItem is T rekord) e.ToolTipText = tooltip(rekord);
 else base.OnCellToolTipTextNeeded(e);
 }
-
-protected override void OnCellPainting(DataGridViewCellPaintingEventArgs e)
-{
-base.OnCellPainting(e);
-if (e.RowIndex == -1)
-{
-e.CellStyle?.SelectionBackColor = System.Drawing.SystemColors.Control;
-}
-else if (e.ColumnIndex != -1 && e.CellStyle != null)
-{
-if (Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection == SortOrder.Ascending) e.CellStyle.BackColor = Color.FromArgb(210, 242, 167);
-else if (Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection == SortOrder.Descending) e.CellStyle.BackColor = Color.FromArgb(242, 219, 167);
-if (Rows[e.RowIndex].DataBoundItem is T rekord) UstawStylWiersza(rekord, Columns[e.ColumnIndex].DataPropertyName, e.CellStyle);
-}
-}
 */
+	private (bool pogrubiona, TColor kolor, TColor tlo) PobierzStylKomorki(SpisDataGridTextColumn kolumna, object dane)
+	{
+		if (dane is not T rekord) return (false, default, default);
+		var pogrubiona = CzyWierszPogrubiony(rekord);
+		var kolor = KolorWiersza(rekord);
+		return (pogrubiona, kolor, default);
+	}
 
 	private void Kolumna_HeaderPointerPressed(object? sender, PointerPressedEventArgs e)
 	{
@@ -354,14 +346,25 @@ class SpisEdytowalny : Spis
 	}
 }
 
-class DataGridTextColumnAlign : DataGridTextColumn
+class SpisDataGridTextColumn : DataGridTextColumn
 {
-	public Avalonia.Layout.HorizontalAlignment? HorizontalAlignment { get; set; }
+	private readonly bool wyrownajDoPrawej;
+	private readonly Func<SpisDataGridTextColumn, object, (bool pogrubiona, TColor kolor, TColor tlo)> pobierzStylKomorki;
+
+	public SpisDataGridTextColumn(bool wyrownajDoPrawej, Func<SpisDataGridTextColumn, object, (bool pogrubiona, TColor kolor, TColor tlo)> pobierzStylKomorki)
+	{
+		this.wyrownajDoPrawej = wyrownajDoPrawej;
+		this.pobierzStylKomorki = pobierzStylKomorki;
+	}
 
 	protected override TControl GenerateElement(Avalonia.Controls.DataGridCell cell, object dataItem)
 	{
-		var element = base.GenerateElement(cell, dataItem);
-		if (HorizontalAlignment != null) element.HorizontalAlignment = HorizontalAlignment.Value;
+		var element = (TextBlock)base.GenerateElement(cell, dataItem);
+		if (wyrownajDoPrawej) element.HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Right;
+		var styl = pobierzStylKomorki(this, dataItem);
+		if (styl.pogrubiona) element.FontWeight = FontWeight.Bold;
+		if (styl.kolor != default) element.Foreground = new SolidColorBrush(styl.kolor);
+		if (styl.tlo != default) element.Background = new SolidColorBrush(styl.tlo);
 		return element;
 	}
 }
