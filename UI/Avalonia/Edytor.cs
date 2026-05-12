@@ -125,8 +125,7 @@ abstract class Edytor : Avalonia.Controls.Panel, IDisposable
 
 	protected void Dymek(TControl kontrolka, string tresc)
 	{
-		//TODO Avalonia
-		//toolTip.SetToolTip(kontrolka, tresc);
+		kontrolka.SetValue(Avalonia.Controls.ToolTip.TipProperty, tresc);
 	}
 	/*
 	private void TextBox_Wymagane_Validating(object? sender, CancelEventArgs e)
