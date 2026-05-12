@@ -125,7 +125,7 @@ abstract partial class Spis<T> : Spis
 		}
 		else
 		{
-			kolumna = new SpisDataGridTextColumn(wyrownajDoPrawej, PobierzStylKomorki);
+			kolumna = new SpisDataGridTextColumn(wyrownajDoPrawej, PobierzStylKomorki, rekord => tooltip?.Invoke((T)rekord));
 		}
 		kolumna.Header = naglowek;
 		kolumna.HeaderPointerPressed += Kolumna_HeaderPointerPressed;
@@ -148,17 +148,6 @@ abstract partial class Spis<T> : Spis
 		return kolumna;
 	}
 
-
-
-	/*
-protected override void OnCellToolTipTextNeeded(DataGridViewCellToolTipTextNeededEventArgs e)
-{
-if (e.RowIndex != -1
-&& tooltipyDlaKolumn.TryGetValue(e.ColumnIndex, out var tooltip)
-&& Rows[e.RowIndex].DataBoundItem is T rekord) e.ToolTipText = tooltip(rekord);
-else base.OnCellToolTipTextNeeded(e);
-}
-*/
 	private (bool pogrubiona, TColor kolor, TColor tlo) PobierzStylKomorki(SpisDataGridTextColumn kolumna, object dane)
 	{
 		if (dane is not T rekord) return (false, default, default);
@@ -350,11 +339,13 @@ class SpisDataGridTextColumn : DataGridTextColumn
 {
 	private readonly bool wyrownajDoPrawej;
 	private readonly Func<SpisDataGridTextColumn, object, (bool pogrubiona, TColor kolor, TColor tlo)> pobierzStylKomorki;
+	private readonly Func<object, string?> pobierzTooltip;
 
-	public SpisDataGridTextColumn(bool wyrownajDoPrawej, Func<SpisDataGridTextColumn, object, (bool pogrubiona, TColor kolor, TColor tlo)> pobierzStylKomorki)
+	public SpisDataGridTextColumn(bool wyrownajDoPrawej, Func<SpisDataGridTextColumn, object, (bool pogrubiona, TColor kolor, TColor tlo)> pobierzStylKomorki, Func<object, string?> pobierzTooltip)
 	{
 		this.wyrownajDoPrawej = wyrownajDoPrawej;
 		this.pobierzStylKomorki = pobierzStylKomorki;
+		this.pobierzTooltip = pobierzTooltip;
 	}
 
 	protected override TControl GenerateElement(Avalonia.Controls.DataGridCell cell, object dataItem)
@@ -365,6 +356,8 @@ class SpisDataGridTextColumn : DataGridTextColumn
 		if (styl.pogrubiona) element.FontWeight = FontWeight.Bold;
 		if (styl.kolor != default) element.Foreground = new SolidColorBrush(styl.kolor);
 		if (styl.tlo != default) element.Background = new SolidColorBrush(styl.tlo);
+		var tooltip = pobierzTooltip(dataItem);
+		if (tooltip != null) element.SetValue(Avalonia.Controls.ToolTip.TipProperty, tooltip);
 		return element;
 	}
 }
