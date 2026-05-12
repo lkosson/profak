@@ -10,7 +10,6 @@ using ProFak.DB;
 
 namespace ProFak.UI;
 
-// TODO Avalonia
 partial class Spis : TDataGrid
 {
 	protected override Type StyleKeyOverride => typeof(TDataGrid);
@@ -138,12 +137,6 @@ abstract partial class Spis<T> : Spis
 		if (!String.IsNullOrEmpty(format)) binding.StringFormat = format;
 		kolumna.Binding = binding;
 		kolumna.SortMemberPath = wlasciwosc;
-		// TODO Avalonia
-		/*
-		kolumna.DefaultCellStyle.Alignment = wyrownajDoPrawej ? DataGridViewContentAlignment.MiddleRight : DataGridViewContentAlignment.MiddleLeft;
-		if (!String.IsNullOrEmpty(format)) kolumna.DefaultCellStyle.Format = format;
-		if (tooltip != null) tooltipyDlaKolumn[kolumna.Index] = tooltip;
-		*/
 		Columns.Add(kolumna);
 		return kolumna;
 	}
@@ -189,8 +182,8 @@ abstract partial class Spis<T> : Spis
 		ObsluzKlawisz?.Invoke(e.Key, e.KeyModifiers);
 	}
 
+	// TODO Avalonia
 	/*
-
 	protected override void OnColumnDisplayIndexChanged(DataGridViewColumnEventArgs e)
 	{
 		base.OnColumnDisplayIndexChanged(e);
@@ -207,13 +200,6 @@ abstract partial class Spis<T> : Spis
 	{
 		base.OnColumnHeadersHeightChanged(e);
 		UstawWysokoscWierszy(ColumnHeadersHeight);
-	}
-
-	protected override void OnRowHeightChanged(DataGridViewRowEventArgs e)
-	{
-		base.OnRowHeightChanged(e);
-		if (e.Row.Index == -1) return;
-		UstawWysokoscWierszy(e.Row.Height);
 	}
 
 	private void UstawWysokoscWierszy(int wysokosc)
