@@ -155,7 +155,7 @@ partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 			Spisy.JednostkiMiar)
 			.Zainstaluj();
 
-		var vatMarza = Kontekst.Znajdz<Faktura>() is Faktura faktura && (faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży);
+		var vatMarza = Kontekst.Znajdz<Faktura>() is Faktura faktura && (faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży || faktura.ProceduraMarzy != ProceduraMarży.NieDotyczy);
 
 		numericUpDownCenaZakupu.Visible = vatMarza;
 		labelCenaZakupu.Visible = vatMarza;
