@@ -148,7 +148,7 @@ public class Faktura : Wydruk
 				var jm = pozycja.JednostkaMiary ?? pozycja.Towar?.JednostkaMiary;
 
 				pozycjaDTO.OpisPozycji = pozycja.Opis;
-				pozycjaDTO.CenaNetto = pozycja.CenaNetto;
+				pozycjaDTO.CenaNetto = faktura.ProceduraMarzy == ProceduraMarży.NieDotyczy ? pozycja.CenaNetto : pozycja.Cena;
 				pozycjaDTO.Ilosc = Math.Abs(pozycja.Ilosc / 1.000000000000m) + " " + jm?.Skrot;
 				pozycjaDTO.WartoscNetto = pozycja.WartoscNetto;
 				pozycjaDTO.WartoscVat = (pozycja.WartoscVat * faktura.KursWaluty).Zaokragl();

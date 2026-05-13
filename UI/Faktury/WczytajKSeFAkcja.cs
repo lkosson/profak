@@ -19,7 +19,7 @@ class WczytajKSeFAkcja : AkcjaNaSpisie<Faktura>
 		{
 			var odp = OknoKomunikatu.PytanieTakNieAnuluj("Wybrano więcej niż jeden plik do importu. Czy wczytać faktury w ciemno, bez wyświetlania formularza edycji dla każdej z nich?", domyslnie: false);
 			if (odp is null) return;
-			if (odp is false) pominOkno = true;
+			if (odp is true) pominOkno = true;
 		}
 
 		for (var i = 0; i < pliki.Length; i++)

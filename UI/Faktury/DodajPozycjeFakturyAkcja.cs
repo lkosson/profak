@@ -19,7 +19,7 @@ class DodajPozycjeFakturyAkcja : DodajRekordAkcja<PozycjaFaktury, PozycjaFaktury
 			.FirstOrDefault();
 		if (ostatniaIstniejacaPozycja != null) rekord.LP = ostatniaIstniejacaPozycja.LP + 1;
 		rekord.Ilosc = 1;
-		rekord.CzyWedlugCenBrutto = kontekst.Znajdz<Faktura>() is Faktura faktura && (faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży);
+		rekord.CzyWedlugCenBrutto = kontekst.Znajdz<Faktura>() is Faktura faktura && (faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży || faktura.ProceduraMarzy != ProceduraMarży.NieDotyczy);
 
 		return rekord;
 	}
