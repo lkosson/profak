@@ -27,5 +27,5 @@ class PozycjaFakturySpis : Spis<PozycjaFaktury>
 		Rekordy = q.ToList();
 	}
 
-	protected override TColor KolorWiersza(PozycjaFaktury rekord) => rekord.Id > 0 ? Kontrolki.Color(210, 210, 210) : base.KolorWiersza(rekord);
+	protected override TColor KolorWiersza(PozycjaFaktury rekord) => rekord.CzyPrzedKorekta ? Kontrolki.Color(210, 210, 210) : base.KolorWiersza(rekord);
 }
