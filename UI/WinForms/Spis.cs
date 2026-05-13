@@ -173,7 +173,7 @@ abstract partial class Spis<T> : Spis
 		kolumna.HeaderText = naglowek;
 		kolumna.DataPropertyName = wlasciwosc;
 		kolumna.Name = wlasciwosc;
-		kolumna.DefaultCellStyle.Alignment = wyrownajDoPrawej ? DataGridViewContentAlignment.MiddleRight : DataGridViewContentAlignment.MiddleLeft;
+		kolumna.DefaultCellStyle.Alignment = checkbox ? DataGridViewContentAlignment.MiddleCenter : wyrownajDoPrawej ? DataGridViewContentAlignment.MiddleRight : DataGridViewContentAlignment.MiddleLeft;
 		kolumna.AutoSizeMode = rozciagnij ? DataGridViewAutoSizeColumnMode.Fill : DataGridViewAutoSizeColumnMode.NotSet;
 		kolumna.Visible = szerokosc != 0;
 		if (!String.IsNullOrEmpty(format)) kolumna.DefaultCellStyle.Format = format;
