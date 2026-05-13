@@ -6,7 +6,9 @@ using Avalonia.Input;
 using Avalonia.Input.Platform;
 using Avalonia.LogicalTree;
 using Avalonia.Media;
+using Avalonia.Reactive;
 using ProFak.DB;
+using System.ComponentModel;
 
 namespace ProFak.UI;
 
@@ -50,8 +52,6 @@ abstract partial class Spis<T> : Spis
 	}
 
 	private void ZaznaczPosortowaneKolumny() { }
-	private void WczytajKonfiguracje() { }
-	private void ZapiszKonfiguracje() { }
 
 	protected override void OnAttachedToLogicalTree(LogicalTreeAttachmentEventArgs e)
 	{
@@ -128,7 +128,6 @@ abstract partial class Spis<T> : Spis
 		}
 		kolumna.Header = naglowek;
 		kolumna.HeaderPointerPressed += Kolumna_HeaderPointerPressed;
-		kolumna.Name = wlasciwosc;
 		kolumna.IsVisible = szerokosc != 0;
 		kolumna.Width = rozciagnij ? DataGridLength.Auto : szerokosc.HasValue ? new DataGridLength(szerokosc.Value, DataGridLengthUnitType.Pixel) : DataGridLength.SizeToHeader;
 		if (rozciagnij) kolumna.MinWidth = 50;
@@ -182,43 +181,16 @@ abstract partial class Spis<T> : Spis
 		ObsluzKlawisz?.Invoke(e.Key, e.KeyModifiers);
 	}
 
-	// TODO Avalonia
-	/*
-	protected override void OnColumnDisplayIndexChanged(DataGridViewColumnEventArgs e)
+	protected override void OnColumnSorting(DataGridColumnEventArgs e)
 	{
-		base.OnColumnDisplayIndexChanged(e);
-		kolumnyZmienione = true;
+		base.OnColumnSorting(e);
+		ZapiszKonfiguracje();
 	}
 
-	protected override void OnColumnWidthChanged(DataGridViewColumnEventArgs e)
+	protected override void OnColumnReordered(DataGridColumnEventArgs e)
 	{
-		base.OnColumnWidthChanged(e);
-		kolumnyZmienione = true;
-	}
-
-	protected override void OnColumnHeadersHeightChanged(EventArgs e)
-	{
-		base.OnColumnHeadersHeightChanged(e);
-		UstawWysokoscWierszy(ColumnHeadersHeight);
-	}
-
-	private void UstawWysokoscWierszy(int wysokosc)
-	{
-		if (kolumnyZmienione) return;
-		kolumnyZmienione = true;
-		ColumnHeadersDefaultCellStyle.WrapMode = wysokosc < FontHeight * 2 ? DataGridViewTriState.False : DataGridViewTriState.True;
-		foreach (DataGridViewRow row in Rows) row.Height = wysokosc;
-		ColumnHeadersHeight = wysokosc;
-	}
-
-	protected override void OnMouseUp(MouseEventArgs e)
-	{
-		base.OnMouseUp(e);
-		if (kolumnyZmienione)
-		{
-			kolumnyZmienione = false;
-			ZapiszKonfiguracje();
-		}
+		base.OnColumnReordered(e);
+		ZapiszKonfiguracje();
 	}
 
 	private void WczytajKonfiguracje()
@@ -240,22 +212,19 @@ abstract partial class Spis<T> : Spis
 		{
 			if (kolumna.Kolumna == WYSOKOSC_WIERSZA)
 			{
-				foreach (DataGridViewRow row in Rows) row.Height = kolumna.Szerokosc;
-				RowTemplate.Height = kolumna.Szerokosc;
-				ColumnHeadersHeight = kolumna.Szerokosc;
+				RowHeight = ColumnHeaderHeight = kolumna.Szerokosc;
 				continue;
 			}
-			var kolumnaSpisu = Columns[kolumna.Kolumna];
+			var kolumnaSpisu = Columns.OfType<TDataGridColumn>().FirstOrDefault(e => e.Name == kolumna.Kolumna);
 			if (kolumnaSpisu == null) continue;
 			if (kolumna.Szerokosc > 0)
 			{
-				kolumnaSpisu.AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
-				kolumnaSpisu.Width = kolumna.Szerokosc;
+				kolumnaSpisu.Width = new DataGridLength(kolumna.Szerokosc, DataGridLengthUnitType.Pixel);
 			}
-			if (kolumna.Szerokosc == -1) kolumnaSpisu.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+			if (kolumna.Szerokosc == -1) kolumnaSpisu.Width = DataGridLength.SizeToHeader;
 			kolumnaSpisu.Visible = kolumna.Szerokosc != 0;
 			kolumnaSpisu.DisplayIndex = kolumna.Kolejnosc;
-			kolumnaSpisu.HeaderCell.SortGlyphDirection = kolumna.PoziomSortowania < 0 ? SortOrder.Descending : kolumna.PoziomSortowania > 0 ? SortOrder.Ascending : SortOrder.None;
+			if (kolumna.PoziomSortowania != 0) kolumnaSpisu.Sort(kolumna.PoziomSortowania < 0 ? ListSortDirection.Descending : ListSortDirection.Ascending);
 		}
 		kolumnyZmienione = false;
 	}
@@ -275,18 +244,17 @@ abstract partial class Spis<T> : Spis
 		}
 
 		var doZapisu = new List<KolumnaSpisu>();
-		doZapisu.Add(new KolumnaSpisu { Spis = spis, Kolumna = WYSOKOSC_WIERSZA, Kolejnosc = -1, Szerokosc = ColumnHeadersHeight });
-		foreach (DataGridViewColumn kolumna in Columns)
+		doZapisu.Add(new KolumnaSpisu { Spis = spis, Kolumna = WYSOKOSC_WIERSZA, Kolejnosc = -1, Szerokosc = (int)RowHeight });
+		foreach (TDataGridColumn kolumna in Columns)
 		{
 			var konfiguracjaKolumny = new KolumnaSpisu { Spis = spis, Kolumna = kolumna.Name };
 			konfiguracjaKolumny.Kolejnosc = kolumna.DisplayIndex;
-			konfiguracjaKolumny.Szerokosc = kolumna.Visible ? kolumna.AutoSizeMode == DataGridViewAutoSizeColumnMode.Fill ? -1 : kolumna.Width : 0;
+			konfiguracjaKolumny.Szerokosc = kolumna.Visible ? kolumna.Width.IsSizeToHeader ? -1 : (int)kolumna.Width.Value : 0;
 			konfiguracjaKolumny.PoziomSortowania = sortowanie.GetValueOrDefault(kolumna.Name);
 			doZapisu.Add(konfiguracjaKolumny);
 		}
 		Kontekst.Baza.Zapisz(doZapisu);
 	}
-	*/
 }
 
 class SpisEdytowalny : Spis

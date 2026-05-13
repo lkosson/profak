@@ -326,7 +326,7 @@ static class RozszerzeniaKontrolek
 	extension(TDataGridColumn kontrolka)
 	{
 		public bool Visible { get => kontrolka.IsVisible; set => kontrolka.IsVisible = value; }
-		public string Name { get => ""; set { } }
+		public string Name => kontrolka.SortMemberPath;
 	}
 }
 #endif
