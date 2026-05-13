@@ -16,9 +16,9 @@ partial class Menu : Avalonia.Controls.TreeView
 {
 	protected override Type StyleKeyOverride => typeof(Avalonia.Controls.TreeView);
 	public ObservableCollection<TTreeNode> Nodes { get; } = [];
-	public TTreeNode? SelectedNode { get => (TTreeNode?)SelectedItem; set { SelectedItem = value; } }
-	private Color KolorAktywny => Color.Black;
-	private Color KolorUkryty => Color.Gray;
+	public TTreeNode? SelectedNode { get => (TTreeNode?)SelectedItem; set { SelectedItem = value; Wyswietl(value); } }
+	private static Color KolorAktywny => Color.Black;
+	private static Color KolorUkryty => Color.Gray;
 
 	private void Zbuduj(bool pokazUkryte = false)
 	{
@@ -106,19 +106,19 @@ partial class Menu : Avalonia.Controls.TreeView
 		if (SelectedNode == wybrany) Wyswietl(wybrany);
 		else SelectedNode = wybrany;
 
-		ZapiszStanPozycji(SelectedNode /* dla spisu według kontrahentów/towarów/dat mogło się zmienić */);
+		ZapiszStanPozycji(SelectedNode /* dla spisu według kontrahentów/towarów/dat mogło się zmienić */, zwinieta: false, aktywna: true);
 	}
 
 	protected override void OnKeyDown(Avalonia.Input.KeyEventArgs e)
 	{
 		base.OnKeyDown(e);
 		if (SelectedNode == null) return;
-		if (e.Key == Avalonia.Input.Key.Enter)
+		if (e.Key == TKeys.Enter)
 		{
 			e.Handled = true;
 			Wyswietl(SelectedNode);
 		}
-		else if (e.Key == Avalonia.Input.Key.OemQuestion)
+		else if (e.Key == TKeys.OemQuestion)
 		{
 			e.Handled = true;
 			SelectedNode.CzyRozwiniety = false;
@@ -139,7 +139,7 @@ partial class Menu : Avalonia.Controls.TreeView
 
 	private void CollapseAll()
 	{
-		void Zwin(TTreeNode wezel)
+		static void Zwin(TTreeNode wezel)
 		{
 			if (wezel.CzyRozwiniety) wezel.CzyRozwiniety = false;
 			foreach (var podrzedny in wezel.Nodes)
