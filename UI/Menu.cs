@@ -64,23 +64,22 @@ partial class Menu
 		Kontrolki.Menu([ukryty ? menuPokaz : menuUkryj, menuPokazUkryte], wyswietlDla: this);
 
 	}
-	// TODO Avalonia
-#if WINFORMS
+
 	private void Rozwin(bool pokazUkryte = false)
 	{
 		using var kontekst = new Kontekst();
 		var stany = kontekst.Baza.StanyMenu.ToList();
 		CollapseAll();
 		var stanyWedlugNazwy = stany.ToDictionary(stan => stan.Pozycja);
-		TreeNode? doWyswietlenia = null;
-		Rozwin(Nodes.Cast<TreeNode>(), stanyWedlugNazwy, pokazUkryte, ref doWyswietlenia);
+		TTreeNode? doWyswietlenia = null;
+		Rozwin(Nodes.Cast<TTreeNode>(), stanyWedlugNazwy, pokazUkryte, ref doWyswietlenia);
 
 		if (doWyswietlenia != null) SelectedNode = doWyswietlenia;
 	}
 
-	private void Rozwin(IEnumerable<TreeNode> wezly, Dictionary<string, StanMenu> stany, bool pokazUkryte, ref TreeNode? wybrany)
+	private void Rozwin(IEnumerable<TTreeNode> wezly, Dictionary<string, StanMenu> stany, bool pokazUkryte, ref TTreeNode? wybrany)
 	{
-		var doUsuniecia = new List<TreeNode>();
+		var doUsuniecia = new List<TTreeNode>();
 		foreach (var wezel in wezly)
 		{
 			if (stany.TryGetValue(wezel.FullPath, out var stan))
@@ -90,7 +89,7 @@ partial class Menu
 				if (stan.CzyUkryta) doUsuniecia.Add(wezel);
 			}
 
-			Rozwin(wezel.Nodes.Cast<TreeNode>(), stany, pokazUkryte, ref wybrany);
+			Rozwin(wezel.Nodes.Cast<TTreeNode>(), stany, pokazUkryte, ref wybrany);
 		}
 
 		foreach (var wezel in doUsuniecia)
@@ -99,5 +98,4 @@ partial class Menu
 			else wezel.Remove();
 		}
 	}
-#endif
 }

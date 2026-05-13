@@ -34,6 +34,8 @@ partial class Menu : Avalonia.Controls.TreeView
 	{
 		var wezel = new TTreeNode();
 		wezel.Text = tekst;
+		wezel.Zwiniety += Wezel_Zwiniety;
+		wezel.Rozwiniety += Wezel_Rozwiniety;
 		return wezel;
 	}
 
@@ -76,21 +78,16 @@ partial class Menu : Avalonia.Controls.TreeView
 		base.OnAttachedToLogicalTree(e);
 		Zbuduj();
 		SelectionChanged += Menu_SelectionChanged;
+		menuGotowe = true;
 	}
 
-	private void Expand(object? sender, RoutedEventArgs e)
-	{
-		var item = (TreeViewItem)e.Source!;
-		if (item == null) return;
-		var wezel = (TTreeNode)item.DataContext!;
+	private void Wezel_Rozwiniety(TTreeNode wezel)
+	{ 
 		ZapiszStanPozycji(wezel, zwinieta: false);
 	}
 
-	private void Collapse(object? sender, RoutedEventArgs e)
+	private void Wezel_Zwiniety(TTreeNode wezel)
 	{
-		var item = (TreeViewItem)e.Source!;
-		if (item == null) return;
-		var wezel = (TTreeNode)item.DataContext!;
 		ZapiszStanPozycji(wezel, zwinieta: true);
 	}
 
@@ -133,14 +130,24 @@ partial class Menu : Avalonia.Controls.TreeView
 	}
 	*/
 
-	private void Rozwin(bool pokazUkryte)
-	{
-		// TODO Avalonia
-	}
-
 	private void Wyswietl(TTreeNode wezel)
 	{
 		wezel?.Akcja?.Invoke();
+	}
+
+	private void CollapseAll()
+	{
+		void Zwin(TTreeNode wezel)
+		{
+			if (wezel.CzyRozwiniety) wezel.CzyRozwiniety = false;
+			foreach (var podrzedny in wezel.Nodes)
+				Zwin(podrzedny);
+		}
+
+		foreach (var wezel in Nodes)
+		{
+			Zwin(wezel);
+		}
 	}
 }
 
@@ -150,6 +157,8 @@ class WezelMenu : INotifyPropertyChanging, INotifyPropertyChanged
 	public string Text { get; set; } = "";
 	public string FullPath => Parent == null ? Text : Parent.FullPath + "\\" + Text;
 	public TTreeNode? Parent { get; set; }
+	public void Expand() => CzyRozwiniety = true;
+	public void Remove() => Parent?.Nodes.Remove(this);
 
 	// TODO Avalonia
 	public System.Drawing.Color ForeColor { get; set; }
@@ -168,6 +177,7 @@ class WezelMenu : INotifyPropertyChanging, INotifyPropertyChanged
 		set
 		{
 			PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(nameof(CzyRozwiniety)));
+			var poprzednio = field;
 			field = value;
 			if (Generator != null)
 			{
@@ -177,11 +187,15 @@ class WezelMenu : INotifyPropertyChanging, INotifyPropertyChanged
 					Nodes.Add(nowyWezel);
 			}
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CzyRozwiniety)));
+			if (poprzednio && !value) Zwiniety?.Invoke(this);
+			if (!poprzednio && value) Rozwiniety?.Invoke(this);
 		}
 	}
 
 	public event PropertyChangingEventHandler? PropertyChanging;
 	public event PropertyChangedEventHandler? PropertyChanged;
+	public event Action<TTreeNode>? Zwiniety;
+	public event Action<TTreeNode>? Rozwiniety;
 
 	public override string ToString() => FullPath;
 }
