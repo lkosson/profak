@@ -8,8 +8,6 @@ partial class Menu : TreeView
 	private bool trwaAktualizacjaMenu;
 	private Dictionary<TTreeNode, Action> akcje = [];
 	private Dictionary<TTreeNode, Func<TTreeNode[]>> rozwiniecia = [];
-	private static Color KolorAktywny => SystemColors.ControlText;
-	private static Color KolorUkryty => SystemColors.GrayText;
 
 	private void Zbuduj(bool pokazUkryte = false)
 	{
@@ -135,6 +133,34 @@ partial class Menu : TreeView
 
 		if (akcje.TryGetValue(wezel, out var akcja)) akcja();
 	}
+
+	private void PokazMenuKontekstowe(TTreeNode wezel)
+	{
+		void Pokaz()
+		{
+			ZapiszStanPozycji(wezel, ukryta: false);
+			wezel.ForeColor = SystemColors.ControlText;
+		}
+
+		void Ukryj()
+		{
+			ZapiszStanPozycji(wezel, ukryta: true);
+			if (wezel.Parent == null) Nodes.Remove(wezel);
+			else wezel.Parent.Nodes.Remove(wezel);
+		}
+
+		void PokazUkryte()
+		{
+			Zbuduj(pokazUkryte: true);
+		}
+
+		var menuPokaz = Kontrolki.MenuItem("Pokaż", Pokaz);
+		var menuUkryj = Kontrolki.MenuItem("Ukryj", Ukryj);
+		var menuPokazUkryte = Kontrolki.MenuItem("Pokaż ukryte", PokazUkryte);
+		var ukryty = wezel.ForeColor == SystemColors.GrayText;
+		Kontrolki.Menu([ukryty ? menuPokaz : menuUkryj, menuPokazUkryte], wyswietlDla: this);
+	}
+
 
 	private const int TVM_SETEXTENDEDSTYLE = 0x1100 + 44;
 	private const int TVS_EX_DOUBLEBUFFER = 0x0004;

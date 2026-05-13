@@ -17,8 +17,6 @@ partial class Menu : Avalonia.Controls.TreeView
 	protected override Type StyleKeyOverride => typeof(Avalonia.Controls.TreeView);
 	public ObservableCollection<TTreeNode> Nodes { get; } = [];
 	public TTreeNode? SelectedNode { get => (TTreeNode?)SelectedItem; set { SelectedItem = value; Wyswietl(value); } }
-	private static Color KolorAktywny => Color.Black;
-	private static Color KolorUkryty => Color.Gray;
 
 	private void Zbuduj(bool pokazUkryte = false)
 	{
@@ -137,6 +135,25 @@ partial class Menu : Avalonia.Controls.TreeView
 		wezel?.Akcja?.Invoke();
 	}
 
+	private void PokazMenuKontekstowe(TTreeNode wezel)
+	{
+		void Ukryj()
+		{
+			ZapiszStanPozycji(wezel, ukryta: true);
+			if (wezel.Parent == null) Nodes.Remove(wezel);
+			else wezel.Parent.Nodes.Remove(wezel);
+		}
+
+		void PokazUkryte()
+		{
+			Zbuduj(pokazUkryte: true);
+		}
+
+		var menuUkryj = Kontrolki.MenuItem("Ukryj", Ukryj);
+		var menuPokazUkryte = Kontrolki.MenuItem("Pokaż ukryte", PokazUkryte);
+		Kontrolki.Menu([menuUkryj, menuPokazUkryte], wyswietlDla: this);
+	}
+
 	private void CollapseAll()
 	{
 		static void Zwin(TTreeNode wezel)
@@ -160,10 +177,7 @@ class WezelMenu : INotifyPropertyChanging, INotifyPropertyChanged
 	public string FullPath => Parent == null ? Text : Parent.FullPath + "\\" + Text;
 	public TTreeNode? Parent { get; set; }
 	public void Expand() => CzyRozwiniety = true;
-	public void Remove() => Parent?.Nodes.Remove(this);
 
-	// TODO Avalonia
-	public System.Drawing.Color ForeColor { get; set; }
 	public ObservableCollection<TTreeNode> Nodes { get; set; } = [];
 
 	public Action? Akcja { get; set; }

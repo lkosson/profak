@@ -24,7 +24,7 @@ partial class Menu
 		if (stan == null) stan = new StanMenu { Pozycja = treeNode.FullPath };
 		stan.CzyZwinieta = zwinieta;
 		stan.CzyAktywna = aktywna;
-		stan.CzyUkryta = ukryta || treeNode.ForeColor == KolorUkryty;
+		stan.CzyUkryta = ukryta;
 		if (stan.CzyAktywna)
 		{
 			var stareAktywne = kontekst.Baza.StanyMenu.Where(e => e.CzyAktywna).ToList();
@@ -36,34 +36,6 @@ partial class Menu
 		}
 		kontekst.Baza.Zapisz(stan);
 		transakcja.Zatwierdz();
-	}
-
-	private void PokazMenuKontekstowe(TTreeNode wezel)
-	{
-		void Pokaz()
-		{
-			ZapiszStanPozycji(wezel, ukryta: false);
-			wezel.ForeColor = KolorAktywny;
-		}
-
-		void Ukryj()
-		{
-			ZapiszStanPozycji(wezel, ukryta: true);
-			if (wezel.Parent == null) Nodes.Remove(wezel);
-			else wezel.Parent.Nodes.Remove(wezel);
-		}
-
-		void PokazUkryte()
-		{
-			Zbuduj(pokazUkryte: true);
-		}
-
-		var menuPokaz = Kontrolki.MenuItem("Pokaż", Pokaz);
-		var menuUkryj = Kontrolki.MenuItem("Ukryj", Ukryj);
-		var menuPokazUkryte = Kontrolki.MenuItem("Pokaż ukryte", PokazUkryte);
-		var ukryty = wezel.ForeColor == KolorUkryty;
-		Kontrolki.Menu([ukryty ? menuPokaz : menuUkryj, menuPokazUkryte], wyswietlDla: this);
-
 	}
 
 	private void Rozwin(bool pokazUkryte = false)
@@ -95,8 +67,15 @@ partial class Menu
 
 		foreach (var wezel in doUsuniecia)
 		{
+#if WINFORMS
 			if (pokazUkryte) wezel.ForeColor = SystemColors.GrayText;
 			else wezel.Remove();
+#endif
+#if AVALONIA
+			if (pokazUkryte) break;
+			if (wezel.Parent == null) Nodes.Remove(wezel);
+			else wezel.Parent.Nodes.Remove(wezel);
+#endif
 		}
 	}
 }
