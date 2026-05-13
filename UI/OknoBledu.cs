@@ -35,6 +35,10 @@ class OknoBledu : Dialog
 		{
 			OknoKomunikatu.Informacja("Operacja została przerwana.");
 		}
+		else if (exc is KSeF.Client.Core.Exceptions.KsefApiException kae)
+		{
+			OknoKomunikatu.Ostrzezenie($"Podczas komunikacji z KSeF wystąpił błąd: {kae.Message}");
+		}
 #if SQLSERVER
 		else if (exc is Microsoft.Data.SqlClient.SqlException se && se.Number == 1222)
 		{
