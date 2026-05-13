@@ -3,6 +3,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Data;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.LogicalTree;
 using Avalonia.Styling;
@@ -71,7 +72,6 @@ partial class Menu : Avalonia.Controls.TreeView
 		var binding = CompiledBinding.Create<TTreeNode, bool>(e => e.CzyRozwiniety);
 		style.Setters.Add(new Setter { Property = TreeViewItem.IsExpandedProperty, Value = binding });
 		Styles.Add(style);
-
 		Padding = new Thickness(0);
 		ItemTemplate = new FuncTreeDataTemplate<TTreeNode>((node, scope) => new TText { Text = node.Text }, treeNode => treeNode.Nodes);
 		ItemsSource = Nodes;
@@ -95,10 +95,13 @@ partial class Menu : Avalonia.Controls.TreeView
 	{
 		var wybrany = SelectedNode;
 		if (wybrany == null) return;
-		while (wybrany.Nodes.Count > 0)
+		if (!ostatnioWybrany?.FullPath.StartsWith(wybrany.FullPath) ?? false)
 		{
-			wybrany.CzyRozwiniety = true;
-			wybrany = wybrany.Nodes[0];
+			while (wybrany.Nodes.Count > 0)
+			{
+				wybrany.CzyRozwiniety = true;
+				wybrany = wybrany.Nodes[0];
+			}
 		}
 		if (SelectedNode == wybrany) Wyswietl(wybrany);
 		else SelectedNode = wybrany;
@@ -121,17 +124,16 @@ partial class Menu : Avalonia.Controls.TreeView
 			SelectedNode.CzyRozwiniety = false;
 		}
 	}
-	// TODO Avalonia
-	/*
-	protected override void OnNodeMouseClick(TreeNodeMouseClickEventArgs e)
+
+	protected override void OnRightTapped(TappedEventArgs e)
 	{
-		base.OnNodeMouseClick(e);
-		if (e.Button == MouseButtons.Right && e.Node != null) PokazMenuKontekstowe(e.Node);
+		base.OnRightTapped(e);
+		if (SelectedNode != null) PokazMenuKontekstowe(SelectedNode);
 	}
-	*/
 
 	private void Wyswietl(TTreeNode wezel)
 	{
+		ostatnioWybrany = wezel;
 		wezel?.Akcja?.Invoke();
 	}
 

@@ -5,6 +5,7 @@ namespace ProFak.UI;
 partial class Menu
 {
 	private bool menuGotowe;
+	private TTreeNode? ostatnioWybrany;
 	private readonly Func<TTreeNode[]> konstruktorMenu;
 
 	public Menu(Func<TTreeNode[]> konstruktorMenu)

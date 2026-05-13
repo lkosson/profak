@@ -8,7 +8,6 @@ partial class Menu : TreeView
 	private bool trwaAktualizacjaMenu;
 	private Dictionary<TTreeNode, Action> akcje = [];
 	private Dictionary<TTreeNode, Func<TTreeNode[]>> rozwiniecia = [];
-	private TreeNode? ostatnioWybrany;
 	private Color KolorAktywny => SystemColors.ControlText;
 	private Color KolorUkryty => SystemColors.GrayText;
 
