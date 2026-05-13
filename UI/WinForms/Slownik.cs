@@ -56,7 +56,7 @@ class Slownik<T>
 
 	private void ComboBox_KeyDown(object? sender, KeyEventArgs e)
 	{
-		if (e.KeyCode == Keys.F2) PokazSpis();
+		if (e.KeyCode == Keys.F2 && e.Modifiers == Keys.None) PokazSpis();
 		if (dopuscPustaWartosc && (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)) comboBox.SelectedIndex = -1;
 	}
 
