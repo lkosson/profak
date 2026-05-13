@@ -65,7 +65,6 @@ public class Generator
 	{
 		// Pobrane przez wywołanie w ZbudujXML
 		ArgumentNullException.ThrowIfNull(dbFaktura.Sprzedawca);
-		ArgumentNullException.ThrowIfNull(dbFaktura.Nabywca);
 		ArgumentNullException.ThrowIfNull(dbFaktura.Waluta);
 		var ksefFaktura = new KSEFFaktura();
 		ksefFaktura.Naglowek = new TNaglowek();
