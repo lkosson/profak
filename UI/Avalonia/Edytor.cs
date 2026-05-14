@@ -58,107 +58,27 @@ abstract class Edytor : Avalonia.Controls.Panel, IDisposable
 		kontrolka.AttachedToVisualTree += delegate { kontrolka.Focus(Avalonia.Input.NavigationMethod.Tab); };
 	}
 
-	public void Wymagane(TTextBox textBox)
+	public void Wymagane(TControl kontrolka)
 	{
-		//TODO Avalonia
-		//textBox.Validating += TextBox_Wymagane_Validating;
-	}
-
-	public void Wymagane(TComboBox comboBox)
-	{
-		//TODO Avalonia
-		//comboBox.Validating += ComboBox_Wymagane_Validating;
-	}
-
-	public void Wymagane(TSuggestBox suggestBox)
-	{
-		//TODO Avalonia
+		if (kontrolka.DataContext is not PowiazanaWartosc wartosc) return;
+		wartosc.DodajWalidator(wartosc => wartosc is null or "" ? "Należy uzupełnić pole." : null);
 	}
 
 	public void Walidacja(TTextBox textBox, Func<string, string?> walidator, bool miekki)
 	{
-		//TODO Avalonia
-		/*
-		textBox.Validating += (control, e) =>
-		{
-			if (ModifierKeys == Keys.Shift) return;
-			var blad = walidator(textBox.Text);
-
-			if (blad == null)
-			{
-				errorProvider.SetError(textBox, "");
-			}
-			else
-			{
-				errorProvider.SetIconAlignment(textBox, ErrorIconAlignment.MiddleLeft);
-				errorProvider.SetError(textBox, blad);
-				if (!miekki) e.Cancel = true;
-			}
-		};
-		*/
+		if (textBox.DataContext is not PowiazanaWartosc<string> wartosc) return;
+		wartosc.DodajWalidator(walidator);
 	}
 
 	public void Walidacja<T>(TComboBox comboBox, Func<T, string?> walidator, bool miekki)
 	{
-		//TODO Avalonia
-		/*
-		comboBox.Validating += (control, e) =>
-		{
-			if (ModifierKeys == Keys.Shift) return;
-			var wartosc = comboBox.SelectedValue;
-			var blad = wartosc is T t ? walidator(t) : "Wybrana wartość jest nieprawidłowa.";
-
-			if (blad == null)
-			{
-				errorProvider.SetError(comboBox, "");
-			}
-			else
-			{
-				errorProvider.SetIconAlignment(comboBox, ErrorIconAlignment.MiddleLeft);
-				errorProvider.SetError(comboBox, blad);
-				if (!miekki) e.Cancel = true;
-			}
-		};
-		*/
+		if (comboBox.DataContext is not PowiazanaWartosc<T> wartosc) return;
+		wartosc.DodajWalidator(walidator);
 	}
 
 	protected void Dymek(TControl kontrolka, string tresc)
 	{
 		kontrolka.SetValue(Avalonia.Controls.ToolTip.TipProperty, tresc);
 	}
-	/*
-	private void TextBox_Wymagane_Validating(object? sender, CancelEventArgs e)
-	{
-		if (ModifierKeys == Keys.Shift) return;
-		if (sender is not TextBox textBox) return;
-		if (String.IsNullOrEmpty(textBox.Text))
-		{
-			errorProvider.SetIconAlignment(textBox, ErrorIconAlignment.MiddleLeft);
-			errorProvider.SetError(textBox, "Należy uzupełnić pole.");
-			e.Cancel = true;
-		}
-		else
-		{
-			errorProvider.SetError(textBox, "");
-		}
-	}
-
-	private void ComboBox_Wymagane_Validating(object? sender, CancelEventArgs e)
-	{
-		if (ModifierKeys == Keys.Shift) return;
-		if (sender is not ComboBox comboBox) return;
-		if ((comboBox.DropDownStyle == ComboBoxStyle.DropDownList && comboBox.SelectedIndex == -1)
-			|| (comboBox.DropDownStyle != ComboBoxStyle.DropDownList) && String.IsNullOrEmpty(comboBox.Text))
-		{
-			errorProvider.SetIconAlignment(comboBox, ErrorIconAlignment.MiddleLeft);
-			errorProvider.SetError(comboBox, "Należy uzupełnić pole.");
-			e.Cancel = true;
-		}
-		else
-		{
-			errorProvider.SetError(comboBox, "");
-		}
-	}
-	*/
 }
 #endif

@@ -78,14 +78,13 @@ partial class Kontroler<TModel>
 	}
 }
 
-class PowiazanaWartosc<T> : INotifyPropertyChanged
+class PowiazanaWartosc : INotifyPropertyChanged
 {
-	public static CompiledBinding Binding = CompiledBinding.Create<PowiazanaWartosc<T>, T?>(e => e.Wartosc);
+	private List<Func<object?, string?>> walidatory = [];
 
 	public bool CzyWlasnaZmiana { get; set; }
 	public bool CzyTrwaZmiana { get; set; }
-
-	public T? Wartosc
+	public object? SurowaWartosc
 	{
 		get
 		{
@@ -94,12 +93,20 @@ class PowiazanaWartosc<T> : INotifyPropertyChanged
 
 		set
 		{
-			field = value;
+			object nowaWartosc = value;
+			foreach (var walidator in walidatory)
+			{
+				var wynik = walidator(nowaWartosc);
+				if (wynik == null) continue;
+				nowaWartosc = new BindingNotification(new DataValidationException(wynik), BindingErrorType.DataValidationError);
+				break;
+			}
+			field = nowaWartosc;
 			if (CzyTrwaZmiana) return;
 			CzyTrwaZmiana = true;
 			try
 			{
-				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Wartosc)));
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SurowaWartosc)));
 			}
 			finally
 			{
@@ -108,7 +115,20 @@ class PowiazanaWartosc<T> : INotifyPropertyChanged
 		}
 	}
 
+	public static CompiledBinding Binding = CompiledBinding.Create<PowiazanaWartosc, object?>(e => e.SurowaWartosc);
 	public event PropertyChangedEventHandler? PropertyChanged;
+	public void DodajWalidator(Func<object?, string?> walidator) => walidatory.Add(walidator);
+}
+
+class PowiazanaWartosc<T> : PowiazanaWartosc
+{
+	public T? Wartosc
+	{
+		get => SurowaWartosc is T wartosc ? wartosc : default;
+		set => SurowaWartosc = value;
+	}
+
+	public void DodajWalidator(Func<T?, string?> walidator) => base.DodajWalidator(surowaWartosc => surowaWartosc is T wartosc || surowaWartosc == null ? walidator((T?)surowaWartosc) : null);
 }
 
 #endif
