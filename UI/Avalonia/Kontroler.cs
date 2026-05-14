@@ -80,10 +80,11 @@ partial class Kontroler<TModel>
 
 class PowiazanaWartosc : INotifyPropertyChanged
 {
-	private List<Func<object?, string?>> walidatory = [];
+	private List<(Func<object?, string?> walidator, bool miekki)> walidatory = [];
 
 	public bool CzyWlasnaZmiana { get; set; }
 	public bool CzyTrwaZmiana { get; set; }
+	public bool CzyBlad => SurowaWartosc is BindingNotification { ErrorType: not BindingErrorType.None, HasValue: false };
 	public object? SurowaWartosc
 	{
 		get
@@ -94,11 +95,11 @@ class PowiazanaWartosc : INotifyPropertyChanged
 		set
 		{
 			object nowaWartosc = value;
-			foreach (var walidator in walidatory)
+			foreach (var (walidator, miekki) in walidatory)
 			{
 				var wynik = walidator(nowaWartosc);
 				if (wynik == null) continue;
-				nowaWartosc = new BindingNotification(new DataValidationException(wynik), BindingErrorType.DataValidationError);
+				nowaWartosc = new BindingNotification(new DataValidationException(wynik), BindingErrorType.DataValidationError, miekki ? nowaWartosc : Avalonia.AvaloniaProperty.UnsetValue);
 				break;
 			}
 			field = nowaWartosc;
@@ -117,18 +118,20 @@ class PowiazanaWartosc : INotifyPropertyChanged
 
 	public static CompiledBinding Binding = CompiledBinding.Create<PowiazanaWartosc, object?>(e => e.SurowaWartosc);
 	public event PropertyChangedEventHandler? PropertyChanged;
-	public void DodajWalidator(Func<object?, string?> walidator) => walidatory.Add(walidator);
+	public void DodajWalidator(Func<object?, string?> walidator, bool miekki) => walidatory.Add((walidator, miekki));
 }
 
 class PowiazanaWartosc<T> : PowiazanaWartosc
 {
 	public T? Wartosc
 	{
-		get => SurowaWartosc is T wartosc ? wartosc : default;
+		get => SurowaWartosc is T wartosc ? wartosc 
+			: SurowaWartosc is BindingNotification { ErrorType: BindingErrorType.DataValidationError } notification && notification.Value is T wartoscBledna ? wartoscBledna 
+			: default;
 		set => SurowaWartosc = value;
 	}
 
-	public void DodajWalidator(Func<T?, string?> walidator) => base.DodajWalidator(surowaWartosc => surowaWartosc is T wartosc || surowaWartosc == null ? walidator((T?)surowaWartosc) : null);
+	public void DodajWalidator(Func<T?, string?> walidator, bool miekki) => base.DodajWalidator(surowaWartosc => surowaWartosc is T wartosc || surowaWartosc == null ? walidator((T?)surowaWartosc) : null, miekki);
 }
 
 #endif

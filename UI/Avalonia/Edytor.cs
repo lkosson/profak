@@ -61,19 +61,19 @@ abstract class Edytor : Avalonia.Controls.Panel, IDisposable
 	public void Wymagane(TControl kontrolka)
 	{
 		if (kontrolka.DataContext is not PowiazanaWartosc wartosc) return;
-		wartosc.DodajWalidator(wartosc => wartosc is null or "" ? "Należy uzupełnić pole." : null);
+		wartosc.DodajWalidator(wartosc => wartosc is null or "" ? "Należy uzupełnić pole." : null, false);
 	}
 
 	public void Walidacja(TTextBox textBox, Func<string, string?> walidator, bool miekki)
 	{
 		if (textBox.DataContext is not PowiazanaWartosc<string> wartosc) return;
-		wartosc.DodajWalidator(walidator);
+		wartosc.DodajWalidator(walidator, miekki);
 	}
 
 	public void Walidacja<T>(TComboBox comboBox, Func<T, string?> walidator, bool miekki)
 	{
 		if (comboBox.DataContext is not PowiazanaWartosc<T> wartosc) return;
-		wartosc.DodajWalidator(walidator);
+		wartosc.DodajWalidator(walidator, miekki);
 	}
 
 	protected void Dymek(TControl kontrolka, string tresc)
