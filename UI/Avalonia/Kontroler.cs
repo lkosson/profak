@@ -1,5 +1,6 @@
 ﻿#if AVALONIA
 using Avalonia.Data;
+using System.ComponentModel;
 using System.Linq.Expressions;
 
 namespace ProFak.UI;
@@ -12,14 +13,12 @@ partial class Kontroler<TModel>
 
 	public void Powiazanie(TDatePicker dateTimePicker, Func<TModel, DateTime> pobierzWartosc, Action<TModel, DateTime>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
-		dateTimePicker.SelectedDateChanged += delegate { AktualizujModel(dateTimePicker, ustawWartosc, dtp => dtp.SelectedDate ?? default); wartoscZmieniona?.Invoke(); };
-		DodajPowiazanie(dateTimePicker, pobierzWartosc, (dtp, wartosc) => dtp.SelectedDate = wartosc);
+		DodajPowiazanie(dateTimePicker, TDatePicker.SelectedDateProperty, pobierzWartosc, ustawWartosc, wartoscZmieniona);
 	}
 
 	public void Powiazanie(TDatePicker dateTimePicker, Func<TModel, DateTime?> pobierzWartosc, Action<TModel, DateTime?>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
-		dateTimePicker.SelectedDateChanged += delegate { AktualizujModel(dateTimePicker, ustawWartosc, dtp => dtp.SelectedDate.HasValue ? (DateTime?)dtp.SelectedDate : null); wartoscZmieniona?.Invoke(); };
-		DodajPowiazanie(dateTimePicker, pobierzWartosc, (dtp, wartosc) => { dtp.SelectedDate = wartosc; });
+		DodajPowiazanie(dateTimePicker, TDatePicker.SelectedDateProperty, pobierzWartosc, ustawWartosc, wartoscZmieniona);
 	}
 
 	public void Powiazanie(TNumericUpDown numericUpDown, Func<TModel, int> pobierzWartosc, Action<TModel, int>? ustawWartosc, Action? wartoscZmieniona = null)
@@ -29,44 +28,46 @@ partial class Kontroler<TModel>
 
 	public void Powiazanie(TNumericUpDown numericUpDown, Func<TModel, decimal> pobierzWartosc, Action<TModel, decimal>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
-		numericUpDown.ValueChanged += delegate { if (ustawWartosc != null) AktualizujModel(numericUpDown, ustawWartosc, nud => nud.Value ?? 0); wartoscZmieniona?.Invoke(); };
-		DodajPowiazanie(numericUpDown, pobierzWartosc, (nud, wartosc) => nud.Value = wartosc);
+		DodajPowiazanie(numericUpDown, TNumericUpDown.ValueProperty, pobierzWartosc, ustawWartosc, wartoscZmieniona);
 	}
 
 	public void Powiazanie(TTextBox textBox, Func<TModel, string> pobierzWartosc, Action<TModel, string>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
-		textBox.TextChanging += delegate { AktualizujModel(textBox, ustawWartosc, txt => txt.Text ?? ""); wartoscZmieniona?.Invoke(); };
-		DodajPowiazanie(textBox, pobierzWartosc, (txt, wartosc) => txt.Text = wartosc);
+		DodajPowiazanie(textBox, TTextBox.TextProperty, pobierzWartosc, ustawWartosc, wartoscZmieniona);
 	}
 
 	public void Powiazanie(TCheckBox checkBox, Func<TModel, bool> pobierzWartosc, Action<TModel, bool>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
-		checkBox.IsCheckedChanged += delegate { AktualizujModel(checkBox, ustawWartosc, chk => chk.IsChecked ?? false); wartoscZmieniona?.Invoke(); };
-		DodajPowiazanie(checkBox, pobierzWartosc, (chk, wartosc) => chk.IsChecked = wartosc);
+		DodajPowiazanie(checkBox, TCheckBox.IsCheckedProperty, pobierzWartosc, ustawWartosc, wartoscZmieniona);
 	}
 
 	public void Powiazanie(TSuggestBox suggestBox, Func<TModel, string> pobierzWartosc, Action<TModel, string>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
-		suggestBox.TextChanged += delegate { AktualizujModel(suggestBox, ustawWartosc, suggestBox => suggestBox.Text ?? ""); wartoscZmieniona?.Invoke(); };
-		DodajPowiazanie(suggestBox, pobierzWartosc, (suggestBox, wartosc) => { suggestBox.Text = wartosc; });
+		DodajPowiazanie(suggestBox, TSuggestBox.TextProperty, pobierzWartosc, ustawWartosc, wartoscZmieniona);
 	}
 
 	public void Powiazanie(TComboBox comboBox, Func<TModel, int> pobierzWartosc, Action<TModel, int>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
-		comboBox.SelectionChanged += delegate { AktualizujModel(comboBox, ustawWartosc, comboBox => comboBox.SelectedIndex); wartoscZmieniona?.Invoke(); };
-		DodajPowiazanie(comboBox, pobierzWartosc, (comboBox, wartosc) => { comboBox.SelectedIndex = wartosc; });
+		DodajPowiazanie(comboBox, TComboBox.SelectedIndexProperty, pobierzWartosc, ustawWartosc, wartoscZmieniona);
 	}
 
 	public void Powiazanie<TWartosc>(TComboBox comboBox, Func<TModel, TWartosc> pobierzWartosc, Action<TModel, TWartosc>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
-		comboBox.SelectionChanged += delegate { AktualizujModel(comboBox, (model, wartosc) => ustawWartosc?.Invoke(model, wartosc!), comboBox => comboBox.SelectedIndex == -1 ? default : (TWartosc)comboBox.SelectedValue!); wartoscZmieniona?.Invoke(); };
-		DodajPowiazanie(comboBox, pobierzWartosc, (comboBox, wartosc) => { if (comboBox.SelectedIndex != -1) comboBox.SelectedIndex = -1; if (wartosc != null) comboBox.SelectedValue = wartosc; });
+		DodajPowiazanie(comboBox, TComboBox.SelectedValueProperty, pobierzWartosc, ustawWartosc, wartoscZmieniona);
 	}
 
 	public void Powiazanie<TWartosc>(TSuggestBox suggestBox, Func<TModel, TWartosc> pobierzWartosc, Action<TModel, TWartosc>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
-		suggestBox.SelectionChanged += delegate { AktualizujModel(suggestBox, (model, wartosc) => ustawWartosc?.Invoke(model, wartosc!), suggestBox => suggestBox.SelectedItem is TWartosc wartosc ? wartosc : default); wartoscZmieniona?.Invoke(); };
-		DodajPowiazanie(suggestBox, pobierzWartosc, (suggestBox, wartosc) => { suggestBox.SelectedValue = wartosc; });
+		DodajPowiazanie(suggestBox, TSuggestBox.SelectedItemProperty, pobierzWartosc, ustawWartosc, wartoscZmieniona);
+	}
+
+	private void DodajPowiazanie<T>(TControl kontrolka, Avalonia.AvaloniaProperty wlasciwosc, Func<TModel, T> pobierzWartosc, Action<TModel, T>? ustawWartosc, Action? wartoscZmieniona = null)
+	{
+		var wartosc = new PowiazanaWartosc<T>();
+		wartosc.PropertyChanged += delegate { ustawWartosc?.Invoke(model, wartosc.Wartosc); wartoscZmieniona?.Invoke(); modelZmieniony |= !wartosc.CzyWlasnaZmiana; };
+		kontrolka.DataContext = wartosc;
+		kontrolka.Bind(wlasciwosc, PowiazanaWartosc<T>.Binding);
+		powiazania.Add(delegate { wartosc.CzyWlasnaZmiana = true; wartosc.Wartosc = pobierzWartosc(model); wartosc.CzyWlasnaZmiana = false; });
 	}
 
 	public void Slownik<T>(TComboBox comboBox, PozycjaListy<T>[] wartosci)
@@ -76,4 +77,38 @@ partial class Kontroler<TModel>
 		comboBox.ItemsSource = wartosci;
 	}
 }
+
+class PowiazanaWartosc<T> : INotifyPropertyChanged
+{
+	public static CompiledBinding Binding = CompiledBinding.Create<PowiazanaWartosc<T>, T?>(e => e.Wartosc);
+
+	public bool CzyWlasnaZmiana { get; set; }
+	public bool CzyTrwaZmiana { get; set; }
+
+	public T? Wartosc
+	{
+		get
+		{
+			return field;
+		}
+
+		set
+		{
+			field = value;
+			if (CzyTrwaZmiana) return;
+			CzyTrwaZmiana = true;
+			try
+			{
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Wartosc)));
+			}
+			finally
+			{
+				CzyTrwaZmiana = false;
+			}
+		}
+	}
+
+	public event PropertyChangedEventHandler? PropertyChanged;
+}
+
 #endif

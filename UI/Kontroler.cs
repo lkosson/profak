@@ -39,49 +39,6 @@ partial class Kontroler<TModel>
 		powiazanie(kontrolka, getter, setter, wartoscZmieniona);
 	}
 
-	private void DodajPowiazanie<TKontrolka, TWartosc>(TKontrolka kontrolka, Func<TModel, TWartosc> pobierzWartosc, Action<TKontrolka, TWartosc> ustawWartosc)
-		where TKontrolka : TControl
-	{
-		void Powiazanie() => AktualizujKontrolke(kontrolka, pobierzWartosc, ustawWartosc);
-		if (model != null) Powiazanie();
-		powiazania.Add(Powiazanie);
-	}
-
-	private void AktualizujModel<TWartosc, TKontrolka>(TKontrolka kontrolka, Action<TModel, TWartosc>? ustawWartosc, Func<TKontrolka, TWartosc> pobierzWartosc)
-		where TKontrolka : TControl
-	{
-		if (model is null) return;
-		if (aktualizowaneKontrolki.Contains(kontrolka)) return;
-		aktualizowaneKontrolki.Add(kontrolka);
-		try
-		{
-			var wartosc = pobierzWartosc(kontrolka);
-			ustawWartosc?.Invoke(model, wartosc);
-			modelZmieniony = true;
-		}
-		finally
-		{
-			aktualizowaneKontrolki.Remove(kontrolka);
-		}
-	}
-
-	private void AktualizujKontrolke<TWartosc, TKontrolka>(TKontrolka kontrolka, Func<TModel, TWartosc> pobierzWartosc, Action<TKontrolka, TWartosc> ustawWartosc)
-		where TKontrolka : TControl
-	{
-		if (model is null) return;
-		if (aktualizowaneKontrolki.Contains(kontrolka)) return;
-		aktualizowaneKontrolki.Add(kontrolka);
-		try
-		{
-			var wartosc = pobierzWartosc(model);
-			ustawWartosc(kontrolka, wartosc);
-		}
-		finally
-		{
-			aktualizowaneKontrolki.Remove(kontrolka);
-		}
-	}
-
 	public void AktualizujKontrolki()
 	{
 		foreach (var powiazanie in powiazania) powiazanie();
