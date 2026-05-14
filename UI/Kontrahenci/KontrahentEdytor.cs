@@ -38,7 +38,7 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 	private readonly TButton buttonCertyfikatKSeF;
 	private readonly TTextBox textBoxNazwaBanku;
 	private readonly TButton buttonWaluta;
-	private readonly TSuggestBox comboBoxWaluta;
+	private readonly TComboBox comboBoxWaluta;
 	private readonly TCheckBox checkBoxImportKSeF;
 	private readonly TTabPage tabPageFakturySprzedazy;
 	private readonly TTabPage tabPageFakturyZakupu;
@@ -64,7 +64,7 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 		buttonSposobPlatnosci = Kontrolki.ButtonSlownik();
 		checkBoxTP = Kontrolki.CheckBox("Podmiot powiązany");
 		checkBoxImportKSeF = Kontrolki.CheckBox("Pobrany z KSeF (ukryty przy ręcznym wprowadzaniu faktury)");
-		comboBoxWaluta = Kontrolki.SuggestBox();
+		comboBoxWaluta = Kontrolki.DropDownList();
 		buttonWaluta = Kontrolki.ButtonSlownik();
 
 		textBoxUwagiWewnetrzne = Kontrolki.TextArea();
