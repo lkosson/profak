@@ -7,6 +7,9 @@ namespace ProFak.UI;
 
 partial class Kontroler<TModel>
 {
+	private readonly List<PowiazanaWartosc> powiazaneWartosci = [];
+	public bool CzyModelPoprawny => powiazaneWartosci.All(e => !e.CzyBlad);
+
 	public void Powiazanie(TSuggestBox suggestBox, Expression<Func<TModel, string>> wlasciwosc, Action? wartoscZmieniona = null) => Powiazanie(suggestBox, wlasciwosc, Powiazanie, wartoscZmieniona);
 	public void Powiazanie(TSuggestBox suggestBox, Expression<Func<TModel, int>> wlasciwosc, Action? wartoscZmieniona = null) => Powiazanie(suggestBox, wlasciwosc, Powiazanie, wartoscZmieniona);
 	public void Powiazanie<TWartosc>(TSuggestBox suggestBox, Expression<Func<TModel, TWartosc>> wlasciwosc, Action? wartoscZmieniona = null) => Powiazanie(suggestBox, wlasciwosc, Powiazanie, wartoscZmieniona);
@@ -68,6 +71,7 @@ partial class Kontroler<TModel>
 		kontrolka.DataContext = wartosc;
 		kontrolka.Bind(wlasciwosc, PowiazanaWartosc<T>.Binding);
 		powiazania.Add(delegate { wartosc.CzyWlasnaZmiana = true; wartosc.Wartosc = pobierzWartosc(model); wartosc.CzyWlasnaZmiana = false; });
+		powiazaneWartosci.Add(wartosc);
 	}
 
 	public void Slownik<T>(TComboBox comboBox, PozycjaListy<T>[] wartosci)

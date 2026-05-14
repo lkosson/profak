@@ -10,6 +10,9 @@ class Edytor<TRekord> : Edytor
 	public TRekord Rekord { get => kontroler.Model; private set => kontroler.Model = value; }
 	public Kontekst Kontekst { get; private set; } = default!;
 	public override bool CzyModelZmieniony => kontroler.CzyModelZmieniony;
+#if AVALONIA
+	public override bool CzyModelPoprawny => kontroler.CzyModelPoprawny;
+#endif
 
 	public Edytor()
 	{

@@ -6,11 +6,14 @@ namespace ProFak.UI;
 
 class DialogEdycji : Dialog
 {
+	private TControl zawartosc;
+
 	public bool Wynik { get; private set; }
 
 	public DialogEdycji(string tytul, TControl zawartosc, Kontekst kontekst)
 		: base(tytul, kontekst)
 	{
+		this.zawartosc = zawartosc;
 		var buttonZapisz = Kontrolki.Button("Zapisz [F10]", akcja: Zapisz);
 		var buttonAnuluj = Kontrolki.Button("Anuluj [ESC]", akcja: Zamknij);
 		var uklad = new Siatka([0, 0, -1], [-1, 0]);
@@ -42,7 +45,8 @@ class DialogEdycji : Dialog
 
 	private bool SprawdzPoprawnosc()
 	{
-		return true;
+		if (zawartosc is not Edytor edytor) return true;
+		return edytor.CzyModelPoprawny;
 	}
 
 	public static bool Pokaz(string tytul, TControl zawartosc, Kontekst kontekst, bool pelnyEkran = false)

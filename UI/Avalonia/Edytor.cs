@@ -7,6 +7,7 @@ abstract class Edytor : Avalonia.Controls.Panel, IDisposable
 {
 	protected override Type StyleKeyOverride => typeof(Avalonia.Controls.Panel);
 	public virtual bool CzyModelZmieniony => false;
+	public virtual bool CzyModelPoprawny => true;
 	protected int DeviceDpi => 96;
 
 	public Edytor()
