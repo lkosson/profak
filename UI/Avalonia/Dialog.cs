@@ -33,8 +33,8 @@ class Dialog : Window, IDisposable
 
 	protected override void OnLoaded(RoutedEventArgs e)
 	{
-		MinWidth = Width;
-		MinHeight = Height;
+		if (!Double.IsNaN(Width)) MinWidth = Width;
+		if (!Double.IsNaN(Height)) MinHeight = Height;
 		base.OnLoaded(e);
 		OknoGotowe();
 	}
