@@ -20,6 +20,11 @@ class Slownik<T>
 	private bool ustawionaNowaWartosc;
 	private bool dopuscPustaWartosc;
 
+	private PozycjaListyRekordu<T>? WybranaPozycja =>
+		comboBox?.SelectedItem is PozycjaListyRekordu<T> pozycjaCombo ? pozycjaCombo
+		: suggestBox?.SelectedItem is Ref<T> refSuggest ? suggestBox?.ItemsSource?.OfType<PozycjaListyRekordu<T>>().FirstOrDefault(e => e.Ref == refSuggest)
+		: default;
+
 	public Slownik(Kontekst kontekst, TComboBox comboBox, TButton? button, Func<IEnumerable<T>> pobierzWartosci, Func<T, string> wyswietlanaWartosc, Action<T?> ustawWartosc, Func<SpisZAkcjami<T>> generatorSpisu, bool dopuscPustaWartosc = false)
 	{
 		this.kontekst = kontekst;
@@ -91,7 +96,7 @@ class Slownik<T>
 
 	private void PokazSpis()
 	{
-		var dotychczasowaPozycja = (PozycjaListyRekordu<T>?)(comboBox?.SelectedItem ?? suggestBox?.SelectedItem);
+		var dotychczasowaPozycja = WybranaPozycja;
 		using var spis = generatorSpisu();
 		var wartosc = Spisy.Wybierz(kontekst, spis, "Wybierz pozycję", dotychczasowaPozycja?.Wartosc);
 		if (wartosc == null) return;
@@ -119,8 +124,7 @@ class Slownik<T>
 	private void SelectionChanged(object? sender, Avalonia.Controls.SelectionChangedEventArgs e)
 	{
 		if (!gotowy) return;
-		var pozycja = comboBox?.SelectedItem ?? suggestBox?.SelectedItem;
-		var wartosc = ((PozycjaListyRekordu<T>?)pozycja)?.Wartosc;
+		var wartosc = WybranaPozycja?.Wartosc;
 		ustawWartosc(wartosc);
 		//if (comboBox.Focused && comboBox.DropDownStyle == ComboBoxStyle.DropDown) comboBox.Focus();
 		ustawionaNowaWartosc = true;
