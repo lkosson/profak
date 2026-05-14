@@ -161,6 +161,7 @@ abstract partial class Spis<T> : Spis
 		if (e.PointerPressedEventArgs.Properties.IsLeftButtonPressed && e.PointerPressedEventArgs.ClickCount == 2)
 		{
 			ObsluzKlawisz?.Invoke(TKeys.Enter, TKeyModifiers.None);
+			e.PointerPressedEventArgs.Handled = true;
 		}
 		else if (e.PointerPressedEventArgs.Properties.IsRightButtonPressed)
 		{
