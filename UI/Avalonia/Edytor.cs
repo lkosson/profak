@@ -55,8 +55,7 @@ abstract class Edytor : Avalonia.Controls.Panel, IDisposable
 
 	protected void KontrolkaStartowa(TControl kontrolka)
 	{
-		//TODO Avalonia
-		//ActiveControl = kontrolka;
+		kontrolka.AttachedToVisualTree += delegate { kontrolka.Focus(Avalonia.Input.NavigationMethod.Tab); };
 	}
 
 	public void Wymagane(TTextBox textBox)
