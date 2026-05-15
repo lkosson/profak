@@ -22,6 +22,7 @@ class Slownik<T>
 
 	private PozycjaListyRekordu<T>? WybranaPozycja =>
 		comboBox?.SelectedItem is PozycjaListyRekordu<T> pozycjaCombo ? pozycjaCombo
+		: suggestBox?.SelectedItem is PozycjaListyRekordu<T> pozycjaSuggest ? pozycjaSuggest
 		: suggestBox?.SelectedItem is Ref<T> refSuggest ? suggestBox?.ItemsSource?.OfType<PozycjaListyRekordu<T>>().FirstOrDefault(e => e.Ref == refSuggest)
 		: default;
 
