@@ -65,7 +65,6 @@ public class Generator
 	{
 		// Pobrane przez wywołanie w ZbudujXML
 		ArgumentNullException.ThrowIfNull(dbFaktura.Sprzedawca);
-		ArgumentNullException.ThrowIfNull(dbFaktura.Nabywca);
 		ArgumentNullException.ThrowIfNull(dbFaktura.Waluta);
 		var ksefFaktura = new KSEFFaktura();
 		ksefFaktura.Naglowek = new TNaglowek();
@@ -91,6 +90,10 @@ public class Generator
 		else if (Regex.IsMatch(nipNabywcy, @"^\d{10}$"))
 		{
 			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP = nipNabywcy;
+		}
+		else if (Regex.IsMatch(nipNabywcy, @"^\d{11}$")) // PESEL
+		{
+			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.BrakID = TWybor1.Item1;
 		}
 		else if (Regex.IsMatch(nipNabywcy, @"^(PL)?\d{10}$"))
 		{
