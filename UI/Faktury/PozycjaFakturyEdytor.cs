@@ -124,6 +124,8 @@ partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 			new Grupa("Podatki", podatki),
 			]);
 
+		KontrolkaStartowa(comboBoxTowar);
+
 		UstawZawartosc(uklad);
 	}
 
