@@ -67,10 +67,26 @@ partial class Kontroler<TModel>
 	private void DodajPowiazanie<T>(TControl kontrolka, Avalonia.AvaloniaProperty wlasciwosc, Func<TModel, T> pobierzWartosc, Action<TModel, T>? ustawWartosc, Action? wartoscZmieniona = null)
 	{
 		var wartosc = new PowiazanaWartosc<T>();
-		wartosc.PropertyChanged += delegate { ustawWartosc?.Invoke(model, wartosc.Wartosc); wartoscZmieniona?.Invoke(); modelZmieniony |= !wartosc.CzyWlasnaZmiana; };
+
+		void AktualizujKontrolke()
+		{
+			if (wartosc.CzyWlasnaZmiana) return;
+			wartosc.CzyWlasnaZmiana = true;
+			wartosc.Wartosc = pobierzWartosc(model);
+			wartosc.CzyWlasnaZmiana = false;
+		}
+
+		void AktualizujModel()
+		{
+			ustawWartosc?.Invoke(model, wartosc.Wartosc);
+			wartoscZmieniona?.Invoke();
+			modelZmieniony |= !wartosc.CzyWlasnaZmiana;
+		}
+
+		wartosc.PropertyChanged += delegate { AktualizujModel(); };
 		kontrolka.DataContext = wartosc;
 		kontrolka.Bind(wlasciwosc, PowiazanaWartosc<T>.Binding);
-		powiazania.Add(delegate { wartosc.CzyWlasnaZmiana = true; wartosc.Wartosc = pobierzWartosc(model); wartosc.CzyWlasnaZmiana = false; });
+		powiazania.Add(AktualizujKontrolke);
 		powiazaneWartosci.Add(wartosc);
 	}
 
