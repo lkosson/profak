@@ -23,6 +23,13 @@ public static class Program
 			Baza.Przygotuj();
 			Wyglad.WczytajZBazy();
 
+			{
+				using var ctx = new Kontekst();
+				var fvs = ctx.Baza.Faktury.ToArray();
+				var fw = new Wydruki.Faktura(ctx.Baza, fvs.Select(e => e.Ref));
+				fw.QPDF();
+			}
+
 			if (args.Length > 0)
 			{
 				if (args[0] == "xsd") Wydruki.GeneratorXSD.Utworz();

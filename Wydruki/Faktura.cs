@@ -164,6 +164,11 @@ public class Faktura : Wydruk
 		}
 	}
 
+	public void QPDF()
+	{
+		new FakturaQ().Przygotuj(dane);
+	}
+
 	public override void Przygotuj(LocalReport report)
 	{
 		using var rdlc = WczytajSzablon("Faktura");
