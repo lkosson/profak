@@ -91,6 +91,10 @@ public class Generator
 		{
 			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP = nipNabywcy;
 		}
+		else if (Regex.IsMatch(nipNabywcy, @"^\d{11}$")) // PESEL
+		{
+			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.BrakID = TWybor1.Item1;
+		}
 		else if (Regex.IsMatch(nipNabywcy, @"^(PL)?\d{10}$"))
 		{
 			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP = nipNabywcy.Substring(2);
