@@ -56,7 +56,14 @@ abstract class Edytor : Avalonia.Controls.Panel, IDisposable
 
 	protected void KontrolkaStartowa(TControl kontrolka)
 	{
-		kontrolka.AttachedToVisualTree += delegate { kontrolka.Focus(Avalonia.Input.NavigationMethod.Tab); };
+		kontrolka.AttachedToVisualTree += delegate 
+		{
+			var topLevel = TopLevel.GetTopLevel(this);
+			topLevel?.Opened += delegate
+			{
+				kontrolka.Focus(Avalonia.Input.NavigationMethod.Tab);
+			};
+		};
 	}
 
 	public void Wymagane(TControl kontrolka)
