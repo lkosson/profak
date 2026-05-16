@@ -253,7 +253,7 @@ partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 	{
 		var towar = new Towar
 		{
-			Nazwa = comboBoxTowar.Text,
+			Nazwa = comboBoxTowar.Text ?? "",
 			StawkaVatRef = Rekord.StawkaVatRef,
 			CenaNetto = Rekord.CenaNetto,
 			CenaBrutto = Rekord.CenaBrutto,

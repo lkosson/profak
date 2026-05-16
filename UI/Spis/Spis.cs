@@ -16,7 +16,6 @@ abstract partial class Spis<T> : Spis
 	private readonly List<(string kolumna, bool malejaco, Func<T, IComparable> metoda)> kolumnyKolejnosci = [];
 	private readonly Dictionary<int, Func<T, string?>> tooltipyDlaKolumn = [];
 	private bool rekordyPodczasZmiany;
-	private bool kolumnyZmienione;
 
 	public Kontekst Kontekst { get; set; } = default!;
 	public IEnumerable<T> WybraneRekordy

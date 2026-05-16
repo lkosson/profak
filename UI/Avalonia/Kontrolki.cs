@@ -308,7 +308,7 @@ static class RozszerzeniaKontrolek
 
 	extension(TSuggestBox kontrolka)
 	{
-		public object? SelectedValue { get => (kontrolka?.SelectedItem as IPozycjaListy)?.Wartosc; set => kontrolka.SelectedItem = kontrolka.ItemsSource.OfType<IPozycjaListy>().FirstOrDefault(e => e.Wartosc == value); }
+		public object? SelectedValue { get => (kontrolka?.SelectedItem as IPozycjaListy)?.Wartosc; set => kontrolka.SelectedItem = kontrolka.ItemsSource?.OfType<IPozycjaListy>().FirstOrDefault(e => e.Wartosc == value); }
 	}
 
 	extension(TComboBox kontrolka)

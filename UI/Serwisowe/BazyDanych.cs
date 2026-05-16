@@ -79,7 +79,7 @@ class BazyDanych : Edytor, IKontrolkaZKontekstem
 			OknoKomunikatu.Ostrzezenie("Nie można przenieść tymczasowej bazy danych.");
 			return;
 		}
-		if (staryPlik == nowyPlik)
+		if (String.IsNullOrEmpty(nowyPlik) || staryPlik == nowyPlik)
 		{
 			OknoKomunikatu.Informacja("Wprowadź ręcznie lub wybierz z listy obok ścieżkę, do której ma zostać przeniesiona baza danych.");
 			return;

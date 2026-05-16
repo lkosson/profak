@@ -36,6 +36,7 @@ class EkranSQL : Edytor, IKontrolkaZKontekstem
 	{
 		try
 		{
+			if (String.IsNullOrWhiteSpace(textBoxSQL.Text)) return;
 			var wynik = Kontekst.Baza.Zapytanie(FormattableStringFactory.Create(textBoxSQL.Text));
 			var tabela = new DataTable();
 			if (wynik.Any())

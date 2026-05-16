@@ -90,7 +90,7 @@ partial class KonfiguracjaSpisu : Edytor
 		if (listBoxKolumny.SelectedItem is not KolumnaSpisu kolumna) return;
 		ZmienWartosci(delegate
 		{
-			kolumna.Szerokosc = (int)numericUpDownSzerokosc.Value;
+			kolumna.Szerokosc = (int?)numericUpDownSzerokosc.Value ?? 0;
 		});
 	}
 
@@ -99,7 +99,7 @@ partial class KonfiguracjaSpisu : Edytor
 		if (listBoxKolumny.SelectedItem is not KolumnaSpisu kolumna) return;
 		ZmienWartosci(delegate
 		{
-			kolumna.Kolejnosc = (int)numericUpDownKolejnosc.Value;
+			kolumna.Kolejnosc = (int?)numericUpDownKolejnosc.Value ?? 0;
 		});
 	}
 
@@ -108,7 +108,7 @@ partial class KonfiguracjaSpisu : Edytor
 		if (listBoxKolumny.SelectedItem is not KolumnaSpisu kolumna) return;
 		ZmienWartosci(delegate
 		{
-			kolumna.PoziomSortowania = (int)numericUpDownPoziomSortowania.Value;
+			kolumna.PoziomSortowania = (int?)numericUpDownPoziomSortowania.Value ?? 0;
 		});
 	}
 

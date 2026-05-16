@@ -16,7 +16,7 @@ partial class Menu : Avalonia.Controls.TreeView
 {
 	protected override Type StyleKeyOverride => typeof(Avalonia.Controls.TreeView);
 	public ObservableCollection<TTreeNode> Nodes { get; } = [];
-	public TTreeNode? SelectedNode { get => (TTreeNode?)SelectedItem; set { SelectedItem = value; Wyswietl(value); } }
+	public TTreeNode? SelectedNode { get => (TTreeNode?)SelectedItem; set { SelectedItem = value; if (value != null) Wyswietl(value); } }
 
 	private void Zbuduj(bool pokazUkryte = false)
 	{

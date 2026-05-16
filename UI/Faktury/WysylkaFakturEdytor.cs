@@ -120,9 +120,9 @@ class WysylkaFakturEdytor : Edytor
 		nowyKontekst.Baza.Zapisz(fakturaDoZapisu);
 
 		var idx = comboBoxFaktura.SelectedIndex;
-		var temat = textBoxTemat.Text;
-		var tresc = textBoxTresc.Text;
-		var adresat = textBoxAdresat.Text;
+		var temat = textBoxTemat.Text ?? "";
+		var tresc = textBoxTresc.Text ?? "";
+		var adresat = textBoxAdresat.Text ?? "";
 		var nadawca = fakturaDoWysylki.PodstawPolaWysylki(szablonNadawca);
 		if (!MailAddress.TryCreate(adresat, out var _)) throw new ApplicationException($"Adres odbiorcy \"{adresat}\" jest nieprawidłowy.");
 		if (!MailAddress.TryCreate(nadawca, out var _)) throw new ApplicationException($"Adres nadawcy \"{nadawca}\" jest nieprawidłowy.");
@@ -205,19 +205,19 @@ class WysylkaFakturEdytor : Edytor
 	private void ZmienionyAdresat()
 	{
 		if (comboBoxFaktura.SelectedIndex != 0) return;
-		szablonAdresat = textBoxAdresat.Text;
+		szablonAdresat = textBoxAdresat.Text ?? "";
 	}
 
 	private void ZmienionyTemat()
 	{
 		if (comboBoxFaktura.SelectedIndex != 0) return;
-		szablonTemat = textBoxTemat.Text;
+		szablonTemat = textBoxTemat.Text ?? "";
 	}
 
 	private void ZmienionaTresc()
 	{
 		if (comboBoxFaktura.SelectedIndex != 0) return;
-		szablonTresc = textBoxTresc.Text;
+		szablonTresc = textBoxTresc.Text ?? "";
 	}
 
 	private void ZmienionaData()

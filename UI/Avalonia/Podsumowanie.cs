@@ -16,7 +16,7 @@ partial class Podsumowanie : TText
 	{
 	}
 
-	public string Text
+	public new string Text
 	{
 		set
 		{

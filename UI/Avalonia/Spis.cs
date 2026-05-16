@@ -227,7 +227,6 @@ abstract partial class Spis<T> : Spis
 			kolumnaSpisu.DisplayIndex = kolumna.Kolejnosc;
 			if (kolumna.PoziomSortowania != 0) kolumnaSpisu.Sort(kolumna.PoziomSortowania < 0 ? ListSortDirection.Descending : ListSortDirection.Ascending);
 		}
-		kolumnyZmienione = false;
 	}
 
 	private void ZapiszKonfiguracje()

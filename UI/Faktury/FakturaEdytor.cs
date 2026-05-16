@@ -502,7 +502,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 
 	private void NowySprzedawca()
 	{
-		var kontrahent = new Kontrahent { Nazwa = comboBoxNazwaSprzedawcy.Text, NIP = comboBoxNIPSprzedawcy.Text, AdresRejestrowy = textBoxDaneSprzedawcy.Text };
+		var kontrahent = new Kontrahent { Nazwa = comboBoxNazwaSprzedawcy.Text ?? "", NIP = comboBoxNIPSprzedawcy.Text ?? "", AdresRejestrowy = textBoxDaneSprzedawcy.Text ?? "" };
 		if (!EdytorNowegoKontrahenta(kontrahent)) return;
 		slownikSprzedawcaNazwa.Przeladuj();
 		slownikSprzedawcaNIP.Przeladuj();
@@ -512,7 +512,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 
 	private void NowyNabywca()
 	{
-		var kontrahent = new Kontrahent { Nazwa = comboBoxNazwaNabywcy.Text, NIP = comboBoxNIPNabywcy.Text, AdresRejestrowy = textBoxDaneNabywcy.Text };
+		var kontrahent = new Kontrahent { Nazwa = comboBoxNazwaNabywcy.Text ?? "", NIP = comboBoxNIPNabywcy.Text ?? "", AdresRejestrowy = textBoxDaneNabywcy.Text ?? "" };
 		if (!EdytorNowegoKontrahenta(kontrahent)) return;
 		slownikNabywcaNazwa.Przeladuj();
 		slownikNabywcaNIP.Przeladuj();
