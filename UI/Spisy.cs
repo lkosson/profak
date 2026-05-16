@@ -120,6 +120,7 @@ class Spisy
 	public static SpisZAkcjami<Faktura, KSeFSpis> KSeFSprzedaz(KSeFSpisParametry parametry)
 	{
 		return Utworz(new KSeFSpis() { Parametry = parametry },
+			new DodajJakoSprzedazAkcja(),
 			new ZapiszJakoXMLAkcja(),
 			new ZapiszJakoPDFZKSeFAkcja(spisKSeF: true),
 			new PrzeladujAkcja<Faktura>()
