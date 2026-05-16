@@ -15,9 +15,6 @@ public static class Program
 			Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 			Wyglad.ZaladujDomyslny();
 			CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("pl-PL");
-#if QUESTPDF
-			QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
-#endif
 			Baza.UstalSciezkeBazy();
 			Interfejs.Przygotuj();
 #if !SQLSERVER
@@ -53,7 +50,7 @@ public static class Program
 				}
 			}
 
-			if (Wyglad.WstepneLadowanieReportingServices) OknoWydruku.ZaladujWstepnieReportViewer();
+			Wydruki.Wydruk.WstepneLadowanie();
 			GlowneOkno.Pokaz();
 		}
 		catch (Exception exc)
