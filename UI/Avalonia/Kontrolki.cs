@@ -238,8 +238,7 @@ class Kontrolki
 	{
 		var pozycja = new TMenuItem();
 		pozycja.Header = etykieta;
-		// TODO Avalonia
-		//pozycja.InputGesture = skrot;
+		if (!String.IsNullOrEmpty(skrot)) pozycja.InputGesture = Avalonia.Input.KeyGesture.Parse(skrot.Replace("-", "+").Replace("INS", "INSERT").Replace("DEL", "DELETE"));
 		pozycja.Click += BezpiecznaAkcja(akcja);
 		return pozycja;
 	}
