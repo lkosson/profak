@@ -108,6 +108,7 @@ class Kontrolki
 		var button = new DropDownButton();
 		button.Content = tekst;
 		button.ContextMenu = menu;
+		button.Click += delegate { button.ContextMenu.Open(); };
 		return button;
 	}
 
