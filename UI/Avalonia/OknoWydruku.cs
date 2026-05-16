@@ -34,8 +34,9 @@ class OknoWydruku : Form
 
 	public OknoWydruku(Wydruki.Wydruk wydruk)
 	{
-		//TODO Avalonia
-		//Icon = GlowneOkno.Ikona;
+#if WINFORMS
+		Icon = GlowneOkno.Ikona;
+#endif
 		WindowState = FormWindowState.Maximized;
 		ShowInTaskbar = false;
 		KeyPreview = true;

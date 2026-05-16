@@ -54,7 +54,6 @@ class Wyglad
 
 	private static void UstawCzcionke()
 	{
-		// TODO Avalonia
 #if WINFORMS
 		if (!RozmiarCzcionki.HasValue) return;
 		try
