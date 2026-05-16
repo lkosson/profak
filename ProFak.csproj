@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <DefineConstants>$(DefineConstants);nSQLSERVER;AVALONIA;</DefineConstants>
+    <DefineConstants>$(DefineConstants);nSQLSERVER;WINFORMS;</DefineConstants>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
