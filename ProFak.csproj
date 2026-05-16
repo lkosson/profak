@@ -1,9 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <ProFakWinForms>true</ProFakWinForms>
+    <ProFakAvalonia>false</ProFakAvalonia>
+    <ProFakSqlServer>false</ProFakSqlServer>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows7.0</TargetFramework>
-    <UseWindowsForms>true</UseWindowsForms>
     <Authors>Łukasz Kosson</Authors>
     <ApplicationIcon>ikona.ico</ApplicationIcon>
     <Version>1.18.1</Version>
@@ -11,14 +16,23 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <DefineConstants>$(DefineConstants);nSQLSERVER;WINFORMS;</DefineConstants>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <PropertyGroup Condition="$(DefineConstants.Contains(;AVALONIA;))">
+  <PropertyGroup Condition="'$(ProFakWinForms)' == 'true'">
+    <UseWindowsForms>true</UseWindowsForms>
+    <DefineConstants>$(DefineConstants);WINFORMS</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(ProFakAvalonia)' == 'true'">
+    <DefineConstants>$(DefineConstants);AVALONIA</DefineConstants>
     <AvaloniaUseCompiledBindingsByDefault>false</AvaloniaUseCompiledBindingsByDefault>
     <EnableAvaloniaXamlCompilation>false</EnableAvaloniaXamlCompilation>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(ProFakSqlServer)' == 'true'">
+    <DefineConstants>$(DefineConstants);SQLSERVER</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -53,16 +67,16 @@
     <PackageReference Include="QRCoder" Version="1.8.0" />
     <PackageReference Include="ReportViewerCore.WinForms" Version="15.1.33" />
   </ItemGroup>
-  <ItemGroup Condition="$(DefineConstants.Contains(;SQLSERVER;))">
+  <ItemGroup Condition="'$(ProFakSqlServer)' == 'true'">
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.2" />
   </ItemGroup>
-  <ItemGroup Condition="$(DefineConstants.Contains(;AVALONIA;))">
+  <ItemGroup Condition="'$(ProFakAvalonia)' == 'true'">
     <PackageReference Include="Avalonia.Controls.DataGrid" Version="12.0.0" />
     <PackageReference Include="Avalonia.Desktop" Version="12.0.1" />
     <PackageReference Include="Avalonia.Themes.Simple" Version="12.0.1" />
   </ItemGroup>
 
-  <ItemGroup Condition="!$(DefineConstants.Contains(;SQLSERVER;))">
+  <ItemGroup Condition="'$(ProFakSqlServer)' != 'true'">
     <Compile Remove="DB\Migrations-SqlServer\*.cs"></Compile>
   </ItemGroup>
 
