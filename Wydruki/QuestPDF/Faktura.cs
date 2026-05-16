@@ -44,7 +44,7 @@ public partial class Faktura
 
 		private TextStyle Czcionka(TextStyle styl)
 		{
-			return styl.FontFamily("Calibri").FontSize(10);
+			return styl.FontFamily("Calibri").FontSize(RozmiarTekst);
 		}
 
 		private void Zawartosc(ColumnDescriptor zawartosc)
@@ -267,14 +267,14 @@ public partial class Faktura
 			stopka.Item().Element(NaglowekPlusTekst("Procedura marży", naglowek.ProceduraMarzy));
 			stopka.Item().Element(SekcjaSformatowana(naglowek.Uwagi));
 			stopka.Item().Height(0.6f, Unit.Centimetre);
-			stopka.Item().AlignRight().Column(KodQR);
+			stopka.Item().AlignRight().Width(5, Unit.Centimetre).Column(KodQR);
 		}
 
 		private void KodQR(ColumnDescriptor kodQR)
 		{
 			if (String.IsNullOrEmpty(naglowek.KodKSeF)) return;
 			kodQR.Item().Image(Convert.FromBase64String(naglowek.KodKSeF));
-			kodQR.Item().Text(naglowek.NumerKSeF);
+			kodQR.Item().Text(naglowek.NumerKSeF).AlignCenter().FontFamily("Consolas", "Courier New");
 		}
 	}
 }
