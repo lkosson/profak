@@ -1,4 +1,4 @@
-using ProFak.DB;
+ï»¿using ProFak.DB;
 using ProFak.UI;
 using System.Globalization;
 using System.Text;
@@ -44,7 +44,7 @@ public static class Program
 				var podmiot = kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot);
 				if (podmiot == null)
 				{
-					OknoKomunikatu.Informacja("Przed rozpoczêciem korzystania z programu nale¿y uzupe³niæ dane firmy.");
+					OknoKomunikatu.Informacja("Przed rozpoczÄ™ciem korzystania z programu naleÅ¼y uzupeÅ‚niÄ‡ dane firmy.");
 					var _ = Enumerable.Empty<DB.Kontrahent>();
 					new UI.MojaFirmaAkcja().Uruchom(kontekst, ref _);
 				}
