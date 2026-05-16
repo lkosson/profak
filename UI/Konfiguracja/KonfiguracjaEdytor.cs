@@ -109,7 +109,7 @@ partial class KonfiguracjaEdytor : Edytor<Konfiguracja>
 		siatkaWyglad.DodajWiersz("Czcionka", [textBoxNazwaCzcionki, null, textBoxRozmiarCzcionki, Kontrolki.ButtonSlownik(WybierzCzcionke)]);
 #endif
 #if AVALONIA
-		siatkaWyglad.DodajWiersz("Czcionka", [textBoxNazwaCzcionki]);
+		siatkaWyglad.DodajWiersz("Czcionka", [(new Poziomo([textBoxNazwaCzcionki, textBoxRozmiarCzcionki]), 7)]);
 #endif
 		siatkaWyglad.DodajWiersz("Wysokość wierszy spisu", [numericUpDownWysokoscWierszy]);
 

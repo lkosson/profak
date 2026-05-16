@@ -35,6 +35,7 @@ class OknoKomunikatu
 	{
 		int? wynik = null;
 		var window = new Window { Title = "ProFak" };
+		Wyglad.UstawCzcionke(window);
 		window.SetValue(XYFocus.NavigationModesProperty, XYFocusNavigationModes.Enabled);
 		var textBlockIkona = new TText { Text = ikona, FontSize = 30 };
 		var textBlockKomunikat = new TText

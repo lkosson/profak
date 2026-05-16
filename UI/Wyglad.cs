@@ -69,6 +69,14 @@ class Wyglad
 #endif
 	}
 
+#if AVALONIA
+	public static void UstawCzcionke(Avalonia.Controls.Window okno)
+	{
+		if (!String.IsNullOrEmpty(NazwaCzcionki)) okno.FontFamily = new Avalonia.Media.FontFamily(NazwaCzcionki);
+		if (RozmiarCzcionki.HasValue) okno.FontSize = RozmiarCzcionki.Value;
+	}
+#endif
+
 	public static int PrzeskalujRozmiar(int rozmiarPx)
 	{
 		if (!RozmiarCzcionki.HasValue) return rozmiarPx;

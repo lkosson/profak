@@ -12,6 +12,7 @@ partial class GlowneOkno : Window
 
 	public GlowneOkno()
 	{
+		Wyglad.UstawCzcionke(this);
 		menu = new Menu(ZbudujMenu);
 
 		panelZawartosc = new Panel();

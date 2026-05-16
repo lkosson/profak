@@ -11,6 +11,7 @@ class Dialog : Window, IDisposable
 
 	protected Dialog(string tytul, Kontekst kontekst)
 	{
+		Wyglad.UstawCzcionke(this);
 		SizeToContent = SizeToContent.WidthAndHeight;
 		ShowInTaskbar = false;
 		Icon = GlowneOkno.Ikona;
