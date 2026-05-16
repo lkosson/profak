@@ -1,9 +1,9 @@
-﻿#if WINFORMS
+﻿#if WINFORMS && REPORTVIEWER
 namespace ProFak.UI;
 
 class OknoWydruku : Form
 {
-	internal readonly Microsoft.Reporting.WinForms.ReportViewer reportViewer;
+	private readonly Microsoft.Reporting.WinForms.ReportViewer reportViewer;
 	private readonly Wydruki.Wydruk wydruk;
 
 	public OknoWydruku(Wydruki.Wydruk wydruk)

@@ -12,7 +12,6 @@ class WydrukFakturyAkcja : AkcjaNaSpisie<Faktura>
 	public override void Uruchom(Kontekst kontekst, ref IEnumerable<Faktura> zaznaczoneRekordy)
 	{
 		var wydruk = new Wydruki.Faktura(kontekst.Baza, zaznaczoneRekordy.Select(faktura => faktura.Ref), CzyDuplikat);
-		using var okno = new OknoWydruku(wydruk);
-		okno.ShowDialog();
+		wydruk.Uruchom();
 	}
 }
