@@ -159,7 +159,7 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 		UstawZawartosc(uklad);
 	}
 
-	private string? WalidacjaNIP(string nip)
+	private string? WalidacjaNIP(string? nip)
 	{
 		if (String.IsNullOrWhiteSpace(nip)) return null;
 		nip = nip.Replace("-", "");
@@ -197,7 +197,7 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 		return "NIP nie jest poprawny.";
 	}
 
-	private string? WalidacjaNazwy(string nazwa)
+	private string? WalidacjaNazwy(string? nazwa)
 	{
 		if (String.IsNullOrWhiteSpace(nazwa)) return "Należy podać nazwę firmy"; // Potrzebne (żeby się wyświeliła ikona błędu) mimo Wymagane(textBoxNazwa) w konstrukorze
 		static string TrzonNazwy(string nazwa) => String.Join("", nazwa.Where(Char.IsLetterOrDigit).Select(Char.ToLower));
@@ -217,7 +217,7 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 		return null;
 	}
 
-	private string? WalidacjaPelnejNazwy(string pelnaNazwa)
+	private string? WalidacjaPelnejNazwy(string? pelnaNazwa)
 	{
 		if (String.IsNullOrWhiteSpace(pelnaNazwa)) return null;
 		var innyKontrahent = Kontekst.Baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.PelnaNazwa == pelnaNazwa && kontrahent.Id != Rekord.Id);

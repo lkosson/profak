@@ -52,7 +52,7 @@ class WplataEdytor : EdytorDwieKolumny<Wplata>
 		UstawRozmiar();
 	}
 
-	private string? WalidacjaUwag(string uwagi)
+	private string? WalidacjaUwag(string? uwagi)
 	{
 		if (Rekord.CzyRozliczenie && String.IsNullOrEmpty(uwagi)) return "Należy podać opis rozliczenia";
 		return null;

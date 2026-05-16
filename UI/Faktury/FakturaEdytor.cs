@@ -284,7 +284,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 		return null;
 	}
 
-	private string? WalidacjaNumer(string numer)
+	private string? WalidacjaNumer(string? numer)
 	{
 		if (String.IsNullOrWhiteSpace(numer)) return Rekord.Numerator.HasValue ? null : "Należy uzupełnić numer faktury.";
 		var innaFaktura = Kontekst.Baza.Faktury.FirstOrDefault(faktura => faktura.Numer == Rekord.Numer && faktura.NIPSprzedawcy == Rekord.NIPSprzedawcy && faktura.Id != Rekord.Id);

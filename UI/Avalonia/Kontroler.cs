@@ -78,7 +78,7 @@ partial class Kontroler<TModel>
 
 		void AktualizujModel()
 		{
-			ustawWartosc?.Invoke(model, wartosc.Wartosc);
+			ustawWartosc?.Invoke(model, wartosc.Wartosc!);
 			wartoscZmieniona?.Invoke();
 			modelZmieniony |= !wartosc.CzyWlasnaZmiana;
 		}
@@ -114,7 +114,7 @@ class PowiazanaWartosc : INotifyPropertyChanged
 
 		set
 		{
-			object nowaWartosc = value;
+			object? nowaWartosc = value;
 			foreach (var (walidator, miekki) in walidatory)
 			{
 				var wynik = walidator(nowaWartosc);
