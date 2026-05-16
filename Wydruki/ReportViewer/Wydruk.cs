@@ -1,4 +1,5 @@
-﻿using Microsoft.Reporting.WinForms;
+﻿#if REPORTVIEWER
+using Microsoft.Reporting.WinForms;
 using ProFak.DB;
 using System.Reflection;
 
@@ -24,3 +25,4 @@ public abstract class Wydruk
 		return pdf;
 	}
 }
+#endif

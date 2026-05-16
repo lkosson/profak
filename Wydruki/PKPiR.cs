@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Reporting.WinForms;
 using ProFak.DB;
 
 namespace ProFak.Wydruki;
 
-public class PKPiR : Wydruk
+public partial class PKPiR : Wydruk
 {
 	private readonly List<PKPiRDTO> dane;
 
@@ -61,12 +60,5 @@ public class PKPiR : Wydruk
 
 			dane.Add(dto);
 		}
-	}
-
-	public override void Przygotuj(LocalReport report)
-	{
-		using var rdlc = WczytajSzablon("PKPiR");
-		report.LoadReportDefinition(rdlc);
-		report.DataSources.Add(new ReportDataSource("DS", dane));
 	}
 }

@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Reporting.WinForms;
 using ProFak.DB;
 using QRCoder;
 
 namespace ProFak.Wydruki;
 
-public class Faktura : Wydruk
+public partial class Faktura : Wydruk
 {
 	private readonly List<FakturaDTO> dane;
 
@@ -161,29 +160,6 @@ public class Faktura : Wydruk
 
 				dane.Add(pozycjaDTO);
 			}
-		}
-	}
-
-	public void QPDF()
-	{
-		new FakturaQ().Przygotuj(dane);
-	}
-
-	public override void Przygotuj(LocalReport report)
-	{
-		using var rdlc = WczytajSzablon("Faktura");
-		report.DisplayName = String.Join(", ", dane.Select(e => e.Numer).Distinct().Order());
-		report.LoadReportDefinition(rdlc);
-		report.LoadSubreportDefinition("PozycjeVatRabat", WczytajSzablon("FakturaPozycjeVatRabat"));
-		report.LoadSubreportDefinition("PozycjeVat", WczytajSzablon("FakturaPozycjeVat"));
-		report.LoadSubreportDefinition("PozycjeRabat", WczytajSzablon("FakturaPozycjeRabat"));
-		report.LoadSubreportDefinition("Pozycje", WczytajSzablon("FakturaPozycje"));
-		report.SubreportProcessing += SubreportProcessing;
-		report.DataSources.Add(new ReportDataSource("DSFaktury", dane));
-
-		void SubreportProcessing(object? sender, SubreportProcessingEventArgs e)
-		{
-			e.DataSources.Add(report.DataSources[0]);
 		}
 	}
 }

@@ -1,23 +1,23 @@
-﻿using QuestPDF.Fluent;
+﻿#if QUESTPDF
+using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 
 namespace ProFak.Wydruki;
 
-internal class FakturaQ
+public partial class Faktura
 {
-	public void Przygotuj(IEnumerable<FakturaDTO> dane)
+	public override IDocument Przygotuj()
 	{
-		QuestPDF.Settings.License = LicenseType.Community;
-
 		var dokumenty = new List<IDocument>();
 		foreach (var faktura in dane.GroupBy(e => e.Numer).OrderBy(g => g.Key))
 		{
 			var dokument = new Szablon(faktura.First(e => String.IsNullOrEmpty(e.LP)), faktura.Where(e => !String.IsNullOrEmpty(e.LP)));
 			dokumenty.Add(dokument);
 		}
+
 		var zbiorczy = Document.Merge(dokumenty);
-		zbiorczy.GeneratePdfAndShow();
+		return zbiorczy;
 	}
 
 	class Szablon(FakturaDTO naglowek, IEnumerable<FakturaDTO> pozycje) : IDocument
@@ -278,3 +278,4 @@ internal class FakturaQ
 		}
 	}
 }
+#endif

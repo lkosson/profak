@@ -15,6 +15,9 @@ public static class Program
 			Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 			Wyglad.ZaladujDomyslny();
 			CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("pl-PL");
+#if QUESTPDF
+			QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
+#endif
 			Baza.UstalSciezkeBazy();
 			Interfejs.Przygotuj();
 #if !SQLSERVER
@@ -22,13 +25,6 @@ public static class Program
 #endif
 			Baza.Przygotuj();
 			Wyglad.WczytajZBazy();
-
-			{
-				using var ctx = new Kontekst();
-				var fvs = ctx.Baza.Faktury.ToArray();
-				var fw = new Wydruki.Faktura(ctx.Baza, fvs.Select(e => e.Ref));
-				fw.QPDF();
-			}
 
 			if (args.Length > 0)
 			{
