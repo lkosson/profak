@@ -4,6 +4,8 @@
     <ProFakWinForms>true</ProFakWinForms>
     <ProFakAvalonia>false</ProFakAvalonia>
     <ProFakSqlServer>false</ProFakSqlServer>
+    <ProFakReportViewer>true</ProFakReportViewer>
+    <ProFakQuestPDF>false</ProFakQuestPDF>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -35,9 +37,21 @@
     <DefineConstants>$(DefineConstants);SQLSERVER</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(ProFakReportViewer)' == 'true'">
+    <DefineConstants>$(DefineConstants);REPORTVIEWER</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(ProFakQuestPDF)' == 'true'">
+    <DefineConstants>$(DefineConstants);QUESTPDF</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="IO\KSEFPDF\ksef-fe-invoice-converter.umd.cjs" />
     <None Remove="IO\KSEFPDF\ksef-fe-invoice-converter-wrapper.cjs" />
+    <None Remove="Wydruki\FakturaPozycje.rdlc" />
+    <None Remove="Wydruki\FakturaPozycjeVat.rdlc" />
+    <None Remove="Wydruki\FakturaPozycjeRabat.rdlc" />
+    <None Remove="Wydruki\FakturaPozycjeVatRabat.rdlc" />
     <None Remove="Wydruki\EwidencjaPrzychodow.rdlc" />
     <None Remove="Wydruki\Faktura.rdlc" />
     <None Remove="Wydruki\PKPiR.rdlc" />
@@ -47,6 +61,9 @@
     <EmbeddedResource Include="ikona.ico" />
     <EmbeddedResource Include="IO\KSEFPDF\ksef-fe-invoice-converter.umd.cjs" />
     <EmbeddedResource Include="IO\KSEFPDF\ksef-fe-invoice-converter-wrapper.cjs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(ProFakReportViewer)' == 'true'">
     <EmbeddedResource Include="Wydruki\FakturaPozycje.rdlc" />
     <EmbeddedResource Include="Wydruki\FakturaPozycjeVat.rdlc" />
     <EmbeddedResource Include="Wydruki\FakturaPozycjeRabat.rdlc" />
@@ -65,7 +82,12 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.7" />
     <PackageReference Include="QRCoder" Version="1.8.0" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(ProFakReportViewer)' == 'true'">
     <PackageReference Include="ReportViewerCore.WinForms" Version="15.1.33" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(ProFakQuestPDF)' == 'true'">
+    <PackageReference Include="QuestPDF" Version="2026.5.0" />
   </ItemGroup>
   <ItemGroup Condition="'$(ProFakSqlServer)' == 'true'">
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.2" />
