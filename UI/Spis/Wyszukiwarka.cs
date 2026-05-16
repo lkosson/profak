@@ -26,7 +26,7 @@ partial class Wyszukiwarka<TRekord>
 				Func<TRekord, bool> dopasowanieFragmentu = rekord => rekord.CzyPasuje(fraza);
 				dopasowania.Add(dopasowanieFragmentu);
 			}
-			spis.UstawFiltr((Func<TRekord, bool>)Delegate.Combine(dopasowania.ToArray())!);
+			spis.UstawFiltr(rekord => dopasowania.All(f => f(rekord)));
 		}
 	}
 }
