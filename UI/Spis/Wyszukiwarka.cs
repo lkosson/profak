@@ -23,8 +23,8 @@ partial class Wyszukiwarka<TRekord>
 			{
 				if (!fragment.Success) continue;
 				var fraza = fragment.Value;
-				Func<TRekord, bool> dopasowanieFragmentu = rekord => rekord.CzyPasuje(fraza);
-				dopasowania.Add(dopasowanieFragmentu);
+				if (fraza.StartsWith('!')) dopasowania.Add(rekord => !rekord.CzyPasuje(fraza[1..]));
+				else dopasowania.Add(rekord => rekord.CzyPasuje(fraza));
 			}
 			spis.UstawFiltr(rekord => dopasowania.All(f => f(rekord)));
 		}

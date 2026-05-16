@@ -12,9 +12,14 @@ public class Rekord
 
 	public virtual bool CzyPasuje(string fraza) => CzyPasuje(Id, fraza);
 
-	protected static bool CzyPasuje(string? pole, string fraza) => pole != null && pole.Contains(fraza, StringComparison.CurrentCultureIgnoreCase);
-	protected static bool CzyPasuje(int pole, string fraza) => Int32.TryParse(fraza, out var wartosc) && pole == wartosc;
-	protected static bool CzyPasuje(decimal pole, string fraza) => Decimal.TryParse(fraza, out var wartosc) && pole == wartosc;
+	protected static bool CzyPasuje(string? pole, string fraza) => (pole != null && pole.Contains(fraza, StringComparison.CurrentCultureIgnoreCase))
+		|| (fraza.StartsWith('=') && pole == fraza[1..]);
+	protected static bool CzyPasuje(int pole, string fraza) => (Int32.TryParse(fraza, out var wartosc) && pole == wartosc)
+		|| (fraza.StartsWith('>') && Int32.TryParse(fraza[1..], out var wartoscWieksza) && pole > wartoscWieksza)
+		|| (fraza.StartsWith('<') && Int32.TryParse(fraza[1..], out var wartoscMniejsza) && pole > wartoscMniejsza);
+	protected static bool CzyPasuje(decimal pole, string fraza) => (Decimal.TryParse(fraza, out var wartosc) && pole == wartosc) 
+		|| (fraza.StartsWith('>') && Decimal.TryParse(fraza[1..], out var wartoscWieksza) && pole > wartoscWieksza)
+		|| (fraza.StartsWith('<') && Decimal.TryParse(fraza[1..], out var wartoscMniejsza) && pole > wartoscMniejsza);
 	protected static bool CzyPasuje(DateTime pole, string fraza) => CzyPasuje(pole.ToString(UI.Wyglad.FormatDaty), fraza);
 	protected static bool CzyPasuje(object? pole, string fraza) => pole != null && CzyPasuje(pole.ToString(), fraza);
 
