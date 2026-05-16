@@ -42,6 +42,7 @@ abstract partial class Spis<T> : Spis
 {
 	private readonly Container container;
 	private readonly BindingSource bindingSource;
+	private bool kolumnyZmienione;
 
 	private IEnumerable<T> WybraneRekordyImpl
 	{
