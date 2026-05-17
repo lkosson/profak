@@ -10,9 +10,10 @@ public class Baza : DbContext
 	public static string NazwaPlikuBazy => "profak.sqlite3";
 	public static string NazwaOdnosnikaDoBazy => "baza.txt";
 	public static string NazwaKataloguKopiiZapasowych => "Kopie zapasowe";
-	public static string PrywatnyKatalog => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+	public static string PrywatnyKatalog => Environment.GetFolderPath(OperatingSystem.IsLinux() ? Environment.SpecialFolder.LocalApplicationData : Environment.SpecialFolder.ApplicationData);
 	public static string PublicznyKatalog => Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-	public static string LokalnyKatalog => Path.GetDirectoryName(Environment.ProcessPath)!;
+	public static string LokalnyKatalog => Directory.Exists(LokalnyKatalogPietroWyzej) ? LokalnyKatalogPietroWyzej : Path.GetDirectoryName(Environment.ProcessPath)!;
+	public static string LokalnyKatalogPietroWyzej => Path.Combine(Path.GetDirectoryName(Environment.ProcessPath)!, "../data");
 	public static string PrywatnaSciezka => Path.Combine(PrywatnyKatalog, NazwaKataloguProgramu, NazwaPlikuBazy);
 	public static string PublicznaSciezka => Path.Combine(PublicznyKatalog, NazwaKataloguProgramu, NazwaPlikuBazy);
 	public static string LokalnaSciezka => Path.Combine(LokalnyKatalog, NazwaPlikuBazy);
