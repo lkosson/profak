@@ -43,6 +43,8 @@ public class PozycjaFaktury : Rekord<PozycjaFaktury>
 	public decimal WartoscVatAbs => Math.Abs(WartoscVat);
 	public decimal WartoscBruttoAbs => Math.Abs(WartoscBrutto);
 
+	private bool przeliczNaPodstawieCenyZakupu;
+
 	public override bool CzyPasuje(string fraza)
 		=> base.CzyPasuje(fraza)
 		|| CzyPasuje(Opis, fraza)
@@ -62,6 +64,23 @@ public class PozycjaFaktury : Rekord<PozycjaFaktury>
 		if (CzyWartosciReczne) return;
 		var faktura = Faktura ?? baza.Znajdz(FakturaRef);
 		if (faktura.Rodzaj == RodzajFaktury.VatMarża || faktura.Rodzaj == RodzajFaktury.KorektaVatMarży) CzyWedlugCenBrutto = true;
+
+		if (przeliczNaPodstawieCenyZakupu && CenaNetto == 0)
+		{
+			var ostatniZakup = baza.PozycjeFaktur
+				.Where(pozycja => (pozycja.Faktura!.Rodzaj == RodzajFaktury.Zakup || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaZakupu) && (pozycja.TowarId == TowarId))
+				.OrderByDescending(pozycja => pozycja.Faktura!.DataSprzedazy)
+				.ThenByDescending(pozycja => pozycja.Id)
+				.FirstOrDefault();
+			if (ostatniZakup != null)
+			{
+				var towar = baza.Znajdz(TowarRef);
+				if (faktura.CzyZakup) CenaNetto = ostatniZakup.CenaNetto;
+				else if (towar.SposobLiczeniaCeny is SposobLiczeniaCenyTowaru.NarzutKwotowy) CenaNetto = ostatniZakup.CenaNetto + towar.CenaNetto;
+				else if (towar.SposobLiczeniaCeny is SposobLiczeniaCenyTowaru.NarzutProcentowy) CenaNetto = (ostatniZakup.CenaNetto * (100 + towar.CenaNetto) / 100m).Zaokragl();
+			}
+			przeliczNaPodstawieCenyZakupu = false;
+		}
 
 		var stawkaVat = baza.ZnajdzLubNull(StawkaVatRef);
 		var procentVat = stawkaVat?.Wartosc ?? 0;
@@ -126,9 +145,16 @@ public class PozycjaFaktury : Rekord<PozycjaFaktury>
 		TowarRef = towar;
 		JednostkaMiaryRef = towar.JednostkaMiaryRef;
 		Opis = towar.Nazwa;
-		CzyWedlugCenBrutto = towar.CzyWedlugCenBrutto;
-		CenaBrutto = towar.CenaBrutto;
-		CenaNetto = towar.CenaNetto;
+		CzyWedlugCenBrutto = towar.SposobLiczeniaCeny == SposobLiczeniaCenyTowaru.WedługBrutto;
+		if (towar.SposobLiczeniaCeny is SposobLiczeniaCenyTowaru.WedługBrutto or SposobLiczeniaCenyTowaru.WedługNetto)
+		{
+			CenaBrutto = towar.CenaBrutto;
+			CenaNetto = towar.CenaNetto;
+		}
+		else
+		{
+			przeliczNaPodstawieCenyZakupu = true;
+		}
 		StawkaVatRef = towar.StawkaVatRef;
 		GTU = towar.GTU;
 		StawkaRyczaltu = towar.StawkaRyczaltu;

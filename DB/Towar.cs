@@ -6,7 +6,7 @@ public class Towar : Rekord<Towar>
 	public RodzajTowaru Rodzaj { get; set; } = RodzajTowaru.Towar;
 	public decimal CenaNetto { get; set; }
 	public decimal CenaBrutto { get; set; }
-	public bool CzyWedlugCenBrutto { get; set; }
+	public SposobLiczeniaCenyTowaru SposobLiczeniaCeny { get; set; }
 	public bool CzyArchiwalny { get; set; }
 	public int GTU { get; set; }
 	public decimal? StawkaRyczaltu { get; set; }
@@ -26,7 +26,7 @@ public class Towar : Rekord<Towar>
 		|| CzyPasuje(Rodzaj, fraza)
 		|| CzyPasuje(CenaNetto, fraza)
 		|| CzyPasuje(CenaBrutto, fraza)
-		|| CzyPasuje(CzyWedlugCenBrutto ? "Brutto" : "Netto", fraza)
+		|| CzyPasuje(Format(SposobLiczeniaCeny), fraza)
 		|| CzyPasuje(CzyArchiwalny ? "Archiwalny" : "", fraza);
 }
 
@@ -34,4 +34,12 @@ public enum RodzajTowaru
 {
 	Towar,
 	Usługa
+}
+
+public enum SposobLiczeniaCenyTowaru
+{
+	WedługNetto,
+	WedługBrutto,
+	NarzutKwotowy,
+	NarzutProcentowy
 }

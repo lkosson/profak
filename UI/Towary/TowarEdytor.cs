@@ -5,6 +5,7 @@ namespace ProFak.UI;
 
 class TowarEdytor : Edytor<Towar>
 {
+	private readonly TLabel labelCenaNetto;
 	private readonly TComboBox comboBoxStawkaVat;
 	private readonly TComboBox comboBoxJednostkaMiary;
 	private readonly TButton buttonStawkaVat;
@@ -28,14 +29,14 @@ class TowarEdytor : Edytor<Towar>
 		var comboBoxStawkaRyczaltu = Kontrolki.DropDownList();
 
 		kontroler.Slownik<RodzajTowaru>(comboBoxRodzaj);
-		kontroler.Slownik(comboBoxSposobLiczenia, "według brutto", "według netto");
+		kontroler.Slownik<SposobLiczeniaCenyTowaru>(comboBoxSposobLiczenia);
 		kontroler.Slownik(comboBoxWidocznosc, "ukryty", "widoczny");
 		kontroler.Slownik(comboBoxGTU, "-", "01 - Napoje alkoholowe", "02 - Paliwa", "03 - Oleje opałowe i smarowe", "04 - Wyroby tytoniowe", "05 - Odpady", "06 - Urządzenia elektroniczne", "07 - Pojazdy i części", "08 - Metale szlachetne i nieszlachetne", "09 - Leki i wyroby medyczne", "10 - Budynki, budowle, grunty", "11 - Uprawnienia do emisji", "12 - Usługi niematerialne", "13 - Usługi transportowe");
 		kontroler.Slownik<decimal?>(comboBoxStawkaRyczaltu, null, 17m, 15m, 14m, 12.5m, 12m, 10m, 8.5m, 5.5m, 3m, 2m);
 
 		kontroler.Powiazanie(textBoxNazwa, towar => towar.Nazwa);
 		kontroler.Powiazanie(comboBoxRodzaj, towar => towar.Rodzaj);
-		kontroler.Powiazanie(comboBoxSposobLiczenia, towar => towar.CzyWedlugCenBrutto, PrzeliczCeny);
+		kontroler.Powiazanie(comboBoxSposobLiczenia, towar => towar.SposobLiczeniaCeny, PrzeliczCeny);
 		kontroler.Powiazanie(comboBoxStawkaVat, towar => towar.StawkaVatRef);
 		kontroler.Powiazanie(numericUpDownCenaNetto, towar => towar.CenaNetto, PrzeliczCeny);
 		kontroler.Powiazanie(numericUpDownCenaBrutto, towar => towar.CenaBrutto, PrzeliczCeny);
@@ -54,7 +55,7 @@ class TowarEdytor : Edytor<Towar>
 		siatka.DodajWiersz("Rodzaj", [(comboBoxRodzaj, 2)]);
 		siatka.DodajWiersz("Sposób liczenia ceny", [(comboBoxSposobLiczenia, 2)]);
 		siatka.DodajWiersz("Stawka VAT", [comboBoxStawkaVat, buttonStawkaVat]);
-		siatka.DodajWiersz("Cena jednostkowa netto", [(numericUpDownCenaNetto, 2)]);
+		siatka.DodajWiersz([(labelCenaNetto = Kontrolki.Label("Cena jednostkowa netto"), 1), (numericUpDownCenaNetto, 2)]);
 		siatka.DodajWiersz("Cena jednostkowa brutto", [(numericUpDownCenaBrutto, 2)]);
 		siatka.DodajWiersz("Jednostka miary", [comboBoxJednostkaMiary, buttonJednostkaMiary]);
 		siatka.DodajWiersz("Widoczność", [(comboBoxWidocznosc, 2)]);
@@ -125,20 +126,31 @@ class TowarEdytor : Edytor<Towar>
 		if (Rekord == null) return;
 		ArgumentNullException.ThrowIfNull(Rekord.StawkaVat);
 
-		numericUpDownCenaBrutto.Enabled = Rekord.CzyWedlugCenBrutto;
-		numericUpDownCenaNetto.Enabled = !Rekord.CzyWedlugCenBrutto;
+		numericUpDownCenaBrutto.Enabled = Rekord.SposobLiczeniaCeny == SposobLiczeniaCenyTowaru.WedługBrutto;
+		numericUpDownCenaNetto.Enabled = Rekord.SposobLiczeniaCeny != SposobLiczeniaCenyTowaru.WedługBrutto;
 
-		if (Rekord.CzyWedlugCenBrutto)
+		if (Rekord.SposobLiczeniaCeny == SposobLiczeniaCenyTowaru.WedługBrutto)
 		{
 			var cenaNetto = (Rekord.CenaBrutto * 100m / (100 + Rekord.StawkaVat.Wartosc)).Zaokragl();
 			if (Rekord.CenaNetto == cenaNetto) return; // Powodowało ustawienie Kontroler.modelZmieniony
 			numericUpDownCenaNetto.Value = cenaNetto;
+			labelCenaNetto.Text = "Cena jednostkowa netto";
 		}
-		else
+		else if (Rekord.SposobLiczeniaCeny == SposobLiczeniaCenyTowaru.WedługNetto)
 		{
 			var cenaBrutto = (Rekord.CenaNetto * (100 + Rekord.StawkaVat.Wartosc) / 100m).Zaokragl();
 			if (Rekord.CenaBrutto == cenaBrutto) return; // Powodowało ustawienie Kontroler.modelZmieniony
 			numericUpDownCenaBrutto.Value = cenaBrutto;
+			labelCenaNetto.Text = "Cena jednostkowa netto";
+		}
+		else if (Rekord.SposobLiczeniaCeny == SposobLiczeniaCenyTowaru.NarzutKwotowy)
+		{
+			numericUpDownCenaBrutto.Value = 0;
+			labelCenaNetto.Text = "Narzut kwotowy";
+		}
+		else if (Rekord.SposobLiczeniaCeny == SposobLiczeniaCenyTowaru.NarzutProcentowy)
+		{
+			labelCenaNetto.Text = "Narzut procentowy";
 		}
 	}
 }

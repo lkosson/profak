@@ -258,7 +258,7 @@ partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 			CenaNetto = Rekord.CenaNetto,
 			CenaBrutto = Rekord.CenaBrutto,
 			GTU = Rekord.GTU,
-			CzyWedlugCenBrutto = Rekord.CzyWedlugCenBrutto,
+			SposobLiczeniaCeny = Rekord.CzyWedlugCenBrutto ? SposobLiczeniaCenyTowaru.WedługBrutto : SposobLiczeniaCenyTowaru.WedługNetto,
 			JednostkaMiaryRef = Rekord.JednostkaMiaryRef,
 			StawkaRyczaltu = Rekord.StawkaRyczaltu
 		};

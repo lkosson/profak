@@ -90,21 +90,35 @@ class DaneDemo
 			{
 				Nazwa = nazwa,
 				CzyArchiwalny = rnd.Next(100) < 5,
-				CzyWedlugCenBrutto = rnd.Next(100) < 30,
+				SposobLiczeniaCeny = rnd.Next(100) switch
+				{
+					< 30 => SposobLiczeniaCenyTowaru.WedługBrutto,
+					< 40 => SposobLiczeniaCenyTowaru.NarzutKwotowy,
+					< 50 => SposobLiczeniaCenyTowaru.NarzutProcentowy,
+					_ => SposobLiczeniaCenyTowaru.WedługNetto
+				},
 				JednostkaMiaryRef = jednostka,
 				StawkaVatRef = vat,
 				Rodzaj = RodzajTowaru.Towar
 			};
 
-			if (towar.CzyWedlugCenBrutto)
+			if (towar.SposobLiczeniaCeny == SposobLiczeniaCenyTowaru.WedługBrutto)
 			{
 				towar.CenaBrutto = rnd.Next(50, 200);
 				towar.CenaNetto = towar.CenaBrutto / (100 + vat.Wartosc) * 100;
 			}
-			else
+			else if (towar.SposobLiczeniaCeny == SposobLiczeniaCenyTowaru.WedługNetto)
 			{
 				towar.CenaNetto = rnd.Next(50, 200);
 				towar.CenaBrutto = towar.CenaNetto * (100 + vat.Wartosc) / 100;
+			}
+			else if (towar.SposobLiczeniaCeny == SposobLiczeniaCenyTowaru.NarzutKwotowy)
+			{
+				towar.CenaNetto = rnd.Next(10, 100);
+			}
+			else if (towar.SposobLiczeniaCeny == SposobLiczeniaCenyTowaru.NarzutProcentowy)
+			{
+				towar.CenaNetto = rnd.Next(5, 20);
 			}
 
 			baza.Zapisz(towar);
@@ -116,7 +130,7 @@ class DaneDemo
 			{
 				Nazwa = usluga,
 				CzyArchiwalny = rnd.Next(100) < 5,
-				CzyWedlugCenBrutto = false,
+				SposobLiczeniaCeny = SposobLiczeniaCenyTowaru.WedługNetto,
 				JednostkaMiaryRef = jednostka,
 				StawkaVatRef = vat,
 				Rodzaj = RodzajTowaru.Usługa
@@ -275,19 +289,16 @@ class DaneDemo
 						var towar = towary[rnd.Next(towary.Count)];
 						var pozycja = new PozycjaFaktury
 						{
-							TowarRef = towar,
-							CenaBrutto = towar.CenaBrutto,
-							CenaNetto = towar.CenaNetto,
-							StawkaVatRef = fvBezVat ? bezVat : towar.StawkaVatRef,
-							CzyWedlugCenBrutto = towar.CzyWedlugCenBrutto,
 							LP = j + 1,
-							Opis = towar.Nazwa,
 							Faktura = faktura,
 							Ilosc = faktura.CzyZakup ? rnd.Next(10, 100) : rnd.Next(1, 20),
 							RabatProcent = faktura.CzyZakup ? 0 : rnd.Next(0, 10) == 0 ? rnd.Next(0, 90) : 0,
 							RabatCena = faktura.CzyZakup ? 0 : rnd.Next(0, 20) == 0 ? rnd.Next(0, (int)towar.CenaNetto) : 0,
 							RabatWartosc = faktura.CzyZakup ? 0 : rnd.Next(0, 30) == 0 ? rnd.Next(0, (int)towar.CenaNetto) : 0,
 						};
+						pozycja.UstawTowar(towar);
+						if (fvBezVat) pozycja.StawkaVatRef = bezVat;
+						if (faktura.CzyZakup && towar.SposobLiczeniaCeny is SposobLiczeniaCenyTowaru.NarzutKwotowy or SposobLiczeniaCenyTowaru.NarzutProcentowy) pozycja.CenaNetto = rnd.Next(50, 200);
 						pozycja.PrzeliczCeny(baza);
 
 						faktura.Pozycje.Add(pozycja);

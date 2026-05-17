@@ -16,7 +16,7 @@ class TowarBuilder
 		builder.Property(e => e.Rodzaj).HasDefaultValue(RodzajTowaru.Towar).IsRequired();
 		builder.Property(e => e.CenaNetto).HasDefaultValue(0).IsRequired();
 		builder.Property(e => e.CenaBrutto).HasDefaultValue(0).IsRequired();
-		builder.Property(e => e.CzyWedlugCenBrutto).HasDefaultValue(false).IsRequired();
+		builder.Property(e => e.SposobLiczeniaCeny).HasDefaultValue(SposobLiczeniaCenyTowaru.WedługNetto).IsRequired();
 		builder.Property(e => e.CzyArchiwalny).HasDefaultValue(false).IsRequired();
 		builder.Property(e => e.GTU).HasDefaultValue(0).IsRequired();
 		builder.Property(e => e.StawkaRyczaltu);

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProFak.DB;
 
@@ -10,9 +11,11 @@ using ProFak.DB;
 namespace ProFak.DB.Migrations
 {
     [DbContext(typeof(Baza))]
-    partial class ProFakContextModelSnapshot : ModelSnapshot
+    [Migration("20260517102854_SposobLiczeniaCenyTowaruNazwa")]
+    partial class SposobLiczeniaCenyTowaruNazwa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.7");
@@ -1125,10 +1128,10 @@ namespace ProFak.DB.Migrations
                         .HasColumnType("INTEGER")
                         .HasDefaultValue(0);
 
-                    b.Property<int>("SposobLiczeniaCeny")
+                    b.Property<bool>("SposobLiczeniaCeny")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
-                        .HasDefaultValue(0);
+                        .HasDefaultValue(false);
 
                     b.Property<decimal?>("StawkaRyczaltu")
                         .HasColumnType("TEXT");
