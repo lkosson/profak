@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -e
+
+cd ..
+
+if [ -d bin/Publish ]; then
+    rm -r bin/Publish
+fi
+
+if [ -d bin/tmp ]; then
+    rm -r bin/tmp
+fi
+
+dotnet publish -r linux-x64 -c release --self-contained
+
+mkdir bin/tmp
+mkdir bin/tmp/bin
+mkdir bin/tmp/data
+cp -r bin/Publish/* bin/tmp/bin/
+chmod a-x bin/tmp/bin/*.dll bin/tmp/bin/*.so
+chmod a+x bin/tmp/bin/ProFak
+echo "#!/usr/bin/env bash" > bin/tmp/profak
+echo "bin/ProFak" >> bin/tmp/profak
+chmod a+x bin/tmp/profak
+cd bin
+tar --transform "s+tmp+ProFak+" --owner=0 --group=0 -zcvf ProFak.tgz tmp
