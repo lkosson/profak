@@ -497,7 +497,8 @@ partial class FakturaEdytor : Edytor<Faktura>
 	protected override void EdytorGotowy()
 	{
 		base.EdytorGotowy();
-		KontrolkaStartowa(comboBoxNazwaNabywcy);
+		if (Rekord.CzyZakup) KontrolkaStartowa(comboBoxNazwaSprzedawcy);
+		else KontrolkaStartowa(comboBoxNazwaNabywcy);
 	}
 
 	private void NowySprzedawca()

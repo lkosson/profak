@@ -124,8 +124,6 @@ partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 			new Grupa("Podatki", podatki),
 			]);
 
-		KontrolkaStartowa(comboBoxTowar);
-
 		UstawZawartosc(uklad);
 	}
 
@@ -199,6 +197,12 @@ partial class PozycjaFakturyEdytor : Edytor<PozycjaFaktury>
 		base.RekordGotowy();
 		KonfigurujPoleIlosci();
 		KonfigurujCeny();
+	}
+
+	protected override void EdytorGotowy()
+	{
+		base.EdytorGotowy();
+		KontrolkaStartowa(comboBoxTowar);
 	}
 
 	private void KonfigurujPoleIlosci()
