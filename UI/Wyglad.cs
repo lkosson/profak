@@ -23,6 +23,7 @@ class Wyglad
 	public static string FormatDaty { get; set; } = default!;
 	public static string FormatCzasu { get; set; } = default!;
 	public static string FormatKwoty { get; set; } = default!;
+	public static bool BlokadaZmianyKolumn { get; set; }
 
 	public static string NazwaAkcji(AdapterAkcji adapter)
 	{
@@ -119,5 +120,6 @@ class Wyglad
 		FormatDaty = konfiguracja.FormatDaty;
 		FormatCzasu = konfiguracja.FormatCzasu;
 		FormatKwoty = konfiguracja.FormatKwoty;
+		BlokadaZmianyKolumn = konfiguracja.BlokadaZmianyKolumn;
 	}
 }

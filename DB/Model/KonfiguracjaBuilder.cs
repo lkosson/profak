@@ -37,5 +37,6 @@ class KonfiguracjaBuilder
 		builder.Property(e => e.FormatDaty).HasDefaultValue("").IsRequired();
 		builder.Property(e => e.FormatCzasu).HasDefaultValue("").IsRequired();
 		builder.Property(e => e.FormatKwoty).HasDefaultValue("").IsRequired();
+		builder.Property(e => e.BlokadaZmianyKolumn);
 	}
 }

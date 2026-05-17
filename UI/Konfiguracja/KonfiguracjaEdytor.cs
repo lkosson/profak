@@ -30,6 +30,7 @@ partial class KonfiguracjaEdytor : Edytor<Konfiguracja>
 		var checkBoxDomyslnyPodgladStrony = Kontrolki.CheckBox("Wyświetlaj domyślnie widok strony jako podgląd wydruku");
 		var checkBoxPotwierdzanieZamknieciaEdytora = Kontrolki.CheckBox("Pytaj o potwierdzenie porzucenia zmian");
 		var checkBoxPotwierdzanieZamknieciaProgramu = Kontrolki.CheckBox("Pytaj o potwierdzenie zamknięcia programu");
+		var checkBoxBlokadaZmianyKolumn = Kontrolki.CheckBox("Zablokuj możliwość zmiany szerokości i kolejności kolumn spisów");
 		var checkBoxWstepneLadowanieReportingServices = Kontrolki.CheckBox("Załaduj w tle moduł wydruków przy starcie programu");
 		checkBoxPrzywrocUstawieniaSpisow = Kontrolki.CheckBox("Przywróć domyślne ustawienia spisów");
 		checkBoxPrzywrocUstawieniaMenu = Kontrolki.CheckBox("Przywróć domyślne ustawienia menu");
@@ -65,6 +66,8 @@ partial class KonfiguracjaEdytor : Edytor<Konfiguracja>
 		kontroler.Powiazanie(checkBoxDomyslnyPodgladStrony, konfiguracja => konfiguracja.DomyslnyPodgladStrony);
 		kontroler.Powiazanie(checkBoxPotwierdzanieZamknieciaEdytora, konfiguracja => konfiguracja.PotwierdzanieZamknieciaEdytora);
 		kontroler.Powiazanie(checkBoxPotwierdzanieZamknieciaProgramu, konfiguracja => konfiguracja.PotwierdzanieZamknieciaProgramu);
+		kontroler.Powiazanie(checkBoxBlokadaZmianyKolumn, konfiguracja => konfiguracja.BlokadaZmianyKolumn);
+
 		kontroler.Powiazanie(checkBoxWstepneLadowanieReportingServices, konfiguracja => konfiguracja.WstepneLadowanieReportingServices);
 		kontroler.Powiazanie(numericUpDownSzerokoscMenu, konfiguracja => konfiguracja.SzerokoscMenu);
 		kontroler.Powiazanie(textBoxRozmiarCzcionki, konfiguracja => konfiguracja.RozmiarCzcionki == 0 ? "" : konfiguracja.RozmiarCzcionki.ToString(), (konfiguracja, wartosc) => konfiguracja.RozmiarCzcionki = Int32.TryParse(wartosc, out var rozmiar) ? rozmiar : 0);
@@ -101,6 +104,7 @@ partial class KonfiguracjaEdytor : Edytor<Konfiguracja>
 		siatkaWyglad.DodajWiersz([(checkBoxDomyslnyPodgladStrony, 7)]);
 		siatkaWyglad.DodajWiersz([(checkBoxPotwierdzanieZamknieciaEdytora, 7)]);
 		siatkaWyglad.DodajWiersz([(checkBoxPotwierdzanieZamknieciaProgramu, 7)]);
+		siatkaWyglad.DodajWiersz([(checkBoxBlokadaZmianyKolumn, 7)]);
 		siatkaWyglad.DodajWiersz([(checkBoxWstepneLadowanieReportingServices, 7)]);
 		siatkaWyglad.DodajWiersz([(checkBoxPrzywrocUstawieniaSpisow, 7)]);
 		siatkaWyglad.DodajWiersz([(checkBoxPrzywrocUstawieniaMenu, 7)]);

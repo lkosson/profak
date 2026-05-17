@@ -33,6 +33,9 @@ public class Konfiguracja : Rekord<Konfiguracja>
 	public string FormatCzasu { get; set; } = "";
 	public string FormatKwoty { get; set; } = "";
 
+	// Wersja 2a
+	public bool BlokadaZmianyKolumn { get; set; }
+
 	public bool CzyDomyslna => SMTPSerwer == Domyslna.SMTPSerwer || String.IsNullOrEmpty(SMTPSerwer);
 
 	public override bool CzyPasuje(string fraza) => false;

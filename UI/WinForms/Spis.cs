@@ -11,8 +11,9 @@ partial class Spis : DataGridView
 		DoubleBuffered = true;
 		AllowUserToAddRows = false;
 		AllowUserToDeleteRows = false;
-		AllowUserToResizeRows = true;
-		AllowUserToOrderColumns = true;
+		AllowUserToResizeRows = !Wyglad.BlokadaZmianyKolumn;
+		AllowUserToOrderColumns = !Wyglad.BlokadaZmianyKolumn;
+		AllowUserToResizeColumns = !Wyglad.BlokadaZmianyKolumn;
 		RowHeadersVisible = true;
 		RowHeadersWidth = 16;
 		ColumnHeadersHeight = Wyglad.PrzeskalujRozmiar(Wyglad.WysokoscWiersza) * DeviceDpi / 96;

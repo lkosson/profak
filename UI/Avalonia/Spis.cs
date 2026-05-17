@@ -19,8 +19,8 @@ partial class Spis : TDataGrid
 	public Spis()
 	{
 		IsReadOnly = true;
-		CanUserResizeColumns = true;
-		CanUserReorderColumns = true;
+		CanUserResizeColumns = !Wyglad.BlokadaZmianyKolumn;
+		CanUserReorderColumns = !Wyglad.BlokadaZmianyKolumn;
 		CanUserSortColumns = true;
 		RowHeight = Wyglad.PrzeskalujRozmiar(Wyglad.WysokoscWiersza);
 	}

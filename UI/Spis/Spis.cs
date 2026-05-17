@@ -103,6 +103,11 @@ abstract partial class Spis<T> : Spis
 	private void PokazKonfiguracjeSpisu()
 	{
 		if (Kontekst == null) return;
+		if (Wyglad.BlokadaZmianyKolumn)
+		{
+			OknoKomunikatu.Informacja("Zmiana konfiguracji kolumn jest zablokowana. Blokadę można zdjąć na ekranie \"Serwisowe\" -> \"Konfiguracja\" -> \"Wygląd\".");
+			return;
+		}
 		using var nowyKontekst = new Kontekst(Kontekst);
 		using var transakcja = nowyKontekst.Transakcja();
 
