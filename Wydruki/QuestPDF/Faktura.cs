@@ -212,17 +212,19 @@ public partial class Faktura
 
 			if (naglowek.JestVAT)
 			{
+				specyfikacja.Cell().ColumnSpan(5u + (naglowek.JestRabat ? 1u : 0u) + (naglowek.JestVAT ? 3u : 0u)).Text("");
+
 				specyfikacja.Cell().ColumnSpan(4);
-				specyfikacja.Cell().Element(StylNaglowkaPozycji).Text("Wartość netto");
-				if (naglowek.JestRabat) specyfikacja.Cell().Element(StylNaglowkaPozycji).Text("Rabat");
-				specyfikacja.Cell().Element(StylNaglowkaPozycji).Text("VAT");
-				specyfikacja.Cell().Element(StylNaglowkaPozycji).Text("Wartość VAT");
-				specyfikacja.Cell().Element(StylNaglowkaPozycji).Text("Wartość brutto");
+				specyfikacja.Cell().Element(StylNaglowkaSpecyfikacji).Text("Wartość netto");
+				if (naglowek.JestRabat) specyfikacja.Cell().Element(StylNaglowkaSpecyfikacji).Text("Rabat");
+				specyfikacja.Cell().Element(StylNaglowkaSpecyfikacji).Text("VAT");
+				specyfikacja.Cell().Element(StylNaglowkaSpecyfikacji).Text("Wartość VAT");
+				specyfikacja.Cell().Element(StylNaglowkaSpecyfikacji).Text("Wartość brutto");
 
 				foreach (var grupa in pozycje.GroupBy(e => e.StawkaVAT))
 				{
 					specyfikacja.Cell().ColumnSpan(3);
-					specyfikacja.Cell().Element(StylNaglowkaPozycji).Text("W tym");
+					specyfikacja.Cell().Element(StylNaglowkaSpecyfikacji).Text("W tym");
 					specyfikacja.Cell().Element(StylSpecyfikacji).Text($"{grupa.Sum(e => e.WartoscNetto):n2} {naglowek.Waluta}");
 					if (naglowek.JestRabat) specyfikacja.Cell().Element(StylSpecyfikacji);
 					specyfikacja.Cell().Element(StylSpecyfikacjiSrodek).Text(grupa.Key);
@@ -231,7 +233,7 @@ public partial class Faktura
 				}
 
 				specyfikacja.Cell().ColumnSpan(3);
-				specyfikacja.Cell().Element(StylNaglowkaPozycji).Text("Razem");
+				specyfikacja.Cell().Element(StylNaglowkaSpecyfikacji).Text("Razem");
 				specyfikacja.Cell().Element(StylSpecyfikacji).Text($"{pozycje.Sum(e => e.WartoscNetto):n2} {naglowek.Waluta}");
 				if (naglowek.JestRabat) specyfikacja.Cell().Element(StylSpecyfikacji).Text($"{pozycje.Sum(e => e.RabatRazem):n2} {naglowek.Waluta}");
 				specyfikacja.Cell().Element(StylSpecyfikacjiSrodek).Text("-");
@@ -241,7 +243,7 @@ public partial class Faktura
 			else
 			{
 				specyfikacja.Cell().ColumnSpan(3);
-				specyfikacja.Cell().Element(StylNaglowkaPozycji).Text("Razem");
+				specyfikacja.Cell().Element(StylNaglowkaSpecyfikacji).Text("Razem");
 				if (naglowek.JestRabat) specyfikacja.Cell().Element(StylSpecyfikacji).Text($"{pozycje.Sum(e => e.RabatRazem):n2} {naglowek.Waluta}");
 				specyfikacja.Cell().Element(StylSpecyfikacji).Text($"{pozycje.Sum(e => e.WartoscBrutto):n2} {naglowek.Waluta}");
 			}
