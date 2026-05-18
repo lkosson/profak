@@ -145,6 +145,7 @@ class Kontrolki
 		var textBox = new TTextArea();
 		textBox.AcceptsReturn = true;
 		textBox.MinLines = Math.Max(2, linie);
+		textBox.TextWrapping = TextWrapping.Wrap;
 		textBox.Margin = new TPadding(3, 3);
 		if (!proporcjonalna) textBox.FontFamily = new Avalonia.Media.FontFamily("Consolas");
 		if (zmienionaWartosc != null) textBox.TextChanged += BezpiecznaAkcja(zmienionaWartosc);
