@@ -17,7 +17,7 @@ del /s /q *.* 2> nul >nul
 for /f "delims=" %%d in ('dir /b /ad') do rd "%%d"
 attrib /s -r *.*
 
-tar -a -c -f ..\ProFak.zip *
+tar -a -c -f ..\ProFak-windows.zip *
 if errorlevel 1 goto :blad
 
 cd ..\..\Instalator

@@ -23,4 +23,4 @@ echo "#!/usr/bin/env bash" > bin/tmp/profak
 echo "bin/ProFak" >> bin/tmp/profak
 chmod a+x bin/tmp/profak
 cd bin
-tar --transform "s+tmp+ProFak+" --owner=0 --group=0 -zcvf ProFak.tgz tmp
+tar --transform "s+tmp+ProFak+" --owner=0 --group=0 -zcvf ProFak-linux.tar.gz tmp
