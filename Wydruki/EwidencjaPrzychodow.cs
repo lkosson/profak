@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Reporting.WinForms;
 using ProFak.DB;
 
 namespace ProFak.Wydruki;
 
-public class EwidencjaPrzychodow : Wydruk
+public partial class EwidencjaPrzychodow : Wydruk
 {
 	private readonly List<EwidencjaPrzychodowDTO> dane;
 
@@ -54,12 +53,5 @@ public class EwidencjaPrzychodow : Wydruk
 
 			dane.Add(dto);
 		}
-	}
-
-	public override void Przygotuj(LocalReport report)
-	{
-		using var rdlc = WczytajSzablon("EwidencjaPrzychodow");
-		report.LoadReportDefinition(rdlc);
-		report.DataSources.Add(new ReportDataSource("DS", dane));
 	}
 }

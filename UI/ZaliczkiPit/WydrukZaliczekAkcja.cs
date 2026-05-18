@@ -14,7 +14,6 @@ class WydrukZaliczekAkcja : AkcjaNaSpisie<ZaliczkaPit>
 		Wydruki.Wydruk wydruk;
 		if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Ryczałt) wydruk = new Wydruki.EwidencjaPrzychodow(kontekst.Baza, zaznaczoneRekordy);
 		else wydruk = new Wydruki.PKPiR(kontekst.Baza, zaznaczoneRekordy);
-		using var okno = new OknoWydruku(wydruk);
-		okno.ShowDialog();
+		wydruk.Uruchom();
 	}
 }

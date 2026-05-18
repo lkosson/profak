@@ -36,5 +36,13 @@ class Interfejs
 			aktywneOkno = poprzednieOkno;
 		}
 	}
+
+	public static T Uruchom<T>(Task<T> zadanie)
+	{
+		var cts = new CancellationTokenSource();
+		zadanie.ContinueWith(delegate { cts.Cancel(); });
+		application.Run(cts.Token);
+		return zadanie.GetAwaiter().GetResult();
+	}
 }
 #endif
