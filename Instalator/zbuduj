@@ -11,7 +11,7 @@ if [ -d bin/tmp ]; then
     rm -r bin/tmp
 fi
 
-dotnet publish -r linux-x64 -c release --self-contained
+dotnet publish -r linux-x64 -c release-linux --self-contained
 
 mkdir bin/tmp
 mkdir bin/tmp/bin
