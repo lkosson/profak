@@ -17,6 +17,9 @@ del /s /q *.* 2> nul >nul
 for /f "delims=" %%d in ('dir /b /ad') do rd "%%d"
 attrib /s -r *.*
 
+tar -a -c -f ..\ProFak.zip *
+if errorlevel 1 goto :blad
+
 cd ..\..\Instalator
 
 heat dir ..\bin\Publish -sreg -srd -sfrag -gg -template fragment -cg Pliki -var var.Zrodlo -dr KATALOGPROGRAMU -out ProFak-pliki.wxs
