@@ -189,7 +189,7 @@ public partial class Faktura
 				wiersz.Cell().Element(StylNaglowkaSpecyfikacji).Text(naglowek.JestVAT ? "Wartość brutto" : "Wartość");
 			});
 
-			foreach (var grupa in pozycje.GroupBy(e => e.NaglowekPozycji).OrderBy(g => g.Key))
+			foreach (var grupa in pozycje.GroupBy(e => e.NaglowekPozycji).OrderByDescending(g => g.Key))
 			{
 				if (!String.IsNullOrEmpty(grupa.Key))
 				{
