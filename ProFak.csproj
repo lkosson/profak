@@ -1,16 +1,52 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
+    <Configurations>Debug;Debug-avalonia;Debug-questpdf;Release;Release-linux</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release-linux'">
+    <ProFakWinForms>false</ProFakWinForms>
+    <ProFakAvalonia>true</ProFakAvalonia>
+    <ProFakSqlServer>false</ProFakSqlServer>
+    <ProFakReportViewer>false</ProFakReportViewer>
+    <ProFakQuestPDF>true</ProFakQuestPDF>
+
+    <TargetFramework>net10.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release' Or '$(Configuration)' == 'Debug'">
     <ProFakWinForms>true</ProFakWinForms>
     <ProFakAvalonia>false</ProFakAvalonia>
     <ProFakSqlServer>false</ProFakSqlServer>
     <ProFakReportViewer>true</ProFakReportViewer>
     <ProFakQuestPDF>false</ProFakQuestPDF>
+
+    <TargetFramework>net10.0-windows7.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug-avalonia'">
+    <ProFakWinForms>false</ProFakWinForms>
+    <ProFakAvalonia>true</ProFakAvalonia>
+    <ProFakSqlServer>false</ProFakSqlServer>
+    <ProFakReportViewer>false</ProFakReportViewer>
+    <ProFakQuestPDF>true</ProFakQuestPDF>
+
+    <TargetFramework>net10.0-windows7.0</TargetFramework>
+    <OutputPath>bin\Debug</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug-questpdf'">
+    <ProFakWinForms>true</ProFakWinForms>
+    <ProFakAvalonia>false</ProFakAvalonia>
+    <ProFakSqlServer>false</ProFakSqlServer>
+    <ProFakReportViewer>false</ProFakReportViewer>
+    <ProFakQuestPDF>true</ProFakQuestPDF>
+
+    <TargetFramework>net10.0-windows7.0</TargetFramework>
+    <OutputPath>bin\Debug</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net10.0-windows7.0</TargetFramework>
     <Authors>Łukasz Kosson</Authors>
     <ApplicationIcon>ikona.ico</ApplicationIcon>
     <Version>1.18.1</Version>

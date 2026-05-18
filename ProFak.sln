@@ -1,20 +1,29 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.2.32616.157
+# Visual Studio Version 18
+VisualStudioVersion = 18.5.11723.231 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProFak", "ProFak.csproj", "{A19C151A-F3C3-4F19-A81E-840D9F86404A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug-avalonia|Any CPU = Debug-avalonia|Any CPU
+		Debug-questpdf|Any CPU = Debug-questpdf|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Release-linux|Any CPU = Release-linux|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A19C151A-F3C3-4F19-A81E-840D9F86404A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A19C151A-F3C3-4F19-A81E-840D9F86404A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A19C151A-F3C3-4F19-A81E-840D9F86404A}.Debug-avalonia|Any CPU.ActiveCfg = Debug-avalonia|Any CPU
+		{A19C151A-F3C3-4F19-A81E-840D9F86404A}.Debug-avalonia|Any CPU.Build.0 = Debug-avalonia|Any CPU
+		{A19C151A-F3C3-4F19-A81E-840D9F86404A}.Debug-questpdf|Any CPU.ActiveCfg = Debug-questpdf|Any CPU
+		{A19C151A-F3C3-4F19-A81E-840D9F86404A}.Debug-questpdf|Any CPU.Build.0 = Debug-questpdf|Any CPU
 		{A19C151A-F3C3-4F19-A81E-840D9F86404A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A19C151A-F3C3-4F19-A81E-840D9F86404A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A19C151A-F3C3-4F19-A81E-840D9F86404A}.Release-linux|Any CPU.ActiveCfg = Release-linux|Any CPU
+		{A19C151A-F3C3-4F19-A81E-840D9F86404A}.Release-linux|Any CPU.Build.0 = Release-linux|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
