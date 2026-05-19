@@ -179,7 +179,7 @@ abstract partial class Spis<T> : Spis
 	protected override void OnKeyDown(Avalonia.Input.KeyEventArgs e)
 	{
 		base.OnKeyDown(e);
-		ObsluzKlawisz?.Invoke(e.Key, e.KeyModifiers);
+		if (ObsluzKlawisz?.Invoke(e.Key, e.KeyModifiers) ?? false) e.Handled = true;
 	}
 
 	protected override void OnColumnSorting(DataGridColumnEventArgs e)
