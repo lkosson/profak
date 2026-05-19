@@ -252,7 +252,9 @@ partial class FakturaEdytor : Edytor<Faktura>
 		ksef.DodajWiersz("Numer KSeF", [textBoxNumerKSeF, null, Kontrolki.Label("Data KSeF"), textBoxDataKSeF, buttonDropDownKSeF]);
 		ksef.DodajWiersz([(textBoxKSeFXML, 7)]);
 
-		pozycjeFaktury.Height = 200;
+#if AVALONIA
+		pozycjeFaktury.MinHeight = 200;
+#endif
 		zakladki = new Zakladki();
 		zakladki.Dodaj("Pozycje", pozycjeFaktury);
 		zakladki.Dodaj("Wpłaty", wplaty);
