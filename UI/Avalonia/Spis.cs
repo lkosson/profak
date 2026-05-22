@@ -222,7 +222,7 @@ abstract partial class Spis<T> : Spis
 			{
 				kolumnaSpisu.Width = new DataGridLength(kolumna.Szerokosc, DataGridLengthUnitType.Pixel);
 			}
-			if (kolumna.Szerokosc == -1) kolumnaSpisu.Width = DataGridLength.SizeToHeader;
+			if (kolumna.Szerokosc == -1) kolumnaSpisu.Width = DataGridLength.Auto;
 			kolumnaSpisu.Visible = kolumna.Szerokosc != 0;
 			kolumnaSpisu.DisplayIndex = kolumna.Kolejnosc;
 			if (kolumna.PoziomSortowania != 0) kolumnaSpisu.Sort(kolumna.PoziomSortowania < 0 ? ListSortDirection.Descending : ListSortDirection.Ascending);
