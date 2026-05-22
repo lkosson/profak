@@ -88,6 +88,7 @@ partial class Kontroler<TModel>
 		kontrolka.Bind(wlasciwosc, PowiazanaWartosc<T>.Binding);
 		powiazania.Add(AktualizujKontrolke);
 		powiazaneWartosci.Add(wartosc);
+		if (model != null) AktualizujKontrolke();
 	}
 
 	public void Slownik<T>(TComboBox comboBox, PozycjaListy<T>[] wartosci)
