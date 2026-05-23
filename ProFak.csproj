@@ -30,7 +30,7 @@
     <ProFakReportViewer>false</ProFakReportViewer>
     <ProFakQuestPDF>true</ProFakQuestPDF>
 
-    <TargetFramework>net10.0-windows7.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <OutputPath>bin\Debug</OutputPath>
   </PropertyGroup>
 
