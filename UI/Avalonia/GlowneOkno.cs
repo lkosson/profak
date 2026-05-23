@@ -1,5 +1,8 @@
 ﻿#if AVALONIA
 using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.LogicalTree;
+using Avalonia.VisualTree;
 using Panel = Avalonia.Controls.Panel;
 
 namespace ProFak.UI;
@@ -46,7 +49,9 @@ partial class GlowneOkno : Window
 		kontrolka.DetachedFromVisualTree += delegate { menu.Focus(); kontekst.Dispose(); };
 		panelZawartosc.Children.Clear();
 		panelZawartosc.Children.Add(kontrolka);
-		kontrolka.Focus();
+
+		var kontrolkaStartowa = (TControl?)kontrolka.GetLogicalDescendants().FirstOrDefault(kontrolka => kontrolka is InputElement { Focusable: true });
+		kontrolkaStartowa?.Focus(kontrolkaStartowa is Spis ? NavigationMethod.Pointer : NavigationMethod.Tab);
 	}
 
 	public static void Pokaz()
