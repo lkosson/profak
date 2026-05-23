@@ -77,6 +77,7 @@ partial class Menu : Avalonia.Controls.TreeView
 		base.OnAttachedToLogicalTree(e);
 		Zbuduj();
 		SelectionChanged += Menu_SelectionChanged;
+		AddHandler(TreeViewItem.KeyDownEvent, (sender, e) => { if (e.Key == Key.Enter && SelectedNode != null) { e.Handled = true; Wyswietl(SelectedNode); } }, RoutingStrategies.Tunnel);
 		menuGotowe = true;
 	}
 
