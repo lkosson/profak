@@ -18,7 +18,7 @@ class Zakladki : Avalonia.Controls.TabControl
 		if (Wyglad.SkrotyKlawiaturoweZakladek)
 		{
 			var num = (char)('₁' + Items.Count);
-			etykieta += $"   [ᴄᴛʀʟ-ғ{num}]";
+			etykieta += $"   [ᴄᴛʀʟ-{num}]";
 		}
 
 		var tabItem = new TTabPage();
@@ -41,11 +41,10 @@ class Zakladki : Avalonia.Controls.TabControl
 
 	private void TopLevel_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
 	{
-		if (e.KeyModifiers == Avalonia.Input.KeyModifiers.Control && e.Key >= Key.F1 && e.Key < (Key.F1 + Items.Count))
+		if (e.KeyModifiers == Avalonia.Input.KeyModifiers.Control && e.Key >= Key.D1 && e.Key < (Key.D1+ Items.Count))
 		{
-			var tabIndex = e.Key - Key.F1;
+			var tabIndex = e.Key - Key.D1;
 			SelectedIndex = tabIndex;
-			//SelectNextControl(tab, true, true, true, true);
 		}
 	}
 
