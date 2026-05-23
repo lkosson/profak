@@ -23,6 +23,7 @@ partial class Spis : TDataGrid
 		CanUserReorderColumns = !Wyglad.BlokadaZmianyKolumn;
 		CanUserSortColumns = true;
 		RowHeight = Wyglad.PrzeskalujRozmiar(Wyglad.WysokoscWiersza);
+		GridLinesVisibility = DataGridGridLinesVisibility.All;
 	}
 }
 
