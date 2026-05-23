@@ -17,6 +17,7 @@ partial class Menu : Avalonia.Controls.TreeView
 	protected override Type StyleKeyOverride => typeof(Avalonia.Controls.TreeView);
 	public ObservableCollection<TTreeNode> Nodes { get; } = [];
 	public TTreeNode? SelectedNode { get => (TTreeNode?)SelectedItem; set { SelectedItem = value; if (value != null) Wyswietl(value); } }
+	private bool wcisnietyKlawisz;
 
 	private void Zbuduj(bool pokazUkryte = false)
 	{
@@ -91,6 +92,7 @@ partial class Menu : Avalonia.Controls.TreeView
 
 	private void Menu_SelectionChanged(object? sender, SelectionChangedEventArgs e)
 	{
+		if (wcisnietyKlawisz) return;
 		var wybrany = SelectedNode;
 		if (wybrany == null) return;
 		if (!ostatnioWybrany?.FullPath.StartsWith(wybrany.FullPath) ?? false)
@@ -109,18 +111,9 @@ partial class Menu : Avalonia.Controls.TreeView
 
 	protected override void OnKeyDown(Avalonia.Input.KeyEventArgs e)
 	{
+		wcisnietyKlawisz = true;
 		base.OnKeyDown(e);
-		if (SelectedNode == null) return;
-		if (e.Key == TKeys.Enter)
-		{
-			e.Handled = true;
-			Wyswietl(SelectedNode);
-		}
-		else if (e.Key == TKeys.OemQuestion)
-		{
-			e.Handled = true;
-			SelectedNode.CzyRozwiniety = false;
-		}
+		wcisnietyKlawisz = false;
 	}
 
 	protected override void OnRightTapped(TappedEventArgs e)
