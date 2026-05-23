@@ -1,5 +1,7 @@
 ﻿#if AVALONIA
 using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.VisualTree;
 
 namespace ProFak.UI;
 
@@ -9,6 +11,7 @@ abstract class Edytor : Avalonia.Controls.Panel, IDisposable
 	public virtual bool CzyModelZmieniony => false;
 	public virtual bool CzyModelPoprawny => true;
 	protected int DeviceDpi => 96;
+	private TControl? kontrolkaStartowa;
 
 	public Edytor()
 	{
@@ -28,6 +31,15 @@ abstract class Edytor : Avalonia.Controls.Panel, IDisposable
 	{
 		base.OnAttachedToVisualTree(e);
 		EdytorGotowy();
+		var topLevel = TopLevel.GetTopLevel(this);
+		topLevel?.Opened += TopLevel_Opened;
+	}
+
+	private void TopLevel_Opened(object? sender, EventArgs e)
+	{
+		if (sender is not TopLevel topLevel) return;
+		kontrolkaStartowa ??= (TControl?)this.GetVisualDescendants().FirstOrDefault(kontrolka => kontrolka is InputElement { Focusable: true });
+		kontrolkaStartowa?.Focus(NavigationMethod.Tab);
 	}
 
 	protected virtual void EdytorGotowy()
@@ -56,14 +68,7 @@ abstract class Edytor : Avalonia.Controls.Panel, IDisposable
 
 	protected void KontrolkaStartowa(TControl kontrolka)
 	{
-		kontrolka.AttachedToVisualTree += delegate 
-		{
-			var topLevel = TopLevel.GetTopLevel(this);
-			topLevel?.Opened += delegate
-			{
-				kontrolka.Focus(Avalonia.Input.NavigationMethod.Tab);
-			};
-		};
+		kontrolkaStartowa = kontrolka;
 	}
 
 	public void Wymagane(TControl kontrolka)
