@@ -94,7 +94,7 @@ class ImportCertyfikatuKSeFEdytor : Edytor
 		if (!plikKlucza.StartsWith("-----")) plikKlucza = File.ReadAllText(plikKlucza);
 
 		var certyfikat = X509CertificateLoaderExtensions.LoadCertificate(Encoding.UTF8.GetBytes(plikCertyfikatu));
-		var polaczonyCertyfikat = X509CertificateLoaderExtensions.MergeWithPemKey(certyfikat, plikKlucza, textBoxHaslo.Text);
+		var polaczonyCertyfikat = X509CertificateLoaderExtensions.MergeWithPemKey(certyfikat, plikKlucza, textBoxHaslo.Text ?? "");
 		var blobCertyfikatu = polaczonyCertyfikat.Export(System.Security.Cryptography.X509Certificates.X509ContentType.Pkcs12);
 
 		OknoPostepu.Uruchom(async cancellationToken =>
