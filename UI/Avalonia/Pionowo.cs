@@ -24,8 +24,5 @@ class Pionowo : StackPanel
 	{
 		MaxWidth = szerokosc;
 	}
-
-	protected void SuspendLayout() { }
-	protected void ResumeLayout() { }
 }
 #endif

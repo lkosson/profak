@@ -179,10 +179,7 @@ class WezelMenu : INotifyPropertyChanging, INotifyPropertyChanged
 
 	public bool CzyRozwiniety
 	{
-		get
-		{
-			return field;
-		}
+		get;
 
 		set
 		{

@@ -5,7 +5,7 @@ using Avalonia.Input;
 
 namespace ProFak.UI;
 
-class Zakladki : Avalonia.Controls.TabControl
+class Zakladki : TabControl
 {
 	protected override Type StyleKeyOverride => typeof(Avalonia.Controls.TabControl);
 

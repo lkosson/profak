@@ -21,11 +21,15 @@ class PanelAkcji : Pionowo
 
 	public void UstawUklad(IEnumerable<TControl> naglowek, IEnumerable<AdapterAkcji> adaptery, IEnumerable<TControl> stopka)
 	{
+#if WINFORMS
 		SuspendLayout();
+#endif
 		foreach (var kontrolka in naglowek) DodajKontrolke(kontrolka);
 		foreach (var adapter in adaptery) DodajAkcje(adapter);
 		foreach (var kontrolka in stopka) DodajKontrolke(kontrolka);
+#if WINFORMS
 		ResumeLayout();
+#endif
 	}
 
 	private void DodajKontrolke(TControl kontrolka)

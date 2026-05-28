@@ -2,9 +2,7 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Documents;
 using Avalonia.Input.Platform;
-using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace ProFak.UI;
 
@@ -39,7 +37,7 @@ partial class Podsumowanie : TText
 				else if (ch == '>')
 				{
 					var odnosnik = value[poczatek..i];
-					var link = new HyperlinkButton();
+					var link = new TLinkLabel();
 					link.Padding = new Avalonia.Thickness(0);
 					link.Content = odnosnik;
 					link.Click += delegate { TopLevel.GetTopLevel(this)?.Clipboard?.SetTextAsync(odnosnik); };

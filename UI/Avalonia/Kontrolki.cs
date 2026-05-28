@@ -27,12 +27,10 @@ global using TKeyModifiers = Avalonia.Input.KeyModifiers;
 global using TIcon = Avalonia.Controls.WindowIcon;
 global using TTreeNode = ProFak.UI.WezelMenu;
 using Avalonia.Layout;
-using HorizontalAlignment = Avalonia.Layout.HorizontalAlignment;
 using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Interactivity;
 using System.Globalization;
-using System.Collections.ObjectModel;
 
 namespace ProFak.UI;
 

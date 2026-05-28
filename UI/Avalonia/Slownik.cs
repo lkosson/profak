@@ -66,7 +66,7 @@ class Slownik<T>
 			suggestBox.AttachedToVisualTree += AttachedToVisualTree;
 			suggestBox.KeyDown += KeyDown;
 		}
-		if (button != null) button.Click += button_Click;
+		button?.Click += button_Click;
 		gotowy = true;
 	}
 

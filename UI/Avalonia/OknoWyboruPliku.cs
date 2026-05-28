@@ -1,5 +1,4 @@
 ﻿#if AVALONIA
-using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 
 namespace ProFak.UI;

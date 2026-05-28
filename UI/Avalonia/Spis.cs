@@ -1,5 +1,4 @@
 ﻿#if AVALONIA
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data;
 using Avalonia.Input;
@@ -208,7 +207,7 @@ abstract partial class Spis<T> : Spis
 			if (kolumna.PoziomSortowania < 0) UstawKolejnosc(kolumna.Kolumna, false);
 		}
 
-		if (kolumnyKolejnosci.Any() && oryginalneRekordy != null) OdswiezWiersze();
+		if (kolumnyKolejnosci.Count != 0 && oryginalneRekordy != null) OdswiezWiersze();
 
 		foreach (var kolumna in kolumny)
 		{
@@ -246,7 +245,7 @@ abstract partial class Spis<T> : Spis
 
 		var doZapisu = new List<KolumnaSpisu>();
 		doZapisu.Add(new KolumnaSpisu { Spis = spis, Kolumna = WYSOKOSC_WIERSZA, Kolejnosc = -1, Szerokosc = (int)RowHeight });
-		foreach (TDataGridColumn kolumna in Columns)
+		foreach (var kolumna in Columns.OfType<TDataGridColumn>())
 		{
 			var konfiguracjaKolumny = new KolumnaSpisu { Spis = spis, Kolumna = kolumna.Name };
 			konfiguracjaKolumny.Kolejnosc = kolumna.DisplayIndex;
@@ -307,10 +306,10 @@ class SpisDataGridTextColumn : DataGridTextColumn
 	{
 		var element = (TextBlock)base.GenerateElement(cell, dataItem);
 		if (wyrownajDoPrawej) element.HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Right;
-		var styl = pobierzStylKomorki(this, dataItem);
-		if (styl.pogrubiona) element.FontWeight = FontWeight.Bold;
-		if (styl.kolor != default) element.Foreground = new SolidColorBrush(styl.kolor);
-		if (styl.tlo != default) element.Background = new SolidColorBrush(styl.tlo);
+		var (pogrubiona, kolor, tlo) = pobierzStylKomorki(this, dataItem);
+		if (pogrubiona) element.FontWeight = FontWeight.Bold;
+		if (kolor != default) element.Foreground = new SolidColorBrush(kolor);
+		if (tlo != default) element.Background = new SolidColorBrush(tlo);
 		var tooltip = pobierzTooltip(dataItem);
 		if (tooltip != null) element.SetValue(Avalonia.Controls.ToolTip.TipProperty, tooltip);
 		return element;

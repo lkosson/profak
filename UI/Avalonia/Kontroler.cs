@@ -101,17 +101,14 @@ partial class Kontroler<TModel>
 
 class PowiazanaWartosc : INotifyPropertyChanged
 {
-	private List<(Func<object?, string?> walidator, bool miekki)> walidatory = [];
+	private readonly List<(Func<object?, string?> walidator, bool miekki)> walidatory = [];
 
 	public bool CzyWlasnaZmiana { get; set; }
 	public bool CzyTrwaZmiana { get; set; }
 	public bool CzyBlad => SurowaWartosc is BindingNotification { ErrorType: not BindingErrorType.None, HasValue: false };
 	public object? SurowaWartosc
 	{
-		get
-		{
-			return field;
-		}
+		get;
 
 		set
 		{

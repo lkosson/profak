@@ -3,7 +3,6 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Themes.Simple;
-using Application = Avalonia.Application;
 using Avalonia.Platform.Storage;
 
 namespace ProFak.UI;

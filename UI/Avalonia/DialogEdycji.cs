@@ -6,7 +6,7 @@ namespace ProFak.UI;
 
 class DialogEdycji : Dialog
 {
-	private TControl zawartosc;
+	private readonly TControl zawartosc;
 
 	public bool Wynik { get; private set; }
 

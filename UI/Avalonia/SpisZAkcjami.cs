@@ -1,6 +1,4 @@
 ﻿#if AVALONIA
-using Avalonia;
-using Avalonia.Input;
 using Avalonia.LogicalTree;
 
 namespace ProFak.UI;
