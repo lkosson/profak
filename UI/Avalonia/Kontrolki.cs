@@ -80,7 +80,7 @@ class Kontrolki
 		var button = new TButton();
 		button.Margin = new TPadding(3, 3);
 		button.Padding = new TPadding(7, 3);
-		button.Content = Wyglad.IkonyAkcji ? tekst : Wyglad.NazwaBezIkony(tekst);
+		button.Text = Wyglad.IkonyAkcji ? tekst : Wyglad.NazwaBezIkony(tekst);
 		if (akcja != null) button.Click += BezpiecznaAkcja(akcja);
 		return button;
 	}
@@ -274,7 +274,7 @@ static class RozszerzeniaKontrolek
 
 	extension(TButton kontrolka)
 	{
-		public string Text { get => kontrolka.Content is string text ? text : ""; set => kontrolka.Content = value; }
+		public string Text { get => kontrolka.Content is string text ? text : ""; set => kontrolka.Content = value.Replace("_", "__"); }
 	}
 
 	extension(TLabel kontrolka)
