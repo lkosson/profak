@@ -29,6 +29,7 @@ class Siatka : Grid
 
 	public void OgraniczSzerokosc(int szerokosc)
 	{
+		MaxWidth = szerokosc;
 	}
 
 	protected override void OnLoaded(RoutedEventArgs e)
