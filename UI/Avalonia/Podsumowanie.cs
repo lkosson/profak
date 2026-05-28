@@ -14,6 +14,7 @@ partial class Podsumowanie : TText
 
 	public Podsumowanie()
 	{
+		Margin = new TPadding(3, 0);
 	}
 
 	public new string Text
