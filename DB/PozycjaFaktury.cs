@@ -57,7 +57,10 @@ public class PozycjaFaktury : Rekord<PozycjaFaktury>
 		|| CzyPasuje(WartoscBrutto, fraza)
 		|| CzyPasuje(CenaZakupuDlaMarzy, fraza)
 		|| CzyPasuje(CzyWartosciReczne ? "Ręczne" : "", fraza)
-		|| CzyPasuje(CzyWedlugCenBrutto ? "Brutto" : "Netto", fraza);
+		|| CzyPasuje(CzyWedlugCenBrutto ? "Brutto" : "Netto", fraza)
+		|| CzyPasuje(RabatFmt, fraza)
+		|| CzyPasuje(GTU, fraza)
+		;
 
 	public void PrzeliczCeny(Baza baza)
 	{

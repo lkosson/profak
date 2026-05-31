@@ -23,11 +23,14 @@ public class Towar : Rekord<Towar>
 	public override bool CzyPasuje(string fraza)
 		=> base.CzyPasuje(fraza)
 		|| CzyPasuje(Nazwa, fraza)
-		|| CzyPasuje(Rodzaj, fraza)
+		|| CzyPasuje(Format(Rodzaj), fraza)
 		|| CzyPasuje(CenaNetto, fraza)
 		|| CzyPasuje(CenaBrutto, fraza)
 		|| CzyPasuje(Format(SposobLiczeniaCeny), fraza)
-		|| CzyPasuje(CzyArchiwalny ? "Archiwalny" : "", fraza);
+		|| CzyPasuje(CzyArchiwalny ? "Archiwalny" : "", fraza)
+		|| CzyPasuje(GTU, fraza)
+		|| CzyPasuje(StawkaRyczaltu ?? default, fraza)
+		;
 }
 
 public enum RodzajTowaru

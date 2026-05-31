@@ -15,7 +15,7 @@ public class Numerator : Rekord<Numerator>
 
 	public override bool CzyPasuje(string fraza)
 		=> base.CzyPasuje(fraza)
-		|| CzyPasuje(Przeznaczenie, fraza)
+		|| CzyPasuje(PrzeznaczenieFmt, fraza)
 		|| CzyPasuje(Format, fraza)
 		|| CzyPasuje(Grupa, fraza);
 
