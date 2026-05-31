@@ -38,7 +38,7 @@ Podczas pierwszego uruchomienia programu zostanie wyświetlone okno, w którym m
 
 ## Wymagania techniczne
 
- * Wymagany Windows 7 lub nowszy, 1GB RAM, 200MB miejsca na dysku
+ * Wymagany Windows 7 lub nowszy albo [prawie dowolny Linux](/Materiały/linux.md), 1GB RAM, 200MB miejsca na dysku
  * Nie wymaga instalacji
  * Nie wymaga dostępu do internetu
  * Nie ma ograniczeń na liczbę wystawianych i przechowywanych faktur
