@@ -62,7 +62,10 @@ partial class GlowneOkno : Form
 			}
 		}
 
-		kontrolka.Focus();
+		BeginInvoke(delegate
+		{
+			kontrolka.Focus();
+		});
 	}
 
 	public static void Pokaz()
