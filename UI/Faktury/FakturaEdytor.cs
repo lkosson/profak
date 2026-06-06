@@ -42,6 +42,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 	private readonly TDatePicker dateTimePickerDataWprowadzenia;
 	private readonly TDatePicker dateTimePickerTerminPlatnosci;
 	private readonly TNumericUpDown numericUpDownKurs;
+	private readonly TButton buttonKurs;
 	private readonly TComboBox comboBoxProceduraMarzy;
 	private readonly TCheckBox checkBoxReczneKwoty;
 	private readonly TLinkLabel linkLabelUwagiPomoc;
@@ -108,6 +109,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 		dateTimePickerDataWprowadzenia = Kontrolki.DatePicker();
 		dateTimePickerTerminPlatnosci = Kontrolki.DatePicker();
 		numericUpDownKurs = Kontrolki.NumericUpDown(poPrzecinku: 4, szerokosc: 70);
+		buttonKurs = Kontrolki.Button("NBP", PobierzKurs);
 		comboBoxProceduraMarzy = Kontrolki.DropDownList();
 		checkBoxReczneKwoty = Kontrolki.CheckBox("Kwota \"razem\" ustawiona ręcznie");
 		linkLabelUwagiPomoc = Kontrolki.LinkPomoc(PomocUwagiPubliczne);
@@ -118,6 +120,9 @@ partial class FakturaEdytor : Edytor<Faktura>
 		menuKSeFKopiujOdnosnik = Kontrolki.MenuItem("Kopiuj odnośnik do schowka", KopiujOdnosnik);
 		menuKSeFOtworzOdnosnik = Kontrolki.MenuItem("Otwórz odnośnik w przeglądarce", OtworzOdnosnik);
 		buttonDropDownKSeF = Kontrolki.ButtonMenu("e-Faktura", [menuKSeFGenerujXML, menuKSeFZapiszXML, menuKSeFZapiszWizualizacje, menuKSeFKopiujOdnosnik, menuKSeFOtworzOdnosnik]);
+
+		buttonKurs.Width = 30;
+		Dymek(buttonKurs, "Pobierz kurs z NBP");
 
 		kontroler.Slownik<ProceduraMarży>(comboBoxProceduraMarzy);
 
@@ -171,8 +176,8 @@ partial class FakturaEdytor : Edytor<Faktura>
 		Walidacja<ProceduraMarży>(comboBoxProceduraMarzy, WalidacjaProceduryMarzy, false);
 		Walidacja(textBoxNumer, WalidacjaNumer, false);
 
-		var naglowek = new Siatka([100, 0, -1, 20, 0, 0, 0, 20, 0, 0], []);
-		naglowek.DodajWiersz([labelRodzaj, Kontrolki.Label("Numer"), textBoxNumer, null, Kontrolki.Label("Waluta"), comboBoxWaluta, buttonWaluta, null, Kontrolki.Label("Kurs"), numericUpDownKurs]);
+		var naglowek = new Siatka([100, 0, -1, 20, 0, 0, 0, 20, 0, 0, 0], []);
+		naglowek.DodajWiersz([labelRodzaj, Kontrolki.Label("Numer"), textBoxNumer, null, Kontrolki.Label("Waluta"), comboBoxWaluta, buttonWaluta, null, Kontrolki.Label("Kurs"), numericUpDownKurs, buttonKurs]);
 
 		var sprzedawca = new Siatka([0, -1, 0, 0], []);
 		sprzedawca.DodajWiersz("NIP", [comboBoxNIPSprzedawcy, buttonSprzedawca, buttonNowySprzedawca]);
@@ -308,7 +313,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 			Kontekst, comboBoxWaluta, buttonWaluta,
 			Kontekst.Baza.Waluty.OrderBy(waluta => waluta.Nazwa).ToList,
 			waluta => waluta.Skrot,
-			waluta => { if (waluta == null) return; numericUpDownKurs.Enabled = !waluta.CzyDomyslna; if (waluta.CzyDomyslna && Rekord?.KursWaluty != 1) numericUpDownKurs.Value = 1; },
+			waluta => { if (waluta == null) return; numericUpDownKurs.Enabled = buttonKurs.Enabled = !waluta.CzyDomyslna; if (waluta.CzyDomyslna && Rekord?.KursWaluty != 1) numericUpDownKurs.Value = 1; },
 			Spisy.Waluty)
 			.Zainstaluj();
 
@@ -397,6 +402,17 @@ partial class FakturaEdytor : Edytor<Faktura>
 		numericUpDownNetto.Enabled = Rekord.CzyWartosciReczne;
 		numericUpDownVat.Enabled = Rekord.CzyWartosciReczne;
 		numericUpDownBrutto.Enabled = Rekord.CzyWartosciReczne;
+	}
+
+	private void PobierzKurs()
+	{
+		OknoPostepu.Uruchom(async cancellationToken =>
+		{
+			var waluta = Kontekst.Baza.Znajdz(Rekord.WalutaRef);
+			Rekord.KursWaluty = await IO.NBP.PobierzSredniKursWaluty(waluta, Rekord.DataSprzedazy.AddDays(-1), cancellationToken);
+		});
+
+		kontroler.AktualizujKontrolki();
 	}
 
 	protected override void PrzygotujRekord(Faktura rekord)
