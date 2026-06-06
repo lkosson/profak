@@ -61,5 +61,7 @@ class NumeratorEdytor : Edytor<Numerator>
 
 Pozostaw to pole puste, by numeracja była restartowana według roku, miesiąca lub dnia zgodnie z wybranym formatem numeru.
 
-Jeśli chcesz, by numeracja była resetowana rocznie, ale w numerze faktury występował także numer miesiąca, wprowadź tu wyrażenie zawierające [Rok], ale nie [Miesiac].";
+Jeśli chcesz, by numeracja była resetowana rocznie, ale w numerze faktury występował także numer miesiąca, wprowadź tu wyrażenie zawierające [Rok], ale nie [Miesiac].
+
+Elementy daty odnoszą się do daty wystawienia faktury. Aby odnieść się do daty sprzedaży, użyj prefiksu ""sprzedaz"", np. [Sprzedaz-Miesiac].";
 }
