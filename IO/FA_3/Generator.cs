@@ -330,6 +330,11 @@ public class Generator
 				ksefFaktura.Fa.P_13_3 += dbPozycja.WartoscNetto;
 				ksefFaktura.Fa.P_14_3 += dbPozycja.WartoscVat;
 				ksefWiersz.P_12 = TStawkaPodatku.Item5;
+				if (dbFaktura.KursWaluty != 0 && dbFaktura.KursWaluty != 1)
+				{
+					ksefFaktura.Fa.P_14_3W ??= 0;
+					ksefFaktura.Fa.P_14_3W += dbPozycja.WartoscVat * dbFaktura.KursWaluty;
+				}
 			}
 			else if (dbPozycja.StawkaVat.Wartosc <= 8)
 			{
@@ -338,6 +343,11 @@ public class Generator
 				ksefFaktura.Fa.P_13_2 += dbPozycja.WartoscNetto;
 				ksefFaktura.Fa.P_14_2 += dbPozycja.WartoscVat;
 				ksefWiersz.P_12 = TStawkaPodatku.Item8;
+				if (dbFaktura.KursWaluty != 0 && dbFaktura.KursWaluty != 1)
+				{
+					ksefFaktura.Fa.P_14_2W ??= 0;
+					ksefFaktura.Fa.P_14_2W += dbPozycja.WartoscVat * dbFaktura.KursWaluty;
+				}
 			}
 			else
 			{
@@ -346,6 +356,11 @@ public class Generator
 				ksefFaktura.Fa.P_13_1 += dbPozycja.WartoscNetto;
 				ksefFaktura.Fa.P_14_1 += dbPozycja.WartoscVat;
 				ksefWiersz.P_12 = TStawkaPodatku.Item23;
+				if (dbFaktura.KursWaluty != 0 && dbFaktura.KursWaluty != 1)
+				{
+					ksefFaktura.Fa.P_14_1W ??= 0;
+					ksefFaktura.Fa.P_14_1W += dbPozycja.WartoscVat * dbFaktura.KursWaluty;
+				}
 			}
 			if (dbPozycja.CzyPrzedKorekta) ksefWiersz.StanPrzed = TWybor1.Item1;
 
