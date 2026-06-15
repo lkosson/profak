@@ -37,6 +37,7 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 	private readonly TTextBox textBoxUwagiPubliczne;
 	private readonly TButton buttonCertyfikatKSeF;
 	private readonly TTextBox textBoxNazwaBanku;
+	private readonly TButton buttonRachunki;
 	private readonly TButton buttonWaluta;
 	private readonly TComboBox comboBoxWaluta;
 	private readonly TCheckBox checkBoxImportKSeF;
@@ -66,6 +67,7 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 		checkBoxImportKSeF = Kontrolki.CheckBox("Pobrany z KSeF (ukryty przy ręcznym wprowadzaniu faktury)");
 		comboBoxWaluta = Kontrolki.DropDownList();
 		buttonWaluta = Kontrolki.ButtonSlownik();
+		buttonRachunki = Kontrolki.ButtonSlownik(PokazRachunki);
 
 		textBoxUwagiWewnetrzne = Kontrolki.TextArea();
 		textBoxUwagiPubliczne = Kontrolki.TextArea();
@@ -118,18 +120,18 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 		Walidacja(textBoxNazwa, WalidacjaNazwy, true);
 		Walidacja(textBoxPelnaNazwa, WalidacjaPelnejNazwy, true);
 
-		var danePodstawowe = new Siatka([0, -1, 0, 0], []);
-		danePodstawowe.DodajWiersz("Pełna nazwa", [(textBoxPelnaNazwa, 3)]);
-		danePodstawowe.DodajWiersz("NIP", [(textBoxNIP, 2), (buttonPobierzGUS, 1)]);
-		danePodstawowe.DodajWiersz("Adres rejestrowy", [(textBoxAdresRejestrowy, 3)]);
-		danePodstawowe.DodajWiersz("Adres korespondencyjny", [(textBoxAdresKorespondencyjny, 3)]);
-		danePodstawowe.DodajWiersz("Telefon", [(textBoxTelefon, 3)]);
-		danePodstawowe.DodajWiersz("E-Mail", [(textBoxEMail, 3)]);
-		danePodstawowe.DodajWiersz("Rachunek bankowy", [textBoxRachunekBankowy, textBoxNazwaBanku, buttonSprawdzMF]);
-		danePodstawowe.DodajWiersz("Stan", [(comboBoxStan, 3)]);
-		danePodstawowe.DodajWiersz([(labelSposobPlatnosci, 1), (comboBoxSposobPlatnosci, 2), (new Poziomo([buttonSposobPlatnosci]), 1)]);
-		danePodstawowe.DodajWiersz([(null, 1), (checkBoxTP, 3)]);
-		danePodstawowe.DodajWiersz([(null, 1), (checkBoxImportKSeF, 3)]);
+		var danePodstawowe = new Siatka([0, -1, 0, 0, 0], []);
+		danePodstawowe.DodajWiersz("Pełna nazwa", [(textBoxPelnaNazwa, 4)]);
+		danePodstawowe.DodajWiersz("NIP", [(textBoxNIP, 3), (buttonPobierzGUS, 1)]);
+		danePodstawowe.DodajWiersz("Adres rejestrowy", [(textBoxAdresRejestrowy, 4)]);
+		danePodstawowe.DodajWiersz("Adres korespondencyjny", [(textBoxAdresKorespondencyjny, 4)]);
+		danePodstawowe.DodajWiersz("Telefon", [(textBoxTelefon, 4)]);
+		danePodstawowe.DodajWiersz("E-Mail", [(textBoxEMail, 4)]);
+		danePodstawowe.DodajWiersz("Rachunek bankowy", [textBoxRachunekBankowy, textBoxNazwaBanku, buttonRachunki, buttonSprawdzMF]);
+		danePodstawowe.DodajWiersz("Stan", [(comboBoxStan, 4)]);
+		danePodstawowe.DodajWiersz([(labelSposobPlatnosci, 1), (comboBoxSposobPlatnosci, 3), (new Poziomo([buttonSposobPlatnosci]), 1)]);
+		danePodstawowe.DodajWiersz([(null, 1), (checkBoxTP, 4)]);
+		danePodstawowe.DodajWiersz([(null, 1), (checkBoxImportKSeF, 4)]);
 		danePodstawowe.DodajWiersz("Domyślna waluta", [comboBoxWaluta, new Poziomo([buttonWaluta])]);
 
 		var uwagi = new Siatka([-1], [-1, -1]);
@@ -294,6 +296,19 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 		base.KoniecEdycji();
 		if (String.IsNullOrEmpty(Rekord.PelnaNazwa)) Rekord.PelnaNazwa = Rekord.Nazwa;
 		if (String.IsNullOrEmpty(Rekord.AdresKorespondencyjny)) Rekord.AdresKorespondencyjny = Rekord.AdresRejestrowy;
+	}
+
+	private void PokazRachunki()
+	{
+		using var nowyKontekst = new Kontekst(Kontekst);
+		using var spis = Spisy.RachunkiKontrahenta();
+		spis.Spis.KontrahentRef = Rekord;
+		spis.Spis.Kontekst = nowyKontekst;
+		var wybrany = Spisy.Wybierz(nowyKontekst, spis, "Rachunki kontrahenta", default);
+		if (wybrany == null) return;
+		Rekord.RachunekBankowy = wybrany.NumerRachunku;
+		Rekord.NazwaBanku = wybrany.NazwaBanku;
+		kontroler.AktualizujKontrolki();
 	}
 
 	private void SprawdzMF()

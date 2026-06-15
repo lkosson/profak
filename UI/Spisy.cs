@@ -17,8 +17,8 @@ class Spisy
 		dialog.Width = Math.Min(Math.Max(spis.PreferowanaSzerokosc, 800), 1200);
 		dialog.Height = 450;
 		dialog.Pokaz();
-		if (wybor.WybranyRekord is null) return default;
 		transakcja.Zatwierdz();
+		if (wybor.WybranyRekord is null) return default;
 		return wybor.WybranyRekord;
 	}
 
@@ -155,6 +155,17 @@ class Spisy
 			new EdytujRekordAkcja<Kontrahent, KontrahentEdytor>(),
 			new UsunKontrahentaAkcja(),
 			new PrzeladujAkcja<Kontrahent>()
+		);
+	}
+
+	public static SpisZAkcjami<RachunekKontrahenta, RachunekKontrahentaSpis> RachunkiKontrahenta()
+	{
+		var spis = new RachunekKontrahentaSpis();
+		return Utworz(spis,
+			new DodajRekordAkcja<RachunekKontrahenta, RachunekKontrahentaEdytor>(rachunekKontrahenta => rachunekKontrahenta.KontrahentRef = spis.KontrahentRef),
+			new EdytujRekordAkcja<RachunekKontrahenta, RachunekKontrahentaEdytor>(),
+			new UsunRekordAkcja<RachunekKontrahenta>(),
+			new PrzeladujAkcja<RachunekKontrahenta>()
 		);
 	}
 
