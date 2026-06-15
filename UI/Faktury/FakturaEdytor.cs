@@ -11,6 +11,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 	private readonly TTextBox textBoxDaneSprzedawcy;
 	private readonly TTextBox textBoxDaneNabywcy;
 	private readonly TTextBox textBoxRachunekBankowy;
+	private readonly TButton buttonRachunek;
 	private readonly TSuggestBox comboBoxSposobPlatnosci;
 	private readonly TButton buttonSprzedawca;
 	private readonly TButton buttonNabywca;
@@ -77,6 +78,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 		textBoxDaneSprzedawcy = Kontrolki.TextArea(3);
 		textBoxDaneNabywcy = Kontrolki.TextArea(3);
 		textBoxRachunekBankowy = Kontrolki.TextBox();
+		buttonRachunek = Kontrolki.ButtonSlownik(WybierzRachunek);
 		comboBoxSposobPlatnosci = Kontrolki.SuggestBox();
 		buttonSprzedawca = Kontrolki.ButtonSlownik();
 		buttonNowySprzedawca = Kontrolki.ButtonDodaj(NowySprzedawca);
@@ -121,6 +123,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 		menuKSeFOtworzOdnosnik = Kontrolki.MenuItem("Otwórz odnośnik w przeglądarce", OtworzOdnosnik);
 		buttonDropDownKSeF = Kontrolki.ButtonMenu("e-Faktura", [menuKSeFGenerujXML, menuKSeFZapiszXML, menuKSeFZapiszWizualizacje, menuKSeFKopiujOdnosnik, menuKSeFOtworzOdnosnik]);
 
+		buttonRachunek.Height = 23;
 		buttonKurs.Width = 30;
 		Dymek(buttonKurs, "Pobierz kurs z NBP");
 
@@ -203,7 +206,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 		var platnosc = new Siatka([0, -1, 0, 0], []);
 		platnosc.DodajWiersz("Sposób płatności", [(comboBoxSposobPlatnosci, 2), (buttonSposobPlatnosci, 1)]);
 		platnosc.DodajWiersz("Termin płatności", [(dateTimePickerTerminPlatnosci, 3)]);
-		platnosc.DodajWiersz("Numer rachunku", [(textBoxRachunekBankowy, 1), (textBoxNazwaBanku, 2)]);
+		platnosc.DodajWiersz("Numer rachunku", [(textBoxRachunekBankowy, 1), (textBoxNazwaBanku, 1), (buttonRachunek, 1)]);
 
 		var razem = new DwieKolumny();
 		razem.DodajWiersz(numericUpDownNetto, "Netto");
@@ -313,7 +316,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 			Kontekst, comboBoxWaluta, buttonWaluta,
 			Kontekst.Baza.Waluty.OrderBy(waluta => waluta.Nazwa).ToList,
 			waluta => waluta.Skrot,
-			waluta => { if (waluta == null) return; numericUpDownKurs.Enabled = buttonKurs.Enabled = !waluta.CzyDomyslna; if (waluta.CzyDomyslna && Rekord?.KursWaluty != 1) numericUpDownKurs.Value = 1; },
+			UstawWalute,
 			Spisy.Waluty)
 			.Zainstaluj();
 
@@ -385,6 +388,24 @@ partial class FakturaEdytor : Edytor<Faktura>
 		kontroler.AktualizujKontrolki();
 	}
 
+	private void UstawWalute(Waluta? waluta)
+	{
+		if (waluta == null) return;
+		if (Rekord == null) return;
+		numericUpDownKurs.Enabled = !waluta.CzyDomyslna;
+		buttonKurs.Enabled = !waluta.CzyDomyslna;
+		if (waluta.CzyDomyslna && Rekord.KursWaluty != 1) numericUpDownKurs.Value = 1;
+		var rachunekWaluty = Kontekst.Baza.RachunkiKontrahentow
+			.Where(rachunekKontrahenta => rachunekKontrahenta.KontrahentId == Rekord.SprzedawcaId && rachunekKontrahenta.WalutaId == waluta.Id)
+			.FirstOrDefault();
+		if (rachunekWaluty != null)
+		{
+			Rekord.RachunekBankowy = rachunekWaluty.NumerRachunku;
+			Rekord.NazwaBanku = rachunekWaluty.NazwaBanku;
+			kontroler.AktualizujKontrolki();
+		}
+	}
+
 	private bool UstawSposobPlatnosci(Faktura rekord, SposobPlatnosci? sposobPlatnosci)
 	{
 		if (sposobPlatnosci == null || rekord == null || rekord.SposobPlatnosciRef == sposobPlatnosci.Ref) return false;
@@ -402,6 +423,19 @@ partial class FakturaEdytor : Edytor<Faktura>
 		numericUpDownNetto.Enabled = Rekord.CzyWartosciReczne;
 		numericUpDownVat.Enabled = Rekord.CzyWartosciReczne;
 		numericUpDownBrutto.Enabled = Rekord.CzyWartosciReczne;
+	}
+
+	private void WybierzRachunek()
+	{
+		using var nowyKontekst = new Kontekst(Kontekst);
+		using var spis = Spisy.RachunkiKontrahenta();
+		spis.Spis.KontrahentRef = Rekord.SprzedawcaRef;
+		spis.Spis.Kontekst = nowyKontekst;
+		var wybrany = Spisy.Wybierz(nowyKontekst, spis, "Wybierz rachunek", default);
+		if (wybrany == null) return;
+		Rekord.RachunekBankowy = wybrany.NumerRachunku;
+		Rekord.NazwaBanku = wybrany.NazwaBanku;
+		kontroler.AktualizujKontrolki();
 	}
 
 	private void PobierzKurs()
