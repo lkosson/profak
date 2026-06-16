@@ -375,7 +375,19 @@ partial class FakturaEdytor : Edytor<Faktura>
 		if (kontrahent == null || rekord.SprzedawcaRef == kontrahent.Ref) return false;
 		rekord.UstawSprzedawce(kontrahent);
 		if (kontrahent.SposobPlatnosciRef.IsNotNull) comboBoxSposobPlatnosci.SelectedValue = kontrahent.SposobPlatnosciRef;
+		UstawDostepnoscRachunkowKontrahenta();
 		return true;
+	}
+
+	private void UstawDostepnoscRachunkowKontrahenta()
+	{
+		if (Rekord == null || Rekord.SprzedawcaRef.IsNull)
+		{
+			buttonRachunek.Enabled = false;
+			return;
+		}
+		var rachunki = Kontekst.Baza.RachunkiKontrahentow.Where(rachunekKontrahenta => rachunekKontrahenta.KontrahentId == Rekord.SprzedawcaRef.Id).ToList();
+		buttonRachunek.Enabled = rachunki.Count > 0;
 	}
 
 	private void UstawDateWystawienia(Faktura rekord, DateTime dataWystawienia)
@@ -395,6 +407,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 		numericUpDownKurs.Enabled = !waluta.CzyDomyslna;
 		buttonKurs.Enabled = !waluta.CzyDomyslna;
 		if (waluta.CzyDomyslna && Rekord.KursWaluty != 1) numericUpDownKurs.Value = 1;
+		/*
 		var rachunekWaluty = Kontekst.Baza.RachunkiKontrahentow
 			.Where(rachunekKontrahenta => rachunekKontrahenta.KontrahentId == Rekord.SprzedawcaId && rachunekKontrahenta.WalutaId == waluta.Id)
 			.FirstOrDefault();
@@ -404,6 +417,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 			Rekord.NazwaBanku = rachunekWaluty.NazwaBanku;
 			kontroler.AktualizujKontrolki();
 		}
+		*/
 	}
 
 	private bool UstawSposobPlatnosci(Faktura rekord, SposobPlatnosci? sposobPlatnosci)
@@ -467,6 +481,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 	{
 		base.RekordGotowy();
 		UstawRazem();
+		UstawDostepnoscRachunkowKontrahenta();
 		wplaty.Spis.FakturaRef = Rekord;
 		wplaty.Spis.Kontekst = Kontekst;
 		pozycjeFaktury.Spis.FakturaRef = Rekord;
