@@ -72,17 +72,6 @@ public partial class Faktura : Wydruk
 				};
 			}
 
-			if (faktura.Rodzaj is RodzajFaktury.Rozliczenie or RodzajFaktury.KorektaRozliczenia)
-			{
-				var fakturaBazowa = faktura.Rodzaj == RodzajFaktury.KorektaRozliczenia ? baza.Znajdz(faktura.FakturaPierwotnaRef) : faktura;
-				var zaliczki = baza.Faktury.Where(e => e.FakturaRozliczeniowaId == fakturaBazowa.Id).ToList();
-				if (zaliczki.Count > 0)
-				{
-					if (!String.IsNullOrEmpty(fakturaDTO.Korekta)) fakturaDTO.Korekta += "<br/>";
-					fakturaDTO.Korekta += "<b>numery faktury zaliczkowych:</b> " + String.Join(", ", zaliczki.Select(e => e.Numer));
-				}
-			}
-
 			if (duplikat)
 			{
 				if (!String.IsNullOrEmpty(fakturaDTO.Korekta)) fakturaDTO.Korekta += "<br/>";

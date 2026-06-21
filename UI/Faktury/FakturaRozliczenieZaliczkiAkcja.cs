@@ -17,7 +17,7 @@ class FakturaRozliczenieZaliczkiAkcja : FakturaPodobnaAkcja
 		{
 			zaliczka.FakturaRozliczeniowaId = podobna.Id;
 			kontekst.Baza.Zapisz(zaliczka);
-			var wplata = new Wplata { Data = zaliczka.DataWystawienia, FakturaRef = podobna, Kwota = zaliczka.RazemBrutto, Uwagi = $"Zaliczka {zaliczka.Numer}", CzyRozliczenie = true };
+			var wplata = new Wplata { Data = zaliczka.DataWystawienia, FakturaRef = podobna, Kwota = zaliczka.RazemBrutto, Uwagi = $"Zaliczka {zaliczka.Numer} z dnia {zaliczka.DataWystawienia.ToString(Wyglad.FormatDaty)}", CzyRozliczenie = true };
 			kontekst.Baza.Zapisz(wplata);
 		}
 		return podobna;
