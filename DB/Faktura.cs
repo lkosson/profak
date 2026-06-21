@@ -109,6 +109,10 @@ public class Faktura : Rekord<Faktura>
 		RodzajFaktury.KorektaVatMarży => PrzeznaczenieNumeratora.KorektaVatMarży,
 		RodzajFaktury.Rachunek => PrzeznaczenieNumeratora.Rachunek,
 		RodzajFaktury.KorektaRachunku => PrzeznaczenieNumeratora.KorektaRachunku,
+		RodzajFaktury.Zaliczka => PrzeznaczenieNumeratora.Zaliczka,
+		RodzajFaktury.KorektaZaliczki=> PrzeznaczenieNumeratora.KorektaZaliczki,
+		RodzajFaktury.Rozliczenie => PrzeznaczenieNumeratora.Faktura,
+		RodzajFaktury.KorektaRozliczenia => PrzeznaczenieNumeratora.KorektaSprzedaży,
 		_ => null
 	};
 
@@ -119,7 +123,11 @@ public class Faktura : Rekord<Faktura>
 		|| Rodzaj == RodzajFaktury.VatMarża
 		|| Rodzaj == RodzajFaktury.KorektaVatMarży
 		|| Rodzaj == RodzajFaktury.Rachunek
-		|| Rodzaj == RodzajFaktury.KorektaRachunku;
+		|| Rodzaj == RodzajFaktury.KorektaRachunku
+		|| Rodzaj == RodzajFaktury.Zaliczka
+		|| Rodzaj == RodzajFaktury.KorektaZaliczki
+		|| Rodzaj == RodzajFaktury.Rozliczenie
+		|| Rodzaj == RodzajFaktury.KorektaRozliczenia;
 
 	public bool CzyZakup => !CzySprzedaz;
 
@@ -278,6 +286,8 @@ public class Faktura : Rekord<Faktura>
 		else if (bazowa.Rodzaj == RodzajFaktury.Rachunek) korekta.Rodzaj = RodzajFaktury.KorektaRachunku;
 		else if (bazowa.Rodzaj == RodzajFaktury.Zakup || bazowa.Rodzaj == RodzajFaktury.KorektaZakupu) korekta.Rodzaj = RodzajFaktury.KorektaZakupu;
 		else if (bazowa.Rodzaj == RodzajFaktury.VatMarża || bazowa.Rodzaj == RodzajFaktury.KorektaVatMarży) korekta.Rodzaj = RodzajFaktury.KorektaVatMarży;
+		else if (bazowa.Rodzaj == RodzajFaktury.Zaliczka || bazowa.Rodzaj == RodzajFaktury.KorektaZaliczki) korekta.Rodzaj = RodzajFaktury.KorektaZaliczki;
+		else if (bazowa.Rodzaj == RodzajFaktury.Rozliczenie || bazowa.Rodzaj == RodzajFaktury.KorektaRozliczenia) korekta.Rodzaj = RodzajFaktury.KorektaRozliczenia;
 		else throw new ApplicationException($"Nie można korygować faktury {bazowa.Rodzaj}.");
 		korekta.DataSprzedazy = bazowa.DataSprzedazy;
 		korekta.FakturaKorygowanaRef = bazowa;
