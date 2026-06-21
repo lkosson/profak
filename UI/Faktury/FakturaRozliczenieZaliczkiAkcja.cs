@@ -4,7 +4,7 @@ namespace ProFak.UI;
 
 class FakturaRozliczenieZaliczkiAkcja : FakturaPodobnaAkcja
 {
-	public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) => zaznaczoneRekordy.Count() >= 1 && zaznaczoneRekordy.All(faktura => faktura.Rodzaj is RodzajFaktury.Zaliczka or RodzajFaktury.KorektaZaliczki);
+	public override bool CzyDostepnaDlaRekordow(IEnumerable<Faktura> zaznaczoneRekordy) => zaznaczoneRekordy.Count() >= 1 && zaznaczoneRekordy.All(faktura => faktura.FakturaRozliczeniowaRef.IsNull && faktura.Rodzaj is RodzajFaktury.Zaliczka or RodzajFaktury.KorektaZaliczki);
 	public override bool CzyKlawiszSkrotu(TKeys klawisz, TKeyModifiers modyfikatory) => modyfikatory == TKeyModifiers.Shift && klawisz == TKeys.Insert;
 	public override string Nazwa => "➕ Wystaw rozliczenie [SHIFT-INS]";
 
