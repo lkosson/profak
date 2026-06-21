@@ -121,6 +121,7 @@ class FakturaSpis : Spis<Faktura>
 		if (rekord.DniPoTerminie > 0) return Kontrolki.Color(160, 20, 20);
 		else if (!rekord.CzyZaplacona) return Kontrolki.Color(240, 80, 40);
 		else if (rekord.FakturaKorygujacaRef.IsNotNull) return Kontrolki.Color(120, 120, 120);
+		else if (rekord.FakturaRozliczeniowaRef.IsNotNull) return Kontrolki.Color(120, 120, 120);
 		else if (rekord.Rodzaj == RodzajFaktury.KorektaSprzedaży) return Kontrolki.Color(50, 60, 220);
 		else if (rekord.Rodzaj == RodzajFaktury.KorektaZakupu) return Kontrolki.Color(50, 60, 220);
 		else if (rekord.Rodzaj == RodzajFaktury.KorektaVatMarży) return Kontrolki.Color(50, 60, 220);
