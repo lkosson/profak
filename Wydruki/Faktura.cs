@@ -35,16 +35,22 @@ public partial class Faktura : Wydruk
 			var jestrabat = pozycje.Any(e => e.RabatProcent > 0 || e.RabatCena > 0 || e.RabatWartosc > 0);
 
 			var fakturaDTO = new FakturaDTO();
-			if (faktura.Rodzaj == RodzajFaktury.Sprzedaż) fakturaDTO.Rodzaj = jestvat ? "Faktura VAT" : "Faktura";
-			else if (faktura.Rodzaj == RodzajFaktury.Rachunek) fakturaDTO.Rodzaj = "Rachunek";
-			else if (faktura.Rodzaj == RodzajFaktury.Proforma) fakturaDTO.Rodzaj = "Faktura pro forma";
-			else if (faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży) fakturaDTO.Rodzaj = jestvat ? "Korekta faktury VAT" : "Korekta faktury";
-			else if (faktura.Rodzaj == RodzajFaktury.KorektaRachunku) fakturaDTO.Rodzaj = "Korekta rachunku";
-			else if (faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny) fakturaDTO.Rodzaj = "Dowód wewnętrzny";
-			else if (faktura.Rodzaj == RodzajFaktury.VatMarża) fakturaDTO.Rodzaj = "Faktura VAT marża";
-			else if (faktura.Rodzaj == RodzajFaktury.KorektaVatMarży) fakturaDTO.Rodzaj = "Korekta faktury VAT marża";
-			else fakturaDTO.Rodzaj = faktura.Rodzaj.ToString();
-
+			fakturaDTO.Rodzaj = faktura.Rodzaj switch
+			{
+				RodzajFaktury.Sprzedaż => jestvat ? "Faktura VAT" : "Faktura",
+				RodzajFaktury.Rachunek => "Rachunek",
+				RodzajFaktury.Proforma => "Faktura pro forma",
+				RodzajFaktury.KorektaSprzedaży => jestvat ? "Korekta faktury VAT" : "Korekta faktury",
+				RodzajFaktury.KorektaRachunku => "Korekta rachunku",
+				RodzajFaktury.DowódWewnętrzny => "Dowód wewnętrzny",
+				RodzajFaktury.VatMarża => "Faktura VAT marża",
+				RodzajFaktury.KorektaVatMarży => "Korekta faktury VAT marża",
+				RodzajFaktury.Zaliczka => "Korekta VAT zaliczkowa",
+				RodzajFaktury.KorektaZaliczki => "Korekta faktury VAT zaliczkowej",
+				RodzajFaktury.Rozliczenie => "Faktura VAT rozliczeniowa",
+				RodzajFaktury.KorektaRozliczenia => "Korekta faktury VAT rozliczeniowej",
+				_ => faktura.Rodzaj.ToString()
+			};
 			fakturaDTO.Numer = faktura.Numer;
 			fakturaDTO.JestVAT = jestvat;
 			fakturaDTO.JestRabat = jestrabat;
@@ -56,9 +62,14 @@ public partial class Faktura : Wydruk
 			if (faktura.FakturaPierwotnaRef.IsNotNull)
 			{
 				var fakturaBazowa = baza.Znajdz(faktura.FakturaPierwotnaRef);
-				if (fakturaBazowa.Rodzaj == RodzajFaktury.Proforma) fakturaDTO.Korekta = "do faktury pro forma <b>" + fakturaBazowa.Numer + "</b>";
-				else if (fakturaBazowa.Rodzaj == RodzajFaktury.VatMarża) fakturaDTO.Korekta = "<b>do faktury VAT marża</b> " + fakturaBazowa.Numer + "<br/><b>z dnia</b> " + fakturaBazowa.DataWystawienia.ToString(UI.Wyglad.FormatDaty) + "<br/>";
-				else fakturaDTO.Korekta = (jestvat ? "<b>do faktury VAT</b> " : "<b>do faktury</b> ") + fakturaBazowa.Numer + "<br/><b>z dnia</b> " + fakturaBazowa.DataWystawienia.ToString(UI.Wyglad.FormatDaty) + "<br/>";
+				fakturaDTO.Korekta = fakturaBazowa.Rodzaj switch
+				{
+					RodzajFaktury.Proforma => "do faktury pro forma <b>" + fakturaBazowa.Numer + "</b>",
+					RodzajFaktury.VatMarża => "<b>do faktury VAT marża</b> " + fakturaBazowa.Numer + "<br/><b>z dnia</b> " + fakturaBazowa.DataWystawienia.ToString(UI.Wyglad.FormatDaty) + "<br/>",
+					RodzajFaktury.Zaliczka or RodzajFaktury.KorektaZaliczki => "<b>do faktury VAT zaliczkowej</b> " + fakturaBazowa.Numer + "<br/><b>z dnia</b> " + fakturaBazowa.DataWystawienia.ToString(UI.Wyglad.FormatDaty) + "<br/>",
+					RodzajFaktury.Rozliczenie or RodzajFaktury.KorektaRozliczenia => "<b>do faktury VAT rozliczeniowej</b> " + fakturaBazowa.Numer + "<br/><b>z dnia</b> " + fakturaBazowa.DataWystawienia.ToString(UI.Wyglad.FormatDaty) + "<br/>",
+					_ => (jestvat ? "<b>do faktury VAT</b> " : "<b>do faktury</b> ") + fakturaBazowa.Numer + "<br/><b>z dnia</b> " + fakturaBazowa.DataWystawienia.ToString(UI.Wyglad.FormatDaty) + "<br/>"
+				};
 			}
 
 			if (duplikat)
