@@ -50,6 +50,7 @@ public class Faktura : Rekord<Faktura>
 	public int? FakturaKorygowanaId { get; set; }
 	public int? FakturaKorygujacaId { get; set; }
 	public int? FakturaPierwotnaId { get; set; }
+	public int? FakturaRozliczeniowaId { get; set; }
 	public int? WalutaId { get; set; }
 	public int? SposobPlatnosciId { get; set; }
 	public int? DeklaracjaVatId { get; set; }
@@ -60,6 +61,7 @@ public class Faktura : Rekord<Faktura>
 	public Ref<Faktura> FakturaKorygowanaRef { get => FakturaKorygowanaId; set => FakturaKorygowanaId = value; }
 	public Ref<Faktura> FakturaKorygujacaRef { get => FakturaKorygujacaId; set => FakturaKorygujacaId = value; }
 	public Ref<Faktura> FakturaPierwotnaRef { get => FakturaPierwotnaId; set => FakturaPierwotnaId = value; }
+	public Ref<Faktura> FakturaRozliczeniowaRef { get => FakturaRozliczeniowaId; set => FakturaRozliczeniowaId = value; }
 	public Ref<Waluta> WalutaRef { get => WalutaId; set => WalutaId = value; }
 	public Ref<SposobPlatnosci> SposobPlatnosciRef { get => SposobPlatnosciId; set => SposobPlatnosciId = value; }
 	public Ref<DeklaracjaVat> DeklaracjaVatRef { get => DeklaracjaVatId; set => DeklaracjaVatId = value; }
@@ -70,6 +72,7 @@ public class Faktura : Rekord<Faktura>
 	public Faktura? FakturaKorygowana { get; set; }
 	public Faktura? FakturaKorygujaca { get; set; }
 	public Faktura? FakturaPierwotna { get; set; }
+	public Faktura? FakturaRozliczeniowa { get; set; }
 	public Waluta? Waluta { get; set; }
 	public SposobPlatnosci? SposobPlatnosci { get; set; }
 	public DeklaracjaVat? DeklaracjaVat { get; set; }

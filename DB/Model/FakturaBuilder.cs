@@ -54,6 +54,7 @@ class FakturaBuilder
 		builder.Property(e => e.FakturaKorygowanaId);
 		builder.Property(e => e.FakturaKorygujacaId);
 		builder.Property(e => e.FakturaPierwotnaId);
+		builder.Property(e => e.FakturaRozliczeniowaId);
 		builder.Property(e => e.WalutaId);
 		builder.Property(e => e.SposobPlatnosciId);
 		builder.Property(e => e.DeklaracjaVatId);
@@ -64,6 +65,7 @@ class FakturaBuilder
 		builder.Ignore(e => e.FakturaKorygowanaRef);
 		builder.Ignore(e => e.FakturaKorygujacaRef);
 		builder.Ignore(e => e.FakturaPierwotnaRef);
+		builder.Ignore(e => e.FakturaRozliczeniowaRef);
 		builder.Ignore(e => e.WalutaRef);
 		builder.Ignore(e => e.SposobPlatnosciRef);
 		builder.Ignore(e => e.DeklaracjaVatRef);
@@ -76,6 +78,7 @@ class FakturaBuilder
 		builder.HasOne(e => e.FakturaKorygowana).WithMany().HasForeignKey(e => e.FakturaKorygowanaId).OnDelete(DeleteBehavior.Restrict);
 		builder.HasOne(e => e.FakturaKorygujaca).WithMany().HasForeignKey(e => e.FakturaKorygujacaId).OnDelete(DeleteBehavior.Restrict);
 		builder.HasOne(e => e.FakturaPierwotna).WithMany().HasForeignKey(e => e.FakturaPierwotnaId).OnDelete(DeleteBehavior.Restrict);
+		builder.HasOne(e => e.FakturaRozliczeniowa).WithMany().HasForeignKey(e => e.FakturaRozliczeniowaId).OnDelete(DeleteBehavior.Restrict);
 		builder.HasOne(e => e.Waluta).WithMany().HasForeignKey(e => e.WalutaId).OnDelete(DeleteBehavior.Restrict);
 		builder.HasOne(e => e.SposobPlatnosci).WithMany().HasForeignKey(e => e.SposobPlatnosciId).OnDelete(DeleteBehavior.Restrict);
 		builder.HasOne(e => e.DeklaracjaVat).WithMany(e => e.Faktury).HasForeignKey(e => e.DeklaracjaVatId).OnDelete(DeleteBehavior.SetNull);
