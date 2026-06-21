@@ -52,6 +52,14 @@ partial class GlowneOkno
 		var fakturyProformaWedlugTowaru = menu.UtworzWezel("Według towaru", () => WypelnijTowaryFaktur(pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.Proforma, towar => Wyswietl(Spisy.FakturyProforma(new() { TowarRef = towar }))));
 		var fakturyProforma = menu.UtworzWezel("Faktury proforma", [fakturyProformaWszystkie, fakturyProformaDoZaplaty, fakturyProformaZaplacone, fakturyProformaWedlugDaty, fakturyProformaWedlugNabywcy, fakturyProformaWedlugTowaru]);
 
+		var fakturyZaliczkoweWszystkie = menu.UtworzWezel("Wszystkie", delegate { Wyswietl(Spisy.FakturyZaliczkowe(new())); });
+		var fakturyZaliczkoweDoZaplaty = menu.UtworzWezel("Do zapłaty", delegate { Wyswietl(Spisy.FakturyZaliczkowe(new() { CzyDoZaplaty = true })); });
+		var fakturyZaliczkoweZaplacone = menu.UtworzWezel("Zapłacone", delegate { Wyswietl(Spisy.FakturyZaliczkowe(new() { CzyZaplacone = true })); });
+		var fakturyZaliczkoweWedlugDaty = menu.UtworzWezel("Według daty", () => WypelnijDatyFaktur(faktura => faktura.Rodzaj == RodzajFaktury.Proforma, (odDaty, doDaty) => Wyswietl(Spisy.FakturyZaliczkowe(new() { OdDaty = odDaty, DoDaty = doDaty }))));
+		var fakturyZaliczkoweWedlugNabywcy = menu.UtworzWezel("Według nabywcy", () => WypelnijKontrahentowFaktur(faktura => faktura.Rodzaj == RodzajFaktury.Proforma, faktura => faktura.Nabywca!, kontrahent => Wyswietl(Spisy.FakturyZaliczkowe(new() { KontrahentRef = kontrahent }))));
+		var fakturyZaliczkoweWedlugTowaru = menu.UtworzWezel("Według towaru", () => WypelnijTowaryFaktur(pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.Proforma, towar => Wyswietl(Spisy.FakturyZaliczkowe(new() { TowarRef = towar }))));
+		var fakturyZaliczkowe = menu.UtworzWezel("Faktury zaliczkowe", [fakturyZaliczkoweWszystkie, fakturyZaliczkoweDoZaplaty, fakturyZaliczkoweZaplacone, fakturyZaliczkoweWedlugDaty, fakturyZaliczkoweWedlugNabywcy, fakturyZaliczkoweWedlugTowaru]);
+
 		var fakturyZakupuWszystkie = menu.UtworzWezel("Wszystkie", delegate { Wyswietl(Spisy.FakturyZakupu(new())); });
 		var fakturyZakupuDoZaplaty = menu.UtworzWezel("Do zapłaty", delegate { Wyswietl(Spisy.FakturyZakupu(new() { CzyDoZaplaty = true })); });
 		var fakturyZakupuZaplacone = menu.UtworzWezel("Zapłacone", delegate { Wyswietl(Spisy.FakturyZakupu(new() { CzyZaplacone = true })); });
@@ -68,7 +76,7 @@ partial class GlowneOkno
 		var fakturyZakupuWedlugTowaru = menu.UtworzWezel("Według towaru", () => WypelnijTowaryFaktur(pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.Zakup || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaZakupu || pozycja.Faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny, towar => Wyswietl(Spisy.FakturyZakupu(new() { TowarRef = towar }))));
 		var fakturyZakupu = menu.UtworzWezel("Faktury zakupu", [fakturyZakupuWszystkie, fakturyZakupuDoZaplaty, fakturyZakupuZaplacone, fakturyZakupuKSeF, fakturyZakupuWedlugDaty, fakturyZakupuWedlugSprzedawcy, fakturyZakupuWedlugTowaru]);
 
-		var faktury = menu.UtworzWezel("Faktury", [fakturySprzedazy, fakturyProforma, fakturyZakupu]);
+		var faktury = menu.UtworzWezel("Faktury", [fakturySprzedazy, fakturyProforma, fakturyZaliczkowe, fakturyZakupu]);
 		var deklaracjeVat = menu.UtworzWezel("Deklaracje Vat", WypelnijDeklaracjeVat);
 		var skladkiZus = menu.UtworzWezel("Składki Zus", WypelnijSkladkiZus);
 		var zaliczkiPit = menu.UtworzWezel("Zaliczki Pit", WypelnijZaliczkiPit);
