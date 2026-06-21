@@ -147,9 +147,16 @@ public class Generator
 		{
 			ksefFaktura.Fa.Adnotacje.PMarzy.P_PMarzyN = TWybor1.Item1;
 		}
-		ksefFaktura.Fa.RodzajFaktury = dbFaktura.Rodzaj == RodzajFaktury.Sprzedaż || dbFaktura.Rodzaj == RodzajFaktury.VatMarża ? TRodzajFaktury.VAT
-			: dbFaktura.Rodzaj == DB.RodzajFaktury.KorektaSprzedaży || dbFaktura.Rodzaj == RodzajFaktury.KorektaVatMarży ? TRodzajFaktury.KOR
-			: throw new ApplicationException("Nieobsługiwany rodzaj faktury: " + dbFaktura.RodzajFmt);
+		ksefFaktura.Fa.RodzajFaktury = dbFaktura.Rodzaj switch
+		{
+			RodzajFaktury.Sprzedaż or RodzajFaktury.VatMarża => TRodzajFaktury.VAT,
+			RodzajFaktury.KorektaSprzedaży or RodzajFaktury.KorektaVatMarży => TRodzajFaktury.KOR,
+			RodzajFaktury.Zaliczka => TRodzajFaktury.ZAL,
+			RodzajFaktury.KorektaZaliczki => TRodzajFaktury.KOR_ZAL,
+			RodzajFaktury.Rozliczenie => TRodzajFaktury.ROZ,
+			RodzajFaktury.KorektaRozliczenia => TRodzajFaktury.KOR_ROZ,
+			_ => throw new ApplicationException("Nieobsługiwany rodzaj faktury: " + dbFaktura.RodzajFmt)
+		};
 		if (dbFaktura.CzyTP) { ksefFaktura.Fa.TP = TWybor1.Item1; }
 		ksefFaktura.Fa.Platnosc = new FakturaFaPlatnosc();
 		var wplaty = dbFaktura.Wplaty.Where(e => !e.CzyRozliczenie).ToList();
@@ -403,8 +410,12 @@ public class Generator
 		dbFaktura.Numer = ksefFaktura.Fa.P_2;
 		dbFaktura.Rodzaj = ksefFaktura.Fa.RodzajFaktury switch
 		{
-			TRodzajFaktury.VAT or TRodzajFaktury.ROZ or TRodzajFaktury.UPR or TRodzajFaktury.ZAL => RodzajFaktury.Zakup,
-			TRodzajFaktury.KOR or TRodzajFaktury.KOR_ROZ or TRodzajFaktury.KOR_ZAL => RodzajFaktury.KorektaZakupu,
+			TRodzajFaktury.VAT or TRodzajFaktury.UPR => RodzajFaktury.Zakup,
+			TRodzajFaktury.KOR => RodzajFaktury.KorektaZakupu,
+			TRodzajFaktury.ZAL => RodzajFaktury.Zaliczka,
+			TRodzajFaktury.KOR_ZAL => RodzajFaktury.KorektaZaliczki,
+			TRodzajFaktury.ROZ => RodzajFaktury.Rozliczenie,
+			TRodzajFaktury.KOR_ROZ => RodzajFaktury.KorektaRozliczenia,
 			_ => throw new ApplicationException($"Nieobsługiwany rodzaj faktury: {ksefFaktura.Fa.RodzajFaktury}.")
 		};
 		dbFaktura.DataWystawienia = ksefFaktura.Fa.P_1;
@@ -856,9 +867,21 @@ public class Generator
 		faktura.NabywcaRef = nabywca;
 		faktura.Nabywca = null;
 
-		if (sprzedawca.CzyPodmiot) faktura.Rodzaj = faktura.ProceduraMarzy == ProceduraMarży.NieDotyczy
-			? faktura.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaSprzedaży : RodzajFaktury.Sprzedaż
-			: faktura.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaVatMarży : RodzajFaktury.VatMarża;
+		if (sprzedawca.CzyPodmiot)
+		{
+			if (faktura.ProceduraMarzy == ProceduraMarży.NieDotyczy)
+			{
+				faktura.Rodzaj = faktura.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaSprzedaży : RodzajFaktury.Sprzedaż;
+			}
+			else
+			{
+				faktura.Rodzaj = faktura.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaVatMarży : RodzajFaktury.VatMarża;
+			}
+		}
+		else
+		{
+			faktura.Rodzaj = faktura.Rodzaj is RodzajFaktury.KorektaZaliczki or RodzajFaktury.KorektaRozliczenia ? RodzajFaktury.KorektaZakupu : RodzajFaktury.Zakup;
+		}
 
 		if (String.IsNullOrEmpty(faktura.NIPNabywcy)) faktura.NIPNabywcy = nabywca.NIP;
 		if (String.IsNullOrEmpty(faktura.NazwaNabywcy)) faktura.NazwaNabywcy = nabywca.PelnaNazwa;
