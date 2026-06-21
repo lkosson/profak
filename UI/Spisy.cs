@@ -91,6 +91,8 @@ class Spisy
 	public static SpisZAkcjami<Faktura, FakturaZaliczkowaSpis> FakturyZaliczkowe(FakturaSpisParametry parametry)
 	{
 		return Utworz(new FakturaZaliczkowaSpis() { Parametry = parametry },
+			new FakturaZaliczkaAkcja(),
+			new FakturaRozliczenieZaliczkiAkcja(),
 			new KorektaSprzedazyAkcja(),
 			new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
 			new UsunFaktureAkcja(),
