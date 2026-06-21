@@ -11,5 +11,12 @@ class FakturaSprzedazySpis : FakturaSpis
 class FakturaSprzedazyBezNabywcySpis : FakturaSprzedazySpis
 {
 	protected override bool CzyWidocznyNabywca => false;
-	protected override RodzajFaktury[] Rodzaje => [..base.Rodzaje, RodzajFaktury.Rachunek, RodzajFaktury.KorektaRachunku];
+	protected override RodzajFaktury[] Rodzaje => [..base.Rodzaje,
+		RodzajFaktury.Rachunek,
+		RodzajFaktury.KorektaRachunku,
+		RodzajFaktury.Zaliczka,
+		RodzajFaktury.KorektaZaliczki,
+		RodzajFaktury.Rozliczenie,
+		RodzajFaktury.KorektaRozliczenia
+	];
 }

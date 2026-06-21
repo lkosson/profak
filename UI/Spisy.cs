@@ -88,6 +88,20 @@ class Spisy
 		);
 	}
 
+	public static SpisZAkcjami<Faktura, FakturaZaliczkowaSpis> FakturyZaliczkowe(FakturaSpisParametry parametry)
+	{
+		return Utworz(new FakturaZaliczkowaSpis() { Parametry = parametry },
+			new KorektaSprzedazyAkcja(),
+			new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
+			new UsunFaktureAkcja(),
+			new DodajWplateAkcja(),
+			new WydrukFakturyAkcja(),
+			new WyslijMailAkcja(),
+			new ZapiszPlikiAkcja(),
+			new PrzeladujAkcja<Faktura>()
+		);
+	}
+
 	public static SpisZAkcjami<Faktura, FakturaZakupuSpis> FakturyZakupu(FakturaSpisParametry parametry)
 	{
 		return Utworz(new FakturaZakupuSpis() { Parametry = parametry },
