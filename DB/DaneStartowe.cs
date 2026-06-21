@@ -28,6 +28,8 @@ class DaneStartowe
 			baza.Zapisz(new Numerator { Przeznaczenie = PrzeznaczenieNumeratora.KorektaVatMarży, Format = "FKM/[Numer]/[Rok]" });
 			baza.Zapisz(new Numerator { Przeznaczenie = PrzeznaczenieNumeratora.Rachunek, Format = "R/[Numer]/[Rok]" });
 			baza.Zapisz(new Numerator { Przeznaczenie = PrzeznaczenieNumeratora.KorektaRachunku, Format = "RK/[Numer]/[Rok]" });
+			baza.Zapisz(new Numerator { Przeznaczenie = PrzeznaczenieNumeratora.Zaliczka, Format = "FZ/[Numer]/[Rok]" });
+			baza.Zapisz(new Numerator { Przeznaczenie = PrzeznaczenieNumeratora.KorektaZaliczki, Format = "FKZ/[Numer]/[Rok]" });
 		}
 
 		if (!baza.SposobyPlatnosci.Any())

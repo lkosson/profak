@@ -72,5 +72,7 @@ public enum PrzeznaczenieNumeratora
 	VatMarża,
 	KorektaVatMarży,
 	Rachunek,
-	KorektaRachunku
+	KorektaRachunku,
+	Zaliczka,
+	KorektaZaliczki,
 }
