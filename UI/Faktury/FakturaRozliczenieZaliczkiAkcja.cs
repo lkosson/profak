@@ -13,7 +13,7 @@ class FakturaRozliczenieZaliczkiAkcja : FakturaPodobnaAkcja
 		var zaznaczona = zaznaczoneRekordy.First();
 		var podobna = zaznaczona.PrzygotujPodobna(kontekst.Baza);
 		podobna.Rodzaj = RodzajFaktury.Rozliczenie;
-		foreach (var zaliczka in zaznaczoneRekordy)
+		foreach (var zaliczka in zaznaczoneRekordy.OrderBy(faktura => faktura.DataWystawienia))
 		{
 			zaliczka.FakturaRozliczeniowaId = podobna.Id;
 			kontekst.Baza.Zapisz(zaliczka);
