@@ -12,6 +12,10 @@ public class Wplata : Rekord<Wplata>
 
 	public Faktura? Faktura { get; set; }
 
+	public bool CzyZaliczka => CzyRozliczenie && Uwagi != null && Uwagi.StartsWith("Zaliczka ");
+
+	internal static string UwagiDlaZaliczki(Faktura zaliczka) => $"Zaliczka {zaliczka.Numer} z dnia {zaliczka.DataWystawienia.ToString(UI.Wyglad.FormatDaty)}";
+
 	public override bool CzyPasuje(string fraza)
 		=> base.CzyPasuje(fraza)
 		|| CzyPasuje(Data, fraza)

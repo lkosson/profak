@@ -196,22 +196,31 @@ public class Faktura : Rekord<Faktura>
 
 	public void PrzeliczRazem(Baza baza)
 	{
+		if (CzyWartosciReczne) return;
+		var oryginalneBrutto = RazemBrutto;
 		var pozycje = baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == Id).ToList();
 		PrzeliczRazem(pozycje);
-	}
-
-	public void PrzeliczRazem(IEnumerable<PozycjaFaktury> pozycje)
-	{
-		if (CzyWartosciReczne) return;
 		if (Rodzaj == RodzajFaktury.Zaliczka)
 		{
-			var sumaNetto = pozycje.Sum(pozycja => pozycja.WartoscNetto);
-			var sumaBrutto = pozycje.Sum(pozycja => pozycja.WartoscBrutto);
-			var ulamekCalosci = sumaBrutto == 0 ? 1 : RazemBrutto / sumaBrutto;
-			RazemNetto = (sumaNetto * ulamekCalosci).Zaokragl();
+			var ulamekCalosci = oryginalneBrutto == 0 ? 1 : RazemBrutto / oryginalneBrutto;
+			RazemNetto = (oryginalneBrutto * ulamekCalosci).Zaokragl();
 			RazemVat = RazemBrutto - RazemNetto;
-			return;
+			RazemBrutto = oryginalneBrutto;
 		}
+		if (Rodzaj == RodzajFaktury.Rozliczenie)
+		{
+			var zaliczki = baza.Faktury.Where(faktura => faktura.FakturaRozliczeniowaId == Id && (faktura.Rodzaj == RodzajFaktury.Zaliczka || faktura.Rodzaj == RodzajFaktury.KorektaZaliczki)).ToList();
+			foreach (var zaliczka in zaliczki)
+			{
+				RazemNetto -= zaliczka.RazemNetto;
+				RazemVat -= zaliczka.RazemVat;
+				RazemBrutto -= zaliczka.RazemBrutto;
+			}
+		}
+	}
+
+	internal void PrzeliczRazem(IEnumerable<PozycjaFaktury> pozycje)
+	{
 		RazemNetto = pozycje.Sum(pozycja => pozycja.WartoscNetto);
 		RazemVat = pozycje.Sum(pozycja => pozycja.WartoscVat);
 		RazemBrutto = pozycje.Sum(pozycja => pozycja.WartoscBrutto);
