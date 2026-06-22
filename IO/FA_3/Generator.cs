@@ -166,8 +166,8 @@ public class Generator
 		if (dbFaktura.CzyTP) { ksefFaktura.Fa.TP = TWybor1.Item1; }
 		ksefFaktura.Fa.Platnosc = new FakturaFaPlatnosc();
 		var wplaty = dbFaktura.Wplaty.Where(e => !e.CzyRozliczenie).ToList();
-		var obciazenia = dbFaktura.Wplaty.Where(e => e.CzyRozliczenie && e.Kwota < 0).ToList();
-		var odliczenia = dbFaktura.Wplaty.Where(e => e.CzyRozliczenie && e.Kwota > 0).ToList();
+		var obciazenia = dbFaktura.Wplaty.Where(e => e.CzyRozliczenie && !e.CzyZaliczka && e.Kwota < 0).ToList();
+		var odliczenia = dbFaktura.Wplaty.Where(e => e.CzyRozliczenie && !e.CzyZaliczka && e.Kwota > 0).ToList();
 		if (dbFaktura.PozostaloDoZaplaty == 0 && wplaty.Count > 0)
 		{
 			ksefFaktura.Fa.Platnosc.Zaplacono = TWybor1.Item1;
