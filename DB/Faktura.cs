@@ -392,7 +392,7 @@ public class Faktura : Rekord<Faktura>
 			pozycjaPo.WartoscNetto = staraPozycja.WartoscNetto;
 			pozycjaPo.WartoscVat = staraPozycja.WartoscVat;
 			pozycjaPo.WartoscBrutto = staraPozycja.WartoscBrutto;
-			pozycjaPo.CzyWedlugCenBrutto = staraPozycja.CzyWedlugCenBrutto;
+			pozycjaPo.CzyWedlugCenBrutto = staraPozycja.CzyWedlugCenBrutto || CzyZaliczka;
 			pozycjaPo.CzyWartosciReczne = staraPozycja.CzyWartosciReczne;
 			pozycjaPo.StawkaVatRef = staraPozycja.StawkaVatRef;
 			pozycjaPo.JednostkaMiaryRef = staraPozycja.JednostkaMiaryRef;
