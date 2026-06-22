@@ -257,24 +257,6 @@ public class Generator
 			}
 		}
 
-		if (dbFaktura.Rodzaj is RodzajFaktury.Rozliczenie or RodzajFaktury.KorektaRozliczenia)
-		{
-			foreach (var dbZaliczka in dbFaktura.Zaliczki)
-			{
-				var ksefZaliczka = new FakturaFaFakturaZaliczkowa();
-				if (String.IsNullOrEmpty(dbZaliczka.NumerKSeF))
-				{
-					ksefZaliczka.NrKSeFZN = TWybor1.Item1;
-					ksefZaliczka.NrFaZaliczkowej = dbZaliczka.Numer;
-				}
-				else
-				{
-					ksefZaliczka.NrKSeFFaZaliczkowej = dbZaliczka.NumerKSeF;
-				}
-				ksefFaktura.Fa.FakturaZaliczkowa.Add(ksefZaliczka);
-			}
-		}
-
 		foreach (var dbPodmiot3 in dbFaktura.DodatkowePodmioty)
 		{
 			var ksefPodmiot3 = new FakturaPodmiot3();
@@ -443,6 +425,24 @@ public class Generator
 			else
 			{
 				ksefFaktura.Fa.FaWiersz.Add(ksefWiersz);
+			}
+		}
+
+		if (dbFaktura.Rodzaj is RodzajFaktury.Rozliczenie or RodzajFaktury.KorektaRozliczenia)
+		{
+			foreach (var dbZaliczka in dbFaktura.Zaliczki)
+			{
+				var ksefZaliczka = new FakturaFaFakturaZaliczkowa();
+				if (String.IsNullOrEmpty(dbZaliczka.NumerKSeF))
+				{
+					ksefZaliczka.NrKSeFZN = TWybor1.Item1;
+					ksefZaliczka.NrFaZaliczkowej = dbZaliczka.Numer;
+				}
+				else
+				{
+					ksefZaliczka.NrKSeFFaZaliczkowej = dbZaliczka.NumerKSeF;
+				}
+				ksefFaktura.Fa.FakturaZaliczkowa.Add(ksefZaliczka);
 			}
 		}
 
