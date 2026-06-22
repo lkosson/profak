@@ -203,6 +203,15 @@ public class Faktura : Rekord<Faktura>
 	public void PrzeliczRazem(IEnumerable<PozycjaFaktury> pozycje)
 	{
 		if (CzyWartosciReczne) return;
+		if (Rodzaj == RodzajFaktury.Zaliczka)
+		{
+			var sumaNetto = pozycje.Sum(pozycja => pozycja.WartoscNetto);
+			var sumaBrutto = pozycje.Sum(pozycja => pozycja.WartoscBrutto);
+			var ulamekCalosci = sumaBrutto == 0 ? 1 : RazemBrutto / sumaBrutto;
+			RazemNetto = (sumaNetto * ulamekCalosci).Zaokragl();
+			RazemVat = RazemBrutto - RazemNetto;
+			return;
+		}
 		RazemNetto = pozycje.Sum(pozycja => pozycja.WartoscNetto);
 		RazemVat = pozycje.Sum(pozycja => pozycja.WartoscVat);
 		RazemBrutto = pozycje.Sum(pozycja => pozycja.WartoscBrutto);

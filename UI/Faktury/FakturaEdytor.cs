@@ -152,7 +152,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 
 		kontroler.Powiazanie(numericUpDownNetto, faktura => faktura.RazemNetto);
 		kontroler.Powiazanie(numericUpDownVat, faktura => faktura.RazemVat);
-		kontroler.Powiazanie(numericUpDownBrutto, faktura => faktura.RazemBrutto);
+		kontroler.Powiazanie(numericUpDownBrutto, faktura => faktura.RazemBrutto, wartoscZmieniona: delegate { if (numericUpDownBrutto.Enabled) PrzeliczRazem(); });
 
 		kontroler.Powiazanie(textBoxUwagiPubliczne, faktura => faktura.UwagiPubliczne);
 		kontroler.Powiazanie(textBoxUwagiWewnetrzne, faktura => faktura.UwagiWewnetrzne);
@@ -278,7 +278,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 		uklad.DodajWiersz([datyPlatnoscKwoty]);
 		uklad.DodajWiersz([zakladki]);
 
-		pozycjeFaktury.Spis.RekordyZmienione += pozycjeFakturySpis_RekordyZmienione;
+		pozycjeFaktury.Spis.RekordyZmienione += PrzeliczRazem;
 
 		UstawZawartosc(uklad);
 	}
@@ -302,7 +302,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 		return null;
 	}
 
-	private void pozycjeFakturySpis_RekordyZmienione()
+	private void PrzeliczRazem()
 	{
 		Rekord.PrzeliczRazem(Kontekst.Baza);
 		kontroler.AktualizujKontrolki();
@@ -436,7 +436,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 		}
 		numericUpDownNetto.Enabled = Rekord.CzyWartosciReczne;
 		numericUpDownVat.Enabled = Rekord.CzyWartosciReczne;
-		numericUpDownBrutto.Enabled = Rekord.CzyWartosciReczne;
+		numericUpDownBrutto.Enabled = Rekord.CzyWartosciReczne || Rekord.CzyZaliczka;
 	}
 
 	private void WybierzRachunek()

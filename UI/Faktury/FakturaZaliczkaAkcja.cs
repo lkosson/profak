@@ -6,7 +6,7 @@ class FakturaZaliczkaAkcja : DodajRekordAkcja<Faktura, FakturaEdytor>
 {
 	public override string Nazwa => "➕ Wystaw zaliczkę";
 	public FakturaZaliczkaAkcja()
-		: base(faktura => { faktura.Rodzaj = RodzajFaktury.Zaliczka; faktura.CzyWartosciReczne = true; })
+		: base(faktura => faktura.Rodzaj = RodzajFaktury.Zaliczka)
 	{
 	}
 
