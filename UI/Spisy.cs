@@ -300,7 +300,7 @@ class Spisy
 		return Utworz(spis,
 			new DodajRekordAkcja<Wplata, WplataEdytor>(wplata => wplata.FakturaRef = spis.FakturaRef),
 			new EdytujRekordAkcja<Wplata, WplataEdytor>(),
-			new UsunRekordAkcja<Wplata>(),
+			new UsunWplateAkcja(),
 			new PrzeladujAkcja<Wplata>()
 		);
 	}
