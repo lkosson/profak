@@ -419,7 +419,7 @@ public class Generator
 				ksefWierszZamowienia.StanPrzedZ = ksefWiersz.StanPrzed;
 				ksefWierszZamowienia.UU_IDZ = ksefWiersz.UU_ID;
 				ksefFaktura.Fa.Zamowienie ??= new();
-				ksefFaktura.Fa.Zamowienie.WartoscZamowienia += dbPozycja.WartoscBrutto;
+				if (!dbPozycja.CzyPrzedKorekta) ksefFaktura.Fa.Zamowienie.WartoscZamowienia += dbPozycja.WartoscBrutto;
 				ksefFaktura.Fa.Zamowienie.ZamowienieWiersz.Add(ksefWierszZamowienia);
 			}
 			else
