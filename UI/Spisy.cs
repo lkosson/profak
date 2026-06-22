@@ -98,8 +98,12 @@ class Spisy
 			new UsunFaktureAkcja(),
 			new DodajWplateAkcja(),
 			new WydrukFakturyAkcja(),
+			new WydrukDuplikatuFakturyAkcja(),
 			new WyslijMailAkcja(),
+			new WyslijDoKSeFAkcja(),
 			new ZapiszPlikiAkcja(),
+			new ZapiszJakoXMLLokalneAkcja(),
+			new WczytajKSeFAkcja(),
 			new PrzeladujAkcja<Faktura>()
 		);
 	}
