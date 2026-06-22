@@ -920,7 +920,8 @@ public class Generator
 		{
 			if (faktura.ProceduraMarzy == ProceduraMarży.NieDotyczy)
 			{
-				faktura.Rodzaj = faktura.Rodzaj == RodzajFaktury.KorektaZakupu ? RodzajFaktury.KorektaSprzedaży : RodzajFaktury.Sprzedaż;
+				if (faktura.Rodzaj == RodzajFaktury.KorektaZakupu) faktura.Rodzaj = RodzajFaktury.KorektaSprzedaży;
+				else if (faktura.Rodzaj == RodzajFaktury.Zakup) faktura.Rodzaj = RodzajFaktury.Sprzedaż;
 			}
 			else
 			{
