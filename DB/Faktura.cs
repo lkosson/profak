@@ -203,10 +203,10 @@ public class Faktura : Rekord<Faktura>
 		PrzeliczRazem(pozycje);
 		if (CzyZaliczka)
 		{
-			var ulamekCalosci = oryginalneBrutto == 0 ? 1 : RazemBrutto / oryginalneBrutto;
-			RazemNetto = (oryginalneBrutto * ulamekCalosci).Zaokragl();
-			RazemVat = RazemBrutto - RazemNetto;
+			var ulamekCalosci = oryginalneBrutto == 0 ? 0 : oryginalneBrutto / RazemBrutto;
+			RazemNetto = (RazemNetto * ulamekCalosci).Zaokragl();
 			RazemBrutto = oryginalneBrutto;
+			RazemVat = RazemBrutto - RazemNetto;
 		}
 		if (CzyRozliczenie)
 		{
