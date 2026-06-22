@@ -390,7 +390,37 @@ public class Generator
 			}
 			if (dbPozycja.CzyPrzedKorekta) ksefWiersz.StanPrzed = TWybor1.Item1;
 
-			ksefFaktura.Fa.FaWiersz.Add(ksefWiersz);
+			if (dbFaktura.Rodzaj is RodzajFaktury.Zaliczka or RodzajFaktury.KorektaZaliczki)
+			{
+				var ksefWierszZamowienia = new FakturaFaZamowienieZamowienieWiersz();
+				ksefWierszZamowienia.CNZ = ksefWiersz.CN;
+				ksefWierszZamowienia.GTINZ = ksefWiersz.GTIN;
+				ksefWierszZamowienia.GTUZ = ksefWiersz.GTU;
+				ksefWierszZamowienia.IndeksZ = ksefWiersz.Indeks;
+				ksefWierszZamowienia.KwotaAkcyzyZ = ksefWiersz.KwotaAkcyzy;
+				ksefWierszZamowienia.NrWierszaZam = ksefWiersz.NrWierszaFa;
+				ksefWierszZamowienia.PKOBZ = ksefWiersz.PKOB;
+				ksefWierszZamowienia.PKWiUZ = ksefWiersz.PKWiU;
+				//ksefWierszZamowienia.ProceduraZ
+				ksefWierszZamowienia.P_11NettoZ = ksefWiersz.P_11;
+				ksefWierszZamowienia.P_11VatZ = ksefWiersz.P_11Vat;
+				ksefWierszZamowienia.P_12Z = ksefWiersz.P_12;
+				ksefWierszZamowienia.P_12Z_XII = ksefWiersz.P_12_XII;
+				ksefWierszZamowienia.P_12Z_Zal_15 = ksefWiersz.P_12_Zal_15;
+				ksefWierszZamowienia.P_7Z = ksefWiersz.P_7;
+				ksefWierszZamowienia.P_8AZ = ksefWiersz.P_8A;
+				ksefWierszZamowienia.P_8BZ = ksefWiersz.P_8B;
+				ksefWierszZamowienia.P_9AZ = ksefWiersz.P_9A;
+				ksefWierszZamowienia.StanPrzedZ = ksefWiersz.StanPrzed;
+				ksefWierszZamowienia.UU_IDZ = ksefWiersz.UU_ID;
+				ksefFaktura.Fa.Zamowienie ??= new();
+				ksefFaktura.Fa.Zamowienie.WartoscZamowienia += dbPozycja.WartoscBrutto;
+				ksefFaktura.Fa.Zamowienie.ZamowienieWiersz.Add(ksefWierszZamowienia);
+			}
+			else
+			{
+				ksefFaktura.Fa.FaWiersz.Add(ksefWiersz);
+			}
 		}
 
 		var rejestry = new FakturaStopkaRejestry();
