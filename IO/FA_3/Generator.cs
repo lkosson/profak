@@ -125,6 +125,11 @@ public class Generator
 		ksefFaktura.Fa.P_2 = dbFaktura.Numer;
 		ksefFaktura.Fa.P_6 = dbFaktura.DataSprzedazy;
 		ksefFaktura.Fa.P_15 = dbFaktura.RazemBrutto;
+		if (dbFaktura.CzyZaliczka)
+		{
+			ksefFaktura.Fa.P_13_1 = dbFaktura.RazemNetto;
+			ksefFaktura.Fa.P_14_1 = dbFaktura.RazemVat;
+		}
 		ksefFaktura.Fa.Adnotacje = new FakturaFaAdnotacje();
 		ksefFaktura.Fa.Adnotacje.P_16 = TWybor1_2.Item2;
 		ksefFaktura.Fa.Adnotacje.P_17 = TWybor1_2.Item2;
@@ -333,60 +338,78 @@ public class Generator
 			}
 			else if (dbFaktura.CzyWDT)
 			{
-				ksefFaktura.Fa.P_13_6_2 ??= 0;
-				ksefFaktura.Fa.P_13_6_2 += dbPozycja.WartoscNetto;
+				if (!dbFaktura.CzyZaliczka)
+				{
+					ksefFaktura.Fa.P_13_6_2 ??= 0;
+					ksefFaktura.Fa.P_13_6_2 += dbPozycja.WartoscNetto;
+				}
 				ksefWiersz.P_12 = TStawkaPodatku.Item0_WDT;
 			}
 			else if (dbPozycja.StawkaVat.Skrot.ToLower().Contains("zw"))
 			{
-				ksefFaktura.Fa.P_13_7 ??= 0;
-				ksefFaktura.Fa.P_13_7 += dbPozycja.WartoscNetto;
+				if (!dbFaktura.CzyZaliczka)
+				{
+					ksefFaktura.Fa.P_13_7 ??= 0;
+					ksefFaktura.Fa.P_13_7 += dbPozycja.WartoscNetto;
+				}
 				ksefWiersz.P_12 = TStawkaPodatku.zw;
 			}
 			else if (dbPozycja.StawkaVat.Wartosc == 0)
 			{
-				ksefFaktura.Fa.P_13_6_1 ??= 0;
-				ksefFaktura.Fa.P_13_6_1 += dbPozycja.WartoscNetto;
+				if (!dbFaktura.CzyZaliczka)
+				{
+					ksefFaktura.Fa.P_13_6_1 ??= 0;
+					ksefFaktura.Fa.P_13_6_1 += dbPozycja.WartoscNetto;
+				}
 				ksefWiersz.P_12 = TStawkaPodatku.Item0_KR;
 			}
 			else if (dbPozycja.StawkaVat.Wartosc <= 5)
 			{
-				ksefFaktura.Fa.P_13_3 ??= 0;
-				ksefFaktura.Fa.P_14_3 ??= 0;
-				ksefFaktura.Fa.P_13_3 += dbPozycja.WartoscNetto;
-				ksefFaktura.Fa.P_14_3 += dbPozycja.WartoscVat;
-				ksefWiersz.P_12 = TStawkaPodatku.Item5;
-				if (dbFaktura.KursWaluty != 0 && dbFaktura.KursWaluty != 1)
+				if (!dbFaktura.CzyZaliczka)
 				{
-					ksefFaktura.Fa.P_14_3W ??= 0;
-					ksefFaktura.Fa.P_14_3W += dbPozycja.WartoscVat * dbFaktura.KursWaluty;
+					ksefFaktura.Fa.P_13_3 ??= 0;
+					ksefFaktura.Fa.P_14_3 ??= 0;
+					ksefFaktura.Fa.P_13_3 += dbPozycja.WartoscNetto;
+					ksefFaktura.Fa.P_14_3 += dbPozycja.WartoscVat;
+					if (dbFaktura.KursWaluty != 0 && dbFaktura.KursWaluty != 1)
+					{
+						ksefFaktura.Fa.P_14_3W ??= 0;
+						ksefFaktura.Fa.P_14_3W += dbPozycja.WartoscVat * dbFaktura.KursWaluty;
+					}
 				}
+				ksefWiersz.P_12 = TStawkaPodatku.Item5;
 			}
 			else if (dbPozycja.StawkaVat.Wartosc <= 8)
 			{
-				ksefFaktura.Fa.P_13_2 ??= 0;
-				ksefFaktura.Fa.P_14_2 ??= 0;
-				ksefFaktura.Fa.P_13_2 += dbPozycja.WartoscNetto;
-				ksefFaktura.Fa.P_14_2 += dbPozycja.WartoscVat;
-				ksefWiersz.P_12 = TStawkaPodatku.Item8;
-				if (dbFaktura.KursWaluty != 0 && dbFaktura.KursWaluty != 1)
+				if (!dbFaktura.CzyZaliczka)
 				{
-					ksefFaktura.Fa.P_14_2W ??= 0;
-					ksefFaktura.Fa.P_14_2W += dbPozycja.WartoscVat * dbFaktura.KursWaluty;
+					ksefFaktura.Fa.P_13_2 ??= 0;
+					ksefFaktura.Fa.P_14_2 ??= 0;
+					ksefFaktura.Fa.P_13_2 += dbPozycja.WartoscNetto;
+					ksefFaktura.Fa.P_14_2 += dbPozycja.WartoscVat;
+					if (dbFaktura.KursWaluty != 0 && dbFaktura.KursWaluty != 1)
+					{
+						ksefFaktura.Fa.P_14_2W ??= 0;
+						ksefFaktura.Fa.P_14_2W += dbPozycja.WartoscVat * dbFaktura.KursWaluty;
+					}
 				}
+				ksefWiersz.P_12 = TStawkaPodatku.Item8;
 			}
 			else
 			{
-				ksefFaktura.Fa.P_13_1 ??= 0;
-				ksefFaktura.Fa.P_14_1 ??= 0;
-				ksefFaktura.Fa.P_13_1 += dbPozycja.WartoscNetto;
-				ksefFaktura.Fa.P_14_1 += dbPozycja.WartoscVat;
-				ksefWiersz.P_12 = TStawkaPodatku.Item23;
-				if (dbFaktura.KursWaluty != 0 && dbFaktura.KursWaluty != 1)
+				if (!dbFaktura.CzyZaliczka)
 				{
-					ksefFaktura.Fa.P_14_1W ??= 0;
-					ksefFaktura.Fa.P_14_1W += dbPozycja.WartoscVat * dbFaktura.KursWaluty;
+					ksefFaktura.Fa.P_13_1 ??= 0;
+					ksefFaktura.Fa.P_14_1 ??= 0;
+					ksefFaktura.Fa.P_13_1 += dbPozycja.WartoscNetto;
+					ksefFaktura.Fa.P_14_1 += dbPozycja.WartoscVat;
+					if (dbFaktura.KursWaluty != 0 && dbFaktura.KursWaluty != 1)
+					{
+						ksefFaktura.Fa.P_14_1W ??= 0;
+						ksefFaktura.Fa.P_14_1W += dbPozycja.WartoscVat * dbFaktura.KursWaluty;
+					}
 				}
+				ksefWiersz.P_12 = TStawkaPodatku.Item23;
 			}
 			if (dbPozycja.CzyPrzedKorekta) ksefWiersz.StanPrzed = TWybor1.Item1;
 
