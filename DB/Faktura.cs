@@ -82,6 +82,7 @@ public class Faktura : Rekord<Faktura>
 	public List<Wplata> Wplaty { get; set; } = default!;
 	public List<Plik> Pliki { get; set; } = default!;
 	public List<DodatkowyPodmiot> DodatkowePodmioty { get; set; } = default!;
+	public List<Faktura> Zaliczki { get; set; } = default!;
 
 	public decimal SumaWplat => Wplaty?.Sum(wplata => wplata.Kwota) ?? 0;
 	public decimal PozostaloDoZaplaty => Math.Max(RazemBrutto - SumaWplat, 0);

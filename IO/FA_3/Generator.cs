@@ -24,6 +24,7 @@ public class Generator
 			.Include(e => e.FakturaKorygowana)
 			.Include(e => e.FakturaPierwotna)
 			.Include(e => e.DodatkowePodmioty)
+			.Include(e => e.Zaliczki)
 			.Where(e => e.Id == dbFakturaRef.Id)
 			.FirstOrDefault() ?? throw new ApplicationException($"Nie znaleziono faktury {dbFakturaRef}.");
 		var ksefFaktura = Zbuduj(dbFaktura);
@@ -248,6 +249,24 @@ public class Generator
 				podmiot2k.DaneIdentyfikacyjne = ksefFaktura.Podmiot2.DaneIdentyfikacyjne;
 				podmiot2k.Adres = ZbudujAdres<TAdres>(dbFaktura.FakturaKorygowana.DaneNabywcy);
 				ksefFaktura.Fa.Podmiot2K.Add(podmiot2k);
+			}
+		}
+
+		if (dbFaktura.Rodzaj is RodzajFaktury.Rozliczenie or RodzajFaktury.KorektaRozliczenia)
+		{
+			foreach (var dbZaliczka in dbFaktura.Zaliczki)
+			{
+				var ksefZaliczka = new FakturaFaFakturaZaliczkowa();
+				if (String.IsNullOrEmpty(dbZaliczka.NumerKSeF))
+				{
+					ksefZaliczka.NrKSeFZN = TWybor1.Item1;
+					ksefZaliczka.NrFaZaliczkowej = dbZaliczka.Numer;
+				}
+				else
+				{
+					ksefZaliczka.NrKSeFFaZaliczkowej = dbZaliczka.NumerKSeF;
+				}
+				ksefFaktura.Fa.FakturaZaliczkowa.Add(ksefZaliczka);
 			}
 		}
 
