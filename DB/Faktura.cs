@@ -84,7 +84,7 @@ public class Faktura : Rekord<Faktura>
 	public List<DodatkowyPodmiot> DodatkowePodmioty { get; set; } = default!;
 	public List<Faktura> Zaliczki { get; set; } = default!;
 
-	public decimal SumaWplat => Wplaty?.Sum(wplata => wplata.Kwota) ?? 0;
+	public decimal SumaWplat => Wplaty?.Where(wplata => !CzyRozliczenie || !wplata.CzyRozliczenie).Sum(wplata => wplata.Kwota) ?? 0;
 	public decimal PozostaloDoZaplaty => Math.Max(RazemBrutto - SumaWplat, 0);
 	public DateTime? DataWplywu => Wplaty == null || Wplaty.Count == 0 ? null : Wplaty.Max(wplata => wplata.Data);
 	public bool CzyZaplacona => PozostaloDoZaplaty == 0;
@@ -135,6 +135,7 @@ public class Faktura : Rekord<Faktura>
 
 	public bool CzyZakup => !CzySprzedaz;
 	public bool CzyZaliczka => Rodzaj is RodzajFaktury.Zaliczka or RodzajFaktury.KorektaZaliczki;
+	public bool CzyRozliczenie => Rodzaj is RodzajFaktury.Rozliczenie or RodzajFaktury.KorektaRozliczenia;
 
 	public bool CzyMechanizmPodzielonejPlatnosci => (OpisSposobuPlatnosci ?? "").Contains("podzielon", StringComparison.CurrentCultureIgnoreCase)
 		|| (UwagiPubliczne ?? "").Contains("mechanizm podzielonej płatności", StringComparison.CurrentCultureIgnoreCase)
@@ -200,14 +201,14 @@ public class Faktura : Rekord<Faktura>
 		var oryginalneBrutto = RazemBrutto;
 		var pozycje = baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == Id).ToList();
 		PrzeliczRazem(pozycje);
-		if (Rodzaj == RodzajFaktury.Zaliczka)
+		if (CzyZaliczka)
 		{
 			var ulamekCalosci = oryginalneBrutto == 0 ? 1 : RazemBrutto / oryginalneBrutto;
 			RazemNetto = (oryginalneBrutto * ulamekCalosci).Zaokragl();
 			RazemVat = RazemBrutto - RazemNetto;
 			RazemBrutto = oryginalneBrutto;
 		}
-		if (Rodzaj == RodzajFaktury.Rozliczenie)
+		if (CzyRozliczenie)
 		{
 			var zaliczki = baza.Faktury.Where(faktura => faktura.FakturaRozliczeniowaId == Id && (faktura.Rodzaj == RodzajFaktury.Zaliczka || faktura.Rodzaj == RodzajFaktury.KorektaZaliczki)).ToList();
 			foreach (var zaliczka in zaliczki)
