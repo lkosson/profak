@@ -94,7 +94,7 @@ class Spisy
 			new FakturaZaliczkaAkcja(),
 			new FakturaPodobnaZaliczkaAkcja(),
 			new FakturaRozliczenieZaliczkiAkcja(),
-			new KorektaSprzedazyAkcja(),
+			//new KorektaSprzedazyAkcja(),
 			new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
 			new UsunFaktureAkcja(),
 			new DodajWplateAkcja(),
