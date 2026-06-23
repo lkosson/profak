@@ -92,6 +92,7 @@ class Spisy
 	{
 		return Utworz(new FakturaZaliczkowaSpis() { Parametry = parametry },
 			new FakturaZaliczkaAkcja(),
+			new FakturaPodobnaZaliczkaAkcja(),
 			new FakturaRozliczenieZaliczkiAkcja(),
 			new KorektaSprzedazyAkcja(),
 			new EdytujRekordAkcja<Faktura, FakturaEdytor>(),
