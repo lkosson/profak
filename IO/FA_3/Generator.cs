@@ -125,6 +125,7 @@ public class Generator
 		ksefFaktura.Fa.P_2 = dbFaktura.Numer;
 		ksefFaktura.Fa.P_6 = dbFaktura.DataSprzedazy;
 		ksefFaktura.Fa.P_15 = dbFaktura.RazemBrutto;
+		if (dbFaktura.Rodzaj == RodzajFaktury.KorektaZaliczki) ksefFaktura.Fa.P_15ZK = dbFaktura.KwotaZaliczkiPrzedKorekta;
 		ksefFaktura.Fa.Adnotacje = new FakturaFaAdnotacje();
 		ksefFaktura.Fa.Adnotacje.P_16 = TWybor1_2.Item2;
 		ksefFaktura.Fa.Adnotacje.P_17 = TWybor1_2.Item2;
@@ -161,7 +162,8 @@ public class Generator
 		if (dbFaktura.CzyTP) { ksefFaktura.Fa.TP = TWybor1.Item1; }
 		ksefFaktura.Fa.Platnosc = new FakturaFaPlatnosc();
 		var sumaPozycjiBrutto = dbFaktura.Pozycje.Where(e => !e.CzyPrzedKorekta).Sum(e => e.WartoscBrutto);
-		var ulamekZaliczki = dbFaktura.CzyZaliczka && sumaPozycjiBrutto != 0 ? dbFaktura.RazemBrutto / sumaPozycjiBrutto : 1;
+		var ulamekZaliczkiPrzed = dbFaktura.CzyZaliczka && sumaPozycjiBrutto != 0 ? dbFaktura.KwotaZaliczkiPrzedKorekta / sumaPozycjiBrutto : 1;
+		var ulamekZaliczkiPo = dbFaktura.CzyZaliczka && sumaPozycjiBrutto != 0 ? (dbFaktura.RazemBrutto + dbFaktura.KwotaZaliczkiPrzedKorekta) / sumaPozycjiBrutto : 1;
 		var wplaty = dbFaktura.Wplaty.Where(e => !e.CzyRozliczenie).ToList();
 		var obciazenia = dbFaktura.Wplaty.Where(e => e.CzyRozliczenie && !e.CzyZaliczka && e.Kwota < 0).ToList();
 		var odliczenia = dbFaktura.Wplaty.Where(e => e.CzyRozliczenie && !e.CzyZaliczka && e.Kwota > 0).ToList();
@@ -292,6 +294,7 @@ public class Generator
 			opis = Regex.Replace(opis, @"PKWIU[: ]+(?<numer>[\d\.]+)", m => { ksefWiersz.PKWiU = m.Groups["numer"].Value; return ""; }, RegexOptions.IgnoreCase);
 			ksefWiersz.P_7 = opis.Trim();
 			//ksefWiersz.Indeks = dbPozycja.Towar == null ? ksefWiersz.UU_ID : dbPozycja.Towar.Id.ToString();
+			var ulamekZaliczki = dbPozycja.CzyPrzedKorekta ? ulamekZaliczkiPrzed : ulamekZaliczkiPo;
 
 			ksefWiersz.P_8A = dbPozycja.JednostkaMiary?.Nazwa ?? "szt";
 			ksefWiersz.P_8B = Math.Abs(dbPozycja.Ilosc);
@@ -386,7 +389,7 @@ public class Generator
 				ksefWierszZamowienia.PKOBZ = ksefWiersz.PKOB;
 				ksefWierszZamowienia.PKWiUZ = ksefWiersz.PKWiU;
 				//ksefWierszZamowienia.ProceduraZ
-				ksefWierszZamowienia.P_11NettoZ = ksefWiersz.P_11;
+				ksefWierszZamowienia.P_11NettoZ = Math.Abs(dbPozycja.WartoscNetto); // musi być netto, niezależnie od wybranego sposobu liczenia
 				ksefWierszZamowienia.P_11VatZ = ksefWiersz.P_11Vat;
 				ksefWierszZamowienia.P_12Z = ksefWiersz.P_12;
 				ksefWierszZamowienia.P_12Z_XII = ksefWiersz.P_12_XII;
@@ -394,7 +397,7 @@ public class Generator
 				ksefWierszZamowienia.P_7Z = ksefWiersz.P_7;
 				ksefWierszZamowienia.P_8AZ = ksefWiersz.P_8A;
 				ksefWierszZamowienia.P_8BZ = ksefWiersz.P_8B;
-				ksefWierszZamowienia.P_9AZ = ksefWiersz.P_9A;
+				ksefWierszZamowienia.P_9AZ = Math.Abs(dbPozycja.WartoscNetto) / (ksefWiersz.P_8B ?? 1); // musi uwzględniać rabat
 				ksefWierszZamowienia.StanPrzedZ = ksefWiersz.StanPrzed;
 				ksefWierszZamowienia.UU_IDZ = ksefWiersz.UU_ID;
 				ksefFaktura.Fa.Zamowienie ??= new();

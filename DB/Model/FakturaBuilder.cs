@@ -33,6 +33,7 @@ class FakturaBuilder
 		builder.Property(e => e.RazemVat).HasDefaultValue(0).IsRequired();
 		builder.Property(e => e.RazemBrutto).HasDefaultValue(0).IsRequired();
 		builder.Property(e => e.KursWaluty).HasDefaultValue(1).IsRequired();
+		builder.Property(e => e.KwotaZaliczkiPrzedKorekta).HasDefaultValue(0).IsRequired();
 		builder.Property(e => e.OpisSposobuPlatnosci).HasDefaultValue("").IsRequired();
 		builder.Property(e => e.Rodzaj).HasDefaultValue(RodzajFaktury.Sprzedaż).IsRequired();
 		builder.Property(e => e.CzyWartosciReczne).HasDefaultValue(false).IsRequired();

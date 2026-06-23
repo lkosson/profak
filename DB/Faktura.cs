@@ -27,6 +27,7 @@ public class Faktura : Rekord<Faktura>
 	public decimal RazemVat { get; set; }
 	public decimal RazemBrutto { get; set; }
 	public decimal KursWaluty { get; set; }
+	public decimal KwotaZaliczkiPrzedKorekta { get; set; }
 	public string OpisSposobuPlatnosci { get; set; } = "";
 	public RodzajFaktury Rodzaj { get; set; } = RodzajFaktury.Sprzedaż;
 	public bool CzyWartosciReczne { get; set; }
@@ -198,17 +199,17 @@ public class Faktura : Rekord<Faktura>
 	public void PrzeliczRazem(Baza baza)
 	{
 		if (CzyWartosciReczne) return;
-		var oryginalneBrutto = RazemBrutto;
 		var pozycje = baza.PozycjeFaktur.Where(pozycja => pozycja.FakturaId == Id).ToList();
-		PrzeliczRazem(pozycje);
+
 		if (CzyZaliczka)
 		{
-			var ulamekCalosci = oryginalneBrutto == 0 ? 0 : oryginalneBrutto / RazemBrutto;
-			RazemNetto = (RazemNetto * ulamekCalosci).Zaokragl();
-			RazemBrutto = oryginalneBrutto;
+			var sumaNetto = pozycje.Where(pozycja => !pozycja.CzyPrzedKorekta).Sum(pozycja => pozycja.WartoscNetto);
+			var sumaBrutto = pozycje.Where(pozycja => !pozycja.CzyPrzedKorekta).Sum(pozycja => pozycja.WartoscBrutto);
+			var ulamekCalosci = sumaBrutto == 0 ? 0 : RazemBrutto / sumaBrutto;
+			RazemNetto = (sumaNetto * ulamekCalosci).Zaokragl();
 			RazemVat = RazemBrutto - RazemNetto;
 		}
-		if (CzyRozliczenie)
+		else if (CzyRozliczenie)
 		{
 			var zaliczki = baza.Faktury.Where(faktura => faktura.FakturaRozliczeniowaId == Id && (faktura.Rodzaj == RodzajFaktury.Zaliczka || faktura.Rodzaj == RodzajFaktury.KorektaZaliczki)).ToList();
 			foreach (var zaliczka in zaliczki)
@@ -218,13 +219,12 @@ public class Faktura : Rekord<Faktura>
 				RazemBrutto -= zaliczka.RazemBrutto;
 			}
 		}
-	}
-
-	internal void PrzeliczRazem(IEnumerable<PozycjaFaktury> pozycje)
-	{
-		RazemNetto = pozycje.Sum(pozycja => pozycja.WartoscNetto);
-		RazemVat = pozycje.Sum(pozycja => pozycja.WartoscVat);
-		RazemBrutto = pozycje.Sum(pozycja => pozycja.WartoscBrutto);
+		else
+		{
+			RazemNetto = pozycje.Sum(pozycja => pozycja.WartoscNetto);
+			RazemVat = pozycje.Sum(pozycja => pozycja.WartoscVat);
+			RazemBrutto = pozycje.Sum(pozycja => pozycja.WartoscBrutto);
+		}
 	}
 
 	public void PoprawNumeracjePozycji(Baza baza)
@@ -339,6 +339,7 @@ public class Faktura : Rekord<Faktura>
 		korekta.CzyWNT = bazowa.CzyWNT;
 		korekta.ProceduraMarzy = bazowa.ProceduraMarzy;
 		korekta.OpisZdarzenia = bazowa.OpisZdarzenia;
+		korekta.KwotaZaliczkiPrzedKorekta = bazowa.CzyZaliczka ? bazowa.KwotaZaliczkiPrzedKorekta + bazowa.RazemBrutto : 0m;
 
 		bazowa.FakturaKorygujacaRef = korekta;
 

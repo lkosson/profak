@@ -238,7 +238,9 @@ class DaneDemo
 							pozycja.PrzeliczCeny(baza);
 						}
 					}
-					korekta.PrzeliczRazem(pozycje);
+					korekta.RazemNetto = pozycje.Sum(pozycja => pozycja.WartoscNetto);
+					korekta.RazemVat = pozycje.Sum(pozycja => pozycja.WartoscVat);
+					korekta.RazemBrutto = pozycje.Sum(pozycja => pozycja.WartoscBrutto);
 					if (korekta.Numerator.HasValue) korekta.Numer = Numerator.NadajNumer(baza, korekta.Numerator.Value, korekta.Podstawienie);
 					baza.Zapisz(korekta);
 					baza.Zapisz(pozycje);
@@ -304,7 +306,9 @@ class DaneDemo
 						faktura.Pozycje.Add(pozycja);
 					}
 
-					faktura.PrzeliczRazem(faktura.Pozycje);
+					faktura.RazemNetto = faktura.Pozycje.Sum(pozycja => pozycja.WartoscNetto);
+					faktura.RazemVat = faktura.Pozycje.Sum(pozycja => pozycja.WartoscVat);
+					faktura.RazemBrutto = faktura.Pozycje.Sum(pozycja => pozycja.WartoscBrutto);
 				}
 
 				faktury.Add(faktura);
