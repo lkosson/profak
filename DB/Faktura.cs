@@ -209,21 +209,22 @@ public class Faktura : Rekord<Faktura>
 			RazemNetto = (sumaNetto * ulamekCalosci).Zaokragl();
 			RazemVat = RazemBrutto - RazemNetto;
 		}
-		else if (CzyRozliczenie)
-		{
-			var zaliczki = baza.Faktury.Where(faktura => faktura.FakturaRozliczeniowaId == Id && (faktura.Rodzaj == RodzajFaktury.Zaliczka || faktura.Rodzaj == RodzajFaktury.KorektaZaliczki)).ToList();
-			foreach (var zaliczka in zaliczki)
-			{
-				RazemNetto -= zaliczka.RazemNetto;
-				RazemVat -= zaliczka.RazemVat;
-				RazemBrutto -= zaliczka.RazemBrutto;
-			}
-		}
-		else
+		else 
 		{
 			RazemNetto = pozycje.Sum(pozycja => pozycja.WartoscNetto);
 			RazemVat = pozycje.Sum(pozycja => pozycja.WartoscVat);
 			RazemBrutto = pozycje.Sum(pozycja => pozycja.WartoscBrutto);
+
+			if (CzyRozliczenie)
+			{
+				var zaliczki = baza.Faktury.Where(faktura => faktura.FakturaRozliczeniowaId == Id && (faktura.Rodzaj == RodzajFaktury.Zaliczka || faktura.Rodzaj == RodzajFaktury.KorektaZaliczki)).ToList();
+				foreach (var zaliczka in zaliczki)
+				{
+					RazemNetto -= zaliczka.RazemNetto;
+					RazemVat -= zaliczka.RazemVat;
+					RazemBrutto -= zaliczka.RazemBrutto;
+				}
+			}
 		}
 	}
 

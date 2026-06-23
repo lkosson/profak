@@ -24,7 +24,7 @@ public class Generator
 			.Include(e => e.FakturaKorygowana)
 			.Include(e => e.FakturaPierwotna)
 			.Include(e => e.DodatkowePodmioty)
-			.Include(e => e.Zaliczki)
+			.Include(e => e.Zaliczki).ThenInclude(e => e.Pozycje).ThenInclude(e => e.StawkaVat)
 			.Where(e => e.Id == dbFakturaRef.Id)
 			.FirstOrDefault() ?? throw new ApplicationException($"Nie znaleziono faktury {dbFakturaRef}.");
 		var ksefFaktura = Zbuduj(dbFaktura);
@@ -425,6 +425,66 @@ public class Generator
 					ksefZaliczka.NrKSeFFaZaliczkowej = dbZaliczka.NumerKSeF;
 				}
 				ksefFaktura.Fa.FakturaZaliczkowa.Add(ksefZaliczka);
+
+				var sumaPozycjiZaliczkiBrutto = dbZaliczka.Pozycje.Where(e => !e.CzyPrzedKorekta).Sum(e => e.WartoscBrutto);
+				var ulamekZaliczki = sumaPozycjiZaliczkiBrutto != 0 ? (dbZaliczka.RazemBrutto + dbZaliczka.KwotaZaliczkiPrzedKorekta) / sumaPozycjiZaliczkiBrutto : 1;
+
+				foreach (var dbPozycjaZaliczki in dbZaliczka.Pozycje)
+				{
+					if (dbPozycjaZaliczki.StawkaVat == null) continue;
+
+					if (dbZaliczka.CzyWDT)
+					{
+						ksefFaktura.Fa.P_13_6_2 ??= 0;
+						ksefFaktura.Fa.P_13_6_2 -= (dbPozycjaZaliczki.WartoscNetto * ulamekZaliczki).Zaokragl();
+					}
+					else if (dbPozycjaZaliczki.StawkaVat.Skrot.ToLower().Contains("zw"))
+					{
+						ksefFaktura.Fa.P_13_7 ??= 0;
+						ksefFaktura.Fa.P_13_7 -= (dbPozycjaZaliczki.WartoscNetto * ulamekZaliczki).Zaokragl();
+					}
+					else if (dbPozycjaZaliczki.StawkaVat.Wartosc == 0)
+					{
+						ksefFaktura.Fa.P_13_6_1 ??= 0;
+						ksefFaktura.Fa.P_13_6_1 -= (dbPozycjaZaliczki.WartoscNetto * ulamekZaliczki).Zaokragl();
+					}
+					else if (dbPozycjaZaliczki.StawkaVat.Wartosc <= 5)
+					{
+						ksefFaktura.Fa.P_13_3 ??= 0;
+						ksefFaktura.Fa.P_14_3 ??= 0;
+						ksefFaktura.Fa.P_13_3 -= (dbPozycjaZaliczki.WartoscNetto * ulamekZaliczki).Zaokragl();
+						ksefFaktura.Fa.P_14_3 -= (dbPozycjaZaliczki.WartoscVat * ulamekZaliczki).Zaokragl();
+						if (dbZaliczka.KursWaluty != 0 && dbZaliczka.KursWaluty != 1)
+						{
+							ksefFaktura.Fa.P_14_3W ??= 0;
+							ksefFaktura.Fa.P_14_3W -= dbPozycjaZaliczki.WartoscVat * dbZaliczka.KursWaluty;
+						}
+					}
+					else if (dbPozycjaZaliczki.StawkaVat.Wartosc <= 8)
+					{
+						ksefFaktura.Fa.P_13_2 ??= 0;
+						ksefFaktura.Fa.P_14_2 ??= 0;
+						ksefFaktura.Fa.P_13_2 -= (dbPozycjaZaliczki.WartoscNetto * ulamekZaliczki).Zaokragl();
+						ksefFaktura.Fa.P_14_2 -= (dbPozycjaZaliczki.WartoscVat * ulamekZaliczki).Zaokragl();
+						if (dbZaliczka.KursWaluty != 0 && dbZaliczka.KursWaluty != 1)
+						{
+							ksefFaktura.Fa.P_14_2W ??= 0;
+							ksefFaktura.Fa.P_14_2W -= dbPozycjaZaliczki.WartoscVat * dbZaliczka.KursWaluty;
+						}
+					}
+					else
+					{
+						ksefFaktura.Fa.P_13_1 ??= 0;
+						ksefFaktura.Fa.P_14_1 ??= 0;
+						ksefFaktura.Fa.P_13_1 -= (dbPozycjaZaliczki.WartoscNetto * ulamekZaliczki).Zaokragl();
+						ksefFaktura.Fa.P_14_1 -= (dbPozycjaZaliczki.WartoscVat * ulamekZaliczki).Zaokragl();
+						if (dbZaliczka.KursWaluty != 0 && dbZaliczka.KursWaluty != 1)
+						{
+							ksefFaktura.Fa.P_14_1W ??= 0;
+							ksefFaktura.Fa.P_14_1W -= dbPozycjaZaliczki.WartoscVat * dbZaliczka.KursWaluty;
+						}
+					}
+				}
 			}
 		}
 

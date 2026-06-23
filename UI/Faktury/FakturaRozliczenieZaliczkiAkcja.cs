@@ -13,12 +13,24 @@ class FakturaRozliczenieZaliczkiAkcja : FakturaPodobnaAkcja
 		var zaznaczona = zaznaczoneRekordy.First();
 		var podobna = zaznaczona.PrzygotujPodobna(kontekst.Baza);
 		podobna.Rodzaj = RodzajFaktury.Rozliczenie;
-		foreach (var zaliczka in zaznaczoneRekordy.OrderBy(faktura => faktura.DataWystawienia))
+		foreach (var _zaliczka in zaznaczoneRekordy.OrderBy(faktura => faktura.DataWystawienia))
 		{
-			zaliczka.FakturaRozliczeniowaId = podobna.Id;
-			kontekst.Baza.Zapisz(zaliczka);
-			var wplata = new Wplata { Data = zaliczka.DataWystawienia, FakturaRef = podobna, Kwota = zaliczka.RazemBrutto, Uwagi = $"Zaliczka {zaliczka.Numer} z dnia {zaliczka.DataWystawienia.ToString(UI.Wyglad.FormatDaty)}", CzyZaliczka = true };
-			kontekst.Baza.Zapisz(wplata);
+			var zaliczka = _zaliczka;
+			if (zaliczka.FakturaPierwotnaRef.IsNotNull) zaliczka = kontekst.Baza.Znajdz(zaliczka.FakturaPierwotnaRef);
+
+			do
+			{
+				zaliczka.FakturaRozliczeniowaId = podobna.Id;
+				kontekst.Baza.Zapisz(zaliczka);
+				if (zaliczka.RazemBrutto != 0)
+				{
+					var wplata = new Wplata { Data = zaliczka.DataWystawienia, FakturaRef = podobna, Kwota = zaliczka.RazemBrutto, Uwagi = $"Zaliczka {zaliczka.Numer} z dnia {zaliczka.DataWystawienia.ToString(UI.Wyglad.FormatDaty)}", CzyZaliczka = true };
+					kontekst.Baza.Zapisz(wplata);
+				}
+				if (zaliczka.FakturaKorygujacaRef.IsNull) break;
+				zaliczka = kontekst.Baza.Znajdz(zaliczka.FakturaKorygujacaRef);
+			}
+			while (true);
 		}
 		return podobna;
 	}
