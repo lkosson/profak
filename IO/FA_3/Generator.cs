@@ -604,6 +604,13 @@ public class Generator
 				dbFaktura.Wplaty.Add(new Wplata { Data = ksefFaktura.Fa.Platnosc.DataZaplaty.Value, Kwota = ksefFaktura.Fa.P_15 });
 				if (terminPlatnosci == null) terminPlatnosci = ksefFaktura.Fa.Platnosc.DataZaplaty.Value;
 			}
+			else if (ksefFaktura.Fa.Platnosc.ZnacznikZaplatyCzesciowejValueSpecified)
+			{
+				foreach (var zaplata in ksefFaktura.Fa.Platnosc.ZaplataCzesciowa)
+				{
+					dbFaktura.Wplaty.Add(new Wplata { Data = zaplata.DataZaplatyCzesciowej, Kwota = zaplata.KwotaZaplatyCzesciowej });
+				}
+			}
 
 			if (terminPlatnosci != null) dbFaktura.TerminPlatnosci = terminPlatnosci.Value;
 		}
