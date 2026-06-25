@@ -4,8 +4,8 @@ namespace ProFak.UI;
 
 class ZaliczkaPitEdytor : Edytor<ZaliczkaPit>
 {
-	private readonly SpisZAkcjami<Faktura, FakturaSprzedazySpis> fakturySprzedazy;
-	private readonly SpisZAkcjami<Faktura, FakturaZakupuSpis> fakturyZakupu;
+	private readonly SpisZAkcjami<Faktura, FakturaSprzedazyBezNabywcySpis> fakturySprzedazy;
+	private readonly SpisZAkcjami<Faktura, FakturaZakupuBezSprzedawcySpis> fakturyZakupu;
 
 	public ZaliczkaPitEdytor()
 	{
@@ -38,7 +38,7 @@ class ZaliczkaPitEdytor : Edytor<ZaliczkaPit>
 
 		var dodajSprzedazDoZaliczki = new DynamicznaAkcja<Faktura>("➕ Dodaj do zaliczki [INS]", kontekst =>
 		{
-			using var spis = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazySpis { Parametry = new() { CzyBezZaliczkiPit = true } });
+			using var spis = new SpisZAkcjami<Faktura, FakturaSprzedazyBezNabywcySpis>(new FakturaSprzedazyBezNabywcySpis { Parametry = new() { CzyBezZaliczkiPit = true } });
 			var faktura = Spisy.Wybierz(kontekst, spis, "Wybierz fakturę", default);
 			if (faktura == null) return;
 			faktura.ZaliczkaPitRef = Rekord;
@@ -48,7 +48,7 @@ class ZaliczkaPitEdytor : Edytor<ZaliczkaPit>
 
 		var dodajZakupDoZaliczki = new DynamicznaAkcja<Faktura>("➕ Dodaj do zaliczki [INS]", kontekst =>
 		{
-			using var spis = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis { Parametry = new() { CzyBezZaliczkiPit = true } });
+			using var spis = new SpisZAkcjami<Faktura, FakturaZakupuBezSprzedawcySpis>(new FakturaZakupuBezSprzedawcySpis { Parametry = new() { CzyBezZaliczkiPit = true } });
 			var faktura = Spisy.Wybierz(kontekst, spis, "Wybierz fakturę", default);
 			if (faktura == null) return;
 			faktura.ZaliczkaPitRef = Rekord;
@@ -66,8 +66,8 @@ class ZaliczkaPitEdytor : Edytor<ZaliczkaPit>
 			Przelicz();
 		}, TKeys.Delete, TKeyModifiers.None);
 
-		fakturySprzedazy = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazySpis(), new AkcjaNaSpisie<Faktura>[] { dodajSprzedazDoZaliczki, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZZaliczki, new WydrukFakturyAkcja(), new PrzeladujAkcja<Faktura>() });
-		fakturyZakupu = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis(), new AkcjaNaSpisie<Faktura>[] { dodajZakupDoZaliczki, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZZaliczki, new PrzeladujAkcja<Faktura>() });
+		fakturySprzedazy = new SpisZAkcjami<Faktura, FakturaSprzedazyBezNabywcySpis>(new FakturaSprzedazyBezNabywcySpis(), new AkcjaNaSpisie<Faktura>[] { dodajSprzedazDoZaliczki, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZZaliczki, new WydrukFakturyAkcja(), new PrzeladujAkcja<Faktura>() });
+		fakturyZakupu = new SpisZAkcjami<Faktura, FakturaZakupuBezSprzedawcySpis>(new FakturaZakupuBezSprzedawcySpis(), new AkcjaNaSpisie<Faktura>[] { dodajZakupDoZaliczki, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZZaliczki, new PrzeladujAkcja<Faktura>() });
 
 		var naglowek = new Poziomo([
 			Kontrolki.Label("Miesiąc"),
