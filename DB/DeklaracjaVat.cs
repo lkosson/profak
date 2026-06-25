@@ -129,15 +129,17 @@ public class DeklaracjaVat : Rekord<DeklaracjaVat>
 		{
 			if (faktura.CzySprzedaz)
 			{
+				var sumaPozycjiBrutto = faktura.Pozycje.Where(e => !e.CzyPrzedKorekta).Sum(e => e.WartoscBrutto);
+				var ulamekZaliczki = (faktura.CzyZaliczka || faktura.CzyRozliczenie) && sumaPozycjiBrutto != 0 ? (faktura.RazemBrutto + faktura.KwotaZaliczkiPrzedKorekta) / sumaPozycjiBrutto : 1;
 				foreach (var pozycja in faktura.Pozycje)
 				{
 					if (pozycja.StawkaVat == null) continue;
-					if (faktura.CzyWDT) { NettoWDT += pozycja.WartoscNetto * faktura.KursWaluty; }
-					else if (pozycja.StawkaVat.Skrot.ToLower().Contains("zw")) { NettoZW += pozycja.WartoscNetto * faktura.KursWaluty; }
-					else if (pozycja.StawkaVat.Wartosc == 0) { Netto0 += pozycja.WartoscNetto * faktura.KursWaluty; }
-					else if (pozycja.StawkaVat.Wartosc <= 5) { Netto5 += pozycja.WartoscNetto * faktura.KursWaluty; Nalezny5 += pozycja.WartoscVat * faktura.KursWaluty; }
-					else if (pozycja.StawkaVat.Wartosc <= 8) { Netto8 += pozycja.WartoscNetto * faktura.KursWaluty; Nalezny8 += pozycja.WartoscVat * faktura.KursWaluty; }
-					else { Netto23 += pozycja.WartoscNetto * faktura.KursWaluty; Nalezny23 += pozycja.WartoscVat * faktura.KursWaluty; }
+					if (faktura.CzyWDT) { NettoWDT += pozycja.WartoscNetto * faktura.KursWaluty * ulamekZaliczki; }
+					else if (pozycja.StawkaVat.Skrot.ToLower().Contains("zw")) { NettoZW += pozycja.WartoscNetto * faktura.KursWaluty * ulamekZaliczki; }
+					else if (pozycja.StawkaVat.Wartosc == 0) { Netto0 += pozycja.WartoscNetto * faktura.KursWaluty * ulamekZaliczki; }
+					else if (pozycja.StawkaVat.Wartosc <= 5) { Netto5 += pozycja.WartoscNetto * faktura.KursWaluty * ulamekZaliczki; Nalezny5 += pozycja.WartoscVat * faktura.KursWaluty * ulamekZaliczki; }
+					else if (pozycja.StawkaVat.Wartosc <= 8) { Netto8 += pozycja.WartoscNetto * faktura.KursWaluty * ulamekZaliczki; Nalezny8 += pozycja.WartoscVat * faktura.KursWaluty * ulamekZaliczki; }
+					else { Netto23 += pozycja.WartoscNetto * faktura.KursWaluty * ulamekZaliczki; Nalezny23 += pozycja.WartoscVat * faktura.KursWaluty * ulamekZaliczki; }
 				}
 			}
 			else if (faktura.CzyZakup)
