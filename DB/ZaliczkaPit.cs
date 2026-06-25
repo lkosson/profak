@@ -77,6 +77,7 @@ public class ZaliczkaPit : Rekord<ZaliczkaPit>
 		var faktury = baza.Faktury
 			.Where(faktura => faktura.DataSprzedazy >= poczatekRoku && faktura.DataSprzedazy < dataKoncowa)
 			.Include(faktura => faktura.Pozycje)
+			.Include(faktura => faktura.Zaliczki)
 			.ToList();
 
 		var podstawaZdrowotna = 0m;
@@ -92,6 +93,7 @@ public class ZaliczkaPit : Rekord<ZaliczkaPit>
 			foreach (var faktura in faktury)
 			{
 				if (!faktura.CzySprzedaz) continue;
+				if (faktura.CzyZaliczka) continue;
 				foreach (var pozycja in faktura.Pozycje)
 				{
 					if (!pozycja.StawkaRyczaltu.HasValue) continue;
@@ -112,7 +114,16 @@ public class ZaliczkaPit : Rekord<ZaliczkaPit>
 			foreach (var faktura in faktury)
 			{
 				if (faktura.CzyZakup) Koszty += faktura.Koszty;
-				if (faktura.CzySprzedaz) Przychody += faktura.RazemNetto;
+				if (faktura.CzySprzedaz)
+				{
+					if (faktura.CzyZaliczka) continue;
+					Przychody += faktura.RazemNetto;
+					if (faktura.CzyRozliczenie)
+					{
+						foreach (var zaliczka in faktura.Zaliczki)
+							Przychody += zaliczka.RazemNetto;
+					}
+				}
 			}
 
 			if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Liniowy)
