@@ -13,7 +13,7 @@ class FakturaRozliczenieZaliczkiAkcja : FakturaPodobnaAkcja
 		var zaznaczona = zaznaczoneRekordy.First();
 		var podobna = zaznaczona.PrzygotujPodobna(kontekst.Baza);
 		podobna.Rodzaj = RodzajFaktury.Rozliczenie;
-		foreach (var _zaliczka in zaznaczoneRekordy.OrderBy(faktura => faktura.DataWystawienia))
+		foreach (var _zaliczka in zaznaczoneRekordy.OrderBy(faktura => faktura.DataWystawienia).ThenBy(faktura => faktura.Id))
 		{
 			var zaliczka = _zaliczka;
 			if (zaliczka.FakturaPierwotnaRef.IsNotNull) zaliczka = kontekst.Baza.Znajdz(zaliczka.FakturaPierwotnaRef);
