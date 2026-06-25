@@ -26,6 +26,7 @@ public class Generator
 		var faktury = baza.Faktury.Where(faktura => zaliczki.Contains(faktura.ZaliczkaPit))
 			.Include(faktura => faktura.Pozycje).ThenInclude(pozycja => pozycja.Towar)
 			.Include(faktura => faktura.FakturaKorygowana)
+			.Include(faktura => faktura.Zaliczki)
 			.ToList();
 
 		var jpk = new JPK();
@@ -76,6 +77,11 @@ public class Generator
 			if (faktura.CzySprzedaz)
 			{
 				jpkwiersz.K_7 = faktura.RazemNetto;
+				if (faktura.CzyRozliczenie)
+				{
+					foreach (var zaliczka in faktura.Zaliczki)
+						jpkwiersz.K_7 += zaliczka.RazemNetto;
+				}
 				jpkwiersz.K_9 = jpkwiersz.K_7.GetValueOrDefault() + jpkwiersz.K_8.GetValueOrDefault();
 			}
 			if (faktura.CzyZakup)
