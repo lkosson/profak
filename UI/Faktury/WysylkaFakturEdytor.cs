@@ -1,7 +1,9 @@
 ﻿using ProFak.DB;
 using System.Data;
 using System.Net;
-using System.Net.Mail;
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using MimeKit;
 
 namespace ProFak.UI;
 
@@ -124,8 +126,22 @@ class WysylkaFakturEdytor : Edytor
 		var tresc = textBoxTresc.Text ?? "";
 		var adresat = textBoxAdresat.Text ?? "";
 		var nadawca = fakturaDoWysylki.PodstawPolaWysylki(szablonNadawca);
-		if (!MailAddress.TryCreate(adresat, out var _)) throw new ApplicationException($"Adres odbiorcy \"{adresat}\" jest nieprawidłowy.");
-		if (!MailAddress.TryCreate(nadawca, out var _)) throw new ApplicationException($"Adres nadawcy \"{nadawca}\" jest nieprawidłowy.");
+		try
+		{
+			InternetAddress.Parse(adresat);
+		}
+		catch (Exception)
+		{
+			throw new ApplicationException($"Adres odbiorcy \"{adresat}\" jest nieprawidłowy.");
+		}
+		try
+		{
+			InternetAddress.Parse(nadawca);
+		}
+		catch (Exception)
+		{
+			throw new ApplicationException($"Adres nadawcy \"{nadawca}\" jest nieprawidłowy.");
+		}
 		OknoPostepu.Uruchom(async cancellationToken =>
 		{
 			var pdf = PrzygotujPDF(fakturaDoWysylki);
@@ -168,8 +184,22 @@ class WysylkaFakturEdytor : Edytor
 				var temat = fakturaDoWysylki.PodstawPolaWysylki(szablonTemat);
 				var tresc = fakturaDoWysylki.PodstawPolaWysylki(szablonTresc);
 				var nadawca = fakturaDoWysylki.PodstawPolaWysylki(szablonNadawca);
-				if (!MailAddress.TryCreate(adresat, out var _)) throw new ApplicationException($"Adres odbiorcy \"{adresat}\" dla faktury {fakturaDoWysylki.Numer} jest nieprawidłowy.");
-				if (!MailAddress.TryCreate(nadawca, out var _)) throw new ApplicationException($"Adres nadawcy \"{nadawca}\" jest nieprawidłowy.");
+				try
+				{
+					InternetAddress.Parse(adresat);
+				}
+				catch (Exception)
+				{
+					throw new ApplicationException($"Adres odbiorcy \"{adresat}\" dla faktury {fakturaDoWysylki.Numer} jest nieprawidłowy.");
+				}
+				try
+				{
+					InternetAddress.Parse(nadawca);
+				}
+				catch (Exception)
+				{
+					throw new ApplicationException($"Adres nadawcy \"{nadawca}\" dla faktury {fakturaDoWysylki.Numer} jest nieprawidłowy.");
+				}
 				var pdf = PrzygotujPDF(fakturaDoWysylki);
 				await Wyslij(temat, tresc, adresat, nadawca, pdf, fakturaDoWysylki.Numer, cancellationToken);
 				transakcja.Zatwierdz();
@@ -188,18 +218,34 @@ class WysylkaFakturEdytor : Edytor
 	private async Task Wyslij(string temat, string tresc, string adresat, string nadawca, byte[] pdf, string nazwa, CancellationToken cancellationToken)
 	{
 		var konfiguracja = Kontekst.Baza.Konfiguracja.First();
-		var smtp = new SmtpClient(konfiguracja.SMTPSerwer, konfiguracja.SMTPPort);
-		smtp.EnableSsl = konfiguracja.SMTPPort != 25;
-		smtp.UseDefaultCredentials = false;
-		smtp.Credentials = new NetworkCredential(konfiguracja.SMTPLogin, konfiguracja.SMTPHaslo);
-		var wiadomosc = new MailMessage();
-		wiadomosc.From = new MailAddress(nadawca);
+
+		var wiadomosc = new MimeMessage();
+		wiadomosc.From.Add(InternetAddress.Parse(nadawca));
+		wiadomosc.To.Add(InternetAddress.Parse(adresat));
 		wiadomosc.Subject = temat;
-		wiadomosc.Body = tresc;
-		wiadomosc.IsBodyHtml = false;
-		wiadomosc.To.Add(adresat);
-		wiadomosc.Attachments.Add(new Attachment(new MemoryStream(pdf), nazwa.Replace('/', '-').Replace(':', '-') + ".pdf", "application/pdf"));
-		await smtp.SendMailAsync(wiadomosc, cancellationToken);
+
+		var builder = new BodyBuilder();
+		builder.TextBody = tresc;
+		builder.Attachments.Add(nazwa.Replace('/', '-').Replace(':', '-') + ".pdf", pdf, ContentType.Parse("application/pdf"));
+		wiadomosc.Body = builder.ToMessageBody();
+
+		using (var smtp = new SmtpClient())
+		{
+			// Określ opcje bezpieczeństwa w zależności od portu
+			var secureSocketOptions = konfiguracja.SMTPPort == 25 
+				? SecureSocketOptions.None 
+				: SecureSocketOptions.Auto;
+
+			await smtp.ConnectAsync(konfiguracja.SMTPSerwer, konfiguracja.SMTPPort, secureSocketOptions, cancellationToken);
+
+			if (!string.IsNullOrEmpty(konfiguracja.SMTPLogin) && !string.IsNullOrEmpty(konfiguracja.SMTPHaslo))
+			{
+				await smtp.AuthenticateAsync(konfiguracja.SMTPLogin, konfiguracja.SMTPHaslo, cancellationToken);
+			}
+
+			await smtp.SendAsync(wiadomosc, cancellationToken);
+			await smtp.DisconnectAsync(true, cancellationToken);
+		}
 	}
 
 	private void ZmienionyAdresat()
