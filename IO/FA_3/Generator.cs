@@ -536,6 +536,7 @@ public class Generator
 		if (ksefFaktura.Fa.P_6.HasValue) dbFaktura.DataSprzedazy = ksefFaktura.Fa.P_6.Value;
 		else dbFaktura.DataSprzedazy = dbFaktura.DataWystawienia;
 		dbFaktura.Waluta = new Waluta { Skrot = ksefFaktura.Fa.KodWaluty.ToString(), Nazwa = ksefFaktura.Fa.KodWaluty.ToString() };
+		if (ksefFaktura.Fa.KursWalutyZ != null) dbFaktura.KursWaluty = ksefFaktura.Fa.KursWalutyZ.Value;
 		dbFaktura.CzyTP = ksefFaktura.Fa.TP > 0;
 		dbFaktura.Sprzedawca = new Kontrahent();
 		if (ksefFaktura.Podmiot1 != null)
