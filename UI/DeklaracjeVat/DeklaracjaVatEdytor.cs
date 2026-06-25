@@ -4,8 +4,8 @@ namespace ProFak.UI;
 
 class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
 {
-	private readonly SpisZAkcjami<Faktura, FakturaSprzedazySpis> fakturySprzedazy;
-	private readonly SpisZAkcjami<Faktura, FakturaZakupuSpis> fakturyZakupu;
+	private readonly SpisZAkcjami<Faktura, FakturaSprzedazyBezNabywcySpis> fakturySprzedazy;
+	private readonly SpisZAkcjami<Faktura, FakturaZakupuBezSprzedawcySpis> fakturyZakupu;
 
 	public DeklaracjaVatEdytor()
 	{
@@ -69,7 +69,7 @@ class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
 
 		var dodajSprzedazDoDeklaracji = new DynamicznaAkcja<Faktura>("➕ Dodaj do deklaracji [INS]", kontekst =>
 		{
-			using var spis = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazySpis { Parametry = new() { CzyBezDeklaracjiVat = true } });
+			using var spis = new SpisZAkcjami<Faktura, FakturaSprzedazyBezNabywcySpis>(new FakturaSprzedazyBezNabywcySpis { Parametry = new() { CzyBezDeklaracjiVat = true } });
 			var faktura = Spisy.Wybierz(kontekst, spis, "Wybierz fakturę", default);
 			if (faktura == null) return;
 			faktura.DeklaracjaVatRef = Rekord;
@@ -79,7 +79,7 @@ class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
 
 		var dodajZakupDoDeklaracji = new DynamicznaAkcja<Faktura>("➕ Dodaj do deklaracji [INS]", kontekst =>
 		{
-			using var spis = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis { Parametry = new() { CzyBezDeklaracjiVat = true } });
+			using var spis = new SpisZAkcjami<Faktura, FakturaZakupuBezSprzedawcySpis>(new FakturaZakupuBezSprzedawcySpis { Parametry = new() { CzyBezDeklaracjiVat = true } });
 			var faktura = Spisy.Wybierz(kontekst, spis, "Wybierz fakturę", default);
 			if (faktura == null) return;
 			faktura.DeklaracjaVatRef = Rekord;
@@ -97,8 +97,8 @@ class DeklaracjaVatEdytor : Edytor<DeklaracjaVat>
 			Przelicz();
 		}, TKeys.Delete, TKeyModifiers.None);
 
-		fakturySprzedazy = new SpisZAkcjami<Faktura, FakturaSprzedazySpis>(new FakturaSprzedazySpis(), new AkcjaNaSpisie<Faktura>[] { dodajSprzedazDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new WydrukFakturyAkcja(), new PrzeladujAkcja<Faktura>() });
-		fakturyZakupu = new SpisZAkcjami<Faktura, FakturaZakupuSpis>(new FakturaZakupuSpis(), new AkcjaNaSpisie<Faktura>[] { dodajZakupDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new PrzeladujAkcja<Faktura>() });
+		fakturySprzedazy = new SpisZAkcjami<Faktura, FakturaSprzedazyBezNabywcySpis>(new FakturaSprzedazyBezNabywcySpis(), new AkcjaNaSpisie<Faktura>[] { dodajSprzedazDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new WydrukFakturyAkcja(), new PrzeladujAkcja<Faktura>() });
+		fakturyZakupu = new SpisZAkcjami<Faktura, FakturaZakupuBezSprzedawcySpis>(new FakturaZakupuBezSprzedawcySpis(), new AkcjaNaSpisie<Faktura>[] { dodajZakupDoDeklaracji, new EdytujRekordAkcja<Faktura, FakturaEdytor>(), usunZDeklaracji, new PrzeladujAkcja<Faktura>() });
 
 		var naglowek = new Poziomo([
 			Kontrolki.Label("Miesiąc"),
