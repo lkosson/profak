@@ -534,6 +534,7 @@ public class Generator
 		};
 		dbFaktura.DataWystawienia = ksefFaktura.Fa.P_1;
 		if (ksefFaktura.Fa.P_6.HasValue) dbFaktura.DataSprzedazy = ksefFaktura.Fa.P_6.Value;
+		else if (ksefFaktura.Fa.OkresFa != null) dbFaktura.DataSprzedazy = ksefFaktura.Fa.OkresFa.P_6_Do;
 		else dbFaktura.DataSprzedazy = dbFaktura.DataWystawienia;
 		dbFaktura.Waluta = new Waluta { Skrot = ksefFaktura.Fa.KodWaluty.ToString(), Nazwa = ksefFaktura.Fa.KodWaluty.ToString() };
 		if (ksefFaktura.Fa.KursWalutyZ != null) dbFaktura.KursWaluty = ksefFaktura.Fa.KursWalutyZ.Value;
