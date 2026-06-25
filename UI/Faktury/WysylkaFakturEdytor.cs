@@ -229,23 +229,18 @@ class WysylkaFakturEdytor : Edytor
 		builder.Attachments.Add(nazwa.Replace('/', '-').Replace(':', '-') + ".pdf", pdf, ContentType.Parse("application/pdf"));
 		wiadomosc.Body = builder.ToMessageBody();
 
-		using (var smtp = new SmtpClient())
+		using var smtp = new SmtpClient();
+		var secureSocketOptions = konfiguracja.SMTPPort == 25 ? SecureSocketOptions.None : SecureSocketOptions.Auto;
+
+		await smtp.ConnectAsync(konfiguracja.SMTPSerwer, konfiguracja.SMTPPort, secureSocketOptions, cancellationToken);
+
+		if (!String.IsNullOrEmpty(konfiguracja.SMTPLogin) && !String.IsNullOrEmpty(konfiguracja.SMTPHaslo))
 		{
-			// Określ opcje bezpieczeństwa w zależności od portu
-			var secureSocketOptions = konfiguracja.SMTPPort == 25 
-				? SecureSocketOptions.None 
-				: SecureSocketOptions.Auto;
-
-			await smtp.ConnectAsync(konfiguracja.SMTPSerwer, konfiguracja.SMTPPort, secureSocketOptions, cancellationToken);
-
-			if (!string.IsNullOrEmpty(konfiguracja.SMTPLogin) && !string.IsNullOrEmpty(konfiguracja.SMTPHaslo))
-			{
-				await smtp.AuthenticateAsync(konfiguracja.SMTPLogin, konfiguracja.SMTPHaslo, cancellationToken);
-			}
-
-			await smtp.SendAsync(wiadomosc, cancellationToken);
-			await smtp.DisconnectAsync(true, cancellationToken);
+			await smtp.AuthenticateAsync(konfiguracja.SMTPLogin, konfiguracja.SMTPHaslo, cancellationToken);
 		}
+
+		await smtp.SendAsync(wiadomosc, cancellationToken);
+		await smtp.DisconnectAsync(true, cancellationToken);
 	}
 
 	private void ZmienionyAdresat()
