@@ -112,6 +112,7 @@
   <ItemGroup>
     <PackageReference Include="Jint" Version="4.9.2" />
     <PackageReference Include="KSeF.Client" Version="2.4.0" />
+    <PackageReference Include="MailKit" Version="4.17.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
