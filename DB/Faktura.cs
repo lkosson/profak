@@ -532,6 +532,7 @@ public class Faktura : Rekord<Faktura>
 	{
 		return szablon
 			.Replace("[NUMER]", Numer)
+			.Replace("[DATA]", DataSprzedazy.ToString(UI.Wyglad.FormatDaty))
 			.Replace("[DATA-SPRZEDAZY]", DataSprzedazy.ToString(UI.Wyglad.FormatDaty))
 			.Replace("[DATA-WYSTAWIENIA]", DataWystawienia.ToString(UI.Wyglad.FormatDaty))
 			.Replace("[TERMIN-PLATNOSCI]", TerminPlatnosci.ToString(UI.Wyglad.FormatDaty))
