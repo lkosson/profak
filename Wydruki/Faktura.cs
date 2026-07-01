@@ -122,7 +122,7 @@ public partial class Faktura : Wydruk
 			foreach (var wplata in wplaty.OrderBy(e => e.Data).ThenBy(e => e.Id))
 			{
 				if (!String.IsNullOrEmpty(fakturaDTO.Rozliczenia)) fakturaDTO.Rozliczenia += "<br/>";
-				if (wplata.CzyRozliczenie) fakturaDTO.Rozliczenia += "<b>" + wplata.Uwagi + ":</b> " + wplata.Kwota.ToString(UI.Wyglad.FormatKwoty) + " " + walutaSkrot;
+				if (wplata.CzyRozliczenie || wplata.CzyZaliczka) fakturaDTO.Rozliczenia += "<b>" + wplata.Uwagi + ":</b> " + wplata.Kwota.ToString(UI.Wyglad.FormatKwoty) + " " + walutaSkrot;
 				else fakturaDTO.Rozliczenia += "<b>Zapłacono " + wplata.Data.ToString(UI.Wyglad.FormatDaty) + ":</b> " + wplata.Kwota.ToString(UI.Wyglad.FormatKwoty) + " " + walutaSkrot;
 			}
 
