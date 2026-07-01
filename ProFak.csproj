@@ -49,7 +49,7 @@
     <OutputType>WinExe</OutputType>
     <Authors>Łukasz Kosson</Authors>
     <ApplicationIcon>ikona.ico</ApplicationIcon>
-    <Version>1.19.0</Version>
+    <Version>1.20.0</Version>
     <PublishDir>bin\Publish</PublishDir>
   </PropertyGroup>
 
