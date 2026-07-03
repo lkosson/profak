@@ -50,7 +50,7 @@ public class Numerator : Rekord<Numerator>
 
 	private static string Podstaw(string format, Func<string, IFormattable?> podstawienie, int? numer)
 	{
-		return Regex.Replace(format, @"\[(?<nazwa>\w+)(:(?<format>[^\]]+))?\]", fragment =>
+		return Regex.Replace(format, @"\[(?<nazwa>[^:\]]+)(:(?<format>[^\]]+))?\]", fragment =>
 		{
 			var nazwa = fragment.Groups["nazwa"].Value;
 			var format = fragment.Groups["format"]?.Value;
