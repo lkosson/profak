@@ -48,7 +48,10 @@ class DaneStartowe
 			baza.Zapisz(new StawkaVat { CzyDomyslna = false, Wartosc = 8, Skrot = "8%" });
 			baza.Zapisz(new StawkaVat { CzyDomyslna = false, Wartosc = 5, Skrot = "5%" });
 			baza.Zapisz(new StawkaVat { CzyDomyslna = false, Wartosc = 0, Skrot = "0%" });
-			baza.Zapisz(new StawkaVat { CzyDomyslna = false, Wartosc = 0, Skrot = "NP" });
+			baza.Zapisz(new StawkaVat { CzyDomyslna = false, Wartosc = 0, Skrot = "0% EX" });
+			baza.Zapisz(new StawkaVat { CzyDomyslna = false, Wartosc = 0, Skrot = "0% KR" });
+			baza.Zapisz(new StawkaVat { CzyDomyslna = false, Wartosc = 0, Skrot = "NP I" });
+			baza.Zapisz(new StawkaVat { CzyDomyslna = false, Wartosc = 0, Skrot = "NP II" });
 			baza.Zapisz(new StawkaVat { CzyDomyslna = false, Wartosc = 0, Skrot = "ZW" });
 		}
 
