@@ -318,23 +318,45 @@ public class Generator
 				ksefFaktura.Fa.P_13_11 ??= 0;
 				ksefFaktura.Fa.P_13_11 += dbPozycja.WartoscBrutto;
 			}
-			else if (dbFaktura.CzyWDT)
-			{
-				ksefFaktura.Fa.P_13_6_2 ??= 0;
-				ksefFaktura.Fa.P_13_6_2 += (dbPozycja.WartoscNetto * ulamekZaliczki).Zaokragl();
-				ksefWiersz.P_12 = TStawkaPodatku.Item0_WDT;
-			}
-			else if (dbPozycja.StawkaVat.Skrot.ToLower().Contains("zw"))
-			{
-				ksefFaktura.Fa.P_13_7 ??= 0;
-				ksefFaktura.Fa.P_13_7 += (dbPozycja.WartoscNetto * ulamekZaliczki).Zaokragl();
-				ksefWiersz.P_12 = TStawkaPodatku.zw;
-			}
 			else if (dbPozycja.StawkaVat.Wartosc == 0)
 			{
-				ksefFaktura.Fa.P_13_6_1 ??= 0;
-				ksefFaktura.Fa.P_13_6_1 += (dbPozycja.WartoscNetto * ulamekZaliczki).Zaokragl();
-				ksefWiersz.P_12 = TStawkaPodatku.Item0_KR;
+				var skrot = dbPozycja.StawkaVat.Skrot.ToLower();
+				if (dbFaktura.CzyWDT)
+				{
+					ksefFaktura.Fa.P_13_6_2 ??= 0;
+					ksefFaktura.Fa.P_13_6_2 += (dbPozycja.WartoscNetto * ulamekZaliczki).Zaokragl();
+					ksefWiersz.P_12 = TStawkaPodatku.Item0_WDT;
+				}
+				else if (skrot.Contains("zw"))
+				{
+					ksefFaktura.Fa.P_13_7 ??= 0;
+					ksefFaktura.Fa.P_13_7 += (dbPozycja.WartoscNetto * ulamekZaliczki).Zaokragl();
+					ksefWiersz.P_12 = TStawkaPodatku.zw;
+				}
+				else if (skrot.Contains("ex"))
+				{
+					ksefFaktura.Fa.P_13_6_3 ??= 0;
+					ksefFaktura.Fa.P_13_6_3 += (dbPozycja.WartoscNetto * ulamekZaliczki).Zaokragl();
+					ksefWiersz.P_12 = TStawkaPodatku.Item0_EX;
+				}
+				else if (skrot.Contains("np i") && !skrot.Contains("np ii"))
+				{
+					ksefFaktura.Fa.P_13_8 ??= 0;
+					ksefFaktura.Fa.P_13_8 += (dbPozycja.WartoscNetto * ulamekZaliczki).Zaokragl();
+					ksefWiersz.P_12 = TStawkaPodatku.np_I;
+				}
+				else if (skrot.Contains("np"))
+				{
+					ksefFaktura.Fa.P_13_9 ??= 0;
+					ksefFaktura.Fa.P_13_9 += (dbPozycja.WartoscNetto * ulamekZaliczki).Zaokragl();
+					ksefWiersz.P_12 = TStawkaPodatku.np_II;
+				}
+				else
+				{
+					ksefFaktura.Fa.P_13_6_1 ??= 0;
+					ksefFaktura.Fa.P_13_6_1 += (dbPozycja.WartoscNetto * ulamekZaliczki).Zaokragl();
+					ksefWiersz.P_12 = TStawkaPodatku.Item0_KR;
+				}
 			}
 			else if (dbPozycja.StawkaVat.Wartosc <= 5)
 			{
