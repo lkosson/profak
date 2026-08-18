@@ -370,7 +370,11 @@ abstract partial class Spis<T> : Spis
 				kolumnaSpisu.AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
 				kolumnaSpisu.Width = kolumna.Szerokosc;
 			}
-			if (kolumna.Szerokosc == -1) kolumnaSpisu.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+			if (kolumna.Szerokosc == -1)
+			{
+				kolumnaSpisu.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+				kolumnaSpisu.MinimumWidth = 50;
+			}
 			kolumnaSpisu.Visible = kolumna.Szerokosc != 0;
 			kolumnaSpisu.DisplayIndex = kolumna.Kolejnosc;
 			kolumnaSpisu.HeaderCell.SortGlyphDirection = kolumna.PoziomSortowania < 0 ? SortOrder.Descending : kolumna.PoziomSortowania > 0 ? SortOrder.Ascending : SortOrder.None;
