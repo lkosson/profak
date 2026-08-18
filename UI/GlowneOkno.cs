@@ -71,7 +71,7 @@ partial class GlowneOkno
 		var fakturyZakupuKSeFRok = menu.UtworzWezel("Z tego roku", delegate { Wyswietl(Spisy.KSeFZakup(new() { CzySprzedaz = false, OdDaty = new DateTime(DateTime.Now.Year, 1, 1) })); });
 		var fakturyZakupuKSeFWszystkie = menu.UtworzWezel("Wszystkie", delegate { Wyswietl(Spisy.KSeFZakup(new() { CzySprzedaz = false, OdDaty = KSeFSpis.DataStartowa })); });
 		var fakturyZakupuKSeF = menu.UtworzWezel("KSeF", [fakturyZakupuKSeFPrzyrostowo, fakturyZakupuKSeFDzis, fakturyZakupuKSeFWczoraj, fakturyZakupuKSeFMiesiac, fakturyZakupuKSeFPoprzedni, fakturyZakupuKSeFRok, fakturyZakupuKSeFWszystkie]);
-		var fakturyZakupuWedlugDaty = menu.UtworzWezel("Według daty", () => WypelnijDatyFaktur(faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny, (odDaty, doDaty) => Wyswietl(Spisy.FakturyZakupu(new() { OdDaty = odDaty, DoDaty = doDaty }))));
+		var fakturyZakupuWedlugDaty = menu.UtworzWezel("Według daty", () => WypelnijDatyFaktur(faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny, (odDaty, doDaty) => Wyswietl(Spisy.FakturyZakupu(new() { OdDaty = odDaty, DoDaty = doDaty })), wedlugDatyWystawienia: true));
 		var fakturyZakupuWedlugSprzedawcy = menu.UtworzWezel("Według sprzedawcy", () => WypelnijKontrahentowFaktur(faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny, faktura => faktura.Sprzedawca!, kontrahent => Wyswietl(Spisy.FakturyZakupu(new() { KontrahentRef = kontrahent }))));
 		var fakturyZakupuWedlugTowaru = menu.UtworzWezel("Według towaru", () => WypelnijTowaryFaktur(pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.Zakup || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaZakupu || pozycja.Faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny, towar => Wyswietl(Spisy.FakturyZakupu(new() { TowarRef = towar }))));
 		var fakturyZakupu = menu.UtworzWezel("Faktury zakupu", [fakturyZakupuWszystkie, fakturyZakupuDoZaplaty, fakturyZakupuZaplacone, fakturyZakupuKSeF, fakturyZakupuWedlugDaty, fakturyZakupuWedlugSprzedawcy, fakturyZakupuWedlugTowaru]);
@@ -108,14 +108,12 @@ partial class GlowneOkno
 	}
 
 
-	private TTreeNode[] WypelnijDatyFaktur(Expression<Func<Faktura, bool>> warunek, Action<DateTime, DateTime> akcja)
+	private TTreeNode[] WypelnijDatyFaktur(Expression<Func<Faktura, bool>> warunek, Action<DateTime, DateTime> akcja, bool wedlugDatyWystawienia = false)
 	{
 		using var kontekst = new Kontekst();
-		var daty = kontekst.Baza.Faktury
-			.Where(warunek)
-			.Select(faktura => faktura.DataSprzedazy)
-			.Distinct()
-			.ToList();
+		var daty = wedlugDatyWystawienia
+			? kontekst.Baza.Faktury.Where(warunek).Select(faktura => faktura.DataWystawienia).Distinct().ToList()
+			: kontekst.Baza.Faktury.Where(warunek).Select(faktura => faktura.DataSprzedazy).Distinct().ToList();
 
 		var wezly = new List<TTreeNode>();
 

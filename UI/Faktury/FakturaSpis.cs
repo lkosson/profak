@@ -103,8 +103,16 @@ class FakturaSpis : Spis<Faktura>
 		if (CzyWidocznyNabywca) q = q.Include(faktura => faktura.Nabywca);
 		if (CzyWidocznySprzedawca) q = q.Include(faktura => faktura.Sprzedawca);
 		if (Parametry.KontrahentRef.IsNotNull) q = q.Where(faktura => faktura.NabywcaId == Parametry.KontrahentRef.Id || faktura.SprzedawcaId == Parametry.KontrahentRef.Id);
-		if (Parametry.OdDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy >= Parametry.OdDaty.Value);
-		if (Parametry.DoDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy < Parametry.DoDaty.Value);
+		if (CzyWidocznySprzedawca)
+		{
+			if (Parametry.OdDaty.HasValue) q = q.Where(faktura => faktura.DataWystawienia >= Parametry.OdDaty.Value);
+			if (Parametry.DoDaty.HasValue) q = q.Where(faktura => faktura.DataWystawienia < Parametry.DoDaty.Value);
+		}
+		else
+		{
+			if (Parametry.OdDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy >= Parametry.OdDaty.Value);
+			if (Parametry.DoDaty.HasValue) q = q.Where(faktura => faktura.DataSprzedazy < Parametry.DoDaty.Value);
+		}
 		if (Parametry.TowarRef.IsNotNull) q = q.Where(faktura => faktura.Pozycje.Any(pozycja => pozycja.TowarId == Parametry.TowarRef.Id));
 		if (Parametry.DeklaracjaVatRef.IsNotNull) q = q.Where(faktura => faktura.DeklaracjaVatId == Parametry.DeklaracjaVatRef.Id);
 		if (Parametry.ZaliczkaPitRef.IsNotNull) q = q.Where(faktura => faktura.ZaliczkaPitId == Parametry.ZaliczkaPitRef.Id);
