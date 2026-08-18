@@ -66,11 +66,14 @@ public class DeklaracjaVat : Rekord<DeklaracjaVat>
 	{
 		var nieaktualneFaktury = baza.Faktury.Where(faktura => faktura.DeklaracjaVatId == Id).ToDictionary(faktura => faktura.Ref);
 		var zmienioneFaktury = new List<Faktura>();
+		var dataGraniczna = Miesiac.Date.AddMonths(1);
 
 		var faktury = baza.Faktury
-			.Where(faktura => faktura.DataSprzedazy < Miesiac.Date.AddMonths(1) 
-				&& faktura.Rodzaj != RodzajFaktury.Usunięta 
+			.Where(faktura => (faktura.DataSprzedazy < dataGraniczna || faktura.DataWystawienia < dataGraniczna)
+				&& faktura.Rodzaj != RodzajFaktury.Usunięta
 				&& (faktura.DeklaracjaVatId == null || faktura.DeklaracjaVatId == Id))
+			.ToList()
+			.Where(faktura => (faktura.CzySprzedaz && faktura.DataSprzedazy < dataGraniczna) || (faktura.CzyZakup && faktura.DataWystawienia < dataGraniczna))
 			.ToList();
 
 		foreach (var faktura in faktury)
