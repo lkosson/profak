@@ -34,6 +34,7 @@ partial class KonfiguracjaEdytor : Edytor<Konfiguracja>
 		var checkBoxWstepneLadowanieReportingServices = Kontrolki.CheckBox("Załaduj w tle moduł wydruków przy starcie programu");
 		checkBoxPrzywrocUstawieniaSpisow = Kontrolki.CheckBox("Przywróć domyślne ustawienia spisów");
 		checkBoxPrzywrocUstawieniaMenu = Kontrolki.CheckBox("Przywróć domyślne ustawienia menu");
+		var numericUpDownOpoznienieWysylki = Kontrolki.NumericUpDown(poPrzecinku: 0);
 		var numericUpDownSzerokoscMenu = Kontrolki.NumericUpDown(poPrzecinku: 0);
 		var textBoxRozmiarCzcionki = Kontrolki.TextBox();
 		var textBoxNazwaCzcionki = Kontrolki.TextBox();
@@ -69,7 +70,9 @@ partial class KonfiguracjaEdytor : Edytor<Konfiguracja>
 		kontroler.Powiazanie(checkBoxBlokadaZmianyKolumn, konfiguracja => konfiguracja.BlokadaZmianyKolumn);
 
 		kontroler.Powiazanie(checkBoxWstepneLadowanieReportingServices, konfiguracja => konfiguracja.WstepneLadowanieReportingServices);
+		kontroler.Powiazanie(numericUpDownOpoznienieWysylki, konfiguracja => konfiguracja.OpoznienieWysylki);
 		kontroler.Powiazanie(numericUpDownSzerokoscMenu, konfiguracja => konfiguracja.SzerokoscMenu);
+
 		kontroler.Powiazanie(textBoxRozmiarCzcionki, konfiguracja => konfiguracja.RozmiarCzcionki == 0 ? "" : konfiguracja.RozmiarCzcionki.ToString(), (konfiguracja, wartosc) => konfiguracja.RozmiarCzcionki = Int32.TryParse(wartosc, out var rozmiar) ? rozmiar : 0);
 		kontroler.Powiazanie(textBoxNazwaCzcionki, konfiguracja => konfiguracja.NazwaCzcionki);
 
@@ -108,6 +111,7 @@ partial class KonfiguracjaEdytor : Edytor<Konfiguracja>
 		siatkaWyglad.DodajWiersz([(checkBoxWstepneLadowanieReportingServices, 7)]);
 		siatkaWyglad.DodajWiersz([(checkBoxPrzywrocUstawieniaSpisow, 7)]);
 		siatkaWyglad.DodajWiersz([(checkBoxPrzywrocUstawieniaMenu, 7)]);
+		siatkaWyglad.DodajWiersz("Opóźnienie wysyłki e-mail/KSeF", [numericUpDownOpoznienieWysylki, Kontrolki.Label("s")]);
 		siatkaWyglad.DodajWiersz("Szerokość menu głównego", [numericUpDownSzerokoscMenu]);
 #if WINFORMS
 		siatkaWyglad.DodajWiersz("Czcionka", [textBoxNazwaCzcionki, null, textBoxRozmiarCzcionki, Kontrolki.ButtonSlownik(WybierzCzcionke)]);

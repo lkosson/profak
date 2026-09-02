@@ -36,6 +36,9 @@ public class Konfiguracja : Rekord<Konfiguracja>
 	// Wersja 2a
 	public bool BlokadaZmianyKolumn { get; set; }
 
+	// Wersja 3
+	public int OpoznienieWysylki { get; set; }
+
 	public bool CzyDomyslna => SMTPSerwer == Domyslna.SMTPSerwer || String.IsNullOrEmpty(SMTPSerwer);
 
 	public override bool CzyPasuje(string fraza) => false;
@@ -75,6 +78,11 @@ public class Konfiguracja : Rekord<Konfiguracja>
 			FormatCzasu = "yyyy-MM-dd HH:mm:ss";
 			FormatKwoty = "#,##0.00";
 			Wersja = 2;
+		}
+		if (Wersja < 3)
+		{
+			OpoznienieWysylki = 1;
+			Wersja = 3;
 		}
 	}
 

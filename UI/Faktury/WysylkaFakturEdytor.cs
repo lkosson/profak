@@ -219,6 +219,8 @@ class WysylkaFakturEdytor : Edytor
 	{
 		var konfiguracja = Kontekst.Baza.Konfiguracja.First();
 
+		if (konfiguracja.OpoznienieWysylki > 0) await Task.Delay(TimeSpan.FromSeconds(konfiguracja.OpoznienieWysylki), cancellationToken);
+
 		var wiadomosc = new MimeMessage();
 		wiadomosc.From.Add(InternetAddress.Parse(nadawca));
 		wiadomosc.To.Add(InternetAddress.Parse(adresat));

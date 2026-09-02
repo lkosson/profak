@@ -36,6 +36,9 @@ class WyslijDoKSeFAkcja : AkcjaNaSpisie<Faktura>
 
 			if (!doWyslania.Any()) return;
 
+			var konfiguracja = kontekst.Baza.Konfiguracja.First();
+			if (konfiguracja.OpoznienieWysylki > 0) await Task.Delay(TimeSpan.FromSeconds(konfiguracja.OpoznienieWysylki), cancellationToken);
+
 			using var api = new IO.KSEF2.API(podmiot.SrodowiskoKSeF);
 			await api.UwierzytelnijAsync(podmiot.NIP, podmiot.TokenKSeF, cancellationToken);
 			var (sessionReferenceNumber, encryptionData) = await api.RozpocznijSesjeAsync(cancellationToken);
