@@ -96,7 +96,10 @@ public class Generator
 
 					if (pozycja.StawkaVat == null) continue;
 					if (faktura.CzyWDT) { jpksprzedaz.K_21 ??= 0; jpksprzedaz.K_21 += pozycja.WartoscNetto; }
-					else if (pozycja.StawkaVat.Skrot.ToLower().Contains("zw")) { jpksprzedaz.K_10 ??= 0; jpksprzedaz.K_10 += pozycja.WartoscNetto; }
+					else if (pozycja.StawkaVat.CzyZW) { jpksprzedaz.K_10 ??= 0; jpksprzedaz.K_10 += pozycja.WartoscNetto; }
+					else if (pozycja.StawkaVat.CzyEX) { jpksprzedaz.K_22 ??= 0; jpksprzedaz.K_22 += pozycja.WartoscNetto; }
+					else if (pozycja.StawkaVat.CzyNP_I) { jpksprzedaz.K_11 ??= 0; jpksprzedaz.K_11 += pozycja.WartoscNetto; }
+					else if (pozycja.StawkaVat.CzyNP_II) { jpksprzedaz.K_12 ??= 0; jpksprzedaz.K_12 += pozycja.WartoscNetto; }
 					else if (pozycja.StawkaVat.Wartosc == 0) { jpksprzedaz.K_13 ??= 0; jpksprzedaz.K_13 += pozycja.WartoscNetto; }
 					else if (pozycja.StawkaVat.Wartosc <= 5) { jpksprzedaz.K_15 ??= 0; jpksprzedaz.K_15 += pozycja.WartoscNetto; }
 					else if (pozycja.StawkaVat.Wartosc <= 8) { jpksprzedaz.K_17 ??= 0; jpksprzedaz.K_17 += pozycja.WartoscNetto; }
