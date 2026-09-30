@@ -137,6 +137,12 @@ public class Faktura : Rekord<Faktura>
 	public bool CzyZakup => !CzySprzedaz;
 	public bool CzyZaliczka => Rodzaj is RodzajFaktury.Zaliczka or RodzajFaktury.KorektaZaliczki;
 	public bool CzyRozliczenie => Rodzaj is RodzajFaktury.Rozliczenie or RodzajFaktury.KorektaRozliczenia;
+	public bool CzyKorekta => Rodzaj is RodzajFaktury.KorektaSprzedaży
+		or RodzajFaktury.KorektaZakupu
+		or RodzajFaktury.KorektaVatMarży
+		or RodzajFaktury.KorektaRachunku
+		or RodzajFaktury.KorektaZaliczki
+		or RodzajFaktury.KorektaRozliczenia;
 
 	public bool CzyMechanizmPodzielonejPlatnosci => (OpisSposobuPlatnosci ?? "").Contains("podzielon", StringComparison.CurrentCultureIgnoreCase)
 		|| (UwagiPubliczne ?? "").Contains("mechanizm podzielonej płatności", StringComparison.CurrentCultureIgnoreCase)
