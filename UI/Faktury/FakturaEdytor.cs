@@ -179,7 +179,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 		Walidacja<ProceduraMarży>(comboBoxProceduraMarzy, WalidacjaProceduryMarzy, false);
 		Walidacja(textBoxNumer, WalidacjaNumer, false);
 
-		var naglowek = new Siatka([100, 0, -1, 20, 0, 0, 0, 20, 0, 0, 0], []);
+		var naglowek = new Siatka([140, 0, -1, 20, 0, 0, 0, 20, 0, 0, 0], []);
 		naglowek.DodajWiersz([labelRodzaj, Kontrolki.Label("Numer"), textBoxNumer, null, Kontrolki.Label("Waluta"), comboBoxWaluta, buttonWaluta, null, Kontrolki.Label("Kurs"), numericUpDownKurs, buttonKurs]);
 
 		var sprzedawca = new Siatka([0, -1, 0, 0], []);
