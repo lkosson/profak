@@ -249,7 +249,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 #endif
 		var podatki = new Siatka([0, 0, 20, 0, -1], []);
 		podatki.DodajWiersz("Udział w kosztach", [comboBoxProcentKosztow, null, checkBoxWDT]);
-		podatki.DodajWiersz("Udział w VA naliczonym", [comboBoxProcentVat, null, checkBoxWNT]);
+		podatki.DodajWiersz("Udział w VAT naliczonym", [comboBoxProcentVat, null, checkBoxWNT]);
 		podatki.DodajWiersz("Opis zdarzenia na PKPiR", [textBoxOpisZdarzenia, null, checkBoxTP]);
 		podatki.DodajWiersz("Procedura marży", [comboBoxProceduraMarzy, null, checkBoxZakupSrodkowTrwalych]);
 		podatki.DodajWiersz([null, null, null, checkBoxReczneKwoty]);
