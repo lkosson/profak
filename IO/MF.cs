@@ -8,7 +8,7 @@ public class MF
 	{
 		if (String.IsNullOrEmpty(nip)) throw new ApplicationException("Nie podano NIPu kontrahenta.");
 		if (String.IsNullOrEmpty(nrb)) throw new ApplicationException("Nie podano numeru rachunku bankowego kontrahenta.");
-		var url = "https://wl-api.mf.gov.pl/api/check/nip/" + nip + "/bank-account/" + nrb;
+		var url = $"https://wl-api.mf.gov.pl/api/check/nip/{nip}/bank-account/{nrb}/?date={DateTime.Now:yyyy-MM-dd}";
 		using var client = new HttpClient();
 		var wynik = await client.GetStringAsync(url, cancellationToken);
 		var json = JsonDocument.Parse(wynik);
