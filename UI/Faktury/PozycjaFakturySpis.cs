@@ -7,6 +7,21 @@ class PozycjaFakturySpis : Spis<PozycjaFaktury>
 {
 	public Ref<Faktura> FakturaRef { get; set; }
 
+	public override string Podsumowanie
+	{
+		get
+		{
+			var podsumowanie = base.Podsumowanie;
+			if (WybraneRekordy.Count() > 1)
+			{
+				podsumowanie += $"\nRazem netto: <{WybraneRekordy.Sum(pozycja => pozycja.WartoscNettoAbs).ToString(Wyglad.FormatKwoty)}>";
+				podsumowanie += $"\nRazem VAT: <{WybraneRekordy.Sum(pozycja => pozycja.WartoscVatAbs).ToString(Wyglad.FormatKwoty)}>";
+				podsumowanie += $"\nRazem brutto: <{WybraneRekordy.Sum(pozycja => pozycja.WartoscBruttoAbs).ToString(Wyglad.FormatKwoty)}>";
+			}
+			return podsumowanie;
+		}
+	}
+
 	public PozycjaFakturySpis()
 	{
 		DodajKolumne(nameof(PozycjaFaktury.LP), "LP", szerokosc: 30);
