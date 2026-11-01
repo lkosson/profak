@@ -241,8 +241,19 @@ abstract partial class Spis<T> : Spis
 		}
 		if (e.Button == MouseButtons.Right)
 		{
-			if (e.RowIndex == -1) PokazKonfiguracjeSpisu();
-			else PokazMenuKontekstowe?.Invoke();
+			if (e.RowIndex == -1)
+			{
+				PokazKonfiguracjeSpisu();
+			}
+			else
+			{
+				if (!Rows[e.RowIndex].Selected && ModifierKeys == TKeyModifiers.None)
+				{
+					ClearSelection();
+					Rows[e.RowIndex].Selected = true;
+				}
+				PokazMenuKontekstowe?.Invoke();
+			}
 		}
 		base.OnCellMouseDown(e);
 	}
