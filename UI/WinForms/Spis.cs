@@ -20,6 +20,7 @@ partial class Spis : DataGridView
 		RowTemplate.Height = ColumnHeadersHeight;
 		ShowCellToolTips = true;
 		EnableHeadersVisualStyles = false;
+		StandardTab = true;
 		ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.False;
 	}
 
