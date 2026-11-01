@@ -59,6 +59,7 @@ class DodajJakoZakupAkcja : AkcjaNaSpisie<Faktura>
 				edytor.Przygotuj(nowyKontekst, faktura);
 				if (!DialogEdycji.Pokaz("Nowa pozycja", edytor, nowyKontekst))
 				{
+					naglowek.Id = 0;
 					if (naglowek != zaznaczoneRekordy.Last() && !OknoKomunikatu.PytanieTakNie("Kontynuować dodawanie faktur ze wskazanych plików?"))
 						break;
 					continue;
