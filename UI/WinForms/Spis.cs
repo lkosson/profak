@@ -193,6 +193,7 @@ abstract partial class Spis<T> : Spis
 			&& tooltipyDlaKolumn.TryGetValue(e.ColumnIndex, out var tooltip)
 			&& Rows[e.RowIndex].DataBoundItem is T rekord) e.ToolTipText = tooltip(rekord);
 		else base.OnCellToolTipTextNeeded(e);
+		if (e.RowIndex >= 0 && e.ColumnIndex >= 0) this[e.ColumnIndex, e.RowIndex].ToolTipText = e.ToolTipText;
 	}
 
 	protected override void OnCellPainting(DataGridViewCellPaintingEventArgs e)
