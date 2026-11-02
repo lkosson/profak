@@ -235,6 +235,18 @@ abstract partial class Spis<T> : Spis
 		}
 	}
 
+	protected override void OnCellMouseEnter(DataGridViewCellEventArgs e)
+	{
+		base.OnCellMouseEnter(e);
+		if (e.RowIndex != -1) Rows[e.RowIndex].DefaultCellStyle.BackColor = TColor.FromArgb(230, 245, 250);
+	}
+
+	protected override void OnCellMouseLeave(DataGridViewCellEventArgs e)
+	{
+		base.OnCellMouseLeave(e);
+		if (e.RowIndex != -1) Rows[e.RowIndex].DefaultCellStyle.BackColor = TColor.Empty;
+	}
+
 	protected override void OnCellMouseDown(DataGridViewCellMouseEventArgs e)
 	{
 		if ((ModifierKeys & Keys.Alt) == Keys.Alt)
