@@ -221,7 +221,7 @@ public class Generator
 
 		if (dbFaktura.FakturaKorygowana != null && dbFaktura.FakturaPierwotna != null)
 		{
-			ksefFaktura.Fa.TypKorekty = TTypKorekty.Item2;
+			ksefFaktura.Fa.TypKorekty = dbFaktura.SkutekKorekty == SkutekKorekty.DataFakturyPierwotnej ? TTypKorekty.Item1 : TTypKorekty.Item2;
 			var ksefDaneKorygowanej = new FakturaFaDaneFaKorygowanej();
 			ksefDaneKorygowanej.DataWystFaKorygowanej = dbFaktura.FakturaPierwotna.DataWystawienia;
 			ksefDaneKorygowanej.NrFaKorygowanej = dbFaktura.FakturaPierwotna.Numer;

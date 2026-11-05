@@ -39,6 +39,7 @@ public class Faktura : Rekord<Faktura>
 	public bool CzyWDT { get; set; }
 	public bool CzyWNT { get; set; }
 	public ProceduraMarży ProceduraMarzy { get; set; }
+	public SkutekKorekty SkutekKorekty { get; set; }
 	public string OpisZdarzenia { get; set; } = "";
 
 	public string NumerKSeF { get; set; } = "";
@@ -586,4 +587,11 @@ public enum ProceduraMarży
 	DziełaSztuki,
 	BiuraPodróży,
 	PrzedmiotyKolekcjonerskie
+}
+
+public enum SkutekKorekty
+{
+	NieDotyczy,
+	DataFakturyPierwotnej,
+	DataFakturyKorygującej
 }

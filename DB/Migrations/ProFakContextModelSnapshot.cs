@@ -15,7 +15,7 @@ namespace ProFak.DB.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "10.0.8");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.14");
 
             modelBuilder.Entity("ProFak.DB.DeklaracjaVat", b =>
                 {
@@ -355,6 +355,11 @@ namespace ProFak.DB.Migrations
                         .HasDefaultValue(0m);
 
                     b.Property<int>("Rodzaj")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("SkutekKorekty")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasDefaultValue(0);

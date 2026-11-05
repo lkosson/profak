@@ -45,6 +45,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 	private readonly TNumericUpDown numericUpDownKurs;
 	private readonly TButton buttonKurs;
 	private readonly TComboBox comboBoxProceduraMarzy;
+	private readonly TComboBox comboBoxSkutekKorekty;
 	private readonly TCheckBox checkBoxReczneKwoty;
 	private readonly TLinkLabel linkLabelUwagiPomoc;
 	private readonly TTextBox textBoxNazwaBanku;
@@ -113,6 +114,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 		numericUpDownKurs = Kontrolki.NumericUpDown(poPrzecinku: 4, szerokosc: 70);
 		buttonKurs = Kontrolki.Button("NBP", PobierzKurs);
 		comboBoxProceduraMarzy = Kontrolki.DropDownList();
+		comboBoxSkutekKorekty = Kontrolki.DropDownList();
 		checkBoxReczneKwoty = Kontrolki.CheckBox("Kwota \"razem\" ustawiona ręcznie");
 		linkLabelUwagiPomoc = Kontrolki.LinkPomoc(PomocUwagiPubliczne);
 		textBoxNazwaBanku = Kontrolki.TextBox(podpowiedz: "Nazwa banku", szerokosc: 120);
@@ -128,6 +130,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 		Dymek(buttonKurs, "Pobierz kurs z NBP");
 
 		kontroler.Slownik<ProceduraMarży>(comboBoxProceduraMarzy);
+		kontroler.Slownik<SkutekKorekty>(comboBoxSkutekKorekty);
 
 		kontroler.Powiazanie(textBoxNumer, faktura => faktura.Numer);
 		kontroler.Powiazanie(comboBoxWaluta, faktura => faktura.WalutaRef);
@@ -166,6 +169,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 		kontroler.Powiazanie(checkBoxWNT, faktura => faktura.CzyWNT);
 		kontroler.Powiazanie(textBoxOpisZdarzenia, faktura => faktura.OpisZdarzenia);
 		kontroler.Powiazanie(comboBoxProceduraMarzy, faktura => faktura.ProceduraMarzy);
+		kontroler.Powiazanie(comboBoxSkutekKorekty, faktura => faktura.SkutekKorekty);
 
 		kontroler.Powiazanie(textBoxKSeFXML, faktura => faktura.XMLKSeFFmt);
 		kontroler.Powiazanie(textBoxNumerKSeF, faktura => faktura.NumerKSeF);
@@ -252,7 +256,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 		podatki.DodajWiersz("Udział w VAT naliczonym", [comboBoxProcentVat, null, checkBoxWNT]);
 		podatki.DodajWiersz("Opis zdarzenia na PKPiR", [textBoxOpisZdarzenia, null, checkBoxTP]);
 		podatki.DodajWiersz("Procedura marży", [comboBoxProceduraMarzy, null, checkBoxZakupSrodkowTrwalych]);
-		podatki.DodajWiersz([null, null, null, checkBoxReczneKwoty]);
+		podatki.DodajWiersz("Skutek korekty", [comboBoxSkutekKorekty, null, checkBoxReczneKwoty]);
 
 		textBoxDataKSeF.ReadOnly = true;
 		buttonDropDownKSeF.Width = 120;
@@ -525,6 +529,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 			checkBoxWDT.Enabled = true;
 			checkBoxWNT.Enabled = false;
 			comboBoxProceduraMarzy.Enabled = Rekord.Rodzaj == RodzajFaktury.VatMarża || Rekord.Rodzaj == RodzajFaktury.KorektaVatMarży || Rekord.Rodzaj == RodzajFaktury.Proforma || Rekord.Rodzaj == RodzajFaktury.Zakup || Rekord.Rodzaj == RodzajFaktury.KorektaZakupu;
+			comboBoxSkutekKorekty.Enabled = Rekord.CzyKorekta;
 
 			comboBoxNIPSprzedawcy.Enabled = false;
 			comboBoxNazwaSprzedawcy.Enabled = false;
@@ -543,6 +548,7 @@ partial class FakturaEdytor : Edytor<Faktura>
 			checkBoxWDT.Enabled = false;
 			checkBoxWNT.Enabled = true;
 			comboBoxProceduraMarzy.Enabled = false;
+			comboBoxSkutekKorekty.Enabled = Rekord.CzyKorekta;
 
 			comboBoxNIPNabywcy.Enabled = false;
 			comboBoxNazwaNabywcy.Enabled = false;

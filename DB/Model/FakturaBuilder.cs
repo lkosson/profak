@@ -44,6 +44,7 @@ class FakturaBuilder
 		builder.Property(e => e.CzyWDT).HasDefaultValue(false).IsRequired();
 		builder.Property(e => e.CzyWNT).HasDefaultValue(false).IsRequired();
 		builder.Property(e => e.ProceduraMarzy).HasDefaultValue(ProceduraMarży.NieDotyczy).IsRequired();
+		builder.Property(e => e.SkutekKorekty).HasDefaultValue(SkutekKorekty.NieDotyczy).IsRequired();
 		builder.Property(e => e.OpisZdarzenia).HasDefaultValue("").IsRequired();
 		builder.Property(e => e.NumerKSeF).HasDefaultValue("").IsRequired();
 		builder.Property(e => e.XMLKSeF).HasDefaultValue("").IsRequired();
