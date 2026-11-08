@@ -31,7 +31,8 @@ partial class GlowneOkno
 		var fakturySprzedazyKSeFPoprzedni = menu.UtworzWezel("Z tego i poprzedniego miesiąca", delegate { Wyswietl(Spisy.KSeFSprzedaz(new() { CzySprzedaz = true, OdDaty = DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-1) })); });
 		var fakturySprzedazyKSeFRok = menu.UtworzWezel("Z tego roku", delegate { Wyswietl(Spisy.KSeFSprzedaz(new() { CzySprzedaz = true, OdDaty = new DateTime(DateTime.Now.Year, 1, 1) })); });
 		var fakturySprzedazyKSeFWszystkie = menu.UtworzWezel("Wszystkie", delegate { Wyswietl(Spisy.KSeFSprzedaz(new() { CzySprzedaz = true, OdDaty = KSeFSpis.DataStartowa })); });
-		var fakturySprzedazyKSeF = menu.UtworzWezel("KSeF", [fakturySprzedazyKSeFDzis, fakturySprzedazyKSeFMiesiac, fakturySprzedazyKSeFPoprzedni, fakturySprzedazyKSeFRok, fakturySprzedazyKSeFWszystkie]);
+		var fakturySprzedazyKSeFInnyZakres = UtworzWezelInnyZakres((odDaty, doDaty) => Wyswietl(Spisy.KSeFSprzedaz(new() { CzySprzedaz = true, CzyWymagaPrzeladowania = false, OdDaty = odDaty, DoDaty = doDaty })));
+		var fakturySprzedazyKSeF = menu.UtworzWezel("KSeF", [fakturySprzedazyKSeFDzis, fakturySprzedazyKSeFMiesiac, fakturySprzedazyKSeFPoprzedni, fakturySprzedazyKSeFRok, fakturySprzedazyKSeFWszystkie, fakturySprzedazyKSeFInnyZakres]);
 		var fakturySprzedazyWedlugDaty = menu.UtworzWezel("Według daty", () => WypelnijDatyFaktur(faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży, (odDaty, doDaty) => Wyswietl(Spisy.FakturySprzedazy(new() { OdDaty = odDaty, DoDaty = doDaty }))));
 		var fakturySprzedazyWedlugNabywcy = menu.UtworzWezel("Według nabywcy", () => WypelnijKontrahentowFaktur(faktura => faktura.Rodzaj == RodzajFaktury.Sprzedaż || faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży, faktura => faktura.Nabywca!, kontrahent => Wyswietl(Spisy.FakturySprzedazy(new() { KontrahentRef = kontrahent }))));
 		var fakturySprzedazyWedlugTowaru = menu.UtworzWezel("Według towaru", () => WypelnijTowaryFaktur(pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.Sprzedaż || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaSprzedaży, towar => Wyswietl(Spisy.FakturySprzedazy(new() { TowarRef = towar }))));
@@ -70,7 +71,8 @@ partial class GlowneOkno
 		var fakturyZakupuKSeFPoprzedni = menu.UtworzWezel("Z tego i poprzedniego miesiąca", delegate { Wyswietl(Spisy.KSeFZakup(new() { CzySprzedaz = false, OdDaty = DateTime.Now.Date.AddDays(1 - DateTime.Now.Day).AddMonths(-1) })); });
 		var fakturyZakupuKSeFRok = menu.UtworzWezel("Z tego roku", delegate { Wyswietl(Spisy.KSeFZakup(new() { CzySprzedaz = false, OdDaty = new DateTime(DateTime.Now.Year, 1, 1) })); });
 		var fakturyZakupuKSeFWszystkie = menu.UtworzWezel("Wszystkie", delegate { Wyswietl(Spisy.KSeFZakup(new() { CzySprzedaz = false, OdDaty = KSeFSpis.DataStartowa })); });
-		var fakturyZakupuKSeF = menu.UtworzWezel("KSeF", [fakturyZakupuKSeFPrzyrostowo, fakturyZakupuKSeFDzis, fakturyZakupuKSeFWczoraj, fakturyZakupuKSeFMiesiac, fakturyZakupuKSeFPoprzedni, fakturyZakupuKSeFRok, fakturyZakupuKSeFWszystkie]);
+		var fakturyZakupuKSeFInnyZakres = UtworzWezelInnyZakres((odDaty, doDaty) => Wyswietl(Spisy.KSeFSprzedaz(new() { CzySprzedaz = false, CzyWymagaPrzeladowania = false, OdDaty = odDaty, DoDaty = doDaty })));
+		var fakturyZakupuKSeF = menu.UtworzWezel("KSeF", [fakturyZakupuKSeFPrzyrostowo, fakturyZakupuKSeFDzis, fakturyZakupuKSeFWczoraj, fakturyZakupuKSeFMiesiac, fakturyZakupuKSeFPoprzedni, fakturyZakupuKSeFRok, fakturyZakupuKSeFWszystkie, fakturyZakupuKSeFInnyZakres]);
 		var fakturyZakupuWedlugDaty = menu.UtworzWezel("Według daty", () => WypelnijDatyFaktur(faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny, (odDaty, doDaty) => Wyswietl(Spisy.FakturyZakupu(new() { OdDaty = odDaty, DoDaty = doDaty })), wedlugDatyWystawienia: true));
 		var fakturyZakupuWedlugSprzedawcy = menu.UtworzWezel("Według sprzedawcy", () => WypelnijKontrahentowFaktur(faktura => faktura.Rodzaj == RodzajFaktury.Zakup || faktura.Rodzaj == RodzajFaktury.KorektaZakupu || faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny, faktura => faktura.Sprzedawca!, kontrahent => Wyswietl(Spisy.FakturyZakupu(new() { KontrahentRef = kontrahent }))));
 		var fakturyZakupuWedlugTowaru = menu.UtworzWezel("Według towaru", () => WypelnijTowaryFaktur(pozycja => pozycja.Faktura!.Rodzaj == RodzajFaktury.Zakup || pozycja.Faktura.Rodzaj == RodzajFaktury.KorektaZakupu || pozycja.Faktura.Rodzaj == RodzajFaktury.DowódWewnętrzny, towar => Wyswietl(Spisy.FakturyZakupu(new() { TowarRef = towar }))));
@@ -145,7 +147,25 @@ partial class GlowneOkno
 			wezly.Add(menu.UtworzWezel(rok.ToString(), wezlyMiesiace.ToArray()));
 		}
 
+		wezly.Add(UtworzWezelInnyZakres(akcja));
+
 		return wezly.ToArray();
+	}
+
+	private TTreeNode UtworzWezelInnyZakres(Action<DateTime, DateTime> akcja)
+	{
+		var ostatnioWybraneDaty = (dataPoczatkowa: DateTime.Now, dataKoncowa: DateTime.Now);
+
+		void UruchomZakres()
+		{
+			using var kontekst = new Kontekst();
+			var daty = OknoWyboruDat.Pokaz(kontekst, ostatnioWybraneDaty.dataPoczatkowa, ostatnioWybraneDaty.dataKoncowa);
+			if (daty == null) return;
+			ostatnioWybraneDaty = daty.Value;
+			akcja(daty.Value.dataPoczatkowa, daty.Value.dataKoncowa);
+		}
+
+		return menu.UtworzWezel("Inny zakres", UruchomZakres);
 	}
 
 	private TTreeNode[] WypelnijKontrahentowFaktur(Expression<Func<Faktura, bool>> warunek, Expression<Func<Faktura, Kontrahent>> pole, Action<Kontrahent> akcja)

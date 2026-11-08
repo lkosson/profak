@@ -53,7 +53,7 @@ class KSeFSpis : Spis<Faktura>
 		kolumnaNazwaSprzedawcy.Visible = !Parametry.CzySprzedaz;
 		kolumnaNIPSprzedawcy.Visible = !Parametry.CzySprzedaz;
 
-		if (pierwszeZaladowanie)
+		if (pierwszeZaladowanie && Parametry.CzyWymagaPrzeladowania)
 		{
 			pierwszeZaladowanie = false;
 			return;
@@ -69,7 +69,7 @@ class KSeFSpis : Spis<Faktura>
 			{
 				var przyrostowo = Parametry.OdDaty is null;
 				var odDaty = Parametry.OdDaty.GetValueOrDefault(DataStartowa);
-				var doDaty = DateTime.Now;
+				var doDaty = Parametry.DoDaty.GetValueOrDefault(DateTime.Now);
 				var podmiot = Kontekst.Baza.Kontrahenci.First(kontrahent => kontrahent.CzyPodmiot);
 				if (String.IsNullOrEmpty(podmiot.TokenKSeF)) throw new ApplicationException("Brak tokena dostępowego do KSeF w danych firmy.\nNadaj dostęp do KSeF w oknie \"Kontrahenci\" -> \"Moja firma\" -> \"Dane urzędowe\" -> \"Token KSeF\".");
 				if (przyrostowo)
@@ -127,5 +127,7 @@ class KSeFSpis : Spis<Faktura>
 class KSeFSpisParametry
 {
 	public bool CzySprzedaz { get; set; }
+	public bool CzyWymagaPrzeladowania { get; set; } = true;
 	public DateTime? OdDaty { get; set; }
+	public DateTime? DoDaty { get; set; }
 }

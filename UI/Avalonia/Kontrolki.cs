@@ -290,6 +290,11 @@ static class RozszerzeniaKontrolek
 		public int DecimalPlaces { get => kontrolka.NumberFormat?.NumberDecimalDigits ?? 0; set => kontrolka.NumberFormat = new NumberFormatInfo { NumberDecimalDigits = value }; }
 	}
 
+	extension(TDatePicker kontrolka)
+	{
+		public DateTime Value { get => kontrolka.SelectedDate ?? default; set => kontrolka.SelectedDate = value; }
+	}
+
 	extension(TCheckBox kontrolka)
 	{
 		public bool Checked { get => kontrolka.IsChecked ?? false; set => kontrolka.IsChecked = value; }
