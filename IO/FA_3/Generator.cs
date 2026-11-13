@@ -250,7 +250,11 @@ public class Generator
 				var podmiot2k = new FakturaFaPodmiot2K();
 				podmiot2k.DaneIdentyfikacyjne = new TPodmiot2();
 				podmiot2k.DaneIdentyfikacyjne.Nazwa = dbFaktura.FakturaKorygowana.NazwaNabywcy;
-				podmiot2k.DaneIdentyfikacyjne = ksefFaktura.Podmiot2.DaneIdentyfikacyjne;
+				podmiot2k.DaneIdentyfikacyjne.NIP = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP;
+				podmiot2k.DaneIdentyfikacyjne.NrVatUE = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NrVatUE;
+				podmiot2k.DaneIdentyfikacyjne.KodUE = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.KodUE;
+				podmiot2k.DaneIdentyfikacyjne.KodKraju = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.KodKraju;
+				podmiot2k.DaneIdentyfikacyjne.NrID = ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NrID;
 				podmiot2k.Adres = ZbudujAdres<TAdres>(dbFaktura.FakturaKorygowana.DaneNabywcy);
 				ksefFaktura.Fa.Podmiot2K.Add(podmiot2k);
 			}
