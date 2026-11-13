@@ -67,8 +67,12 @@ public class SkladkaZus : Rekord<SkladkaZus>
 			SkladkaZdrowotna = (PodstawaZdrowotne * 0.049m).Zaokragl();
 			SkladkaZdrowotna += RozliczenieRoczneSkladkiZdrowotnej;
 			OdliczenieOdDochodu += SkladkaZdrowotna;
-			var sumaOdliczen = baza.SkladkiZus.Where(skladka => skladka.Miesiac >= new DateTime(Miesiac.Year, 1, 1) && skladka.Miesiac < skladka.Miesiac).AsEnumerable().Sum(skladka => skladka.OdliczenieOdDochodu);
-			OdliczenieOdDochodu = Math.Min(OdliczenieOdDochodu, 8700m - sumaOdliczen);
+			var sumaOdliczen = baza.SkladkiZus.Where(skladka => skladka.Miesiac >= new DateTime(Miesiac.Year, 1, 1) && skladka.Miesiac < Miesiac).AsEnumerable().Sum(skladka => skladka.OdliczenieOdDochodu);
+			if (Miesiac.Year == 2022) OdliczenieOdDochodu = Math.Min(OdliczenieOdDochodu, 8700m - sumaOdliczen);
+			else if (Miesiac.Year == 2023) OdliczenieOdDochodu = Math.Min(OdliczenieOdDochodu, 10200m - sumaOdliczen);
+			else if (Miesiac.Year == 2024) OdliczenieOdDochodu = Math.Min(OdliczenieOdDochodu, 11600m - sumaOdliczen);
+			else if (Miesiac.Year == 2025) OdliczenieOdDochodu = Math.Min(OdliczenieOdDochodu, 12900m - sumaOdliczen);
+			else if (Miesiac.Year == 2026) OdliczenieOdDochodu = Math.Min(OdliczenieOdDochodu, 14100m - sumaOdliczen);
 		}
 		else if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Ryczałt)
 		{
