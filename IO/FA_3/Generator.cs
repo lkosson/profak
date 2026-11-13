@@ -278,7 +278,7 @@ public class Generator
 			if (!String.IsNullOrEmpty(dbPodmiot3.VatUE)) ksefPodmiot3.DaneIdentyfikacyjne.NrVatUE = dbPodmiot3.VatUE;
 			if (!String.IsNullOrEmpty(dbPodmiot3.IDwew)) ksefPodmiot3.DaneIdentyfikacyjne.IDWew = dbPodmiot3.IDwew;
 			if (!String.IsNullOrEmpty(dbPodmiot3.Adres)) ksefPodmiot3.Adres = ZbudujAdres<TAdres>(dbPodmiot3.Adres);
-			dbPodmiot3.Udzial = ksefPodmiot3.Udzial;
+			ksefPodmiot3.Udzial = dbPodmiot3.Udzial;
 
 			ksefFaktura.Podmiot3.Add(ksefPodmiot3);
 		}
