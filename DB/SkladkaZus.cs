@@ -71,16 +71,22 @@ public class SkladkaZus : Rekord<SkladkaZus>
 		}
 		else if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Liniowy)
 		{
-			PodstawaZdrowotne = Math.Max(dochod, minimalneWynagrodzenie * 3 / 4);
+			var mnoznikMinimalnego = Miesiac.Year >= 2024 ? 0.75m : 1m;
+			PodstawaZdrowotne = Math.Max(dochod, minimalneWynagrodzenie * mnoznikMinimalnego);
 			SkladkaZdrowotna = (PodstawaZdrowotne * 0.049m).Zaokragl();
 			SkladkaZdrowotna += RozliczenieRoczneSkladkiZdrowotnej;
-			OdliczenieOdDochodu += SkladkaZdrowotna;
-			var sumaOdliczen = baza.SkladkiZus.Where(skladka => skladka.Miesiac >= new DateTime(Miesiac.Year, 1, 1) && skladka.Miesiac < Miesiac).AsEnumerable().Sum(skladka => skladka.OdliczenieOdDochodu);
-			if (Miesiac.Year == 2022) OdliczenieOdDochodu = Math.Min(OdliczenieOdDochodu, 8700m - sumaOdliczen);
-			else if (Miesiac.Year == 2023) OdliczenieOdDochodu = Math.Min(OdliczenieOdDochodu, 10200m - sumaOdliczen);
-			else if (Miesiac.Year == 2024) OdliczenieOdDochodu = Math.Min(OdliczenieOdDochodu, 11600m - sumaOdliczen);
-			else if (Miesiac.Year == 2025) OdliczenieOdDochodu = Math.Min(OdliczenieOdDochodu, 12900m - sumaOdliczen);
-			else if (Miesiac.Year == 2026) OdliczenieOdDochodu = Math.Min(OdliczenieOdDochodu, 14100m - sumaOdliczen);
+			var limitOdliczeniaZdrowotnej = Miesiac.Year switch
+			{
+				2022 => 8700m,
+				2023 => 10200m,
+				2024 => 11600m,
+				2025 => 12900m,
+				2026 => 14100m,
+				_ => 0m,
+			};
+			var sumaZdrowotnych = baza.SkladkiZus.Where(skladka => skladka.Miesiac >= new DateTime(Miesiac.Year, 1, 1) && skladka.Miesiac < Miesiac).AsEnumerable().Sum(skladka => skladka.SkladkaZdrowotna);
+			var odliczenieZdrowotnej = Math.Max(0m, Math.Min(SkladkaZdrowotna, limitOdliczeniaZdrowotnej - sumaZdrowotnych));
+			OdliczenieOdDochodu += odliczenieZdrowotnej;
 		}
 		else if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Ryczałt)
 		{
