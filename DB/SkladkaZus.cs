@@ -23,7 +23,15 @@ public class SkladkaZus : Rekord<SkladkaZus>
 		var podmiot = baza.Kontrahenci.FirstOrDefault(kontrahent => kontrahent.CzyPodmiot);
 		if (podmiot == null || !podmiot.FormaOpodatkowania.HasValue) throw new ApplicationException("Przed wyliczeniem składek ZUS należy uzupełnić formę opodatkowania firmy.");
 
-		var minimalneWynagrodzenie = Miesiac.Year == 2025 ? 3499.50m : 3000.00m;
+		var minimalneWynagrodzenie = Miesiac.Year switch
+		{
+			2022 => 3010,
+			2023 => 3490,
+			2024 => 4242,
+			2025 => 4666,
+			2026 => 4806,
+			_ => 0
+		};
 
 		var przychod = 0m;
 		var koszty = 0m;
@@ -63,7 +71,7 @@ public class SkladkaZus : Rekord<SkladkaZus>
 		}
 		else if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Liniowy)
 		{
-			PodstawaZdrowotne = Math.Max(dochod, minimalneWynagrodzenie);
+			PodstawaZdrowotne = Math.Max(dochod, minimalneWynagrodzenie * 3 / 4);
 			SkladkaZdrowotna = (PodstawaZdrowotne * 0.049m).Zaokragl();
 			SkladkaZdrowotna += RozliczenieRoczneSkladkiZdrowotnej;
 			OdliczenieOdDochodu += SkladkaZdrowotna;
@@ -82,7 +90,7 @@ public class SkladkaZus : Rekord<SkladkaZus>
 		}
 		else if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Skala)
 		{
-			PodstawaZdrowotne = Math.Max(dochod, minimalneWynagrodzenie);
+			PodstawaZdrowotne = Math.Max(dochod, minimalneWynagrodzenie * 3 / 4);
 			SkladkaZdrowotna = (PodstawaZdrowotne * 0.09m).Zaokragl();
 		}
 
