@@ -96,6 +96,7 @@ public class ZaliczkaPit : Rekord<ZaliczkaPit>
 
 		if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Ryczałt)
 		{
+			var przychodyWedlugStawki = new Dictionary<decimal, decimal>();
 			foreach (var faktura in faktury)
 			{
 				if (!faktura.CzySprzedaz) continue;
@@ -103,16 +104,16 @@ public class ZaliczkaPit : Rekord<ZaliczkaPit>
 				foreach (var pozycja in faktura.Pozycje)
 				{
 					if (!pozycja.StawkaRyczaltu.HasValue) continue;
+					var stawka = pozycja.StawkaRyczaltu.Value;
 					Przychody += pozycja.WartoscNetto;
-					Podatek += (pozycja.WartoscNetto * pozycja.StawkaRyczaltu.Value / 100m).Zaokragl(2);
+					przychodyWedlugStawki[stawka] = przychodyWedlugStawki.GetValueOrDefault(stawka) + pozycja.WartoscNetto;
 				}
 			}
-			Podatek = Podatek.Zaokragl(0);
-			if (Podatek > 0)
+			foreach (var (stawka, przychod) in przychodyWedlugStawki)
 			{
-				var sredniaStawkaRyczaltu = Podatek / Przychody;
-				var odliczenieSkladekZus = (SkladkiZus * sredniaStawkaRyczaltu).Zaokragl(0);
-				Podatek -= odliczenieSkladekZus;
+				var udzialProcentowy = Przychody == 0 ? 0m : przychod / Przychody;
+				var podstawa = przychod - SkladkiZus * udzialProcentowy;
+				if (podstawa > 0) Podatek += (podstawa * stawka / 100).Zaokragl(0);
 			}
 		}
 		else
