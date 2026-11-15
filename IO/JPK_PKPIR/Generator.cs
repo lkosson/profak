@@ -54,6 +54,7 @@ public class Generator
 		foreach (var faktura in faktury)
 		{
 			if (faktura.CzyZakup && faktura.ProcentKosztow == 0) continue;
+			if (faktura.CzyZaliczka) continue;
 			var jestTowar = faktura.Pozycje.Any(pozycja => pozycja.Towar != null && pozycja.Towar.Rodzaj == RodzajTowaru.Towar);
 			var nipnumer = faktura.NIPNabywcy;
 			var nipkraj = "PL";
