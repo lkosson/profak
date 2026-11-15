@@ -101,8 +101,8 @@ public class Generator
 					else if (pozycja.StawkaVat.CzyNP_I) { jpksprzedaz.K_11 ??= 0; jpksprzedaz.K_11 += pozycja.WartoscNetto; }
 					else if (pozycja.StawkaVat.CzyNP_II) { jpksprzedaz.K_12 ??= 0; jpksprzedaz.K_12 += pozycja.WartoscNetto; }
 					else if (pozycja.StawkaVat.Wartosc == 0) { jpksprzedaz.K_13 ??= 0; jpksprzedaz.K_13 += pozycja.WartoscNetto; }
-					else if (pozycja.StawkaVat.Wartosc <= 5) { jpksprzedaz.K_15 ??= 0; jpksprzedaz.K_15 += pozycja.WartoscNetto; }
-					else if (pozycja.StawkaVat.Wartosc <= 8) { jpksprzedaz.K_17 ??= 0; jpksprzedaz.K_17 += pozycja.WartoscNetto; }
+					else if (pozycja.StawkaVat.Wartosc <= 5) { jpksprzedaz.K_15 ??= 0; jpksprzedaz.K_15 += pozycja.WartoscNetto; jpksprzedaz.K_16 ??= 0; jpksprzedaz.K_16 += pozycja.WartoscVat; }
+					else if (pozycja.StawkaVat.Wartosc <= 8) { jpksprzedaz.K_17 ??= 0; jpksprzedaz.K_17 += pozycja.WartoscNetto; jpksprzedaz.K_18 ??= 0; jpksprzedaz.K_18 += pozycja.WartoscVat; }
 					else { jpksprzedaz.K_19 ??= 0; jpksprzedaz.K_19 += pozycja.WartoscNetto; jpksprzedaz.K_20 ??= 0; jpksprzedaz.K_20 += pozycja.WartoscVat; }
 				}
 
