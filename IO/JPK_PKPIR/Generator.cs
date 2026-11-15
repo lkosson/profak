@@ -96,7 +96,7 @@ public class Generator
 		jpk.PKPIRInfo = new JPKPKPIRInfo();
 		jpk.PKPIRInfo.P_1 = 0m;
 		jpk.PKPIRInfo.P_2 = 0m;
-		jpk.PKPIRInfo.P_3 = jpk.PKPIRWiersz.Sum(wiersz => wiersz.K_10 ?? 0 + wiersz.K_14 ?? 0);
+		jpk.PKPIRInfo.P_3 = jpk.PKPIRWiersz.Sum(wiersz => (wiersz.K_10 ?? 0) + (wiersz.K_14 ?? 0));
 		jpk.PKPIRInfo.P_4 = jpk.PKPIRWiersz.Sum(wiersz => wiersz.K_7 ?? 0) - jpk.PKPIRInfo.P_3;
 
 		jpk.PKPIRCtrl = new JPKPKPIRCtrl();
