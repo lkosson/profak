@@ -26,6 +26,7 @@ public class Generator
 			.Include(faktura => faktura.Pozycje).ThenInclude(pozycja => pozycja.StawkaVat)
 			.Include(faktura => faktura.Pozycje).ThenInclude(pozycja => pozycja.Towar).ThenInclude(towar => towar!.JednostkaMiary)
 			.Include(faktura => faktura.FakturaKorygowana)
+			.Include(faktura => faktura.Waluta)
 			.ToList();
 
 		var jpk = new JPK();
@@ -71,7 +72,7 @@ public class Generator
 			var jpkfaktura = new JPKFaktura();
 			jpk.Faktura.Add(jpkfaktura);
 
-			jpkfaktura.KodWaluty = TKodWaluty.PLN;
+			jpkfaktura.KodWaluty = faktura.Waluta?.Skrot == "zł" ? TKodWaluty.PLN : Enum.Parse<TKodWaluty>(faktura.Waluta?.Skrot ?? "PLN");
 			jpkfaktura.P_1 = faktura.DataWystawienia;
 			jpkfaktura.P_2A = faktura.Numer;
 			jpkfaktura.P_3A = faktura.NazwaNabywcy;
