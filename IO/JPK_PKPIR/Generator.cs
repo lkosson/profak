@@ -68,7 +68,7 @@ public class Generator
 			jpkwiersz.K_1 = (ulong)(jpk.PKPIRWiersz.Count + 1);
 			jpkwiersz.K_2 = faktura.DataSprzedazy;
 			jpkwiersz.K_3A = faktura.Numer;
-			jpkwiersz.K_3B = faktura.NumerKSeF;
+			if (!String.IsNullOrEmpty(faktura.NumerKSeF)) jpkwiersz.K_3B = faktura.NumerKSeF;
 			jpkwiersz.K_4A = Enum.Parse<TKodKraju>(nipkraj);
 			jpkwiersz.K_4B = nipnumer;
 			jpkwiersz.K_5A = faktura.CzySprzedaz ? faktura.NazwaNabywcy : faktura.NazwaSprzedawcy;

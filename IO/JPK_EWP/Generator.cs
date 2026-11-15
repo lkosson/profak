@@ -69,7 +69,7 @@ public class Generator
 				jpkwiersz.K_2 = faktura.DataWystawienia;
 				jpkwiersz.K_3 = faktura.DataSprzedazy;
 				jpkwiersz.K_4 = faktura.Numer;
-				jpkwiersz.K_5 = faktura.NumerKSeF;
+				if (!String.IsNullOrEmpty(faktura.NumerKSeF)) jpkwiersz.K_5 = faktura.NumerKSeF;
 				jpkwiersz.K_6 = Enum.Parse<TKodKraju>(nipkraj);
 				jpkwiersz.K_7 = nipnumer;
 				jpkwiersz.K_8 = pozycje.Sum(e => e.WartoscNetto);
