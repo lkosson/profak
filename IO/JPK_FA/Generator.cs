@@ -62,7 +62,7 @@ public class Generator
 		{
 			if (!faktura.CzySprzedaz) continue;
 			var nipnumer = faktura.NIPNabywcy;
-			var nipkraj = "PL";
+			var nipkraj = "";
 			if (nipnumer.Length > 2 && Char.IsLetter(nipnumer[0]) && Char.IsLetter(nipnumer[1]))
 			{
 				nipkraj = nipnumer[0..2];
@@ -81,8 +81,8 @@ public class Generator
 			jpkfaktura.P_3D = faktura.DaneSprzedawcy;
 			jpkfaktura.P_4A = TKodyKrajowUE.PL;
 			jpkfaktura.P_4B = faktura.NIPSprzedawcy;
-			jpkfaktura.P_5A = TKodyKrajowUE.PL;
-			jpkfaktura.P_5B = faktura.NIPNabywcy;
+			jpkfaktura.P_5A = String.IsNullOrEmpty(nipkraj) ? null : Enum.Parse<TKodyKrajowUE>(nipkraj);
+			jpkfaktura.P_5B = nipnumer;
 			jpkfaktura.P_6 = faktura.DataSprzedazy;
 			jpkfaktura.P_15 = faktura.RazemBrutto;
 			jpkfaktura.P_18A = faktura.CzyMechanizmPodzielonejPlatnosci;
