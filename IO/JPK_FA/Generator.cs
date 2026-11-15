@@ -114,7 +114,8 @@ public class Generator
 				jpkwiersz.P_11A = pozycja.WartoscBrutto;
 
 				if (faktura.CzyWDT) { jpkfaktura.P_13_5 ??= 0; jpkfaktura.P_13_5 += pozycja.WartoscNetto; jpkwiersz.P_12 = JPKFakturaWierszP_12.np; }
-				else if (pozycja.StawkaVat.Skrot.ToLower().Contains("zw")) { jpkfaktura.P_13_7 ??= 0; jpkfaktura.P_13_7 += pozycja.WartoscNetto; jpkwiersz.P_12 = JPKFakturaWierszP_12.zw; }
+				else if (pozycja.StawkaVat.CzyNP_I) { jpkfaktura.P_13_5 ??= 0; jpkfaktura.P_13_5 += pozycja.WartoscNetto; jpkwiersz.P_12 = JPKFakturaWierszP_12.np; }
+				else if (pozycja.StawkaVat.CzyZW) { jpkfaktura.P_13_7 ??= 0; jpkfaktura.P_13_7 += pozycja.WartoscNetto; jpkwiersz.P_12 = JPKFakturaWierszP_12.zw; }
 				else if (pozycja.StawkaVat.Wartosc == 0) { jpkfaktura.P_13_6 ??= 0; jpkfaktura.P_13_6 += pozycja.WartoscNetto; jpkwiersz.P_12 = JPKFakturaWierszP_12.Item0; }
 				else if (pozycja.StawkaVat.Wartosc == 5) { jpkfaktura.P_13_3 ??= 0; jpkfaktura.P_13_3 += pozycja.WartoscNetto; jpkfaktura.P_14_3 += pozycja.WartoscVat; jpkwiersz.P_12 = JPKFakturaWierszP_12.Item5; }
 				else if (pozycja.StawkaVat.Wartosc == 7 || pozycja.StawkaVat.Wartosc == 8) { jpkfaktura.P_13_2 ??= 0; jpkfaktura.P_13_2 += pozycja.WartoscNetto; jpkfaktura.P_14_2 += pozycja.WartoscVat; jpkwiersz.P_12 = JPKFakturaWierszP_12.Item8; }
