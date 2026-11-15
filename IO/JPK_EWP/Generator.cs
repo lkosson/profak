@@ -82,6 +82,7 @@ public class Generator
 				else if (pozycje.Key == 8.5m) jpkwiersz.K_9 = TStawkaPodatku.Item8Period5;
 				else if (pozycje.Key == 5.5m) jpkwiersz.K_9 = TStawkaPodatku.Item5Period5;
 				else if (pozycje.Key == 3) jpkwiersz.K_9 = TStawkaPodatku.Item3;
+				else throw new ApplicationException($"Nieznana stawka ryczałtu {pozycje.Key}% na fakturze {faktura.Numer}.");
 				jpk.EWPWiersz.Add(jpkwiersz);
 			}
 		}
