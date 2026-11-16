@@ -22,10 +22,12 @@ public class ZaliczkaPit : Rekord<ZaliczkaPit>
 	{
 		var nieaktualneFaktury = baza.Faktury.Where(faktura => faktura.ZaliczkaPitId == Id).ToDictionary(faktura => faktura.Ref);
 		var zmienioneFaktury = new List<Faktura>();
-		var dataGraniczna = Miesiac.Date.AddMonths(1);
+		var poczatekRoku = new DateTime(Miesiac.Year, 1, 1);
+		var dataGraniczna = Miesiac.Date.AddDays(1 - Miesiac.Day).AddMonths(1);
 
 		var faktury = baza.Faktury
-			.Where(faktura => (faktura.DataSprzedazy < dataGraniczna || faktura.DataWystawienia < dataGraniczna)
+			.Where(faktura => (faktura.DataSprzedazy >= poczatekRoku || faktura.DataWystawienia >= poczatekRoku)
+				&& (faktura.DataSprzedazy < dataGraniczna || faktura.DataWystawienia < dataGraniczna)
 				&& faktura.Rodzaj != RodzajFaktury.Usunięta
 				&& faktura.Rodzaj != RodzajFaktury.Zaliczka
 				&& faktura.Rodzaj != RodzajFaktury.KorektaZaliczki
@@ -79,13 +81,9 @@ public class ZaliczkaPit : Rekord<ZaliczkaPit>
 			.ToList();
 
 		var faktury = baza.Faktury
-			// tutaj celowo nie jest brane ZaliczkaPitId - roliczenie jest zawsze od początku roku
-			.Where(faktura => faktura.DataSprzedazy >= poczatekRoku && (faktura.DataSprzedazy < dataKoncowa || faktura.DataWystawienia < dataKoncowa))
+			.Where(faktura => poprzednieZaliczki.Contains(faktura.ZaliczkaPit!) || faktura.ZaliczkaPitId == Id)
 			.Include(faktura => faktura.Pozycje)
 			.Include(faktura => faktura.Zaliczki)
-			.ToList()
-			.Where(faktura => faktura.Rodzaj != RodzajFaktury.Proforma)
-			.Where(faktura => (faktura.CzySprzedaz && faktura.DataSprzedazy < dataKoncowa) || (faktura.CzyZakup && faktura.DataWystawienia < dataKoncowa))
 			.ToList();
 
 		var podstawaZdrowotna = 0m;
