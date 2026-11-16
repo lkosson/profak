@@ -146,6 +146,10 @@ public class ZaliczkaPit : Rekord<ZaliczkaPit>
 				else if (podstawa <= 120000) Podatek = (podstawa * 0.12m - 3600.00m).Zaokragl(0);
 				else Podatek = 10800.00m + ((podstawa - 120000) * 0.32m).Zaokragl(0);
 			}
+			else if (podmiot.FormaOpodatkowania == FormaOpodatkowania.DziałalnośćNierejestrowana)
+			{
+				Podatek = 0m;
+			}
 
 			if (Miesiac.Year < 2022) Podatek -= (podstawaZdrowotna * 0.09m * 0.0775m).Zaokragl(0);
 		}
@@ -168,7 +172,5 @@ public class ZaliczkaPit : Rekord<ZaliczkaPit>
 		{
 			DoWplaty = Podatek;
 		}
-
-
 	}
 }
