@@ -103,7 +103,7 @@ public class ZaliczkaPit : Rekord<ZaliczkaPit>
 				if (faktura.CzyZaliczka) continue;
 				foreach (var pozycja in faktura.Pozycje)
 				{
-					if (!pozycja.StawkaRyczaltu.HasValue) continue;
+					if (!pozycja.StawkaRyczaltu.HasValue) throw new ApplicationException($"Pozycja {pozycja.LP} na fakturze {faktura.Numer} nie ma ustawionej stawki ryczałtu.");
 					var stawka = pozycja.StawkaRyczaltu.Value;
 					Przychody += pozycja.WartoscNetto;
 					przychodyWedlugStawki[stawka] = przychodyWedlugStawki.GetValueOrDefault(stawka) + pozycja.WartoscNetto;
