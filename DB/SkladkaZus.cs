@@ -96,7 +96,7 @@ public class SkladkaZus : Rekord<SkladkaZus>
 		}
 		else if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Skala)
 		{
-			PodstawaZdrowotne = Math.Max(dochod, minimalneWynagrodzenie * 3 / 4);
+			PodstawaZdrowotne = Math.Max(dochod, minimalneWynagrodzenie * 0.75m);
 			SkladkaZdrowotna = (PodstawaZdrowotne * 0.09m).Zaokragl();
 		}
 
