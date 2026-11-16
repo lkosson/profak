@@ -144,8 +144,7 @@ public class ZaliczkaPit : Rekord<ZaliczkaPit>
 
 				if (podstawa <= 30000) Podatek = 0;
 				else if (podstawa <= 120000) Podatek = (podstawa * 0.12m - 3600.00m).Zaokragl(0);
-				else if (podstawa <= 1000000) Podatek = 10800.00m + ((podstawa - 120000) * 0.32m).Zaokragl(0);
-				else Podatek = 10800.00m + ((podstawa - 120000) * 0.32m + (podstawa - 1000000) * 0.04m).Zaokragl(0);
+				else Podatek = 10800.00m + ((podstawa - 120000) * 0.32m).Zaokragl(0);
 			}
 
 			if (Miesiac.Year < 2022) Podatek -= (podstawaZdrowotna * 0.09m * 0.0775m).Zaokragl(0);
