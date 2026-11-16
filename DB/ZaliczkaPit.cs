@@ -29,6 +29,7 @@ public class ZaliczkaPit : Rekord<ZaliczkaPit>
 				&& faktura.Rodzaj != RodzajFaktury.Usunięta
 				&& faktura.Rodzaj != RodzajFaktury.Zaliczka
 				&& faktura.Rodzaj != RodzajFaktury.KorektaZaliczki
+				&& faktura.Rodzaj != RodzajFaktury.Proforma
 				&& (faktura.ZaliczkaPitId == null || faktura.ZaliczkaPitId == Id))
 			.ToList()
 			.Where(faktura => (faktura.CzySprzedaz && faktura.DataSprzedazy < dataGraniczna) || (faktura.CzyZakup && faktura.DataWystawienia < dataGraniczna))
@@ -83,6 +84,7 @@ public class ZaliczkaPit : Rekord<ZaliczkaPit>
 			.Include(faktura => faktura.Pozycje)
 			.Include(faktura => faktura.Zaliczki)
 			.ToList()
+			.Where(faktura => faktura.Rodzaj != RodzajFaktury.Proforma)
 			.Where(faktura => (faktura.CzySprzedaz && faktura.DataSprzedazy < dataKoncowa) || (faktura.CzyZakup && faktura.DataWystawienia < dataKoncowa))
 			.ToList();
 

@@ -71,6 +71,7 @@ public class DeklaracjaVat : Rekord<DeklaracjaVat>
 		var faktury = baza.Faktury
 			.Where(faktura => (faktura.DataSprzedazy < dataGraniczna || faktura.DataWystawienia < dataGraniczna)
 				&& faktura.Rodzaj != RodzajFaktury.Usunięta
+				&& faktura.Rodzaj != RodzajFaktury.Proforma
 				&& (faktura.DeklaracjaVatId == null || faktura.DeklaracjaVatId == Id))
 			.ToList()
 			.Where(faktura => (faktura.CzySprzedaz && faktura.DataSprzedazy < dataGraniczna) || (faktura.CzyZakup && faktura.DataWystawienia < dataGraniczna))
