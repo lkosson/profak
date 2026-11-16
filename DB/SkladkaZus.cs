@@ -33,6 +33,16 @@ public class SkladkaZus : Rekord<SkladkaZus>
 			_ => 0
 		};
 
+		var srednieWynagrodzenie = Miesiac.Year switch
+		{
+			2022 => 6221.04m,
+			2023 => 6965.94m,
+			2024 => 7767.85m,
+			2025 => 8549.18m,
+			2026 => 9228.64m,
+			_ => 0,
+		};
+
 		var przychod = 0m;
 		var koszty = 0m;
 		var poczatekRoku = new DateTime(Miesiac.Year, 1, 1);
@@ -51,7 +61,6 @@ public class SkladkaZus : Rekord<SkladkaZus>
 			if (poprzedniMiesiac != null && poprzedniMiesiac.Miesiac.Year == Miesiac.Year)
 			{
 				if (PodstawaSpoleczne == 0) PodstawaSpoleczne = poprzedniMiesiac.PodstawaSpoleczne;
-				if (PodstawaZdrowotne == 0) PodstawaZdrowotne = poprzedniMiesiac.PodstawaZdrowotne;
 			}
 		}
 
@@ -90,6 +99,13 @@ public class SkladkaZus : Rekord<SkladkaZus>
 		}
 		else if (podmiot.FormaOpodatkowania == FormaOpodatkowania.Ryczałt)
 		{
+			var mnoznikPodstawy = przychod switch
+			{
+				< 60000 => 0.60m,
+				<= 300000m => 1.00m,
+				_ => 1.80m
+			};
+			PodstawaZdrowotne = srednieWynagrodzenie * mnoznikPodstawy;
 			SkladkaZdrowotna = (PodstawaZdrowotne * 0.09m).Zaokragl();
 			SkladkaZdrowotna += RozliczenieRoczneSkladkiZdrowotnej;
 			OdliczenieOdDochodu += (SkladkaZdrowotna * 0.5m).Zaokragl();
