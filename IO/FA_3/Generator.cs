@@ -100,13 +100,13 @@ public class Generator
 		{
 			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NIP = nipNabywcy.Substring(2);
 		}
-		else if (Regex.IsMatch(nipNabywcy, @"^\w\w") && Enum.TryParse<TKodyKrajowUE>(nipNabywcy[0..2], out var kodUE))
+		else if (Regex.IsMatch(nipNabywcy, @"^[A-Z]{2}") && Enum.TryParse<TKodyKrajowUE>(nipNabywcy[0..2], out var kodUE))
 		{
 			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.KodUE = kodUE;
 			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NrVatUE = nipNabywcy.Substring(2);
 			if (Enum.TryParse<TKodKraju>(nipNabywcy[0..2], out var kodKraju)) ksefFaktura.Podmiot2.Adres.KodKraju = kodKraju;
 		}
-		else if (Regex.IsMatch(nipNabywcy, @"^\w\w") && Enum.TryParse<TKodKraju>(nipNabywcy[0..2], out var kodKraju))
+		else if (Regex.IsMatch(nipNabywcy, @"^[A-Z]{2}") && Enum.TryParse<TKodKraju>(nipNabywcy[0..2], out var kodKraju))
 		{
 			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.KodKraju = kodKraju;
 			ksefFaktura.Podmiot2.DaneIdentyfikacyjne.NrID = nipNabywcy.Substring(2);
