@@ -60,7 +60,7 @@ public class Generator
 			{
 				var nipnumer = faktura.NIPNabywcy;
 				var nipkraj = "PL";
-				if (nipnumer.Length > 2 && Char.IsLetter(nipnumer[0]) && Char.IsLetter(nipnumer[1]))
+				if (nipnumer != null && nipnumer.Length > 2 && Char.IsLetter(nipnumer[0]) && Char.IsLetter(nipnumer[1]))
 				{
 					nipkraj = nipnumer[0..2];
 					nipnumer = nipnumer[2..];
