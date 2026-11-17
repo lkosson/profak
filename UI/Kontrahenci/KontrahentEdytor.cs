@@ -170,15 +170,9 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 
 		if (innyKontrahent != null) return "Istnieje już kontrahent z takim samym NIPem.";
 
-		if (!Regex.IsMatch(nip, @"^(\w\w)?\d+$")) return "NIP ma nieprawidłowy format.";
-		if (nip.Length == 12)
+		if (Regex.IsMatch(nip, @"^(PL)?\d{10}$"))
 		{
-			if (nip.StartsWith("PL")) nip = nip.Substring(2);
-			else return null;
-		}
-
-		if (nip.Length == 10)
-		{
+			if (nip.Length == 12) nip = nip.Substring(2);
 			int[] wagi = [6, 5, 7, 2, 3, 4, 5, 6, 7, 0];
 			int suma = 0;
 			for (int i = 0; i < wagi.Length; i++) suma += (nip[i] - '0') * wagi[i];
@@ -186,7 +180,7 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 			return null;
 		}
 
-		if (nip.Length == 11)
+		if (Regex.IsMatch(nip, @"\d{11}$"))
 		{
 			int[] wagi = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3, 0];
 			int suma = 0;
@@ -195,6 +189,8 @@ partial class KontrahentEdytor : Edytor<Kontrahent>
 			if (oczekiwana != (nip[^1] - '0')) return "PESEL nie jest poprawny.";
 			return null;
 		}
+
+		if (Regex.IsMatch(nip, @"^[A-Z]{2}")) return null;
 
 		return "NIP nie jest poprawny.";
 	}
