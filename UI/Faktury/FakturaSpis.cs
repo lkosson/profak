@@ -78,7 +78,7 @@ class FakturaSpis : Spis<Faktura>
 		DodajKolumneKwota(nameof(Faktura.RazemRabat), "Rabat", szerokosc: 0);
 		DodajKolumneData(nameof(Faktura.TerminPlatnosci), "Termin płatności");
 		DodajKolumne(nameof(Faktura.DniPoTerminie), "Dni po terminie", szerokosc: 0);
-		DodajKolumneData(nameof(Faktura.DataWplywu), "Data zapłaty");
+		DodajKolumneData(nameof(Faktura.DataWplaty), "Data zapłaty");
 		if (CzySprzedaz) DodajKolumneData(nameof(Faktura.DataWyslania), "Data wysłania", tooltip: faktura => faktura.DataWyslania?.ToString(Wyglad.FormatCzasu));
 		DodajKolumne(nameof(Faktura.NumerPowiazanej), "Powiązana");
 		if (!czyRachunek)

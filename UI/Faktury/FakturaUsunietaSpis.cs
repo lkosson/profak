@@ -35,7 +35,7 @@ class FakturaUsunietaSpis : Spis<Faktura>
 		DodajKolumneKwota(nameof(Faktura.RazemRabat), "Rabat", szerokosc: 0);
 		DodajKolumneData(nameof(Faktura.TerminPlatnosci), "Termin płatności");
 		DodajKolumne(nameof(Faktura.DniPoTerminie), "Dni po terminie", szerokosc: 0);
-		DodajKolumneData(nameof(Faktura.DataWplywu), "Data zapłaty");
+		DodajKolumneData(nameof(Faktura.DataWplaty), "Data zapłaty");
 		DodajKolumne(nameof(Faktura.NumerPowiazanej), "Powiązana");
 		DodajKolumne(nameof(Faktura.NumerKSeF), "Numer KSeF", szerokosc: 230);
 		DodajKolumneBool(nameof(Faktura.CzyTP), "TP", szerokosc: 0);
