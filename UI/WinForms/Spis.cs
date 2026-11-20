@@ -182,6 +182,7 @@ abstract partial class Spis<T> : Spis
 		if (!String.IsNullOrEmpty(format)) kolumna.DefaultCellStyle.Format = format;
 		if (szerokosc.HasValue) kolumna.Width = Wyglad.PrzeskalujRozmiar(szerokosc.Value) * DeviceDpi / 96;
 		if (rozciagnij) kolumna.MinimumWidth = 50;
+		if (checkbox) kolumna.SortMode = DataGridViewColumnSortMode.Automatic;
 		Columns.Add(kolumna);
 		if (tooltip != null) tooltipyDlaKolumn[kolumna.Index] = tooltip;
 		return kolumna;
